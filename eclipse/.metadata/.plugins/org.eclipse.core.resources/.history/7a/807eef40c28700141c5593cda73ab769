@@ -1,7 +1,0 @@
-package at.tyron.vintagecraft.item;
-
-import net.minecraft.item.ItemBlock;
-
-public class ItemOre extends ItemBlock {
-
-}

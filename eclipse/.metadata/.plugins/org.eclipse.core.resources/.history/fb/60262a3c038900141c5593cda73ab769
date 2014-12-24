@@ -1,9 +1,0 @@
-package at.tyron.vintagecraft.item;
-
-public class VCItems {
-
-	
-	public static void initItems() {
-		
-	}
-}

@@ -105,16 +105,14 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
 
     @Override
     public IBakedModel handleBlockState(IBlockState blockstate) {
-    	
     	return handleState((IExtendedBlockState)blockstate);
     }
 
     @Override
     public IBakedModel handleItemState(ItemStack stack) {
-    	//System.out.println("handle block state");
         IExtendedBlockState itemstate = ((IExtendedBlockState)VCBlocks.rawore.getDefaultState())
-        		.withProperty(TEOre.properties[0], EnumRockType.ANDESITE)
-        		.withProperty(TEOre.properties[1], EnumMaterialDeposit.LIMONITE);
+        		.withProperty(BlockOreVC.properties[0], EnumRockType.ANDESITE)
+        		.withProperty(BlockOreVC.properties[1], EnumMaterialDeposit.LIMONITE);
         
         return handleState((IExtendedBlockState)itemstate);
     }
@@ -125,8 +123,8 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
     public IBakedModel handleState(IExtendedBlockState extendedstate) {
     	//this.theWorld.theProfiler.endStartSection("renderlistcamera");
     	
-    	EnumRockType rocktype = (EnumRockType)extendedstate.getValue(TEOre.properties[0]);
-    	EnumMaterialDeposit oretype = (EnumMaterialDeposit)extendedstate.getValue(TEOre.properties[1]);
+    	EnumRockType rocktype = (EnumRockType)extendedstate.getValue(BlockOreVC.properties[0]);
+    	EnumMaterialDeposit oretype = (EnumMaterialDeposit)extendedstate.getValue(BlockOreVC.properties[1]);
     	
         base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/rock/" + rocktype.getName());
         overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/ore/" + oretype.getName());

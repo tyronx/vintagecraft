@@ -11,10 +11,12 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -33,6 +35,12 @@ import at.tyron.vintagecraft.item.ItemStone;
 import at.tyron.vintagecraft.item.VCItems;
 
 public class BlockOreVC extends BlockContainer {
+	public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
+
+	static {
+		properties[0] = Properties.toUnlisted(PropertyEnum.create("rocktype", EnumRockType.class));
+		properties[1] = Properties.toUnlisted(PropertyEnum.create("oretype", EnumMaterialDeposit.class));
+    }
 
 	 
 	protected BlockOreVC() {
@@ -69,18 +77,34 @@ public class BlockOreVC extends BlockContainer {
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
         TileEntity te = world.getTileEntity(pos);
         if(te instanceof TEOre) {
-        	//System.out.println("te is of instance TEOre");
         	TEOre cte = (TEOre) te;
             return cte.getState();
         } else {
-        	System.out.println("Error: te is NOT of instance TEOre at pos " + pos);
+        	if (te == null) {
+        		System.out.println("getExtendedState() Error: tileentity is null!");
+        	} else {
+        		System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
+        	}
         }
         return state;
     }
 
     @Override
     protected BlockState createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[0], TEOre.properties);
+        return new ExtendedBlockState(this, new IProperty[0], properties);
+    }
+    
+    
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+        TileEntity te = world.getTileEntity(pos);
+        if(te instanceof TEOre) {
+        	TEOre cte = (TEOre) te;
+            cte.setOreType(EnumMaterialDeposit.BITUMINOUSCOAL);
+            cte.setRockType(EnumRockType.REDSANDSTONE);
+            world.markBlockRangeForRenderUpdate(pos, pos);
+        }
+        return true;
     }
 
 
@@ -103,7 +127,12 @@ public class BlockOreVC extends BlockContainer {
             ItemOre.setOreType(itemstack, teOre.getOreType());          
             ret.add(itemstack);
         } else {
-        	System.out.println("tile entity is not of instance TEOre! D:");
+        	if (te == null) {
+        		System.out.println("getDrops(): tile entity is null!");
+        	} else {
+        		System.out.println("getDrops(): tile entity is not of instance TEOre! D:");
+        	}
+        	
         }
         
 		return ret;

@@ -1,7 +1,0 @@
-//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.jdt.junit.launchconfig=org.eclipse.jdt.junit.launchconfig,debug
-//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.jdt.launching.javaApplet=org.eclipse.jdt.launching.javaApplet,debug
-//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.jdt.launching.localJavaApplication=org.eclipse.jdt.launching.localJavaApplication,debug
-//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.pde.ui.JunitLaunchConfig=org.eclipse.pde.ui.JunitLaunchConfig,debug
-//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.pde.ui.RuntimeWorkbench=org.eclipse.pde.ui.RuntimeWorkbench,debug
-eclipse.preferences.version=1
-org.eclipse.debug.core.PREF_DELETE_CONFIGS_ON_PROJECT_DELETE=false

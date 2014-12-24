@@ -79,7 +79,6 @@ public class WorldGenDeposits implements IWorldGenerator {
 						TEOre tileentity = (TEOre)world.getTileEntity(pos);
 						if(tileentity != null) {
 							tileentity.setOreType(deposit).setRockType((EnumRockType)parentmaterial.getValue(BlockRock.STONETYPE));
-							world.markBlockForUpdate(pos);
 						} else {
 							System.out.println("tileentity was not created?");
 						}
