@@ -1,0 +1,124 @@
+package at.tyron.vintagecraft.TileEntity;
+
+import at.tyron.vintagecraft.World.EnumMaterialDeposit;
+import at.tyron.vintagecraft.World.EnumOreType;
+import at.tyron.vintagecraft.World.EnumRockType;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraftforge.common.property.IExtendedBlockState;
+import net.minecraftforge.common.property.IUnlistedProperty;
+import net.minecraftforge.common.property.Properties;
+
+public class TEOre extends NetworkTileEntity {
+	/*public EnumRockType rocktype;
+	public EnumMaterialDeposit oretype;*/
+	private IExtendedBlockState state;
+	
+	public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
+
+	static {
+		properties[0] = Properties.toUnlisted(PropertyEnum.create("rocktype", EnumRockType.class));
+		properties[1] = Properties.toUnlisted(PropertyEnum.create("oretype", EnumMaterialDeposit.class));
+    }
+	
+	public TEOre() {
+		this.shouldSendInitData = true;
+	}
+
+	@Override
+	public boolean canRenderBreaking() {
+		return false;
+	}
+
+	public void setVisible() {
+		worldObj.markBlockForUpdate(pos);
+	}
+	
+	public EnumRockType getRockType() {
+		return (EnumRockType)state.getValue(TEOre.properties[1]);
+	}
+	
+	public EnumMaterialDeposit getOreType() {
+		return (EnumMaterialDeposit)state.getValue(TEOre.properties[0]);
+	}
+	
+	public TEOre setRockType(EnumRockType rocktype) {
+		setState(getState().withProperty(TEOre.properties[0], rocktype));
+		return this;
+	}
+	
+	public TEOre setOreType(EnumMaterialDeposit oretype) {
+		setState(getState().withProperty(TEOre.properties[0], oretype));
+		return this;
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		
+		setRockType(EnumRockType.byId(nbt.getInteger("rocktype")));
+		setOreType(EnumMaterialDeposit.byId(nbt.getInteger("oretype")));
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt)  {
+		super.writeToNBT(nbt);
+		
+		nbt.setInteger("rocktype", rocktype.id);
+		nbt.setInteger("oretype", oretype.id);
+	}
+
+	/*@Override
+	public Packet getDescriptionPacket() {
+		if((extraData & 8) != 0 || pos.getY() > 100)
+		{
+			NBTTagCompound nbt = new NBTTagCompound();
+			createInitNBT(nbt);
+			return new S35PacketUpdateTileEntity(pos, 1, nbt);
+		}
+		return null;
+	}*/
+
+	@Override
+	public void handleInitPacket(NBTTagCompound nbt) {
+		rocktype = EnumRockType.byId(nbt.getInteger("rocktype"));
+		oretype = EnumMaterialDeposit.byId(nbt.getInteger("oretype"));
+	}
+
+	@Override
+	public void handleDataPacket(NBTTagCompound nbt) {
+
+	}
+
+	@Override
+	public void createDataNBT(NBTTagCompound nbt) {
+
+	}
+
+	@Override
+	public void createInitNBT(NBTTagCompound nbt) {
+		nbt.setInteger("rocktype", rocktype.id);
+		nbt.setInteger("oretype", oretype.id);
+	}
+	
+	
+	
+	
+    
+
+    public IExtendedBlockState getState() {
+        if(state == null) {
+            state = (IExtendedBlockState)getBlockType().getDefaultState();
+        }
+        return state;
+    }
+
+    public void setState(IExtendedBlockState state) {
+        this.state = state;
+    }
+	
+}

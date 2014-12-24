@@ -1,0 +1,85 @@
+[00:17:59] [Client thread/INFO]: Setting user: Player580
+[00:18:02] [Client thread/INFO]: LWJGL Version: 2.9.1
+[00:18:08] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:VintageCraft
+[00:18:08] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[00:18:09] [Thread-7/INFO]: Initializing LWJGL OpenAL
+[00:18:09] [Thread-7/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[00:18:09] [Thread-7/INFO]: OpenAL initialized.
+[00:18:09] [Sound Library Loader/INFO]: Sound engine started
+[00:18:14] [Client thread/INFO]: Created: 512x512 textures-atlas
+[00:18:16] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:VintageCraft
+[00:18:16] [Client thread/INFO]: SoundSystem shutting down...
+[00:18:16] [Client thread/WARN]: Author: Paul Lamb, www.paulscode.com
+[00:18:16] [Sound Library Loader/INFO]: Starting up SoundSystem...
+[00:18:16] [Thread-9/INFO]: Initializing LWJGL OpenAL
+[00:18:16] [Thread-9/INFO]: (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[00:18:16] [Thread-9/INFO]: OpenAL initialized.
+[00:18:17] [Sound Library Loader/INFO]: Sound engine started
+[00:18:20] [Client thread/WARN]: Unable to load variant: normal from vintagecraft:rawore#normal
+[00:18:21] [Client thread/INFO]: Created: 512x512 textures-atlas
+[00:18:46] [Server thread/INFO]: Starting integrated minecraft server version 1.8
+[00:18:46] [Server thread/INFO]: Generating keypair
+[00:18:47] [Server thread/INFO]: Converting map!
+[00:18:47] [Server thread/INFO]: Scanning folders...
+[00:18:47] [Server thread/INFO]: Total conversion count is 0
+[00:18:47] [Server thread/INFO]: Preparing start region for level 0
+[00:18:49] [Server thread/INFO]: Preparing spawn area: 4%
+[00:18:50] [Server thread/INFO]: Preparing spawn area: 4%
+[00:18:51] [Server thread/INFO]: Preparing spawn area: 6%
+[00:18:53] [Server thread/INFO]: Preparing spawn area: 7%
+[00:18:58] [Server thread/INFO]: Preparing spawn area: 8%
+[00:19:00] [Server thread/INFO]: Preparing spawn area: 8%
+[00:19:01] [Server thread/INFO]: Preparing spawn area: 14%
+[00:19:02] [Server thread/INFO]: Preparing spawn area: 22%
+[00:19:03] [Server thread/INFO]: Preparing spawn area: 30%
+[00:19:04] [Server thread/INFO]: Preparing spawn area: 34%
+[00:19:05] [Server thread/INFO]: Preparing spawn area: 42%
+[00:19:06] [Server thread/INFO]: Preparing spawn area: 47%
+[00:19:08] [Server thread/INFO]: Preparing spawn area: 48%
+[00:19:09] [Server thread/INFO]: Preparing spawn area: 53%
+[00:19:10] [Server thread/INFO]: Preparing spawn area: 62%
+[00:19:11] [Server thread/INFO]: Preparing spawn area: 68%
+[00:19:12] [Server thread/INFO]: Preparing spawn area: 76%
+[00:19:13] [Server thread/INFO]: Preparing spawn area: 84%
+[00:19:15] [Server thread/INFO]: Preparing spawn area: 88%
+[00:19:16] [Server thread/INFO]: Preparing spawn area: 95%
+[00:19:17] [Server thread/INFO]: Changing view distance to 7, from 10
+[00:19:18] [Server thread/INFO]: Player580[local:E:10bbe7a5] logged in with entity id 0 at (-261.5, 151.0, -200.5)
+[00:19:18] [Server thread/INFO]: Player580 joined the game
+[00:19:21] [Server thread/INFO]: Saving and pausing game...
+[00:19:21] [Server thread/INFO]: Saving chunks for level 'New World'/DEFAULT
+[00:19:23] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[00:19:23] [Server thread/INFO]: Saving chunks for level 'New World'/DEFAULT
+[00:19:23] [Server thread/INFO]: Stopping server
+[00:19:23] [Server thread/INFO]: Saving players
+[00:19:23] [Server thread/INFO]: Saving worlds
+[00:19:23] [Server thread/INFO]: Saving chunks for level 'New World'/DEFAULT
+[00:19:23] [Server thread/INFO]: Saving chunks for level 'New World'/Nether
+[00:19:23] [Server thread/INFO]: Saving chunks for level 'New World'/DEFAULT
+[00:19:28] [Client thread/FATAL]: Reported exception thrown!
+net.minecraft.util.ReportedException: Tesselating block in world
+	at net.minecraft.client.renderer.BlockRendererDispatcher.renderBlock(BlockRendererDispatcher.java:88) ~[BlockRendererDispatcher.class:?]
+	at net.minecraft.client.renderer.chunk.RenderChunk.rebuildChunk(RenderChunk.java:176) ~[RenderChunk.class:?]
+	at net.minecraft.client.renderer.chunk.ChunkRenderWorker.processTask(ChunkRenderWorker.java:100) ~[ChunkRenderWorker.class:?]
+	at net.minecraft.client.renderer.chunk.ChunkRenderDispatcher.updateChunkNow(ChunkRenderDispatcher.java:144) ~[ChunkRenderDispatcher.class:?]
+	at net.minecraft.client.renderer.RenderGlobal.setupTerrain(RenderGlobal.java:882) ~[RenderGlobal.class:?]
+	at net.minecraft.client.renderer.EntityRenderer.renderWorldPass(EntityRenderer.java:1264) ~[EntityRenderer.class:?]
+	at net.minecraft.client.renderer.EntityRenderer.renderWorld(EntityRenderer.java:1207) ~[EntityRenderer.class:?]
+	at net.minecraft.client.renderer.EntityRenderer.updateCameraAndRender(EntityRenderer.java:1032) ~[EntityRenderer.class:?]
+	at net.minecraft.client.Minecraft.runGameLoop(Minecraft.java:1048) ~[Minecraft.class:?]
+	at net.minecraft.client.Minecraft.run(Minecraft.java:345) [Minecraft.class:?]
+	at net.minecraft.client.main.Main.main(Main.java:117) [Main.class:?]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.7.0_71]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57) ~[?:1.7.0_71]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.7.0_71]
+	at java.lang.reflect.Method.invoke(Method.java:606) ~[?:1.7.0_71]
+	at net.minecraft.launchwrapper.Launch.launch(Launch.java:135) [launchwrapper-1.11.jar:?]
+	at net.minecraft.launchwrapper.Launch.main(Launch.java:28) [launchwrapper-1.11.jar:?]
+	at net.minecraftforge.gradle.GradleStartCommon.launch(GradleStartCommon.java:78) [start/:?]
+	at GradleStart.main(GradleStart.java:45) [start/:?]
+Caused by: java.lang.NullPointerException
+	at at.tyron.vintagecraft.client.Model.BlockOreVCModel.handleState(BlockOreVCModel.java:131) ~[BlockOreVCModel.class:?]
+	at at.tyron.vintagecraft.client.Model.BlockOreVCModel.handleBlockState(BlockOreVCModel.java:109) ~[BlockOreVCModel.class:?]
+	at net.minecraft.client.renderer.BlockRendererDispatcher.getModelFromBlockState(BlockRendererDispatcher.java:135) ~[BlockRendererDispatcher.class:?]
+	at net.minecraft.client.renderer.BlockRendererDispatcher.renderBlock(BlockRendererDispatcher.java:76) ~[BlockRendererDispatcher.class:?]
+	... 18 more

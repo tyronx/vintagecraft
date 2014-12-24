@@ -1,0 +1,10 @@
+{
+    "parent": "block/grass",
+    "textures": {
+        "particle": "vintagecraft:blocks/topsoil",
+        "bottom": "vintagecraft:blocks/topsoil",
+        "top": "vintagecraft:blocks/GrassSparseOverlay",
+        "side": "vintagecraft:blocks/topsoil",
+        "overlay": "vintagecraft:blocks/GrassSideSparse"
+    }
+}

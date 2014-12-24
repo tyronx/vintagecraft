@@ -1,0 +1,85 @@
+package at.tyron.vintagecraft.Network;
+
+import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.BlockPos;
+
+
+public class DataBlockPacket extends AbstractPacket {
+	private int x;
+	private int y;
+	private int z;
+	private NBTTagCompound nbtData;
+
+	public DataBlockPacket() {}
+
+	public DataBlockPacket(int x, int y, int z, NBTTagCompound data)
+	{
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.nbtData = data;
+	}
+
+	@Override
+	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+	{
+		PacketBuffer pb = new PacketBuffer(buffer);
+		pb.writeInt(x);
+		pb.writeShort(y);
+		pb.writeInt(z);
+		try
+		{
+			pb.writeNBTTagCompoundToBuffer(nbtData);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer)
+	{
+		PacketBuffer pb = new PacketBuffer(buffer);
+		x = pb.readInt();
+		y = pb.readShort();
+		z = pb.readInt();
+		try
+		{
+			nbtData = pb.readNBTTagCompoundFromBuffer();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void handleClientSide(EntityPlayer player)
+	{
+		NetworkTileEntity te = (NetworkTileEntity)player.worldObj.getTileEntity(new BlockPos(x, y, z));
+		if (te != null)
+		{
+			te.entityplayer = player;
+			te.handleDataPacket(nbtData);
+		}
+	}
+
+	@Override
+	public void handleServerSide(EntityPlayer player)
+	{
+		NetworkTileEntity te = (NetworkTileEntity)player.worldObj.getTileEntity(new BlockPos(x, y, z));
+		if (te != null)
+		{
+			te.entityplayer = player;
+			te.handleDataPacket(nbtData);
+		}
+	}
+
+}

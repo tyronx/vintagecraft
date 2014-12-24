@@ -1,0 +1,45 @@
+---- Minecraft Crash Report ----
+// Why did you do that?
+
+Time: 12/20/14 2:44 PM
+Description: Exception in server tick loop
+
+java.lang.IllegalArgumentException: Cannot set unlisted property net.minecraftforge.common.property.Properties$PropertyAdapter@7ee3ec7e to IRON on block vintagecraft:ore, it is not an allowed value
+	at net.minecraftforge.common.property.ExtendedBlockState$ExtendedStateImplementation.withProperty(ExtendedBlockState.java:103)
+	at at.tyron.vintagecraft.TileEntity.TEOre.setOreType(TEOre.java:55)
+	at at.tyron.vintagecraft.WorldGen.WorldGenDeposits.generateDeposits(WorldGenDeposits.java:82)
+	at at.tyron.vintagecraft.WorldGen.WorldGenDeposits.generate(WorldGenDeposits.java:42)
+	at net.minecraftforge.fml.common.registry.GameRegistry.generateWorld(GameRegistry.java:106)
+	at net.minecraft.world.gen.ChunkProviderServer.populate(ChunkProviderServer.java:270)
+	at net.minecraft.world.chunk.Chunk.populateChunk(Chunk.java:1126)
+	at net.minecraft.world.gen.ChunkProviderServer.originalLoadChunk(ChunkProviderServer.java:180)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:122)
+	at net.minecraft.world.gen.ChunkProviderServer.loadChunk(ChunkProviderServer.java:92)
+	at net.minecraft.server.MinecraftServer.initialWorldChunkLoad(MinecraftServer.java:302)
+	at net.minecraft.server.integrated.IntegratedServer.loadAllWorlds(IntegratedServer.java:112)
+	at net.minecraft.server.integrated.IntegratedServer.startServer(IntegratedServer.java:126)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:438)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8
+	Operating System: Windows 7 (amd64) version 6.1
+	Java Version: 1.7.0_71, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 749189504 bytes (714 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	IntCache: cache: 9, tcache: 0, allocated: 4, tallocated: 22
+	FML: MCP v9.10 FML v8.0.14.1273 Minecraft Forge 11.14.0.1273 4 mods loaded, 4 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	FML{8.0.14.1273} [Forge Mod Loader] (forgeSrc-1.8-11.14.0.1273-1.8.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	Forge{11.14.0.1273} [Minecraft Forge] (forgeSrc-1.8-11.14.0.1273-1.8.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	vintagecraft{0.1.1} [VintageCraft] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available
+	Profiler Position: N/A (disabled)
+	Player Count: 0 / 8; []
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'

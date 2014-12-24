@@ -1,0 +1,21 @@
+{
+    "variants": {
+        "type=gneiss": { "model": "vintagecraft:regolith/gneiss" },
+		"type=limestone": { "model": "vintagecraft:regolith/limestone" },
+		"type=claystone": { "model": "vintagecraft:regolith/claystone" },
+		"type=marble": { "model": "vintagecraft:regolith/marble" },
+		"type=granite": { "model": "vintagecraft:regolith/granite" },
+		"type=basalt": { "model": "vintagecraft:regolith/basalt" },
+		"type=andesite": { "model": "vintagecraft:regolith/andesite" },
+		"type=conglomerate": { "model": "vintagecraft:regolith/conglomerate" },
+		"type=diorite": { "model": "vintagecraft:regolith/diorite" },
+		"type=shale": { "model": "vintagecraft:regolith/shale" },
+		"type=schist": { "model": "vintagecraft:regolith/schist" },
+		"type=quartzite": { "model": "vintagecraft:regolith/quartzite" },
+		
+		"type=sandstone": { "model": "vintagecraft:regolith/sandstone" },
+		"type=redsandstone": { "model": "vintagecraft:regolith/redsandstone" },
+		"type=gabbro": { "model": "vintagecraft:regolith/gabbro" },
+		"type=chert": { "model": "vintagecraft:regolith/chert" }
+    }
+}

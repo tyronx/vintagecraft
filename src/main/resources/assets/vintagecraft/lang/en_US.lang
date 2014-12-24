@@ -1,0 +1,44 @@
+﻿#en_US
+#This is the Main language configuration file
+#
+#If you want to color code the text then I recommend you visit http://www.minecraftwiki.net/wiki/Formatting_codes#Color_codes
+#To create the § symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
+#This file needs to be UTF-8 encoded to work with MC 1.7+
+
+generator.VCDefault=VC Default
+generator.VCFlat=VC Flat
+
+nograss.name=No Gras
+sparsegrass.name=Sparse Grass
+normalgrass.name=Normal Grass
+
+tile.regolith.name=Regolith
+tile.topsoil.name=Topsoil
+tile.peat.name=Peat
+tile.subsoil.name=Subsoil
+tile.uppermantle.name=Upper Mantle
+
+tile.rock.gneiss.name=Gneiss
+tile.rock.limestone.name=Limestone
+tile.rock.claystone.name=Claystone
+tile.rock.marble.name=Marble
+tile.rock.granite.name=Granite
+tile.rock.basalt.name=Basalt
+tile.rock.andesite.name=Andesite
+tile.rock.conglomerate.name=Conglomerate
+tile.rock.diorite.name=Diorite
+tile.rock.sandstone.name=Sandstone
+tile.rock.redsandstone.name=Red Sandstone
+tile.rock.quartzite.name=Quartzite
+tile.rock.chert.name=Chert
+tile.rock.gabbro.name=Gabbro
+tile.rock.shale.name=Shale
+tile.rock.schist.name=Schist
+
+item.stone.name=Stone
+stone.name=Stone
+item.ore.nativegold.name=Native Gold
+item.ore.limonite.name=Limonite
+item.ore.nativecopper.name=Native Copper
+item.ore.bituminouscoal.name=Bituminous Coal
+item.ore.lignite.name=Lignite

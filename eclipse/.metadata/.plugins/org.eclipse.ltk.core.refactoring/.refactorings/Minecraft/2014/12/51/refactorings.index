@@ -1,0 +1,12 @@
+1419021341489	Move compilation unit
+1419021371043	Delete element
+1419021684360	Rename field 'rocktype'
+1419022559858	Rename field 'index'
+1419022564550	Rename local variable 'index'
+1419022859708	Delete element
+1419072097581	Rename local variable 'radius'
+1419072180636	Rename local variable 'var8'
+1419072186840	Rename local variable 'var9'
+1419080353798	Rename enum constant 'COAL'
+1419085546753	Rename enum constant 'IRON'
+1419085551726	Rename enum constant 'GOLD'

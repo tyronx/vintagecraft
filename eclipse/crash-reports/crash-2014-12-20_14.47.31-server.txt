@@ -1,0 +1,93 @@
+---- Minecraft Crash Report ----
+// I feel sad now :(
+
+Time: 12/20/14 2:47 PM
+Description: Ticking entity
+
+java.lang.ClassCastException: at.tyron.vintagecraft.World.EnumMaterialDeposit cannot be cast to at.tyron.vintagecraft.World.EnumRockType
+	at at.tyron.vintagecraft.TileEntity.TEOre.getRockType(TEOre.java:42)
+	at at.tyron.vintagecraft.TileEntity.TEOre.createInitNBT(TEOre.java:104)
+	at at.tyron.vintagecraft.TileEntity.NetworkTileEntity.createInitNBT(NetworkTileEntity.java:47)
+	at at.tyron.vintagecraft.TileEntity.NetworkTileEntity.getDescriptionPacket(NetworkTileEntity.java:67)
+	at net.minecraft.entity.player.EntityPlayerMP.sendTileEntityUpdate(EntityPlayerMP.java:610)
+	at net.minecraft.entity.player.EntityPlayerMP.onUpdate(EntityPlayerMP.java:301)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1870)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:732)
+	at net.minecraft.world.World.updateEntity(World.java:1840)
+	at net.minecraft.world.World.updateEntities(World.java:1669)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:571)
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:703)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:598)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:164)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:478)
+	at java.lang.Thread.run(Thread.java:745)
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- Head --
+Stacktrace:
+	at at.tyron.vintagecraft.TileEntity.TEOre.getRockType(TEOre.java:42)
+	at at.tyron.vintagecraft.TileEntity.TEOre.createInitNBT(TEOre.java:104)
+	at at.tyron.vintagecraft.TileEntity.NetworkTileEntity.createInitNBT(NetworkTileEntity.java:47)
+	at at.tyron.vintagecraft.TileEntity.NetworkTileEntity.getDescriptionPacket(NetworkTileEntity.java:67)
+	at net.minecraft.entity.player.EntityPlayerMP.sendTileEntityUpdate(EntityPlayerMP.java:610)
+	at net.minecraft.entity.player.EntityPlayerMP.onUpdate(EntityPlayerMP.java:301)
+	at net.minecraft.world.World.updateEntityWithOptionalForce(World.java:1870)
+	at net.minecraft.world.WorldServer.updateEntityWithOptionalForce(WorldServer.java:732)
+	at net.minecraft.world.World.updateEntity(World.java:1840)
+
+-- Entity being ticked --
+Details:
+	Entity Type: null (net.minecraft.entity.player.EntityPlayerMP)
+	Entity ID: 0
+	Entity Name: Player355
+	Entity's Exact location: -252.50, 150.00, -221.50
+	Entity's Block location: -253.00,150.00,-222.00 - World: (-253,150,-222), Chunk: (at 3,9,2 in -16,-14; contains blocks -256,0,-224 to -241,255,-209), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Entity's Momentum: 0.00, 0.00, 0.00
+	Entity's Rider: ~~ERROR~~ NullPointerException: null
+	Entity's Vehicle: ~~ERROR~~ NullPointerException: null
+Stacktrace:
+	at net.minecraft.world.World.updateEntities(World.java:1669)
+	at net.minecraft.world.WorldServer.updateEntities(WorldServer.java:571)
+
+-- Affected level --
+Details:
+	Level name: New World
+	All players: 1 total; [EntityPlayerMP['Player355'/0, l='New World', x=-252.50, y=150.00, z=-221.50]]
+	Chunk stats: ServerChunkCache: 1197 Drop: 0
+	Level seed: -1292284854013216863
+	Level generator: ID 00 - VCDefault, ver 0. Features enabled: true
+	Level generator options: 
+	Level spawn location: -244.00,120.00,-212.00 - World: (-244,120,-212), Chunk: (at 12,7,12 in -16,-14; contains blocks -256,0,-224 to -241,255,-209), Region: (-1,-1; contains chunks -32,-32 to -1,-1, blocks -512,0,-512 to -1,255,-1)
+	Level time: 20 game time, 20 day time
+	Level dimension: 0
+	Level storage version: 0x04ABD - Anvil
+	Level weather: Rain time: 92623 (now: false), thunder time: 100127 (now: false)
+	Level game mode: Game mode: creative (ID 1). Hardcore: false. Cheats: true
+Stacktrace:
+	at net.minecraft.server.MinecraftServer.updateTimeLightAndEntities(MinecraftServer.java:703)
+	at net.minecraft.server.MinecraftServer.tick(MinecraftServer.java:598)
+	at net.minecraft.server.integrated.IntegratedServer.tick(IntegratedServer.java:164)
+	at net.minecraft.server.MinecraftServer.run(MinecraftServer.java:478)
+	at java.lang.Thread.run(Thread.java:745)
+
+-- System Details --
+Details:
+	Minecraft Version: 1.8
+	Operating System: Windows 7 (amd64) version 6.1
+	Java Version: 1.7.0_71, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 629489696 bytes (600 MB) / 1038876672 bytes (990 MB) up to 1038876672 bytes (990 MB)
+	JVM Flags: 3 total; -Xincgc -Xmx1024M -Xms1024M
+	IntCache: cache: 204, tcache: 0, allocated: 0, tallocated: 22
+	FML: MCP v9.10 FML v8.0.14.1273 Minecraft Forge 11.14.0.1273 4 mods loaded, 4 mods active
+	mcp{9.05} [Minecraft Coder Pack] (minecraft.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	FML{8.0.14.1273} [Forge Mod Loader] (forgeSrc-1.8-11.14.0.1273-1.8.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Forge{11.14.0.1273} [Minecraft Forge] (forgeSrc-1.8-11.14.0.1273-1.8.jar) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	vintagecraft{0.1.1} [VintageCraft] (bin) Unloaded->Constructed->Pre-initialized->Initialized->Post-initialized->Available->Available->Available->Available
+	Profiler Position: N/A (disabled)
+	Player Count: 1 / 8; [EntityPlayerMP['Player355'/0, l='New World', x=-252.50, y=150.00, z=-221.50]]
+	Type: Integrated Server (map_client.txt)
+	Is Modded: Definitely; Client brand changed to 'fml,forge'

@@ -1,0 +1,22 @@
+{
+    "variants": {
+        "type=gneiss": { "model": "vintagecraft:subsoil/gneiss" },
+		"type=limestone": { "model": "vintagecraft:subsoil/limestone" },
+		"type=claystone": { "model": "vintagecraft:subsoil/claystone" },
+		"type=marble": { "model": "vintagecraft:subsoil/marble" },
+		"type=granite": { "model": "vintagecraft:subsoil/granite" },
+		"type=basalt": { "model": "vintagecraft:subsoil/basalt" },
+		"type=andesite": { "model": "vintagecraft:subsoil/andesite" },
+		"type=conglomerate": { "model": "vintagecraft:subsoil/conglomerate" },
+		"type=diorite": { "model": "vintagecraft:subsoil/diorite" },
+		"type=shale": { "model": "vintagecraft:subsoil/shale" },
+		"type=schist": { "model": "vintagecraft:subsoil/schist" },
+		"type=quartzite": { "model": "vintagecraft:subsoil/quartzite" },
+		
+		"type=sandstone": { "model": "vintagecraft:subsoil/sandstone" },
+		"type=redsandstone": { "model": "vintagecraft:subsoil/redsandstone" },
+		"type=gabbro": { "model": "vintagecraft:subsoil/gabbro" },
+		"type=chert": { "model": "vintagecraft:subsoil/chert" }
+
+    }
+}

@@ -1,0 +1,26 @@
+package at.tyron.vintagecraft.client.Renderer;
+
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.IItemRenderer;
+
+public class RenderItemStone implements IItemRenderer {
+
+	@Override
+	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
+		return true;
+	}
+
+	@Override
+	public boolean shouldUseRenderHelper(ItemRenderType type, ItemStack item,
+			ItemRendererHelper helper) {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

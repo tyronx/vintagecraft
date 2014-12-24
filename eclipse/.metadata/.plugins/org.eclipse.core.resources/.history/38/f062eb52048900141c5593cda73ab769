@@ -1,0 +1,17 @@
+package at.tyron.vintagecraft.item;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+
+public class ItemStone extends ItemVC {
+
+	public ItemStone() {
+		setHasSubtypes(true);
+		setCreativeTab(CreativeTabs.tabMisc);
+	}
+	
+	
+	
+	
+	
+}

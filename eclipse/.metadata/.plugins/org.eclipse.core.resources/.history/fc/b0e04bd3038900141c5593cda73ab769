@@ -1,0 +1,15 @@
+package at.tyron.vintagecraft.item;
+
+import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+
+public class ItemVC extends Item {
+
+	
+	public Item register(Item item, String internalname) {
+		item.setUnlocalizedName(internalname);
+		GameRegistry.registerItem(item, internalname);
+		
+		return item;
+	}
+}

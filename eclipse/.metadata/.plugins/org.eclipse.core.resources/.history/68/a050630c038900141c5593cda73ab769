@@ -1,0 +1,16 @@
+package at.tyron.vintagecraft.item;
+
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+
+public class ItemOre extends Item {
+
+	public ItemOre() {
+		this.setMaxDamage(0);
+        this.setHasSubtypes(true);
+	}
+	
+	
+
+}
