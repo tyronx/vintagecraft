@@ -3,7 +3,6 @@ package at.tyron.vintagecraft;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.World.Climate;
-import at.tyron.vintagecraft.WorldGen.WorldCacheManager;
 
 public class ChunkEventHandler {
 
@@ -11,7 +10,7 @@ public class ChunkEventHandler {
     
     @SubscribeEvent
 	public void onUnloadWorld(WorldEvent.Unload event) {
-		Climate.removeCacheManager(event.world);
+		//Climate.removeCacheManager(event.world);
 		//TFC_Core.removeCDM(event.world);
 		//if(event.world.provider.dimensionId == 0)
 		//	AnvilManager.getInstance().clearRecipes();

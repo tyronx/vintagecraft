@@ -2,11 +2,10 @@ package at.tyron.vintagecraft.World;
 
 import java.util.HashMap;
 
-import at.tyron.vintagecraft.WorldGen.WorldCacheManager;
 import net.minecraft.world.World;
 
 public class Climate {
-	public static HashMap<World, WorldCacheManager> worldPair = new HashMap<World, WorldCacheManager>();
+	/*public static HashMap<World, WorldCacheManager> worldPair = new HashMap<World, WorldCacheManager>();
 	
 	public static WorldCacheManager getCacheManager(World world) {
 		if (worldPair.get(world) == null) {
@@ -19,6 +18,6 @@ public class Climate {
 		if(worldPair.containsKey(world))
 			worldPair.remove(world);
 	}
-	
+	*/
 	
 }

@@ -6,10 +6,10 @@ import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
-import at.tyron.vintagecraft.block.VCBlocks;
 
 import com.google.common.primitives.Ints;
 
@@ -110,7 +110,7 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
 
     @Override
     public IBakedModel handleItemState(ItemStack stack) {
-        IExtendedBlockState itemstate = ((IExtendedBlockState)VCBlocks.rawore.getDefaultState())
+        IExtendedBlockState itemstate = ((IExtendedBlockState)BlocksVC.rawore.getDefaultState())
         		.withProperty(BlockOreVC.properties[0], EnumRockType.ANDESITE)
         		.withProperty(BlockOreVC.properties[1], EnumMaterialDeposit.LIMONITE);
         
@@ -121,13 +121,16 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
     
     
     public IBakedModel handleState(IExtendedBlockState extendedstate) {
-    	//this.theWorld.theProfiler.endStartSection("renderlistcamera");
-    	
     	EnumRockType rocktype = (EnumRockType)extendedstate.getValue(BlockOreVC.properties[0]);
     	EnumMaterialDeposit oretype = (EnumMaterialDeposit)extendedstate.getValue(BlockOreVC.properties[1]);
     	
-        base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/rock/" + rocktype.getName());
-        overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/ore/" + oretype.getName());
+    	if (rocktype != null) {
+    		base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/rock/" + rocktype.getName());
+    	}
+    	if (oretype != null) {
+    		overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/ore/" + oretype.getName());
+    	} 
+        
     	
         return new BlockOreVCModel(base, overlay, extendedstate);
     }

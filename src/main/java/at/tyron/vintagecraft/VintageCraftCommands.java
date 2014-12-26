@@ -3,14 +3,14 @@ package at.tyron.vintagecraft;
 import java.io.File;
 import java.util.List;
 
-import at.tyron.vintagecraft.World.EnumCrustLayer;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
 import at.tyron.vintagecraft.WorldGen.GenLayers.*;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerAddIsland;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerIsland;
 
 
+import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;

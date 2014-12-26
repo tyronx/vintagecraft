@@ -3,9 +3,10 @@ package at.tyron.vintagecraft.item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
-import at.tyron.vintagecraft.block.VCBlocks;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -30,7 +31,7 @@ public class ItemStone extends ItemVC {
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	ItemStack stack;
     	for (EnumRockType rocktype : EnumRockType.values()) {
-    		stack = new ItemStack(VCItems.stone);
+    		stack = new ItemStack(ItemsVC.stone);
     		setRockType(stack, rocktype);
     		subItems.add(stack);
     		
@@ -42,7 +43,7 @@ public class ItemStone extends ItemVC {
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add(StatCollector.translateToLocal(VCBlocks.rock.getUnlocalizedName() + "." + ItemStone.getRockType(itemstack) + ".name"));
+		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getUnlocalizedName() + "." + ItemStone.getRockType(itemstack) + ".name"));
 	}
 	
 	

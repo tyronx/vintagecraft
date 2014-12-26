@@ -10,16 +10,14 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Network.PacketPipeline;
 import at.tyron.vintagecraft.World.Climate;
-import at.tyron.vintagecraft.WorldGen.VCProvider;
-import at.tyron.vintagecraft.WorldGen.VCWorldGen;
-import at.tyron.vintagecraft.WorldGen.VCWorldType;
-import at.tyron.vintagecraft.WorldGen.WorldCacheManager;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldGen.WorldProviderVC;
+import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
 import at.tyron.vintagecraft.WorldGen.WorldGenForests;
-import at.tyron.vintagecraft.block.VCBlocks;
 import at.tyron.vintagecraft.client.ClientProxy;
 import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
-import at.tyron.vintagecraft.item.VCItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockDoublePlant;
@@ -88,9 +86,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class VintageCraft {
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
-	
-    public static VCWorldGen worldgen = new VCWorldGen();
-    
+	    
     // The packet pipeline
  	public static final PacketPipeline packetPipeline = new PacketPipeline();
 
@@ -98,8 +94,8 @@ public class VintageCraft {
  	
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
-    	VCBlocks.init();
-    	VCItems.init();
+    	BlocksVC.init();
+    	ItemsVC.init();
     	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
@@ -115,14 +111,11 @@ public class VintageCraft {
      	MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
      	
      	
-     	
-        
-     	
      	GameRegistry.registerWorldGenerator(new WorldGenDeposits(), 4);
      	GameRegistry.registerWorldGenerator(new WorldGenForests(), 5);
      	
         
-        WorldType.DEFAULT = new VCWorldType(0, "VCDefault");
+        WorldType.DEFAULT = new WorldTypeVC(0, "VCDefault");
         
        // DimensionManager.unregisterDimension(-1);
 		DimensionManager.unregisterDimension(0);
@@ -131,8 +124,8 @@ public class VintageCraft {
 		//DimensionManager.unregisterProviderType(-1);
 		DimensionManager.unregisterProviderType(0);
 		DimensionManager.unregisterProviderType(1);
-        DimensionManager.registerProviderType(0, VCProvider.class, true);
-        DimensionManager.registerProviderType(1, VCProvider.class, false);
+        DimensionManager.registerProviderType(0, WorldProviderVC.class, true);
+        DimensionManager.registerProviderType(1, WorldProviderVC.class, false);
 
 		//DimensionManager.registerDimension(-1, -1);
 		DimensionManager.registerDimension(0, 0);

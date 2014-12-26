@@ -2,10 +2,10 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.EnumOrganicLayer;
-import at.tyron.vintagecraft.World.EnumRockType;
 
 
+import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockTallGrass;
@@ -27,7 +27,7 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTopSoil extends VCBlock {
+public class BlockTopSoil extends BlockVC {
 	
 	
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
@@ -47,8 +47,8 @@ public class BlockTopSoil extends VCBlock {
 	
 	
 	@Override
-	public VCBlock setHardness(float hardness) {
-		return (VCBlock) super.setHardness(hardness);
+	public BlockVC setHardness(float hardness) {
+		return (BlockVC) super.setHardness(hardness);
 	}
 	
 	

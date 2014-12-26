@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.item.ItemRock;
 import at.tyron.vintagecraft.item.ItemStone;
-import at.tyron.vintagecraft.item.VCItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -33,7 +34,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 //- graphics will be like smooth stone 
 
 
-public class BlockRock extends VCBlock {
+public class BlockRock extends BlockVC {
 
 	public static final PropertyEnum STONETYPE = PropertyEnum.create("type", EnumRockType.class);
     
@@ -53,16 +54,19 @@ public class BlockRock extends VCBlock {
 
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-
-        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-
-        ItemStack itemstack = new ItemStack(VCItems.stone, 1 + rand.nextInt(3));
-        ItemStone.setRockType(itemstack, (EnumRockType) state.getValue(STONETYPE));
-        
-        ret.add(itemstack);
-        
-		return ret;
+    	if (state.getBlock() == BlocksVC.rock) {
+	        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+	
+	        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
+	
+	        ItemStack itemstack = new ItemStack(ItemsVC.stone, 2 + rand.nextInt(3));
+	        ItemStone.setRockType(itemstack, (EnumRockType) state.getValue(STONETYPE));
+	        
+	        ret.add(itemstack);
+	        
+			return ret;
+    	}
+    	return super.getDrops(world, pos, state, fortune);
     }
     
     

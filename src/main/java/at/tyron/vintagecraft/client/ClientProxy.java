@@ -22,14 +22,14 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
-import at.tyron.vintagecraft.block.VCBlocks;
 import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import at.tyron.vintagecraft.item.ItemOre;
 import at.tyron.vintagecraft.item.ItemStone;
-import at.tyron.vintagecraft.item.VCItems;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -71,20 +71,20 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-        Item item = Item.getItemFromBlock(VCBlocks.rawore);
+        Item item = Item.getItemFromBlock(BlocksVC.rawore);
         RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
         if (renderItem != null) {
             renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
 	            @Override
                 public ModelResourceLocation getModelLocation(ItemStack stack) {
-                    return VCBlocks.oremodelLocation;
+                    return BlocksVC.oremodelLocation;
                 }
             });
 	       
 	        
             
             
-            renderItem.getItemModelMesher().register(VCItems.stone, new ItemMeshDefinition() {
+            renderItem.getItemModelMesher().register(ItemsVC.stone, new ItemMeshDefinition() {
 	            @Override
 	             public ModelResourceLocation getModelLocation(ItemStack stack) {
 	            	 //System.out.println(ModInfo.ModID + ":item/stone/" + ItemStone.getRockType(stack));
@@ -96,7 +96,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	         });
 	        
 	        
-            renderItem.getItemModelMesher().register(VCItems.ore, new ItemMeshDefinition() {
+            renderItem.getItemModelMesher().register(ItemsVC.ore, new ItemMeshDefinition() {
 	            @Override
 	             public ModelResourceLocation getModelLocation(ItemStack stack) {
 	            		//System.out.println(ModInfo.ModID + ":ore/" + ItemOre.getOreType(stack).getName());
@@ -115,7 +115,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         TextureAtlasSprite base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/slime");
         TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
         
-        event.modelRegistry.putObject(VCBlocks.oremodelLocation, new BlockOreVCModel(base, overlay));
+        event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base, overlay));
     }
 	
 	
@@ -123,7 +123,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	public void registerTextures(TextureStitchEvent.Pre event) {
         TextureMap map = event.map;
         for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-        	if (deposit.block == VCBlocks.rawore) {
+        	if (deposit.block == BlocksVC.rawore) {
         		event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/ore/" + deposit.getName()));
         	}
         }

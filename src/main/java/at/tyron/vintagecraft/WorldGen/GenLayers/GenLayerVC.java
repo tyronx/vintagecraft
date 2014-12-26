@@ -7,11 +7,8 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumOrganicLayer;
-import at.tyron.vintagecraft.World.EnumRockType;
-import at.tyron.vintagecraft.WorldGen.VCBiome;
-import at.tyron.vintagecraft.WorldGen.VCWorldType;
+import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerAddIsland;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerBiomeEdge;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerBiome;
@@ -25,7 +22,9 @@ import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiverInit;
 import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiverMix;
 import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiver;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Rock.GenLayerRockInit;
-
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.world.gen.layer.GenLayer;
 
 public abstract class GenLayerVC extends GenLayer {

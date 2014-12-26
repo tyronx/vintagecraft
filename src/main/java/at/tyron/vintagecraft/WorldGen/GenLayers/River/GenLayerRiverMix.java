@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.River;
 
-import at.tyron.vintagecraft.WorldGen.VCBiome;
+import at.tyron.vintagecraft.World.VCBiome;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;

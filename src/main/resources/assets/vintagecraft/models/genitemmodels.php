@@ -1,10 +1,12 @@
 <?php
 
-$itemtype = "stone";
+$itemtype = "ingot";
 
-$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
+//$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
 
 //$types = array("nativecopper","nativegold", "limonite", "lignite", "bituminouscoal");
+
+$types = array("copper", "bronze", "iron", "steel", "rhodium", "platinum", "iridium", "palladium", "osmium", "silver", "gold");
 
 $outdir = "item/{$itemtype}/";
 

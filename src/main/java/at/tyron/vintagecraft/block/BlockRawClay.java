@@ -7,7 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
-public class BlockRawClay extends VCBlock {
+public class BlockRawClay extends BlockVC {
 
 
 	public BlockRawClay() {

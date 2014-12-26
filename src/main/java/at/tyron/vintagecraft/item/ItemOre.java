@@ -3,8 +3,9 @@ package at.tyron.vintagecraft.item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -31,7 +32,7 @@ public class ItemOre extends ItemVC {
     	ItemStack stack;
     	for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
     		if (deposit.hasOre) {
-	    		stack = new ItemStack(VCItems.ore);
+	    		stack = new ItemStack(ItemsVC.ore);
 	    		setOreType(stack, deposit);
 	    		subItems.add(stack);
     		}

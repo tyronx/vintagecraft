@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldGen.GenLayers.Continent;
 
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
-import at.tyron.vintagecraft.WorldGen.VCBiome;
+import at.tyron.vintagecraft.World.VCBiome;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 
 public class GenLayerBiomeEdge extends GenLayerVC {

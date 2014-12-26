@@ -5,10 +5,9 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockRock;
-import at.tyron.vintagecraft.block.VCBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -37,7 +36,7 @@ public class ItemRock extends ItemBlock {
 	public String getUnlocalizedName(ItemStack itemstack) {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
-		if (item.getBlock() == VCBlocks.rock) {
+		if (item.getBlock() == BlocksVC.rock) {
 			return getUnlocalizedName() + "." + EnumRockType.byMetadata(itemstack.getMetadata()).getUnlocalizedName();
 		} else {
 			return getUnlocalizedName();
@@ -49,8 +48,8 @@ public class ItemRock extends ItemBlock {
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
-		if (item.getBlock() != VCBlocks.rock) {
-			tooltip.add(StatCollector.translateToLocal(VCBlocks.rock.getUnlocalizedName() + "." + EnumRockType.byMetadata(itemstack.getItemDamage()).getUnlocalizedName() + ".name"));
+		if (item.getBlock() != BlocksVC.rock) {
+			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getUnlocalizedName() + "." + EnumRockType.byMetadata(itemstack.getItemDamage()).getUnlocalizedName() + ".name"));
 		}
 	}
 	
@@ -58,8 +57,8 @@ public class ItemRock extends ItemBlock {
 	
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
-    	if (((ItemRock)stack.getItem()).getBlock() == VCBlocks.topsoil) {
-    		return VCBlocks.topsoil.getRenderColor(VCBlocks.topsoil.getStateFromMeta(stack.getMetadata()));
+    	if (((ItemRock)stack.getItem()).getBlock() == BlocksVC.topsoil) {
+    		return BlocksVC.topsoil.getRenderColor(BlocksVC.topsoil.getStateFromMeta(stack.getMetadata()));
     	}
     	return 16777215;
     }

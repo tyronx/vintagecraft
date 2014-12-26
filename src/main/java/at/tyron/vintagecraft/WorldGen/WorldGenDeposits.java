@@ -3,12 +3,12 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.Random;
 
 import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockRock;
-import at.tyron.vintagecraft.block.VCBlocks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

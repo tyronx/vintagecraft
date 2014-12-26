@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
+
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
-import at.tyron.vintagecraft.WorldGen.Trees.WorldGenShortTrees;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;

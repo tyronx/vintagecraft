@@ -27,12 +27,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumOreType;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.item.ItemOre;
 import at.tyron.vintagecraft.item.ItemStone;
-import at.tyron.vintagecraft.item.VCItems;
 
 public class BlockOreVC extends BlockContainer {
 	public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
@@ -43,7 +43,7 @@ public class BlockOreVC extends BlockContainer {
     }
 
 	 
-	protected BlockOreVC() {
+	public BlockOreVC() {
 		super(Material.iron);
 		
 		this.setDefaultState(this.blockState.getBaseState());
@@ -80,11 +80,11 @@ public class BlockOreVC extends BlockContainer {
         	TEOre cte = (TEOre) te;
             return cte.getState();
         } else {
-        	if (te == null) {
+        	/*if (te == null) {
         		System.out.println("getExtendedState() Error: tileentity is null!");
         	} else {
         		System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
-        	}
+        	}*/
         }
         return state;
     }
@@ -106,37 +106,33 @@ public class BlockOreVC extends BlockContainer {
         }
         return true;
     }
-
-
-
+    
+    
     @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-
-        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-
-        TileEntity te = world.getTileEntity(pos);
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    	
+    	TileEntity te = worldIn.getTileEntity(pos);
+    	
         if(te instanceof TEOre) {
         	TEOre teOre = (TEOre) te;
         	
-        	ItemStack itemstack = new ItemStack(VCItems.stone, rand.nextInt(2));
+        	ItemStack itemstack = new ItemStack(ItemsVC.stone, worldIn.rand.nextInt(2));
             ItemStone.setRockType(itemstack, teOre.getRockType());          
-            ret.add(itemstack);
+            spawnAsEntity(worldIn, pos, itemstack);
 
-            itemstack = new ItemStack(VCItems.ore, 1);
+            itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
             ItemOre.setOreType(itemstack, teOre.getOreType());          
-            ret.add(itemstack);
-        } else {
-        	if (te == null) {
-        		System.out.println("getDrops(): tile entity is null!");
-        	} else {
-        		System.out.println("getDrops(): tile entity is not of instance TEOre! D:");
-        	}
-        	
+            spawnAsEntity(worldIn, pos, itemstack);
         }
-        
-		return ret;
+    	
+    	super.breakBlock(worldIn, pos, state);
     }
 
+    
+    @Override
+    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos,
+    		IBlockState state, float chance, int fortune) {
+    	
+    }
 
 }

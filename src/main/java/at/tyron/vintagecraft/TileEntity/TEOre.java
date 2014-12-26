@@ -1,10 +1,10 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.World.EnumMaterialDeposit;
-import at.tyron.vintagecraft.World.EnumOreType;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
-import at.tyron.vintagecraft.block.VCBlocks;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
@@ -22,6 +22,10 @@ import net.minecraftforge.common.property.Properties;
 public class TEOre extends TileEntity { /* extends NetworkTileEntity {*/
 	private IExtendedBlockState state;
 	
+	EnumRockType rocktype = EnumRockType.ANDESITE;
+	EnumMaterialDeposit oretype = EnumMaterialDeposit.LIGNITE;
+	
+	
 	@Override
 	public boolean canRenderBreaking() {
 		return false;
@@ -32,6 +36,7 @@ public class TEOre extends TileEntity { /* extends NetworkTileEntity {*/
     public IExtendedBlockState getState() {
         if(state == null) {
         	state = (IExtendedBlockState)getBlockType().getDefaultState();
+        	state = state.withProperty(BlockOreVC.properties[0], rocktype).withProperty(BlockOreVC.properties[1], oretype);
         }
         return state;
     }
@@ -42,20 +47,20 @@ public class TEOre extends TileEntity { /* extends NetworkTileEntity {*/
 	
 	
 	public EnumRockType getRockType() {
-		return (EnumRockType)state.getValue(BlockOreVC.properties[0]);
+		return rocktype;
 	}
 	
 	public EnumMaterialDeposit getOreType() {
-		return (EnumMaterialDeposit)state.getValue(BlockOreVC.properties[1]);
+		return oretype;
 	}
 	
 	public TEOre setRockType(EnumRockType rocktype) {
-		setState(getState().withProperty(BlockOreVC.properties[0], rocktype));
+		this.rocktype = rocktype;
 		return this;
 	}
 	
 	public TEOre setOreType(EnumMaterialDeposit oretype) {
-		setState(getState().withProperty(BlockOreVC.properties[1], oretype));
+		this.oretype = oretype;
 		return this;
 	}
 	
@@ -65,7 +70,7 @@ public class TEOre extends TileEntity { /* extends NetworkTileEntity {*/
 	
 	
 	
-/*
+
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
@@ -95,7 +100,7 @@ public class TEOre extends TileEntity { /* extends NetworkTileEntity {*/
 		readFromNBT(pkt.getNbtCompound());
 		worldObj.markBlockForUpdate(pos);
 	}
-*/
+
 	
 	
 	

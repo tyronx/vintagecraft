@@ -4,10 +4,10 @@ import java.util.Random;
 
 import com.google.common.base.Objects;
 
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockSubSoil;
 import at.tyron.vintagecraft.block.BlockTopSoil;
-import at.tyron.vintagecraft.block.VCBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockSand;

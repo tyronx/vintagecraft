@@ -8,8 +8,8 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
-import at.tyron.vintagecraft.World.EnumOrganicLayer;
-import at.tyron.vintagecraft.World.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 
 public class BlockPeat extends BlockTopSoil {
 

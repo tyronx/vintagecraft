@@ -1,8 +1,7 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.Rock;
 
-import at.tyron.vintagecraft.World.EnumRockType;
-import at.tyron.vintagecraft.WorldGen.DataLayer;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 
 public class GenLayerRockInit extends GenLayerVC {
 
