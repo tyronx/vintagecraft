@@ -12,6 +12,7 @@ import at.tyron.vintagecraft.Network.PacketPipeline;
 import at.tyron.vintagecraft.World.Climate;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.Recipes;
 import at.tyron.vintagecraft.WorldGen.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
@@ -133,6 +134,8 @@ public class VintageCraft {
 		
 			
 		proxy.init(event);
+		
+		Recipes.addRecipes();
     }
     	
 	@EventHandler

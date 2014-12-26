@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"checkdecay=false,treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" },
+		"checkdecay=true,treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" }
+	}
+}

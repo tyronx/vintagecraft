@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "treetype=mountaindogwood": [
+			{ "model": "vintagecraft:log/mountaindogwood" }
+		]
+    }
+}

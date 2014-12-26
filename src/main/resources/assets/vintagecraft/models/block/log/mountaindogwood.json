@@ -1,0 +1,7 @@
+{
+		"parent": "block/cube_column",
+		"textures": {
+			"end": "vintagecraft:blocks/log/mountaindogwood",
+			"side": "vintagecraft:blocks/log/mountaindogwood_bark"
+		}
+	}

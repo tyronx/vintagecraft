@@ -30,5 +30,9 @@ public class CommonProxy {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public boolean isFancyGraphics() {
+		return false;
+	}
 
 }
