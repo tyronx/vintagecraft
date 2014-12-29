@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -20,7 +21,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemStone extends ItemVC {
+public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 
 	public ItemStone() {
 		setHasSubtypes(true);
@@ -78,6 +79,11 @@ public class ItemStone extends ItemVC {
 		
 		
 		
+	}
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		return getRockType(stack).getName();
 	}
 	
 	

@@ -1,28 +1,22 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers;
 
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.IGenLayerSupplier;
+import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 
 public class GenLayerWeightedNoise extends GenLayerNoise {
-	IGenLayerSupplier[] deposits;
+	IGenLayerSupplier[] genlayersuppliers;
 	/*int[] weights;
 	int[] colors;*/
 	
 	int weightsum;
 
-	public GenLayerWeightedNoise(long seed, IGenLayerSupplier[] deposits) {
+	public GenLayerWeightedNoise(long seed, IGenLayerSupplier[] genlayersupplier) {
 		super(seed);
 		
-		//this.weights = new int[deposits.length];
-		
-		for (int i = 0; i < deposits.length; i++) {
-			//weights[i] = deposits[i].getWeight();
-			weightsum += deposits[i].getWeight();
-			
-			//System.out.println(i + ": " + weights[i]);
+		for (int i = 0; i < genlayersupplier.length; i++) {
+			weightsum += genlayersupplier[i].getWeight();
 		}
 		
-		this.deposits = deposits;
+		this.genlayersuppliers = genlayersupplier;
 	}
 	
 	@Override
@@ -39,13 +33,13 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 				
 				//cache[x + z * sizeX] = nextInt(255) << 8;
 				
-				for (int i = 0; i < deposits.length; i++) {
-					sum += deposits[i].getWeight();
+				for (int i = 0; i < genlayersuppliers.length; i++) {
+					sum += genlayersuppliers[i].getWeight();
 					
 					if (rnd < sum) {
 						cache[x + z * sizeX] =
-								((deposits[i].getDepthMin() + nextInt(1 + deposits[i].getDepthMax() - deposits[i].getDepthMin())) << 16)
-								+ deposits[i].getColor(); //+ (i * 255) / (weights.length-1);
+								((genlayersuppliers[i].getDepthMin() + nextInt(1 + genlayersuppliers[i].getDepthMax() - genlayersuppliers[i].getDepthMin())) << 16)
+								+ genlayersuppliers[i].getColor(); //+ (i * 255) / (weights.length-1);
 						break;
 					}
 				}

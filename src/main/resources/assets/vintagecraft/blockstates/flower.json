@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"flowertype=orangebutterflymilkweed": { "model": "vintagecraft:flower/orangebutterflymilkweed" },
+		"flowertype=purplebutterflymilkweed": { "model": "vintagecraft:flower/purplebutterflymilkweed" },
+		"flowertype=catmint": { "model": "vintagecraft:flower/catmint" },
+		"flowertype=calendula": { "model": "vintagecraft:flower/calendula" },
+		"flowertype=cornflower": { "model": "vintagecraft:flower/cornflower" },
+		"flowertype=cornflower2": { "model": "vintagecraft:flower/cornflower2" }
+	}
+}

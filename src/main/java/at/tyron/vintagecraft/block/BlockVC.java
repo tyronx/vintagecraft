@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.block;
 
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.IEnumState;
+import at.tyron.vintagecraft.interfaces.IEnumState;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

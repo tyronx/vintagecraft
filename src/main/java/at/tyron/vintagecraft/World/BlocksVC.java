@@ -11,18 +11,34 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.TileEntity.TEOre;
+import at.tyron.vintagecraft.TileEntity.TileEntityStove;
+import at.tyron.vintagecraft.WorldProperties.EnumDoublePlantTypeVC;
+import at.tyron.vintagecraft.WorldProperties.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.EnumGrass;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.*;
 import at.tyron.vintagecraft.item.ItemBrick;
+import at.tyron.vintagecraft.item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.item.ItemFlowerVC;
+import at.tyron.vintagecraft.item.ItemGrassVC;
+import at.tyron.vintagecraft.item.ItemLeaves;
+import at.tyron.vintagecraft.item.ItemLeavesBranchy;
+import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOre;
+import at.tyron.vintagecraft.item.ItemPlanksVC;
 import at.tyron.vintagecraft.item.ItemTopSoil;
 import at.tyron.vintagecraft.item.ItemRock;
 
 public class BlocksVC {
 	public static Block stove;
+	public static Block stove_lit;
+	
+	public static BlockVC flower;
+	public static BlockVC tallgrass;
+	public static BlockVC doubleplant;
 
 	public static BlockVC uppermantle;
 	
@@ -61,13 +77,20 @@ public class BlocksVC {
 		initBlocks();
 		initHardness();
 		initTileEntities();
-		
 	}
 	
 	
 	public static void initBlocks() {
 		stove = new BlockStove(false).setHardness(3F);
+		stove_lit = new BlockStove(true).setHardness(3F);
+		stove_lit.setLightLevel(0.86f);
 		register(stove, "stove", ItemBlock.class);
+		register(stove_lit, "stove_lit", ItemBlock.class);
+		
+		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumGrass.values()).setHardness(0.1f);
+		flower = new BlockFlowerVC().registerMultiState("flower", ItemFlowerVC.class, "flower", EnumFlower.values()).setHardness(0.2f);
+		doubleplant = new BlockDoublePlantVC().registerMultiState("doubleplant", ItemDoublePlantVC.class, "doubleplant", EnumDoublePlantTypeVC.values()).setHardness(0.4f);
+		
 		
 		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, "topsoil", EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
@@ -80,11 +103,11 @@ public class BlocksVC {
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
-		log = new BlockLog().setHardness(3F).registerMultiState("log", ItemBlock.class, "log", EnumTree.values());
-		planks = new BlockPlanks().setHardness(1.5F).registerMultiState("planks", ItemBlock.class, "planks", EnumTree.values());
+		log = new BlockLogVC().setHardness(3F).registerMultiState("log", ItemLogVC.class, "log", EnumTree.values());
+		planks = new BlockPlanksVC().setHardness(1.5F).registerMultiState("planks", ItemPlanksVC.class, "planks", EnumTree.values());
 		
-		leaves = new BlockLeaves().setHardness(0.2f).registerMultiState("leaves", ItemBlock.class, "leaves", EnumTree.values());
-		leavesbranchy = new BlockLeavesBranchy().setHardness(0.4f).registerMultiState("leavesbranchy", ItemBlock.class, "leavesbranchy", EnumTree.values());
+		leaves = new BlockLeaves().setHardness(0.2f).registerMultiState("leaves", ItemLeaves.class, "leaves", EnumTree.values());
+		leavesbranchy = new BlockLeavesBranchy().setHardness(0.4f).registerMultiState("leavesbranchy", ItemLeavesBranchy.class, "leavesbranchy", EnumTree.values());
 	}
 	
 	
@@ -101,6 +124,8 @@ public class BlocksVC {
 		
 		GameRegistry.registerBlock(rawore, raworeName); //.registerSingleState("ore", ItemOre.class);	
 		GameRegistry.registerTileEntity(TEOre.class, ModInfo.ModID + ":orete");
+		
+		GameRegistry.registerTileEntity(TileEntityStove.class, ModInfo.ModID + ":stove");
 	}
 
 

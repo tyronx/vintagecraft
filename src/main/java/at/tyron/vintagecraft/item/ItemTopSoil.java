@@ -7,9 +7,12 @@ import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemTopSoil extends ItemBlock {
 
@@ -23,5 +26,11 @@ public class ItemTopSoil extends ItemBlock {
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		tooltip.add(StatCollector.translateToLocal(EnumOrganicLayer.byMetadata(itemstack.getItemDamage()).getStateName() + ".name"));
 	}
+	
+	
+    @SideOnly(Side.CLIENT)
+    public int getColorFromItemStack(ItemStack stack, int renderPass) {
+        return BlocksVC.topsoil.getRenderColor(BlocksVC.topsoil.getStateFromMeta(stack.getMetadata()));
+    }
 	
 }

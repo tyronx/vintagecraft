@@ -1,12 +1,15 @@
 <?php
 
-$itemtype = "ingot";
+$itemtype = "doubleplant";
+
+$types = array("goldenrod", "goldenrod2", "goldenrod3", "butterflymilkweed", "butterflymilkweed2", "orangebutterflybush");
+
 
 //$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
 
 //$types = array("nativecopper","nativegold", "limonite", "lignite", "bituminouscoal");
 
-$types = array("copper", "bronze", "iron", "steel", "rhodium", "platinum", "iridium", "palladium", "osmium", "silver", "gold");
+//$types = array("copper", "bronze", "iron", "steel", "rhodium", "platinum", "iridium", "palladium", "osmium", "silver", "gold");
 
 $outdir = "item/{$itemtype}/";
 
@@ -16,7 +19,7 @@ foreach ($types as $type) {
 '{
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "vintagecraft:items/'.$itemtype.'/'.$type.'"
+        "layer0": "vintagecraft:blocks/'.$itemtype.'/'.$type.'_top"
     },
     "display": {
         "thirdperson": {
@@ -30,7 +33,8 @@ foreach ($types as $type) {
             "scale": [ 1.7, 1.7, 1.7 ]
         }
     }
-}';
+}
+';
 	
 	file_put_contents($outdir . $type.".json", $model);
 }

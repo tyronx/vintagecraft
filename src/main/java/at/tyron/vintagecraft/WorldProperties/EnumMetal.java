@@ -1,18 +1,26 @@
 package at.tyron.vintagecraft.WorldProperties;
 
-public enum EnumMetal {
-	COPPER (0),
-	BRONZE (1),
-	IRON (2),
-	STEEL (3),
-	RHODIUM (4),
-	PLATINUM (5),
-	IRIDIUM (6),
-	PALLADIUM (7),
-	OSMIUM (8),
+import net.minecraft.util.IStringSerializable;
+
+public enum EnumMetal implements IStringSerializable {
 	
-	SILVER (9),
-	GOLD (10),
+	COPPER (0, 1084, 2.5f),
+	TIN (1, 232, 1.5f), 
+	BRONZE (2, 950, 4f),
+	
+	IRON (3, 1482, 5f),
+	STEEL (4, 1510, 7f),
+	
+	PALLADIUM (5, 1555, 4.8f),
+	PLATINUM (6, 1770, 4.3f),
+	RHODIUM (7, 1965, 6.5f),
+	IRIDIUM (8, 2450, 6.5f),
+	OSMIUM (9, 3025, 7f),
+	
+	SILVER (10, 961, 3f),
+	GOLD (11, 1063, 2.75f),
+	
+	URANIUM (12, 1132, 9f)
 	
 	;
 	
@@ -21,9 +29,27 @@ public enum EnumMetal {
 	
 	
 	public int id;
+	public int meltingpoint; // °C
+	public float hardness; 
 	
-	private EnumMetal(int id) {
+	private EnumMetal(int id, int meltingpoint, float hardness) {
 		this.id = id;
+		this.meltingpoint = meltingpoint;
+		this.hardness = hardness;
+	}
+
+	public static EnumMetal byId(int meta) {
+		for (EnumMetal metal : EnumMetal.values()) {
+			if (metal.id == meta) {
+				return metal;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return name().toLowerCase();
 	}
 }
 

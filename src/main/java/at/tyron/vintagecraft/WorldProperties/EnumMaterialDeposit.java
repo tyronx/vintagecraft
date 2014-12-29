@@ -17,6 +17,7 @@ import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockSubSoil;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
 	//						    color  weight hgt vari mind maxd 
@@ -29,7 +30,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	LIGNITE (2,        BlocksVC.rawore, true, 60,   50,   2,  10,  50, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}),
 	BITUMINOUSCOAL (3, BlocksVC.rawore, true, 80,   40,   2,  50, 150, new VCBiome[]{VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}),
 	
-	NATIVECOPPER (4,   BlocksVC.rawore, true, 100,   45,   2,  4,   40, null),
+	NATIVECOPPER (4,   BlocksVC.rawore, true, 80,   45,   2,  4,   40, null),
 	
 	LIMONITE (5,      BlocksVC.rawore, true, 100,   30,   2,  1,  150, null),
 	NATIVEGOLD (6,    BlocksVC.rawore, true, 120,   10,   1,  15, 200, null),
@@ -46,6 +47,9 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	public int averageHeight;
 	public int minDepth;
 	public int maxDepth;
+	
+	public EnumMetal smelted;
+	public int ore2IngotRatio;
 	
 	//public int rarity; // Used as if !nextInt(rarity)
 	public final VCBiome[] biomes;

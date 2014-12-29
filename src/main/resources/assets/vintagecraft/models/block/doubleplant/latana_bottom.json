@@ -1,0 +1,6 @@
+{
+		"parent": "block/tallgrass",
+		"textures": {
+			"cross": "vintagecraft:blocks/doubleplant/latana_bottom"
+		}
+	}

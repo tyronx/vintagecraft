@@ -52,15 +52,7 @@ public class BlockOreVC extends BlockContainer {
     @Override
     public int getRenderType() { return 3; }
 
-    @Override
-    public boolean isOpaqueCube() { return true; }
-
-    @Override
-    public boolean isFullCube() { return false; }
-
-    @Override
-    public boolean isVisuallyOpaque() { return true; }
-
+    
     @Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TEOre();
@@ -94,18 +86,7 @@ public class BlockOreVC extends BlockContainer {
         return new ExtendedBlockState(this, new IProperty[0], properties);
     }
     
-    
-    @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
-        TileEntity te = world.getTileEntity(pos);
-        if(te instanceof TEOre) {
-        	TEOre cte = (TEOre) te;
-            cte.setOreType(EnumMaterialDeposit.BITUMINOUSCOAL);
-            cte.setRockType(EnumRockType.REDSANDSTONE);
-            world.markBlockRangeForRenderUpdate(pos, pos);
-        }
-        return true;
-    }
+   
     
     
     @Override

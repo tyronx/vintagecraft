@@ -1,13 +1,21 @@
 package at.tyron.vintagecraft;
 
+import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.TileEntity.TEOre;
+import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.block.BlockOreVC;
+import at.tyron.vintagecraft.gui.GuiStove;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ContainerFurnace;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class CommonProxy {
+public class CommonProxy implements IGuiHandler {
 
 	public void registerRenderInformation() {
 		//RenderingRegistry.registerEntityRenderingHandler(BlockOreVC.class, new RenderOre());
@@ -35,4 +43,24 @@ public class CommonProxy {
 		return false;
 	}
 
+	
+	@Override
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if (ID == 0) {
+			return new ContainerStove(player.inventory, (TileEntityStove) world.getTileEntity(new BlockPos(x, y, z)));
+		}
+		
+		return null;
+	}
+
+	@Override
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
+		if (ID == 0) {
+			return new GuiStove(player.inventory, world, (TileEntityStove) world.getTileEntity(new BlockPos(x, y, z)));
+		}
+			
+			
+		return null;
+	}
+	
 }

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers;
 
-import at.tyron.vintagecraft.WorldProperties.IGenLayerSupplier;
+import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 
 public class GenLayerReducePallette extends GenLayerVC {
 	int quantity;

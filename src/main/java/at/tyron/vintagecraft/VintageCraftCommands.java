@@ -66,7 +66,7 @@ public class VintageCraftCommands extends CommandBase {
 			}
 			
 			if (args[1].equals("rocks")) {	
-				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1_THIN));
+				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
 			}
 			
 			if (args[1].equals("rockdeform")) {	

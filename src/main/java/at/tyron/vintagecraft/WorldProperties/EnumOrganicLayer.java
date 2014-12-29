@@ -5,6 +5,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockTopSoil;
+import at.tyron.vintagecraft.interfaces.IEnumState;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;

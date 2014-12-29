@@ -6,32 +6,35 @@ import java.util.List;
 
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.block.BlockRock;
+import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSupplier {
-	LIMESTONE(1, 1, "limestone", EnumRockGroup.SEDIMENTARY),
-	CLAYSTONE(2, 2, "claystone", EnumRockGroup.SEDIMENTARY),
-	CONGLOMERATE(3, 3, "conglomerate", EnumRockGroup.SEDIMENTARY),
-	SHALE(4, 4, "shale", EnumRockGroup.SEDIMENTARY),
-	CHERT(13, 13, "chert", EnumRockGroup.SEDIMENTARY),
-	SANDSTONE(0, 0, "sandstone", EnumRockGroup.SEDIMENTARY),
-	REDSANDSTONE(15, 0, "redsandstone", EnumRockGroup.SEDIMENTARY2),
+	SANDSTONE		(0, 0, 40, "sandstone", EnumCrustLayerGroup.SEDIMENTARY),
+	LIMESTONE		(1, 1, 5, "limestone", EnumCrustLayerGroup.SEDIMENTARY),
+	CLAYSTONE		(2, 2, 30, "claystone", EnumCrustLayerGroup.SEDIMENTARY),
+	CONGLOMERATE	(3, 3, 50, "conglomerate", EnumCrustLayerGroup.SEDIMENTARY),
+	SHALE			(4, 4, 50, "shale", EnumCrustLayerGroup.SEDIMENTARY),
+	CHERT			(13, 13, 50, "chert", EnumCrustLayerGroup.SEDIMENTARY),
+	REDSANDSTONE	(15, 0, 20, "redsandstone", EnumCrustLayerGroup.SEDIMENTARY2),
 	
-    SCHIST(5, 5, "schist", EnumRockGroup.METAMORPHIC),
-    GNEISS(6, 6, "gneiss", EnumRockGroup.METAMORPHIC),
-    MARBLE(7, 7, "marble", EnumRockGroup.METAMORPHIC),
-    QUARTZITE(8, 8, "quartzite", EnumRockGroup.METAMORPHIC),
+    SCHIST			(5, 5, 50, "schist", EnumCrustLayerGroup.METAMORPHIC),
+    GNEISS			(6, 6, 50, "gneiss", EnumCrustLayerGroup.METAMORPHIC),
+    MARBLE			(7, 7, 20, "marble", EnumCrustLayerGroup.METAMORPHIC),
+    QUARTZITE		(8, 8, 50, "quartzite", EnumCrustLayerGroup.METAMORPHIC),
 	
-	GRANITE(9, 9, "granite", EnumRockGroup.IGNEOUS_INTRUSIVE),
-	DIORITE(10, 10, "diorite", EnumRockGroup.IGNEOUS_INTRUSIVE),
+	GRANITE			(9, 9, 80, "granite", EnumCrustLayerGroup.IGNEOUS_INTRUSIVE),
+	DIORITE			(10, 10, 50, "diorite", EnumCrustLayerGroup.IGNEOUS_INTRUSIVE),
 	
-	BASALT(11, 11, "basalt", EnumRockGroup.IGNEOUS_EXTRUSIVE),
-	ANDESITE(12, 12, "andesite", EnumRockGroup.IGNEOUS_EXTRUSIVE),
+	BASALT			(11, 11, 20, "basalt", EnumCrustLayerGroup.IGNEOUS_EXTRUSIVE),
+	ANDESITE		(12, 12, 80, "andesite", EnumCrustLayerGroup.IGNEOUS_EXTRUSIVE),
 	
-	GABBRO(14, 14, "gabbro", EnumRockGroup.IGNEOUS_INTRUSIVE)
+	GABBRO			(14, 14, 50, "gabbro", EnumCrustLayerGroup.IGNEOUS_INTRUSIVE)
 	
+//	KIMBERLITE(15, 15, )
     ;
     
 	private static HashMap<EnumCrustLayer, List<EnumRockType>> CRUSTLAYER_ROCKTYPES = new HashMap<EnumCrustLayer, List<EnumRockType>>(EnumCrustLayer.values().length);
@@ -40,24 +43,27 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     
     public int id; // used for GenLayerRockInit
     public int meta;
+    public int weight;
     public String name;
     public String unlocalizedName;
-    public EnumRockGroup group;
+    public EnumCrustLayerGroup group;
+    
 
-    private EnumRockType(int id, int meta, String name, EnumRockGroup group) {
-        this(id, meta, name, name, group);
+    private EnumRockType(int id, int meta, int weight, String name, EnumCrustLayerGroup group) {
+        this(id, meta, weight, name, name, group);
     }
 
-    private EnumRockType(int id, int meta, String name, String unlocalizedName, EnumRockGroup group) {
+    private EnumRockType(int id, int meta, int weight, String name, String unlocalizedName, EnumCrustLayerGroup group) {
     	this.id = id;
         this.meta = meta;
         this.name = name;
         this.unlocalizedName = unlocalizedName;
         this.group = group;
+        this.weight = weight;
     }
     
     
-    public EnumRockType randomRockTypeByLayer(EnumRockGroup layer) {
+    public EnumRockType randomRockTypeByLayer(EnumCrustLayerGroup layer) {
 		return null;
     	
     }
@@ -73,7 +79,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     
     @Override
     public int getColor() {
-    	return id;
+    	return id * 10;
     }
     
     public int getMetaData() {
@@ -163,16 +169,16 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
 
 	@Override
 	public int getWeight() {
-		return 0;
+		return weight;
 	}
 	
 	@Override
 	public int getDepthMin() {
-		return 0;
+		return group.minThickness;
 	}
 	
 	@Override
 	public int getDepthMax() {
-		return 0;
+		return group.maxThickness;
 	}
 }

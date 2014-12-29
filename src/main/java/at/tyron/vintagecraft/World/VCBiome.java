@@ -141,4 +141,9 @@ public class VCBiome extends BiomeGenBase {
 		return biomeList;
 	}
 	
+	
+	/*@Override
+	public float getSpawningChance() {
+		return 1f;
+	}*/
 }

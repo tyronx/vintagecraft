@@ -37,8 +37,49 @@ tile.rock.schist.name=Schist
 
 item.stone.name=Stone
 stone.name=Stone
+item.peatbrick.name=Peat Brick
+
 item.ore.nativegold.name=Native Gold
 item.ore.limonite.name=Limonite
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite
+
+item.ingot.copper.name=Copper Ingot
+item.ingot.bronze.name=Bronze Ingot
+item.ingot.iron.name=Iron Ingot
+item.ingot.steel.name=Steel Ingot
+item.ingot.rhodium.name=Rhodium Ingot
+item.ingot.platinum.name=Platinum Ingot
+item.ingot.iridium.name=Iridium Ingot
+item.ingot.palladium.name=Palladium Ingot
+item.ingot.osmium.name=Osmium Ingot
+item.ingot.silver.name=Silver Ingot
+item.ingot.gold.name=Gold Ingot
+
+
+tile.log.mountaindogwood.name=Mountain Dogwood Log
+
+container.stove=Stove
+tile.stove.name=Stove
+
+tile.flower.orangebutterflymilkweed.name=Orange Butterfly Milkweed
+tile.flower.purplebutterflymilkweed.name=Purple Butterfly Milkweed
+tile.flower.catmint.name=Catmint
+
+
+item.copper_axe.name=Copper Axe
+item.copper_pickaxe.name=Copper Pickaxe
+item.copper_shovel.name=Copper Shovel
+item.copper_sword.name=Copper Sword
+item.copper_hoe.name=Copper How
+item.copper_saw.name=Copper Saw
+
+item.stone_axe.name=Stone Axe
+item.stone_pickaxe.name=Stone Pickaxe
+item.stone_shovel.name=Stone Shovel
+item.stone_sword.name=Stone Sword
+item.stone_hoe.name=Stone How
+item.stone_saw.name=Stone Saw
+
+tile.planks.name=Planks

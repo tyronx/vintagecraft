@@ -28,8 +28,8 @@ import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
-import at.tyron.vintagecraft.item.ItemOre;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.item.*;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -71,47 +71,52 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-        Item item = Item.getItemFromBlock(BlocksVC.rawore);
-        RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-        if (renderItem != null) {
-            renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
-	            @Override
-                public ModelResourceLocation getModelLocation(ItemStack stack) {
-                    return BlocksVC.oremodelLocation;
-                }
-            });
-	       
-	        
-            
-            
-            renderItem.getItemModelMesher().register(ItemsVC.stone, new ItemMeshDefinition() {
-	            @Override
-	             public ModelResourceLocation getModelLocation(ItemStack stack) {
-	            	 //System.out.println(ModInfo.ModID + ":item/stone/" + ItemStone.getRockType(stack));
-	                 return new ModelResourceLocation(ModInfo.ModID + ":stone/" + ItemStone.getRockType(stack), "inventory");
-	            	//return new ModelResourceLocation("stone");
-	                 
-	             }
-	
-	         });
-	        
-	        
-            renderItem.getItemModelMesher().register(ItemsVC.ore, new ItemMeshDefinition() {
-	            @Override
-	             public ModelResourceLocation getModelLocation(ItemStack stack) {
-	            		//System.out.println(ModInfo.ModID + ":ore/" + ItemOre.getOreType(stack).getName());
-	                 return new ModelResourceLocation(ModInfo.ModID + ":ore/" + ItemOre.getOreType(stack).getName(), "inventory");
-	             }
-	
-	         });
-        }
-        
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.log), "log", "inventory");
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.planks), "planks", "inventory");
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.leaves), "leaves", "inventory");
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.leavesbranchy), "leavesbranchy", "inventory");
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.doubleplant), "doubleplant", "inventory");
+    	
+    	registerModelLocation(ItemsVC.stone, "stone", "inventory");
+    	registerModelLocation(ItemsVC.ore, "ore", "inventory");
+    	registerModelLocation(ItemsVC.ingot, "ingot", "inventory");
+    	
+    	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
+    	
+    	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw}, "tool", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.stoneAxe, ItemsVC.stoneHoe, ItemsVC.stonePickaxe, ItemsVC.stoneShovel, ItemsVC.stoneSword}, "tool", "inventory");
+    	
+    	registerModelLocation(new Item[]{ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
     }
 	
+    private void registerModelLocation(final Item[] items, final String name, final String type) {
+    	for (Item item : items) {
+    		registerModelLocation(item, name, type);
+    	}
+    }
 	
+	private void registerModelLocation(final Item item, final String name, final String type) {
+		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
+		
+		if (renderItem != null) {
+	        renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
+	            @Override
+	            public ModelResourceLocation getModelLocation(ItemStack stack) {
+	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
+	            	if (item instanceof ISubtypeFromStackPovider) {
+	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
+	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);
+	            	} else {
+	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name, type);
+	            	}
+	            }
+	        });
+		}	
+	}
+
 	@SubscribeEvent
     public void onModelBakeEvent(ModelBakeEvent event) {
-		//System.out.println("bake event!");
         TextureAtlasSprite base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/slime");
         TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
         

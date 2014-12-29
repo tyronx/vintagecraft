@@ -13,13 +13,13 @@ public enum EnumCrustLayer {
 	TOPSOIL (-1, 0, -999),
 	SUBSOIL (-1, 1, 0),
 	REGOLITH(-1, 2, 1),
-	ROCK_1_THIN   (0, 4, 3),
-	ROCK_2_THIN   (1, 9, 8),
-	ROCK_3_THIN   (2, 14, 13),
-	ROCK_4_MEDIUM   (3, 17, 16),
-	ROCK_5_LARGE   (4, 35, 34),
-	ROCK_6_THIN   (5, 72, 71),
-	ROCK_7_LARGE   (6, 80, 79),
+	ROCK_1   (0, -1, -1),
+	ROCK_2   (1, -1, -1),
+	ROCK_3   (2, -1, -1),
+	ROCK_4   (3, -1, -1),
+	ROCK_5   (4, -1, -1),
+	ROCK_6   (5, -1, -1),
+	ROCK_7   (6, -1, -1),
 	
 	;
 	

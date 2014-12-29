@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "vintagecraft:stove_lit" },
+        "facing=south": { "model": "vintagecraft:stove_lit", "y": 180 },
+        "facing=west":  { "model": "vintagecraft:stove_lit", "y": 270 },
+        "facing=east":  { "model": "vintagecraft:stove_lit", "y": 90 }
+    }
+}

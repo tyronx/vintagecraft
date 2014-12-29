@@ -1,6 +1,6 @@
 {
     "variants": {
-        "type=mountaindogwood": [
+        "treetype=mountaindogwood": [
 			{ "model": "vintagecraft:planks/mountaindogwood" }
 		]
     }

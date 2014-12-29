@@ -1,22 +1,25 @@
 <?php
 
-$blocktype = "rock";
+//$blocktype = "rock";
+$blocktype = "doubleplant";
 
-$rocktypes = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
+//$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
+//$types = array("goldenrod_bottom", "goldenrod2_bottom", "goldenrod3_bottom", "butterflymilkweed_bottom", "butterflymilkweed2_bottom", "orangebutterflybush_bottom");
+$types = array("goldenrod_top", "goldenrod2_top", "goldenrod3_top", "butterflymilkweed_top", "butterflymilkweed2_top", "orangebutterflybush_top");
 
 $outdir = "block/{$blocktype}/";
 
-foreach ($rocktypes as $rocktype) {
+foreach ($types as $type) {
 
 	$model = 
 	'{
-		"parent": "block/cube_all",
+		"parent": "block/tallgrass",
 		"textures": {
-			"all": "vintagecraft:blocks/'.$blocktype.'/'.$rocktype.'"
+			"cross": "vintagecraft:blocks/'.$blocktype.'/'.$type.'"
 		}
 	}';
 	
-	file_put_contents($outdir . $rocktype.".json", $model);
+	file_put_contents($outdir . $type.".json", $model);
 	
 	
 }

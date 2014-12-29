@@ -1,0 +1,6 @@
+{
+		"parent": "block/tallgrass",
+		"textures": {
+			"cross": "vintagecraft:blocks/doubleplant/butterflymilkweed_bottom"
+		}
+	}

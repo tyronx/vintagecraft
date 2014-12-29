@@ -17,11 +17,15 @@ import at.tyron.vintagecraft.block.BlockRock;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -185,9 +189,18 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	@Override
 	public void populate(IChunkProvider par1IChunkProvider, int chunkX, int chunkZ) {
+		
 		BlockPos pos = new BlockPos(chunkX, 0, chunkZ);
 		VCBiome biome = (VCBiome) this.worldObj.getBiomeGenForCoords(pos);
 		//biome.decorate(this.worldObj, this.rand, pos);
+
+		
+		
+		int xCoord = chunkX * 16;
+		int zCoord = chunkZ * 16;
+
+		WorldGenAnimals.performWorldGenSpawning(this.worldObj, biome, xCoord + 8, zCoord + 8, 16, 16, this.rand);
+
 	}
 	
 	
@@ -768,6 +781,17 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public boolean unloadQueuedChunks()
 	{
 		return true;
+	}
+
+
+	public static List getCreatureSpawnsByChunk(World world, VCBiome biome, int par2, int par3) {
+		ArrayList<SpawnListEntry> list = new ArrayList<SpawnListEntry>();
+		
+		list.add(new SpawnListEntry(EntityPig.class, 1, 2, 4));
+		list.add(new SpawnListEntry(EntityCow.class, 1, 2, 4));
+		list.add(new SpawnListEntry(EntityChicken.class, 1, 2, 4));
+		
+		return list;
 	}
 	
 }

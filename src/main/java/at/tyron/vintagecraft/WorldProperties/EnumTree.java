@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import at.tyron.vintagecraft.interfaces.IEnumState;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumTree implements IEnumState, IStringSerializable {
