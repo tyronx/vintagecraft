@@ -30,7 +30,7 @@ public class ItemPlanksVC extends ItemBlock implements ISubtypeFromStackPovider 
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		
-		nbt.setInteger("treetype", treetype.id);
+		nbt.setInteger("treetype", treetype.meta);
 		itemstack.setTagCompound(nbt);
 	}
 
@@ -38,7 +38,7 @@ public class ItemPlanksVC extends ItemBlock implements ISubtypeFromStackPovider 
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		if (itemstack.getTagCompound() != null) {
-			return EnumTree.byId(itemstack.getTagCompound().getInteger("treetype"));
+			return EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
 		}
 		return null;
 	}

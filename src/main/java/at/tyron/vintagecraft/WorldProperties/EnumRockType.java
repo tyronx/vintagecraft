@@ -79,7 +79,11 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     
     @Override
     public int getColor() {
-    	return id * 10;
+    	return id * 15;
+    }
+    
+    static int Color2Id(int color) {
+    	return color / 15;
     }
     
     public int getMetaData() {
@@ -130,6 +134,11 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
         }
 
         return ID_LOOKUP[id];
+    }
+    
+    
+    public static EnumRockType byColor(int color) {
+    	return byId(Color2Id(color));
     }
     
     

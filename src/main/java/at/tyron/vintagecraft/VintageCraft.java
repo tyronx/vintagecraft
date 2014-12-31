@@ -16,7 +16,7 @@ import at.tyron.vintagecraft.World.Recipes;
 import at.tyron.vintagecraft.WorldGen.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
-import at.tyron.vintagecraft.WorldGen.WorldGenFlora;
+import at.tyron.vintagecraft.WorldGen.MapGenFlora;
 import at.tyron.vintagecraft.client.ClientProxy;
 import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import net.minecraft.block.Block;
@@ -87,8 +87,10 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.IEventListener;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.server.FMLServerHandler;
 
 @Mod(modid = ModInfo.ModID, version = ModInfo.ModVersion)
 public class VintageCraft {
@@ -118,15 +120,15 @@ public class VintageCraft {
     	
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
     	
-		System.out.println("backtotheroots has init.");
+		System.out.println("vcraft has init.");
 		
        
         // Register the Chunk Load/Save Handler
-     	MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
+     	//MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
      	
      	
      	GameRegistry.registerWorldGenerator(new WorldGenDeposits(), 4);
-     	GameRegistry.registerWorldGenerator(new WorldGenFlora(), 5);
+     	//GameRegistry.registerWorldGenerator(new WorldGenFlora(), 5);
      	
         
         WorldType.DEFAULT = new WorldTypeVC(0, "VCDefault");
@@ -145,7 +147,7 @@ public class VintageCraft {
 		DimensionManager.registerDimension(0, 0);
 		DimensionManager.registerDimension(1, 1);
 		
-			
+		
 		proxy.init(event);
 		
 		Recipes.addRecipes();
@@ -163,6 +165,12 @@ public class VintageCraft {
 		manager.registerCommand(new VintageCraftCommands());
 	}
 		
+	/*@SubscribeEvent
+	public void onServerPostTick(ServerTickEvent evt) {
+		//System.out.println("server post tick: " + evt.type);
+		MinecraftServer.getServer().theProfiler.profilingEnabled = true;
+		MinecraftServer.getServer().theProfiler.getProfilingData("root");
+	}*/
 
 	
 	

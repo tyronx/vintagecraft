@@ -6,6 +6,8 @@ public class GenLayerContrastAndBrightness extends GenLayerVC {
 	float level = 0f;
 	int brightness = 0;
 	
+	int rgbselect = 0;
+	
 	public GenLayerContrastAndBrightness(long seed, float level, int brightness, GenLayerVC parent) {
 		super(seed);
 		this.parent = parent;
@@ -17,10 +19,14 @@ public class GenLayerContrastAndBrightness extends GenLayerVC {
 	@Override
 	public int[] getInts(int xCoord, int zCoord, int sizeX, int sizeZ) {
 		int[] ints = parent.getInts(xCoord, zCoord, sizeX, sizeZ);
+		int color;
 		
 		for (int i = 0; i < ints.length; i++) {
-			ints[i] += Math.min(255, brightness);
-			ints[i] = Math.min(255, Math.max(0, ints[i] + (int)((ints[i] - 128) * level))); 
+			color = (ints[i] >> rgbselect) & 0xff;
+			
+			ints[i] += Math.min(255, brightness << rgbselect);
+			ints[i] = (ints[i] & ~(0xff << rgbselect)) + (Math.min(255, Math.max(0, color + (int)((color - 128) * level))) << rgbselect); 
+			
 		}
 		
 		return ints;

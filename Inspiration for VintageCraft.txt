@@ -77,10 +77,13 @@
 - Less, but sometimes really deep oceans
 
 - Giant Mushroom:
+  - http://minecraftbuildinginc.com/pollux-mushroom-world-build/ !
   - http://i.imgur.com/xkJJvw1.jpg?1
   - http://storage.koinup.com/090620x163666/163666-6.jpg
   - http://th01.deviantart.net/fs70/PRE/i/2013/264/3/9/world_of_warcraft_mushroom_mousepad_design_v1_by_g3xter-d6n9o5b.jpg
   - http://www.blogcdn.com/wow.joystiq.com/media/2009/12/aaa-mushroomkingdom-580.jpg
+  - http://minecraftbuildinginc.com/the-ol-shroom-inn/
+
 
 
 - Make Diamonds in empty caves, that grow on the walls
@@ -116,6 +119,15 @@ young beech: http://images.everytrail.com/pics/fullsize/4537721-Charlton_Zoo-004
 
 
 
+http://minecraftbuildinginc.com/savanna-tree-pack/
+
+
+http://www.planetminecraft.com/project/european-tree-pack/  - best birch tree ever!
+
+
+
+(http://minecraftbuildinginc.com/mother-of-trees-largest-ever-and-a-town/)
+
 
 === Weapons ===
 
@@ -123,7 +135,12 @@ young beech: http://images.everytrail.com/pics/fullsize/4537721-Charlton_Zoo-004
 
 
 
-===== Wheeelitches ====
+===== Villages ====
+
+
+Import schematic files: https://github.com/tehbeard/LibSchematic
+
+
 
 - Sell stuff you cannot normally get to. E.g. Seed Vendor
 
@@ -134,3 +151,30 @@ young beech: http://images.everytrail.com/pics/fullsize/4537721-Charlton_Zoo-004
 
 
 - Trading makes the village grow
+
+- Dessert Villages: http://minecraftbuildinginc.com/wild-west-building-bundle/
+                    http://www.planetminecraft.com/project/desert-building-pack-1150679/
+
+- Plains Village: http://minecraftbuildinginc.com/edoras-capital-of-rohan/
+- Plains Farmer Village: http://www.planetminecraft.com/project/farm-house-pack---12-different-houses-with-download/
+- Forest Village: http://minecraftbuildinginc.com/lost-isles-of-galitor-island/
+
+
+
+- Tundra/Taiga Village: http://www.planetminecraft.com/project/small-snow-village/  !!
+                        http://www.planetminecraft.com/project/dwarf-house-pack-2785267/
+
+
+
+
+- Hills Village: http://www.planetminecraft.com/project/the-hobbit-849972/
+
+
+
+http://www.planetminecraft.com/project/better-npc---village/
+http://www.planetminecraft.com/project/medieval-building-bundle-98192/
+Medieval shops: http://www.planetminecraft.com/project/medieval-stores-model-pack/
+http://www.planetminecraft.com/project/minecraft-kingdom-texture-pack-527448/
+
+
+http://www.planetminecraft.com/project/lakeside-village-timelapse-video-download/

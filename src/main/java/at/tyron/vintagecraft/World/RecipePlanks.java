@@ -26,7 +26,7 @@ public class RecipePlanks implements IRecipe {
 				if (itemstack.getItem() == Item.getItemFromBlock(BlocksVC.log)) {
 					found |= 1;
 					quantityfound++;
-					tree = EnumTree.byId(itemstack.getTagCompound().getInteger("treetype"));
+					tree = EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
 				}
 				
 				if (itemstack.getItem() instanceof ItemToolVC && ((ItemToolVC)(itemstack.getItem())).tooltype == EnumTool.SAW) {

@@ -9,15 +9,15 @@ public enum EnumTree implements IEnumState, IStringSerializable {
 	;
 	
 	
-	public int id;
+	public int meta;
 	
-	private EnumTree(int id) {
-		this.id = id;
+	private EnumTree(int meta) {
+		this.meta = meta;
 	}
 
 	@Override
 	public int getMetaData() {
-		return id;
+		return meta;
 	}
 
 	@Override
@@ -31,9 +31,9 @@ public enum EnumTree implements IEnumState, IStringSerializable {
 		return name().toLowerCase();
 	}
 
-	public static EnumTree byId(int meta) {
+	public static EnumTree byMeta(int meta) {
 		for (EnumTree tree : EnumTree.values()) {
-			if (tree.id == meta) return tree;
+			if (tree.meta == meta) return tree;
 		}
 		return null;
 	}

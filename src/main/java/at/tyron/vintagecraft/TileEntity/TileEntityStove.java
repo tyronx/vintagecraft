@@ -193,7 +193,7 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     }
     
 
-    
+    @Override
     public void update() {
     	if (worldObj.isRemote) return;
     	

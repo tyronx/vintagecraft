@@ -79,6 +79,7 @@ public class VintageCraftCommands extends CommandBase {
 			sender.addChatMessage(new ChatComponentText("Layers generated with seed " + seed + " to " + getCleanPath()));
 			
 		}
+
 		
 	}
 	

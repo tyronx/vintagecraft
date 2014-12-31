@@ -80,8 +80,8 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
         List<BakedQuad> ret = new ArrayList<BakedQuad>();
         
         for(EnumFacing f : EnumFacing.values()) {
-            ret.add(createSidedBakedQuad(0, 1, 0, 1, 1, base, -1, f));
-            ret.add(createSidedBakedQuad(0, 1, 0, 1, 1.005f, overlay, -1, f));
+        	ret.add(createSidedBakedQuad(0, 1, 0, 1, 1, base, -1, f));
+        	ret.add(createSidedBakedQuad(0, 1, 0, 1, 1.005f, overlay, -1, f));
         }
         return ret;
     }
@@ -90,7 +90,7 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
     public boolean isGui3d() { return true; }
 
     @Override
-    public boolean isAmbientOcclusion() { return true; }
+    public boolean isAmbientOcclusion() { return false; }
 
     @Override
     public boolean isBuiltInRenderer() { return false; }

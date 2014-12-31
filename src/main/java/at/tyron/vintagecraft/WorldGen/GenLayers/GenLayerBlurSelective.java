@@ -6,27 +6,33 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class GenLayerBlur extends GenLayerVC {
-	private int iterations = 1;
-	private int radius = 3;
-	private boolean motionBlur = false;
+public class GenLayerBlurSelective extends GenLayerVC {
+	int iterations = 1;
+	int radius = 3;
+	boolean motionBlur = false;
+	// which color to blur
+	// 0 = blue
+	// 8 = green
+	// 16 = red
+	public static int rgbselect = 0;
+
 	
-	public GenLayerBlur(long seed, int iterations, int radius, boolean motionBlur, int rgbselect, GenLayerVC parent) {
+	public GenLayerBlurSelective(long seed, int iterations, int radius, boolean motionBlur, int rgbselect, GenLayerVC parent) {
 		super(seed);
 		this.rgbselect = rgbselect;
-		this.parent = parent;
+		super.parent = parent;
 		this.radius = radius;
 		this.iterations = iterations;
 		this.motionBlur = motionBlur;
 	}
 	
 	
-	public GenLayerBlur(long seed, int iterations, int radius, boolean motionBlur, GenLayerVC parent) {
+	public GenLayerBlurSelective(long seed, int iterations, int radius, boolean motionBlur, GenLayerVC parent) {
 		this (seed, iterations, radius, motionBlur, 0, parent);
 	}
 	
 	
-	public GenLayerBlur(long seed, GenLayerVC parent) {
+	public GenLayerBlurSelective(long seed, GenLayerVC parent) {
 		this (seed, 3, 3, false, parent);
 	}
 	
@@ -72,11 +78,6 @@ public class GenLayerBlur extends GenLayerVC {
 	}
 	
 	
-	// which color to blur
-	// 0 = blue
-	// 8 = green
-	// 16 = red
-	public static int rgbselect = 0;
 	
 	private void gaussBlurGrayScale(Kernel kernel, int[] inPixels, int[] outPixels, int width, int height) {
 		float[] matrix = kernel.getKernelData(null);

@@ -10,7 +10,7 @@ import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
 
 public enum EnumCrustLayer {
-	TOPSOIL (-1, 0, -999),
+	TOPSOIL (-1, 1, 0),
 	SUBSOIL (-1, 1, 0),
 	REGOLITH(-1, 2, 1),
 	ROCK_1   (0, -1, -1),
@@ -23,15 +23,16 @@ public enum EnumCrustLayer {
 	
 	;
 	
+	public static final int quantityFixedTopLayers = 3;
 	
 	public final int dataLayerIndex;
-	public final int depthStart;
-	public final int underwaterDepthStart;
+	public final int thickness;
+	public final int underwaterThickness;
 	
 	private EnumCrustLayer(int index, int depthStart, int underwaterDepthStart) {
 		this.dataLayerIndex = index;
-		this.depthStart = depthStart;
-		this.underwaterDepthStart = underwaterDepthStart;
+		this.thickness = depthStart;
+		this.underwaterThickness = underwaterDepthStart;
 	}
 	
 	
@@ -52,17 +53,24 @@ public enum EnumCrustLayer {
 		}
 	}
 	
-	public static EnumCrustLayer crustLayerForDepth(int depth, boolean underwater) {
-		EnumCrustLayer curlayer, layer = null;
-		for (int i = 0; i < values().length; i++) {
-			curlayer = values()[i];
-			int depthStart = underwater ? curlayer.underwaterDepthStart : curlayer.depthStart;
+
+	
+	public static EnumCrustLayer crustLayerForDepth(int targetdepth, int[][]rockdata, int arrayIndexChunk, boolean underwater) {
+		int depth = 0, i = 0;
+		
+		for (EnumCrustLayer layer : EnumCrustLayer.values()) {
+			if (layer.thickness == -1) {
+				depth += (rockdata[i - quantityFixedTopLayers][arrayIndexChunk] >> 16) & 0xff;
+			} else {
+				depth += underwater ? layer.underwaterThickness : layer.thickness;
+			}
 			
-			if (depth >= depthStart) layer = curlayer;
+			if (targetdepth < depth) return layer;
+			i++;
 		}
-		return layer;
+		
+		return ROCK_7;
 	}
 	
-
 	
 }

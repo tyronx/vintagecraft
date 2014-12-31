@@ -2,9 +2,12 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import javax.naming.spi.StateFactory;
+
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.item.ItemLeaves;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.Material;
@@ -17,11 +20,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -80,6 +87,15 @@ public class BlockLeaves extends BlockVC {
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
         return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
     }
+    
+    
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos) {
+        return ItemLeaves.setTreeType(
+        	new ItemStack(getItem(world,pos)), 
+        	(EnumTree)world.getBlockState(pos).getValue(TREETYPE)
+        );
+    }
+    
 
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
         byte b0 = 1;
@@ -292,7 +308,7 @@ public class BlockLeaves extends BlockVC {
     public int getMetaFromState(IBlockState state) {
     	return
     		(Boolean)state.getValue(CHECK_DECAY) ? 1 : 0
-    		+ ((EnumTree)state.getValue(TREETYPE)).id << 1
+    		+ ((EnumTree)state.getValue(TREETYPE)).meta << 1
     	;
     }
     
@@ -300,9 +316,13 @@ public class BlockLeaves extends BlockVC {
     public IBlockState getStateFromMeta(int meta) {
     	return super.getStateFromMeta(meta)
     			.withProperty(CHECK_DECAY, (meta & 1) > 0 ? true : false)
-    			.withProperty(TREETYPE, EnumTree.byId(meta >> 1))
+    			.withProperty(TREETYPE, EnumTree.byMeta(meta >> 1))
     	;
     }
     
 
+    @Override
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+        return null;
+    }
 }

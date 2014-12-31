@@ -6,6 +6,7 @@ public class GenLayerReducePallette extends GenLayerVC {
 	int quantity;
 	IGenLayerSupplier []colorSupplier;
 
+	
 	public GenLayerReducePallette(long seed, int quantity, GenLayerVC parent) {
 		this(seed, null, parent);
 		this.quantity = quantity;
@@ -29,10 +30,11 @@ public class GenLayerReducePallette extends GenLayerVC {
 		int[] inInts = this.parent.getInts(xCoord, zCoord, xSize, zSize);
 
 		for (int i = 0; i < inInts.length; i++) {
+			
 			if (colorSupplier != null) {
-				inInts[i] = colorSupplier[inInts[i] / step].getColor();
+				inInts[i] = (inInts[i] & 0xffff00) + colorSupplier[(inInts[i] & 0xff) / step].getColor();
 			} else {
-				inInts[i] = (inInts[i] / step) * step;
+				inInts[i] = (inInts[i] & 0xffff00) + ((inInts[i] & 0xff) / step) * step;
 			}
 		}
 		

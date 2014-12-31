@@ -6,6 +6,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -29,11 +30,17 @@ public class BlockLeavesBranchy extends BlockLeaves {
             ret.add(new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state)));
         }*/
         
-        if (rand.nextInt(3) == 0) {
+        if (rand.nextInt(2) == 0) {
         	ret.add(new ItemStack(Items.stick, 1));
         }
 
 
         return ret;
     }
+    
+    
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+        return new AxisAlignedBB((double)pos.getX() + this.minX, (double)pos.getY() + this.minY, (double)pos.getZ() + this.minZ, (double)pos.getX() + this.maxX, (double)pos.getY() + this.maxY, (double)pos.getZ() + this.maxZ);
+    }
+
 }

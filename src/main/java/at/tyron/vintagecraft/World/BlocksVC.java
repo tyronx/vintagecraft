@@ -87,9 +87,9 @@ public class BlocksVC {
 		register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
 		
-		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumGrass.values()).setHardness(0.1f);
-		flower = new BlockFlowerVC().registerMultiState("flower", ItemFlowerVC.class, "flower", EnumFlower.values()).setHardness(0.2f);
-		doubleplant = new BlockDoublePlantVC().registerMultiState("doubleplant", ItemDoublePlantVC.class, "doubleplant", EnumDoublePlantTypeVC.values()).setHardness(0.4f);
+		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
+		flower = new BlockFlowerVC().registerMultiState("flower", ItemFlowerVC.class, "flower", EnumFlower.values()).setHardness(0.2f).setStepSound(Block.soundTypeGrass);
+		doubleplant = new BlockDoublePlantVC().registerMultiState("doubleplant", ItemDoublePlantVC.class, "doubleplant", EnumDoublePlantTypeVC.values()).setHardness(0.4f).setStepSound(Block.soundTypeGrass);
 		
 		
 		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, "topsoil", EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);

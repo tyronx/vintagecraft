@@ -6,11 +6,11 @@ public enum EnumCrustLayerGroup {
 	SUBSOIL (1, 2, new EnumCrustLayer[]{EnumCrustLayer.SUBSOIL}),
 	REGOLITH (1, 2, new EnumCrustLayer[]{EnumCrustLayer.REGOLITH}),
 	
-	SEDIMENTARY (0, 8, new EnumCrustLayer[]{EnumCrustLayer.ROCK_1, EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3}),
+	SEDIMENTARY (0, 10, new EnumCrustLayer[]{EnumCrustLayer.ROCK_1, EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3}),
 	SEDIMENTARY2 (0, 4, new EnumCrustLayer[]{EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3}),
-	METAMORPHIC (0, 30, new EnumCrustLayer[]{EnumCrustLayer.ROCK_1, EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3, EnumCrustLayer.ROCK_4, EnumCrustLayer.ROCK_6}),
-	IGNEOUS_INTRUSIVE (0, 40, new EnumCrustLayer[]{EnumCrustLayer.ROCK_5, EnumCrustLayer.ROCK_6, EnumCrustLayer.ROCK_7}),
-	IGNEOUS_EXTRUSIVE  (0, 40, new EnumCrustLayer[]{EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3, EnumCrustLayer.ROCK_4, EnumCrustLayer.ROCK_5, EnumCrustLayer.ROCK_6})
+	METAMORPHIC (0, 40, new EnumCrustLayer[]{EnumCrustLayer.ROCK_1, EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3, EnumCrustLayer.ROCK_4, EnumCrustLayer.ROCK_6}),
+	IGNEOUS_INTRUSIVE (0, 80, new EnumCrustLayer[]{EnumCrustLayer.ROCK_5, EnumCrustLayer.ROCK_6, EnumCrustLayer.ROCK_7}),
+	IGNEOUS_EXTRUSIVE  (0, 80, new EnumCrustLayer[]{EnumCrustLayer.ROCK_2, EnumCrustLayer.ROCK_3, EnumCrustLayer.ROCK_4, EnumCrustLayer.ROCK_5, EnumCrustLayer.ROCK_6})
 	;
 	
 	

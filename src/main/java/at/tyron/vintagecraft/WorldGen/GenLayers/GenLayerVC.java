@@ -47,7 +47,7 @@ public abstract class GenLayerVC extends GenLayer {
 		deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 30, deposits);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add heightmap (green)");
 
-		deposits = new GenLayerBlur(2L, 1, 5, false, 8, deposits);
+		deposits = new GenLayerBlurSelective(2L, 1, 5, false, 8, deposits);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 Blur Heightmap (green)");
 
 		deposits = GenLayerZoom.magnify(4L, deposits, 1);
@@ -59,26 +59,26 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genForest(long seed) {
-		//System.out.println("gen forest");
+		//System.out.println("gen forest " + seed);
 		
 		GenLayerVC noise = new GenLayerNoise(1L, 54);
-		GenLayerVC.drawImageRGB(512, noise, "Forest 0 Noise");
+		GenLayerVC.drawImageGrayScale(512, noise, "Forest 0 Noise");
 		
-		noise.initWorldGenSeed(seed);
+	//	noise.initWorldGenSeed(seed);
 		
 		//GenLayerVC forest = new GenLayerBlur(seed, 8, 3, noise);
-		GenLayerVC forest = new GenLayerBlur(2L, 2, 8, false, noise);
-		GenLayerVC.drawImageRGB(512, forest, "Forest 1 Blur");
+		GenLayerVC forest = new GenLayerBlurAll(2L, 2, 8, noise);
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 1 Blur");
 		
 		forest = new GenLayerContrastAndBrightness(3L, 4f, 0, forest);
-		GenLayerVC.drawImageRGB(512, forest, "Forest 2 Contrast");
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 2 Contrast");
 		
 		//forest = new GenLayerSubstract(seed, forest, new GenLayerBlur(seed, 2, 5, noise));
-		forest = new GenLayerSubstract(4L, forest, new GenLayerBlur(seed, 1, 15, false, noise));
-		GenLayerVC.drawImageRGB(512, forest, "Forest 3 Unsharp Mask");
+		forest = new GenLayerClampedSubstract(4L, 0, 1, forest, new GenLayerBlurAll(seed, 1, 15,  noise));
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 3 Unsharp Mask");
 		
 		forest = GenLayerZoom.magnify(1000L, forest, 2);
-		GenLayerVC.drawImageRGB(512, forest, "Forest 4 Zoom");
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 4 Zoom");
 		
 		forest.initWorldGenSeed(seed);
 		
@@ -89,11 +89,39 @@ public abstract class GenLayerVC extends GenLayer {
 
 	// Blue value = rocktype
 	// Red value = layer thickness
+	// Green value = temporary value layer for substracting thickness from red 
 	public static GenLayerVC genRockLayer(long seed, EnumRockType[] rocktypes) {
-		//System.out.println("gen rock");
-		
 		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise");
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise - rocks and thickness");
+		
+		rocklayer = new GenLayerExactZoom(2001L, 2, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 2 Exact Zoom");
+	
+		rocklayer = new GenLayerBlurAll(2L, 1, 2, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 3 Blur");
+		
+		rocklayer = new GenLayerBlurAll(2L, 1, 5, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 4 Blur blue");
+
+		rocklayer = new GenLayerReducePallette(2001L, rocktypes, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 5 reducepallete");
+
+		
+	/*	rocklayer = new GenLayerContrastAndBrightness(4L, 0.2f, 10, rocklayer);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 5 Contrast");
+		*/
+		rocklayer = GenLayerZoom.magnify(seed, rocklayer, 12);
+		drawImageRGB(512, rocklayer, "Rocks 6 12x magnify");
+
+		
+
+
+		
+		
+		//System.out.println("gen rock");
+		/*
+		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise - rocks and thickness");
 		
 		
 		rocklayer.initWorldGenSeed(seed);
@@ -101,18 +129,36 @@ public abstract class GenLayerVC extends GenLayer {
 		rocklayer = GenLayerZoom.magnify(2L, rocklayer, 2);
 		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 1 2x Magnify");
 		
-		rocklayer = new GenLayerAddNoise(3L, 70, 10, 8, 70, 30, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 2 Add heightmap (green)");
-
-		
-		/*rocklayer = new GenLayerBlur(2L, 1, 5, false, 8, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Deposits 3 Blur Heightmap (green)");*/
-
-		rocklayer = GenLayerZoom.magnify(4L, rocklayer, 4);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 4 4x Magnify");
+		rocklayer = new GenLayerBlur(2L, 1, 2, false, 16, rocklayer);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 2 Blur Thickness (red)");
 		
 		
-		/*GenLayerVC rocklayer = new GenLayerNoise(1L, 20, 2);
+		rocklayer = new GenLayerCopyColor(16, 8, rocklayer);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 3 Copy red to green");
+		
+		
+		rocklayer = GenLayerZoom.magnify(4L, rocklayer, 6);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 5 6x Magnify");
+	
+	
+		GenLayerVC rocklayer2 = new GenLayerBlur(2L, 2, 4, false, 8, rocklayer);
+		GenLayerVC.drawImageRGB(512, rocklayer2, "Rocks 7 Blur green");
+		
+		rocklayer = new GenLayerClampedSubstract(4L, 8, rocklayer, rocklayer2);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 8 Substract green blur");
+		
+		
+		rocklayer = new GenLayerClampedSubstract(4L, 16, 8, rocklayer, rocklayer);
+		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 9 Substract green blur diff from red (thickness)");
+		
+		
+		
+		*/
+		
+		
+	/*
+		
+		GenLayerVC rocklayer = new GenLayerNoise(1L, 20, 2);
 		drawImageRGB(512, rocklayer, "NewRock 0 Noise");
 				
 		rocklayer.initWorldGenSeed(seed);
@@ -139,8 +185,8 @@ public abstract class GenLayerVC extends GenLayer {
 				
 		rocklayer = GenLayerZoom.magnify(5L, rocklayer, 8);
 		//drawImageRGB(512, rocklayer, "NewRock 6 8x magnify");
-		
 		*/
+		
 		
 		rocklayer.initWorldGenSeed(seed);
 		
@@ -187,7 +233,7 @@ public abstract class GenLayerVC extends GenLayer {
 		
 		deformationlayer.initWorldGenSeed(seed);
 
-		deformationlayer = new GenLayerBlur(2L, 1, 3, false, deformationlayer);
+		deformationlayer = new GenLayerBlurSelective(2L, 1, 3, false, deformationlayer);
 		drawImageRGB(512, deformationlayer, "Rock Deform 1 Blur");
 
 	
@@ -195,14 +241,14 @@ public abstract class GenLayerVC extends GenLayer {
 		drawImageRGB(512, deformationlayer, "Rock Deform 2 2x exact zoom");
 
 	
-		deformationlayer = new GenLayerBlur(2L, 1, 3, false, deformationlayer);
+		deformationlayer = new GenLayerBlurSelective(2L, 1, 3, false, deformationlayer);
 		drawImageRGB(512, deformationlayer, "Rock Deform 3 Blur");
 
 	
 		deformationlayer = new GenLayerExactZoom(5L, 5, deformationlayer);
 		drawImageRGB(512, deformationlayer, "Rock Deform 5 5x exact zoom");
 
-		deformationlayer = new GenLayerBlur(2L, 1, 5, false, deformationlayer);
+		deformationlayer = new GenLayerBlurSelective(2L, 1, 5, false, deformationlayer);
 		drawImageRGB(512, deformationlayer, "Rock Deform 6 Blur");
 		
 		deformationlayer = new GenLayerContrastAndBrightness(4L, 0.3f, 15, deformationlayer);
@@ -303,6 +349,11 @@ public abstract class GenLayerVC extends GenLayer {
 	public static void drawImageRGB(int size, GenLayerVC genlayer, String name) {
 		drawImage(size, genlayer, name, 1);
 	}
+	
+	public static void drawImageGrayScale(int size, GenLayerVC genlayer, String name) {
+		drawImage(size, genlayer, name, 3);
+	}
+
 
 	public static void drawImageRocks(int size, GenLayerVC genlayer, String name) {
 		drawImage(size, genlayer, name, 2);
@@ -332,7 +383,7 @@ public abstract class GenLayerVC extends GenLayer {
 		{
 			File outFile = new File(name+".bmp");
 			
-			
+			Color c;
 			
 			BufferedImage outBitmap = new BufferedImage(size,size,BufferedImage.TYPE_INT_RGB);
 			Graphics2D graphics = (Graphics2D) outBitmap.getGraphics();
@@ -354,7 +405,7 @@ public abstract class GenLayerVC extends GenLayer {
 						
 					case 1:
 						//id = id & 0xff;
-						Color c = new Color((id >> 16) & 0xff, (id >> 8) & 0xff, id & 0xff);
+						c = new Color((id >> 16) & 0xff, (id >> 8) & 0xff, id & 0xff);
 						graphics.setColor(c);
 						graphics.drawRect(x, z, 1, 1);
 
@@ -365,6 +416,12 @@ public abstract class GenLayerVC extends GenLayer {
 						graphics.setColor(Color.getColor("", color));	
 						graphics.drawRect(x, z, 1, 1);
 						break;
+						
+					case 3:
+						c = new Color(id & 0xff, id & 0xff, id & 0xff);
+						graphics.setColor(c);
+						graphics.drawRect(x, z, 1, 1);
+						
 					}
 				}
 			}

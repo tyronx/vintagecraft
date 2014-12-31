@@ -21,18 +21,22 @@ import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.IWorldGenerator;
 
-public class WorldGenFlora implements IWorldGenerator {
+public class MapGenFlora {
 	
-	@Override
+	GenLayerVC forestGen;
+	WorldGenShortTrees worldGeneratorTrees;
+	
+	public MapGenFlora(long seed) {
+		forestGen = GenLayerVC.genForest(seed);
+		worldGeneratorTrees = new WorldGenShortTrees(false, 0);
+	}
+	
+	
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		chunkX *= 16;
 		chunkZ *= 16;
 
-        WorldGenShortTrees worldGeneratorTrees = new WorldGenShortTrees(false, 0);
-
-		int[] forestLayer = GenLayerVC.genForest(world.getSeed()).getInts(chunkX, chunkZ, 16, 16);
-		
-		
+		int[] forestLayer = forestGen.getInts(chunkX, chunkZ, 16, 16);
 		
 		for (int i = 0; i < 200; i++) {
 			int x = random.nextInt(16);
@@ -42,7 +46,6 @@ public class WorldGenFlora implements IWorldGenerator {
 		
 			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
-		
 			if (random.nextInt(255) < density) {
 				placeGrass(world, blockpos, random);
 				if (density < 10) {

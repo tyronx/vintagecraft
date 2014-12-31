@@ -30,29 +30,33 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	}
 	
 	
-	public static void setTreeType(ItemStack itemstack, EnumTree treetype) {
+	public static ItemStack setTreeType(ItemStack itemstack, EnumTree treetype) {
 		NBTTagCompound nbt = itemstack.getTagCompound(); 
 		if (nbt == null) {
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		
-		nbt.setInteger("treetype", treetype.id);
+		nbt.setInteger("treetype", treetype.meta);
 		itemstack.setTagCompound(nbt);
+		return itemstack;
 	}
 
 	
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		if (itemstack.getTagCompound() != null) {
-			return EnumTree.byId(itemstack.getTagCompound().getInteger("treetype"));
+			return EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
 		}
 		return null;
 	}
 
 	@Override
 	public String getSubType(ItemStack stack) {
+		if (getTreeType(stack) == null) return EnumTree.MOUNTAINDOGWOOD.getName();
 		return getTreeType(stack).getName();
 	}
+	
+	
 
 	@Override
 	public int getBurningHeat(ItemStack stack) {

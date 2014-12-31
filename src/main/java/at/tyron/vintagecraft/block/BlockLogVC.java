@@ -48,12 +48,12 @@ public class BlockLogVC extends BlockVC {
 	
     @Override
     public int getMetaFromState(IBlockState state) {
-    	return ((EnumTree)state.getValue(TREETYPE)).id;
+    	return ((EnumTree)state.getValue(TREETYPE)).meta;
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	return super.getStateFromMeta(meta).withProperty(TREETYPE, EnumTree.byId(meta));
+    	return super.getStateFromMeta(meta).withProperty(TREETYPE, EnumTree.byMeta(meta));
     }
 
     
