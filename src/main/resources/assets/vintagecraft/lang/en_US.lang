@@ -33,7 +33,7 @@ tile.rock.quartzite.name=Quartzite
 tile.rock.chert.name=Chert
 tile.rock.gabbro.name=Gabbro
 tile.rock.shale.name=Shale
-tile.rock.schist.name=Schist
+tile.rock.schist.name=Green Schist
 
 item.stone.name=Stone
 stone.name=Stone
@@ -83,3 +83,9 @@ item.stone_hoe.name=Stone How
 item.stone_saw.name=Stone Saw
 
 tile.planks.name=Planks
+
+low.name=Low Fertility
+medium.name=Medium Fertility
+high.name=High Fertility
+
+verysparsegrass.name=Very Sparse Grass

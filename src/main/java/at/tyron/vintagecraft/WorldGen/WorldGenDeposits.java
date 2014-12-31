@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
@@ -68,9 +69,12 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int depositDepth = ((depositLayer[x*16+z] >> 16) & 0xFF) + (((depositLayer[x*16+z] >> 8) & 0xFF) - 7);
 
 				
-				int horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
+				int horizon = VintageCraftConfig.seaLevel();
+				if (deposit.relativeDepth) {
+					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
+				}
 				
-				pos = new BlockPos(xCoord + x, horizon - depositDepth, zCoord + z);
+				pos = new BlockPos(xCoord + x, Math.max(1, horizon - depositDepth), zCoord + z);
 				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos))) {
 					world.setBlockState(pos, deposit.block.getDefaultState(), 2);

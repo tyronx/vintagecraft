@@ -30,7 +30,7 @@ import net.minecraftforge.client.model.*;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartItemModel {
-	private TextureAtlasSprite base, overlay;
+	/*private TextureAtlasSprite base, overlay;
     private boolean hasStateSet = false;
     private final IExtendedBlockState state;
 
@@ -42,7 +42,21 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
         this.base = base;
         this.overlay = overlay;
         this.state = state;
+    }*/
+	
+	private TextureAtlasSprite base;
+    private boolean hasStateSet = false;
+    private final IExtendedBlockState state;
+
+    public BlockOreVCModel(TextureAtlasSprite base) {
+        this(base, null);
     }
+
+    public BlockOreVCModel(TextureAtlasSprite base, IExtendedBlockState state) {
+        this.base = base;
+        this.state = state;
+    }
+    
 
     @Override
     public List<BakedQuad> getFaceQuads(EnumFacing side){
@@ -81,7 +95,7 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
         
         for(EnumFacing f : EnumFacing.values()) {
         	ret.add(createSidedBakedQuad(0, 1, 0, 1, 1, base, -1, f));
-        	ret.add(createSidedBakedQuad(0, 1, 0, 1, 1.005f, overlay, -1, f));
+        //	ret.add(createSidedBakedQuad(0, 1, 0, 1, 1.005f, overlay, -1, f));
         }
         return ret;
     }
@@ -124,15 +138,16 @@ public class BlockOreVCModel implements IBakedModel, ISmartBlockModel, ISmartIte
     	EnumRockType rocktype = (EnumRockType)extendedstate.getValue(BlockOreVC.properties[0]);
     	EnumMaterialDeposit oretype = (EnumMaterialDeposit)extendedstate.getValue(BlockOreVC.properties[1]);
     	
-    	if (rocktype != null) {
+    	/*if (rocktype != null) {
     		base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/rock/" + rocktype.getName());
-    	}
+    	}*/
     	if (oretype != null) {
-    		overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/ore/" + oretype.getName());
-    	} 
+    		base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(ModInfo.ModID + ":blocks/ore/" + oretype.getName() + "-" + rocktype.getName());
+    	}
         
     	
-        return new BlockOreVCModel(base, overlay, extendedstate);
+        //return new BlockOreVCModel(base, overlay, extendedstate);
+    	return new BlockOreVCModel(base, extendedstate);
     }
     
     

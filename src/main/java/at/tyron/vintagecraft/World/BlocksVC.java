@@ -92,7 +92,7 @@ public class BlocksVC {
 		doubleplant = new BlockDoublePlantVC().registerMultiState("doubleplant", ItemDoublePlantVC.class, "doubleplant", EnumDoublePlantTypeVC.values()).setHardness(0.4f).setStepSound(Block.soundTypeGrass);
 		
 		
-		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, "topsoil", EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
+		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, "topsoil", EnumOrganicLayer.valuesWithFertility()).setStepSound(Block.soundTypeGrass);
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, "peat", EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		

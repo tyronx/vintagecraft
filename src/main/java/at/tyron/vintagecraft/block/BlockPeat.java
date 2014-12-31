@@ -12,7 +12,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.item.ItemLogVC;
@@ -20,11 +23,19 @@ import at.tyron.vintagecraft.item.ItemLogVC;
 public class BlockPeat extends BlockTopSoil {
 
 	public BlockPeat() {
-		super();
+		super(false);
 		
-		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.None));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NormalGrass));
 	}
 	
+	
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+    	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
+    		list.add(new ItemStack(itemIn, 1, organiclayer.meta));
+    	}
+    }
+   
 
 	@Override
 	protected BlockState createBlockState() {
@@ -38,7 +49,7 @@ public class BlockPeat extends BlockTopSoil {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.byMetadata(meta));
+		return this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.fromMeta(meta));
 	}
 	
 	

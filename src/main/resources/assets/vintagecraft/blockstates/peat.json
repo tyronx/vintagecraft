@@ -1,6 +1,7 @@
 {
     "variants": {
         "organiclayer=nograss": { "model": "vintagecraft:peat/nograss" },
+		"organiclayer=verysparsegrass": { "model": "vintagecraft:peat/verysparsegrass" },
 		"organiclayer=sparsegrass": { "model": "vintagecraft:peat/sparsegrass" },
 		"organiclayer=normalgrass": { "model": "vintagecraft:peat/normalgrass" }
     }

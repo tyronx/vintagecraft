@@ -78,7 +78,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 
 	/** Holds the overall noise array used in chunk generation */
 	double[] noiseArray;
-	double[] stoneNoise = new double[256];
+	//double[] stoneNoise = new double[256];
 
 	
 
@@ -156,15 +156,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
-		//if (chunkX % 4 != 0 && (chunkX+1) % 4 != 0) {
+		//if (chunkX % 4 != 0) { // && (chunkX+1) % 4 != 0) {
 		
 			generateTerrainHigh(chunkX, chunkZ, primer);
 			generateTerrainLow(chunkX, chunkZ, primer);
 		
 			decorate(chunkX, chunkZ, rand, primer);
 			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
+			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
 			
-		//}
+	//	}
 		
 		Chunk chunk = new Chunk(this.worldObj, primer, chunkX, chunkZ);
 		
@@ -394,29 +395,36 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		biomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(biomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
 		
 		this.noiseArray = this.initializeNoiseFieldHigh(this.noiseArray, chunkX * horizontalPart, 0, chunkZ * horizontalPart, xSize, ySize, zSize);
-
+		
+		double yLerp = 0.125D;
+		double xLerp = 0.25D;
+		double zLerp = 0.25D;
+		
 		for (int x = 0; x < horizontalPart; ++x) {
 			for (int z = 0; z < horizontalPart; ++z) {
 				for (int y = 0; y < verticalPart; ++y) {
-					double yLerp = 0.125D;
-					double bottom1 = this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 0];
-					double bottom2 = this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 0];
-					double bottom3 = this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 0];
-					double bottom4 = this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 0];
-					double top1 = (this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 1] - bottom1) * yLerp;
-					double top2 = (this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 1] - bottom2) * yLerp;
-					double top3 = (this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 1] - bottom3) * yLerp;
-					double top4 = (this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 1] - bottom4) * yLerp;
+					
+					double lower_lefttop = this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 0];
+					double lower_leftbottom = this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 0];
+					double lower_righttop = this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 0];
+					double lower_rightbottom = this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 0];
+					
+					double dy_lefttop = (this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 1] - lower_lefttop) * yLerp;
+					double dy_leftbottom = (this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 1] - lower_leftbottom) * yLerp;
+					double dy_righttop = (this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 1] - lower_righttop) * yLerp;
+					double dy_rightbottom = (this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 1] - lower_rightbottom) * yLerp;
 
 					for (int dy = 0; dy < 8; ++dy) {
-						double xLerp = 0.25D;
-						double bottom1Counting = bottom1;
-						double bottom2Counting = bottom2;
-						double var38 = (bottom3 - bottom1) * xLerp;
-						double var40 = (bottom4 - bottom2) * xLerp;
+						
+						
+						double bottom1Counting = lower_lefttop;
+						double bottom2Counting = lower_leftbottom;
+						
+						double noisetopdx = (lower_righttop - lower_lefttop) * xLerp;
+						double noisedowndx = (lower_rightbottom - lower_leftbottom) * xLerp;
 
 						for (int dx = 0; dx < 4; ++dx) {	
-							double zLerp = 0.25D;
+							
 							double var49 = (bottom2Counting - bottom1Counting) * zLerp;
 							double var47 = bottom1Counting - var49;
 
@@ -431,13 +439,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 								
 							}
 							
-							bottom1Counting += var38;
-							bottom2Counting += var40;
+							bottom1Counting += noisetopdx;
+							bottom2Counting += noisedowndx;
 						}
-						bottom1 += top1;
-						bottom2 += top2;
-						bottom3 += top3;
-						bottom4 += top4;
+						
+						lower_lefttop += dy_lefttop;
+						lower_leftbottom += dy_leftbottom;
+						lower_righttop += dy_righttop;
+						lower_rightbottom += dy_rightbottom;
 					}
 				}
 			}
@@ -482,16 +491,19 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			}
 		}
 
-		//double var44 = 684.412D;
-		//double var45 = 684.412D;
-		double var44 = 800D;
-		double var45 = 800D;
+		// Determines the height of the terrain i guess
+		double var44 = 684.412D;
+		double var45 = 684.412D;
+		/*double var44 = 800D;
+		double var45 = 800D;*/
+		
+		
 		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
 		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 200.0D, 200.0D, 0.5D);
 		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, var44 / 80.0D, var45 / 160.0D, var44 / 80.0D);
-		//this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, var44 / 80.0D, 0.5, var44 / 80.0D);
 		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, var44, var45, var44);
 		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, var44, var45, var44);
+		
 		boolean var43 = false;
 		boolean var42 = false;
 		int posIndex = 0;
@@ -524,6 +536,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				minBlendedHeight /= blendedHeightSum;
 				maxBlendedHeight = maxBlendedHeight * 0.9F + 0.1F;
 				minBlendedHeight = (minBlendedHeight * 4.0F - 1.0F) / 8.0F;
+				
 				double var47 = this.noise6[var13] / 8000.0D;
 
 				if (var47 < 0.0D)

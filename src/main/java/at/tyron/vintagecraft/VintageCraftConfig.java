@@ -8,4 +8,8 @@ public class VintageCraftConfig {
 	public static int matLayer1 = 0; // 0-8 Blocks: Surface stuff like Glaciers, Sandstone, etc.
 
 	public static final String ModChannel = "VintageCraft";
+	
+	public static int seaLevel() {
+		return terrainGenLevel + 48;
+	}
 }

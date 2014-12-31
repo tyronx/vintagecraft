@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.WorldProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+import sun.security.krb5.Realm;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.Material;
@@ -20,20 +21,20 @@ import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
-	//						    color  weight hgt vari mind maxd 
-	NODEPOSIT (-1, null, false,              0, 5000,   0,  0, 0, null),
+	//						                color  weight hgt vari mind maxd 
+	NODEPOSIT (-1, null,                 false, 0,  5000,   0,  0, 0, null, false),
 	
-	CLAY (0, BlocksVC.rawclay, false, 20,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.beach, VCBiome.river, VCBiome.rollingHills}),
-	PEAT (1, BlocksVC.peat, false,  40,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}),
+	CLAY (0,           BlocksVC.rawclay, false, 20,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.beach, VCBiome.river, VCBiome.rollingHills}, true),
+	PEAT (1,              BlocksVC.peat, false, 40,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, true),
 	
 	
-	LIGNITE (2,        BlocksVC.rawore, true, 60,   50,   2,  10,  50, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}),
-	BITUMINOUSCOAL (3, BlocksVC.rawore, true, 80,   40,   2,  50, 150, new VCBiome[]{VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}),
+	LIGNITE (2,        BlocksVC.rawore, true,   60,   40,   2,  10,  50, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, true),
+	BITUMINOUSCOAL (3, BlocksVC.rawore, true,   80,   20,   2,  8, 103, new VCBiome[]{VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, false),
 	
-	NATIVECOPPER (4,   BlocksVC.rawore, true, 80,   45,   2,  4,   40, null),
+	NATIVECOPPER (4,   BlocksVC.rawore, true,   80,   60,   2,  4,   40, null, true),
 	
-	LIMONITE (5,      BlocksVC.rawore, true, 100,   30,   2,  1,  150, null),
-	NATIVEGOLD (6,    BlocksVC.rawore, true, 120,   10,   1,  15, 200, null),
+	LIMONITE (5,      BlocksVC.rawore,  true,  100,   30,   2,  15, 103, null, false),
+	NATIVEGOLD (6,    BlocksVC.rawore,  true,  120,   10,   1,  50, 103, null, false),
 
 	
 	;
@@ -47,15 +48,13 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	public int averageHeight;
 	public int minDepth;
 	public int maxDepth;
-	
 	public EnumMetal smelted;
 	public int ore2IngotRatio;
-	
-	//public int rarity; // Used as if !nextInt(rarity)
 	public final VCBiome[] biomes;
 	public int weight;
+	public boolean relativeDepth;
 	
-	private EnumMaterialDeposit(int id, Block block, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, VCBiome[] biomes) {
+	private EnumMaterialDeposit(int id, Block block, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, VCBiome[] biomes, boolean relativeDepth) {
 		this.id = id;
 		
 		this.weight = weight;
@@ -66,7 +65,9 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		this.maxDepth = maxDepth;
 		this.biomes = biomes;
 		this.color = color;
+		this.relativeDepth = relativeDepth;
 	}
+	
 	
 	
 	public static EnumMaterialDeposit depositForColor(int color) {

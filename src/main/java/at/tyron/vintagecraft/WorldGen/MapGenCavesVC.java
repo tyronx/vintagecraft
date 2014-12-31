@@ -23,6 +23,7 @@ import net.minecraft.world.gen.MapGenCaves;
 
 public class MapGenCavesVC extends MapGenBase {
 	// All copied from Vanilla minecraft with minor adjustments
+	// I wish someone could figure out what this actually does :/
 	
 	//this.func_180703_a(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
     protected void func_180703_a(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
@@ -302,7 +303,7 @@ public class MapGenCavesVC extends MapGenBase {
         IBlockState filler = biome.fillerBlock;*/
 
         if (this.caveableBlock(state, up)) {
-            if (y < 10) {
+            if (y < 40) {
                 data.setBlockState(x, y, z, Blocks.lava.getDefaultState());
             } else {
                 data.setBlockState(x, y, z, Blocks.air.getDefaultState());

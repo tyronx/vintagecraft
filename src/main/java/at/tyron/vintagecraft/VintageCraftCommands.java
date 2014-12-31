@@ -55,6 +55,9 @@ public class VintageCraftCommands extends CommandBase {
 			
 			GenLayerVC.shouldDraw = true;
 			
+			if (args[1].equals("climate")) {	
+				GenLayerVC.genClimate(seed);
+			}
 			if (args[1].equals("forest")) {	
 				GenLayerVC.genForest(seed);
 			}

@@ -1,13 +1,20 @@
 package at.tyron.vintagecraft.block;
 
+import java.util.List;
 import java.util.Random;
 
 
 
 
 
+
+
+
+import at.tyron.vintagecraft.WorldProperties.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.item.ItemLogVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockTallGrass;
@@ -20,6 +27,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -33,21 +41,31 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTopSoil extends BlockVC {
-	
-	
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
+	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class);
 
 	public BlockTopSoil() {
-		super(Material.grass);
-		
-		isSoil = true;
-		
-		this.setTickRandomly(true);
-		
-        this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.None));
-        this.setCreativeTab(CreativeTabs.tabBlock);
-
+		this(true);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.None).withProperty(fertility, EnumFertility.MEDIUM));
 	}
+	
+	public BlockTopSoil(boolean istopsoil) {
+		super(Material.grass);
+		isSoil = true;
+		this.setTickRandomly(true);
+		this.setCreativeTab(CreativeTabs.tabBlock);
+	}
+	
+	
+    @SideOnly(Side.CLIENT)
+    public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+    	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
+    		for (EnumFertility fertility : EnumFertility.values()) {
+    			list.add(new ItemStack(itemIn, 1, organiclayer.meta + (fertility.getMetaData() << 2)));
+    		}
+    	}
+    }
+    
 	
 	@Override
 	public boolean canSustainPlant(IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
@@ -87,31 +105,55 @@ public class BlockTopSoil extends BlockVC {
     public EnumWorldBlockLayer getBlockLayer() {
         return EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
+    
+    
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	
+    	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+    	itemstack.setItemDamage(((EnumFertility)state.getValue(fertility)).getMetaData() << 2);
+        ret.add(itemstack);
+        
+    	return ret;
+    }
+
+    
+    
+    
+    
 	
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    	if (worldIn.isRemote) return;
     	
-        if (!worldIn.isRemote && state.getValue(organicLayer) != EnumOrganicLayer.None) {
-            if (worldIn.getLightFromNeighbors(pos.up()) < 4 && worldIn.getBlockState(pos.up()).getBlock().getLightOpacity(worldIn, pos.up()) > 2) {
-                worldIn.setBlockState(pos, getDefaultState());
-            }
-            else {
-                if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
-                    for (int i = 0; i < 4; ++i) {
-                        BlockPos blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
-                        Block block = worldIn.getBlockState(blockpos1.up()).getBlock();
-                        IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
+    	// Up or downgrade grass depending on light conditions
+    	EnumOrganicLayer organiclayer = (EnumOrganicLayer)state.getValue(organicLayer);
+    	if (organiclayer != EnumOrganicLayer.None) {
+    		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToLight(worldIn.getLight(pos.up()));
+    		if (adjustedorganiclayer != organiclayer) {
+    		//	System.out.println("curr: " + organiclayer + " next: " + adjustedorganiclayer + " light: " + worldIn.getLight(pos.up()));
+    			worldIn.setBlockState(pos, state.withProperty(organicLayer, adjustedorganiclayer));
+    		}
+        }
+            
+        // Spread grass when at least medium grown 
+        if (organiclayer != EnumOrganicLayer.None) {
+            if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
+                for (int i = 0; i < 4; ++i) {
+                    BlockPos blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+                    Block block = worldIn.getBlockState(blockpos1.up()).getBlock();
+                    IBlockState neighbourblockstate = worldIn.getBlockState(blockpos1);
 
-                        if (iblockstate1.getBlock() instanceof BlockTopSoil && worldIn.getLightFromNeighbors(blockpos1.up()) >= 4 && block.getLightOpacity(worldIn, blockpos1.up()) <= 2) {
-                            worldIn.setBlockState(blockpos1, getDefaultState().withProperty(BlockTopSoil.organicLayer, EnumOrganicLayer.NormalGrass));
-                        }
+                    if (
+                    	neighbourblockstate.getBlock() instanceof BlockTopSoil 
+                    	&& worldIn.getLight(blockpos1.up()) >= EnumOrganicLayer.VerySparseGrass.minblocklight 
+                    	&& block.getLightOpacity(worldIn, blockpos1.up()) <= 2
+                    	&& ((EnumOrganicLayer)neighbourblockstate.getValue(organicLayer)) == EnumOrganicLayer.None
+                    ) {
+                        worldIn.setBlockState(blockpos1, neighbourblockstate.withProperty(BlockTopSoil.organicLayer, EnumOrganicLayer.VerySparseGrass));
                     }
                 }
-                
-               /* if (worldIn.getLightFromNeighbors(pos.up()) >= 14 && worldIn.getBlockState(pos.up()).getBlock() == Blocks.air) {
-                	if (rand.nextInt(10) == 0) {
-                		worldIn.setBlockState(pos.up(), Blocks.tallgrass.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS));
-                	}
-                }*/
             }
         }
     }
@@ -134,18 +176,25 @@ public class BlockTopSoil extends BlockVC {
 	
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {organicLayer});
+        return new BlockState(this, new IProperty[] {organicLayer, fertility});
     }
     
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData();
+        return 
+        	((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData()
+        	+ 
+        	(((EnumFertility)state.getValue(fertility)).getMetaData() << 2);
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	return this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.byMetadata(meta));
+    	return 
+    		this.blockState.getBaseState()
+    			.withProperty(organicLayer, EnumOrganicLayer.fromMeta(meta & 3))
+    			.withProperty(fertility, EnumFertility.fromMeta((meta >> 2) & 3))
+    	;
     }
 
     

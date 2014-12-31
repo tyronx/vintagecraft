@@ -96,11 +96,17 @@
 
 
 
+
 - https://i.imgur.com/G9e7Htm.jpg
 - http://imgur.com/a/VnT8r
 
 
 - Dried out lake beds   - http://depositphotos.com/6945059/stock-photo-dry-clay.html?sst=0&sqc=18&sqm=6406&sq=3786i9
+
+- Small Oasis subbiomes in deserts
+
+
+- Seasonal forest: http://img683.imageshack.us/img683/7482/nowwithgrass.png
 
 
 ======== Etc =========
@@ -134,6 +140,11 @@ http://www.planetminecraft.com/project/european-tree-pack/  - best birch tree ev
 - Arrowheads can be made of metal too (not only flint)
 
 
+===== Plant Life ====
+
+- Add herbs, like Camomile, Cornflower    = make tea/potions to regenerate health?
+
+
 
 ===== Villages ====
 
@@ -141,8 +152,44 @@ http://www.planetminecraft.com/project/european-tree-pack/  - best birch tree ev
 Import schematic files: https://github.com/tehbeard/LibSchematic
 
 
+- Villagers will buy and sell rare goods, which are often useless for the player.
+  E.g. A fisher village sells pearls, a mountain village will sell gems
+  => Players can establish trade routes between them
 
-- Sell stuff you cannot normally get to. E.g. Seed Vendor
+- A internal database of village and their type is kept. The further 2 specialized villages are apart the higher they will buy the others goods
+
+
+- List of rare trade goods:
+  - Any area:
+    Jewelery  (sells jewelery, buys gems)
+    Dyes (buys dyes, sells dyed cloth)
+    Porcelain (buys clay, sells porcelain)
+    Flowers (sells seed, buys peat)
+
+  - Beach areas: 
+      Pearls
+
+  - Mountain areas:  
+    - Gems (e.g. Emeralds)
+    - Obsidian (http://en.wikipedia.org/wiki/File:Lipari-Obsidienne_(5).jpg)  - Lava creates perhaps a crappy obsidian? http://en.wikipedia.org/wiki/Obsidian#mediaviewer/File:ObsidianDomeCA.JPG
+    - Salt
+
+  - Plains / Dessert:
+    - Herbs / Spices (e.g. Peppermint, Pepper, Chilli)
+    - Incense
+    - Wine
+
+  - Cold + Forest areas: 
+    - Furs
+
+  - Jungle areas:
+    - Rum, Tobacco
+
+  
+
+
+- Sell stuff you cannot normally get to. E.g. Seed Vendor (sells seeds for flowers that don't or rarely grow in nature)
+
 
 - Examples: 
 	http://upload.wikimedia.org/wikipedia/commons/1/1c/ScaleRepoductionOfaCucutenivillage.JPG   

@@ -6,9 +6,11 @@ import at.tyron.vintagecraft.interfaces.IEnumState;
 public enum EnumGrass implements IEnumState, IStringSerializable {
 
 	NORMAL (0),
-	OXEYEDAISY (1),
-	CORNFLOWER (2),
-	CORNFLOWER2 (3)
+	OXEYEDAISY (1),  // normal size grass
+	CORNFLOWER (2),  // normal size grass
+	CORNFLOWER2 (3)  // normal size grass
+	
+	
 	;
 	
 	int meta;

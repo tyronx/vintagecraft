@@ -1,7 +1,19 @@
 {
     "variants": {
-        "organiclayer=nograss": { "model": "vintagecraft:topsoil/nograss" },
-		"organiclayer=sparsegrass": { "model": "vintagecraft:topsoil/sparsegrass" },
-		"organiclayer=normalgrass": { "model": "vintagecraft:topsoil/normalgrass" }
+        "fertility=low,organiclayer=nograss": { "model": "vintagecraft:topsoil/lowf_nograss" },
+		"fertility=low,organiclayer=verysparsegrass": { "model": "vintagecraft:topsoil/lowf_verysparsegrass" },
+		"fertility=low,organiclayer=sparsegrass": { "model": "vintagecraft:topsoil/lowf_sparsegrass" },
+		"fertility=low,organiclayer=normalgrass": { "model": "vintagecraft:topsoil/lowf_normalgrass" },
+
+        "fertility=medium,organiclayer=nograss": { "model": "vintagecraft:topsoil/medf_nograss" },
+		"fertility=medium,organiclayer=verysparsegrass": { "model": "vintagecraft:topsoil/medf_verysparsegrass" },
+		"fertility=medium,organiclayer=sparsegrass": { "model": "vintagecraft:topsoil/medf_sparsegrass" },
+		"fertility=medium,organiclayer=normalgrass": { "model": "vintagecraft:topsoil/medf_normalgrass" },
+
+        "fertility=high,organiclayer=nograss": { "model": "vintagecraft:topsoil/hif_nograss" },
+		"fertility=high,organiclayer=verysparsegrass": { "model": "vintagecraft:topsoil/hif_verysparsegrass" },
+		"fertility=high,organiclayer=sparsegrass": { "model": "vintagecraft:topsoil/hif_sparsegrass" },
+		"fertility=high,organiclayer=normalgrass": { "model": "vintagecraft:topsoil/hif_normalgrass" }
+
     }
 }

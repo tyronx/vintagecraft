@@ -25,6 +25,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
@@ -78,6 +79,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.leavesbranchy), "leavesbranchy", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.doubleplant), "doubleplant", "inventory");
     	
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.peat), "peat", "inventory");
+    	registerModelLocation(Item.getItemFromBlock(BlocksVC.topsoil), "topsoil", "inventory");
+    	
     	registerModelLocation(ItemsVC.stone, "stone", "inventory");
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
     	registerModelLocation(ItemsVC.ingot, "ingot", "inventory");
@@ -118,9 +122,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	@SubscribeEvent
     public void onModelBakeEvent(ModelBakeEvent event) {
         TextureAtlasSprite base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/slime");
-        TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
+//        TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
         
-        event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base, overlay));
+        //event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base, overlay));
+        event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base));
     }
 	
 	
@@ -129,7 +134,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         TextureMap map = event.map;
         for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
         	if (deposit.block == BlocksVC.rawore) {
-        		event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/ore/" + deposit.getName()));
+        		for (EnumRockType rocktype: EnumRockType.values()) {
+        			event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/ore/" + deposit.getName() + "-" + rocktype.getName()));
+        		}
         	}
         }
 	}

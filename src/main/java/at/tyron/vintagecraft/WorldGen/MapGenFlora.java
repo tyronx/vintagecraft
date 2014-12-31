@@ -46,7 +46,7 @@ public class MapGenFlora {
 		
 			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
-			if (random.nextInt(255) < density) {
+			if (random.nextInt(255) < density - Math.max(0, blockpos.getY() - 160)) {
 				placeGrass(world, blockpos, random);
 				if (density < 10) {
 					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random);

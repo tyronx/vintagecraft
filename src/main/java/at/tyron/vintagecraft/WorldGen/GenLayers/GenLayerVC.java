@@ -34,6 +34,26 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long chunkSeed;
 	protected long baseSeed;
 	
+	// Generates Wind, Temperature and Rainfall map
+	// R = Temperature    use  R-Value / 5 - 10 => Temp range from -10 to +40
+	// G = Wind           use lower 3 bits for 
+	// B = Rain           
+	public static GenLayerVC genClimate(long seed) {
+		GenLayerVC noise = new GenLayerRGBNoise(1L);
+		GenLayerVC.drawImageRGB(512, noise, "Climate 0 Noise");
+		
+		GenLayerVC climate = GenLayerZoom.magnify(2L, noise, 4);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 1 4x Magnify");
+		
+		climate = new GenLayerBlurAll(2L, 1, 5, climate);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 4 Blur ");
+		
+		climate = GenLayerZoom.magnify(2L, climate, 8);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 8x Magnify");
+		
+		return climate;
+	}
+	
 
 	public static GenLayerVC genDeposits(long seed) {
 		GenLayerVC noise = new GenLayerWeightedNoise(1L, EnumMaterialDeposit.values());
@@ -50,8 +70,8 @@ public abstract class GenLayerVC extends GenLayer {
 		deposits = new GenLayerBlurSelective(2L, 1, 5, false, 8, deposits);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 Blur Heightmap (green)");
 
-		deposits = GenLayerZoom.magnify(4L, deposits, 1);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 1x Magnify");
+		deposits = GenLayerZoom.magnify(4L, deposits, 2);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 2x Magnify");
 		
 		deposits.initWorldGenSeed(seed);
 		
