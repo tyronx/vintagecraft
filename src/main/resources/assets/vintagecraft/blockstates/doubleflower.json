@@ -1,0 +1,11 @@
+{
+	"variants": {
+		"half=lower,flowertype=goldenrod": { "model": "vintagecraft:doubleflower/goldenrod_bottom" },
+		"half=lower,flowertype=goldenrod2": { "model": "vintagecraft:doubleflower/goldenrod2_bottom" },
+		"half=lower,flowertype=goldenrod3": { "model": "vintagecraft:doubleflower/goldenrod3_bottom" },
+		
+		"half=upper,flowertype=goldenrod": { "model": "vintagecraft:doubleflower/goldenrod_top" },
+		"half=upper,flowertype=goldenrod2": { "model": "vintagecraft:doubleflower/goldenrod2_top" },
+		"half=upper,flowertype=goldenrod3": { "model": "vintagecraft:doubleflower/goldenrod3_top" }
+	}
+}

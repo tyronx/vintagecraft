@@ -6,6 +6,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.block.BlockRock;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 import net.minecraft.block.Block;
@@ -189,5 +190,11 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
 	@Override
 	public int getDepthMax() {
 		return group.maxThickness;
+	}
+
+	@Override
+	public void init(BlockVC block, int meta) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -25,8 +25,6 @@ public class BlockSubSoil extends BlockRock {
 	
 	public BlockSubSoil() {
 		super(Material.ground);
-		isSoil = true;
-		//this.setTickRandomly(true);
 	}
 
 

@@ -3,7 +3,7 @@
     "textures": {
         "particle": "vintagecraft:blocks/tallgrass/normal",
         "cross": "vintagecraft:blocks/tallgrass/normal",
-        "colored": "vintagecraft:blocks/tallgrass/oxeyedaisy_colored",
-		"fixcolor": "vintagecraft:blocks/tallgrass/oxeyedaisy_fixcolor"
+        "colored": "vintagecraft:blocks/tallgrass/oxeyedaisy_stem",
+		"fixcolor": "vintagecraft:blocks/tallgrass/oxeyedaisy_petals"
     }
 }

@@ -71,6 +71,33 @@
 
 ======= Biome Stuff ======
 
+List of Dimensions:
+
+0 = Normal
+1 = Dangerous and magic (Mushroom biome)
+
+
+List of normal World Biomes:
+- Sea 
+  - Deepsea
+  - Island
+  - Eroded Islands 
+  - Tall Eroded Islands
+
+- Beach
+- Land
+  - Rare subbiomes: 
+    - Volcano?
+    - Large mounain
+    - Lake?
+
+
+
+- Wind map that creates
+  - Bent trees
+  - Sand dunes http://upload.wikimedia.org/wikipedia/commons/3/34/Rub_al_Khali_002.JPG
+  - Beaches
+
 - Awesome Lava stuff and trees and mountains: http://imgur.com/a/sEv5I#0
 
 
@@ -108,6 +135,20 @@
 
 - Seasonal forest: http://img683.imageshack.us/img683/7482/nowwithgrass.png
 
+
+- Kwongan:
+  http://forestphytophthoras.org/sites/default/files/photo_gallery/symptoms-arenaria%20w%20attribute.jpg
+  http://merten.caelum.uberspace.de/wp-content/gallery/jurienbay/web__mg_0695.jpg
+
+- Outback: (top layer = red sandstone subsoil)
+  http://mymiasart.files.wordpress.com/2012/08/15-kununurra-255.jpg
+  http://www.atraxarta.com.au/ATRAXARTA/media/ATRAXARTA/Products/24x18/outback_road.jpg
+  http://australieoutback.files.wordpress.com/2013/03/about-landscapes-outback.jpg
+
+
+- Dessert:
+  http://edstreasure.com/world%20hunt/deserts/desert.html
+  Decoration: http://i.imgur.com/4MSCHWu.png
 
 ======== Etc =========
 

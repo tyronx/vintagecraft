@@ -35,7 +35,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class BlockRock extends BlockVC {
-
+	// Does the block fall like sand?
+	public boolean unstable;
+	
 	public static final PropertyEnum STONETYPE = PropertyEnum.create("type", EnumRockType.class);
     
 

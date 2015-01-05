@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.naming.spi.StateFactory;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -85,7 +86,8 @@ public class BlockLeaves extends BlockVC {
 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-        return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
+       // return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
+    	return VCraftWorld.getGrassColorAtPos(pos);
     }
     
     

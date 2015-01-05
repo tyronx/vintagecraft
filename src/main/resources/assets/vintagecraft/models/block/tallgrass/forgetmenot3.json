@@ -1,0 +1,9 @@
+{
+    "parent": "vintagecraft:block/tallgrass/tallgrass_with_overlay",
+    "textures": {
+        "particle": "vintagecraft:blocks/tallgrass/normal",
+        "cross": "vintagecraft:blocks/tallgrass/normal",
+        "colored": "vintagecraft:blocks/tallgrass/forgetmenot3_stem",
+		"fixcolor": "vintagecraft:blocks/tallgrass/forgetmenot3_petals"
+    }
+}

@@ -1,0 +1,7 @@
+{
+		"parent": "block/cross",
+		"textures": {
+			"particle": "vintagecraft:blocks/flower/forgetmenot3",
+			"cross": "vintagecraft:blocks/flower/forgetmenot3"
+		}
+	}

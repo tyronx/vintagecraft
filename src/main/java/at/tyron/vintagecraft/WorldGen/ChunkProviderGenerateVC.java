@@ -7,15 +7,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockRock;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityChicken;
@@ -37,6 +39,8 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	GenLayerVC depositLayer;
+	GenLayerVC climate;
+	
 	GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
 
 	/** The 7 rocklayers **/
@@ -113,11 +117,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	ChunkPrimer primer;
 	
 	
+	ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
+	
+	
 	public ChunkProviderGenerateVC(World worldIn, long seed, boolean mapfeaturesenabled, String customgenjson) {
 		super(worldIn, seed, mapfeaturesenabled, customgenjson);
 		
 		caveGenerator = new MapGenCavesVC();
 		floragenerator = new MapGenFlora(seed);
+		
+		VCraftWorld.setUnpopChunkList(unpopulatedChunks);
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
@@ -131,6 +140,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		this.seed = seed;
 		
 		loadRockLayers();
+		climate = GenLayerVC.genClimate(seed);
 	}
 	
 	
@@ -152,6 +162,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public Chunk provideChunk(int chunkX, int chunkZ) {
 		primer = new ChunkPrimer();
 		
+		VCraftWorld.setChunkNBT(chunkX, chunkZ, "climate", climate.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		
 		//this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 		
 		biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
@@ -170,7 +182,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		Chunk chunk = new Chunk(this.worldObj, primer, chunkX, chunkZ);
 		
 		
-		biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
+		//biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
 		byte biomeMapbytes[] = new byte[256];
 		for (int i = 0; i < biomeMap.length; i++) {
@@ -179,6 +191,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		chunk.setBiomeArray(biomeMapbytes);
 		chunk.generateSkylightMap();
+		
 		
 		
 		return chunk;
@@ -199,12 +212,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 	
 	
-	ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
+	
 	
 	@Override
 	// chunkprovider is an instance of ChunkProviderServer
 	public void populate(IChunkProvider chunkprovider, int chunkX, int chunkZ) {
 		
+		// Actually working check on whether or not to populate a chunk (prevents runaway chunk generation)
+		// Vanilla pop-check extremely strange and not working 
 		if (chunkprovider instanceof ChunkProviderServer) {
 			int x, z;
 			
@@ -216,13 +231,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				if (shouldPopulate((ChunkProviderServer)chunkprovider, x, z)) {
 					it.remove();
 					populate(chunkprovider, x, z);
+					VCraftWorld.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", true);
 					break;
 				}
 			}
 			
 			if(!shouldPopulate((ChunkProviderServer)chunkprovider, chunkX, chunkZ)) {
 				unpopulatedChunks.add(new BlockPos(chunkX, 0, chunkZ));
-				//worldObj.getChunkFromChunkCoords(chunkX, chunkZ).setTerrainPopulated(false);
+				VCraftWorld.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", false);	
 				return;
 			}
 			
@@ -230,7 +246,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			
 		
 		BlockPos pos = new BlockPos(chunkX, 0, chunkZ);
-		VCBiome biome = (VCBiome) this.worldObj.getBiomeGenForCoords(pos);
+		//BiomeVC biome = (BiomeVC) this.worldObj.getBiomeGenForCoords(pos);
 		//biome.decorate(this.worldObj, this.rand, pos);
 
 		
@@ -238,10 +254,27 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		int xCoord = chunkX * 16;
 		int zCoord = chunkZ * 16;
 
-		WorldGenAnimals.performWorldGenSpawning(this.worldObj, biome, xCoord + 8, zCoord + 8, 16, 16, this.rand);
+		WorldGenAnimals.performWorldGenSpawning(this.worldObj, null, xCoord + 8, zCoord + 8, 16, 16, this.rand);
 		
 		floragenerator.generate(rand, chunkX, chunkZ, worldObj, chunkprovider, chunkprovider);
 
+		
+		BlockPos chunkpos = new BlockPos(xCoord, 0, zCoord);
+		int temp;
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				pos = worldObj.getHorizon(chunkpos.add(x, 0, z));
+				
+				if (worldObj.getBlockState(pos.down()).getBlock().getMaterial() != Material.water) {
+					temp = VCraftWorld.getTemperature(pos);
+					if (temp < -10 || (temp < 2 && rand.nextInt(temp + 11) == 0)) {
+						worldObj.setBlockState(pos, Blocks.snow_layer.getDefaultState());
+					}
+				}
+			}
+		}
+		
+		
 	}
 	
 	
@@ -281,7 +314,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			rockData[i] = rockLayers[i].getInts(chunkZ*16, chunkX*16, 16, 16);
 		}
 		
-		biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
+		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
 		//rockDeformationData = rockDeformationLayer.getInts(chunkZ*16, chunkX*16, 16, 16);
 		
@@ -289,7 +322,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			for (int z = 0; z < 16; ++z) {
 				int arrayIndexChunk = z + x * 16;
 				
-				VCBiome biome = (VCBiome) biomeMap[arrayIndexChunk];
+				BiomeVC biome = (BiomeVC) biomeMap[arrayIndexChunk];
 
 				int airblocks = 0;
 				
@@ -303,7 +336,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 							chunkGroundLevelMap[arrayIndexChunk] = y;
 						}
 						
-						buildCrustLayers(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome);						
+						buildCrustLayers(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);						
 					}
 					
 					if (chunkGroundLevelMap[arrayIndexChunk] != 0 && primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
@@ -324,7 +357,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	
 	
-	public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, VCBiome biome) {
+	public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ) {
 		int arrayIndexChunk = z + x * 16;
 		
 		EnumCrustLayer layer = EnumCrustLayer.crustLayerForDepth(depth, rockData, arrayIndexChunk, primer.getBlockState(x, chunkGroundLevelMap[arrayIndexChunk]+1, z).getBlock() == Blocks.water);
@@ -332,10 +365,12 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		if (layer == null) return;
 		
-		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), depth);
+		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth);
 		
 		if (blockstate == null) {
 			blockstate = EnumRockType.byColor(rockData[layer.dataLayerIndex][arrayIndexChunk] & 0xff).getRockVariantForBlock(BlocksVC.rock);
+		} else {
+			//System.out.println(chunkX + " / " + x + "   " + chunkZ + " / " + z);
 		}
 		
 		primer.setBlockState(x, y, z, blockstate);
@@ -380,19 +415,20 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 	}
 
-	
+	BiomeGenBase []largerBiomeMap = null;
 	public void generateTerrainHigh(int chunkX, int chunkZ, ChunkPrimer primer) {
 		byte horizontalPart = 4;
-		byte verticalPart = 16;
-		int seaLevel = 123 - VintageCraftConfig.terrainGenLevel;
+		byte verticalPart = 20;
+		int seaLevel = VintageCraftConfig.seaLevel() - VintageCraftConfig.terrainGenLevel;
 		
 		int xSize = horizontalPart + 1;
-		byte ySize = 17;
+		byte ySize = 21;
 		int zSize = horizontalPart + 1;
 		
 		//short arrayYHeight = 128;
 		
-		biomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(biomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
+		
+		largerBiomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(largerBiomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
 		
 		this.noiseArray = this.initializeNoiseFieldHigh(this.noiseArray, chunkX * horizontalPart, 0, chunkZ * horizontalPart, xSize, ySize, zSize);
 		
@@ -473,8 +509,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	 * size.
 	 */
 	private double[] initializeNoiseFieldHigh(double[] outArray, int xPos, int yPos, int zPos, int xSize, int ySize, int zSize) {
-		// /tp -332 157 1004
-		
 		int smoothingRadius = 2;
 		
 		if (outArray == null) {
@@ -492,22 +526,44 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 
 		// Determines the height of the terrain i guess
-		double var44 = 684.412D;
-		double var45 = 684.412D;
-		/*double var44 = 800D;
-		double var45 = 800D;*/
+		/*
+		 * Cool settings! 
+		 
+		double horizontalScale = 684.412D; //684.412D;
+		double verticalScale = 50D; // 684.412D;
+		*/
 		
+		/* Very sharp cliffs to moutain  
+		double horizontalScale = 684.412D;
+		double verticalScale = 1D;
+		*/
+		
+		/* Rather flat with extreme overhangs - very nice!
+		double horizontalScale = 684.412D;
+		double verticalScale = 2000D;
+		*/
+		
+		
+		// No overhangs, large mountains, shallow lakes 
+		/*double horizontalScale = 300D;
+		double verticalScale = 300D;      // probably horizontal scale*/
+		
+		
+		
+		double horizontalScale = 384.412D;
+		double verticalScale = 684.412D;
 		
 		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
 		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 200.0D, 200.0D, 0.5D);
-		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, var44 / 80.0D, var45 / 160.0D, var44 / 80.0D);
-		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, var44, var45, var44);
-		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, var44, var45, var44);
+		
+		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 80.0D, verticalScale / 160.0D, horizontalScale / 80.0D);
+		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
+		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
 		
 		boolean var43 = false;
 		boolean var42 = false;
 		int posIndex = 0;
-		int var13 = 0;
+		int counter = 0;
 
 		for (int x = 0; x < xSize; ++x) {
 			for (int z = 0; z < zSize; ++z) {
@@ -515,11 +571,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				float minBlendedHeight = 0.0F;
 				float blendedHeightSum = 0.0F;
 				
-				VCBiome baseBiome = (VCBiome)biomeMap[x + smoothingRadius + (z + smoothingRadius) * (xSize + 5)];
+				BiomeVC baseBiome = (BiomeVC)largerBiomeMap[x + smoothingRadius + (z + smoothingRadius) * (xSize + 5)];
 
 				for (int xR = -smoothingRadius; xR <= smoothingRadius; ++xR) {
 					for (int zR = -smoothingRadius; zR <= smoothingRadius; ++zR) {
-						VCBiome blendBiome = (VCBiome)biomeMap[x + xR + smoothingRadius + (z + zR + smoothingRadius) * (xSize + 5)];
+						BiomeVC blendBiome = (BiomeVC)largerBiomeMap[x + xR + smoothingRadius + (z + zR + smoothingRadius) * (xSize + 5)];
 						float blendedHeight = this.parabolicField[xR + smoothingRadius + (zR + smoothingRadius) * 5] / 2.0F;
 						//System.out.println(blendedHeight + " / " + blendBiome.minHeight + " > " + baseBiome.minHeight + " max:" + blendBiome.maxHeight);
 						if (blendBiome.minHeight > baseBiome.minHeight) {
@@ -537,60 +593,85 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				maxBlendedHeight = maxBlendedHeight * 0.9F + 0.1F;
 				minBlendedHeight = (minBlendedHeight * 4.0F - 1.0F) / 8.0F;
 				
-				double var47 = this.noise6[var13] / 8000.0D;
+				
+				
+				/*minBlendedHeight = -5f;
+				maxBlendedHeight = -4.9f;*/
+				
+				// Tall Erroded Islands
+				//minBlendedHeight = -0.8f;
+				//maxBlendedHeight = 1f;xd
+				
+				// Eroded Islands
+				//minBlendedHeight = -0.8f;
+				//maxBlendedHeight = 0.2f;
+				
+				
+				// Island
+				// Used these settings to generate extreme overhangs etc. 
+				/*minBlendedHeight = -0.2f;
+				maxBlendedHeight = 0.5f;*/
+				
+				maxBlendedHeight /= 10;
+				
+				
+				double noise6var = this.noise6[counter] / 8000.0D;
 
-				if (var47 < 0.0D)
-					var47 = -var47 * 0.3D;
-				var47 = var47 * 3.0D - 2.0D;
+				if (noise6var < 0.0D)
+					noise6var = -noise6var * 0.3D;
+				noise6var = noise6var * 3.0D - 2.0D;
 
-				if (var47 < 0.0D)
-				{
-					var47 /= 2.0D;
-					if (var47 < -1.0D)
-						var47 = -1.0D;
-					var47 /= 1.4D;
-					var47 /= 2.0D;
+				if (noise6var < 0.0D) {
+					noise6var /= 2.0D;
+					if (noise6var < -1.0D)
+						noise6var = -1.0D;
+					noise6var /= 1.4D;
+					noise6var /= 2.0D;
 				}
 				else
 				{
-					if (var47 > 1.0D)
-						var47 = 1.0D;
-					var47 /= 8.0D;
+					if (noise6var > 1.0D)
+						noise6var = 1.0D;
+					noise6var /= 8.0D;
 				}
 
-				++var13;
-				for (int y = 0; y < ySize; ++y)
-				{
-					double var48 = minBlendedHeight;
-					double var26 = maxBlendedHeight;
-					var48 += var47 * 0.2D;
-					var48 = var48 * ySize / 16.0D;
-					double var28 = ySize / 2.0D + var48 * 4.0D;
-					double var30 = 0.0D;
-					double var32 = (y - var28) * 12.0D * 256.0D / 256.0D / (2.70 + var26);
+				++counter;
+				for (int y = 0; y < ySize; ++y) {
+					double minblendhgvar = minBlendedHeight;
+					double maxblendhgvar = maxBlendedHeight;
+					minblendhgvar += noise6var * 0.2D;
+					minblendhgvar = minblendhgvar * ySize / 16.0D;
+					
+					double adjustedminhg = ySize / 2.0D + minblendhgvar * 4.0D;
+					double result = 0.0D;
+					double theheight = (y - adjustedminhg) * 12.0D / (2.70 + maxblendhgvar);   // * 256.0D / 256.0D
 
-					if (var32 < 0.0D)
-						var32 *= 4.0D;
-
-					double var34 = this.noise1[posIndex] / 512.0D;
-					double var36 = this.noise2[posIndex] / 512.0D;
-					double var38 = (this.noise3[posIndex] / 10.0D + 1.0D) / 2.0D;
-
-					if (var38 < 0.0D)
-						var30 = var34;
-					else if (var38 > 1.0D)
-						var30 = var36;
-					else
-						var30 = var34 + (var36 - var34) * var38;
-
-					var30 -= var32;
-					if (y > ySize - 4)
-					{
-						double var40 = (y - (ySize - 4)) / 3.0F;
-						var30 = var30 * (1.0D - var40) + -10.0D * var40;
+					if (theheight < 0.0D) {
+						theheight *= 4.0D;
+					}
+					
+					double noise1var = this.noise1[posIndex] / 512.0D;
+					double noise2var = this.noise2[posIndex] / 512.0D;
+					double noise3var = (this.noise3[posIndex] / 10.0D + 1.0D) / 2.0D;
+					
+					if (noise3var < 0.0D) {
+						result = noise1var;
+					} else if (noise3var > 1.0D) {
+						result = noise2var;
+					} else {
+						result = noise1var + (noise2var - noise1var) * noise3var;
 					}
 
-					outArray[posIndex] = var30;
+					//result = noise1var;
+							
+					result -= theheight;
+					
+					if (y > ySize - 4) {
+						double var40 = (y - (ySize - 4)) / 3.0F;
+						result = result * (1.0D - var40) + -10.0D * var40;
+					}
+
+					outArray[posIndex] = result;
 					++posIndex;
 					
 					
@@ -821,7 +902,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 
 
-	public static List getCreatureSpawnsByChunk(World world, VCBiome biome, int par2, int par3) {
+	public static List getCreatureSpawnsByChunk(World world, BiomeVC biome, int par2, int par3) {
 		ArrayList<SpawnListEntry> list = new ArrayList<SpawnListEntry>();
 		
 		list.add(new SpawnListEntry(EntityPig.class, 1, 2, 4));

@@ -3,7 +3,7 @@
     "textures": {
         "particle": "vintagecraft:blocks/tallgrass/normal",
         "cross": "vintagecraft:blocks/tallgrass/normal",
-        "colored": "vintagecraft:blocks/tallgrass/cornflower_colored",
-		"fixcolor": "vintagecraft:blocks/tallgrass/cornflower_fixcolor"
+        "colored": "vintagecraft:blocks/tallgrass/cornflower_stem",
+		"fixcolor": "vintagecraft:blocks/tallgrass/cornflower_petals"
     }
 }

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.River;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
@@ -48,35 +48,35 @@ public class GenLayerRiverMix extends GenLayerVC {
 				zprev = index+zSize;
 
 				// No river in ocean and mountain biomes
-				if (VCBiome.isOceanic(biomeid) || VCBiome.isMountainous(biomeid)) {
+				if (BiomeVC.isOceanic(biomeid) || BiomeVC.isMountainous(biomeid)) {
 					layerOut[index] = biomeid;
 				} else if (isriver > 0) {
 					layerOut[index] = isriver;
 
 					//Here we make sure that rivers dont run along ocean/beach splits. We turn the river into oceans.
-					if (VCBiome.isShore(biomeid)) {
+					if (BiomeVC.isShore(biomeid)) {
 						
-						layerOut[index] = VCBiome.ocean.biomeID;
+						layerOut[index] = BiomeVC.ocean.biomeID;
 						
 						if (xnext < 0 || xprev >= layerBiomes.length || znext < 0 || zprev >= layerBiomes.length) continue;
 						
-						if(inBounds(xnext, layerOut) && layerOut[xnext] == VCBiome.river.biomeID) {
-							layerOut[xnext] = VCBiome.ocean.biomeID;
+						if(inBounds(xnext, layerOut) && layerOut[xnext] == BiomeVC.river.biomeID) {
+							layerOut[xnext] = BiomeVC.ocean.biomeID;
 						}
-						if(inBounds(znext, layerOut) && layerOut[znext] == VCBiome.river.biomeID) {
-							layerOut[znext] = VCBiome.ocean.biomeID;
+						if(inBounds(znext, layerOut) && layerOut[znext] == BiomeVC.river.biomeID) {
+							layerOut[znext] = BiomeVC.ocean.biomeID;
 						}
 						
-						if(inBounds(zprev, layerOut) && VCBiome.isOceanic(layerBiomes[zprev]) && layerRivers[zprev] == 0) {
+						if(inBounds(zprev, layerOut) && BiomeVC.isOceanic(layerBiomes[zprev]) && layerRivers[zprev] == 0) {
 							layerOut[index] = biomeid;
 						}
-						if(inBounds(znext, layerOut) && VCBiome.isOceanic(layerBiomes[znext]) && layerRivers[znext] == 0) {
+						if(inBounds(znext, layerOut) && BiomeVC.isOceanic(layerBiomes[znext]) && layerRivers[znext] == 0) {
 							layerOut[index] = biomeid;
 						}
-						if(inBounds(xnext, layerOut) && VCBiome.isOceanic(layerBiomes[xnext]) && layerRivers[xnext] == 0) {
+						if(inBounds(xnext, layerOut) && BiomeVC.isOceanic(layerBiomes[xnext]) && layerRivers[xnext] == 0) {
 							layerOut[index] = biomeid;
 						}
-						if(inBounds(xprev, layerOut) && VCBiome.isOceanic(layerBiomes[xprev]) && layerRivers[xprev] == 0) {
+						if(inBounds(xprev, layerOut) && BiomeVC.isOceanic(layerBiomes[xprev]) && layerRivers[xprev] == 0) {
 							layerOut[index] = biomeid;
 						}
 					}
@@ -86,8 +86,8 @@ public class GenLayerRiverMix extends GenLayerVC {
 				}
 
 				//Similar to above, if we're near a lake, we turn the river into lake.
-				removeRiver(index, VCBiome.lake.biomeID);
-				removeRiver(index, VCBiome.MountainsEdge.biomeID);
+				removeRiver(index, BiomeVC.lake.biomeID);
+				removeRiver(index, BiomeVC.MountainsEdge.biomeID);
 
 				validateInt(layerOut, index);
 			}
@@ -97,7 +97,7 @@ public class GenLayerRiverMix extends GenLayerVC {
 
 	public void removeRiver(int index, int biomeToReplaceWith)
 	{		
-		if(layerOut[index] == VCBiome.river.biomeID)
+		if(layerOut[index] == BiomeVC.river.biomeID)
 		{
 			if(xnext >= 0 && layerBiomes[xnext] == biomeToReplaceWith)
 			{

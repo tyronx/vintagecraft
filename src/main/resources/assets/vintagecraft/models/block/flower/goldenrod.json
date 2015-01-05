@@ -1,0 +1,7 @@
+{
+		"parent": "block/cross",
+		"textures": {
+			"particle": "vintagecraft:blocks/flower/goldenrod",
+			"cross": "vintagecraft:blocks/flower/goldenrod"
+		}
+	}

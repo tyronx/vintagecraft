@@ -1,8 +1,11 @@
 {
 	"variants": {
-		"grasstype=normal": { "model": "vintagecraft:tallgrass/normal" },
-		"grasstype=oxeyedaisy": { "model": "vintagecraft:tallgrass/oxeyedaisy" },
-		"grasstype=cornflower": { "model": "vintagecraft:tallgrass/cornflower" },
-		"grasstype=cornflower2": { "model": "vintagecraft:tallgrass/cornflower2" }
+		"grasstype=veryshort": { "model": "vintagecraft:tallgrass/veryshort" },
+		"grasstype=short": { "model": "vintagecraft:tallgrass/short" },
+		"grasstype=medium": { "model": "vintagecraft:tallgrass/medium" },
+		"grasstype=long": { "model": "vintagecraft:tallgrass/long" },
+		"grasstype=verylong": { "model": "vintagecraft:tallgrass/verylong" },
+		"grasstype=verylong_flowering": { "model": "vintagecraft:tallgrass/verylong_flowering" }
+
 	}
 }

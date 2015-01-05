@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldGen.GenLayers.Continent;
 
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 
 public class GenLayerShore extends GenLayerVC {
@@ -33,20 +33,20 @@ public class GenLayerShore extends GenLayerVC {
 				int var12;
 				int var13;
 
-				if ( !VCBiome.isOceanic(var9) && var9 != VCBiome.river.biomeID && var9 != VCBiome.swampland.biomeID && var9 != VCBiome.HighHills.biomeID)
+				if ( !BiomeVC.isOceanic(var9) && var9 != BiomeVC.river.biomeID && var9 != BiomeVC.swampland.biomeID && var9 != BiomeVC.HighHills.biomeID)
 				{
 					var10 = var5[var8 + 1 + (var7 + 1 - 1) * (par3 + 2)];
 					var11 = var5[var8 + 1 + 1 + (var7 + 1) * (par3 + 2)];
 					var12 = var5[var8 + 1 - 1 + (var7 + 1) * (par3 + 2)];
 					var13 = var5[var8 + 1 + (var7 + 1 + 1) * (par3 + 2)];
 
-					if (!VCBiome.isOceanic(var10) && !VCBiome.isOceanic(var11) && !VCBiome.isOceanic(var12) && !VCBiome.isOceanic(var13))
+					if (!BiomeVC.isOceanic(var10) && !BiomeVC.isOceanic(var11) && !BiomeVC.isOceanic(var12) && !BiomeVC.isOceanic(var13))
 						var6[var8 + var7 * par3] = var9;
 					else
 					{
-						int beachid = VCBiome.beach.biomeID;
-						if(VCBiome.isMountainous(var9))
-							beachid = VCBiome.gravelbeach.biomeID;
+						int beachid = BiomeVC.beach.biomeID;
+						if(BiomeVC.isMountainous(var9))
+							beachid = BiomeVC.gravelbeach.biomeID;
 						var6[var8 + var7 * par3] = beachid;
 					}
 				}

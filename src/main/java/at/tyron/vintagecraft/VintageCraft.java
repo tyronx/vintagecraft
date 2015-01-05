@@ -72,6 +72,8 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.world.ChunkDataEvent;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
@@ -124,7 +126,8 @@ public class VintageCraft {
 		
        
         // Register the Chunk Load/Save Handler
-     	//MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
+     	MinecraftForge.EVENT_BUS.register(VCraftWorld.instance);
+     	
      	
      	
      	GameRegistry.registerWorldGenerator(new WorldGenDeposits(), 4);
@@ -152,6 +155,9 @@ public class VintageCraft {
 		
 		Recipes.addRecipes();
     }
+    
+    
+	
     	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) { proxy.postInit(event); }

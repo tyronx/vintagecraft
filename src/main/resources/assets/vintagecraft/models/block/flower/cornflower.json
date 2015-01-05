@@ -1,7 +1,7 @@
 {
-    "parent": "block/cross",
-    "textures": {
-        "particle": "vintagecraft:blocks/flower/cornflower",
-        "cross": "vintagecraft:blocks/flower/cornflower"
-    }
-}
+		"parent": "block/cross",
+		"textures": {
+			"particle": "vintagecraft:blocks/flower/cornflower",
+			"cross": "vintagecraft:blocks/flower/cornflower"
+		}
+	}

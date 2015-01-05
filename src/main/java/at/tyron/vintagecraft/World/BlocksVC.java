@@ -1,6 +1,11 @@
 package at.tyron.vintagecraft.World;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.Block.SoundType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -12,23 +17,20 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
-import at.tyron.vintagecraft.WorldProperties.EnumDoublePlantTypeVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumGrass;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.block.*;
+import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
 import at.tyron.vintagecraft.item.ItemFlowerVC;
 import at.tyron.vintagecraft.item.ItemGrassVC;
+import at.tyron.vintagecraft.item.ItemGravel;
 import at.tyron.vintagecraft.item.ItemLeaves;
 import at.tyron.vintagecraft.item.ItemLeavesBranchy;
 import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOre;
 import at.tyron.vintagecraft.item.ItemPlanksVC;
+import at.tyron.vintagecraft.item.ItemSand;
 import at.tyron.vintagecraft.item.ItemTopSoil;
 import at.tyron.vintagecraft.item.ItemRock;
 
@@ -36,9 +38,10 @@ public class BlocksVC {
 	public static Block stove;
 	public static Block stove_lit;
 	
-	public static BlockVC flower;
+	public static BlockVC[] flowers;
+	public static BlockVC[] doubleflowers;
+	
 	public static BlockVC tallgrass;
-	public static BlockVC doubleplant;
 
 	public static BlockVC uppermantle;
 	
@@ -50,6 +53,8 @@ public class BlocksVC {
 	public static BlockVC regolith;
 	public static BlockVC subsoil;
 	public static BlockVC topsoil;
+	public static BlockVC sand;
+	public static BlockVC gravel;
 
 	// Todo
 	public static BlockVC charredtopsoil;  // Burned dirt when in contact with lava 
@@ -79,6 +84,7 @@ public class BlocksVC {
 		initTileEntities();
 	}
 	
+
 	
 	public static void initBlocks() {
 		stove = new BlockStove(false).setHardness(3F);
@@ -87,12 +93,18 @@ public class BlocksVC {
 		register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
 		
-		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
-		flower = new BlockFlowerVC().registerMultiState("flower", ItemFlowerVC.class, "flower", EnumFlower.values()).setHardness(0.2f).setStepSound(Block.soundTypeGrass);
-		doubleplant = new BlockDoublePlantVC().registerMultiState("doubleplant", ItemDoublePlantVC.class, "doubleplant", EnumDoublePlantTypeVC.values()).setHardness(0.4f).setStepSound(Block.soundTypeGrass);
+		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 		
+		
+		flowers = initMultiBlock(EnumFlower.values(false), "flower", BlockFlowerVC.class, ItemFlowerVC.class, BlockFlowerVC.multistateAvailableTypes, 0.2f, Block.soundTypeGrass, null, 0);
+		doubleflowers = initMultiBlock(EnumFlower.values(true), "doubleflower", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
+
+		//System.out.println("created " + flowers.length + " flower blocks and " + doubleflowers.length + " double flower blocks");
 		
 		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, "topsoil", EnumOrganicLayer.valuesWithFertility()).setStepSound(Block.soundTypeGrass);
+		//topsoil = initMultiBlock(EnumFlower.values(true), "topsoil", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
+		
+		
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, "peat", EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
@@ -100,6 +112,9 @@ public class BlocksVC {
 		subsoil = new BlockSubSoil().setHardness(1.5F).registerMultiState("subsoil", ItemRock.class, "subsoil", EnumRockType.values()).setStepSound(Block.soundTypeGravel);
 		regolith = new BlockRegolith().setHardness(2.5F).registerMultiState("regolith", ItemRock.class, "regolith", EnumRockType.values()).setStepSound(Block.soundTypeGravel);
 		rock = new BlockRock().setHardness(2F).registerMultiState("rock", ItemRock.class, "rock", EnumRockType.values());
+		gravel = new BlockGravel().setHardness(1.3F).registerMultiState("gravel", ItemGravel.class, "gravel", EnumRockType.values());
+		sand = new BlockGravel().setHardness(1F).registerMultiState("sand", ItemSand.class, "sand", EnumRockType.values());
+		
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
@@ -116,11 +131,11 @@ public class BlocksVC {
 		rawore.setUnlocalizedName(ModInfo.ModID + ":" + raworeName);
 		rawore.setHardness(2F);
 		
-		EnumMaterialDeposit.NATIVEGOLD.block = rawore;
-		EnumMaterialDeposit.LIMONITE.block = rawore;
-		EnumMaterialDeposit.LIGNITE.block = rawore;
-		EnumMaterialDeposit.BITUMINOUSCOAL.block = rawore;
-		EnumMaterialDeposit.NATIVECOPPER.block = rawore;
+		EnumMaterialDeposit.NATIVEGOLD.init(rawore);
+		EnumMaterialDeposit.LIMONITE.init(rawore);
+		EnumMaterialDeposit.LIGNITE.init(rawore);
+		EnumMaterialDeposit.BITUMINOUSCOAL.init(rawore);
+		EnumMaterialDeposit.NATIVECOPPER.init(rawore);
 		
 		GameRegistry.registerBlock(rawore, raworeName); //.registerSingleState("ore", ItemOre.class);	
 		GameRegistry.registerTileEntity(TEOre.class, ModInfo.ModID + ":orete");
@@ -139,6 +154,8 @@ public class BlocksVC {
 		topsoil.setHarvestLevel("shovel", 0);
 		subsoil.setHarvestLevel("shovel", 0);
 		rawclay.setHarvestLevel("shovel", 0);
+		gravel.setHarvestLevel("shovel", 0);
+		sand.setHarvestLevel("shovel", 0);
 		
 		regolith.setHarvestLevel("shovel", 1);
 		peat.setHarvestLevel("shovel", 1);
@@ -160,4 +177,62 @@ public class BlocksVC {
 		ModelBakery.addVariantName(Item.getItemFromBlock(block), "vintagecraft:" + name);
 	}
 	
+
+
+
+
+
+
+
+
+
+	
+	
+	static BlockVC[] initMultiBlock(IEnumState[] states, String name, Class<? extends BlockVC> blockclass, Class<? extends ItemBlock> itemclass, int typesperblock, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
+		IEnumState[][] chunked = split(states, typesperblock);
+		ArrayList<BlockVC> blocks = new ArrayList<BlockVC>();
+		
+		for (IEnumState[] blockstates : chunked) {
+			BlockVC block;
+			try {
+				block = blockclass.getDeclaredConstructor(new Class[]{IEnumState[].class}).newInstance(new Object[]{blockstates});
+				block.setHardness(hardness).setStepSound(stepsound);
+				
+				if (harvesLevelTool != null) {
+					block.setHarvestLevel(harvesLevelTool, harvestLevel);
+				}
+				
+				blocks.add(block);
+				
+				int meta = 0;
+				for (IEnumState blockstate : blockstates) {
+					blockstate.init(block, meta++);
+				}
+				
+				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, name, blockstates);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return blocks.toArray(new BlockVC[0]);
+	}
+	
+	
+	static <T> T[][] split(T[] elements, int chunksize) {
+		int chunks = 1 + elements.length / chunksize;
+		
+		ArrayList<T> result = new ArrayList<T>(); 
+		
+		for (int i = 0; i < chunks; i++) {
+			result.add((T) Arrays.copyOfRange(elements, i * chunksize, Math.min(elements.length, i*chunksize + chunksize)));
+		}
+		
+		return (T[][]) result.toArray((T[])Array.newInstance(elements.getClass(), 0));
+		
+	}
+	
+	
+
 }

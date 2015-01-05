@@ -1,0 +1,7 @@
+{
+		"parent": "block/cross",
+		"textures": {
+			"particle": "vintagecraft:blocks/flower/purplemilkweed",
+			"cross": "vintagecraft:blocks/flower/purplemilkweed"
+		}
+	}

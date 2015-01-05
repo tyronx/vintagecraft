@@ -56,7 +56,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				int depositColor = depositLayer[x*16+z] & 0xFF;
+				int depositColor = depositLayer[x+z*16] & 0xFF;
 				if (depositColor == 0) continue;
 				
 				EnumMaterialDeposit deposit = EnumMaterialDeposit.depositForColor(depositColor);
@@ -66,7 +66,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				drawnDeposits[deposit.id] = 1;
 				
 				
-				int depositDepth = ((depositLayer[x*16+z] >> 16) & 0xFF) + (((depositLayer[x*16+z] >> 8) & 0xFF) - 7);
+				int depositDepth = ((depositLayer[x+z*16] >> 16) & 0xFF) + (((depositLayer[x+z*16] >> 8) & 0xFF) - 7);
 
 				
 				int horizon = VintageCraftConfig.seaLevel();
@@ -76,10 +76,12 @@ public class WorldGenDeposits implements IWorldGenerator {
 				
 				pos = new BlockPos(xCoord + x, Math.max(1, horizon - depositDepth), zCoord + z);
 				
+				//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("made copper");
+				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos))) {
-					world.setBlockState(pos, deposit.block.getDefaultState(), 2);
+					world.setBlockState(pos, deposit.getBlockStateForDepth(depositDepth), 2);
 					
-					if (deposit.block instanceof BlockOreVC) {
+					if (deposit.getBlockStateForDepth(depositDepth) instanceof BlockOreVC) {
 						TEOre tileentity = (TEOre)world.getTileEntity(pos);
 						if(tileentity != null) {
 							tileentity.setOreType(deposit).setRockType((EnumRockType)parentmaterial.getValue(BlockRock.STONETYPE));

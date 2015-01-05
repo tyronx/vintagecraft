@@ -31,7 +31,7 @@ public class ItemFlowerVC extends ItemBlock {
 
 	
 	public static EnumFlower getFlowerType(ItemStack itemstack) {
-		return EnumFlower.fromMeta(itemstack.getItemDamage());
+		return EnumFlower.fromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 	}
 	
 	

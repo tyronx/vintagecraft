@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.Continent;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -60,7 +60,7 @@ public class GenLayerDeepOcean extends GenLayerVC {
 
 				if (thisID == 0 && oceanCount > 3)
 				{
-					outCache[outIndex] = VCBiome.DeepOcean.biomeID;
+					outCache[outIndex] = BiomeVC.DeepOcean.biomeID;
 				}
 				else
 				{

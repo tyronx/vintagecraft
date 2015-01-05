@@ -3,8 +3,10 @@ package at.tyron.vintagecraft.block;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumGrass;
+import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
+import at.tyron.vintagecraft.interfaces.ISoil;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -28,12 +30,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class BlockTallGrass extends BlockVC implements IPlantable {
-	public static final PropertyEnum GRASSTYPE = PropertyEnum.create("grasstype", EnumGrass.class);
+	public static final PropertyEnum GRASSTYPE = PropertyEnum.create("grasstype", EnumTallGrass.class);
 	
 	public BlockTallGrass() {
 		super(Material.plants);
 		setCreativeTab(CreativeTabs.tabDecorations);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(GRASSTYPE, EnumGrass.NORMAL));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(GRASSTYPE, EnumTallGrass.LONG));
 		this.setTickRandomly(true);
 		float f = 0.5F;
 	    this.setBlockBounds(
@@ -44,23 +46,23 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	
 	
 	public int damageDropped(IBlockState state) {
-        return ((EnumGrass)state.getValue(GRASSTYPE)).getMetaData();
+        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData();
     }
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-    	for (EnumGrass grass : EnumGrass.values()) {
+    	for (EnumTallGrass grass : EnumTallGrass.values()) {
     		list.add(new ItemStack(itemIn, 1, grass.getMetaData()));
     	}
     }
 
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(GRASSTYPE, EnumGrass.fromMeta(meta));
+        return this.getDefaultState().withProperty(GRASSTYPE, EnumTallGrass.fromMeta(meta));
     }
 
 
     public int getMetaFromState(IBlockState state) {
-        return ((EnumGrass)state.getValue(GRASSTYPE)).getMetaData();
+        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData();
     }
 
     protected BlockState createBlockState() {
@@ -84,7 +86,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	@Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-        return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
+		return VCraftWorld.getGrassColorAtPos(pos);
     }
 	
 
@@ -94,15 +96,20 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     @SideOnly(Side.CLIENT)
     public Block.EnumOffsetType getOffsetType() {
         return Block.EnumOffsetType.XZ;
-    }   
+    }
     
+
+    @Override
+    public boolean isReplaceable(World worldIn, BlockPos pos) {
+    	return true;
+    }
     
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
         return super.canPlaceBlockAt(worldIn, pos) && worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
     }
 
     protected boolean canPlaceBlockOn(Block ground) {
-        return ground == BlocksVC.topsoil || ground == BlocksVC.subsoil;
+        return ground instanceof ISoil && ((ISoil)ground).canGrowGrass(null, null);
     }
 
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
@@ -115,8 +122,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     }
 
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (!this.canBlockStay(worldIn, pos, state))
-        {
+        if (!this.canBlockStay(worldIn, pos, state)) {
             this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
         }

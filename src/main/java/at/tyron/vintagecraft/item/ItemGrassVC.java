@@ -8,10 +8,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumGrass;
+import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
 
 public class ItemGrassVC extends ItemBlock {
 
+	
+	
 	public ItemGrassVC(Block block) {
 		super(block);
         this.setHasSubtypes(true);
@@ -28,8 +30,8 @@ public class ItemGrassVC extends ItemBlock {
 	
 
 	
-	public static EnumGrass getGrassType(ItemStack itemstack) {
-		return EnumGrass.fromMeta(itemstack.getItemDamage());
+	public static EnumTallGrass getGrassType(ItemStack itemstack) {
+		return EnumTallGrass.fromMeta(itemstack.getItemDamage());
 	}
 	
 	

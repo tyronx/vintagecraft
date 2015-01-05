@@ -4,8 +4,9 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
 
@@ -44,10 +45,10 @@ public enum EnumCrustLayer {
 	}
 	
 	
-	public IBlockState getFixedBlock(EnumRockType rocktype, int depth) {
+	public IBlockState getFixedBlock(EnumRockType rocktype, int x, int y, int z, int depth) {
 		switch (this) {
-			case TOPSOIL: return depth > 0 ? EnumOrganicLayer.None.getTopSoilVariantForBlock(BlocksVC.topsoil) : EnumOrganicLayer.NormalGrass.getTopSoilVariantForBlock(BlocksVC.topsoil);
-			case SUBSOIL: return rocktype.getRockVariantForBlock(BlocksVC.subsoil);
+			case TOPSOIL: return VCraftWorld.getTopLayerAtPos(x, y, z, rocktype); 
+			case SUBSOIL: return VCraftWorld.getSubLayerAtPos(x, y, z, rocktype);
 			case REGOLITH: return rocktype.getRockVariantForBlock(BlocksVC.regolith);
 			default: return null;
 		}

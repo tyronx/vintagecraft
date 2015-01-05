@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
@@ -16,16 +16,16 @@ public class WorldTypeVC extends WorldType {
 	
 	public static WorldTypeVC DEFAULT;
 	
-	private static final VCBiome[] biomesDefault = {
-		VCBiome.ocean,
-		VCBiome.HighHills,
-		VCBiome.plains,
-		VCBiome.HighPlains,
-		VCBiome.swampland,
-		VCBiome.rollingHills,
-		VCBiome.Mountains,
+/*	private static final BiomeVC[] biomesDefault = {
+		BiomeVC.ocean,
+		BiomeVC.HighHills,
+		BiomeVC.plains,
+		BiomeVC.HighPlains,
+		BiomeVC.swampland,
+		BiomeVC.rollingHills,
+		BiomeVC.Mountains,
 	};
-	
+	*/
 	
 	
 	

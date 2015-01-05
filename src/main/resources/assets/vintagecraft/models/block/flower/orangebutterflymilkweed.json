@@ -1,7 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "particle": "vintagecraft:blocks/flower/orangebutterflymilkweed",
-        "cross": "vintagecraft:blocks/flower/orangebutterflymilkweed"
-    }
-}

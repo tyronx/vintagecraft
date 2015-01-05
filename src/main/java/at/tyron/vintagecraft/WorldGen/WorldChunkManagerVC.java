@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 
 
@@ -20,10 +20,7 @@ import net.minecraft.world.gen.layer.IntCache;
 public class WorldChunkManagerVC extends WorldChunkManager {
 	protected World worldObj;
 	protected GenLayerVC genBiomes;
-	protected GenLayerVC biomeIndexLayer;
 
-	/** The BiomeCache object for this world. */
-	protected BiomeCache biomeCache;
 	
 	/** A list of biomes that the player can spawn in. */
 	protected List biomesToSpawnIn;
@@ -33,14 +30,14 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	
 	private WorldChunkManagerVC() {
 		super();
-		biomeCache = new BiomeCache(this);
 		this.biomesToSpawnIn = new ArrayList();
-		this.biomesToSpawnIn.add(VCBiome.HighHills);
-		this.biomesToSpawnIn.add(VCBiome.plains);
-		this.biomesToSpawnIn.add(VCBiome.rollingHills);
-		this.biomesToSpawnIn.add(VCBiome.swampland);
-		this.biomesToSpawnIn.add(VCBiome.Mountains);
-		this.biomesToSpawnIn.add(VCBiome.HighPlains);
+		this.biomesToSpawnIn.add(BiomeVC.HighHills);
+		this.biomesToSpawnIn.add(BiomeVC.plains);
+		
+		/*this.biomesToSpawnIn.add(BiomeVC.rollingHills);
+		this.biomesToSpawnIn.add(BiomeVC.swampland);
+		this.biomesToSpawnIn.add(BiomeVC.Mountains);
+		this.biomesToSpawnIn.add(BiomeVC.HighPlains);*/
 	}
 
 	
@@ -54,10 +51,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 		this();
 		seed = Seed;
 
-		GenLayerVC[] layers = GenLayerVC.genBiomes(Seed);
-
-		this.genBiomes = layers[0];
-		this.biomeIndexLayer = layers[1];
+		this.genBiomes = GenLayerVC.genErosion(Seed);
 	}
 	
 	@Override
@@ -71,19 +65,19 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	 * Returns an array of biomes for the location input.
 	 */
 	@Override
-	public VCBiome[] getBiomesForGeneration(BiomeGenBase[] biomebase, int x, int y, int width, int height) {
+	public BiomeVC[] getBiomesForGeneration(BiomeGenBase[] biomebase, int x, int y, int width, int height) {
 		IntCache.resetIntCache();
 
-		VCBiome[] biomes = (VCBiome[]) biomebase;
+		BiomeVC[] biomes = (BiomeVC[]) biomebase;
 		if (biomes == null || biomes.length < width * height) {
-			biomes = new VCBiome[width * height];
+			biomes = new BiomeVC[width * height];
 		}
 
 		int[] intmap = this.genBiomes.getInts(x, y, width, height);
 		
 		for (int i = 0; i < width * height; ++i) {
 			int index = Math.max(intmap[i], 0);
-			biomes[i] = VCBiome.getBiome(index);
+			biomes[i] = BiomeVC.biomeList[index];
 		}
 		
 		//System.out.println("length: " + biomes.length);
@@ -91,48 +85,28 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	}
 
 	
-	
-	/**
-	 * Returns biomes to use for the blocks and loads the other data like temperature and humidity onto the
-	 * WorldChunkManager Args: oldBiomeList, x, z, width, depth
-	 */
+
 	@Override
-	public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] par1, int par2, int par3, int par4, int par5)
-	{
+	public BiomeGenBase[] loadBlockGeneratorData(BiomeGenBase[] par1, int par2, int par3, int par4, int par5) {
 		return this.getBiomeGenAt(par1, par2, par3, par4, par5, true);
 	}
 
-	/**
-	 * Return a list of biomes for the specified blocks. Args: listToReuse, x, y, width, length, cacheFlag (if false,
-	 * don't check biomeCache to avoid infinite loop in BiomeCacheBlock)
-	 */
+
 	@Override
 	public BiomeGenBase[] getBiomeGenAt(BiomeGenBase[] biomes, int x, int y, int width, int length, boolean cache) {
 		IntCache.resetIntCache();
-
-		if (biomes == null || biomes.length < width * length) {
-			biomes = new VCBiome[width * length];
+		
+	//	System.out.println("call to getbiomegenat @" + x + " / " + y);
+		
+		int ints[] = genBiomes.getInts(x, y, width, length);
+		
+		biomes = new BiomeVC[width * length];
+		
+		for (int i = 0; i < biomes.length; i++) {
+			biomes[i] = BiomeVC.biomeList[ints[i]];
 		}
-
-		if (cache && width == 16 && length == 16 && (x & 15) == 0 && (y & 15) == 0)
-		{
-			BiomeGenBase[] var9 = this.biomeCache.getCachedBiomes(x, y);
-			System.arraycopy(var9, 0, biomes, 0, width * length);
-			return biomes;
-		}
-		else
-		{
-			int[] var7 = this.biomeIndexLayer.getInts(x, y, width, length);
-			for (int zCoord = 0; zCoord < width; ++zCoord)
-			{
-				for (int xCoord = 0; xCoord < length; ++xCoord)
-				{
-					int id = var7[zCoord * width + xCoord] != -1 ? var7[zCoord * width + xCoord] : 0;
-					biomes[zCoord * width + xCoord] = VCBiome.getBiome(id);
-				}
-			}
-			return biomes;
-		}
+		
+		return biomes;
 	}
 
 	
@@ -144,7 +118,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	 */
 	@Override
 	public BlockPos findBiomePosition(int xCoord, int zCoord, int radius, List biomeList, Random rand) {
-		IntCache.resetIntCache();
+		/*IntCache.resetIntCache();
 		int l = xCoord - radius >> 2;
 		int i1 = zCoord - radius >> 2;
 		int j1 = xCoord + radius >> 2;
@@ -158,7 +132,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 		for (int k2 = 0; k2 < l1 * i2; ++k2) {
 			int l2 = l + k2 % l1 << 2;
 			int i3 = i1 + k2 / l1 << 2;
-			VCBiome biomegenbase = VCBiome.getBiome(aint[k2]);
+			BiomeVC biomegenbase = BiomeVC.getBiome(aint[k2]);
 
 			if (biomeList.contains(biomegenbase) && (chunkposition == null || rand.nextInt(j2 + 1) == 0)) {
 				chunkposition = new BlockPos(l2, 0, i3);
@@ -166,7 +140,11 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 			}
 		}
 
-		return chunkposition;
+		return chunkposition;*/
+		
+		
+		return new BlockPos(0, 0, 0);
+		
 	}
 
 	
@@ -192,7 +170,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	 */
 	@Override
 	public boolean areBiomesViable(int par1, int par2, int par3, List par4List) {
-		IntCache.resetIntCache();
+	/*	IntCache.resetIntCache();
 		int var5 = par1 - par3 >> 2;
 				int var6 = par2 - par3 >> 2;
 		int var7 = par1 + par3 >> 2;
@@ -202,10 +180,10 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 		int[] var11 = this.genBiomes.getInts(var5, var6, var9, var10);
 
 		for (int var12 = 0; var12 < var9 * var10; ++var12) {
-			VCBiome var13 = VCBiome.getBiomeGenArray()[var11[var12]];
+			BiomeVC var13 = BiomeVC.getBiomeGenArray()[var11[var12]];
 			if (!par4List.contains(var13))
 				return false;
-		}
+		}*/
 		return true;
 	}
 	
@@ -213,8 +191,6 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	
 	@Override
 	public void cleanupCache() {
-		this.biomeCache.cleanupCache();
-		//WorldCacheManager wcm = TFC_Climate.getCacheManager(this.worldObj);
-		//if(wcm != null) wcm.cleanupCache();
+		
 	}
 }

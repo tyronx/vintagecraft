@@ -7,9 +7,9 @@ import java.io.File;
 
 import javax.imageio.ImageIO;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
-import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerAddIsland;
+/*import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerAddIsland;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerBiomeEdge;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerBiome;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerDeepOcean;
@@ -20,11 +20,9 @@ import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerSmoothBiome;
 import at.tyron.vintagecraft.WorldGen.GenLayers.Continent.GenLayerSmooth;
 import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiverInit;
 import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiverMix;
-import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiver;
+import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiver;*/
 import at.tyron.vintagecraft.WorldGen.GenLayers.Rock.GenLayerRockInit;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.*;
 import net.minecraft.world.gen.layer.GenLayer;
 
 public abstract class GenLayerVC extends GenLayer {
@@ -35,21 +33,39 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long baseSeed;
 	
 	// Generates Wind, Temperature and Rainfall map
-	// R = Temperature    use  R-Value / 5 - 10 => Temp range from -10 to +40
-	// G = Wind           use lower 3 bits for 
-	// B = Rain           
+	// R = Temperature    temp = R-Value / 4.25 - 30 ( = Temp range from -30 to +30)      | inverse R-Value = (temp + 30) * 4.25
+	// G = Fertility      = generated from temp * rain                         (+ water nearby?)
+	// B = Rain           between 0 - 255
 	public static GenLayerVC genClimate(long seed) {
-		GenLayerVC noise = new GenLayerRGBNoise(1L);
+		GenLayerVC noise = new GenLayerClimateRGBNoise(1L);
 		GenLayerVC.drawImageRGB(512, noise, "Climate 0 Noise");
 		
-		GenLayerVC climate = GenLayerZoom.magnify(2L, noise, 4);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 1 4x Magnify");
+		GenLayerVC climate = new GenLayerBlurAll(2L, 1, 3, noise);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 2 Blur ");
 		
-		climate = new GenLayerBlurAll(2L, 1, 5, climate);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 4 Blur ");
+		climate = new GenLayerContrastAndBrightnessAll(3L, 0.5f, 0, climate);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 2 Contrast");
 		
-		climate = GenLayerZoom.magnify(2L, climate, 8);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 8x Magnify");
+		climate = new GenLayerClampedSubstractAll(4L, 0, 1, climate, new GenLayerBlurAll(seed, 1, 15,  noise));
+		GenLayerVC.drawImageRGB(512, climate, "Climate 3 With Unsharp Mask");
+		
+		climate = GenLayerZoom.magnify(1000L, climate, 2);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 4 2xZoom");
+
+		climate = new GenLayerBlurAll(2L, 1, 3, climate);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 5 Blur");
+		
+		climate = GenLayerZoom.magnify(1000L, climate, 2);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 6 2xZoom");
+		
+		climate = new GenLayerBlurAll(2L, 1, 3, climate);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 7 Blur");
+
+		climate = GenLayerZoom.magnify(1000L, climate, 4);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 6 4xZoom");
+
+		
+		climate.initWorldGenSeed(seed);
 		
 		return climate;
 	}
@@ -90,11 +106,11 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC forest = new GenLayerBlurAll(2L, 2, 8, noise);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 1 Blur");
 		
-		forest = new GenLayerContrastAndBrightness(3L, 4f, 0, forest);
+		forest = new GenLayerContrastAndBrightnessSelective(3L, 4f, 0, forest);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 2 Contrast");
 		
 		//forest = new GenLayerSubstract(seed, forest, new GenLayerBlur(seed, 2, 5, noise));
-		forest = new GenLayerClampedSubstract(4L, 0, 1, forest, new GenLayerBlurAll(seed, 1, 15,  noise));
+		forest = new GenLayerClampedSubstractSelective(4L, 0, 1, forest, new GenLayerBlurAll(seed, 1, 15,  noise));
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 3 Unsharp Mask");
 		
 		forest = GenLayerZoom.magnify(1000L, forest, 2);
@@ -126,123 +142,12 @@ public abstract class GenLayerVC extends GenLayer {
 		rocklayer = new GenLayerReducePallette(2001L, rocktypes, rocklayer);
 		drawImageRGB(512, rocklayer, "Rocks 5 reducepallete");
 
-		
-	/*	rocklayer = new GenLayerContrastAndBrightness(4L, 0.2f, 10, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 5 Contrast");
-		*/
 		rocklayer = GenLayerZoom.magnify(seed, rocklayer, 12);
 		drawImageRGB(512, rocklayer, "Rocks 6 12x magnify");
-
-		
-
-
-		
-		
-		//System.out.println("gen rock");
-		/*
-		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise - rocks and thickness");
-		
-		
-		rocklayer.initWorldGenSeed(seed);
-		
-		rocklayer = GenLayerZoom.magnify(2L, rocklayer, 2);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 1 2x Magnify");
-		
-		rocklayer = new GenLayerBlur(2L, 1, 2, false, 16, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 2 Blur Thickness (red)");
-		
-		
-		rocklayer = new GenLayerCopyColor(16, 8, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 3 Copy red to green");
-		
-		
-		rocklayer = GenLayerZoom.magnify(4L, rocklayer, 6);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 5 6x Magnify");
-	
-	
-		GenLayerVC rocklayer2 = new GenLayerBlur(2L, 2, 4, false, 8, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer2, "Rocks 7 Blur green");
-		
-		rocklayer = new GenLayerClampedSubstract(4L, 8, rocklayer, rocklayer2);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 8 Substract green blur");
-		
-		
-		rocklayer = new GenLayerClampedSubstract(4L, 16, 8, rocklayer, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 9 Substract green blur diff from red (thickness)");
-		
-		
-		
-		*/
-		
-		
-	/*
-		
-		GenLayerVC rocklayer = new GenLayerNoise(1L, 20, 2);
-		drawImageRGB(512, rocklayer, "NewRock 0 Noise");
-				
-		rocklayer.initWorldGenSeed(seed);
-		
-		rocklayer = new GenLayerBlur(2L, 1, 3, false, rocklayer);
-		drawImageRGB(512, rocklayer, "NewRock 1 Blur");
-
-		rocklayer = new GenLayerExactZoom(2001L, 2, rocklayer);
-		drawImageRGB(512, rocklayer, "NewRock 2 Exact Zoom");
-		
-		rocklayer = new GenLayerBlur(3L, 1, 8, false, rocklayer);
-		drawImageRGB(512, rocklayer, "NewRock 3 Blur");
-		
-		rocklayer = new GenLayerContrastAndBrightness(4L, 0.7f, 50, rocklayer);
-		GenLayerVC.drawImageRGB(512, rocklayer, "NewRock 4 Contrast");
-
-		GenLayerVC debug = new GenLayerReducePallette(2001L, rocktypes.length, rocklayer);
-		drawImageRGB(512, debug, "NewRock 5 reduce pallette");
-		drawImageRGB(512, GenLayerZoom.magnify(seed, debug, 8), "NewRock 6 8x magnify");
-		
-		
-		rocklayer = new GenLayerReducePallette(2001L, rocktypes, rocklayer);
-		//drawImageRGB(512, rocklayer, "NewRock 5 reduce pallette");
-				
-		rocklayer = GenLayerZoom.magnify(5L, rocklayer, 8);
-		//drawImageRGB(512, rocklayer, "NewRock 6 8x magnify");
-		*/
-		
 		
 		rocklayer.initWorldGenSeed(seed);
 		
 		return rocklayer;
-
-		
-		/*GenLayerVC layer = new GenLayerRockInit(1L, rocks);
-		drawImageRocks(512, layer, "Rock 0");
-		
-		layer = new GenLayerFuzzyZoom(2000L, layer);
-		drawImageRocks(512, layer, "Rock 1");
-		//layer = new GenLayerAddRock(1L, layer);
-		drawImageRocks(512, layer, "Rock 2");
-		layer = new GenLayerZoom(2001L, layer);
-		//layer = new GenLayerAddRock(2L, layer);
-		drawImageRocks(512, layer, "Rock 3");
-		layer = new GenLayerZoom(2002L, layer);
-		//layer = new GenLayerAddRock(3L, layer);
-		drawImageRocks(512, layer, "Rock 4");
-		layer = new GenLayerZoom(2003L, layer);
-		//layer = new GenLayerAddRock(4L, layer);
-		drawImageRocks(512, layer, "Rock 5");
-		layer = new GenLayerSmooth(1000L, layer);
-		drawImageRocks(512, layer, "Rock 6");
-		for (int zoomLevel = 0; zoomLevel < 5; ++zoomLevel)
-		{
-			layer = new GenLayerZoom(1000 + zoomLevel, layer);
-			drawImageRocks(512, layer, "Rock "+(7+zoomLevel));
-		}
-
-		GenLayerSmooth smoothedLayer = new GenLayerSmooth(1000L, layer);
-		GenLayerVoronoiZoom voronoiLayer = new GenLayerVoronoiZoom(10L, smoothedLayer);
-		drawImageRocks(512, layer, "Rock Final");
-		smoothedLayer.initWorldGenSeed(seed);
-		voronoiLayer.initWorldGenSeed(seed);
-		return voronoiLayer;*/		
 	}
 	
 	
@@ -271,7 +176,7 @@ public abstract class GenLayerVC extends GenLayer {
 		deformationlayer = new GenLayerBlurSelective(2L, 1, 5, false, deformationlayer);
 		drawImageRGB(512, deformationlayer, "Rock Deform 6 Blur");
 		
-		deformationlayer = new GenLayerContrastAndBrightness(4L, 0.3f, 15, deformationlayer);
+		deformationlayer = new GenLayerContrastAndBrightnessSelective(4L, 0.3f, 15, deformationlayer);
 		GenLayerVC.drawImageRGB(512, deformationlayer, "Rock Deform 7 Contrast");
 		
 		
@@ -279,9 +184,21 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	
+	// Formerly Biomes
+	public static GenLayerVC genErosion(long seed) {
+		GenLayerVC noise = new GenLayerWeightedNoise(1L, BiomeVC.getBiomes());
+		drawImageBiome(512, noise, "Erosion 1 noise");
+		
+		
+		GenLayerVC erosion = GenLayerZoom.magnify(seed, noise, 6);
+		drawImageBiome(512, erosion, "Erosion 2 2x magnify");
+		
+		erosion.initWorldGenSeed(seed);
+		
+		return erosion;
+	}
 	
-	
-	public static GenLayerVC[] genBiomes(long seed) {
+	/*public static GenLayerVC[] genBiomes(long seed) {
 		GenLayerVC continent = genContinent(0, false);
 		continent = new GenLayerDeepOcean(4L, continent);
 		drawImageContinent(512, continent, "Continents 8b Done Deep Ocean");
@@ -358,11 +275,13 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC continent = new GenLayerAddIsland(4L, var11);
 		drawImageContinent(512, continent, "Continents 8 Done");
 		return continent;
-	}
+	}*/
+	
+	
 
 	public static boolean shouldDraw = false;
 	
-	public static void drawImageContinent(int size, GenLayerVC genlayer, String name) {
+	public static void drawImageBiome(int size, GenLayerVC genlayer, String name) {
 		drawImage(size, genlayer, name, 0);
 	}
 
@@ -417,8 +336,8 @@ public abstract class GenLayerVC extends GenLayer {
 					
 					switch (type) {
 					case 0:
-						if(id != -1 && VCBiome.getBiomeGenArray()[id] != null) {
-							graphics.setColor(Color.getColor("", VCBiome.getBiome(id).getBiomeColor()));	
+						if(id != -1 && BiomeVC.getBiomeGenArray()[id] != null) {
+							graphics.setColor(new Color(BiomeVC.getBiome(id).getBiomeColor()));
 							graphics.drawRect(x, z, 1, 1);
 						}
 						break;
@@ -470,7 +389,7 @@ public abstract class GenLayerVC extends GenLayer {
 	 * amounts, or biomeList[] indices based on the particular GenLayer subclass.
 	 */
 	@Override
-	public abstract int[] getInts(int var1, int var2, int var3, int var4);
+	public abstract int[] getInts(int x, int z, int xSize, int zSize);
 
 	public static int validateInt(int[] array, int index)
 	{
@@ -485,7 +404,7 @@ public abstract class GenLayerVC extends GenLayer {
 		{
 			for(int x = 0; x < xSize; x++)
 			{
-				if(VCBiome.biomeList[array[x+z*xSize]] == null)
+				if(BiomeVC.biomeList[array[x+z*xSize]] == null)
 				{
 					System.out.println("Error Array garbage data: "+array[x+z*xSize]);
 					return;

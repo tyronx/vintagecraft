@@ -3,7 +3,9 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.Random;
 
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.interfaces.ISoil;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -56,11 +58,13 @@ public class WorldGenShortTrees extends WorldGenerator {
 
 		Block block = world.getBlockState(blockpos.down(1)).getBlock();
 		
-		if (!(block instanceof BlockVC)) {
+		if (!(block instanceof BlockVC) || !(block instanceof ISoil)) {
 			return false;
 		}
+		if (!((ISoil)block).canGrowTree(world, blockpos, EnumTree.MOUNTAINDOGWOOD)) return false;
 		
-		if (!((BlockVC)block).isSoil || blockpos.getY() >= world.getHeight() - height - 1) {
+		
+		if (blockpos.getY() >= world.getHeight() - height - 1) {
 			return false;
 		}
 

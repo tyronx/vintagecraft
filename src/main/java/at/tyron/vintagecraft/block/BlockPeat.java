@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -12,31 +13,42 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.interfaces.ISoil;
 import at.tyron.vintagecraft.item.ItemLogVC;
 
-public class BlockPeat extends BlockTopSoil {
-
+public class BlockPeat extends BlockVC implements ISoil {
+	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
+	
+	
 	public BlockPeat() {
-		super(false);
-		
+		super(Material.grass);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NormalGrass));
+		this.setTickRandomly(true);
+		this.setCreativeTab(CreativeTabs.tabBlock);
 	}
+	
 	
 	
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
-    		list.add(new ItemStack(itemIn, 1, organiclayer.meta));
+    		list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData()));
     	}
     }
    
 
+    
+
+    
+    
 	@Override
 	protected BlockState createBlockState() {
 	    return new BlockState(this, new IProperty[] {organicLayer});
@@ -66,6 +78,43 @@ public class BlockPeat extends BlockTopSoil {
 	@Override
 	public int damageDropped(IBlockState state) {
 		return 0;
+	}
+	
+	
+	
+	
+	
+	
+
+
+	@Override
+	public boolean canSpreadGrass(World world, BlockPos pos) {
+		return true;
+	}
+
+
+	@Override
+	public boolean canGrowGrass(World world, BlockPos pos) {
+		return true;
+	}
+
+
+	@Override
+	public EnumFertility getFertility(World world, BlockPos pos) {
+		return EnumFertility.HIGH;
+	}
+
+
+	@Override
+	public IProperty getOrganicLayerProperty(World world, BlockPos pos) {
+		return organicLayer;
+	}
+
+
+
+	@Override
+	public boolean canGrowTree(World world, BlockPos pos, EnumTree tree) {
+		return true;
 	}
 	
 }

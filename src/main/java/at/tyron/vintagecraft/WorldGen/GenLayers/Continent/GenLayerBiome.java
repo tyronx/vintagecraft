@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.Continent;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.GenLayer;
@@ -9,14 +9,14 @@ import net.minecraft.world.gen.layer.IntCache;
 public class GenLayerBiome extends GenLayerVC {
 
 	/** this sets all the biomes that are allowed to appear in the overworld */
-	private VCBiome[] allowedBiomes = new VCBiome[] {
-			VCBiome.ocean,
-			VCBiome.HighHills,
-			VCBiome.plains,
-			VCBiome.HighPlains,
-			VCBiome.swampland,
-			VCBiome.rollingHills,
-			VCBiome.Mountains,
+	private BiomeVC[] allowedBiomes = new BiomeVC[] {
+			BiomeVC.ocean,
+			BiomeVC.HighHills,
+			BiomeVC.plains,
+			BiomeVC.HighPlains,
+			BiomeVC.swampland,
+			BiomeVC.rollingHills,
+			BiomeVC.Mountains,
 	};
 
 	public GenLayerBiome(long par1, GenLayerVC par3GenLayer)
@@ -43,7 +43,7 @@ public class GenLayerBiome extends GenLayerVC {
 				this.initChunkSeed(var8 + par1, var7 + par2);
 				int id = var5[var8 + var7 * par3];
 				//if (VC_Core.isOceanicBiome(id))
-				if (VCBiome.isOceanic(id))
+				if (BiomeVC.isOceanic(id))
 					var6[var8 + var7 * par3] = id;
 				else
 					var6[var8 + var7 * par3] = this.allowedBiomes[this.nextInt(this.allowedBiomes.length)].biomeID;

@@ -4,7 +4,7 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;
@@ -66,10 +66,10 @@ public class WorldGenAnimals {
 	/**
 	 * Called during chunk generation to spawn initial creatures.
 	 */
-	public static void performWorldGenSpawning(World world, VCBiome biome, int par2, int par3, int par4, int par5, Random par6Random) {
+	public static void performWorldGenSpawning(World world, BiomeVC biome, int par2, int par3, int par4, int par5, Random par6Random) {
 		List list = ChunkProviderGenerateVC.getCreatureSpawnsByChunk(world, biome, par2, par3);//par1BiomeGenBase.getSpawnableList(EnumCreatureType.creature);
 		if (!list.isEmpty()) {
-			while (par6Random.nextFloat() < biome.getSpawningChance()) {
+			while (par6Random.nextFloat() < 0.1f) { //biome.getSpawningChance()) {
 				
 				SpawnListEntry spawnlistentry = (SpawnListEntry)WeightedRandom.getRandomItem(world.rand, list);
 				IEntityLivingData entitylivingdata = null;

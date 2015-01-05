@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockRock;
+import at.tyron.vintagecraft.interfaces.ISmeltable;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -22,7 +23,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRock extends ItemBlock {
+public class ItemRock extends ItemBlock implements ISmeltable {
 
 	public ItemRock(Block block) {
 		super(block);
@@ -78,5 +79,30 @@ public class ItemRock extends ItemBlock {
 		return mrl;
     }
 */
+
+	
+	@Override
+	public ItemStack getSmelted(ItemStack raw) {
+		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+			return new ItemStack(Blocks.glass);
+		}
+		return null;
+	}
+
+	@Override
+	public int getRaw2SmeltedRatio(ItemStack raw) {
+		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public int getMeltingPoint(ItemStack raw) {
+		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+			return 1800;
+		}
+		return 0;
+	}
 
 }

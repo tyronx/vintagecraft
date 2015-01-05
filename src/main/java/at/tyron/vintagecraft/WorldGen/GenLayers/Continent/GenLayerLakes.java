@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.Continent;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
@@ -43,7 +43,7 @@ public class GenLayerLakes extends GenLayerVC {
 				if (isOceanic(var9))
 				{
 					if(!isOceanic(var10) && !isOceanic(var11) && !isOceanic(var12) && !isOceanic(var13))
-						var6[var8 + var7 * par3] = VCBiome.lake.biomeID;
+						var6[var8 + var7 * par3] = BiomeVC.lake.biomeID;
 					else
 						var6[var8 + var7 * par3] = var9;
 				}
@@ -58,7 +58,7 @@ public class GenLayerLakes extends GenLayerVC {
 
 	boolean isOceanic(int id)
 	{
-		if(id == VCBiome.ocean.biomeID || id == VCBiome.DeepOcean.biomeID)
+		if(id == BiomeVC.ocean.biomeID || id == BiomeVC.DeepOcean.biomeID)
 			return true;
 		return false;
 	}

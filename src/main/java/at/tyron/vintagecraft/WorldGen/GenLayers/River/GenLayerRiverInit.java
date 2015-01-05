@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.River;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.GenLayer;
 
@@ -34,7 +34,7 @@ public class GenLayerRiverInit extends GenLayerVC {
 				int id = parentCache[index];
 				//outCache[index] = !VC_Core.isOceanicBiome(id) && !VC_Core.isMountainBiome(id) ? 1 : 0;
 				
-				outCache[index] = (VCBiome.isOceanic(id) || id == VCBiome.Mountains.biomeID || id == VCBiome.MountainsEdge.biomeID) ? 0 : 1;				
+				outCache[index] = (BiomeVC.isOceanic(id) || id == BiomeVC.Mountains.biomeID || id == BiomeVC.MountainsEdge.biomeID) ? 0 : 1;				
 			}
 		}
 		return outCache;

@@ -12,26 +12,27 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.block.BlockRegolith;
 import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockSubSoil;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
+import at.tyron.vintagecraft.interfaces.ISoil;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
 	//						                color  weight hgt vari mind maxd 
 	NODEPOSIT (-1, null,                 false, 0,  5000,   0,  0, 0, null, false),
 	
-	CLAY (0,           BlocksVC.rawclay, false, 20,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.beach, VCBiome.river, VCBiome.rollingHills}, true),
-	PEAT (1,              BlocksVC.peat, false, 40,   70,   1,  1,    2, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, true),
+	CLAY (0,           BlocksVC.rawclay, false, 20,   70,   1,  1,    2, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.beach, BiomeVC.river, BiomeVC.rollingHills*/}, true),
+	PEAT (1,              BlocksVC.peat, false, 40,   70,   1,  0,    1, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, true),
 	
 	
-	LIGNITE (2,        BlocksVC.rawore, true,   60,   40,   2,  10,  50, new VCBiome[]{VCBiome.plains, VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, true),
-	BITUMINOUSCOAL (3, BlocksVC.rawore, true,   80,   20,   2,  8, 103, new VCBiome[]{VCBiome.rollingHills, VCBiome.Mountains, VCBiome.MountainsEdge}, false),
+	LIGNITE (2,        BlocksVC.rawore, true,   60,   40,   2,  10,  50, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, true),
+	BITUMINOUSCOAL (3, BlocksVC.rawore, true,   80,   20,   2,  8, 103, new BiomeVC[]{/*BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, false),
 	
-	NATIVECOPPER (4,   BlocksVC.rawore, true,   80,   60,   2,  4,   40, null, true),
+	NATIVECOPPER (4,   BlocksVC.rawore, true,   90,   60,   2,  4,   40, null, true),
 	
 	LIMONITE (5,      BlocksVC.rawore,  true,  100,   30,   2,  15, 103, null, false),
 	NATIVEGOLD (6,    BlocksVC.rawore,  true,  120,   10,   1,  50, 103, null, false),
@@ -42,7 +43,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	
 
 	public int id;
-	public Block block;
+	Block block;
 	public boolean hasOre;
 	int color;
 	public int averageHeight;
@@ -50,11 +51,11 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	public int maxDepth;
 	public EnumMetal smelted;
 	public int ore2IngotRatio;
-	public final VCBiome[] biomes;
+	public final BiomeVC[] biomes;
 	public int weight;
 	public boolean relativeDepth;
 	
-	private EnumMaterialDeposit(int id, Block block, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, VCBiome[] biomes, boolean relativeDepth) {
+	private EnumMaterialDeposit(int id, Block block, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, BiomeVC[] biomes, boolean relativeDepth) {
 		this.id = id;
 		
 		this.weight = weight;
@@ -86,6 +87,23 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		return state.getBlock() instanceof BlockRock && state.getBlock().getMaterial() == Material.rock;
 	}
 
+	public Block getBlock() {
+		return block;
+	}
+	
+	public IBlockState getBlockStateForDepth(int depth) {
+		if (depth > 1 && block instanceof ISoil) {
+			return block.getDefaultState().withProperty(((ISoil)block).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
+		}
+		
+		return block.getDefaultState();
+	}
+	
+	public void init(Block block) {
+		this.block = block;
+	}
+	
+	
 	
 	public static EnumMaterialDeposit byId(int id) {
 		EnumMaterialDeposit[] deposits = values();

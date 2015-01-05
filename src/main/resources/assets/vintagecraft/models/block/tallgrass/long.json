@@ -1,0 +1,7 @@
+{
+    "parent": "vintagecraft:block/tallgrass/tallgrass_base",
+    "textures": {
+        "particle": "vintagecraft:blocks/tallgrass/long",
+        "cross": "vintagecraft:blocks/tallgrass/long"
+    }
+}

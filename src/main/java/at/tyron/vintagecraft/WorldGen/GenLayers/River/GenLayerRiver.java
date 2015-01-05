@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers.River;
 
-import at.tyron.vintagecraft.World.VCBiome;
+import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import net.minecraft.world.gen.layer.IntCache;
 
@@ -42,7 +42,7 @@ public class GenLayerRiver extends GenLayerVC {
 				}
 				else
 				{
-					aint1[j2 + i2 * par3] = VCBiome.river.biomeID;
+					aint1[j2 + i2 * par3] = BiomeVC.river.biomeID;
 				}
 			}
 		}

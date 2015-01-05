@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import net.minecraft.util.IStringSerializable;
 
@@ -36,5 +37,11 @@ public enum EnumTree implements IEnumState, IStringSerializable {
 			if (tree.meta == meta) return tree;
 		}
 		return null;
+	}
+
+	@Override
+	public void init(BlockVC block, int meta) {
+		// TODO Auto-generated method stub
+		
 	}
 }
