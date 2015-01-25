@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -103,7 +104,8 @@ public class BlockSand extends BlockRock implements ISoil {
 
 	@Override
 	public boolean canGrowTree(World world, BlockPos pos, EnumTree tree) {
-		return false;
+		return true;
 	}
+
 	
 }

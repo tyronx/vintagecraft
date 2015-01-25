@@ -44,7 +44,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 	}
 
 	@Override
-	public int getMetaData() {
+	public int getMetaData(BlockVC block) {
 		return id;
 	}
 
@@ -98,7 +98,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 		 
 		 for (int i = 0; i < types.length; ++i) {
 			 EnumTallGrass type = types[i];
-			 META_LOOKUP[type.getMetaData()] = type;      
+			 META_LOOKUP[type.id] = type;      
 	     }
 
 		 EnumTallGrass layer = null;
@@ -111,6 +111,12 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 			 FERTILITY_LOOKUP[fertility] = layer;
 		 }
 		    
+	}
+
+
+	@Override
+	public int getId() {
+		return id;
 	}
 		
 

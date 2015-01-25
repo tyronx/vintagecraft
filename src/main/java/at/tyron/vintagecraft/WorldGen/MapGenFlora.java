@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
@@ -103,8 +104,10 @@ public class MapGenFlora {
 				pos = world.getHorizon(new BlockPos(chunkX + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, chunkZ + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
+				BlockClassEntry[] variants = BlocksVC.flower.values(flora);
+				if (variants.length == 0) variants = BlocksVC.doubleflower.values(flora);
 				
-				IBlockState flower = flora.variants[random.nextInt(flora.variants.length)].getBlockState();
+				IBlockState flower = variants[random.nextInt(variants.length)].getBlockState();
 				
 				if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
 					world.setBlockState(pos, flower, 2);

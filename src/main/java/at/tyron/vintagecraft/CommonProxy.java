@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft;
 
+import java.util.HashMap;
+
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
@@ -7,6 +9,7 @@ import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.gui.GuiStove;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerFurnace;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -16,7 +19,24 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
-
+	HashMap<Long, NBTTagCompound> chunkextranbt = new HashMap<Long, NBTTagCompound>();
+	
+	public void putChunkNbt(long index, NBTTagCompound nbt) {
+		chunkextranbt.put(index, nbt);
+	}
+	
+	public NBTTagCompound getChunkNbt(long index) {
+		return chunkextranbt.get(index);
+	}
+	
+	public void removeChunkNbt(long index) {
+		//chunkextranbt.remove(index);
+	}
+	
+	public void clearChunkNbt() {
+		chunkextranbt.clear();
+	}
+	
 	public void registerRenderInformation() {
 		//RenderingRegistry.registerEntityRenderingHandler(BlockOreVC.class, new RenderOre());
 		

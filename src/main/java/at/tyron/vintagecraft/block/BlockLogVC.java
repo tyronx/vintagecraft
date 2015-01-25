@@ -2,37 +2,65 @@ package at.tyron.vintagecraft.block;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.FlowerClass;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.TileEntity.TEOre;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.interfaces.IMultiblock;
+import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOre;
 import at.tyron.vintagecraft.item.ItemStone;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockLogVC extends BlockVC {
-	public static final PropertyEnum TREETYPE = PropertyEnum.create("treetype", EnumTree.class);
-	
+public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMultiblock {
+	public static PropertyBlockClass TREETYPE; // = PropertyInteger.create("log", 0, 1); 
 	
 	public BlockLogVC() {
 		super(Material.wood);
-		
 		setCreativeTab(CreativeTabs.tabMaterials);
-		
-		this.setDefaultState(this.blockState.getBaseState().withProperty(TREETYPE, EnumTree.MOUNTAINDOGWOOD));
 	}
+	
+	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
+		this.subtypes = subtypes;
+		setTypeProperty(property);
+		
+		blockState = this.createBlockState();
+	
+		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState(), getTypeProperty()));
+	}
+
+	
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (BlockClassEntry tree : subtypes) {
+			list.add(new ItemStack(itemIn, 1, tree.getMetaData(this)));
+		}
+		super.getSubBlocks(itemIn, tab, list);
+	}
+	
 	
 	@Override
 	public boolean canSustainLeaves(IBlockAccess world, BlockPos pos) {
@@ -42,18 +70,20 @@ public class BlockLogVC extends BlockVC {
 	
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {TREETYPE});
+    	if (getTypeProperty() != null) {
+    		return new BlockState(this, new IProperty[] {getTypeProperty()});
+    	}
+    	return new BlockState(this, new IProperty[0]);
     }
 	
 	
     @Override
     public int getMetaFromState(IBlockState state) {
-    	return ((EnumTree)state.getValue(TREETYPE)).meta;
+    	return getBlockClass().getMetaFromState(state);
     }
-    
-    @Override
+      
     public IBlockState getStateFromMeta(int meta) {
-    	return super.getStateFromMeta(meta).withProperty(TREETYPE, EnumTree.byMeta(meta));
+       return this.getDefaultState().withProperty(getTypeProperty(), meta);
     }
 
     
@@ -64,15 +94,37 @@ public class BlockLogVC extends BlockVC {
     	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
     	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-        ItemLogVC.setTreeType(itemstack, getTreeType(state));
+        ItemLogVC.withTreeType(itemstack, getTreeType(state));
         ret.add(itemstack);
         
     	return ret;
     }
 
-	public EnumTree getTreeType(IBlockState state) {
-		return (EnumTree)state.getValue(TREETYPE);
+	public BlockClassEntry getTreeType(IBlockState state) {
+		return getBlockClass().getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(getTypeProperty()));
 	}
-    
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		ItemBlock itemblock = (ItemBlock)stack.getItem();
+		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
+	}
+
+	@Override
+	public IProperty getTypeProperty() {
+		return TREETYPE;
+	}
+
+	@Override
+	public void setTypeProperty(PropertyBlockClass property) {
+		this.TREETYPE = property;
+	}
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.log;
+	}
+	
+	
     
 }

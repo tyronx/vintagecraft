@@ -15,6 +15,8 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.BlockClass.FlowerClass;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.WorldProperties.*;
@@ -38,8 +40,8 @@ public class BlocksVC {
 	public static Block stove;
 	public static Block stove_lit;
 	
-	public static BlockVC[] flowers;
-	public static BlockVC[] doubleflowers;
+	//public static BlockVC[] flowers;
+	//public static BlockVC[] doubleflowers;
 	
 	public static BlockVC tallgrass;
 
@@ -72,11 +74,17 @@ public class BlocksVC {
 	public static BlockVC coal;
 	
 
-	public static BlockVC log;
-	public static BlockVC planks;
+	//public static BlockVC[] logs;
+	public static FlowerClass flower;
+	public static FlowerClass doubleflower;
+	public static TreeClass log;
+	public static TreeClass leaves;
+	public static TreeClass leavesbranchy;
 	
-	public static BlockVC leaves;
-	public static BlockVC leavesbranchy;
+	public static TreeClass planks;
+	
+	//public static BlockVC leaves;
+	//public static BlockVC leavesbranchy;
 	
 	public static void init() {
 		initBlocks();
@@ -95,9 +103,28 @@ public class BlocksVC {
 		
 		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, "tallgrass", EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 		
+		flower = new FlowerClass();
+		flower.init(false);
 		
-		flowers = initMultiBlock(EnumFlower.values(false), "flower", BlockFlowerVC.class, ItemFlowerVC.class, BlockFlowerVC.multistateAvailableTypes, 0.2f, Block.soundTypeGrass, null, 0);
-		doubleflowers = initMultiBlock(EnumFlower.values(true), "doubleflower", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
+		doubleflower = new FlowerClass();
+		doubleflower.init(true);
+		
+		log = new TreeClass("log", BlockLogVC.class, ItemLogVC.class, 3.5f, Block.soundTypeWood, "axe", 2);
+		log.init();
+		
+		planks = new TreeClass("planks", BlockPlanksVC.class, ItemPlanksVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		planks.init();
+		
+		leaves = new TreeClass("leaves", BlockLeaves.class, ItemLeaves.class, 0.2f, Block.soundTypeGrass, null, 0);
+		leaves.init();
+		
+		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemLeavesBranchy.class, 0.4f, Block.soundTypeGrass, "axe", 1);
+		leavesbranchy.init();
+		
+//		/logs = TreeClass.init("log", BlockLogVC.class, ItemLogVC.class, BlockLogVC.multistateAvailableTypes, 3F, Block.soundTypeWood, "axe", 2);
+		
+		//flowers = initMultiBlock(Flower.values(false), "flower", BlockFlowerVC.class, ItemFlowerVC.class, BlockFlowerVC.multistateAvailableTypes, 0.2f, Block.soundTypeGrass, null, 0);
+		//doubleflowers = initMultiBlock(Flower.values(true), "doubleflower", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
 
 		//System.out.println("created " + flowers.length + " flower blocks and " + doubleflowers.length + " double flower blocks");
 		
@@ -118,11 +145,12 @@ public class BlocksVC {
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
-		log = new BlockLogVC().setHardness(3F).registerMultiState("log", ItemLogVC.class, "log", EnumTree.values());
-		planks = new BlockPlanksVC().setHardness(1.5F).registerMultiState("planks", ItemPlanksVC.class, "planks", EnumTree.values());
 		
-		leaves = new BlockLeaves().setHardness(0.2f).registerMultiState("leaves", ItemLeaves.class, "leaves", EnumTree.values());
-		leavesbranchy = new BlockLeavesBranchy().setHardness(0.4f).registerMultiState("leavesbranchy", ItemLeavesBranchy.class, "leavesbranchy", EnumTree.values());
+		
+		//planks = initMultiBlock(Tree.values(), "planks", BlockPlanksVC.class, ItemPlanksVC.class, BlockPlanksVC.multistateAvailableTypes, 1.5F, Block.soundTypeWood, "axe", 1);
+		
+	//	leaves = new BlockLeaves().setHardness(0.2f).registerMultiState("leaves", ItemLeaves.class, "leaves", Tree.values());
+	//	leavesbranchy = new BlockLeavesBranchy().setHardness(0.4f).registerMultiState("leavesbranchy", ItemLeavesBranchy.class, "leavesbranchy", Tree.values());
 	}
 	
 	
@@ -159,10 +187,6 @@ public class BlocksVC {
 		
 		regolith.setHarvestLevel("shovel", 1);
 		peat.setHarvestLevel("shovel", 1);
-		
-		log.setHarvestLevel("axe", 2);
-		planks.setHarvestLevel("axe", 1);
-		
 	}
 	
 
@@ -188,14 +212,15 @@ public class BlocksVC {
 
 	
 	
-	static BlockVC[] initMultiBlock(IEnumState[] states, String name, Class<? extends BlockVC> blockclass, Class<? extends ItemBlock> itemclass, int typesperblock, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
-		IEnumState[][] chunked = split(states, typesperblock);
+/*	static BlockVC[] initMultiBlock(BlockClass[] states, String name, Class<? extends BlockVC> blockclass, Class<? extends ItemBlock> itemclass, int typesperblock, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
+		BlockClass[][] chunked = split(states, typesperblock);
 		ArrayList<BlockVC> blocks = new ArrayList<BlockVC>();
+		
 		
 		for (IEnumState[] blockstates : chunked) {
 			BlockVC block;
 			try {
-				block = blockclass.getDeclaredConstructor(new Class[]{IEnumState[].class}).newInstance(new Object[]{blockstates});
+				block = blockclass.getDeclaredConstructor(new Class[]{BlockClass[].class}).newInstance(new Object[]{blockstates});
 				block.setHardness(hardness).setStepSound(stepsound);
 				
 				if (harvesLevelTool != null) {
@@ -217,7 +242,7 @@ public class BlocksVC {
 		}
 		
 		return blocks.toArray(new BlockVC[0]);
-	}
+	}*/
 	
 	
 	static <T> T[][] split(T[] elements, int chunksize) {

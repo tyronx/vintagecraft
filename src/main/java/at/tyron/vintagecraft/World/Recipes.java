@@ -2,11 +2,13 @@ package at.tyron.vintagecraft.World;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockLogVC;
 import at.tyron.vintagecraft.block.BlockPlanksVC;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.item.ItemIngot;
 import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOre;
@@ -44,9 +46,19 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperSaw), new Object[] { "S  ", "WS ", " WS", 'S', copperingot, 'W', Items.stick});
 
 		
+		for (BlockClassEntry log : BlocksVC.log.values()) {
+			ItemStack logstack = new ItemStack(log.block);
+			ItemLogVC.withTreeType(logstack, log);
+			
+			GameRegistry.addShapedRecipe(new ItemStack(Blocks.crafting_table), new Object[] { "LL", "LL", 'L', logstack});
+		}
 		
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.crafting_table), new Object[] { "LL", "LL", 'L', new ItemStack(BlocksVC.log)});
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.chest), new Object[] { "LLL", "L L", "LLL", 'L', new ItemStack(BlocksVC.planks)});
+		for (BlockClassEntry planks : BlocksVC.planks.values()) {
+			ItemStack planksstack = new ItemStack(planks.block);
+			ItemPlanksVC.withTreeType(planksstack, planks);
+			
+			GameRegistry.addShapedRecipe(new ItemStack(Blocks.chest), new Object[] { "LLL", "L L", "LLL", 'L', planksstack});
+		}
 
 		
 		RecipeSorter.register("vintagecraft:findings", RecipePlanks.class, Category.SHAPELESS, "after:minecraft:shapeless");

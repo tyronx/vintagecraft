@@ -46,13 +46,13 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	
 	
 	public int damageDropped(IBlockState state) {
-        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData();
+        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData(this);
     }
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumTallGrass grass : EnumTallGrass.values()) {
-    		list.add(new ItemStack(itemIn, 1, grass.getMetaData()));
+    		list.add(new ItemStack(itemIn, 1, grass.getMetaData(this)));
     	}
     }
 
@@ -62,7 +62,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 
 
     public int getMetaFromState(IBlockState state) {
-        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData();
+        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData(this);
     }
 
     protected BlockState createBlockState() {

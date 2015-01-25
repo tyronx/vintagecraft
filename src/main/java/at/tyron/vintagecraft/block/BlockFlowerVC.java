@@ -7,16 +7,24 @@ import java.util.Random;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.FlowerClass;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.interfaces.IMultiblock;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.item.ItemFlowerVC;
+import at.tyron.vintagecraft.item.ItemLogVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -33,12 +41,11 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFlowerVC extends BlockVC implements IPlantable, ISubtypeFromStackPovider {
-	IEnumState subtypes[];
+public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
+	public PropertyBlockClass FLOWERTYPE;
 	
-	public PropertyEnum FLOWERTYPE;
 	
-	protected BlockFlowerVC() {
+	public BlockFlowerVC() {
 		super(Material.plants);
 		setCreativeTab(CreativeTabs.tabDecorations);
 		this.setTickRandomly(true);
@@ -46,44 +53,57 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, ISubtypeFromSt
 	    this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
 	}
 	
-	public BlockFlowerVC(IEnumState []subtypes) {
-		this();
+	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
 		this.subtypes = subtypes;
-		FLOWERTYPE = PropertyEnum.create("flowertype", EnumFlower.class, Lists.newArrayList(subtypes));
-		blockState = this.createBlockState();
+		setTypeProperty(property);
 		
-		setDefaultState(this.blockState.getBaseState().withProperty(FLOWERTYPE, (EnumFlower)subtypes[0]));
+		blockState = this.createBlockState();
+	
+		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState(), getTypeProperty()));
 	}
 	
 	
 	
-	
-	public int damageDropped(IBlockState state) {
-        return ((EnumFlower)state.getValue(FLOWERTYPE)).getMetaData();
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	
+    	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+        ItemFlowerVC.withFlowerType(itemstack, getFlowerType(state));
+        ret.add(itemstack);
+        
+    	return ret;
     }
+    
+	public BlockClassEntry getFlowerType(IBlockState state) {
+		return getBlockClass().getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(getTypeProperty()));
+	}
+	
+    
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (IEnumState flower : getSubTypes()) {
-    		list.add(new ItemStack(itemIn, 1, flower.getMetaData()));
+    		list.add(new ItemStack(itemIn, 1, flower.getMetaData(this)));
     	}
     }
 
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FLOWERTYPE, EnumFlower.fromMeta(this, meta));
+    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
     }
 
 
     public int getMetaFromState(IBlockState state) {
-        return ((EnumFlower)state.getValue(FLOWERTYPE)).getMetaData();
+    	return getBlockClass().getMetaFromState(state);
     }
 
     protected BlockState createBlockState() {
-    	if (FLOWERTYPE == null) {
+    	if (getTypeProperty() == null) {
     		return new BlockState(this, new IProperty[0]);
     	}
     	
-        return new BlockState(this, new IProperty[] {FLOWERTYPE});
+        return new BlockState(this, new IProperty[] {getTypeProperty()});
     }
 
     @SideOnly(Side.CLIENT)
@@ -162,14 +182,29 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, ISubtypeFromSt
         return this.getDefaultState();
     }
 
-	public IEnumState[] getSubTypes() {
-		return subtypes;
-	}
+
 
 	@Override
 	public String getSubType(ItemStack stack) {
 		ItemBlock itemblock = (ItemBlock)stack.getItem();
-		return EnumFlower.fromMeta(itemblock.block, stack.getItemDamage()).getName();	
+		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
+	}
+	
+	
+
+	@Override
+	public IProperty getTypeProperty() {
+		return FLOWERTYPE;
+	}
+
+	@Override
+	public void setTypeProperty(PropertyBlockClass property) {
+		FLOWERTYPE = property;
+	}
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.flower;
 	}
 
     

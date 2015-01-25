@@ -3,7 +3,7 @@
     "textures": {
         "particle": "vintagecraft:blocks/peat",
         "bottom": "vintagecraft:blocks/peat",
-        "top": "vintagecraft:blocks/topsoil/grass_top_sparse",
+        "top": "vintagecraft:blocks/topsoil/grass_top_sparse1",
         "side": "vintagecraft:blocks/peat",
         "overlay": "vintagecraft:blocks/topsoil/grass_side_sparse"
     }

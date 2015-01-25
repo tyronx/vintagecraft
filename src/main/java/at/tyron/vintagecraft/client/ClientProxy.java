@@ -71,9 +71,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
     	//registerModelLocation(Item.getItemFromBlock(BlocksVC.log), "log", "inventory");
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.planks), "planks", "inventory");
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.leaves), "leaves", "inventory");
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.leavesbranchy), "leavesbranchy", "inventory");
+    	
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.planks), "planks", "inventory");
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.leaves), "leaves", "inventory");
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.leavesbranchy), "leavesbranchy", "inventory");
     	
     	/*for (BlockVC block : BlocksVC.doubleflowers) {
     		registerModelLocation(Item.getItemFromBlock(block), "doubleflowers", "inventory");
@@ -112,7 +113,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	            @Override
 	            public ModelResourceLocation getModelLocation(ItemStack stack) {
 	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
-	            	if (item instanceof ISubtypeFromStackPovider) {
+	            	if (item instanceof ISubtypeFromStackPovider && ((ISubtypeFromStackPovider)item).getSubType(stack) != null) {
 	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
 	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);
 	            	} else {

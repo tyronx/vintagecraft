@@ -1,18 +1,23 @@
 package at.tyron.vintagecraft.World;
 
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.block.BlockLogVC;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.ItemToolVC;
 import at.tyron.vintagecraft.item.ItemPlanksVC;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class RecipePlanks implements IRecipe {
-	EnumTree tree;
+	BlockClassEntry tree;
 
 	@Override
 	public boolean matches(InventoryCrafting inventory, World worldIn) {
@@ -23,10 +28,10 @@ public class RecipePlanks implements IRecipe {
 				ItemStack itemstack = inventory.getStackInRowAndColumn(y, x);
 				if (itemstack == null) continue;
 				
-				if (itemstack.getItem() == Item.getItemFromBlock(BlocksVC.log)) {
+				if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).block instanceof BlockLogVC) {
 					found |= 1;
 					quantityfound++;
-					tree = EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
+					tree = BlocksVC.planks.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("treetype"));
 				}
 				
 				if (itemstack.getItem() instanceof ItemToolVC && ((ItemToolVC)(itemstack.getItem())).tooltype == EnumTool.SAW) {
@@ -52,8 +57,8 @@ public class RecipePlanks implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		ItemStack stack = new ItemStack(BlocksVC.planks, 4);
-		ItemPlanksVC.setTreeType(stack, tree);
+		ItemStack stack = new ItemStack(tree.getBlockState().getBlock(), 4);
+		ItemPlanksVC.withTreeType(stack, tree);
 		return stack;
 	}
 

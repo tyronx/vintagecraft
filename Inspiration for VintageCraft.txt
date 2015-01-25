@@ -68,6 +68,10 @@
 - use red layer (= just a blurred version of blue layer) for smooth transitions?!
 
 
+========= Cave Stuff =====
+
+- Mineshafts like these http://imgur.com/a/idI07
+
 
 ======= Biome Stuff ======
 
@@ -97,6 +101,8 @@ List of normal World Biomes:
   - Bent trees
   - Sand dunes http://upload.wikimedia.org/wikipedia/commons/3/34/Rub_al_Khali_002.JPG
   - Beaches
+  - Erosion http://www.planetminecraft.com/project/island-terraform/
+
 
 - Awesome Lava stuff and trees and mountains: http://imgur.com/a/sEv5I#0
 
@@ -122,7 +128,10 @@ List of normal World Biomes:
 
 
 
+- Icicles from Conquest resource pack
 
+
+- Various landscapes: http://youtu.be/a_lAX_xHIQs
 
 - https://i.imgur.com/G9e7Htm.jpg
 - http://imgur.com/a/VnT8r
@@ -149,6 +158,13 @@ List of normal World Biomes:
 - Dessert:
   http://edstreasure.com/world%20hunt/deserts/desert.html
   Decoration: http://i.imgur.com/4MSCHWu.png
+
+
+
+- Hills
+  http://www.planetminecraft.com/project/floating-hub-terraform/
+  http://www.planetminecraft.com/project/forgotten-valley-1k-1k-custom-terrain/
+  http://www.planetminecraft.com/project/the-cave-3061678/
 
 ======== Etc =========
 
@@ -244,6 +260,8 @@ Import schematic files: https://github.com/tehbeard/LibSchematic
                     http://www.planetminecraft.com/project/desert-building-pack-1150679/
 
 - Plains Village: http://minecraftbuildinginc.com/edoras-capital-of-rohan/
+                  http://www.planetminecraft.com/project/villager-town-makeover/
+    
 - Plains Farmer Village: http://www.planetminecraft.com/project/farm-house-pack---12-different-houses-with-download/
 - Forest Village: http://minecraftbuildinginc.com/lost-isles-of-galitor-island/
 
@@ -266,3 +284,23 @@ http://www.planetminecraft.com/project/minecraft-kingdom-texture-pack-527448/
 
 
 http://www.planetminecraft.com/project/lakeside-village-timelapse-video-download/
+
+
+- Trading post, sells/buys a lot of common items: http://www.planetminecraft.com/project/kjolr---trading-post---fantasy--/
+
+
+
+
+
+
+
+
+
+
+
+
+
+===== Future =======
+
+
+Effects, Mob Detail: https://www.youtube.com/watch?v=5kwsoQcgYNE

@@ -80,7 +80,7 @@ public class BlockRock extends BlockVC {
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return ((EnumRockType)state.getValue(STONETYPE)).getMetaData();
+        return ((EnumRockType)state.getValue(STONETYPE)).getMetaData(this);
     }
     
     @Override
@@ -96,7 +96,7 @@ public class BlockRock extends BlockVC {
 
         for (int j = 0; j < i; ++j) {
         	EnumRockType enumtype = aenumtype[j];
-            list.add(new ItemStack(itemIn, 1, enumtype.getMetaData()));
+            list.add(new ItemStack(itemIn, 1, enumtype.getMetaData(this)));
         }
     }
     

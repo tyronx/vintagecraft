@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.interfaces;
 
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -12,7 +13,7 @@ public interface ISoil {
 
 	
 	boolean canSpreadGrass(World world, BlockPos pos);
-	boolean canGrowTree(World world, BlockPos pos, EnumTree mountaindogwood);
+	boolean canGrowTree(World world, BlockPos pos, EnumTree tree);
 	boolean canGrowGrass(World world, BlockPos pos);
 	
 	EnumFertility getFertility(World world, BlockPos pos);

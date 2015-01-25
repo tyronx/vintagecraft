@@ -134,6 +134,9 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 		//registerPacket(KeyPressPacket.class);
 		//registerPacket(InitClientWorldPacket.class);
 		registerPacket(DataBlockPacket.class);
+		registerPacket(ChunkPutNbt.class);
+		registerPacket(ChunkRemoveNbt.class);
+		
 		/*registerPacket(ItemRenamePacket.class);
 		registerPacket(KnappingUpdatePacket.class);
 		registerPacket(PlayerUpdatePacket.class);

@@ -1,7 +1,12 @@
 {
     "variants": {
-        "treetype=mountaindogwood": [
-			{ "model": "vintagecraft:planks/mountaindogwood" }
-		]
+		"treetype=ash": { "model": "vintagecraft:planks/ash" },
+		"treetype=birch": { "model": "vintagecraft:planks/birch" },
+		"treetype=douglasfir": { "model": "vintagecraft:planks/douglasfir" },
+		"treetype=oak": { "model": "vintagecraft:planks/oak" },
+		"treetype=maple": { "model": "vintagecraft:planks/maple" },
+		"treetype=mountaindogwood": { "model": "vintagecraft:planks/mountaindogwood" },
+		"treetype=pine": { "model": "vintagecraft:planks/pine" },
+		"treetype=spruce": { "model": "vintagecraft:planks/spruce" }
     }
 }

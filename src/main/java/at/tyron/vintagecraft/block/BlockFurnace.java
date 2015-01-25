@@ -6,7 +6,6 @@ public class BlockFurnace extends BlockVC {
 
 	protected BlockFurnace(Material materialIn) {
 		super(materialIn);
-		// TODO Auto-generated constructor stub
 	}
 
 }

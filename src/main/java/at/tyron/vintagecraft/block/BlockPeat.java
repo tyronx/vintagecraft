@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
@@ -40,7 +41,7 @@ public class BlockPeat extends BlockVC implements ISoil {
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
-    		list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData()));
+    		list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData(this)));
     	}
     }
    
@@ -56,7 +57,7 @@ public class BlockPeat extends BlockVC implements ISoil {
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-	    return ((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData();
+	    return ((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData(this);
 	}
 	
 	@Override

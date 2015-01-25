@@ -2,9 +2,13 @@ package at.tyron.vintagecraft.item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IFuel;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import net.minecraft.block.Block;
@@ -26,17 +30,17 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 			return super.getUnlocalizedName() + ".unknown";
 		}
 		
-		return super.getUnlocalizedName() + "." + getTreeType(stack).getName();
+		return super.getUnlocalizedName() + "." + getTreeType(stack).getStateName();
 	}
 	
 	
-	public static ItemStack setTreeType(ItemStack itemstack, EnumTree treetype) {
+	public static ItemStack withTreeType(ItemStack itemstack, BlockClassEntry treetype) {
 		NBTTagCompound nbt = itemstack.getTagCompound(); 
 		if (nbt == null) {
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		
-		nbt.setInteger("treetype", treetype.meta);
+		nbt.setInteger("treetype", treetype.getMetaData((BlockVC) ((ItemBlock)itemstack.getItem()).block));
 		itemstack.setTagCompound(nbt);
 		return itemstack;
 	}
@@ -45,15 +49,15 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		if (itemstack.getTagCompound() != null) {
-			return EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
+			return (EnumTree) BlocksVC.log.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("treetype")).getKey();
 		}
 		return null;
 	}
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		if (getTreeType(stack) == null) return EnumTree.MOUNTAINDOGWOOD.getName();
-		return getTreeType(stack).getName();
+		if (getTreeType(stack) == null) return EnumTree.ASH.getStateName();
+		return getTreeType(stack).getStateName();
 	}
 	
 	

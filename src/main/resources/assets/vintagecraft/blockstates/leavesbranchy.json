@@ -1,6 +1,21 @@
 {
-	"variants": {
+    "variants": {
+		"checkdecay=false,treetype=ash": { "model": "vintagecraft:leavesbranchy/ash" },
+		"checkdecay=false,treetype=birch": { "model": "vintagecraft:leavesbranchy/birch" },
+		"checkdecay=false,treetype=douglasfir": { "model": "vintagecraft:leavesbranchy/douglasfir" },
+		"checkdecay=false,treetype=oak": { "model": "vintagecraft:leavesbranchy/oak" },
+		"checkdecay=false,treetype=maple": { "model": "vintagecraft:leavesbranchy/maple" },
 		"checkdecay=false,treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" },
-		"checkdecay=true,treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" }
-	}
+		"checkdecay=false,treetype=pine": { "model": "vintagecraft:leavesbranchy/pine" },
+		"checkdecay=false,treetype=spruce": { "model": "vintagecraft:leavesbranchy/spruce" },
+		
+		"checkdecay=true,treetype=ash": { "model": "vintagecraft:leavesbranchy/ash" },
+		"checkdecay=true,treetype=birch": { "model": "vintagecraft:leavesbranchy/birch" },
+		"checkdecay=true,treetype=douglasfir": { "model": "vintagecraft:leavesbranchy/douglasfir" },
+		"checkdecay=true,treetype=oak": { "model": "vintagecraft:leavesbranchy/oak" },
+		"checkdecay=true,treetype=maple": { "model": "vintagecraft:leavesbranchy/maple" },
+		"checkdecay=true,treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" },
+		"checkdecay=true,treetype=pine": { "model": "vintagecraft:leavesbranchy/pine" },
+		"checkdecay=true,treetype=spruce": { "model": "vintagecraft:leavesbranchy/spruce" }
+    }
 }

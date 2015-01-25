@@ -5,7 +5,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
 
 public class DynTreeGen {
 	// Absolute values
@@ -14,6 +16,9 @@ public class DynTreeGen {
 	
 	// All below: Relative values from 0..100  (except angles)
 	
+	
+	// Stuff to read:
+	// http://en.wikipedia.org/wiki/L-system
 	
 	float trunkHeight; 
 	float trunkRadius;
@@ -66,9 +71,10 @@ public class DynTreeGen {
 		this.foliageRadius = foliageRadius;
 		this.randomness = randomness;
 		
-		log = BlocksVC.log.getDefaultState();
-		leaves = BlocksVC.leaves.getDefaultState();
-		leavesBranchy = BlocksVC.leaves.getDefaultState();
+		log = BlocksVC.log.getBlockStateFor(EnumTree.ASH);
+		//log = TreeClass.ASH.getBlockState();
+		//leaves = EnumLeaves.
+		//leavesBranchy = TreeClass.ASH.getBlockState();
 	}
 	
 	
@@ -76,6 +82,7 @@ public class DynTreeGen {
 		for (int y = 0; y < height; y++) {
 			if (y < trunkHeight * height) drawTrunk(world, pos.up(y), width);
 			//System.out.println((y - branchingMinHeight * height)+" % " + (branchingVertDist*height));
+			
 			if (y >= branchingMinHeight * height &&  (int)(y - branchingMinHeight * height) % (int)(branchingVertDist*height) == 0) {
 				int quantityLeavesBranching = leavesBranchingMin + world.rand.nextInt(leavesBranchingMax);
 				int step = Math.max(1, (int) ((maxBranchAngleHor - minBranchAngleHor) / quantityLeavesBranching)); 
@@ -111,7 +118,9 @@ public class DynTreeGen {
 	
 	
 	public void drawTrunk(World world, BlockPos pos, int width) {
-		for (int x = (int) (-trunkRadius * width / 2); x < trunkRadius * width; x++) {
+		world.setBlockState(pos, log);
+		
+		/*for (int x = (int) (-trunkRadius * width / 2); x < trunkRadius * width; x++) {
 			for (int z = (int) (-trunkRadius * width / 2); z < trunkRadius * width; z++) {
 				//if (world.getBlockState(pos).getBlock() == Blocks.air) {
 				if (x*x + z*z <= width * width * trunkRadius*trunkRadius / 4) {
@@ -119,7 +128,7 @@ public class DynTreeGen {
 				//}
 				}
 			}
-		}
+		}*/
 	}
 	
 	

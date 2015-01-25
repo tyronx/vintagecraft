@@ -99,10 +99,10 @@ public class VintageCraftCommands extends CommandBase {
 			if (args[1].equals("deposits")) {
 				GenLayerVC.genDeposits(seed);
 			}
-			
 			if (args[1].equals("rocks")) {	
 				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
 			}
+			
 			
 			if (args[1].equals("rockdeform")) {	
 				GenLayerVC.genRockDeformation(seed);

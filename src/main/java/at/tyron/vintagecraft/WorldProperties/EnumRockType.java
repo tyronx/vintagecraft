@@ -77,7 +77,11 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     }
 
     
-    
+	@Override
+	public int getId() {
+		return id;
+	}
+	
     @Override
     public int getColor() {
     	return id * 15;
@@ -87,7 +91,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     	return color / 15;
     }
     
-    public int getMetaData() {
+    public int getMetaData(BlockVC block) {
         return this.meta;
     }
 
@@ -110,6 +114,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     public String getUnlocalizedName() {
         return this.unlocalizedName;
     }
+
 
     public static String[] getNames() {
     	String[] names = new String[values().length];
@@ -157,7 +162,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
 
         for (int i = 0; i < rocktypes.length; ++i) {
         	EnumRockType rocktype = rocktypes[i];
-            META_LOOKUP[rocktype.getMetaData()] = rocktype;      
+            META_LOOKUP[rocktype.meta] = rocktype;      
             ID_LOOKUP[rocktype.id] = rocktype;
             
             for (int j = 0; j < rocktype.group.crustlayers.length; j++) {
@@ -194,7 +199,6 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
 
 	@Override
 	public void init(BlockVC block, int meta) {
-		// TODO Auto-generated method stub
 		
 	}
 }

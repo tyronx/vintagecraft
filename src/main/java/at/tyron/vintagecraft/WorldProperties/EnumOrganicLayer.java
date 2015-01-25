@@ -73,7 +73,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 	
 
 	@Override
-	public int getMetaData() {
+	public int getMetaData(BlockVC block) {
 		return meta;
 	}
 
@@ -88,7 +88,10 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
         return getName();
     }
     
-	
+	@Override
+	public int getId() {
+		return meta;
+	}
 
 	
 	
@@ -136,7 +139,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 
         for (int i = 0; i < types.length; ++i) {
         	EnumOrganicLayer type = types[i];
-            META_LOOKUP[type.getMetaData()] = type;      
+            META_LOOKUP[type.meta] = type;      
         }
         
         for (int i = 0; i <= 15; i++) {
@@ -172,7 +175,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 		int i = 0;
 		for (EnumOrganicLayer organiclayer : values()) {
 			for (EnumFertility fertility : EnumFertility.values()) {
-				results[i++] = new EnumStateImplementation(organiclayer.meta + (fertility.meta << 2), fertility.shortname + "_" + organiclayer.getName());
+				results[i++] = new EnumStateImplementation(organiclayer.getId(), organiclayer.meta + (fertility.meta << 2), fertility.shortname + "_" + organiclayer.getName());
 			}
 		}
 		return results;
@@ -180,7 +183,6 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 
 	@Override
 	public void init(BlockVC block, int meta) {
-		// TODO Auto-generated method stub
 		
 	}
 

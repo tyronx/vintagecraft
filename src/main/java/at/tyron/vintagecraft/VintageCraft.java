@@ -113,6 +113,8 @@ public class VintageCraft {
     	BlocksVC.init();
     	ItemsVC.init();
     	
+    	packetPipeline.initalise();
+    	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
 		

@@ -231,7 +231,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				if (shouldPopulate((ChunkProviderServer)chunkprovider, x, z)) {
 					it.remove();
 					populate(chunkprovider, x, z);
-					VCraftWorld.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", true);
+					VCraftWorld.setChunkNBT(x, z, "vcraftpopulated", true);
 					break;
 				}
 			}

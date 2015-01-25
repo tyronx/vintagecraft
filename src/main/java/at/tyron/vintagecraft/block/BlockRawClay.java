@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -46,7 +47,7 @@ public class BlockRawClay extends BlockVC implements ISoil {
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-	    return ((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData();
+	    return ((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData(this);
 	}
 	
 	@Override

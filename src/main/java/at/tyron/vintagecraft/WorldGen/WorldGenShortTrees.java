@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockVC;
@@ -15,10 +16,18 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGenShortTrees extends WorldGenerator {
 	private int treeId;
+	
+	IBlockState log;
+	IBlockState leaves;
+	IBlockState leavesbranchy;
 
 	public WorldGenShortTrees(boolean flag, int id) {
 		super(flag);
 		treeId=id;
+		
+		log = BlocksVC.log.getBlockStateFor(EnumTree.ASH);
+		leaves = BlocksVC.leaves.getBlockStateFor(EnumTree.ASH);
+		leavesbranchy = BlocksVC.leavesbranchy.getBlockStateFor(EnumTree.ASH);
 	}
 	
 	@Override
@@ -61,7 +70,7 @@ public class WorldGenShortTrees extends WorldGenerator {
 		if (!(block instanceof BlockVC) || !(block instanceof ISoil)) {
 			return false;
 		}
-		if (!((ISoil)block).canGrowTree(world, blockpos, EnumTree.MOUNTAINDOGWOOD)) return false;
+		if (!((ISoil)block).canGrowTree(world, blockpos, EnumTree.ASH)) return false;
 		
 		
 		if (blockpos.getY() >= world.getHeight() - height - 1) {
@@ -78,9 +87,9 @@ public class WorldGenShortTrees extends WorldGenerator {
 					int dz = z - blockpos.getZ();
 					if ((Math.abs(dx) != width || Math.abs(dz) != width || random.nextInt(2) != 0 && dyLast4Blocks != 0) && world.getBlockState(new BlockPos(x, y, z)).getBlock() == Blocks.air) {
 						if (Math.abs(dx) < 2 && Math.abs(dz) < 2 && (y - blockpos.getY() < height) && width > 1) {
-							world.setBlockState(new BlockPos(x, y, z), BlocksVC.leavesbranchy.getDefaultState(), 2);
+							world.setBlockState(new BlockPos(x, y, z), leavesbranchy, 2);
 						} else {
-							world.setBlockState(new BlockPos(x, y, z), BlocksVC.leaves.getDefaultState(), 2);
+							world.setBlockState(new BlockPos(x, y, z), leaves, 2);
 						}
 					}
 				}
@@ -88,7 +97,7 @@ public class WorldGenShortTrees extends WorldGenerator {
 		}
 
 		for (int dy = -1; dy < height; dy++) {
-			world.setBlockState(blockpos.up(dy), BlocksVC.log.getDefaultState(), 2);
+			world.setBlockState(blockpos.up(dy), log, 2);
 		}
 
 		return true;

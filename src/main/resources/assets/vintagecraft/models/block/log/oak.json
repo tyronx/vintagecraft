@@ -1,0 +1,7 @@
+{
+		"parent": "block/cube_column",
+		"textures": {
+			"end": "vintagecraft:blocks/log/oak",
+			"side": "vintagecraft:blocks/log/oak_bark"
+		}
+	}

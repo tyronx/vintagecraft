@@ -7,14 +7,21 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.FlowerClass;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.item.ItemLogVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -23,6 +30,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
@@ -38,21 +46,20 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
-	public static int multistateAvailableTypes = 8;
-	
-    public static final PropertyEnum HALF = PropertyEnum.create("half", EnumBlockHalf.class);
+	public static int multistateAvailableTypes() { return 8; }	
+	public PropertyBlockClass FLOWERTYPE;
+	public PropertyEnum HALF = PropertyEnum.create("half", EnumBlockHalf.class);
     
 
-	public BlockDoubleFlowerVC(IEnumState []subtypes) {
-		super();		
-		this.subtypes = subtypes;
-		FLOWERTYPE = PropertyEnum.create("flowertype", EnumFlower.class, Lists.newArrayList(subtypes));
-		
-		blockState = this.createBlockState();
-		setDefaultState(this.blockState.getBaseState().withProperty(FLOWERTYPE, (EnumFlower)subtypes[0]).withProperty(HALF, EnumBlockHalf.LOWER));
+	public BlockDoubleFlowerVC() {
+		super();
+		setCreativeTab(CreativeTabs.tabDecorations);
+		this.setTickRandomly(true);
+		float f = 0.2F;
+	    this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
 	}
-
 	
+
 
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
@@ -127,7 +134,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     }
 
     public int damageDropped(IBlockState state) {
-        return state.getValue(HALF) != EnumBlockHalf.UPPER ? ((EnumFlower)state.getValue(FLOWERTYPE)).getMetaData() : 0;
+        return state.getValue(HALF) != EnumBlockHalf.UPPER ? ((EnumFlower)state.getValue(FLOWERTYPE)).getMetaData(this) : 0;
     }
 
     @SideOnly(Side.CLIENT)
@@ -177,28 +184,17 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 
 
     public int getDamageValue(World worldIn, BlockPos pos) {
-        return this.getVariant(worldIn, pos).getMetaData();
+        return this.getVariant(worldIn, pos).getMetaData(this);
     }
 
-    public IBlockState getStateFromMeta(int meta) {
-        return (meta & 8) > 0 ? this.getDefaultState().withProperty(HALF, EnumBlockHalf.UPPER) : this.getDefaultState().withProperty(HALF, EnumBlockHalf.LOWER).withProperty(FLOWERTYPE, EnumFlower.fromMeta(this, meta & 7));
-    }
-
-    public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-        if (state.getValue(HALF) == EnumBlockHalf.UPPER) {
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.down());
-
-            if (iblockstate1.getBlock() == this) {
-                state = state.withProperty(FLOWERTYPE, iblockstate1.getValue(FLOWERTYPE));
-            }
-        }
-
-        return state;
-    }
-
-    public int getMetaFromState(IBlockState state) {
-        return state.getValue(HALF) == EnumBlockHalf.UPPER ? 8 : ((EnumFlower)state.getValue(FLOWERTYPE)).getMetaData();
-    }
+  
+  /*  public int getMetaFromState(IBlockState state) {
+    	int upper = state.getValue(HALF) == EnumBlockHalf.UPPER ? 1 : 0;
+        
+    	return 
+        	upper << 3
+        	| ((BlockClassEntry)state.getValue(FLOWERTYPE)).metadata & 7;
+    }*/
 
     protected BlockState createBlockState() {
     	if (FLOWERTYPE == null) {
@@ -207,6 +203,38 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
         return new BlockState(this, new IProperty[] {HALF, FLOWERTYPE});
     }
 
+    
+    
+    public IBlockState getStateFromMeta(int meta) {
+    	EnumBlockHalf half = (meta & 1) > 0 ? EnumBlockHalf.UPPER : EnumBlockHalf.LOWER;
+    	
+    	return BlocksVC.doubleflower.getBlockClassfromMeta(this, meta & 7).getBlockState().withProperty(HALF, half);
+    }
+
+
+    public int getMetaFromState(IBlockState state) {
+    	return BlocksVC.doubleflower.getMetaFromState(state) & 7 + (((EnumBlockHalf)state.getValue(HALF) == EnumBlockHalf.UPPER) ? 8 : 0);
+    }
+    
+    
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	
+    	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
+        ItemDoublePlantVC.withFlowerType(itemstack, getFlowerType(state));
+        ret.add(itemstack);
+        
+    	return ret;
+    }
+    
+	public BlockClassEntry getFlowerType(IBlockState state) {
+		return BlocksVC.doubleflower.getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(FLOWERTYPE));
+	}
+	
+
+	
     
     @SideOnly(Side.CLIENT)
     public Block.EnumOffsetType getOffsetType() {
@@ -248,7 +276,6 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
         return null;
     }	
 
-	
 
 	
 	
@@ -267,14 +294,30 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 	 
 	 
 	    
-	    @Override
-	    public net.minecraftforge.common.EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-	        return net.minecraftforge.common.EnumPlantType.Plains;
-	    }
-	    @Override
-	    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
-	        return this.getDefaultState();
-	    }
+    @Override
+    public net.minecraftforge.common.EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+        return net.minecraftforge.common.EnumPlantType.Plains;
+    }
+    @Override
+    public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
+        return this.getDefaultState();
+    }
 	    
+
+	@Override
+	public IProperty getTypeProperty() {
+		return FLOWERTYPE;
+	}
+
+	@Override
+	public void setTypeProperty(PropertyBlockClass property) {
+		FLOWERTYPE = property;
+	}
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.doubleflower;
+	}
+    
 	    
 }

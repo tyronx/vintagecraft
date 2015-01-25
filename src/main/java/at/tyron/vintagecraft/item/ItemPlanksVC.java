@@ -1,13 +1,18 @@
 package at.tyron.vintagecraft.item;
 
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import java.util.List;
+
+import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemPlanksVC extends ItemBlock implements ISubtypeFromStackPovider {
+public class ItemPlanksVC extends ItemLogVC implements ISubtypeFromStackPovider {
 	
 	public ItemPlanksVC(Block block) {
 		super(block);
@@ -20,31 +25,17 @@ public class ItemPlanksVC extends ItemBlock implements ISubtypeFromStackPovider 
 			return super.getUnlocalizedName() + ".unknown";
 		}
 		
-		return super.getUnlocalizedName() + "." + getTreeType(stack).getName();
+		return super.getUnlocalizedName() + "." + getTreeType(stack).getStateName();
 	}
 	
 	
-	public static void setTreeType(ItemStack itemstack, EnumTree treetype) {
-		NBTTagCompound nbt = itemstack.getTagCompound(); 
-		if (nbt == null) {
-			itemstack.setTagCompound(nbt = new NBTTagCompound());
-		}	
-		
-		nbt.setInteger("treetype", treetype.meta);
-		itemstack.setTagCompound(nbt);
-	}
-
-	
-	
-	public static EnumTree getTreeType(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null) {
-			return EnumTree.byMeta(itemstack.getTagCompound().getInteger("treetype"));
-		}
-		return null;
+	@Override
+	public int getBurningHeat(ItemStack stack) {
+		return 900;
 	}
 
 	@Override
-	public String getSubType(ItemStack stack) {
-		return getTreeType(stack).getName();
-	}
+	public float getBurnDurationMultiplier(ItemStack stack) {
+		return 0.25f;
+	}	
 }

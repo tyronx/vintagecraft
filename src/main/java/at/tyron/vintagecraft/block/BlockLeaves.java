@@ -1,13 +1,23 @@
 package at.tyron.vintagecraft.block;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.naming.spi.StateFactory;
 
+import com.google.common.collect.Lists;
+
 import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumFlower;
+import at.tyron.vintagecraft.block.BlockDoubleFlowerVC.EnumBlockHalf;
+import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.interfaces.IMultiblock;
 import at.tyron.vintagecraft.item.ItemLeaves;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
@@ -15,6 +25,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -37,11 +48,15 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLeaves extends BlockVC {
+public class BlockLeaves extends BlockVC implements IMultiblock {
+	public static int multistateAvailableTypes() {
+		return 8;
+	}
+	
 	public boolean fancyGfx; 
 	
-	public static final PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
-	public static final PropertyEnum TREETYPE = PropertyEnum.create("treetype", EnumTree.class);
+	public static PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
+	public static PropertyBlockClass TREETYPE = BlockLogVC.TREETYPE;
 	
 	
 	int[] surroundings;
@@ -52,11 +67,18 @@ public class BlockLeaves extends BlockVC {
 		super(Material.leaves);
 		this.setTickRandomly(true);
 		this.setLightOpacity(1);
-        this.setStepSound(soundTypeGrass);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
-        
-        this.setDefaultState(this.blockState.getBaseState().withProperty(TREETYPE, EnumTree.MOUNTAINDOGWOOD));
+        this.setCreativeTab(CreativeTabs.tabDecorations);    
 	}
+	
+	
+	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
+		this.subtypes = subtypes;
+		setTypeProperty(property);
+		
+		blockState = this.createBlockState();
+		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState()));		
+	}
+	
 
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
@@ -92,9 +114,11 @@ public class BlockLeaves extends BlockVC {
     
     
     public ItemStack getPickBlock(MovingObjectPosition target, World world, BlockPos pos) {
-        return ItemLeaves.setTreeType(
-        	new ItemStack(getItem(world,pos)), 
-        	(EnumTree)world.getBlockState(pos).getValue(TREETYPE)
+    	IBlockState state = world.getBlockState(pos);
+    	
+        return ItemLeaves.withTreeType(
+        	new ItemStack(getItem(world,pos)),
+        	getBlockClass().getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(getTypeProperty()))
         );
     }
     
@@ -299,10 +323,18 @@ public class BlockLeaves extends BlockVC {
     
     
     
+    @Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (BlockClassEntry tree : getBlockClass().values()) {
+			list.add(new ItemStack(itemIn, 1, tree.getMetaData(this)));
+		}
+		super.getSubBlocks(itemIn, tab, list);
+	}
+    
     
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {TREETYPE, CHECK_DECAY});
+        return new BlockState(this, new IProperty[] {getTypeProperty(), CHECK_DECAY});
     }
 
     
@@ -310,7 +342,7 @@ public class BlockLeaves extends BlockVC {
     public int getMetaFromState(IBlockState state) {
     	return
     		(Boolean)state.getValue(CHECK_DECAY) ? 1 : 0
-    		+ ((EnumTree)state.getValue(TREETYPE)).meta << 1
+    		| getBlockClass().getMetaFromState(state) << 1
     	;
     }
     
@@ -318,7 +350,7 @@ public class BlockLeaves extends BlockVC {
     public IBlockState getStateFromMeta(int meta) {
     	return super.getStateFromMeta(meta)
     			.withProperty(CHECK_DECAY, (meta & 1) > 0 ? true : false)
-    			.withProperty(TREETYPE, EnumTree.byMeta(meta >> 1))
+    			.withProperty(getTypeProperty(), meta >> 1)
     	;
     }
     
@@ -327,4 +359,30 @@ public class BlockLeaves extends BlockVC {
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
         return null;
     }
+
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		ItemBlock itemblock = (ItemBlock)stack.getItem();
+		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();	
+	}
+
+
+	@Override
+	public IProperty getTypeProperty() {
+		return TREETYPE;
+	}
+
+
+	@Override
+	public void setTypeProperty(PropertyBlockClass property) {
+		TREETYPE = property;
+	}
+
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.leaves;
+	}
+
 }

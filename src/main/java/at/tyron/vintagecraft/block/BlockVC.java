@@ -5,9 +5,12 @@ import java.util.Random;
 import com.google.common.util.concurrent.Service.State;
 
 import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.WorldProperties.*;
+import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.interfaces.ISoil;
+import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -17,6 +20,7 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -30,8 +34,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockVC extends Block {
-	public static int multistateAvailableTypes = 16;
+public abstract class BlockVC extends Block implements ISubtypeFromStackPovider {
+	public static int multistateAvailableTypes() {
+		return 16;
+	}
+	
+	BlockClassEntry[] subtypes;
 	
 	protected BlockVC(Material materialIn) {
 		super(materialIn);
@@ -40,9 +48,14 @@ public abstract class BlockVC extends Block {
 	public BlockVC(IEnumState[] states) {
 		super (Material.air);
 	}
-
+	
+	
+	public BlockClassEntry[] getSubTypes() {
+		return subtypes;
+	}
 	
 	public BlockVC registerMultiState(String name, Class<? extends ItemBlock> itemclass, String folderprefix, IEnumState []types) {
+		System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, name);
 		setUnlocalizedName(name);
 		
@@ -50,7 +63,7 @@ public abstract class BlockVC extends Block {
 			IEnumState enumstate = types[i]; 
 			//System.out.println("add variant name " + enumstate + " item is " + Item.getItemFromBlock(this));
 			ModelBakery.addVariantName(Item.getItemFromBlock(this), "vintagecraft:" + folderprefix + "/" + enumstate.getStateName());
-			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), enumstate.getMetaData(), new ModelResourceLocation("vintagecraft:" + folderprefix + "/" + enumstate.getStateName(), "inventory"));
+			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), enumstate.getMetaData(this), new ModelResourceLocation("vintagecraft:" + folderprefix + "/" + enumstate.getStateName(), "inventory"));
 		}
 		
 		return this;
@@ -199,6 +212,10 @@ public abstract class BlockVC extends Block {
     
    
     
-    
+
+    @Override
+    public String getSubType(ItemStack stack) {
+    	return null;
+    }
     
 }

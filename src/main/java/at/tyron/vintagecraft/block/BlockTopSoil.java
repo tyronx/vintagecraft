@@ -48,7 +48,7 @@ public class BlockTopSoil extends BlockVC implements ISoil {
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
     		for (EnumFertility fertility : EnumFertility.values()) {
-    			list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData() + (fertility.getMetaData() << 2)));
+    			list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData(this) + (fertility.getMetaData(this) << 2)));
     		}
     	}
     }
@@ -65,7 +65,7 @@ public class BlockTopSoil extends BlockVC implements ISoil {
     	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
     	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-    	itemstack.setItemDamage(((EnumFertility)state.getValue(fertility)).getMetaData() << 2);
+    	itemstack.setItemDamage(((EnumFertility)state.getValue(fertility)).getMetaData(this) << 2);
         ret.add(itemstack);
         
     	return ret;
@@ -85,9 +85,9 @@ public class BlockTopSoil extends BlockVC implements ISoil {
     @Override
     public int getMetaFromState(IBlockState state) {
         return 
-        	((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData()
+        	((EnumOrganicLayer)state.getValue(organicLayer)).getMetaData(this)
         	+ 
-        	(((EnumFertility)state.getValue(fertility)).getMetaData() << 2);
+        	(((EnumFertility)state.getValue(fertility)).getMetaData(this) << 2);
     }
     
     @Override

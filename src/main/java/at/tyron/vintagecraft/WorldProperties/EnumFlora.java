@@ -16,9 +16,9 @@ public enum EnumFlora {
 	
 	CLOVER			 ( 0, 19, 60, 220,  90, 255, 100, new EnumFlower[]{EnumFlower.CLOVER}),
 	
-   // GOLDENROD        (15, 28,   0,  10, 120, 190, 100, new EnumFlower[]{EnumFlower.GOLDENROD, EnumFlower.GOLDENROD2, EnumFlower.GOLDENROD3}),
+    GOLDENROD        (15, 28,   0,  10, 120, 190, 0, new EnumFlower[]{EnumFlower.GOLDENROD, EnumFlower.GOLDENROD2, EnumFlower.GOLDENROD3}),
     
-    //FORGETMENOT		 ( 8, 20, 0, 40, 100, 255, 100, new EnumFlower[]{EnumFlower.FORGETMENOT, EnumFlower.FORGETMENOT2, EnumFlower.FORGETMENOT3, EnumFlower.FORGETMENOT4, EnumFlower.FORGETMENOT5}),
+    FORGETMENOT		 ( 8, 20, 0, 40, 100, 255, 0, new EnumFlower[]{EnumFlower.FORGETMENOT, EnumFlower.FORGETMENOT2, EnumFlower.FORGETMENOT3, EnumFlower.FORGETMENOT4, EnumFlower.FORGETMENOT5}),
     
     NARCISSUS		 ( 8, 20, 1, 120, 100, 255, 100, new EnumFlower[]{EnumFlower.NARCISSUS, EnumFlower.NARCISSUS2, EnumFlower.NARCISSUS3}),
     
