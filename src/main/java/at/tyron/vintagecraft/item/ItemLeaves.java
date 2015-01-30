@@ -2,7 +2,9 @@ package at.tyron.vintagecraft.item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.block.BlockVC;
 import net.minecraft.block.Block;
@@ -27,5 +29,7 @@ public class ItemLeaves extends ItemLogVC {
 	public float getBurnDurationMultiplier(ItemStack stack) {
 		return 0.2f;
 	}
+	
+	
 	
 }

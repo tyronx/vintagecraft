@@ -40,6 +40,8 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC noise = new GenLayerClimateRGBNoise(1L);
 		GenLayerVC.drawImageRGB(512, noise, "Climate 0 Noise");
 		
+		noise.initWorldGenSeed(seed);
+		
 		GenLayerVC climate = new GenLayerBlurAll(2L, 1, 3, noise);
 		GenLayerVC.drawImageRGB(512, climate, "Climate 2 Blur ");
 		

@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockFlowerVC;
-import at.tyron.vintagecraft.block.BlockLeaves;
+import at.tyron.vintagecraft.block.BlockLeavesVC;
 import at.tyron.vintagecraft.block.BlockLeavesBranchy;
 import at.tyron.vintagecraft.block.BlockLogVC;
 import at.tyron.vintagecraft.block.BlockVC;

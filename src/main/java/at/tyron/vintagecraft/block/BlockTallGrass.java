@@ -45,8 +45,8 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	}
 	
 	
-	public int damageDropped(IBlockState state) {
-        return ((EnumTallGrass)state.getValue(GRASSTYPE)).getMetaData(this);
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return null;
     }
 
     @SideOnly(Side.CLIENT)

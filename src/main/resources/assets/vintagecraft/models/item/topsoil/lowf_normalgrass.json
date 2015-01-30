@@ -1,10 +1,10 @@
 {
-"parent": "vintagecraft:block/topsoil/lowf_normalgrass",
-    "display": {
-        "thirdperson": {
-            "rotation": [ 10, -45, 170 ],
-            "translation": [ 0, 1.5, -2.75 ],
-            "scale": [ 0.375, 0.375, 0.375 ]
-        }
-    }
+	"parent": "vintagecraft:block/topsoil/grass",
+	"textures": {
+		"particle": "vintagecraft:blocks/topsoil/topsoil_lowf",
+		"bottom": "vintagecraft:blocks/topsoil/topsoil_lowf",
+		"top": "vintagecraft:blocks/topsoil/grass_top_normal3",
+		"side": "vintagecraft:blocks/topsoil/topsoil_lowf",
+		"overlay": "vintagecraft:blocks/topsoil/grass_side_normal"
+	}
 }

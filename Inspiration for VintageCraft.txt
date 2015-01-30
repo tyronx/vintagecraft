@@ -73,7 +73,18 @@
 - Mineshafts like these http://imgur.com/a/idI07
 
 
+========= Landforms =============
+
+
+I seriously want all of these Landforms: http://en.wikipedia.org/wiki/List_of_landforms (scroll to bottom)
+
+
+
 ======= Biome Stuff ======
+
+
+
+
 
 List of Dimensions:
 
@@ -96,12 +107,36 @@ List of normal World Biomes:
     - Lake?
 
 
+   - Heathland              (Rare)
+   - Moorland 
+   - Open Shrubland
+   - Closed Shrubland
+   - 
+   - Temperate Rainforest   (Rare: http://en.wikipedia.org/wiki/Rainforest#mediaviewer/File:Temperate_rainforest_map.svg)
+   - Tropical Rainforest
+   - 
+
+
+- Rivers
+  http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2213153-streams-real-flowing-rivers
+
 
 - Wind map that creates
   - Bent trees
   - Sand dunes http://upload.wikimedia.org/wikipedia/commons/3/34/Rub_al_Khali_002.JPG
   - Beaches
   - Erosion http://www.planetminecraft.com/project/island-terraform/
+
+
+
+- Nativity Map that determines where plants are natively growing at = like rock layers with types
+  plants native for:
+    central asia
+    america
+    europe
+    galapagos (rare?)
+    etc.
+  
 
 
 - Awesome Lava stuff and trees and mountains: http://imgur.com/a/sEv5I#0

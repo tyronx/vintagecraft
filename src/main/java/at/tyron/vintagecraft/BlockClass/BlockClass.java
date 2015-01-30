@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.interfaces.IMultiblock;
 
 public abstract class BlockClass {
-	HashMap<IEnumState, BlockClassEntry> values = new HashMap<IEnumState, BlockClassEntry>();
+	LinkedHashMap<IEnumState, BlockClassEntry> values = new LinkedHashMap<IEnumState, BlockClassEntry>();
 	
 
 	String name;
@@ -94,23 +95,23 @@ public abstract class BlockClass {
 		BlockClassEntry[][] chunked = split(values(), typesperblock);
 		ArrayList<BlockVC> blocks = new ArrayList<BlockVC>();
 		
-		for (BlockClassEntry[] blockstates : chunked) {
-			System.out.println("register chunk piece of size " + blockstates.length);
+		for (BlockClassEntry[] blockclassentrychunk : chunked) {
+			System.out.println("register chunk piece of size " + blockclassentrychunk.length);
 			BlockVC block;
 			try {
 				block = blockclass.newInstance();
 				blocks.add(block);
 				
 				int meta = 0;
-				for (IEnumState blockstate : blockstates) {
-					System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta);
-					blockstate.init(block, meta++);
+				for (BlockClassEntry blockclassentry : blockclassentrychunk) {
+					System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta + "     (key = " + blockclassentry.key + ")");
+					blockclassentry.init(block, meta++);
 				}
 				
 				//blockclass.getDeclaredMethod("init", new Class[]{BlockClassEntry[].class, PropertyInteger.class}).invoke(block, new Object[]{blockstates, createProperty(name, blockstates.length)});
-				invokeMethod(blockclass, block, "init", new Object[]{blockstates, createProperty(getTypeName(), blockstates)});
+				invokeMethod(blockclass, block, "init", new Object[]{blockclassentrychunk, createProperty(getTypeName(), blockclassentrychunk)});
 				
-				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, name, blockstates);
+				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, name, blockclassentrychunk);
 				
 				block.setHardness(hardness).setStepSound(stepsound);
 				
@@ -146,6 +147,10 @@ public abstract class BlockClass {
 	static <T> T[][] split(T[] elements, int chunksize) {
 		int chunks = (int) Math.ceil((1f * elements.length) / chunksize);
 		
+		/*for (T element : elements) {
+			System.out.println(((IEnumState)element).getStateName());
+		}*/
+		
 		ArrayList<T> result = new ArrayList<T>(); 
 		
 		for (int i = 0; i < chunks; i++) {
@@ -158,11 +163,16 @@ public abstract class BlockClass {
 	
 	
 	
-	public BlockClassEntry getBlockClassfromMeta(BlockVC block, int meta) {
+	public BlockClassEntry getBlockClassfromMeta(Block block, int meta) {
 		for (BlockClassEntry enumitem: values()) {
 			if (enumitem.metadata == meta && enumitem.block == block) return enumitem;
 		}
-		return null;
+		
+		for (BlockClassEntry enumitem: values()) {
+			System.out.println(enumitem.metadata+" == "+meta+" && "+enumitem.block+" == "+block);
+		}
+		
+		throw new RuntimeException("Blockstate not found for block " + block + " / meta " + meta);
 	}
 	
 	public int getMetaFromBlockClass(BlockClassEntry blockclassentry) {

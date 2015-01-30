@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/topsoil/sparsegrass",
+"parent": "vintagecraft:block/log/pine",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

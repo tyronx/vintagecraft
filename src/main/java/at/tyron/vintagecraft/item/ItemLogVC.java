@@ -2,16 +2,21 @@ package at.tyron.vintagecraft.item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.block.BlockLeavesVC;
+import at.tyron.vintagecraft.block.BlockLeavesBranchy;
+import at.tyron.vintagecraft.block.BlockPlanksVC;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IFuel;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -26,32 +31,24 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		if (getTreeType(stack) == null) {
+		/*if (getTreeType(stack) == null) {
 			return super.getUnlocalizedName() + ".unknown";
-		}
+		}*/
 		
 		return super.getUnlocalizedName() + "." + getTreeType(stack).getStateName();
 	}
 	
 	
 	public static ItemStack withTreeType(ItemStack itemstack, BlockClassEntry treetype) {
-		NBTTagCompound nbt = itemstack.getTagCompound(); 
-		if (nbt == null) {
-			itemstack.setTagCompound(nbt = new NBTTagCompound());
-		}	
-		
-		nbt.setInteger("treetype", treetype.getMetaData((BlockVC) ((ItemBlock)itemstack.getItem()).block));
-		itemstack.setTagCompound(nbt);
+		itemstack.setItemDamage(treetype.metadata);
 		return itemstack;
 	}
 
 	
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null) {
-			return (EnumTree) BlocksVC.log.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("treetype")).getKey();
-		}
-		return null;
+		Block block = ((ItemBlock)itemstack.getItem()).block;
+		return (EnumTree) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 
 	@Override
@@ -81,5 +78,13 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	}
 	
 	
+	public static BlockClass getBlockClass(Block block) {
+		// Workaround for Java being too fail to allow overriding static methods
+		if (block instanceof BlockLeavesVC) return BlocksVC.leaves;
+		if (block instanceof BlockLeavesBranchy) return BlocksVC.leavesbranchy;
+		if (block instanceof BlockPlanksVC) return BlocksVC.planks;
+		
+		return BlocksVC.log;
+	}
 
 }

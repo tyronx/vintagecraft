@@ -77,7 +77,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     }
     
 	public BlockClassEntry getFlowerType(IBlockState state) {
-		return getBlockClass().getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(getTypeProperty()));
+		return (BlockClassEntry)state.getValue(getTypeProperty());
 	}
 	
     

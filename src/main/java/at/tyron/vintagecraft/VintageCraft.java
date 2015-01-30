@@ -136,7 +136,8 @@ public class VintageCraft {
      	//GameRegistry.registerWorldGenerator(new WorldGenFlora(), 5);
      	
         
-        WorldType.DEFAULT = new WorldTypeVC(0, "VCDefault");
+        WorldType.DEFAULT = WorldTypeVC.DEFAULT;
+        WorldType.FLAT = WorldTypeVC.FLAT;
         
        // DimensionManager.unregisterDimension(-1);
 		DimensionManager.unregisterDimension(0);

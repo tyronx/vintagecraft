@@ -4,12 +4,16 @@ import java.io.File;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.WorldGen.DynTreeBranch;
 import at.tyron.vintagecraft.WorldGen.DynTreeGen;
+import at.tyron.vintagecraft.WorldGen.DynTreeRoot;
+import at.tyron.vintagecraft.WorldGen.DynTreeTrunk;
 import at.tyron.vintagecraft.WorldGen.GenLayers.*;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumFlora;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -36,6 +40,16 @@ public class VintageCraftCommands extends CommandBase {
 	
 	// /vcraft genlayer forest
 	
+	void clearArea(World world, BlockPos center, int wdt, int hgt) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = 0; y < hgt; y++) {
+					world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
 		World world = sender.getEntityWorld();
@@ -46,34 +60,127 @@ public class VintageCraftCommands extends CommandBase {
 		}
 		
 		if (args[0].equals("clear")) {
-			int wdt = 20;
-			int hgt = 30;
+			int wdt = 30;
+			int hgt = 80;
 			
-			for (int x = -wdt/2; x < wdt; x++) {
-				for (int z = -wdt/2; z < wdt; z++) {
-					for (int y = 0; y < hgt; y++) {
-						sender.getEntityWorld().setBlockState(sender.getPosition().add(x, y, z), Blocks.air.getDefaultState());
-					}
-				}
-			}
+			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
 		}
 		
-		if (args[0].equals("gentree")) {
-			int wdt = 5;
-			int hgt = 15;
+		
+		
+		if (args[0].equals("genspruce")) {
+			float size = 1f;
 			
 			if (args.length == 2) {
-				wdt = parseInt(args[1]);
-			}
-			if (args.length == 3) {
-				hgt = parseInt(args[2]);
+				size = (float)parseDouble(args[1]);
 			}
 			
-			DynTreeGen bla     = new DynTreeGen(0.9f, 0.1f, 0.1f, 0.1f, 0, 0, 0, 0, 3, 6, (float)(25*Math.PI/180), (float)(40*Math.PI/180), 0, (float)(2*Math.PI), 3, 2);
 			
-			
-			bla.gen(sender.getEntityWorld(), sender.getPosition().east(3), wdt, hgt);
+			/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
+			 *	new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss)
+	   		 */
+			DynTreeGen.spruce.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, 0f);
 		}
+		
+		
+		if (args[0].equals("genbirch")) {
+			float size = 1f;
+			float bend = 0f;
+			
+			if (args.length == 2) {
+				size = (float)parseDouble(args[1]);
+			}
+
+			if (args.length == 3) {
+				bend = (float)parseDouble(args[2]);
+			}
+
+			DynTreeGen.birch.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
+		}
+		
+		
+		
+		
+		if (args[0].equals("gendogw")) {
+			float size = 1f;
+			float bend = 0f;
+			
+			if (args.length == 2) {
+				size = (float)parseDouble(args[1]);
+			}
+
+			if (args.length == 3) {
+				bend = (float)parseDouble(args[2]);
+			}
+
+			 DynTreeGen.mountaindogwood.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
+		}
+		
+
+		if (args[0].equals("genscotspine")) {
+			float size = 1f;
+			float bend = 0.07f;
+			
+			if (args.length == 2) {
+				size = (float)parseDouble(args[1]);
+			}
+
+			if (args.length == 3) {
+				bend = (float)parseDouble(args[2]);
+			}
+			
+			// Reference: http://upload.wikimedia.org/wikipedia/commons/3/31/A_trio_of_Scots_Pine_-_geograph.org.uk_-_1750728.jpg
+			
+			/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
+			 *	new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss, gravityDrag)
+	   		 */
+			DynTreeGen scotspine = new DynTreeGen(
+				EnumTree.SCOTSPINE, 
+				null,
+				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.5f, 0.02f, 0f, 0.1f, 3, 0.4f),
+				new DynTreeBranch(Math.PI / 2 - 0.9f, 0f, 0, 2*Math.PI, 0.25f, 0f, 0.02f, 0.2f)
+			);
+
+			 scotspine.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
+		}
+		
+		
+		
+		
+		
+	/*	if (args[0].equals("gentrees")) {
+			DynTreeGen birch = new DynTreeGen(
+				EnumTree.BIRCH, 
+				null,
+				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.08f, 0.35f, 0.17f, 0.3f, 0.9f, 0.2f, 0.1f),
+				new DynTreeBranch(Math.PI / 4, Math.PI / 8, 0, 2*Math.PI, 5f, 2f)
+			);
+			
+			float size = 0;
+			int width = 5;
+			for (int i = 0; i < 15; i++) {
+				size += 0.2f;
+				
+				clearArea(sender.getEntityWorld(), sender.getPosition().east(width), 50, 80);
+				
+				width += Math.max(10, size * 10);
+			}
+			
+			
+			size = 0;
+			width = 5;
+			for (int i = 0; i < 15; i++) {
+				size += 0.2f;
+				
+				birch.gen(sender.getEntityWorld(), sender.getPosition().east(width), size);
+				
+				width += (int) Math.max(10, size * 10);
+			}
+			
+		}*/
+		
+		
+		
 		
 		if (args[0].equals("genlayer")) {
 			if (args.length == 1) {
@@ -110,6 +217,7 @@ public class VintageCraftCommands extends CommandBase {
 			
 			
 			GenLayerVC.shouldDraw = false;
+			
 
 			sender.addChatMessage(new ChatComponentText("Layers generated with seed " + seed + " to " + getCleanPath()));
 			

@@ -20,8 +20,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockLeavesBranchy extends BlockLeaves {
-	public static PropertyBlockClass TREETYPE = BlockLogVC.TREETYPE;
+public class BlockLeavesBranchy extends BlockLeavesVC {
+	public PropertyBlockClass TREETYPE;
 	
 
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {

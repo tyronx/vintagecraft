@@ -115,7 +115,7 @@ public class BlocksVC {
 		planks = new TreeClass("planks", BlockPlanksVC.class, ItemPlanksVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		planks.init();
 		
-		leaves = new TreeClass("leaves", BlockLeaves.class, ItemLeaves.class, 0.2f, Block.soundTypeGrass, null, 0);
+		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemLeaves.class, 0.2f, Block.soundTypeGrass, null, 0);
 		leaves.init();
 		
 		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemLeavesBranchy.class, 0.4f, Block.soundTypeGrass, "axe", 1);

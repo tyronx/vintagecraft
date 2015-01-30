@@ -6,8 +6,7 @@
 		"treetype=oak": { "model": "vintagecraft:planks/oak" },
 		"treetype=maple": { "model": "vintagecraft:planks/maple" },
 		"treetype=mountaindogwood": { "model": "vintagecraft:planks/mountaindogwood" },
-		"treetype=pinyonpine": { "model": "vintagecraft:planks/pine" },
-		"treetype=scotspine": { "model": "vintagecraft:planks/pine" },
+		"treetype=pine": { "model": "vintagecraft:planks/pine" },
 		"treetype=spruce": { "model": "vintagecraft:planks/spruce" }
     }
 }

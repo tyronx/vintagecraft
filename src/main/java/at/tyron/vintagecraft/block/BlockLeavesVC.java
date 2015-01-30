@@ -48,26 +48,26 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockLeaves extends BlockVC implements IMultiblock {
+public class BlockLeavesVC extends BlockVC implements IMultiblock {
 	public static int multistateAvailableTypes() {
 		return 8;
 	}
 	
 	public boolean fancyGfx; 
 	
-	public static PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
-	public static PropertyBlockClass TREETYPE = BlockLogVC.TREETYPE;
+	//public static PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
+	public PropertyBlockClass TREETYPE;
 	
 	
-	int[] surroundings;
+//	int[] surroundings;
 	
     
 	
-	public BlockLeaves() {
+	public BlockLeavesVC() {
 		super(Material.leaves);
 		this.setTickRandomly(true);
 		this.setLightOpacity(1);
-        this.setCreativeTab(CreativeTabs.tabDecorations);    
+        this.setCreativeTab(CreativeTabs.tabMaterials);    
 	}
 	
 	
@@ -98,18 +98,21 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
     
     @SideOnly(Side.CLIENT)
     public int getBlockColor() {
-        return ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
+        //return ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
+    	return 16777215;
     }
 
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state) {
-        return ColorizerFoliage.getFoliageColorBasic();
+        //return ColorizerFoliage.getFoliageColorBasic();
+    	return 16777215;
     }
 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
        // return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
-    	return VCraftWorld.getGrassColorAtPos(pos);
+    	//return VCraftWorld.getGrassColorAtPos(pos);
+    	return 16777215;
     }
     
     
@@ -118,7 +121,7 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
     	
         return ItemLeaves.withTreeType(
         	new ItemStack(getItem(world,pos)),
-        	getBlockClass().getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(getTypeProperty()))
+        	(BlockClassEntry)state.getValue(getTypeProperty())
         );
     }
     
@@ -146,7 +149,9 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
         }
     }
 
-    public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    /*public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    	if (true) return;
+    	
         if (!worldIn.isRemote && ((Boolean)state.getValue(CHECK_DECAY)).booleanValue()) {
             byte b0 = 4;
             int i = b0 + 1;
@@ -247,7 +252,7 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
                 this.destroy(worldIn, pos);
             }
         }
-    }
+    }*/
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
@@ -306,14 +311,14 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
     public boolean isLeaves(IBlockAccess world, BlockPos pos){ return true; }
 
     
-    @Override
+    /*@Override
     public void beginLeavesDecay(World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
         if (!(Boolean)state.getValue(CHECK_DECAY))
         {
             world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
         }
-    }
+    }*/
 
     @Override
     public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -326,7 +331,7 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
     @Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
 		for (BlockClassEntry tree : getBlockClass().values()) {
-			list.add(new ItemStack(itemIn, 1, tree.getMetaData(this)));
+			if (tree.block == this) list.add(new ItemStack(itemIn, 1, tree.getMetaData(this)));
 		}
 		super.getSubBlocks(itemIn, tab, list);
 	}
@@ -334,24 +339,28 @@ public class BlockLeaves extends BlockVC implements IMultiblock {
     
     @Override
     protected BlockState createBlockState() {
-        return new BlockState(this, new IProperty[] {getTypeProperty(), CHECK_DECAY});
+    	if (getTypeProperty() != null) {
+    		return new BlockState(this, new IProperty[] {getTypeProperty()});
+    	}
+    	return new BlockState(this, new IProperty[0]);
     }
 
     
     @Override
     public int getMetaFromState(IBlockState state) {
-    	return
+    	return getBlockClass().getMetaFromState(state);
+    	
+    	/*return
     		(Boolean)state.getValue(CHECK_DECAY) ? 1 : 0
     		| getBlockClass().getMetaFromState(state) << 1
-    	;
+    	;*/
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	return super.getStateFromMeta(meta)
-    			.withProperty(CHECK_DECAY, (meta & 1) > 0 ? true : false)
-    			.withProperty(getTypeProperty(), meta >> 1)
-    	;
+    	//return getBlockClass().getBlockClassfromMeta(this, meta >> 1).getBlockState().withProperty(CHECK_DECAY, (meta & 1) > 0 ? true : false);
+    	
+    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
     }
     
 

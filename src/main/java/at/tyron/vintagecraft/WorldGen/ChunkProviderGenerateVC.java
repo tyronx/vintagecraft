@@ -14,6 +14,7 @@ import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockRock;
 import net.minecraft.block.Block;
@@ -29,6 +30,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -160,11 +162,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	@Override
 	public Chunk provideChunk(int chunkX, int chunkZ) {
+		if (worldObj.getWorldChunkManager() instanceof WorldChunkManagerFlatVC) {
+			return provideFlatChunk(chunkX, chunkZ);
+		}
+		
 		primer = new ChunkPrimer();
 		
 		VCraftWorld.setChunkNBT(chunkX, chunkZ, "climate", climate.getInts(chunkX * 16, chunkZ * 16, 16, 16));
 		
 		//this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
+		
 		
 		biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
@@ -198,6 +205,26 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 	
 	
+	private Chunk provideFlatChunk(int chunkX, int chunkZ) {
+		primer = new ChunkPrimer();
+		//System.out.println("provide flat chunk");
+		VCraftWorld.setChunkNBT(chunkX, chunkZ, "climate", climate.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				primer.setBlockState(x, 64, z, VCraftWorld.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE));
+				primer.setBlockState(x, 63, z, EnumRockType.GRANITE.getRockVariantForBlock(BlocksVC.rock));
+			}
+		}
+		
+		Chunk chunk = new Chunk(this.worldObj, primer, chunkX, chunkZ);
+		chunk.generateSkylightMap();
+		
+		return chunk;
+	}
+
+
+
 	// Get spawnable creatures list
 	@Override
 	public List func_177458_a(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
