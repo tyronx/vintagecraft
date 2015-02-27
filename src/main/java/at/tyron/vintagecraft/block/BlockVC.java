@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.common.util.concurrent.Service.State;
 
 import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
@@ -30,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -54,28 +56,32 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 		return subtypes;
 	}
 	
-	public BlockVC registerMultiState(String name, Class<? extends ItemBlock> itemclass, String folderprefix, IEnumState []types) {
+	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types) {
+		return registerMultiState(blockclassname, itemclass, types, blockclassname);
+	}
+	
+	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types, String folderprefix) {
 		System.out.println("register block " + this);
-		GameRegistry.registerBlock(this, itemclass, name);
-		setUnlocalizedName(name);
+		GameRegistry.registerBlock(this, itemclass, blockclassname);
+		setUnlocalizedName(blockclassname);
 		
 		for (int i = 0; i < types.length; i++) {
 			IEnumState enumstate = types[i]; 
-			//System.out.println("add variant name " + enumstate + " item is " + Item.getItemFromBlock(this));
-			ModelBakery.addVariantName(Item.getItemFromBlock(this), "vintagecraft:" + folderprefix + "/" + enumstate.getStateName());
-			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), enumstate.getMetaData(this), new ModelResourceLocation("vintagecraft:" + folderprefix + "/" + enumstate.getStateName(), "inventory"));
+			
+			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		
 		return this;
 	}
+
 	
 	
 	public BlockVC registerSingleState(String name, Class<? extends ItemBlock> itemclass) {
 		GameRegistry.registerBlock(this, itemclass, name);
 		setUnlocalizedName(name);
 		
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(this), 0, new ModelResourceLocation("vintagecraft:" + name, "inventory"));
-		ModelBakery.addVariantName(Item.getItemFromBlock(this), "vintagecraft:" + name);
+		VintageCraft.instance.proxy.registerItemBlockTexture(this, name);
+		
 		
 		return this;
 	}
@@ -112,6 +118,9 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     }
 	
     
+    public void hoeUsed(UseHoeEvent event) {
+    
+    }
     
     
     
@@ -133,8 +142,14 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     	IProperty property = soil.getOrganicLayerProperty(worldIn, pos);
     	EnumOrganicLayer organiclayer = (EnumOrganicLayer)state.getValue(property);
     	
+    	
+    	
     	if (organiclayer != EnumOrganicLayer.NoGrass) {
-    		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToEnviroment(worldIn.getLight(pos.up()), VCraftWorld.getRainfall(pos), VCraftWorld.getTemperature(pos));
+    		BlockPos above = pos.up();
+    		int light = Math.max(worldIn.getLight(above), Math.max(Math.max(Math.max(worldIn.getLight(above.north()), worldIn.getLight(above.south())), worldIn.getLight(above.east())), worldIn.getLight(above.west())));
+    		
+    		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToEnviroment(light, VCraftWorld.instance.getRainfall(pos), VCraftWorld.instance.getTemperature(pos));
+    		
     		if (adjustedorganiclayer != organiclayer) {
     			worldIn.setBlockState(pos, state.withProperty(property, adjustedorganiclayer));
     			return;
@@ -193,7 +208,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
 		if (this instanceof ISoil) {
 			//return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
-			return VCraftWorld.getGrassColorAtPos(pos);
+			return VCraftWorld.instance.getGrassColorAtPos(pos);
 		} else {
 			return 16777215;
 		}
@@ -217,5 +232,6 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     public String getSubType(ItemStack stack) {
     	return null;
     }
+
     
 }

@@ -73,7 +73,7 @@ public class BlockPeat extends BlockVC implements ISoil {
 	
 	@Override
 	public int quantityDropped(Random random) {
-		return random.nextInt(3) + 2;
+		return random.nextInt(3) + 1;
 	}
 	
 	@Override

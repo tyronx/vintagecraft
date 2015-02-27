@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/kapok",
+		"side": "vintagecraft:blocks/log/kapok_bark"
+	}
+}

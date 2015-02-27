@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.TileEntity.TEOre;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;

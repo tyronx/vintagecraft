@@ -1,10 +1,10 @@
 package at.tyron.vintagecraft.item;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -25,7 +25,7 @@ public class ItemFoodVC extends ItemFood implements ISmeltable, ISubtypeFromStac
 	public Item register(String internalname) {
 		setUnlocalizedName(internalname);
 		GameRegistry.registerItem(this, internalname);
-		ModelBakery.addVariantName(this, ModInfo.ModID + ":food/" + internalname);
+		VintageCraft.instance.proxy.addVariantName(this, ModInfo.ModID + ":food/" + internalname);
 		this.internalname = internalname;
 		return this;
 	}

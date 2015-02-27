@@ -36,7 +36,11 @@ public enum EnumFertility implements IEnumState, IStringSerializable {
 	public int getMetaData(BlockVC block) {
 		return meta;
 	}
-	
+
+	public int getMetaData() {
+		return meta;
+	}
+
 	@Override
 	public int getId() {
 		return meta;

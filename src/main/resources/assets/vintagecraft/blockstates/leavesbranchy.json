@@ -1,13 +1,14 @@
 {
-    "variants": {
+	"variants": {
 		"treetype=ash": { "model": "vintagecraft:leavesbranchy/ash" },
 		"treetype=birch": { "model": "vintagecraft:leavesbranchy/birch" },
-		"treetype=douglasfir": { "model": "vintagecraft:leavesbranchy/douglasfir" },
 		"treetype=oak": { "model": "vintagecraft:leavesbranchy/oak" },
 		"treetype=maple": { "model": "vintagecraft:leavesbranchy/maple" },
 		"treetype=mountaindogwood": { "model": "vintagecraft:leavesbranchy/mountaindogwood" },
-		"treetype=pinyonpine": { "model": "vintagecraft:leavesbranchy/pine" },
-		"treetype=scotspine": { "model": "vintagecraft:leavesbranchy/pine" },
-		"treetype=spruce": { "model": "vintagecraft:leavesbranchy/spruce" }
-    }
+		"treetype=scotspine": { "model": "vintagecraft:leavesbranchy/scotspine" },
+		"treetype=spruce": { "model": "vintagecraft:leavesbranchy/spruce" },
+		"treetype=acacia": { "model": "vintagecraft:leavesbranchy/acacia" },
+		"treetype=kapok": { "model": "vintagecraft:leavesbranchy/kapok" },
+		"treetype=coconutpalm": { "model": "vintagecraft:leavesbranchy/coconutpalm" }
+	}
 }

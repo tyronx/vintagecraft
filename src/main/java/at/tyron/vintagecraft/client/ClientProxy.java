@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.client;
 
 import java.io.IOException;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
+import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,7 +32,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
+//import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.item.*;
 import net.minecraftforge.client.MinecraftForgeClient;
@@ -39,7 +41,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
 	
-	
+	public static ModelResourceLocation oremodelLocation = new ModelResourceLocation(ModInfo.ModID + ":" + BlocksVC.raworeName, null);
 	
 	
 
@@ -70,6 +72,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         super.postInit(event);
         
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
+    	
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.farmland), "farmland", null);
+    	
     	//registerModelLocation(Item.getItemFromBlock(BlocksVC.log), "log", "inventory");
     	
     	//registerModelLocation(Item.getItemFromBlock(BlocksVC.planks), "planks", "inventory");
@@ -83,14 +88,18 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     		registerModelLocation(Item.getItemFromBlock(block), "flowers", "inventory");
     	}*/
     	
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.farmland), "farmland", "inventory");
+    	
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.peat), "peat", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.topsoil), "topsoil", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.sand), "sand", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.gravel), "gravel", "inventory");
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.cobblestone), "cobblestone", "inventory");
     	
     	registerModelLocation(ItemsVC.stone, "stone", "inventory");
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
     	registerModelLocation(ItemsVC.ingot, "ingot", "inventory");
+    	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");
     	
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
     	
@@ -124,17 +133,17 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		}	
 	}
 
-	@SubscribeEvent
+	/*@SubscribeEvent
     public void onModelBakeEvent(ModelBakeEvent event) {
         TextureAtlasSprite base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/slime");
 //        TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
         
         //event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base, overlay));
-        event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base));
+        event.modelRegistry.putObject(oremodelLocation, new BlockOreVCModel(base));
     }
+	*/
 	
-	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public void registerTextures(TextureStitchEvent.Pre event) {
         TextureMap map = event.map;
         for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
@@ -144,12 +153,38 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         		}
         	}
         }
-	}
+        
+      //  event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/farmland_dry"));
+        
+	}*/
 	
 	
 	
 	public boolean isFancyGraphics() {
 		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
 	}
+	
+	
+	/*@Override
+	public void registerBlockTexture(Block block, String folderprefix, String blockclassname, String subtype) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("vintagecraft:" + folderprefix + "/" + subtype, "inventory"));
+		ModelBakery.addVariantName(Item.getItemFromBlock(block), "vintagecraft:" + folderprefix + "/" + subtype);	
+	}*/
+	
+	@Override
+	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), meta, new ModelResourceLocation("vintagecraft:" + blockclassname + "/" + subtype, "inventory"));
+		ModelBakery.addVariantName(Item.getItemFromBlock(block), "vintagecraft:" + blockclassname + "/" + subtype);
+	}
+	
+	@Override
+	public void registerItemBlockTexture(Block block, String blockclassname) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("vintagecraft:" + blockclassname, "inventory"));
+	}	
+	
+	public void addVariantName(Item item, String... names) {
+		ModelBakery.addVariantName(item, names);
+	}
 
+	
 }

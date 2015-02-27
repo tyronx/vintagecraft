@@ -12,6 +12,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -26,21 +27,24 @@ import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.TileEntity.TEOre;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.item.ItemOre;
+import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemStone;
 
-public class BlockOreVC extends BlockContainer {
-	public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
+public class BlockOreVC extends BlockVC {
+	public PropertyBlockClass ORETYPE;
+	
+	/*public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
 
 	static {
 		properties[0] = Properties.toUnlisted(PropertyEnum.create("rocktype", EnumRockType.class));
 		properties[1] = Properties.toUnlisted(PropertyEnum.create("oretype", EnumMaterialDeposit.class));
-    }
+    }*/
 
 	 
 	public BlockOreVC() {
@@ -53,17 +57,17 @@ public class BlockOreVC extends BlockContainer {
     public int getRenderType() { return 3; }
 
     
-    @Override
+    /*@Override
     public TileEntity createNewTileEntity(World world, int meta) {
         return new TEOre();
-    }
+    }*/
 
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer() {
         return EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
 
-    
+    /*
     
     @Override
     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
@@ -72,11 +76,11 @@ public class BlockOreVC extends BlockContainer {
         	TEOre cte = (TEOre) te;
             return cte.getState();
         } else {
-        	/*if (te == null) {
-        		System.out.println("getExtendedState() Error: tileentity is null!");
-        	} else {
-        		System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
-        	}*/
+        	//if (te == null) {
+        	//	System.out.println("getExtendedState() Error: tileentity is null!");
+        	//} else {
+        	//	System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
+        	//}
         }
         return state;
     }
@@ -86,7 +90,7 @@ public class BlockOreVC extends BlockContainer {
         return new ExtendedBlockState(this, new IProperty[0], properties);
     }
     
-   
+   */
     
     
     @Override
@@ -101,8 +105,12 @@ public class BlockOreVC extends BlockContainer {
             ItemStone.setRockType(itemstack, teOre.getRockType());          
             spawnAsEntity(worldIn, pos, itemstack);
 
-            itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
-            ItemOre.setOreType(itemstack, teOre.getOreType());          
+            if (teOre.getOreType() == EnumMaterialDeposit.REDSTONE) {
+            	itemstack = new ItemStack(Items.redstone, 2 + worldIn.rand.nextInt(2));
+            } else { 
+            	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
+            	ItemOreVC.setOreType(itemstack, teOre.getOreType());          
+            }
             spawnAsEntity(worldIn, pos, itemstack);
         }
     	

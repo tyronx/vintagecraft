@@ -7,67 +7,42 @@ import at.tyron.vintagecraft.block.BlockLeavesBranchy;
 import net.minecraft.block.state.IBlockState;
 
 public class DynTreeTrunk {
-	float avgHeight;
-	float width;
-	float widthloss;         // (per 0.01f = 1% height)   => if 0.01f then at the trunk we have 100% width and at the top 0% width
-	//float splitChance;
-	//float splitStart;
-	//float splitAngle;		// angle between branch and trunk
-	//float splitWidth;
-	//float splitWidthVariance;
-	//float trunkAngleLoss;    //(0 = the trunk loses no angle,  0.5f = trunk and branch both split of at same angle, 1f = trunk looses full angle, branch goes vertical)  
-	float variance;
+	public float avgHeight;
+	public float width;
+	public float widthloss;         			 // (per 0.01f = 1% height)   => if 0.01f then at the trunk we have 100% width and at the top 0% width
+	public float widthBranchLossBase = 1f;       // Each branch action, this value gets multiplied to the current width (=> 1f = no loss in width from branching)
+	public float branchWidthMultiplier = 0.5f;   // This is the size of the branch multiplied by the current trunk width  (=> 0.5f = branch is half the width as the trunk)
 	
-	float branchStart;
-	float branchSpacing;
-	float branchVarianceSpacing;
+	public float bend = 0f;						 // Vertical angle of the tree 
+	public float bendCorrection = 0f;			 // How strongly will a bent tree correct to straight again 
 	
-	//float widthBranchLossBase = 1f;       // Each branch action, this value gets multiplied to the current width (=> 1f = no loss in width from branching)
-	float branchWidthMultiplier = 0.5f;   // This is the size of the branch multiplied by the current trunk width  (=> 0.5f = branch is half the width as the trunk)
+	public int numBranching = 1;
 	
-	int numBranching = 1;
+	public NatFloat branchStart;
+	public NatFloat branchSpacing;
+	public NatFloat branchVerticalAngle;
+	public NatFloat branchHorizontalAngle;
+
 	
-	private IBlockState log;
-	private IBlockState leavesbranchy;
-	private IBlockState leaves;
+	public DynTreeTrunk(float avgHeight, float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat verticalAngle, NatFloat horizontalAngle, int numBranching, float branchWidthMultiplier) {
+		this(avgHeight, width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier, 1f, 0f, 0f);
+	}
 	
-	//public DynTreeTrunk(float avgHeight, float width, float widthloss, float splitChance, float splitStart, float splitAngle, float splitWidth, float splitWidthVariance, float trunkAngleLoss,float variance, int numBranching) {
-	public DynTreeTrunk(float avgHeight, float width, float widthloss, float branchStart, float branchSpacing, float branchVarianceSpacing, float variance, int numBranching, float branchWidthMultiplier) {
+	public DynTreeTrunk(float avgHeight, float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat verticalAngle, NatFloat horizontalAngle, int numBranching, float branchWidthMultiplier, float widthBranchLossBase, float bend, float bendCorrection) {
 		this.avgHeight = avgHeight;
 		this.width = width;
 		this.widthloss = widthloss;
-		
 		this.branchStart = branchStart;
 		this.branchSpacing = branchSpacing;
-		this.branchVarianceSpacing = branchVarianceSpacing;
+		this.branchVerticalAngle = verticalAngle;
+		this.branchHorizontalAngle = horizontalAngle;
 		
-		//this.splitChance = splitChance;
-		//this.splitStart = splitStart;
-		//this.splitAngle = splitAngle;
-		//this.trunkAngleLoss = trunkAngleLoss;
-		//this.splitWidth = splitWidth;
-		//this.splitWidthVariance = splitWidthVariance;
-		this.variance = variance;
 		this.numBranching = numBranching;
-		
 		this.branchWidthMultiplier = branchWidthMultiplier;
-	}
-	
-	
-	public void setTree(EnumTree tree) {
-		log = BlocksVC.log.getBlockStateFor(tree);
-		leavesbranchy = BlocksVC.leavesbranchy.getBlockStateFor(tree);
-		leaves = BlocksVC.leaves.getBlockStateFor(tree);
-	}
-	
-	
-	public IBlockState block(float width) {
-		if (width < 0.1f)
-			return leaves;
-		if (width < 0.3f)
-			return leavesbranchy;
 		
-		return log;
+		this.widthBranchLossBase = widthBranchLossBase;
+		
+		this.bend = bend;
+		this.bendCorrection = bendCorrection;
 	}
-	
 }

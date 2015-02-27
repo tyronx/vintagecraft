@@ -1,9 +1,11 @@
 package at.tyron.vintagecraft.WorldGen;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.common.MinecraftForge;
 
 public class WorldProviderVC extends WorldProvider {
 
@@ -21,6 +23,10 @@ public class WorldProviderVC extends WorldProvider {
 		 */
 		//TFC_Climate.worldPair.put(worldObj, new WorldCacheManager(worldObj));
 		//TFC_Core.addCDM(worldObj);
+		
+		VCraftWorld.instance = new VCraftWorld(worldObj.getSeed());
+        // Register the Chunk Load/Save Handler
+     	MinecraftForge.EVENT_BUS.register(VCraftWorld.instance);
 
 		super.registerWorldChunkManager();
 	}

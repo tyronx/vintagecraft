@@ -1,0 +1,72 @@
+{
+    "variants": {
+        "type=gneiss": [
+			{ "model": "vintagecraft:cobblestone/gneiss" }
+		
+		],
+		"type=limestone": [
+			{ "model": "vintagecraft:cobblestone/limestone" }
+			
+		],
+		"type=claystone": [
+			{ "model": "vintagecraft:cobblestone/claystone" }
+	
+		],
+		"type=marble": [
+			{ "model": "vintagecraft:cobblestone/marble" }
+
+		],
+		"type=granite": [
+			{ "model": "vintagecraft:cobblestone/granite" }
+
+		],
+		"type=basalt": [
+			{ "model": "vintagecraft:cobblestone/basalt" }
+
+		],
+		"type=andesite": [
+			{ "model": "vintagecraft:cobblestone/andesite" }
+
+		],
+		"type=conglomerate": [
+			{ "model": "vintagecraft:cobblestone/conglomerate" }
+
+		],
+		"type=diorite": [
+			{ "model": "vintagecraft:cobblestone/diorite" }
+
+		],
+		"type=shale": [
+			{ "model": "vintagecraft:cobblestone/shale" },
+			{ "model": "vintagecraft:cobblestone/shale", "y": 90 },
+			{ "model": "vintagecraft:cobblestone/shale", "y": 180  },
+			{ "model": "vintagecraft:cobblestone/shale", "y": 270  }
+		],
+		"type=schist": [
+			{ "model": "vintagecraft:cobblestone/schist" }
+
+		],
+		"type=quartzite": [
+			{ "model": "vintagecraft:cobblestone/quartzite" }
+		],
+		"type=sandstone": [
+			{ "model": "vintagecraft:cobblestone/sandstone" }
+
+		],
+		"type=redsandstone": [
+			{ "model": "vintagecraft:cobblestone/redsandstone" }
+
+		],
+		"type=gabbro": [
+			{ "model": "vintagecraft:cobblestone/gabbro" }
+
+		],
+		"type=chert": [
+			{ "model": "vintagecraft:cobblestone/chert" }
+
+		],
+		"type=diorite": [
+			{ "model": "vintagecraft:cobblestone/diorite" }
+		]
+    }
+}

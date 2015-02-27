@@ -1,7 +1,7 @@
 {
-		"parent": "block/cube_column",
-		"textures": {
-			"end": "vintagecraft:blocks/log/maple",
-			"side": "vintagecraft:blocks/log/maple_bark"
-		}
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/maple",
+		"side": "vintagecraft:blocks/log/maple_bark"
 	}
+}

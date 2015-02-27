@@ -33,6 +33,12 @@ public class BlockRawClay extends BlockVC implements ISoil {
 		return Items.clay_ball;
 	}
 	
+	
+	@Override
+	public int damageDropped(IBlockState state) {
+		return 0;
+	}
+	
 
 	public int quantityDropped(Random random) {
 	    return 1 + random.nextInt(3);

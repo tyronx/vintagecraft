@@ -21,6 +21,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
@@ -111,7 +112,7 @@ public abstract class BlockClass {
 				//blockclass.getDeclaredMethod("init", new Class[]{BlockClassEntry[].class, PropertyInteger.class}).invoke(block, new Object[]{blockstates, createProperty(name, blockstates.length)});
 				invokeMethod(blockclass, block, "init", new Object[]{blockclassentrychunk, createProperty(getTypeName(), blockclassentrychunk)});
 				
-				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, name, blockclassentrychunk);
+				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, blockclassentrychunk, name);
 				
 				block.setHardness(hardness).setStepSound(stepsound);
 				
@@ -227,7 +228,10 @@ public abstract class BlockClass {
 	public IBlockState getBlockStateFor(IEnumState enumitem) {
 		return values.get(enumitem).getBlockState();
 	}
-	
+
+	public ItemStack getItemStackFor(IEnumState enumitem) {
+		return values.get(enumitem).getItemStack();
+	}
 
 	
    

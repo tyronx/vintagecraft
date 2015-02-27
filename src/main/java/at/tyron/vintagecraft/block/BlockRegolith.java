@@ -34,7 +34,7 @@ public class BlockRegolith extends BlockRock {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 
-    	if (rand.nextInt(5) == 0) {
+    	if (rand.nextInt(3) == 0) {
     		List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
 	   
 	        ItemStack itemstack = new ItemStack(ItemsVC.stone, 1);

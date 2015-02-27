@@ -32,6 +32,42 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long chunkSeed;
 	protected long baseSeed;
 	
+	
+	public static GenLayerVC genHeightmap(long seed) {
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 6, 0.6f, 67, 80);
+		GenLayerVC.drawImageGrayScale(512, noise, "Heightmap 0 Noise");
+		
+		return noise;
+		
+		//GenLayerVC noise = new GenLayerHeightmap(seed);
+/*		GenLayerVC noise = new GenLayerNoise(seed, 40);
+		GenLayerVC.drawImageGrayScale(512, noise, "Heightmap 0 Noise");
+		
+		noise.initWorldGenSeed(seed);
+		
+		GenLayerVC heightmap = new GenLayerBlurAll(seed, 2, 3, noise);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 1 Blur");
+		
+		heightmap = GenLayerZoom.magnify(1000L, heightmap, 2);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 2 2xZoom");
+
+		heightmap = new GenLayerBlurAll(seed, 2, 5, heightmap);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 3 Blur");
+
+		heightmap = GenLayerZoom.magnify(1000L, heightmap, 4);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 4 2xZoom");
+		
+		heightmap = new GenLayerBlurAll(seed, 2, 5, heightmap);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 6 Blur");
+
+		heightmap = new GenLayerAddPerlin(seed, 3, 0.65f, 150, heightmap);
+		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 8 Add Perlin");
+		
+		heightmap.initWorldGenSeed(seed);
+
+		return heightmap;*/
+	}
+	
 	// Generates Wind, Temperature and Rainfall map
 	// R = Temperature    temp = R-Value / 4.25 - 30 ( = Temp range from -30 to +30)      | inverse R-Value = (temp + 30) * 4.25
 	// G = Fertility      = generated from temp * rain                         (+ water nearby?)
@@ -64,7 +100,10 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC.drawImageRGB(512, climate, "Climate 7 Blur");
 
 		climate = GenLayerZoom.magnify(1000L, climate, 4);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 6 4xZoom");
+		GenLayerVC.drawImageRGB(512, climate, "Climate 8 4xZoom");
+
+		climate = new GenLayerBlurAll(2L, 1, 3, climate);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 9 Blur");
 
 		
 		climate.initWorldGenSeed(seed);

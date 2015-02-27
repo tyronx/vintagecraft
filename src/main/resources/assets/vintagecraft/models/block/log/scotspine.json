@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/scotspine",
+		"side": "vintagecraft:blocks/log/scotspine_bark"
+	}
+}

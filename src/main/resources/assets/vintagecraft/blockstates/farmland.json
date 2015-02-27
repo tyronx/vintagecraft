@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "fertility=low": [ { "model": "vintagecraft:farmland/lowf" } ],
+        "fertility=medium": [ { "model": "vintagecraft:farmland/medf" } ],
+        "fertility=high": [ { "model": "vintagecraft:farmland/hif" } ]
+    }
+}

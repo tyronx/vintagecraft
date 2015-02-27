@@ -3,6 +3,9 @@ package at.tyron.vintagecraft.block;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.TileEntity.TEFarmland;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.interfaces.ISoil;
 import at.tyron.vintagecraft.item.ItemLogVC;
@@ -28,6 +31,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -129,6 +135,22 @@ public class BlockTopSoil extends BlockVC implements ISoil {
 	public boolean canGrowTree(World world, BlockPos pos, EnumTree tree) {
 		return true;
 	}
+
 	
+	@Override
+	public void hoeUsed(UseHoeEvent event) {
+		EnumFertility fertility = getFertility(event.world, event.pos);
+		
+		event.world.setBlockState(event.pos, BlocksVC.farmland.getDefaultState().withProperty(BlockFarmlandVC.fertility, fertility));
+		TEFarmland tileentity = (TEFarmland)event.world.getTileEntity(event.pos);
+		if (tileentity != null) {
+			tileentity.setFertility(fertility.getId() * 10);			
+		} else {
+			System.out.println("tileentity was not created?");
+		}
+		
+		
+		super.hoeUsed(event);
+	}
 }
 

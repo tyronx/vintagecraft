@@ -18,32 +18,33 @@ import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockSubSoil;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 import at.tyron.vintagecraft.interfaces.ISoil;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
-	//						                color  weight hgt vari mind maxd 
-	NODEPOSIT (-1, null,                 false, 0,  5000,   0,  0, 0, null, false),
+	//						                color  weight hgt vari mind maxd reldepth
+	NODEPOSIT (-1,                  false, 0,  5000,   0,  0, 0, false),
 	
-	CLAY (0,           BlocksVC.rawclay, false, 20,   70,   1,  1,    2, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.beach, BiomeVC.river, BiomeVC.rollingHills*/}, true),
-	PEAT (1,              BlocksVC.peat, false, 40,   70,   1,  0,    1, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, true),
+	CLAY (0,           false, 20,   35,   3,  1,    2, true),
+	PEAT (1,            false, 40,   35,   2,  0,    1, true),
 	
 	
-	LIGNITE (2,        BlocksVC.rawore, true,   60,   40,   2,  10,  50, new BiomeVC[]{/*BiomeVC.plains, BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, true),
-	BITUMINOUSCOAL (3, BlocksVC.rawore, true,   80,   20,   2,  8, 103, new BiomeVC[]{/*BiomeVC.rollingHills, BiomeVC.Mountains, BiomeVC.MountainsEdge*/}, false),
+	LIGNITE (2,         true,   60,   40,   2,  10,  50, true),
+	BITUMINOUSCOAL (3,  true,   80,   20,   2,  8, 103, false),
 	
-	NATIVECOPPER (4,   BlocksVC.rawore, true,   90,   60,   2,  4,   40, null, true),
+	NATIVECOPPER (4,    true,   90,   60,   3,  4,   40, true),
 	
-	LIMONITE (5,      BlocksVC.rawore,  true,  100,   30,   2,  15, 103, null, false),
-	NATIVEGOLD (6,    BlocksVC.rawore,  true,  120,   10,   1,  50, 103, null, false),
+	LIMONITE (5,       true,  100,   30,   2,  15, 103, false),
+	NATIVEGOLD (6,     true,  120,   10,   1,  50, 103, false),
 
-	
+	REDSTONE (7,       true,  140,   20,   4,  20, 130, false)
 	;
 
 	
 
 	public int id;
-	Block block;
+	//Block block;
 	public boolean hasOre;
 	int color;
 	public int averageHeight;
@@ -51,20 +52,20 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	public int maxDepth;
 	public EnumMetal smelted;
 	public int ore2IngotRatio;
-	public final BiomeVC[] biomes;
+	//public final BiomeVC[] biomes;
 	public int weight;
 	public boolean relativeDepth;
 	
-	private EnumMaterialDeposit(int id, Block block, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, BiomeVC[] biomes, boolean relativeDepth) {
+	private EnumMaterialDeposit(int id, /*Block block,*/ boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, boolean relativeDepth) {
 		this.id = id;
 		
 		this.weight = weight;
-		this.block = block;
+		//this.block = block;
 		this.hasOre = hasOre;
 		this.averageHeight = averageHeight;
 		this.minDepth = minDepth;
 		this.maxDepth = maxDepth;
-		this.biomes = biomes;
+		//this.biomes = biomes;
 		this.color = color;
 		this.relativeDepth = relativeDepth;
 	}
@@ -87,20 +88,34 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		return state.getBlock() instanceof BlockRock && state.getBlock().getMaterial() == Material.rock;
 	}
 
-	public Block getBlock() {
+	/*public Block getBlock() {
 		return block;
-	}
+	}*/
 	
-	public IBlockState getBlockStateForDepth(int depth) {
-		if (depth > 1 && block instanceof ISoil) {
-			return block.getDefaultState().withProperty(((ISoil)block).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
+	public IBlockState getBlockStateForDepth(int depth, IBlockState parentmaterial) {
+		IBlockState state;
+		
+		switch (this) {
+			case PEAT: state = BlocksVC.peat.getDefaultState();
+			case CLAY: state = BlocksVC.rawclay.getDefaultState();
+			default:
+				EnumRockType rocktype = (EnumRockType)parentmaterial.getValue(BlockRock.STONETYPE);
+				state = BlocksVC.rawore.getBlockStateFor();
 		}
 		
-		return block.getDefaultState();
+
+		
+		if (depth > 1 && state.getBlock() instanceof ISoil) {
+			return state.withProperty(((ISoil)state.getBlock()).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
+		}
+		
+		if (state.getBlock() == null) System.out.println("block for state " + this + " is null!");
+		
+		return state;
 	}
 	
 	public void init(Block block) {
-		this.block = block;
+	//	this.block = block;
 	}
 	
 	

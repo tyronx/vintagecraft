@@ -11,9 +11,12 @@ import at.tyron.vintagecraft.WorldProperties.EnumFlora;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.block.BlockCropsVC;
 import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
 import at.tyron.vintagecraft.block.BlockFlowerVC;
 import at.tyron.vintagecraft.block.BlockTallGrass;
+import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.ISoil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
@@ -44,8 +47,7 @@ public class MapGenFlora {
 		chunkZ *= 16;
 
 		int[] forestLayer = forestGen.getInts(chunkX, chunkZ, 16, 16);
-		
-		VCraftWorld.setChunkNBT(chunkX/16, chunkZ/16, "forest", forestLayer);
+		VCraftWorld.instance.setChunkNBT(chunkX/16, chunkZ/16, "forest", forestLayer);
 		
 
 		if (random.nextInt(12) == 0) {
@@ -61,6 +63,7 @@ public class MapGenFlora {
 		
 			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
+
 			if (random.nextInt(255) < density - Math.max(0, blockpos.getY() - 160)) {
 				placeGrass(world, blockpos, random);
 				if (density < 10) {
@@ -68,10 +71,29 @@ public class MapGenFlora {
 				}
 			}
 			
+			//if (true) continue;
 			
 			if (i <= 50 && random.nextInt(255) > density) {
-				worldGeneratorTrees.generate(world, random, blockpos);
+				Block block = world.getBlockState(blockpos.down()).getBlock();
+				if (!(block instanceof ISoil)) {
+					continue;
+				}
+				
+				int climate[] = VCraftWorld.instance.getClimate(blockpos);
+				EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], random);				
+				
+				if (tree != null) {
+					if (tree.defaultGenerator == null) System.out.println("gen for " + tree + " is null!");
+					else {
+						tree.defaultGenerator.growTree(world, blockpos.down(), 0.66f + random.nextFloat()/3);
+					}
+				}
+				
+				//worldGeneratorTrees.generate(world, random, blockpos);
 			}
+
+			
+			
 			
 		}
 		
@@ -89,8 +111,7 @@ public class MapGenFlora {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int climate[] = VCraftWorld.getClimate(pos = new BlockPos(chunkX + x, 0, chunkZ + z));
-
+			int climate[] = VCraftWorld.instance.getClimate(pos = new BlockPos(chunkX + x, 0, chunkZ + z));
 			EnumFlora flora = EnumFlora.getRandomFlowerForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], random);
 			//System.out.println("try place flower "  + flora);
 			
@@ -116,6 +137,26 @@ public class MapGenFlora {
 			}
 			
 		}
+		
+		if (random.nextInt(3) == 0) {
+			int x = random.nextInt(16);
+			int z = random.nextInt(16);
+			
+			int fertility = VCraftWorld.instance.getFertily(pos = new BlockPos(chunkX + x, 0, chunkZ + z));
+			if (fertility < 140 ) return;
+			
+			int quantity = random.nextInt(10) + 2;
+			
+			while (quantity-- > 0) {
+				pos = world.getHorizon(new BlockPos(chunkX + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, chunkZ + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+				Block block = world.getBlockState(pos.down()).getBlock();
+				
+				if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
+					world.setBlockState(pos, BlocksVC.wheatcrops.getDefaultState().withProperty(BlockCropsVC.AGE, random.nextInt(4)), 2);
+				}
+			}
+		}
+
 	}
 	
 	
@@ -123,7 +164,7 @@ public class MapGenFlora {
 		Block block = world.getBlockState(pos.down()).getBlock();
 		
 		if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
-			int fertility = VCraftWorld.getFertily(pos);
+			int fertility = VCraftWorld.instance.getFertily(pos);
 			
 			EnumTallGrass grasstype = EnumTallGrass.fromClimate(fertility, random);
 			if (grasstype != null) {

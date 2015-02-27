@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldGen.GenLayers;
 
 public class GenLayerNoise extends GenLayerVC {
 	int level = 50; // Between 0..100
-	int quantityColors = 0;
+	int quantityColors = 2;
 	
 	public GenLayerNoise(long seed) {
 		super(seed);

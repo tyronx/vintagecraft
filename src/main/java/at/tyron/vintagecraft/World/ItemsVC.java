@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
@@ -12,14 +13,14 @@ import at.tyron.vintagecraft.interfaces.ItemToolVC;
 import at.tyron.vintagecraft.item.ItemCopperTool;
 import at.tyron.vintagecraft.item.ItemFoodVC;
 import at.tyron.vintagecraft.item.ItemIngot;
-import at.tyron.vintagecraft.item.ItemOre;
+import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemPeatBrick;
 import at.tyron.vintagecraft.item.ItemStone;
 import at.tyron.vintagecraft.item.ItemStoneTool;
-import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -53,6 +54,8 @@ public class ItemsVC {
 	public static Item chickenRaw;
 	public static Item chickenCooked;
 	
+	public static Item wheatSeeds;
+	
 	
 	public static void init() {
 		initItems();
@@ -64,13 +67,14 @@ public class ItemsVC {
 		stone = new ItemStone().register("stone");
 		
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			ModelBakery.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());	
+			//ModelBakery.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());	
+			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());
 		}
 		
-		ore = new ItemOre().register("ore");
+		ore = new ItemOreVC().register("ore");
 		for (EnumMaterialDeposit oretype : EnumMaterialDeposit.values()) {
 			if (oretype.hasOre) {
-				ModelBakery.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
+				VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
 			}
 		}
 		
@@ -87,7 +91,15 @@ public class ItemsVC {
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
 		chickenCooked = new ItemFoodVC(6, 0.6f, true).register("chickenCooked");
 		
-		
+		wheatSeeds = new ItemSeeds(BlocksVC.wheatcrops, BlocksVC.farmland);
+		register(wheatSeeds, "wheatseeds");
+	}
+	
+	public static Item register(Item item, String internalname) {
+		item.setUnlocalizedName(internalname);
+		GameRegistry.registerItem(item, internalname);
+		VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":" + internalname);
+		return item;
 	}
 	
 	
@@ -110,7 +122,7 @@ public class ItemsVC {
 				item.setUnlocalizedName(unlocalizedname);
 				GameRegistry.registerItem(item, unlocalizedname);
 				
-				ModelBakery.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
+				VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
 				
 			} catch (Exception e) {
 				System.out.println(e.toString());
@@ -131,7 +143,7 @@ public class ItemsVC {
 		ingot = new ItemIngot().register("ingot");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
-			ModelBakery.addVariantName(ingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase());
+			VintageCraft.instance.proxy.addVariantName(ingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase());
 		}
 		
 		
@@ -139,7 +151,7 @@ public class ItemsVC {
 		ItemIngot.setMetal(copperIngot, EnumMetal.COPPER);
 		
 		ItemStack nativeCopperOre = new ItemStack(ore);
-		ItemOre.setOreType(nativeCopperOre, EnumMaterialDeposit.NATIVECOPPER);
+		ItemOreVC.setOreType(nativeCopperOre, EnumMaterialDeposit.NATIVECOPPER);
 		
 		GameRegistry.addSmelting(nativeCopperOre, copperIngot, 0);
 	}

@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/acacia",
+		"side": "vintagecraft:blocks/log/acacia_bark"
+	}
+}

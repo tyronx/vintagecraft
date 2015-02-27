@@ -5,51 +5,47 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 
 public class DynTreeBranch {
-	float anglevert;
-	float varianceAnglevert;
-	
-	float anglehori;
-	float varianceAnglehori;
-	
-	float spacing;
-	float varianceSpacing;
-	
+	public NatFloat branchVerticalAngle;
+	public NatFloat branchHorizontalAngle;
+	public NatFloat branchSpacing;
+	public NatFloat branchStart;
+		
 	// How much thickness the branch looses over distance
 	public float widthloss = 0.05f;
 	
-	//public float widthBranchLossBase = 1f;     // Each branch action, this value gets multiplied to the current width (=> 1f = no loss in width from branching)
+	public float widthBranchLossBase = 1f;     // Each branch action, this value gets multiplied to the current width (=> 1f = no loss in width from branching)
 	public float branchWidthMultiplier = 0.5f;   		// This is the size of the branch multiplied by the current trunk width  (=> 0.5f = branch is half the width as the trunk)
 
 	// How much does the branch give in to gravity? (increases over the branch length)
 	public float gravityDrag = 0f;
 	
-	private IBlockState block;
+	public float bendCorrection = 0f;
 	
-	public DynTreeBranch(double anglevert, double varianceAnglevert, double anglehori, double varianceAnglehori, float spacing, float varianceSpacing, float widthloss) {
-		this(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss, 0f);
+	
+	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat spacing, float widthloss) {
+		this(verticalAngle, horizontalAngle, NatFloat.createUniform(0f, 0f), spacing, widthloss, 0f);
 	}
 	
-	
-	public DynTreeBranch(double anglevert, double varianceAnglevert, double anglehori, double varianceAnglehori, float spacing, float varianceSpacing, float widthloss, float gravitydrag) {
-		this.anglevert = (float) anglevert;
-		this.varianceAnglevert = (float) varianceAnglevert;
-		this.anglehori = (float) anglehori;
-		this.varianceAnglehori = (float) varianceAnglehori;
-		this.spacing = spacing;
-		this.varianceSpacing = varianceSpacing;
-		this.widthloss = widthloss;
+	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag) {
+		this.branchVerticalAngle = verticalAngle;
+		this.branchHorizontalAngle = horizontalAngle;
+		this.branchSpacing = spacing;
+		this.branchStart = branchStart;
 		
+		this.widthloss = widthloss;
+		this.gravityDrag = gravitydrag;
+	}
+
+	
+	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier) {
+		this.branchVerticalAngle = verticalAngle;
+		this.branchHorizontalAngle = horizontalAngle;
+		this.branchSpacing = spacing;
+		this.branchStart = branchStart;
+		
+		this.widthloss = widthloss;
 		this.gravityDrag = gravitydrag;
 		
+		this.branchWidthMultiplier = branchWidthMultiplier;
 	}
-	
-	public void setTree(EnumTree tree) {
-		block = BlocksVC.log.getBlockStateFor(tree);
-	}
-	
-	
-	public IBlockState block() {
-		return block;
-	}
-	
 }

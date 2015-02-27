@@ -5,6 +5,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
 import at.tyron.vintagecraft.interfaces.ISoil;
 import net.minecraft.block.Block;
@@ -15,6 +16,7 @@ import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
@@ -48,6 +50,24 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }
+    
+   /* @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    	super.breakBlock(worldIn, pos, state);
+    	
+    	Item item = null;
+    	if (worldIn.rand.nextInt(10) == 0) {
+    		//if (worldIn.rand.nextInt(25) == 0) item = Items.carrot;
+    		//else if (worldIn.rand.nextInt(25) == 0) item = Items.potato;
+    		//else 
+    		item = Items.wheat_seeds;
+    	}
+    	
+    	if (item != null) {
+    		ItemStack itemstack = new ItemStack(item);
+    		spawnAsEntity(worldIn, pos, itemstack);
+    	}
+    }*/
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
@@ -86,7 +106,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	@Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-		return VCraftWorld.getGrassColorAtPos(pos);
+		return VCraftWorld.instance.getGrassColorAtPos(pos);
     }
 	
 

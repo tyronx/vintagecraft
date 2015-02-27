@@ -336,7 +336,8 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     	}
     	
 		if (oreItemSmeltedMeltingPoint() > 0 && oreTemperature >= oreItemSmeltedMeltingPoint()) {
-			oreCookingTime += MathHelper.clamp_int(3 * oreItemSmeltedMeltingPoint() / oreTemperature - 1, 1, 15);
+			float diff = (1f * oreTemperature / oreItemSmeltedMeltingPoint());
+			oreCookingTime += MathHelper.clamp_int((int) (diff), 1, 30);
 		} else {
 			if (oreCookingTime > 0) oreCookingTime--;
 		}

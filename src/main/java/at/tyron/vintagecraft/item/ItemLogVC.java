@@ -80,8 +80,8 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	
 	public static BlockClass getBlockClass(Block block) {
 		// Workaround for Java being too fail to allow overriding static methods
-		if (block instanceof BlockLeavesVC) return BlocksVC.leaves;
 		if (block instanceof BlockLeavesBranchy) return BlocksVC.leavesbranchy;
+		if (block instanceof BlockLeavesVC) return BlocksVC.leaves;
 		if (block instanceof BlockPlanksVC) return BlocksVC.planks;
 		
 		return BlocksVC.log;

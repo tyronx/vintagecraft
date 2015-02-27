@@ -4,16 +4,22 @@ import java.io.File;
 import java.util.List;
 import java.util.Random;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import at.tyron.vintagecraft.WorldGen.BlockStateSerializer;
 import at.tyron.vintagecraft.WorldGen.DynTreeBranch;
 import at.tyron.vintagecraft.WorldGen.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.DynTreeRoot;
 import at.tyron.vintagecraft.WorldGen.DynTreeTrunk;
+import at.tyron.vintagecraft.WorldGen.NatFloat;
 import at.tyron.vintagecraft.WorldGen.GenLayers.*;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumFlora;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -66,58 +72,49 @@ public class VintageCraftCommands extends CommandBase {
 			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
 		}
 		
-		
-		
-		if (args[0].equals("genspruce")) {
-			float size = 1f;
+		if (args[0].equals("gen")) {
+			GsonBuilder builder = new GsonBuilder();
+	        builder.registerTypeAdapter(IBlockState.class, new BlockStateSerializer());
+	        
+	        Gson gson = builder.create();
+	        
+			DynTreeGen gen = gson.fromJson(args[1], DynTreeGen.class); 
 			
-			if (args.length == 2) {
-				size = (float)parseDouble(args[1]);
-			}
-			
-			
-			/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
-			 *	new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss)
-	   		 */
-			DynTreeGen.spruce.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, 0f);
+			gen.growTree(sender.getEntityWorld(), sender.getPosition().north());
 		}
 		
 		
-		if (args[0].equals("genbirch")) {
+		if (args[0].equals("gentree") || args[0].equals("genltree") || args[0].equals("genptree")) {
 			float size = 1f;
 			float bend = 0f;
+			EnumTree tree = EnumTree.SCOTSPINE;
 			
 			if (args.length == 2) {
-				size = (float)parseDouble(args[1]);
+				tree = tree.valueOf(args[1].toUpperCase());
 			}
-
+			
 			if (args.length == 3) {
-				bend = (float)parseDouble(args[2]);
+				size = (float)parseDouble(args[2]);
 			}
-
-			DynTreeGen.birch.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
+			
+			if (args.length == 4) {
+				bend = (float)parseDouble(args[3]);
+			}
+			
+			//new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier),
+			//new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier)
+			DynTreeGen.initGenerators();
+			
+			DynTreeGen gen = tree.defaultGenerator;
+			if (args[0].equals("genltree")) gen = tree.lushGenerator;
+			if (args[0].equals("genptree")) gen = tree.poorGenerator;
+			
+			gen.growTree(sender.getEntityWorld(), sender.getPosition().down().east(3), size);
 		}
 		
 		
 		
-		
-		if (args[0].equals("gendogw")) {
-			float size = 1f;
-			float bend = 0f;
-			
-			if (args.length == 2) {
-				size = (float)parseDouble(args[1]);
-			}
-
-			if (args.length == 3) {
-				bend = (float)parseDouble(args[2]);
-			}
-
-			 DynTreeGen.mountaindogwood.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
-		}
-		
-
-		if (args[0].equals("genscotspine")) {
+		if (args[0].equals("genpalm")) {
 			float size = 1f;
 			float bend = 0.07f;
 			
@@ -134,17 +131,15 @@ public class VintageCraftCommands extends CommandBase {
 			/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
 			 *	new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss, gravityDrag)
 	   		 */
-			DynTreeGen scotspine = new DynTreeGen(
+			/*DynTreeGen scotspine = new DynTreeGen(
 				EnumTree.SCOTSPINE, 
 				null,
-				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.5f, 0.02f, 0f, 0.1f, 3, 0.4f),
-				new DynTreeBranch(Math.PI / 2 - 0.9f, 0f, 0, 2*Math.PI, 0.25f, 0f, 0.02f, 0.2f)
+				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.5f, 0.02f, 0f, 0.1f, 3, 0.4f, Math.PI / 2, 0f, 0, 2*Math.PI),
+				new DynTreeBranch(Math.PI / 2, 0f, 0, Math.PI / 2, 0.25f, 0f, 0.02f, 0f)
 			);
 
-			 scotspine.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);
+			 scotspine.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);*/
 		}
-		
-		
 		
 		
 		
@@ -188,7 +183,7 @@ public class VintageCraftCommands extends CommandBase {
 				return;
 			}
 			
-			long seed = sender.getEntityWorld().rand.nextInt(5000);
+			long seed = sender.getEntityWorld().rand.nextInt(50000);
 			
 			//seed = 1L;
 			
@@ -209,10 +204,8 @@ public class VintageCraftCommands extends CommandBase {
 			if (args[1].equals("rocks")) {	
 				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
 			}
-			
-			
-			if (args[1].equals("rockdeform")) {	
-				GenLayerVC.genRockDeformation(seed);
+			if (args[1].equals("heightmap")) {	
+				GenLayerVC.genHeightmap(seed);
 			}
 			
 			
@@ -226,28 +219,30 @@ public class VintageCraftCommands extends CommandBase {
 		
 		if (args[0].equals("climate")) {
 			
-			int temp = VCraftWorld.getTemperature(sender.getPosition());
-			int rainfall = VCraftWorld.getRainfall(sender.getPosition());
-			int fertility = VCraftWorld.getFertily(sender.getPosition());
-			int forest =  VCraftWorld.getForest(sender.getPosition());
+			int temp = VCraftWorld.instance.getTemperature(sender.getPosition());
+			int rainfall = VCraftWorld.instance.getRainfall(sender.getPosition());
+			int fertility = VCraftWorld.instance.getFertily(sender.getPosition());
+			int forest =  VCraftWorld.instance.getForest(sender.getPosition());
 			
 			sender.addChatMessage(new ChatComponentText("Temperature " + temp + ", Rainfall " + rainfall + ", Fertility " + fertility + ", Forest " + forest));
 			
-			EnumFlora flora = EnumFlora.getRandomFlowerForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
+			//EnumFlora flora = EnumFlora.getRandomFlowerForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
+			//System.out.println("chosen " + flora);
 			
-			System.out.println("chosen " + flora);
+			EnumTree tree = EnumTree.getRandomTreeForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
+			System.out.println("chosen " + tree);
 			/*if (flora != null) {
 				sender.getEntityWorld().setBlockState(sender.getPosition(), flora.variants[0].getBlockState());
 			}*/
 		}
 		
 		if (args[0].equals("reloadgrass")) {
-			VCraftWorld.loadGrassColors(Minecraft.getMinecraft().getResourceManager());
+			VCraftWorld.instance.loadGrassColors(Minecraft.getMinecraft().getResourceManager());
 			sender.addChatMessage(new ChatComponentText("reloaded."));
 		}
 		
 		if (args[0].equals("grasscolor")) {
-			sender.addChatMessage(new ChatComponentText("#" + Integer.toHexString(VCraftWorld.getGrassColorAtPos(sender.getPosition()))));
+			sender.addChatMessage(new ChatComponentText("#" + Integer.toHexString(VCraftWorld.instance.getGrassColorAtPos(sender.getPosition()))));
 		}
 		
 		if (args[0].equals("noisegen")) {

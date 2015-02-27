@@ -41,7 +41,8 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	GenLayerVC depositLayer;
-	GenLayerVC climate;
+	GenLayerVC climateGen;
+	GenLayerVC heightmapGen;
 	
 	GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
 
@@ -119,7 +120,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	ChunkPrimer primer;
 	
 	
-	ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
+	//ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
 	
 	
 	public ChunkProviderGenerateVC(World worldIn, long seed, boolean mapfeaturesenabled, String customgenjson) {
@@ -128,7 +129,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		caveGenerator = new MapGenCavesVC();
 		floragenerator = new MapGenFlora(seed);
 		
-		VCraftWorld.setUnpopChunkList(unpopulatedChunks);
+		//VCraftWorld.instance.setUnpopChunkList(unpopulatedChunks);
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
@@ -142,7 +143,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		this.seed = seed;
 		
 		loadRockLayers();
-		climate = GenLayerVC.genClimate(seed);
+		climateGen = GenLayerVC.genClimate(seed);
+		heightmapGen = GenLayerVC.genHeightmap(seed);
 	}
 	
 	
@@ -168,7 +170,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		primer = new ChunkPrimer();
 		
-		VCraftWorld.setChunkNBT(chunkX, chunkZ, "climate", climate.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
 		
 		//this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 		
@@ -208,11 +210,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	private Chunk provideFlatChunk(int chunkX, int chunkZ) {
 		primer = new ChunkPrimer();
 		//System.out.println("provide flat chunk");
-		VCraftWorld.setChunkNBT(chunkX, chunkZ, "climate", climate.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				primer.setBlockState(x, 64, z, VCraftWorld.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE));
+				primer.setBlockState(x, 64, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0));
 				primer.setBlockState(x, 63, z, EnumRockType.GRANITE.getRockVariantForBlock(BlocksVC.rock));
 			}
 		}
@@ -250,7 +252,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		if (chunkprovider instanceof ChunkProviderServer) {
 			int x, z;
 			
-			for (Iterator<BlockPos> it = unpopulatedChunks.iterator(); it.hasNext(); ) {
+			for (Iterator<BlockPos> it = VCraftWorld.instance.unpopulatedChunks.iterator(); it.hasNext(); ) {
 				BlockPos chunkpos = it.next();
 				x = chunkpos.getX();
 				z = chunkpos.getZ();
@@ -258,14 +260,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				if (shouldPopulate((ChunkProviderServer)chunkprovider, x, z)) {
 					it.remove();
 					populate(chunkprovider, x, z);
-					VCraftWorld.setChunkNBT(x, z, "vcraftpopulated", true);
+					VCraftWorld.instance.setChunkNBT(x, z, "vcraftpopulated", true);
 					break;
 				}
 			}
 			
 			if(!shouldPopulate((ChunkProviderServer)chunkprovider, chunkX, chunkZ)) {
-				unpopulatedChunks.add(new BlockPos(chunkX, 0, chunkZ));
-				VCraftWorld.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", false);	
+				VCraftWorld.instance.unpopulatedChunks.add(new BlockPos(chunkX, 0, chunkZ));
+				VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", false);	
 				return;
 			}
 			
@@ -293,7 +295,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				pos = worldObj.getHorizon(chunkpos.add(x, 0, z));
 				
 				if (worldObj.getBlockState(pos.down()).getBlock().getMaterial() != Material.water) {
-					temp = VCraftWorld.getTemperature(pos);
+					temp = VCraftWorld.instance.getTemperature(pos);
 					if (temp < -10 || (temp < 2 && rand.nextInt(temp + 11) == 0)) {
 						worldObj.setBlockState(pos, Blocks.snow_layer.getDefaultState());
 					}
@@ -341,29 +343,39 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			rockData[i] = rockLayers[i].getInts(chunkZ*16, chunkX*16, 16, 16);
 		}
 		
-		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
+		//int []heightmap = this.heightmapGen.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
 		
-		//rockDeformationData = rockDeformationLayer.getInts(chunkZ*16, chunkX*16, 16, 16);
+		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);		
 		
 		for (int x = 0; x < 16; ++x) {
 			for (int z = 0; z < 16; ++z) {
-				int arrayIndexChunk = z + x * 16;
+				int arrayIndexChunk = z*16 + x;
+				int arrayIndexHeightmap = (z+1)*18 + (x+1);
 				
 				BiomeVC biome = (BiomeVC) biomeMap[arrayIndexChunk];
 
 				int airblocks = 0;
 				
+				//for (int y = Math.max(VCraftWorld.seaLevel, heightmap[arrayIndexHeightmap]); y >= 0; --y) {
 				for (int y = 255; y >= 0; --y) {
 					if (y <= 0) {
 						primer.setBlockState(x, y, z, BlocksVC.uppermantle.getDefaultState());
 						break;
 					}
+					/*if (y > heightmap[arrayIndexHeightmap] && y <= VCraftWorld.seaLevel) {
+						primer.setBlockState(x, y, z, Blocks.water.getDefaultState());
+						continue;
+					}*/
+					
 					if (primer.getBlockState(x, y, z).getBlock() == Blocks.stone) {
 						if (chunkGroundLevelMap[arrayIndexChunk] == 0) {
 							chunkGroundLevelMap[arrayIndexChunk] = y;
 						}
 						
-						buildCrustLayers(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);						
+						//int steepness = Math.max(Math.abs(heightmap[(z+1)*18 + (x+1)-1] - heightmap[(z+1)*18 + (x+1)+1]), Math.abs(heightmap[(z+1-1)*18 + (x+1)] - heightmap[(z+1+1)*18 + (x+1)]));
+						//buildCrustLayers(x, y, z, /*chunkGroundLevelMap[arrayIndexChunk] - y*/ heightmap[arrayIndexHeightmap] - y, primer, biome, chunkX, chunkZ, steepness);
+						
+						buildCrustLayers(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);
 					}
 					
 					if (chunkGroundLevelMap[arrayIndexChunk] != 0 && primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
@@ -383,18 +395,21 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 	
 	
-	
 	public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ) {
-		int arrayIndexChunk = z + x * 16;
+	//public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ, int steepness) {
+		int arrayIndexChunk = z*16 + x;
 		
 		EnumCrustLayer layer = EnumCrustLayer.crustLayerForDepth(depth, rockData, arrayIndexChunk, primer.getBlockState(x, chunkGroundLevelMap[arrayIndexChunk]+1, z).getBlock() == Blocks.water);
 		
 		
 		if (layer == null) return;
 		
-		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth);
+		
+		
+		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth, 0);
 		
 		if (blockstate == null) {
+			if (layer.dataLayerIndex == -1) layer = EnumCrustLayer.ROCK_1;
 			blockstate = EnumRockType.byColor(rockData[layer.dataLayerIndex][arrayIndexChunk] & 0xff).getRockVariantForBlock(BlocksVC.rock);
 		} else {
 			//System.out.println(chunkX + " / " + x + "   " + chunkZ + " / " + z);
@@ -576,14 +591,19 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		double verticalScale = 300D;      // probably horizontal scale*/
 		
 		
+		// Normal VCraft Settings
+		/*double horizontalScale = 384.412D;
+		double verticalScale = 684.412D;*/
 		
-		double horizontalScale = 384.412D;
-		double verticalScale = 684.412D;
+		// Normal TFCraft Settings
+		double horizontalScale = 1000D;
+		double verticalScale = 1000D;
 		
 		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
 		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 200.0D, 200.0D, 0.5D);
 		
 		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 80.0D, verticalScale / 160.0D, horizontalScale / 80.0D);
+		
 		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
 		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
 		

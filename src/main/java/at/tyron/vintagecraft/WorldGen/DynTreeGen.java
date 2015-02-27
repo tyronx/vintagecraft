@@ -2,6 +2,9 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -16,106 +19,23 @@ import at.tyron.vintagecraft.block.BlockLeavesBranchy;
 import at.tyron.vintagecraft.block.BlockLogVC;
 
 
-
-/*
- * Needed parameters:
- * 
- * Roots:
- *   yStart
- *   avgLength
- * 	 numRoots
- * 	 variance
- *   
- * 
- * Trunk:
- *   avgHeight
- *   width
- *   widthloss         (per block)
- *   splitStart
- *   splitAngle
- *   trunkAngleLoss    (0 = the trunk loses no angle, 1f = trunk and branch both split of at same angle)  
- *   
- *   variance
- * 
- * 
- * 
- * Branch:
- *   branchanglevert
- *   branchanglehori
- *   variance
- * 
- * 
- * Leaves:
- *   direction       (0 = downwards, 1 = sideways, 2 = all directions)
- * 
- * 
- * 
- * 
- */
-
-
-
 public class DynTreeGen {
 	// "Temporary Values" linked to currently generated tree
-	World world;
-	BlockPos pos;
-	float size;
+	transient World world;
+	transient BlockPos pos;
+	transient float size;
+	
+	//public float bend = 0f;
 	
 	// "Permanent Values" Linked to tree type
-	float sizemodifier;
-	DynTreeRoot roots;
-	DynTreeTrunk trunk;
-	DynTreeBranch branches;
+	public float sizemodifier;
+	public DynTreeRoot roots;
+	public DynTreeTrunk trunk;
+	public DynTreeBranch branches;
 	
-	
-	public static DynTreeGen birch = new DynTreeGen(
-		EnumTree.BIRCH, 
-		null,
-		new DynTreeTrunk(0.8f, 1f, 0.05f, 0.22f, 0.01f, 0.005f, 0.1f, 3, 0.5f),
-		new DynTreeBranch(Math.PI / 4 + 0.1f, Math.PI / 8, 0, 2*Math.PI, 0.01f, 0.01f, 0.05f)
-	);
-	
-	
-	// More like a christmas tree, very regular branching in discs ^^
-	/*public static DynTreeGen spruce = new DynTreeGen(
-		EnumTree.SPRUCE, 
-		null,
-		new DynTreeTrunk(0.8f, 1f, 0.04f, 0.15f, 0.1f, 0f, 0.1f, 32, 0.25f),
-		new DynTreeBranch(Math.PI / 2 - 0.4f, 0, 0, 2*Math.PI, 5f, 0.05f, 0.03f),
-		0.8f
-	);*/
-	
-	// Reference: http://upload.wikimedia.org/wikipedia/commons/8/81/Picea_abies.jpg
-	public static DynTreeGen spruce = new DynTreeGen(
-		EnumTree.SPRUCE, 
-		null,
-		new DynTreeTrunk(0.8f, 1f, 0.03f, 0.12f, 0.05f, 0f, 0.1f, 16, 0.25f),
-		new DynTreeBranch(Math.PI / 2 - 0.35f, 0, 0, 2*Math.PI, 5f, 0.05f, 0.03f)
-	);
-
-	
-	// Reference: http://4.bp.blogspot.com/-saiB023XaGo/T5uu7K8dnAI/AAAAAAAAP14/rvvkLnFOAJA/s1600/dogwood-tree.jpg
-	public static DynTreeGen mountaindogwood = new DynTreeGen(
-		EnumTree.MOUNTAINDOGWOOD, 
-		null, 
-		//new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier), 
-		new DynTreeTrunk(0.9f, 1f, 0.15f, 0.5f, 0.01f, 0f, 0f, 8, 1f),
-		//new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss)
-		new DynTreeBranch(Math.PI / 2 - 0.55f, 0, 0, 2*Math.PI, 0.01f, 0f, 0.17f),
-		0.8f
-	);
-	
-	
-	
-	public static DynTreeGen scotspine = new DynTreeGen(
-		EnumTree.SCOTSPINE, 
-		null,
-		new DynTreeTrunk(0.8f, 1f, 0.05f, 0.5f, 0.02f, 0f, 0.1f, 3, 0.4f),
-		new DynTreeBranch(Math.PI / 2 - 0.9f, 0f, 0, 2*Math.PI, 0.25f, 0f, 0.02f, 0.2f)
-	);
-
-
-	
+	public IBlockState log;
+	public IBlockState leavesbranchy;
+	public IBlockState leaves;
 	
 	
 	public DynTreeGen(EnumTree treetype, DynTreeRoot roots, DynTreeTrunk trunk, DynTreeBranch branches) {
@@ -127,21 +47,24 @@ public class DynTreeGen {
 		this.trunk = trunk;
 		this.branches = branches;
 		this.sizemodifier = sizemodifier;
+		/*this.bend = bend;*/
 		
 		setTree(treetype);
 	}
 	
-	
+	public void growTree(World world, BlockPos pos) {
+		growTree(world, pos, 1f);
+	}
 
-	public void gen(World world, BlockPos pos, float size, float bend) {
+	public void growTree(World world, BlockPos pos, float size) {
 		this.world = world;
 		this.pos = pos;
 		this.size = size * sizemodifier;
 		
-		float relheight = getWithGaussVariance(world.rand, trunk.avgHeight, trunk.variance);
+		float relheight = trunk.avgHeight; // getWithGaussVariance(world.rand, trunk.avgHeight, trunk.variance);
 		float relwidth = trunk.width;
 		
-		genTrunk(0f, 0f, 0f, trunk.width, relheight, (float)(world.rand.nextFloat() * Math.PI * 2), bend);
+		genTrunk(0f, 0f, 0f, trunk.width, relheight, (float)(world.rand.nextFloat() * Math.PI * 2), trunk.bend, trunk.bendCorrection);
 		genRoots();
 	}
 	
@@ -153,27 +76,41 @@ public class DynTreeGen {
 
 
 
-	private void genTrunk(float curx, float cury, float curz, float curwidth, float relheight, float anglehor, float anglever) {
-		float numBranches = trunk.numBranching * (size / 2) + trunk.numBranching / 2; 
+	private void genTrunk(float curx, float cury, float curz, float curwidth, float relheight, float anglehor, float anglever, float angleverReduction) {
+		float numBranches = Math.round((float)trunk.numBranching * (size / 2) + (float)trunk.numBranching / 2); 
+		//System.out.println(numBranches + " / " + trunk.numBranching);
+		//growBranch(pos, 0f, 0f, 0f, anglever, anglehor, trunk.width, trunk.widthloss, (int) numBranches, trunk.branchStart, trunk.branchSpacing, trunk.branchVarianceSpacing, trunk.branchWidthMultiplier, 0f, trunk.branchAnglevert, trunk.branchVarianceAnglevert, trunk.branchAnglehori, trunk.branchVarianceAnglehori);
 		
-		growBranch(pos, 0f, 0f, 0f, anglever, anglehor, trunk.width, trunk.widthloss, (int) numBranches, trunk.branchStart, trunk.branchSpacing, trunk.branchVarianceSpacing, trunk.branchWidthMultiplier, 0f);
+		growBranch(pos, 0f, 0f, 0f, anglever, angleverReduction, anglehor, trunk.width, trunk.widthloss, numBranches, trunk.branchStart, trunk.branchSpacing, trunk.branchWidthMultiplier, 0f, trunk.branchVerticalAngle, trunk.branchHorizontalAngle, trunk.widthBranchLossBase);
 	}
 	
 	
 	
-	public void growBranch(BlockPos pos, float dx, float dy, float dz, float anglever, float anglehor, float baseWidth, float widthloss, int numbranching, float branchStart, float avgSpacing, float varianceSpacing, float branchWidthMultiplier, float gravityDrag) {
-//		if (numbranching > 1)
+	public void growBranch(BlockPos pos, float dx, float dy, float dz, float anglever, float angleverReduction, float anglehor, float baseWidth, float widthloss, float numbranching, NatFloat branchStart, NatFloat branchSpacing, float branchWidthMultiplier, float gravityDrag, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, float widthBranchLossBase) {
+		//if (numbranching > 1)
+		//	System.out.println(angleverReduction);
 //			System.out.println("spacing = "+avgSpacing+" +- " + varianceSpacing);
 	
-		float spacing = getWithGaussVariance(world.rand, avgSpacing, varianceSpacing);
+		float branchspacing = branchSpacing.nextFloat();
+		float branchstart = branchStart.nextFloat();
 		
 		float reldistance = 0, lastreldistance = 0;
 		float totaldistance = baseWidth / (widthloss / size);
 		
 		int iterations = 5000;
 		
+		//System.out.println("growbranch width " + baseWidth);
+		
 		while (baseWidth > 0 && iterations-- > 0) {
 			baseWidth -= widthloss / size;
+			if (angleverReduction > 0) {
+				if (anglever > 0) {
+					anglever = Math.max(0, anglever - angleverReduction);
+				}
+				if (anglever < 0) {
+					anglever = Math.min(0, anglever + angleverReduction);
+				}
+			}
 			
 			
 			dx += MathHelper.sin(anglever) * MathHelper.cos(anglehor);
@@ -182,91 +119,58 @@ public class DynTreeGen {
 			
 			
 			IBlockState blockstate = block(baseWidth);
-			// Logs overwrite leaves
+
 			if (canPlace(blockstate, world.getBlockState(pos.add(dx, dy, dz)))) {
-				world.setBlockState(pos.add(dx, dy, dz), blockstate);
+				world.setBlockState(pos.add(dx, dy, dz), blockstate, 2);
 			}
 			
 			
 			reldistance = MathHelper.sqrt_float(dx*dx + dy*dy + dz*dz) / totaldistance;
 			
-			if (reldistance < branchStart) continue;
 			
 			
+			if (reldistance < branchstart) continue;
+			
+		//	System.out.println(reldistance+" > "+(lastreldistance + branchspacing));
 			//reldistance += MathHelper.sqrt_float(dx*dx + dy*dy + dz*dz);
 			
 			
-			
-			if (reldistance > lastreldistance + spacing) {
-				//if (numbranching > 1) System.out.println(reldistance+" > "+(lastreldistance + spacing));
+			if (reldistance > lastreldistance + branchspacing * (1f - reldistance)) {
+				//if (numbranching > 1) System.out.println(reldistance+" > "+(lastreldistance + branchspacing));
 				
-				spacing = getWithGaussVariance(world.rand, avgSpacing, varianceSpacing);
+				branchspacing = branchSpacing.nextFloat();
 				lastreldistance = reldistance;
 				
 				//branchsize *= branches.splitloss;
 				
 				for (int i = 0; i < numbranching; i++) {
+					//growBranch(BlockPos pos, float dx, float dy, float dz, float anglever, float anglehor, float baseWidth, 
+					// float widthloss, int numbranching, NatFloat branchStart, NatFloat branchSpacing, float branchWidthMultiplier, float gravityDrag, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle)
+					
+					baseWidth *= widthBranchLossBase;
+					
 					growBranch(
 						pos, dx, dy, dz, 
-						anglever + getWithGaussVarianceInverse(world.rand, branches.anglevert, branches.varianceAnglevert), 
-						anglehor + getWithVariance(world.rand, branches.anglehori, branches.varianceAnglehori), 
+						anglever + branchVerticalAngle.nextFloat(),
+						0f,
+						anglehor + branchHorizontalAngle.nextFloat(), 
 						baseWidth * branchWidthMultiplier, 
 						branches.widthloss, 
-						1, 
-						0f, 
-						branches.spacing, 
-						branches.varianceSpacing,
+						1,
+						branches.branchStart, 
+						branches.branchSpacing, 
 						branches.branchWidthMultiplier,
-						branches.gravityDrag
+						branches.gravityDrag,
+						branches.branchVerticalAngle, 
+						branches.branchHorizontalAngle,
+						branches.widthBranchLossBase
 					);
 				}
 			}
 		}		
-	}
+	}	
 	
 	
-	
-	
-	
-	float getWithVariance(Random rand, float val, float variance) {
-		float rnd = rand.nextFloat() - 0.5f;	
-		return val + rnd * variance;
-	}
-	
-	// Delivers a value from a gauss curve
-	float getWithGaussVariance(Random rand, float val, float variance) {
-		float rnd = (rand.nextFloat() + rand.nextFloat() + rand.nextFloat())/3;  // Random value out of a gauss curve between 0..1, with 0.5f being most common
-		
-		// Center gauss curve to 0
-		rnd = rnd - 0.5f;
-		
-		return val + rnd * variance;
-	}
-
-	
-	// Delivers a value from a vertically flipped gauss curve
-	float getWithGaussVarianceInverse(Random rand, float val, float variance) {
-		float rnd = (rand.nextFloat() + rand.nextFloat() + rand.nextFloat())/3;  // Random value out of a gauss curve between 0..1, with 0.5f being most common
-		
-		// Flip curve
-		if (rnd > 0.5f) {
-			rnd -= 0.5f;
-		} else {
-			rnd += 0.5f;
-		}
-		
-		// Center gauss curve to 0
-		rnd = rnd - 0.5f;
-		
-		return val + rnd * variance;
-	}
-	
-	
-	
-	
-	private IBlockState log;
-	private IBlockState leavesbranchy;
-	private IBlockState leaves;
 
 	
 	public void setTree(EnumTree tree) {
@@ -291,6 +195,7 @@ public class DynTreeGen {
 		// branchy leaves override leaves
 		return 
 			blockatpos.getBlock() == Blocks.air
+			|| blockatpos.getBlock() == BlocksVC.tallgrass
 			|| (blockstate == log && (blockatpos.getBlock() instanceof BlockLeavesVC))
 			|| (blockstate == leavesbranchy && (blockatpos.getBlock() instanceof BlockLeavesVC) && !(blockatpos.getBlock() instanceof BlockLeavesBranchy))
 		;
@@ -298,133 +203,236 @@ public class DynTreeGen {
 	}
 	
 	
+	
+	
+	public static void initGenerators() {
+		// Reference: 
+		/*  new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
+		 * new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss, gravityDrag)
+   		 */
+		DynTreeGen test;
+		DynTreeTrunk trunk;
+		DynTreeBranch branch;
+		
+		EnumTree.BIRCH.setGenerators(test = new DynTreeGen(
+			EnumTree.BIRCH, 
+			null,
+			trunk = new DynTreeTrunk(
+				0.8f,
+				1f, 
+				0.05f, 
+				NatFloat.createGauss(0.22f, 0.01f), 
+				NatFloat.createGauss(0.005f, 0.1f), 
+				NatFloat.createInvGauss(NatFloat.PI / 4 + 0.1f, NatFloat.PI / 8), 
+				NatFloat.createUniform(0, 2*NatFloat.PI),
+				3, 
+				0.5f
+			),
+			branch = new DynTreeBranch(
+				NatFloat.createInvGauss(NatFloat.PI / 4 + 0.1f, NatFloat.PI / 8),
+				NatFloat.createUniform(0, 2*NatFloat.PI), 
+				NatFloat.createGauss(0.01f, 0.01f), 
+				0.05f
+			)
+		), null, null);
+		
+		/*GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(IBlockState.class, new BlockStateSerializer());
+        
+        Gson gson = builder.create();
+        
+        System.out.println(gson.toJson(test));
+		*/
+		EnumTree.SPRUCE.setGenerators(new DynTreeGen(
+			EnumTree.SPRUCE, 
+			null,
+			new DynTreeTrunk(
+				0.8f,
+				1f, 
+				0.03f, 
+				NatFloat.createGauss(0.12f, 0.05f), 
+				NatFloat.createGauss(0f, 0.1f), 
+				NatFloat.createInvGauss(NatFloat.PI / 2 - 0.35f, 0), 
+				NatFloat.createUniform(0, 2*NatFloat.PI),
+				16, 
+				0.25f
+			),
+			new DynTreeBranch(
+				NatFloat.createInvGauss(NatFloat.PI / 2 - 0.35f, 0),
+				NatFloat.createUniform(0, 2*NatFloat.PI), 
+				NatFloat.createGauss(5f, 0.05f), 
+				0.03f
+			),
+			0.8f
+		), null, null);
+		
+		EnumTree.MOUNTAINDOGWOOD.setGenerators(new DynTreeGen(
+			EnumTree.MOUNTAINDOGWOOD, 
+			null,
+			new DynTreeTrunk(
+				0.9f,
+				1f, 
+				0.15f, 
+				NatFloat.createGauss(0.5f, 0f), 
+				NatFloat.createGauss(0f, 0f), 
+				NatFloat.createInvGauss(NatFloat.PI / 2 - 0.55f, 0), 
+				NatFloat.createUniform(0, 2*NatFloat.PI),
+				8, 
+				1f
+			),
+			new DynTreeBranch(
+				NatFloat.createInvGauss(NatFloat.PI / 2 - 0.55f, 0),
+				NatFloat.createUniform(0, 2*NatFloat.PI), 
+				NatFloat.createGauss(0.01f, 0f), 
+				0.17f
+			),
+			0.8f
+		), null, null);
+		
+		
+		
+		EnumTree.OAK.setGenerators(new DynTreeGen(
+				EnumTree.OAK, 
+				null,
+				new DynTreeTrunk(
+					0.9f,
+					1f, 
+					0.15f, 
+					NatFloat.createGauss(0.5f, 0f), 
+					NatFloat.createGauss(0f, 0f), 
+					NatFloat.createInvGauss(NatFloat.PI / 2 - 0.55f, 0), 
+					NatFloat.createUniform(0, 2*NatFloat.PI),
+					8, 
+					1f
+				),
+				new DynTreeBranch(
+					NatFloat.createInvGauss(NatFloat.PI / 2 - 0.55f, 0),
+					NatFloat.createUniform(0, 2*NatFloat.PI), 
+					NatFloat.createGauss(0.01f, 0f), 
+					0.17f
+				),
+				2f
+			), null, null);
+		
+		
+		
+		// Reference: 
+		/*  new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier, widthBranchLossBase),
+		 * new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier)
+   		 */
+		
+		EnumTree.ACACIA.setGenerators(new DynTreeGen(
+			EnumTree.ACACIA, 
+			null,
+			new DynTreeTrunk(
+				1f,
+				1f,
+				0.15f,
+				NatFloat.createGauss(0.50f, 0.15f), 
+				NatFloat.createUniform(0f, 0f), 
+				NatFloat.createGauss(NatFloat.PI / 2 - 0.55f, 0f), 
+				NatFloat.createUniform(0, 2*NatFloat.PI),
+				4, 
+				1f,
+				1f,
+				0.2f,
+				0.02f
+			),
+			new DynTreeBranch(
+				NatFloat.createUniform(0, 0.5f),
+				NatFloat.createUniform(0, 2 * NatFloat.PI), 
+				NatFloat.createGauss(0f, 0f),
+				NatFloat.createUniform(0.05f, 0.01f), 
+				0.09f,
+				0.01f,
+				0.4f
+			),
+			1.5f
+		), null, null);
+		
+		EnumTree.SCOTSPINE.setGenerators(
+			// Normal
+			new DynTreeGen(
+				EnumTree.SCOTSPINE, 
+				null,
+				new DynTreeTrunk(
+					1f,
+					1f,
+					0.02f,
+					NatFloat.createGauss(0.55f, 0.15f), 
+					NatFloat.createUniform(0.3f, 0.005f), 
+					NatFloat.createGauss(NatFloat.PI / 2, 0.3f), 
+					NatFloat.createUniform(0, 2*NatFloat.PI),
+					4, 
+					0.9f
+				),
+				new DynTreeBranch(
+					NatFloat.createUniform(0, 0.5f),
+					NatFloat.createUniform(0, 2 * NatFloat.PI), 
+					NatFloat.createGauss(0f, 0f),
+					NatFloat.createUniform(0.25f, 0.1f), 
+					0.027f,
+					0.1f,
+					0.4f
+				),
+				0.5f
+			),
+			// Poor
+			new DynTreeGen(
+					EnumTree.SCOTSPINE, 
+					null,
+					new DynTreeTrunk(
+						1f,
+						1f,
+						0.15f,
+						NatFloat.createGauss(0.50f, 0.15f), 
+						NatFloat.createUniform(0f, 0f), 
+						NatFloat.createGauss(NatFloat.PI / 2 - 0.55f, 0f), 
+						NatFloat.createUniform(0, 2*NatFloat.PI),
+						4, 
+						1f,
+						1f,
+						0.5f,
+						0.02f
+					),
+					new DynTreeBranch(
+						NatFloat.createUniform(0, 0.5f),
+						NatFloat.createUniform(0, 2 * NatFloat.PI), 
+						NatFloat.createGauss(0f, 0f),
+						NatFloat.createUniform(0.1f, 0.01f), 
+						0.2f,
+						0.01f,
+						0.4f
+					),
+					1.5f
+			),
+			// Lush
+			new DynTreeGen(
+				EnumTree.SCOTSPINE, 
+				null,
+				new DynTreeTrunk(
+					0.8f,
+					1f, 
+					0.02f, 
+					NatFloat.createGauss(0.3f, 0.1f), 
+					NatFloat.createUniform(0.025f, 0.01f), 
+					NatFloat.createGauss(NatFloat.PI / 2, 0.3f), 
+					NatFloat.createUniform(0, 2*NatFloat.PI),
+					2, 
+					0.5f
+				),
+				new DynTreeBranch(
+					NatFloat.createUniform(0, 0.5f),
+					NatFloat.createUniform(0, 2 * NatFloat.PI), 
+					NatFloat.createGauss(0f, 0f),
+					NatFloat.createUniform(0.15f, 0.08f), 
+					0.027f,
+					0.1f,
+					0.5f
+				),
+				0.5f
+			)
+		);
+		 
+	}	
 }
-
-
-
-/*
-public class DynTreeGen {
-	// Absolute values
-	int width;
-	int height;
-	
-	// All below: Relative values from 0..100  (except angles)
-	
-	
-	// Stuff to read:
-	// http://en.wikipedia.org/wiki/L-system
-	
-	float trunkHeight;
-	float trunkRadius;
-	
-	float branchingMinHeight; 
-	float branchingVertDist;
-	
-	float trunkBottomCurvature;
-	float trunkTopCurvature;
-	
-	float logBranchingMin;
-	float logBranchingMax;
-	
-	int leavesBranchingMin;
-	int leavesBranchingMax;
-		
-	float minBranchAngleVert; // 0..pi
-	float maxBranchAngleVert; // 0..pi
-	
-	float minBranchAngleHor; // 0..2 pi
-	float maxBranchAngleHor; // 0..2 pi
-	
-	float foliageRadius;
-	
-	float randomness;
-	
-	IBlockState log;
-	IBlockState leaves;
-	IBlockState leavesBranchy;
-	
-	
-	
-	public static DynTreeGen testtree = new DynTreeGen(0.9f, 0.2f, 0.25f, 0.15f, 0, 0, 0, 0, 4, 4, 30, 40, 0, 360, 3, 0);
-	
-	public DynTreeGen(float trunkHeight, float trunkRadius, float branchingMinHeight, float branchingVertDist, float trunkBottomCurvature, float trunkTopCurvature, float logBranchingMin, float logBranchingMax, int leavesBranchingMin, int leavesBranchingMax, float minBranchAngleVert, float maxBranchAngleVert, float minBranchAngleHor, float maxBranchAngleHor, float foliageRadius, float randomness) {
-		this.trunkHeight = trunkHeight;
-		this.trunkRadius = trunkRadius;
-		this.branchingMinHeight = branchingMinHeight;
-		this.branchingVertDist = branchingVertDist;
-		this.trunkBottomCurvature = trunkBottomCurvature;
-		this.trunkTopCurvature = trunkTopCurvature;
-		this.logBranchingMin = logBranchingMin;
-		this.logBranchingMax = logBranchingMax;
-		this.leavesBranchingMin = leavesBranchingMin;
-		this.leavesBranchingMax = leavesBranchingMax;
-		this.minBranchAngleVert = minBranchAngleVert;
-		this.maxBranchAngleVert = maxBranchAngleVert;
-		this.minBranchAngleHor = minBranchAngleHor;
-		this.maxBranchAngleHor = maxBranchAngleHor;
-		this.foliageRadius = foliageRadius;
-		this.randomness = randomness;
-		
-		log = BlocksVC.log.getBlockStateFor(EnumTree.PINE);
-		leaves = BlocksVC.leaves.getBlockStateFor(EnumTree.PINE).withProperty(BlockLeaves.CHECK_DECAY, false);
-		leavesBranchy = BlocksVC.leavesbranchy.getBlockStateFor(EnumTree.PINE).withProperty(BlockLeavesBranchy.CHECK_DECAY, false);;
-	}
-	
-	
-	public void gen(World world, BlockPos pos, int width, int height) {
-		for (int y = 0; y < height; y++) {
-			if (y < trunkHeight * height) drawTrunk(world, pos.up(y), width);
-			//System.out.println((y - branchingMinHeight * height)+" % " + (branchingVertDist*height));
-			
-			if (y >= branchingMinHeight * height &&  (int)(y - branchingMinHeight * height) % (int)(branchingVertDist*height) == 0) {
-				int quantityLeavesBranching = leavesBranchingMin + world.rand.nextInt(leavesBranchingMax);
-				int step = Math.max(1, (int) ((maxBranchAngleHor - minBranchAngleHor) / quantityLeavesBranching)); 
-				
-				float leaveBranchingAngleVert = minBranchAngleVert + (maxBranchAngleVert-minBranchAngleVert) * world.rand.nextFloat();
-				
-				for (float leaveBranchingAngleHor = minBranchAngleHor; leaveBranchingAngleHor < maxBranchAngleHor; leaveBranchingAngleHor += step) {
-					float endX = MathHelper.sin(leaveBranchingAngleVert) * MathHelper.cos(leaveBranchingAngleHor);
-					float endZ = MathHelper.sin(leaveBranchingAngleVert) * MathHelper.sin(leaveBranchingAngleHor);
-					float endY = MathHelper.cos(leaveBranchingAngleVert);
-					
-					//System.out.println(endX + "/" + endY + "/" + endZ);
-					
-					for (int blockstephor = 0; blockstephor < width; blockstephor++) {
-						BlockPos thepos = pos.add(blockstephor * endX, y + blockstephor * endY, blockstephor * endZ);
-						if (world.getBlockState(thepos).getBlock() == Blocks.air) {
-							world.setBlockState(thepos, leaves);
-						}
-					}
-					
-					
-					
-				}
-				
-			}
-			
-		}
-		
-		
-		
-	}
-	
-	
-	public void drawTrunk(World world, BlockPos pos, int width) {
-		world.setBlockState(pos, log);
-		
-		/*for (int x = (int) (-trunkRadius * width / 2); x < trunkRadius * width; x++) {
-			for (int z = (int) (-trunkRadius * width / 2); z < trunkRadius * width; z++) {
-				//if (world.getBlockState(pos).getBlock() == Blocks.air) {
-				if (x*x + z*z <= width * width * trunkRadius*trunkRadius / 4) {
-					world.setBlockState(new BlockPos(pos.getX() + x, pos.getY(), pos.getZ() + z), log);
-				//}
-				}
-			}
-		}
-	}
-	
-	
-	
-	
-	
-}*/

@@ -1,7 +1,7 @@
 {
-		"parent": "block/cube_column",
-		"textures": {
-			"end": "vintagecraft:blocks/log/birch",
-			"side": "vintagecraft:blocks/log/birch_bark"
-		}
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/birch",
+		"side": "vintagecraft:blocks/log/birch_bark"
 	}
+}

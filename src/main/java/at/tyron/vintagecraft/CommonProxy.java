@@ -3,12 +3,14 @@ package at.tyron.vintagecraft;
 import java.util.HashMap;
 
 import at.tyron.vintagecraft.Inventory.ContainerStove;
-import at.tyron.vintagecraft.TileEntity.TEOre;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.gui.GuiStove;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerFurnace;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
@@ -82,5 +84,24 @@ public class CommonProxy implements IGuiHandler {
 			
 		return null;
 	}
+	
+	
+	/*public void registerBlockTexture(Block block, String folderprefix, String blockclassname, String subtype) {
+		
+	}*/
+	
+	
+	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {
+		
+	}
+	
+	public void registerItemBlockTexture(Block block, String blockclassname) {
+		
+	}
+	
+	public void addVariantName(Item item, String... names) {
+		
+	}
+	
 	
 }

@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.item;
 
 import java.util.List;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
@@ -11,6 +12,9 @@ import at.tyron.vintagecraft.interfaces.IFuel;
 
 public class ItemPeatBrick extends ItemVC implements IFuel {
 
+	public ItemPeatBrick() {
+		setCreativeTab(CreativeTabs.tabMisc);
+	}
 	
 	@Override
 	public int getBurningHeat(ItemStack stack) {
@@ -19,7 +23,7 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 1.1f;
+		return 0.7f;
 	}
 	
 	

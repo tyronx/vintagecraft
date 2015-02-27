@@ -28,46 +28,6 @@ public class FlowerClass extends BlockClass {
 	String getTypeName() { return "flowertype"; }
 
 
-
-	
-/*	public FlowerClass ORANGEMILKWEED = new FlowerClassEntry("orangemilkweed", EnumFlora.ORANGEMILKWEED);
-	public FlowerClass ORANGEMILKWEED2 = new FlowerClass("orangemilkweed2", EnumFlora.ORANGEMILKWEED);
-
-	public FlowerClass PURPLEMILKWEED = new FlowerClass("purplemilkweed", EnumFlora.PURPLEMILKWEED);
-	public FlowerClass PURPLEMILKWEED2 = new FlowerClass("purplemilkweed2", EnumFlora.PURPLEMILKWEED);
-
-	public FlowerClass CATMINT = new FlowerClass("catmint", EnumFlora.CATMINT);
-	public FlowerClass CALENDULA = new FlowerClass("calendula", EnumFlora.CALENDULA);
-	public FlowerClass CORNFLOWER = new FlowerClass("cornflower", EnumFlora.CORNFLOWER);
-	public FlowerClass CORNFLOWER2 = new FlowerClass("cornflower2", EnumFlora.CORNFLOWER);
-
-	public FlowerClass LILYOFTHEVALLEY = new FlowerClass("lilyofthevalley", EnumFlora.LILYOFTHEVALLEY);
-	public FlowerClass LILYOFTHEVALLEY2 = new FlowerClass("lilyofthevalley2", EnumFlora.LILYOFTHEVALLEY);
-	public FlowerClass LILYOFTHEVALLEY3 = new FlowerClass("lilyofthevalley3", EnumFlora.LILYOFTHEVALLEY);
-
-	public FlowerClass CLOVER = new FlowerClass("clover", EnumFlora.CLOVER);
-
-	public FlowerClass GOLDENROD = new FlowerClass("goldenrod", EnumFlora.GOLDENROD, true);
-	public FlowerClass GOLDENROD2 = new FlowerClass("goldenrod", EnumFlora.GOLDENROD, true);
-	public FlowerClass GOLDENROD3 = new FlowerClass("goldenrod", EnumFlora.GOLDENROD, true);
-
-	public FlowerClass FORGETMENOT = new FlowerClass("forgetmenot", EnumFlora.FORGETMENOT);
-	public FlowerClass FORGETMENOT2 = new FlowerClass("forgetmenot2", EnumFlora.FORGETMENOT, false);
-	public FlowerClass FORGETMENOT3 = new FlowerClass("forgetmenot3", EnumFlora.FORGETMENOT, false);
-	public FlowerClass FORGETMENOT4 = new FlowerClass("forgetmenot4", EnumFlora.FORGETMENOT, false);
-	public FlowerClass FORGETMENOT5 = new FlowerClass("forgetmenot5", EnumFlora.FORGETMENOT, false);
-
-	public FlowerClass NARCISSUS = new FlowerClass("narcissus", EnumFlora.NARCISSUS);
-	public FlowerClass NARCISSUS2 = new FlowerClass("narcissus2", EnumFlora.NARCISSUS);
-	public FlowerClass NARCISSUS3 = new FlowerClass("narcissus3", EnumFlora.NARCISSUS);
-
-	public FlowerClass PURPLETULIP = new FlowerClass("purpletulip", EnumFlora.PURPLETULIP);
-	public FlowerClass PURPLETULIP2 = new FlowerClass("purpletulip2", EnumFlora.PURPLETULIP);
-	public FlowerClass PURPLETULIP3 = new FlowerClass("purpletulip3", EnumFlora.PURPLETULIP);*/
-	
-	
-
-
 	public FlowerClass init(boolean doublehigh) {
 		if (doublehigh) {
 			name = "doubleflower";

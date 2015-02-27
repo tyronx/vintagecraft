@@ -26,7 +26,6 @@ public class GenLayerContrastAndBrightnessSelective extends GenLayerVC {
 			
 			ints[i] += Math.min(255, brightness << rgbselect);
 			ints[i] = (ints[i] & ~(0xff << rgbselect)) + (Math.min(255, Math.max(0, color + (int)((color - 128) * level))) << rgbselect); 
-			
 		}
 		
 		return ints;

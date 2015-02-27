@@ -39,7 +39,7 @@ public enum EnumFurnace {
 	public int getHeatDuration(ItemStack stack) {
 		if (stack != null && stack.getItem() instanceof IFuel) {
 			IFuel fuel = (IFuel)stack.getItem();
-			return (int)fuel.getBurnDurationMultiplier(stack) * 20 - fuelUse / 15;
+			return (int)fuel.getBurnDurationMultiplier(stack) * 35 - fuelUse * 2;
 		}
 		return 0;
 	}

@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/coconutpalm",
+		"side": "vintagecraft:blocks/log/coconutpalm_bark"
+	}
+}

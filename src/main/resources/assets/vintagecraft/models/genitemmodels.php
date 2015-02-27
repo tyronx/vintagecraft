@@ -3,9 +3,10 @@
 //$itemtype = "doubleplant";
 //$itemtype = "topsoil";
 //$itemtype = "gravel";
-$itemtype = "leavesbranchy";
+//$itemtype = "leavesbranchy";
+$itemtype = "cobblestone";
 
-$types = array("ash", "birch", "douglasfir", "oak", "maple", "mountaindogwood", "pine", "spruce");
+//$types = array("ash", "birch", "douglasfir", "oak", "maple", "mountaindogwood", "pine", "spruce");
 
 
 //$types = array('orangemilkweed', 'orangemilkweed2', 'purplemilkweed', 'purplemilkweed2', 'catmint', 'calendula', 'cornflower', 'cornflower2', 'lilyofthevalley', 'lilyofthevalley2', 'lilyofthevalley3', 'clover', 'goldenrod', 'goldenrod2', 'goldenrod3', 'forgetmenot', 'forgetmenot2', 'forgetmenot3', 'forgetmenot4', 'forgetmenot5', 'narcissus', 'narcissus2', 'narcissus3');
@@ -13,7 +14,7 @@ $types = array("ash", "birch", "douglasfir", "oak", "maple", "mountaindogwood", 
 //$types = array("lowf_nograss", "lowf_verysparsegrass", "lowf_sparsegrass", "lowf_normalgrass", "medf_nograss", "medf_verysparsegrass", "medf_sparsegrass", "medf_normalgrass", "hif_nograss", "hif_verysparsegrass", "hif_sparsegrass", "hif_normalgrass");
 
 
-//$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
+$types = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert");
 
 //$types = array("nativecopper","nativegold", "limonite", "lignite", "bituminouscoal");
 

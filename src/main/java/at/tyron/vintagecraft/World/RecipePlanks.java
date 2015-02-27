@@ -17,7 +17,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
 public class RecipePlanks implements IRecipe {
-	BlockClassEntry tree;
+	BlockClassEntry log;
 
 	@Override
 	public boolean matches(InventoryCrafting inventory, World worldIn) {
@@ -28,10 +28,10 @@ public class RecipePlanks implements IRecipe {
 				ItemStack itemstack = inventory.getStackInRowAndColumn(y, x);
 				if (itemstack == null) continue;
 				
-				if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).block instanceof BlockLogVC) {
+				if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).block instanceof BlockLogVC && itemstack.getItem().getUnlocalizedName().equals("tile.log")) {
 					found |= 1;
 					quantityfound++;
-					tree = BlocksVC.planks.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("treetype"));
+					log = BlocksVC.log.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 				}
 				
 				if (itemstack.getItem() instanceof ItemToolVC && ((ItemToolVC)(itemstack.getItem())).tooltype == EnumTool.SAW) {
@@ -41,7 +41,6 @@ public class RecipePlanks implements IRecipe {
 				
 			}
 		}
-		
 		return (found & 3) == 3 && quantityfound == 2;
 	}
 
@@ -57,8 +56,8 @@ public class RecipePlanks implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		ItemStack stack = new ItemStack(tree.getBlockState().getBlock(), 4);
-		ItemPlanksVC.withTreeType(stack, tree);
+		ItemStack stack = BlocksVC.planks.getItemStackFor(log.getKey());
+		stack.stackSize = 4;
 		return stack;
 	}
 

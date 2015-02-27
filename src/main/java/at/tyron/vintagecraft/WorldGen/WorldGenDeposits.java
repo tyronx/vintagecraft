@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraftConfig;
-import at.tyron.vintagecraft.TileEntity.TEOre;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
@@ -25,6 +25,8 @@ public class WorldGenDeposits implements IWorldGenerator {
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		chunkX *= 16;
 		chunkZ *= 16;
+		//if (true) return;
+		
 		EnumMaterialDeposit []deposits = EnumMaterialDeposit.values();
 		int[] depositsPerChunk = new int[deposits.length]; 
 		
@@ -76,10 +78,14 @@ public class WorldGenDeposits implements IWorldGenerator {
 				
 				pos = new BlockPos(xCoord + x, Math.max(1, horizon - depositDepth), zCoord + z);
 				
-				//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("made copper");
+				
 				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos))) {
+					//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("made copper @ " + pos);
+					
 					world.setBlockState(pos, deposit.getBlockStateForDepth(depositDepth), 2);
+					
+					/*
 					
 					if (deposit.getBlockStateForDepth(depositDepth) instanceof BlockOreVC) {
 						TEOre tileentity = (TEOre)world.getTileEntity(pos);
@@ -88,7 +94,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 						} else {
 							System.out.println("tileentity was not created?");
 						}
-					}
+					}*/
 				}
 
 				

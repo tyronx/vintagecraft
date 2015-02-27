@@ -15,10 +15,8 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 			for (int x = 0; x < sizeX; ++x) {
 				this.initChunkSeed(xCoord + x, zCoord + z);
 				
-				// Creates Bell curves with max. at 195.5, clipped to 0-255
+				// lumpyInt creates Bell curves with max. at 195.5, clipped to 0-255
 				// Results in a predominant average temperature of 16 degree and rather good rainfall
-				
-				
 				
 				if (nextInt(10) == 0) {
 					temp = lumpyInt3(55);
@@ -28,7 +26,7 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 					rain = lumpyInt3(55);
 				} else {
 					temp = lumpyInt3(350);
-					rain = lumpyInt3(350);
+					rain = lumpyInt3(350 - (255 - temp));
 				}
 				
 				   

@@ -2,6 +2,8 @@ package at.tyron.vintagecraft.BlockClass;
 
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
@@ -54,6 +56,11 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 	public IBlockState getBlockState(IBlockState baseState, IProperty property) {
 		return baseState.withProperty(property, this);
 	}
+	
+	public ItemStack getItemStack() {
+		return new ItemStack(Item.getItemFromBlock(block), 1, metadata);
+	}
+	
 
 
 	

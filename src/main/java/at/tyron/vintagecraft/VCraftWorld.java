@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.sun.security.ntlm.Client;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResourceManager;
@@ -15,6 +16,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.ChunkWatchEvent;
@@ -31,23 +34,41 @@ import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockGravel;
-import at.tyron.vintagecraft.block.BlockSand;
+import at.tyron.vintagecraft.block.BlockGravelVC;
+import at.tyron.vintagecraft.block.BlockSandVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
+import at.tyron.vintagecraft.block.BlockVC;
 
 public class VCraftWorld {
-	static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
+	public static boolean chunkdataprofiling = false;
+	
+	
+	public static VCraftWorld instance;
+	
+	
+	public int seaLevel = 96;
+	public static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
+	
+	
+	public ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
+	private boolean printingProfiling = false;
 	private static int[] grassBuffer = new int[65536];
-	
-	static ArrayList<BlockPos> unpopulatedChunks;
-	
-	public static VCraftWorld instance = new VCraftWorld(); 
+	private long seed;
+	private HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
 	
 	
-	static HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
+	public VCraftWorld(long seed) {
+		this.seed = seed;
+	}
 	
-	static void mark(int chunkX, int chunkZ, String key) {
+	
+	void mark(int chunkX, int chunkZ, String key) {
 		long index = ChunkPos2Index(chunkX, chunkZ);
+		
+		if (!chunkdataprofiling) return;
+		
+		
+		if (printingProfiling) return;
 		
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ) {
 			//System.out.println("called by client");
@@ -81,9 +102,10 @@ public class VCraftWorld {
 	}
 	
 	
-	static void printProfiling(String reason) {
+	void printProfiling(String reason) {
 		System.out.println("writing chunknbt.txt");
-
+		printingProfiling = true;
+		
 		Writer writer;
 		try {
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("chunknbt.txt"), "utf-8"));
@@ -117,6 +139,7 @@ public class VCraftWorld {
 			e.printStackTrace();
 		}
 		
+		printingProfiling = false;
 		System.out.println("chunknbt.txt written.");
 		
 	}
@@ -124,18 +147,13 @@ public class VCraftWorld {
 
 	
 
-	public static void setUnpopChunkList(ArrayList<BlockPos> unpopulatedChunks) {
-		VCraftWorld.unpopulatedChunks = unpopulatedChunks;
-	}
 
-
-
-	static NBTTagCompound getChunkNBT(BlockPos blockpos) {
+	NBTTagCompound getChunkNBT(BlockPos blockpos) {
 		return VintageCraft.proxy.getChunkNbt(BlockPos2Index(blockpos));
 	}
 	
 	
-	public static void setChunkNBT(int chunkX, int chunkZ, String key, int[] data) {
+	public void setChunkNBT(int chunkX, int chunkZ, String key, int[] data) {
 		long index = ChunkPos2Index(chunkX, chunkZ);
 		
 		int x = 2;
@@ -157,7 +175,7 @@ public class VCraftWorld {
 	  
 	
 
-	public static void setChunkNBT(int chunkX, int chunkZ, String key, boolean value) {
+	public void setChunkNBT(int chunkX, int chunkZ, String key, boolean value) {
 		long index = ChunkPos2Index(chunkX, chunkZ);
 		
 		NBTTagCompound nbt = VintageCraft.proxy.getChunkNbt(index);
@@ -226,9 +244,11 @@ public class VCraftWorld {
     	long index = ChunkPos2Index(event.chunk.chunkXPos, event.chunk.chunkZPos);
     	VintageCraft.packetPipeline.sendTo(new ChunkRemoveNbt(index), event.player);
     }
+    
+    
 
 
-    private static int _getClimate(BlockPos pos) {
+    private int _getClimate(BlockPos pos) {
     	NBTTagCompound nbt = getChunkNBT(pos);
     	mark(pos.getX() >> 4, pos.getZ() >> 4, "getnbt-_climate " + (nbt == null));
     	
@@ -236,12 +256,15 @@ public class VCraftWorld {
     		printProfiling("_climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " at coord " + pos + " missing!" + " (@index " + BlockPos2Index(pos) + ")");
     	}
     	
+    	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
     	
-    	return nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
+    	int sealevelheight = pos.getY() - seaLevel;
+    	
+    	return climate;
     }
 
     // Returns climate = int[temp, fertility, rain] 
-    public static int[] getClimate(BlockPos pos) {
+    public int[] getClimate(BlockPos pos) {
     	NBTTagCompound nbt = getChunkNBT(pos);
     	mark(pos.getX() >> 4, pos.getZ() >> 4, "getnbt-climate");
     	
@@ -251,18 +274,18 @@ public class VCraftWorld {
     	
     	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
     	
-    	return new int[]{normalizeTemperature((climate >> 16) & 0xff), (climate >> 8) & 0xff, climate & 0xff};
+    	return new int[]{normalizeTemperature((climate >> 16) & 0xff, pos), (climate >> 8) & 0xff, normalizeRainFall(climate & 0xff, pos)};
     }
     
-    public static int getTemperature(BlockPos pos) {
-    	return normalizeTemperature((_getClimate(pos) >> 16) & 0xff);
+    public int getTemperature(BlockPos pos) {
+    	return normalizeTemperature((_getClimate(pos) >> 16) & 0xff, pos);
     }
     
-    public static int getRainfall(BlockPos pos) {
-    	return (_getClimate(pos) >> 0) & 0xff;
+    public int getRainfall(BlockPos pos) {
+    	return normalizeRainFall((_getClimate(pos) >> 0) & 0xff, pos);
     }
     
-    public static int getFertily(BlockPos pos) {
+    public int getFertily(BlockPos pos) {
     	return (_getClimate(pos) >> 8) & 0xff;
     }
     
@@ -270,17 +293,19 @@ public class VCraftWorld {
     
 
 	
-
+    public int normalizeRainFall(int rainfall, BlockPos pos) {
+    	return Math.min(255, rainfall + (pos.getY() - seaLevel)/2);
+    }
 
     
-    
-    public static int normalizeTemperature(int temperature) {
-    	return (int) (temperature / 4.25f) - 30;
+    // Temperature range between -30 and +30 degree
+    public int normalizeTemperature(int temperature, BlockPos pos) {
+    	return Math.max(-30, (int) ((temperature - (pos.getY() - seaLevel)/2) / 4.25f) - 30);
     }
     
     
     
-    public static int getForest(BlockPos pos) {
+    public int getForest(BlockPos pos) {
     	int forest = getChunkNBT(pos).getIntArray("forest")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
     	mark(pos.getX() >> 4, pos.getZ() >> 4, "getnbt-forest");
     	
@@ -294,7 +319,7 @@ public class VCraftWorld {
     
     
     
-    public static IBlockState getTopLayerAtPos(int x, int y, int z, EnumRockType rocktype) {
+    public IBlockState getTopLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
     	BlockPos pos = new BlockPos(x, y, z);
 		int temperature = getTemperature(pos);
 		int rainfall = getRainfall(pos);
@@ -303,29 +328,33 @@ public class VCraftWorld {
 		EnumFertility fertility = EnumFertility.fromFertilityValue(fertilityvalue);
 		
 		if (fertility != null) {
+			if (steepness > 3 && rainfall < 180) return null;
 			EnumOrganicLayer layer = EnumOrganicLayer.fromClimate(rainfall, temperature);
 			return BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, layer).withProperty(BlockTopSoil.fertility, fertility);
 		} else {
+			if (steepness > 2) return null;
+			
 			if (temperature < 10) {
-				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravel.STONETYPE, rocktype);
+				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravelVC.STONETYPE, rocktype);
 			} else {
-				return BlocksVC.sand.getDefaultState().withProperty(BlockSand.STONETYPE, rocktype);
+				return BlocksVC.sand.getDefaultState().withProperty(BlockSandVC.STONETYPE, rocktype);
 			}
 		}
 	}
 
-	public static IBlockState getSubLayerAtPos(int x, int y, int z, EnumRockType rocktype) {
+	public IBlockState getSubLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
 		int fertilityvalue = getFertily(new BlockPos(x, y, z));
 		EnumFertility fertility = EnumFertility.fromFertilityValue(fertilityvalue);
 		int temperature = getTemperature(new BlockPos(x, y, z));
 		
 		if (fertility != null) {
+			if (steepness > 2 || y > 200) return null;
 			return rocktype.getRockVariantForBlock(BlocksVC.subsoil);
 		} else {
 			if (temperature < 10) {
-				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravel.STONETYPE, rocktype);
+				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravelVC.STONETYPE, rocktype);
 			} else {
-				return BlocksVC.sand.getDefaultState().withProperty(BlockSand.STONETYPE, rocktype);
+				return BlocksVC.sand.getDefaultState().withProperty(BlockSandVC.STONETYPE, rocktype);
 			}
 		}
 	}
@@ -345,25 +374,37 @@ public class VCraftWorld {
 	}
 	
     @SideOnly(Side.CLIENT)
-    public static int getGrassColorAtPos(BlockPos pos) {
+    public int getGrassColorAtPos(BlockPos pos) {
     	int climate = _getClimate(pos);
     	
-    	int temperature = (climate >> 16) & 0xff;
-    	int rainfall = climate & 0xff;
+    	int temperature = (climate >> 16) & 0xff  - (pos.getY() - seaLevel)/2;
+    	int rainfall = normalizeRainFall(climate & 0xff, pos);
     	//System.out.println(temperature + "/" + (255-rainfall));
     	return grassBuffer[temperature + 256 * (255-rainfall)];
     }
     
       
-    static long Chunk2Index(Chunk chunk) {
+    long Chunk2Index(Chunk chunk) {
     	return ChunkPos2Index(chunk.xPosition, chunk.zPosition);
     }
-	static long BlockPos2Index(BlockPos pos) {
+	long BlockPos2Index(BlockPos pos) {
 		return ChunkPos2Index(pos.getX() >> 4, pos.getZ() >> 4);
 	}
-	static long ChunkPos2Index(int chunkX, int chunkZ) {
+	long ChunkPos2Index(int chunkX, int chunkZ) {
 		return ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
 		//return ((long)chunkX + (long)Integer.MAX_VALUE) + (((long)chunkZ + (long)Integer.MAX_VALUE) << 32); 
 	}
     
+	
+	
+	
+	
+	@SubscribeEvent
+	public void onEvent(UseHoeEvent event) {
+		Block block = event.world.getBlockState(event.pos).getBlock();
+		if (block instanceof BlockVC) {
+			((BlockVC)block).hoeUsed(event);
+		}
+	}
+
 }

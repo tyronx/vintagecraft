@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.TileEntity.TEOre;
+//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
@@ -38,7 +38,7 @@ public class BlockRock extends BlockVC {
 	// Does the block fall like sand?
 	public boolean unstable;
 	
-	public static final PropertyEnum STONETYPE = PropertyEnum.create("type", EnumRockType.class);
+	public static PropertyEnum STONETYPE = PropertyEnum.create("type", EnumRockType.class);
     
 
 	protected BlockRock(Material materialIn) {

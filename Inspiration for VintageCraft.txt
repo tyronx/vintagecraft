@@ -114,7 +114,6 @@ List of normal World Biomes:
    - 
    - Temperate Rainforest   (Rare: http://en.wikipedia.org/wiki/Rainforest#mediaviewer/File:Temperate_rainforest_map.svg)
    - Tropical Rainforest
-   - 
 
 
 - Rivers

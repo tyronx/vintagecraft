@@ -13,12 +13,13 @@ import at.tyron.vintagecraft.World.Climate;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Recipes;
+import at.tyron.vintagecraft.WorldGen.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.WorldTypeVC;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
 import at.tyron.vintagecraft.WorldGen.MapGenFlora;
 import at.tyron.vintagecraft.client.ClientProxy;
-import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
+//import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
 import net.minecraft.block.BlockDoublePlant;
@@ -112,11 +113,13 @@ public class VintageCraft {
     public void init(FMLInitializationEvent event) throws Exception {
     	BlocksVC.init();
     	ItemsVC.init();
+    	DynTreeGen.initGenerators();
     	
     	packetPipeline.initalise();
     	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
+    	
 		
     	
     	proxy.registerRenderInformation();
@@ -127,8 +130,6 @@ public class VintageCraft {
 		System.out.println("vcraft has init.");
 		
        
-        // Register the Chunk Load/Save Handler
-     	MinecraftForge.EVENT_BUS.register(VCraftWorld.instance);
      	
      	
      	

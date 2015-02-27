@@ -45,11 +45,11 @@ public enum EnumCrustLayer {
 	}
 	
 	
-	public IBlockState getFixedBlock(EnumRockType rocktype, int x, int y, int z, int depth) {
-		switch (this) {
-			case TOPSOIL: return VCraftWorld.getTopLayerAtPos(x, y, z, rocktype); 
-			case SUBSOIL: return VCraftWorld.getSubLayerAtPos(x, y, z, rocktype);
-			case REGOLITH: return rocktype.getRockVariantForBlock(BlocksVC.regolith);
+	public IBlockState getFixedBlock(EnumRockType rocktype, int x, int y, int z, int depth, int steepness) {
+		switch (this) { 
+			case TOPSOIL: return VCraftWorld.instance.getTopLayerAtPos(x, y, z, rocktype, steepness); 
+			case SUBSOIL: return VCraftWorld.instance.getSubLayerAtPos(x, y, z, rocktype, steepness);
+			case REGOLITH: if (steepness < 1) return rocktype.getRockVariantForBlock(BlocksVC.regolith);
 			default: return null;
 		}
 	}

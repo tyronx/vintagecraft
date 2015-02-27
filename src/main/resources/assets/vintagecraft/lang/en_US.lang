@@ -72,14 +72,14 @@ item.copper_axe.name=Copper Axe
 item.copper_pickaxe.name=Copper Pickaxe
 item.copper_shovel.name=Copper Shovel
 item.copper_sword.name=Copper Sword
-item.copper_hoe.name=Copper How
+item.copper_hoe.name=Copper Hoe
 item.copper_saw.name=Copper Saw
 
 item.stone_axe.name=Stone Axe
 item.stone_pickaxe.name=Stone Pickaxe
 item.stone_shovel.name=Stone Shovel
 item.stone_sword.name=Stone Sword
-item.stone_hoe.name=Stone How
+item.stone_hoe.name=Stone Hoe
 item.stone_saw.name=Stone Saw
 
 tile.planks.name=Planks
@@ -89,3 +89,5 @@ medium.name=Medium Fertility
 high.name=High Fertility
 
 verysparsegrass.name=Very Sparse Grass
+
+tile.cobblestone.name=Cobblestone
