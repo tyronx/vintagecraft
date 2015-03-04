@@ -44,6 +44,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 	public PropertyBlockClass FLOWERTYPE;
 	
+	public int multistateAvailableTypes() {
+		return 16;
+	}
 	
 	public BlockFlowerVC() {
 		super(Material.plants);

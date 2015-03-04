@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
@@ -16,7 +17,10 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRawClay extends BlockVC implements ISoil {
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
@@ -44,6 +48,13 @@ public class BlockRawClay extends BlockVC implements ISoil {
 	    return 1 + random.nextInt(3);
 	}
 	
+	
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
+		return VCraftWorld.instance.getGrassColorAtPos(pos, 12);
+    }
+
 	
     
 	@Override

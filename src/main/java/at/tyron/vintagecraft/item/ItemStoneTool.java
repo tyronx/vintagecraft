@@ -10,11 +10,21 @@ public class ItemStoneTool extends ItemToolVC {
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {
-			case AXE: if (material == Material.wood) return 3f; break;
+			case AXE: 
+				if (material == Material.wood) return 3f; 
+				break;
 			//case CHISEL:
-			case PICKAXE: if (material == Material.rock) return 3f; if (material == Material.ground) return 2f;  break;
-			case SHOVEL: if (material == Material.grass || material == Material.ground) return 3f;  break;
-			case SWORD:  break;
+			case PICKAXE: 
+				if (material == Material.rock) return 2f; 
+				if (material == Material.ground) return 1f;  
+				if (material == Material.iron) return 0.6f;
+				break;
+			case SHOVEL: 
+				if (material == Material.grass || material == Material.ground) return 3f;  
+				break;
+			case SWORD:
+				if (material == Material.leaves) return 2f;
+				break;
 		
 			default: break;
 			

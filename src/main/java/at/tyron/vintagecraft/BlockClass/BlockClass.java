@@ -32,7 +32,7 @@ public abstract class BlockClass {
 	
 
 	String name;
-	Class<? extends BlockVC> blockclass;
+	Class<? extends Block> blockclass;
 	Class<? extends ItemBlock> itemclass;
 	float hardness;
 	SoundType stepsound;
@@ -40,7 +40,7 @@ public abstract class BlockClass {
 	int harvestlevel;
 	
 	abstract String getBlockClassName();
-	abstract Class<? extends BlockVC> getBlockClass();
+	abstract Class<? extends Block> getBlockClass();
 	abstract Class<? extends ItemBlock> getItemClass();
 	abstract float getHardness();
 	abstract SoundType getStepSound();
@@ -51,7 +51,7 @@ public abstract class BlockClass {
 
 	
 	
-	public BlockVC[] initFromEnum(Class<? extends Enum> enumclass) {
+	public Block[] initFromEnum(Class<? extends Enum> enumclass) {
 		for (Enum item : enumclass.getEnumConstants()) {
 			values.put((IEnumState) item, new BlockClassEntry((IEnumState)item));
 		}
@@ -88,31 +88,35 @@ public abstract class BlockClass {
 		return null;
 	}
 	
-	protected BlockVC[] initBlocks(String name, Class<? extends BlockVC> blockclass, Class<? extends ItemBlock> itemclass, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
+	protected Block[] initBlocks(String name, Class<? extends Block> blockclass, Class<? extends ItemBlock> itemclass, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
 		System.out.println("init " + (values().length) + " of type " + name + " (block = " + blockclass + ")");
 		
+		// I hate Java not being able to allow method overriding of static methods :/
+		int typesperblock = 1;
+		try {
+			typesperblock = (Integer)invokeMethod(blockclass, blockclass.newInstance(), "multistateAvailableTypes", new Object[0]);
+		} catch (Exception e) { System.out.println("Unable to get multistateAvailableTypes ("+e.getMessage()+") for "+name+"! Will use 1 (= waste of blockids)"); } 
 		
-		int typesperblock = (Integer)invokeMethod(blockclass, null, "multistateAvailableTypes", new Object[0]);
 		BlockClassEntry[][] chunked = split(values(), typesperblock);
-		ArrayList<BlockVC> blocks = new ArrayList<BlockVC>();
+		ArrayList<Block> blocks = new ArrayList<Block>();
 		
 		for (BlockClassEntry[] blockclassentrychunk : chunked) {
 			System.out.println("register chunk piece of size " + blockclassentrychunk.length);
-			BlockVC block;
+			Block block;
 			try {
 				block = blockclass.newInstance();
 				blocks.add(block);
 				
 				int meta = 0;
 				for (BlockClassEntry blockclassentry : blockclassentrychunk) {
-					System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta + "     (key = " + blockclassentry.key + ")");
+					System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta + "     (key = " + blockclassentry.key.getStateName() + ")");
 					blockclassentry.init(block, meta++);
 				}
 				
 				//blockclass.getDeclaredMethod("init", new Class[]{BlockClassEntry[].class, PropertyInteger.class}).invoke(block, new Object[]{blockstates, createProperty(name, blockstates.length)});
 				invokeMethod(blockclass, block, "init", new Object[]{blockclassentrychunk, createProperty(getTypeName(), blockclassentrychunk)});
 				
-				block.registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, blockclassentrychunk, name);
+				((IMultiblock)block).registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, blockclassentrychunk, name);
 				
 				block.setHardness(hardness).setStepSound(stepsound);
 				
@@ -126,7 +130,7 @@ public abstract class BlockClass {
 			}
 		}
 		
-		return blocks.toArray(new BlockVC[0]);
+		return blocks.toArray(new Block[0]);
 	}
 	
 	
@@ -170,7 +174,7 @@ public abstract class BlockClass {
 		}
 		
 		for (BlockClassEntry enumitem: values()) {
-			System.out.println(enumitem.metadata+" == "+meta+" && "+enumitem.block+" == "+block);
+			System.out.println(enumitem.metadata+" == "+meta+" && "+enumitem.block.getUnlocalizedName()+" == "+block.getUnlocalizedName());
 		}
 		
 		throw new RuntimeException("Blockstate not found for block " + block + " / meta " + meta);
@@ -228,12 +232,30 @@ public abstract class BlockClass {
 	public IBlockState getBlockStateFor(IEnumState enumitem) {
 		return values.get(enumitem).getBlockState();
 	}
+	
+	public IBlockState getBlockStateFor(String statename) {
+		for (IEnumState state : values.keySet()) {
+			if (state.getStateName().equals(statename)) return values.get(state).getBlockState();
+		}
+		return null;
+	}
 
 	public ItemStack getItemStackFor(IEnumState enumitem) {
 		return values.get(enumitem).getItemStack();
 	}
 
-	
+	public ItemStack getItemStackFor(IBlockState state) {
+		for (BlockClassEntry enumitem: values()) {
+			if (enumitem.block == state.getBlock() && enumitem == state.getValue(((IMultiblock)enumitem.block).getTypeProperty())) return enumitem.getItemStack();
+		}
+		
+		for (BlockClassEntry enumitem: values()) {
+			System.out.println((enumitem.block == state.getBlock()) + " && " + enumitem + " == " + state.getValue(((IMultiblock)enumitem.block).getTypeProperty()));
+		}
+		
+		throw new RuntimeException("Meta not found for state " + state + "\r\n num values: " + values().length);
+	}
+		
    
 
 	

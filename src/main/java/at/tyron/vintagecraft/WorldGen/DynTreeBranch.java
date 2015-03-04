@@ -27,17 +27,15 @@ public class DynTreeBranch {
 	}
 	
 	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag) {
-		this.branchVerticalAngle = verticalAngle;
-		this.branchHorizontalAngle = horizontalAngle;
-		this.branchSpacing = spacing;
-		this.branchStart = branchStart;
-		
-		this.widthloss = widthloss;
-		this.gravityDrag = gravitydrag;
+		this(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, 0.5f);
 	}
 
 	
 	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier) {
+		this(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier, 1f);
+	}
+	
+	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier, float widthBranchLossBase) {
 		this.branchVerticalAngle = verticalAngle;
 		this.branchHorizontalAngle = horizontalAngle;
 		this.branchSpacing = spacing;
@@ -47,5 +45,6 @@ public class DynTreeBranch {
 		this.gravityDrag = gravitydrag;
 		
 		this.branchWidthMultiplier = branchWidthMultiplier;
+		this.widthBranchLossBase = widthBranchLossBase;
 	}
 }

@@ -16,6 +16,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
@@ -46,6 +47,12 @@ public class BlockPeat extends BlockVC implements ISoil {
     }
    
 
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
+		return VCraftWorld.instance.getGrassColorAtPos(pos, 12);
+    }
     
 
     

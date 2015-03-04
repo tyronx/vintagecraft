@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/scotspine",
+        "top": "vintagecraft:blocks/planks/scotspine",
+        "side": "vintagecraft:blocks/planks/scotspine"
+    }
+}

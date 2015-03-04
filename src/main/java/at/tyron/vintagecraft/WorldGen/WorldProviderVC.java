@@ -24,11 +24,10 @@ public class WorldProviderVC extends WorldProvider {
 		//TFC_Climate.worldPair.put(worldObj, new WorldCacheManager(worldObj));
 		//TFC_Core.addCDM(worldObj);
 		
-		VCraftWorld.instance = new VCraftWorld(worldObj.getSeed());
-        // Register the Chunk Load/Save Handler
-     	MinecraftForge.EVENT_BUS.register(VCraftWorld.instance);
-
 		super.registerWorldChunkManager();
+		
+		VCraftWorld.instance = new VCraftWorld(worldObj.getSeed(), this.worldChunkMgr);
+     	MinecraftForge.EVENT_BUS.register(VCraftWorld.instance);
 	}
 	
 	
@@ -45,7 +44,8 @@ public class WorldProviderVC extends WorldProvider {
 	
 	@Override
 	public boolean canCoordinateBeSpawn(int x, int z) {
-		BlockPos pos = worldObj.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
+		return worldObj.getHorizon(new BlockPos(x, 0, z)).getY() > VCraftWorld.instance.seaLevel;
+		//BlockPos pos = worldObj.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
 		
 		//if(y < Global.SEALEVEL || y > Global.SEALEVEL + 25) return false;
 		
@@ -53,7 +53,7 @@ public class WorldProviderVC extends WorldProvider {
 		return (TFC_Core.isSand(b) || TFC_Core.isGrass(b));*/
 		
 		//worldObj.getBlockState(pos).getBlock() == Blocks.grass;
-		return true;
+		//return true;
 	}
 	
 	

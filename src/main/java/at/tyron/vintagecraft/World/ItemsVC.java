@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.interfaces.ItemToolVC;
@@ -151,7 +152,7 @@ public class ItemsVC {
 		ItemIngot.setMetal(copperIngot, EnumMetal.COPPER);
 		
 		ItemStack nativeCopperOre = new ItemStack(ore);
-		ItemOreVC.setOreType(nativeCopperOre, EnumMaterialDeposit.NATIVECOPPER);
+		ItemOreVC.setOreType(nativeCopperOre, EnumOreType.NATIVECOPPER);
 		
 		GameRegistry.addSmelting(nativeCopperOre, copperIngot, 0);
 	}

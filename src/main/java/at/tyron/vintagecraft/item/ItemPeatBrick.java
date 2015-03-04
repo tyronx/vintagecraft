@@ -23,7 +23,7 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 0.7f;
+		return 0.6f;
 	}
 	
 	
@@ -31,7 +31,7 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		tooltip.add("Heat produced when burned");
 		for (EnumFurnace furnace : EnumFurnace.values()) {
-			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " °C");	
+			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
 		}
 	}
 	

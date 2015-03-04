@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
@@ -33,7 +34,7 @@ public enum EnumFertility implements IEnumState, IStringSerializable {
 	}
 	
 	@Override
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return meta;
 	}
 
@@ -71,7 +72,7 @@ public enum EnumFertility implements IEnumState, IStringSerializable {
 	
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -9,6 +9,10 @@
 		"treetype=spruce": { "model": "vintagecraft:leavesbranchy/spruce" },
 		"treetype=acacia": { "model": "vintagecraft:leavesbranchy/acacia" },
 		"treetype=kapok": { "model": "vintagecraft:leavesbranchy/kapok" },
-		"treetype=coconutpalm": { "model": "vintagecraft:leavesbranchy/coconutpalm" }
+		"treetype=coconutpalm": { "model": "vintagecraft:leavesbranchy/coconutpalm" },
+		"treetype=purpleheartwood": { "model": "vintagecraft:leavesbranchy/purpleheartwood" },
+		"treetype=crimsonkingmaple": { "model": "vintagecraft:leavesbranchy/crimsonkingmaple" },
+		"treetype=elephanttree": { "model": "vintagecraft:leavesbranchy/elephanttree" },
+		"treetype=myrtlebeech": { "model": "vintagecraft:leavesbranchy/myrtlebeech" }
 	}
 }

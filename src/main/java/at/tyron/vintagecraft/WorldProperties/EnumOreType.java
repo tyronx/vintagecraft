@@ -3,24 +3,27 @@ package at.tyron.vintagecraft.WorldProperties;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumOreType implements IStringSerializable {
-	NATIVECOPPER ("NativeCopper"),
-	NATIVEGOLD ("NativeGold"),
-	LIMONITE ("Limonite"),
-	COAL ("Coal"),
-	LIGNITE ("Lignite"),
+	NATIVECOPPER (4, "NativeCopper"),
+	NATIVEGOLD (6, "NativeGold"),
+	LIMONITE (5, "Limonite"),
+	BITUMINOUSCOAL (3, "BituminousCoal"),
+	LIGNITE (2, "Lignite"),
+	REDSTONE (7, "Redstone"),
+	CASSITERITE (8, "Cassiterite")
 	;
 	
-
+	public int meta;
 	String name;
 	
-	private EnumOreType(String name) {
+	private EnumOreType(int meta, String name) {
+		this.meta = meta;
 		this.name = name;
 	}
 	
 
 	@Override
 	public String getName() {
-		return name;
+		return name.toLowerCase();
 	}
 	
 }

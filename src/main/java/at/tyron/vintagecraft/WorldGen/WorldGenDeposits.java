@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraftConfig;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -71,36 +72,23 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int depositDepth = ((depositLayer[x+z*16] >> 16) & 0xFF) + (((depositLayer[x+z*16] >> 8) & 0xFF) - 7);
 
 				
-				int horizon = VintageCraftConfig.seaLevel();
+				int horizon = VCraftWorld.instance.seaLevel;
 				if (deposit.relativeDepth) {
 					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
+					if (horizon > deposit.maxheightOnRelDepth) continue;
 				}
 				
-				pos = new BlockPos(xCoord + x, Math.max(1, horizon - depositDepth), zCoord + z);
-				
-				
+				pos = new BlockPos(xCoord + x, depositDepth = Math.max(1, Math.max(horizon - deposit.maxDepth, horizon - depositDepth)), zCoord + z);
 				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos))) {
-					//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("made copper @ " + pos);
-					
-					world.setBlockState(pos, deposit.getBlockStateForDepth(depositDepth), 2);
-					
-					/*
-					
-					if (deposit.getBlockStateForDepth(depositDepth) instanceof BlockOreVC) {
-						TEOre tileentity = (TEOre)world.getTileEntity(pos);
-						if(tileentity != null) {
-							tileentity.setOreType(deposit).setRockType((EnumRockType)parentmaterial.getValue(BlockRock.STONETYPE));
-						} else {
-							System.out.println("tileentity was not created?");
-						}
-					}*/
+					int hgt = deposit.height;
+					//if(deposit == EnumMaterialDeposit.CLAY) System.out.println(horizon - depositDepth);
+					while (hgt-- > 0) {
+						world.setBlockState(pos, deposit.getBlockStateForDepth(horizon - depositDepth, parentmaterial), 2);
+						pos = pos.down();
+						depositDepth--;
+					}
 				}
-
-				
-				//if (horizon != 0)
-				//	if (x == 8 && z == 8) System.out.println(deposit.name() + " at " + pos + "   horizon=" + horizon + "   depth=" + depositDepth);
-				
 			}
 		}
 		

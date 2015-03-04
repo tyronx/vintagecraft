@@ -23,22 +23,24 @@ import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 import at.tyron.vintagecraft.interfaces.ISoil;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
-	//						                color  weight hgt vari mind maxd reldepth
-	NODEPOSIT (-1,                  false, 0,  5000,   0,  0, 0, false),
+	//     int id, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, boolean relativeDepth
+	NODEPOSIT (-1,                  false, 0,  5000,   0,  0, 0),
 	
-	CLAY (0,           false, 20,   35,   3,  1,    2, true),
-	PEAT (1,            false, 40,   35,   2,  0,    1, true),
+	CLAY (0,           false, 30,   5,   2,  0,    1, true, 155),
+	PEAT (1,            false, 40,   10,   2,  0,    1, true, 155),
 	
 	
-	LIGNITE (2,         true,   60,   40,   2,  10,  50, true),
-	BITUMINOUSCOAL (3,  true,   80,   20,   2,  8, 103, false),
+	LIGNITE (2,         true,   60,   33,   1,  10,  50, true, 255),
+	BITUMINOUSCOAL (3,  true,   80,   25,   1,  8, 103),
 	
-	NATIVECOPPER (4,    true,   90,   60,   3,  4,   40, true),
+	NATIVECOPPER (4,    true,   90,   18,   1,  4,   40, true, 255),
 	
-	LIMONITE (5,       true,  100,   30,   2,  15, 103, false),
-	NATIVEGOLD (6,     true,  120,   10,   1,  50, 103, false),
+	LIMONITE (5,       true,  100,   23,   1,  15, 103),
+	NATIVEGOLD (6,     true,  120,   10,   1,  50, 103),
 
-	REDSTONE (7,       true,  140,   20,   4,  20, 130, false)
+	REDSTONE (7,       true,  140,   20,   2,  30, 130),
+	
+	CASSITERITE (8,	   true,  160, 3, 1, 0, 35, true, 220) 
 	;
 
 	
@@ -47,7 +49,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	//Block block;
 	public boolean hasOre;
 	int color;
-	public int averageHeight;
+	public int height;
 	public int minDepth;
 	public int maxDepth;
 	public EnumMetal smelted;
@@ -55,19 +57,25 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	//public final BiomeVC[] biomes;
 	public int weight;
 	public boolean relativeDepth;
+	public int maxheightOnRelDepth; // 0..255    only relevant on relativeDepth = true 
 	
-	private EnumMaterialDeposit(int id, /*Block block,*/ boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, boolean relativeDepth) {
+	private EnumMaterialDeposit(int id, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth) {
+		this(id, hasOre, color, weight, averageHeight, minDepth, maxDepth, false, 255);
+	}
+	
+	private EnumMaterialDeposit(int id, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, boolean relativeDepth, int maxheightOnRelDepth) {
 		this.id = id;
 		
 		this.weight = weight;
 		//this.block = block;
 		this.hasOre = hasOre;
-		this.averageHeight = averageHeight;
+		this.height = averageHeight;
 		this.minDepth = minDepth;
 		this.maxDepth = maxDepth;
 		//this.biomes = biomes;
 		this.color = color;
 		this.relativeDepth = relativeDepth;
+		this.maxheightOnRelDepth = maxheightOnRelDepth;
 	}
 	
 	
@@ -96,20 +104,23 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		IBlockState state;
 		
 		switch (this) {
-			case PEAT: state = BlocksVC.peat.getDefaultState();
-			case CLAY: state = BlocksVC.rawclay.getDefaultState();
+			case PEAT: state = BlocksVC.peat.getDefaultState(); break;
+			case CLAY: state = BlocksVC.rawclay.getDefaultState(); break;
 			default:
 				EnumRockType rocktype = (EnumRockType)parentmaterial.getValue(BlockRock.STONETYPE);
-				state = BlocksVC.rawore.getBlockStateFor();
+				state = BlocksVC.rawore.getBlockStateFor(this.getName() + "-" + rocktype.getName());
+				break;
 		}
 		
 
+		if (state == null) System.out.println("block state for " + this + " is null!");
+		
 		
 		if (depth > 1 && state.getBlock() instanceof ISoil) {
 			return state.withProperty(((ISoil)state.getBlock()).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
 		}
 		
-		if (state.getBlock() == null) System.out.println("block for state " + this + " is null!");
+		
 		
 		return state;
 	}

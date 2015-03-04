@@ -36,4 +36,9 @@ public class ItemSand extends ItemRock implements ISmeltable {
 		return 0;
 	}
 
+	@Override
+	public int getMetadata(int damage) {
+		return damage;
+	}
+
 }

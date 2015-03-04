@@ -71,7 +71,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
+    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
     	
     	//registerModelLocation(Item.getItemFromBlock(BlocksVC.farmland), "farmland", null);
     	
@@ -180,7 +180,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	@Override
 	public void registerItemBlockTexture(Block block, String blockclassname) {
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("vintagecraft:" + blockclassname, "inventory"));
-	}	
+	}
+	
+	@Override
+	public void registerItemBlockTextureVanilla(Block block, String blockclassname) {
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(blockclassname, "inventory"));
+	}
 	
 	public void addVariantName(Item item, String... names) {
 		ModelBakery.addVariantName(item, names);

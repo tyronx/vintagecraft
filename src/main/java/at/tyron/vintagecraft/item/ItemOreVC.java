@@ -6,6 +6,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.interfaces.IFuel;
@@ -35,12 +36,10 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	ItemStack stack;
-    	for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-    		if (deposit.hasOre) {
-	    		stack = new ItemStack(ItemsVC.ore);
-	    		setOreType(stack, deposit);
-	    		subItems.add(stack);
-    		}
+    	for (EnumOreType oretype : EnumOreType.values()) {
+    		stack = new ItemStack(ItemsVC.ore);
+    		setOreType(stack, oretype);
+    		subItems.add(stack);
     	}
     }
 
@@ -61,13 +60,13 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		return null;
 	}
 	
-	public static void setOreType(ItemStack itemstack, EnumMaterialDeposit oretype) {
+	public static void setOreType(ItemStack itemstack, EnumOreType oretype) {
 		NBTTagCompound nbt = itemstack.getTagCompound(); 
 		if (nbt == null) {
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		
-		nbt.setInteger("oretype", oretype.id);
+		nbt.setInteger("oretype", oretype.meta);
 		itemstack.setTagCompound(nbt);
 	}
 
@@ -147,13 +146,13 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		if (getBurningHeat(itemstack) > 0) {
 			tooltip.add("Heat produced when burned");
 			for (EnumFurnace furnace : EnumFurnace.values()) {
-				tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " °C");	
+				tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
 			}
 			
 		}
 		
 		if (getMeltingPoint(itemstack) > 0) {
-			tooltip.add("Melting Point: " + getMeltingPoint(itemstack) + " °C");
+			tooltip.add("Melting Point: " + getMeltingPoint(itemstack) + " deg.");
 		}
 	}
 

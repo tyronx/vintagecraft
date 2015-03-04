@@ -49,7 +49,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLeavesVC extends BlockVC implements IMultiblock {
-	public static int multistateAvailableTypes() {
+	public int multistateAvailableTypes() {
 		return 8;
 	}
 	

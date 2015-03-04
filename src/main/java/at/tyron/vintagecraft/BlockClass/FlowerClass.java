@@ -19,7 +19,7 @@ import at.tyron.vintagecraft.item.ItemFlowerVC;
 
 public class FlowerClass extends BlockClass {
 	String getBlockClassName() { return name; }
-	Class<? extends BlockVC> getBlockClass() { return blockclass; }
+	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
 	float getHardness() { return hardness; }
 	SoundType getStepSound() { return Block.soundTypeGrass; }

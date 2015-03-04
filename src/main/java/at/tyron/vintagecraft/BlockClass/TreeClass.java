@@ -27,7 +27,7 @@ public class TreeClass extends BlockClass {
 
 	
 	String getBlockClassName() { return name; }
-	Class<? extends BlockVC> getBlockClass() { return blockclass; }
+	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
 	float getHardness() { return hardness; }
 	SoundType getStepSound() { return stepsound; }
@@ -35,7 +35,7 @@ public class TreeClass extends BlockClass {
 	int getHarvestLevel() { return harvestlevel; }
 	String getTypeName() { return "treetype"; }
 	
-	public TreeClass(String name, Class<? extends BlockVC> blockclass, Class<? extends ItemBlock> itemclass, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
+	public TreeClass(String name, Class<? extends Block> blockclass, Class<? extends ItemBlock> itemclass, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
 		this.name = name;
 		this.blockclass = blockclass;
 		this.itemclass = itemclass;

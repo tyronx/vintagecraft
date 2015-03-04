@@ -73,7 +73,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 	
 
 	@Override
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return meta;
 	}
 
@@ -182,7 +182,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IEnumState {
 	}
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		
 	}
 

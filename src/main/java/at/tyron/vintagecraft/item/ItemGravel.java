@@ -10,6 +10,12 @@ public class ItemGravel extends ItemSand {
 	public ItemGravel(Block block) {
 		super(block);
 	}
+	
+	@Override
+	public int getMetadata(int damage) {
+		return damage;
+	}
+
 
 	@Override
 	public int getMeltingPoint(ItemStack raw) {

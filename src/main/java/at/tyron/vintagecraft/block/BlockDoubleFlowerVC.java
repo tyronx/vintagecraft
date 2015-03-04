@@ -46,7 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
-	public static int multistateAvailableTypes() { return 8; }	
+	public int multistateAvailableTypes() { return 8; }	
 	public PropertyBlockClass FLOWERTYPE;
 	public PropertyEnum HALF = PropertyEnum.create("half", EnumBlockHalf.class);
     

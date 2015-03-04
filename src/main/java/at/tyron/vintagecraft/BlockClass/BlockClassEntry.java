@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.BlockClass;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
@@ -12,7 +13,7 @@ import at.tyron.vintagecraft.interfaces.IMultiblock;
 public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comparable<E> {
 	IEnumState key;
 	
-	public BlockVC block;
+	public Block block;
 	public int metadata;
 	
 	
@@ -29,7 +30,7 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 		return key.getStateName();
 	}
 	
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return metadata;
 	}
 	
@@ -80,7 +81,7 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 	}
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		this.block = block;
 		this.metadata = meta;
 	}

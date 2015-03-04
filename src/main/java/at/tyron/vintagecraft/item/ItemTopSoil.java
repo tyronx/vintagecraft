@@ -43,4 +43,11 @@ public class ItemTopSoil extends ItemBlock implements ISubtypeFromStackPovider {
 		return fertility.shortName() + "_" + organiclayer.getName();
 	}
 	
+	
+	@Override
+	public int getMetadata(int damage) {
+		return damage;
+	}
+
+	
 }

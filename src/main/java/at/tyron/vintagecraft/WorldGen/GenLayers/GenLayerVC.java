@@ -33,6 +33,13 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long baseSeed;
 	
 	
+	public static GenLayerVC genNoiseFieldModifier(long seed) {	
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.85f, 150, 50);
+		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
+		
+		return noise;
+	}
+	
 	public static GenLayerVC genHeightmap(long seed) {
 		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 6, 0.6f, 67, 80);
 		GenLayerVC.drawImageGrayScale(512, noise, "Heightmap 0 Noise");
@@ -68,7 +75,7 @@ public abstract class GenLayerVC extends GenLayer {
 		return heightmap;*/
 	}
 	
-	// Generates Wind, Temperature and Rainfall map
+	// Generates Fertility, Temperature and Rainfall map
 	// R = Temperature    temp = R-Value / 4.25 - 30 ( = Temp range from -30 to +30)      | inverse R-Value = (temp + 30) * 4.25
 	// G = Fertility      = generated from temp * rain                         (+ water nearby?)
 	// B = Rain           between 0 - 255
@@ -99,10 +106,10 @@ public abstract class GenLayerVC extends GenLayer {
 		climate = new GenLayerBlurAll(2L, 1, 3, climate);
 		GenLayerVC.drawImageRGB(512, climate, "Climate 7 Blur");
 
-		climate = GenLayerZoom.magnify(1000L, climate, 4);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 8 4xZoom");
+		climate = GenLayerZoom.magnify(1000L, climate, 3);
+		GenLayerVC.drawImageRGB(512, climate, "Climate 8 3xZoom");
 
-		climate = new GenLayerBlurAll(2L, 1, 3, climate);
+		climate = new GenLayerBlurAll(2L, 1, 2, climate);
 		GenLayerVC.drawImageRGB(512, climate, "Climate 9 Blur");
 
 		
@@ -127,8 +134,8 @@ public abstract class GenLayerVC extends GenLayer {
 		deposits = new GenLayerBlurSelective(2L, 1, 5, false, 8, deposits);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 Blur Heightmap (green)");
 
-		deposits = GenLayerZoom.magnify(4L, deposits, 2);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 2x Magnify");
+		deposits = GenLayerZoom.magnify(4L, deposits, 1);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 1x Magnify");
 		
 		deposits.initWorldGenSeed(seed);
 		
@@ -138,7 +145,7 @@ public abstract class GenLayerVC extends GenLayer {
 	public static GenLayerVC genForest(long seed) {
 		//System.out.println("gen forest " + seed);
 		
-		GenLayerVC noise = new GenLayerNoise(1L, 54);
+		GenLayerVC noise = new GenLayerNoise(1L, 46);
 		GenLayerVC.drawImageGrayScale(512, noise, "Forest 0 Noise");
 		
 	//	noise.initWorldGenSeed(seed);
@@ -232,7 +239,7 @@ public abstract class GenLayerVC extends GenLayer {
 		
 		
 		GenLayerVC erosion = GenLayerZoom.magnify(seed, noise, 6);
-		drawImageBiome(512, erosion, "Erosion 2 2x magnify");
+		drawImageBiome(512, erosion, "Erosion 2 6x magnify");
 		
 		erosion.initWorldGenSeed(seed);
 		

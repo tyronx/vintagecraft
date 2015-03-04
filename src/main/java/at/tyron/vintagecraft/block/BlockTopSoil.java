@@ -34,6 +34,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -148,6 +149,8 @@ public class BlockTopSoil extends BlockVC implements ISoil {
 		} else {
 			System.out.println("tileentity was not created?");
 		}
+		
+		event.setResult(Result.ALLOW);
 		
 		
 		super.hoeUsed(event);

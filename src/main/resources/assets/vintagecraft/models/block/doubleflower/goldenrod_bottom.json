@@ -1,6 +1,6 @@
 {
 		"parent": "block/tallgrass",
 		"textures": {
-			"cross": "vintagecraft:blocks/doubleplant/goldenrod_bottom"
+			"cross": "vintagecraft:blocks/doubleflower/goldenrod_bottom"
 		}
 	}

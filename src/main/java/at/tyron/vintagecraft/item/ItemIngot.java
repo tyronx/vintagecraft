@@ -52,7 +52,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add("Melting Point: " + getMetal(itemstack).meltingpoint + " °C");
+		tooltip.add("Melting Point: " + getMetal(itemstack).meltingpoint + " deg.");
 		tooltip.add("Hardness: " + getMetal(itemstack).hardness);
 	}
 	

@@ -18,11 +18,22 @@ public class ItemCopperTool extends ItemToolVC {
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {
-			case AXE: if (material == Material.wood) return 4f; break;
+			case AXE: 
+				if (material == Material.wood) return 4f; 
+				break;
 			//case CHISEL:
-			case PICKAXE: if (material == Material.rock) return 4f; if (material == Material.ground) return 2f;  break;
-			case SHOVEL: if (material == Material.grass || material == Material.ground) return 4f;  break;
-			case SWORD:  break;
+			case PICKAXE: 
+				if (material == Material.rock) return 2.5f; 
+				if (material == Material.ground) return 1.5f;
+				if (material == Material.iron) return 0.8f;
+
+				break;
+			case SHOVEL: 
+				if (material == Material.grass || material == Material.ground) return 4f;  
+				break;
+			case SWORD:
+				if (material == Material.leaves) return 2.5f;
+				break;
 		
 			default: break;
 			
@@ -39,7 +50,7 @@ public class ItemCopperTool extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		return 200;
+		return 250;
 	}
 
 	@Override

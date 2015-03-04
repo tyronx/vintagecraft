@@ -31,5 +31,13 @@ public class ItemLeaves extends ItemLogVC {
 	}
 	
 	
+	@Override
+	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+		tooltip.add("Heat produced when burned");
+		for (EnumFurnace furnace : EnumFurnace.values()) {
+			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
+		}
+	}
+	
 	
 }

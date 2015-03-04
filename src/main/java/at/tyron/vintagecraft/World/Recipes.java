@@ -6,6 +6,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockLogVC;
@@ -15,6 +16,7 @@ import at.tyron.vintagecraft.item.ItemIngot;
 import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemPlanksVC;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -78,6 +80,10 @@ public class Recipes {
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_slab, 1), new Object[] { "   ", "   ", "WWW", 'W', planks.block});
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.trapdoor, 1), new Object[] { "   ", "WWW", "WWW", 'W', planks.block});	
+			
+
+			GameRegistry.addShapedRecipe(BlocksVC.fence.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'W', planksstack, 'S', Items.stick});
+			GameRegistry.addShapedRecipe(BlocksVC.fencegate.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'S', planksstack, 'W', Items.stick});
 		}
 		
 		
@@ -86,11 +92,11 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Items.birch_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.BIRCH)});
 		GameRegistry.addShapedRecipe(new ItemStack(Items.acacia_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA)});
 		
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.oak_fence, 1), new Object[] { "   ", "WSW", "WSW", 'W', BlocksVC.planks.getItemStackFor(EnumTree.OAK), 'S', Items.stick});
+		/*GameRegistry.addShapedRecipe(new ItemStack(Blocks.oak_fence, 1), new Object[] { "   ", "WSW", "WSW", 'W', BlocksVC.planks.getItemStackFor(EnumTree.OAK), 'S', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.spruce_fence, 1), new Object[] { "   ", "WSW", "WSW", 'W', BlocksVC.planks.getItemStackFor(EnumTree.SPRUCE), 'S', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.birch_fence, 1), new Object[] { "   ", "WSW", "WSW", 'W', BlocksVC.planks.getItemStackFor(EnumTree.BIRCH), 'S', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.acacia_fence, 1), new Object[] { "   ", "WSW", "WSW", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA), 'S', Items.stick});
-
+*/
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.oak_fence_gate, 1), new Object[] { "   ", "SWS", "SWS", 'W', BlocksVC.planks.getItemStackFor(EnumTree.OAK), 'S', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.spruce_fence_gate, 1), new Object[] { "   ", "SWS", "SWS", 'W', BlocksVC.planks.getItemStackFor(EnumTree.SPRUCE), 'S', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.birch_fence_gate, 1), new Object[] { "   ", "SWS", "SWS", 'W', BlocksVC.planks.getItemStackFor(EnumTree.BIRCH), 'S', Items.stick});
@@ -112,13 +118,15 @@ public class Recipes {
 		recipes.add(new RecipePlanks());
 
 		
+		RecipeSorter.register("vintagecraft:findings", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
+		recipes.add(new RecipeSlabs());
 		
 		
 		ItemStack lignite = new ItemStack(ItemsVC.ore);
-		ItemOreVC.setOreType(lignite, EnumMaterialDeposit.LIGNITE);
+		ItemOreVC.setOreType(lignite, EnumOreType.LIGNITE);
 		
 		ItemStack bituminouscoal = new ItemStack(ItemsVC.ore);
-		ItemOreVC.setOreType(lignite, EnumMaterialDeposit.BITUMINOUSCOAL);
+		ItemOreVC.setOreType(lignite, EnumOreType.BITUMINOUSCOAL);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', lignite, 'S', stick});
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});

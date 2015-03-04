@@ -8,6 +8,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	static float riverDepthMin = -0.5F;
 	public static float riverDepthMax = -0.3F;
+	int weight = 100;
 	
 	public static BiomeVC[] biomeList = new BiomeVC[256];
 	
@@ -42,8 +43,8 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	*/
 	
 	
-	public static final BiomeVC Submerged = new BiomeVC(0).setBiomeName("Submerged").setMinMaxHeight(-0.9F, 0.00001F).setBiomeColor(0x000000);
-	public static final BiomeVC Plains = new BiomeVC(1).setBiomeName("Flat").setBiomeColor(0x666666);
+	public static final BiomeVC Fjords = new BiomeVC(0).setBiomeName("Fjords").setMinMaxHeight(-0.9F, 0.00001F).setBiomeColor(0x000000).setWeight(5);
+	public static final BiomeVC Flat = new BiomeVC(1).setBiomeName("Flat").setBiomeColor(0x666666);
 	public static final BiomeVC Lake = new BiomeVC(2).setBiomeName("Lake").setMinMaxHeight(-0.5F, 0.001F).setBiomeColor(0x333333);
 	public static final BiomeVC HighHills = (new BiomeVC(3)).setBiomeName("High Hills").setMinMaxHeight(0.8F, 1.6F).setBiomeColor(0xaaaaaa);
 	public static final BiomeVC Mountains = (new BiomeVC(4)).setBiomeName("Mountains").setMinMaxHeight(0.8F, 1.6F).setBiomeColor(0xcccccc);
@@ -132,8 +133,7 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	/**
 	 * return the biome specified by biomeID, or 0 (ocean) if out of bounds
 	 */
-	public static BiomeVC getBiome(int id)
-	{
+	public static BiomeVC getBiome(int id) {
 		if(biomeList[id] == null)
 		{
 			System.out.println("Biome ID is null: " + id);
@@ -146,7 +146,7 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 		{
 			System.out.println("Biome ID is out of bounds: " + id + ", defaulting to 0 (Ocean)");
 			//return ocean;
-			return Submerged;
+			return Flat;
 		}
 	}
 
@@ -198,7 +198,12 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 
 	@Override
 	public int getWeight() {
-		return 100;
+		return weight;
+	}
+	
+	public BiomeVC setWeight(int weight) {
+		this.weight = weight;
+		return this;
 	}
 
 

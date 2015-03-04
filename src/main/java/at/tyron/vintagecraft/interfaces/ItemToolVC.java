@@ -98,7 +98,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	
 	@Override
 	public ItemStack getContainerItem(ItemStack stack) {
-		stack.setItemDamage(stack.getItemDamage()+1);
+		stack.setItemDamage(stack.getItemDamage()+2);
 		return stack;
 	}
 	

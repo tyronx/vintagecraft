@@ -20,6 +20,12 @@ public class ItemPlanksVC extends ItemLogVC implements ISubtypeFromStackPovider 
 	}
 	
 	@Override
+	public int getMetadata(int damage) {
+		return damage;
+	}
+
+	
+	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		if (getTreeType(stack) == null) {
 			return super.getUnlocalizedName() + ".unknown";

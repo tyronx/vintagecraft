@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.interfaces;
 
+import net.minecraft.block.Block;
 import at.tyron.vintagecraft.block.BlockVC;
 
 public class EnumStateImplementation implements IEnumState {
@@ -16,7 +17,7 @@ public class EnumStateImplementation implements IEnumState {
 	}
 		
 	@Override
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return metadata;
 	}
 
@@ -26,7 +27,7 @@ public class EnumStateImplementation implements IEnumState {
 	}
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		// TODO Auto-generated method stub
 		
 	}

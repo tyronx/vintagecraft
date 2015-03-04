@@ -18,7 +18,7 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 				// lumpyInt creates Bell curves with max. at 195.5, clipped to 0-255
 				// Results in a predominant average temperature of 16 degree and rather good rainfall
 				
-				if (nextInt(10) == 0) {
+				if (nextInt(15) == 0) {
 					temp = lumpyInt3(55);
 					rain = lumpyInt3(130);
 				} else if (nextInt(13) == 0) {

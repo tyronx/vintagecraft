@@ -207,6 +207,9 @@ public class VintageCraftCommands extends CommandBase {
 			if (args[1].equals("heightmap")) {	
 				GenLayerVC.genHeightmap(seed);
 			}
+			if (args[1].equals("noisemod")) {
+				GenLayerVC.genNoiseFieldModifier(seed);
+			}
 			
 			
 			GenLayerVC.shouldDraw = false;
@@ -226,14 +229,15 @@ public class VintageCraftCommands extends CommandBase {
 			
 			sender.addChatMessage(new ChatComponentText("Temperature " + temp + ", Rainfall " + rainfall + ", Fertility " + fertility + ", Forest " + forest));
 			
-			//EnumFlora flora = EnumFlora.getRandomFlowerForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
-			//System.out.println("chosen " + flora);
+			EnumFlora flora = EnumFlora.getRandomFlowerForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
+			System.out.println("chosen flower " + flora);
 			
-			EnumTree tree = EnumTree.getRandomTreeForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
-			System.out.println("chosen " + tree);
+			EnumTree tree = EnumTree.getRandomTreeForClimate(rainfall, temp, forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
+			System.out.println("chosen tree " + tree);
 			/*if (flora != null) {
 				sender.getEntityWorld().setBlockState(sender.getPosition(), flora.variants[0].getBlockState());
 			}*/
+			//System.out.println("tree size " + (0.66f - Math.max(0, (sender.getPosition().getY() * 1f / EnumTree.SCOTSPINE.maxy) - 0.5f)));   //sender.getEntityWorld().rand.nextFloat()/3 - 
 		}
 		
 		if (args[0].equals("reloadgrass")) {

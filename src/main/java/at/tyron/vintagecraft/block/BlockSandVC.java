@@ -89,7 +89,7 @@ public class BlockSandVC extends BlockRock implements ISoil {
 
 	@Override
 	public boolean canGrowGrass(World world, BlockPos pos) {
-		return true;
+		return false;
 	}
 
 	@Override

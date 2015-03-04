@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.WorldProperties;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
@@ -44,7 +45,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 	}
 
 	@Override
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return id;
 	}
 
@@ -87,7 +88,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 	
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		// TODO Auto-generated method stub
 		
 	}

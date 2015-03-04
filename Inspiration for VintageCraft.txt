@@ -71,6 +71,7 @@
 ========= Cave Stuff =====
 
 - Mineshafts like these http://imgur.com/a/idI07
+- Some Mineshafts have Entrances
 
 
 ========= Landforms =============
@@ -199,6 +200,9 @@ List of normal World Biomes:
   http://www.planetminecraft.com/project/floating-hub-terraform/
   http://www.planetminecraft.com/project/forgotten-valley-1k-1k-custom-terrain/
   http://www.planetminecraft.com/project/the-cave-3061678/
+
+
+- http://i.imgur.com/LshGTzq.jpg
 
 ======== Etc =========
 

@@ -91,17 +91,13 @@ public class CommonProxy implements IGuiHandler {
 	}*/
 	
 	
-	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {
-		
-	}
+	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {}
 	
-	public void registerItemBlockTexture(Block block, String blockclassname) {
-		
-	}
+	public void registerItemBlockTexture(Block block, String blockclassname) {}
 	
-	public void addVariantName(Item item, String... names) {
-		
-	}
+	public void registerItemBlockTextureVanilla(Block block, String blockclassname) {}
+	
+	public void addVariantName(Item item, String... names) {}
 	
 	
 }

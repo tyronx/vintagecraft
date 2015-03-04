@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
@@ -25,6 +26,7 @@ import at.tyron.vintagecraft.block.*;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.item.ItemWoodProductVC;
 import at.tyron.vintagecraft.item.ItemFlowerVC;
 import at.tyron.vintagecraft.item.ItemGrassVC;
 import at.tyron.vintagecraft.item.ItemGravel;
@@ -61,7 +63,8 @@ public class BlocksVC {
 	public static BlockVC gravel;
 	
 	public static Block farmland;
-
+	public static Block vine;
+	
 	// Todo
 	public static BlockVC charredtopsoil;  // Burned dirt when in contact with lava 
 	public static BlockVC lichen; // Mossy stuff that grows on stones
@@ -89,6 +92,11 @@ public class BlocksVC {
 	public static Block wheatcrops;
 	
 	public static OreClass rawore;
+	public static TreeClass fence;
+	public static TreeClass fencegate;
+	public static TreeClass stairs;
+	public static TreeClass singleslab;
+	public static TreeClass doubleslab;
 	
 	//public static BlockVC leaves;
 	//public static BlockVC leavesbranchy;
@@ -127,6 +135,22 @@ public class BlocksVC {
 		
 		planks = new TreeClass("planks", BlockPlanksVC.class, ItemPlanksVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		planks.init();
+		
+		fence = new TreeClass("fence", BlockFenceVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		fence.init();
+		
+		fencegate = new TreeClass("fencegate", BlockFenceGateVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		fencegate.init();
+		
+		/*stairs = new TreeClass("stairs", BlockStairsVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		stairs.init();
+*/
+		singleslab = new TreeClass("singleslab", BlockSingleWoodenSlab.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		singleslab.init();
+
+		doubleslab = new TreeClass("doubleslab", BlockDoubleWoodenSlab.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		doubleslab.init();
+
 		
 		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemLeaves.class, 0.2f, Block.soundTypeGrass, null, 0);
 		leaves.init();
@@ -172,6 +196,11 @@ public class BlocksVC {
 		
 		wheatcrops = new BlockCropsVC().setHardness(0.2f);
 		register(wheatcrops, "wheatcrops", ItemBlock.class);
+		
+		vine = new BlockVineVC().setHardness(0.2f).setStepSound(Block.soundTypeGrass);
+		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");
+		vine.setUnlocalizedName("vine");
+		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
 	}
 	
 	

@@ -1,0 +1,32 @@
+{
+	"variants": {
+        "half=bottom,treetype=ash": { "model": "vintagecraft:singleslab/ash_lower" },
+        "half=top,treetype=ash":  { "model": "vintagecraft:singleslab/ash_upper" },
+        "half=bottom,treetype=birch": { "model": "vintagecraft:singleslab/birch_lower" },
+        "half=top,treetype=birch":  { "model": "vintagecraft:singleslab/birch_upper" },
+        "half=bottom,treetype=oak": { "model": "vintagecraft:singleslab/oak_lower" },
+        "half=top,treetype=oak":  { "model": "vintagecraft:singleslab/oak_upper" },
+        "half=bottom,treetype=maple": { "model": "vintagecraft:singleslab/maple_lower" },
+        "half=top,treetype=maple":  { "model": "vintagecraft:singleslab/maple_upper" },
+        "half=bottom,treetype=mountaindogwood": { "model": "vintagecraft:singleslab/mountaindogwood_lower" },
+        "half=top,treetype=mountaindogwood":  { "model": "vintagecraft:singleslab/mountaindogwood_upper" },
+        "half=bottom,treetype=scotspine": { "model": "vintagecraft:singleslab/scotspine_lower" },
+        "half=top,treetype=scotspine":  { "model": "vintagecraft:singleslab/scotspine_upper" },
+        "half=bottom,treetype=spruce": { "model": "vintagecraft:singleslab/spruce_lower" },
+        "half=top,treetype=spruce":  { "model": "vintagecraft:singleslab/spruce_upper" },
+        "half=bottom,treetype=acacia": { "model": "vintagecraft:singleslab/acacia_lower" },
+        "half=top,treetype=acacia":  { "model": "vintagecraft:singleslab/acacia_upper" },
+        "half=bottom,treetype=kapok": { "model": "vintagecraft:singleslab/kapok_lower" },
+        "half=top,treetype=kapok":  { "model": "vintagecraft:singleslab/kapok_upper" },
+        "half=bottom,treetype=coconutpalm": { "model": "vintagecraft:singleslab/coconutpalm_lower" },
+        "half=top,treetype=coconutpalm":  { "model": "vintagecraft:singleslab/coconutpalm_upper" },
+        "half=bottom,treetype=purpleheartwood": { "model": "vintagecraft:singleslab/purpleheartwood_lower" },
+        "half=top,treetype=purpleheartwood":  { "model": "vintagecraft:singleslab/purpleheartwood_upper" },
+        "half=bottom,treetype=crimsonkingmaple": { "model": "vintagecraft:singleslab/crimsonkingmaple_lower" },
+        "half=top,treetype=crimsonkingmaple":  { "model": "vintagecraft:singleslab/crimsonkingmaple_upper" },
+        "half=bottom,treetype=elephanttree": { "model": "vintagecraft:singleslab/elephanttree_lower" },
+        "half=top,treetype=elephanttree":  { "model": "vintagecraft:singleslab/elephanttree_upper" },
+        "half=bottom,treetype=myrtlebeech": { "model": "vintagecraft:singleslab/myrtlebeech_lower" },
+        "half=top,treetype=myrtlebeech":  { "model": "vintagecraft:singleslab/myrtlebeech_upper" }
+	}
+}

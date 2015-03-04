@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
@@ -31,6 +32,7 @@ import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Climate;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
+import at.tyron.vintagecraft.WorldGen.WorldChunkManagerVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
@@ -46,7 +48,9 @@ public class VCraftWorld {
 	public static VCraftWorld instance;
 	
 	
-	public int seaLevel = 96;
+	public static int seaLevel = 128;
+	public int terrainGenHiLevel = 73;
+ 	
 	public static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
 	
 	
@@ -56,9 +60,11 @@ public class VCraftWorld {
 	private long seed;
 	private HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
 	
+	WorldChunkManagerVC wcm;
 	
-	public VCraftWorld(long seed) {
+	public VCraftWorld(long seed, WorldChunkManager wcm) {
 		this.seed = seed;
+		this.wcm = (WorldChunkManagerVC)wcm;
 	}
 	
 	
@@ -246,6 +252,16 @@ public class VCraftWorld {
     }
     
     
+    
+    
+    
+    public NBTTagCompound recreateClimateNBT(BlockPos pos) {
+    	int[] climate = wcm.climateGen.getInts(pos.getX() >> 4, pos.getZ() >> 4, 16, 16);
+    	
+    	setChunkNBT(pos.getX() >> 4, pos.getZ() >> 4, "climate", climate);
+    	return getChunkNBT(pos);
+    }
+    
 
 
     private int _getClimate(BlockPos pos) {
@@ -253,15 +269,18 @@ public class VCraftWorld {
     	mark(pos.getX() >> 4, pos.getZ() >> 4, "getnbt-_climate " + (nbt == null));
     	
     	if (nbt == null || !nbt.hasKey("climate")) {
-    		printProfiling("_climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " at coord " + pos + " missing!" + " (@index " + BlockPos2Index(pos) + ")");
+    		nbt = recreateClimateNBT(pos);
+    		/*printProfiling*/System.out.println("_climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " at coord " + pos + " missing - recreated!" + " (@index " + BlockPos2Index(pos) + ")");
     	}
     	
     	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
     	
-    	int sealevelheight = pos.getY() - seaLevel;
+    	//int sealevelheight = pos.getY() - seaLevel;
     	
     	return climate;
     }
+
+    
 
     // Returns climate = int[temp, fertility, rain] 
     public int[] getClimate(BlockPos pos) {
@@ -269,7 +288,8 @@ public class VCraftWorld {
     	mark(pos.getX() >> 4, pos.getZ() >> 4, "getnbt-climate");
     	
     	if (!nbt.hasKey("climate")) {
-    		printProfiling("climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " missing!");
+    		nbt = recreateClimateNBT(pos);
+    		/*printProfiling*/System.out.println("climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " missing - recreated!");	
     	}
     	
     	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
@@ -303,6 +323,10 @@ public class VCraftWorld {
     	return Math.max(-30, (int) ((temperature - (pos.getY() - seaLevel)/2) / 4.25f) - 30);
     }
     
+    
+    /*public int normalizeFertility(int fertility, BlockPos pos) {
+    	return Math.min(255, rainfall + (pos.getY() - seaLevel)/2);
+    }*/
     
     
     public int getForest(BlockPos pos) {
@@ -375,13 +399,19 @@ public class VCraftWorld {
 	
     @SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
+    	return getGrassColorAtPos(pos, 0);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public int getGrassColorAtPos(BlockPos pos, int rainfallmodifier) {
     	int climate = _getClimate(pos);
     	
     	int temperature = (climate >> 16) & 0xff  - (pos.getY() - seaLevel)/2;
     	int rainfall = normalizeRainFall(climate & 0xff, pos);
     	//System.out.println(temperature + "/" + (255-rainfall));
-    	return grassBuffer[temperature + 256 * (255-rainfall)];
+    	return grassBuffer[temperature + 256 * Math.min(255, (255-rainfall+rainfallmodifier))];
     }
+    
     
       
     long Chunk2Index(Chunk chunk) {

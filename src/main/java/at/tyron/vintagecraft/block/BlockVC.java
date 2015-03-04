@@ -37,10 +37,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockVC extends Block implements ISubtypeFromStackPovider {
-	public static int multistateAvailableTypes() {
-		return 16;
-	}
-	
 	BlockClassEntry[] subtypes;
 	
 	protected BlockVC(Material materialIn) {
@@ -155,17 +151,21 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     			return;
     		}
     		
-    		
+    		// Spread grass
             if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
                 for (int i = 0; i < 4; ++i) {
                     BlockPos blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
                     Block block = worldIn.getBlockState(blockpos1.up()).getBlock();
                     IBlockState neighbourblockstate = worldIn.getBlockState(blockpos1);
 
+                    
+                    
                     if (neighbourblockstate.getBlock() instanceof ISoil && ((ISoil)neighbourblockstate.getBlock()).canGrowGrass(worldIn, pos)) {
+                    	soil = (ISoil)neighbourblockstate.getBlock();
                     	IProperty neighbourproperty = soil.getOrganicLayerProperty(worldIn, pos);
-                    	EnumOrganicLayer neighbourorganiclayer = (EnumOrganicLayer)state.getValue(neighbourproperty);
+                    	EnumOrganicLayer neighbourorganiclayer = (EnumOrganicLayer)neighbourblockstate.getValue(neighbourproperty);
                     	
+                    	//if (neighbourblockstate.getBlock() instanceof BlockRawClay) System.out.println(neighbourorganiclayer);
 
                         if (worldIn.getLight(blockpos1.up()) >= neighbourorganiclayer.minblocklight 
                             && block.getLightOpacity(worldIn, blockpos1.up()) <= 2

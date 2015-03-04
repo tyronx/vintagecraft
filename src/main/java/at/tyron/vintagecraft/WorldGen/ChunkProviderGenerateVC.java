@@ -23,7 +23,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -41,11 +43,15 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	GenLayerVC depositLayer;
-	GenLayerVC climateGen;
-	GenLayerVC heightmapGen;
+	
+//	GenLayerVC heightmapGen;
+	
+	GenLayerVC noiseFieldModifier;
+	int noiseFieldModifierArray[];
 	
 	GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
-
+	
+	
 	/** The 7 rocklayers **/
 	int[][] rockData;
 	/** The biomes that are used to generate the chunk */
@@ -142,9 +148,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
 		this.seed = seed;
 		
+		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed);
+		
 		loadRockLayers();
-		climateGen = GenLayerVC.genClimate(seed);
-		heightmapGen = GenLayerVC.genHeightmap(seed);
+		
+		//heightmapGen = GenLayerVC.genHeightmap(seed);
 	}
 	
 	
@@ -165,12 +173,13 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	@Override
 	public Chunk provideChunk(int chunkX, int chunkZ) {
 		if (worldObj.getWorldChunkManager() instanceof WorldChunkManagerFlatVC) {
-			return provideFlatChunk(chunkX, chunkZ);
+			return provideFlatChunk(chunkX, chunkZ, (WorldChunkManagerFlatVC)worldObj.getWorldChunkManager());
 		}
+		WorldChunkManagerVC wcm = (WorldChunkManagerVC)worldObj.getWorldChunkManager();
 		
 		primer = new ChunkPrimer();
 		
-		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", wcm.climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
 		
 		//this.rand.setSeed(chunkX * 341873128712L + chunkZ * 132897987541L);
 		
@@ -207,10 +216,10 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 	
 	
-	private Chunk provideFlatChunk(int chunkX, int chunkZ) {
+	private Chunk provideFlatChunk(int chunkX, int chunkZ, WorldChunkManagerFlatVC wcm) {
 		primer = new ChunkPrimer();
 		//System.out.println("provide flat chunk");
-		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", wcm.climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
@@ -274,16 +283,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 			
 		
-		BlockPos pos = new BlockPos(chunkX, 0, chunkZ);
+		//BlockPos pos = new BlockPos(chunkX, 0, chunkZ);
 		//BiomeVC biome = (BiomeVC) this.worldObj.getBiomeGenForCoords(pos);
 		//biome.decorate(this.worldObj, this.rand, pos);
 
 		
-		
+		BlockPos pos;
 		int xCoord = chunkX * 16;
 		int zCoord = chunkZ * 16;
 
-		WorldGenAnimals.performWorldGenSpawning(this.worldObj, null, xCoord + 8, zCoord + 8, 16, 16, this.rand);
+		WorldGenAnimals.performWorldGenSpawning(this.worldObj, null, xCoord, zCoord, 16, 16, this.rand);
 		
 		floragenerator.generate(rand, chunkX, chunkZ, worldObj, chunkprovider, chunkprovider);
 
@@ -448,7 +457,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public void generateTerrainLow(int chunkX, int chunkZ, ChunkPrimer primer) {
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				for (int y = VintageCraftConfig.terrainGenLevel; y > 0; y--) {
+				for (int y = VCraftWorld.instance.terrainGenHiLevel; y > 0; y--) {
 					if (primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
 						primer.setBlockState(x, y, z, Blocks.stone.getDefaultState());
 					}
@@ -461,14 +470,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public void generateTerrainHigh(int chunkX, int chunkZ, ChunkPrimer primer) {
 		byte horizontalPart = 4;
 		byte verticalPart = 20;
-		int seaLevel = VintageCraftConfig.seaLevel() - VintageCraftConfig.terrainGenLevel;
+		//int seaLevel = VCraftWorld.instance.seaLevel; // - VCraftWorld.instance.terrainGenLevel;
 		
 		int xSize = horizontalPart + 1;
 		byte ySize = 21;
 		int zSize = horizontalPart + 1;
 		
 		//short arrayYHeight = 128;
-		
+		//VCraftWorld.instance.terrainGenHiLevel = 65;
 		
 		largerBiomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(largerBiomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
 		
@@ -477,6 +486,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		double yLerp = 0.125D;
 		double xLerp = 0.25D;
 		double zLerp = 0.25D;
+		
+		//int ycoord;
 		
 		for (int x = 0; x < horizontalPart; ++x) {
 			for (int z = 0; z < horizontalPart; ++z) {
@@ -508,11 +519,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 
 							for (int dz = 0; dz < 4; ++dz) {
 								if ((var47 += var49) > 0.0D) {
-									primer.setBlockState(4*x + dx, 8*y + dy + VintageCraftConfig.terrainGenLevel, 4*z + dz, Blocks.stone.getDefaultState());
-								} else if (y * 8 + dy < seaLevel) {
-									primer.setBlockState(4*x + dx, 8*y + dy + VintageCraftConfig.terrainGenLevel, 4*z + dz, Blocks.water.getDefaultState());
+									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.stone.getDefaultState());
+								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.instance.seaLevel) {
+									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.water.getDefaultState());
 								} else {
-									primer.setBlockState(4*x + dx, 8*y + dy + VintageCraftConfig.terrainGenLevel, 4*z + dz, Blocks.air.getDefaultState());
+									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.air.getDefaultState());
 								}
 								
 							}
@@ -553,10 +564,14 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	private double[] initializeNoiseFieldHigh(double[] outArray, int xPos, int yPos, int zPos, int xSize, int ySize, int zSize) {
 		int smoothingRadius = 2;
 		
+		noiseFieldModifierArray = noiseFieldModifier.getInts(xPos, zPos, xSize, zSize);
+		
 		if (outArray == null) {
 			outArray = new double[xSize * ySize * zSize];
 		}
 
+		VCraftWorld.instance.terrainGenHiLevel = 67;
+		
 		if (this.parabolicField == null) {
 			this.parabolicField = new float[2*smoothingRadius + 5 * 2 * smoothingRadius + 1];
 			for (int xR = -smoothingRadius; xR <= smoothingRadius; ++xR) {
@@ -600,12 +615,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		double verticalScale = 1000D;
 		
 		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
-		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 200.0D, 200.0D, 0.5D);
+		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 800.0D, 800.0D, 0.5D);
 		
-		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 80.0D, verticalScale / 160.0D, horizontalScale / 80.0D);
-		
+		// Seems to be the lowest octave
 		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
+		
 		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
+
+		// one of the higher octaves
+		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 60.0D, verticalScale / 120.0D, horizontalScale / 60.0D);
+
 		
 		boolean var43 = false;
 		boolean var42 = false;
@@ -697,7 +716,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						theheight *= 4.0D;
 					}
 					
-					double noise1var = this.noise1[posIndex] / 512.0D;
+					/*double noise1var = this.noise1[posIndex] / 512.0D;
 					double noise2var = this.noise2[posIndex] / 512.0D;
 					double noise3var = (this.noise3[posIndex] / 10.0D + 1.0D) / 2.0D;
 					
@@ -707,7 +726,10 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						result = noise2var;
 					} else {
 						result = noise1var + (noise2var - noise1var) * noise3var;
-					}
+					}*/
+					
+					result = noise1[posIndex] / 128D 
+							+ (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0.2f, noiseFieldModifierArray[x + z * xSize] / 210f);
 
 					//result = noise1var;
 							
@@ -949,12 +971,35 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 
 
-	public static List getCreatureSpawnsByChunk(World world, BiomeVC biome, int par2, int par3) {
+	public static List getCreatureSpawnsByChunk(World world, BiomeVC biome, int xcoord, int zcoord) {
 		ArrayList<SpawnListEntry> list = new ArrayList<SpawnListEntry>();
 		
-		list.add(new SpawnListEntry(EntityPig.class, 1, 2, 4));
-		list.add(new SpawnListEntry(EntityCow.class, 1, 2, 4));
-		list.add(new SpawnListEntry(EntityChicken.class, 1, 2, 4));
+		// Returns climate = int[temp, fertility, rain]
+		int[] climate = VCraftWorld.instance.getClimate(new BlockPos(xcoord, 128, zcoord));
+		
+		if (climate[0] > -10 && climate[2] > 60) {
+			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
+			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			return list;
+		}
+		
+		if (climate[0] > 0 && climate[2] > 60) {
+			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
+			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			list.add(new SpawnListEntry(EntityPig.class, 25, 2, 4));
+			return list;
+		}
+		
+		if (climate[0] > 10 && climate[2] > 60) {
+			list.add(new SpawnListEntry(EntityCow.class, 15, 2, 4));
+			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
+			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			list.add(new SpawnListEntry(EntityPig.class, 20, 2, 4));
+			list.add(new SpawnListEntry(EntityChicken.class, 20, 2, 4));
+			return list;
+		}
 		
 		return list;
 	}

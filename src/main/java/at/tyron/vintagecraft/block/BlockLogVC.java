@@ -124,6 +124,11 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 	public BlockClass getBlockClass() {
 		return BlocksVC.log;
 	}
+
+	@Override
+	public int multistateAvailableTypes() {
+		return 16;
+	}
 	
 	
     

@@ -21,6 +21,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 
 public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IFuel {
 
@@ -42,6 +45,12 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	public static ItemStack withTreeType(ItemStack itemstack, BlockClassEntry treetype) {
 		itemstack.setItemDamage(treetype.metadata);
 		return itemstack;
+	}
+	
+	
+	@Override
+	public int getMetadata(int damage) {
+		return damage;
 	}
 
 	
@@ -73,7 +82,7 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		tooltip.add("Heat produced when burned");
 		for (EnumFurnace furnace : EnumFurnace.values()) {
-			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " °C");	
+			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
 		}
 	}
 	

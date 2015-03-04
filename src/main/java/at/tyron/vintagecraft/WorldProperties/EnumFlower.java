@@ -112,7 +112,7 @@ public enum EnumFlower implements IStringSerializable, IEnumState {
 	}
 
 	@Override
-	public int getMetaData(BlockVC block) {
+	public int getMetaData(Block block) {
 		return 0;
 	}
 
@@ -127,7 +127,7 @@ public enum EnumFlower implements IStringSerializable, IEnumState {
 	}
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		// TODO Auto-generated method stub
 		
 	}

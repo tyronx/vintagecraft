@@ -20,7 +20,7 @@ import net.minecraft.world.gen.layer.IntCache;
 public class WorldChunkManagerVC extends WorldChunkManager {
 	protected World worldObj;
 	protected GenLayerVC genBiomes;
-
+	public GenLayerVC climateGen;
 	
 	/** A list of biomes that the player can spawn in. */
 	protected List biomesToSpawnIn;
@@ -31,8 +31,10 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	private WorldChunkManagerVC() {
 		super();
 		this.biomesToSpawnIn = new ArrayList();
+		//this.biomesToSpawnIn.add(BiomeVC.HighHills);
+		this.biomesToSpawnIn.add(BiomeVC.Flat);
+		this.biomesToSpawnIn.add(BiomeVC.Mountains);
 		this.biomesToSpawnIn.add(BiomeVC.HighHills);
-		this.biomesToSpawnIn.add(BiomeVC.plains);
 		
 		/*this.biomesToSpawnIn.add(BiomeVC.rollingHills);
 		this.biomesToSpawnIn.add(BiomeVC.swampland);
@@ -52,6 +54,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 		seed = Seed;
 
 		this.genBiomes = GenLayerVC.genErosion(Seed);
+		climateGen = GenLayerVC.genClimate(seed);
 	}
 	
 	@Override
@@ -112,39 +115,50 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	
 	
 	
-	/**
-	 * Finds a valid position within a range, that is in one of the listed biomes. Searches {par1,par2} +-par3 blocks.
-	 * Strongly favors positive y positions.
-	 */
+
 	@Override
 	public BlockPos findBiomePosition(int xCoord, int zCoord, int radius, List biomeList, Random rand) {
-		/*IntCache.resetIntCache();
+		IntCache.resetIntCache();
 		int l = xCoord - radius >> 2;
 		int i1 = zCoord - radius >> 2;
 		int j1 = xCoord + radius >> 2;
 		int k1 = zCoord + radius >> 2;
 		int l1 = j1 - l + 1;
 		int i2 = k1 - i1 + 1;
-		int[] aint = this.genBiomes.getInts(l, i1, l1, i2);
+		int[] aint = this.climateGen.getInts(l, i1, l1, i2);
 		BlockPos chunkposition = null;
 		int j2 = 0;
+		
+		
+		int bestrain = 0;
+		int besttemp = 0;
 
 		for (int k2 = 0; k2 < l1 * i2; ++k2) {
 			int l2 = l + k2 % l1 << 2;
 			int i3 = i1 + k2 / l1 << 2;
-			BiomeVC biomegenbase = BiomeVC.getBiome(aint[k2]);
+			
+			int climate = aint[k1];
+			int rain = aint[k1] & 0xff;
+			int temp = (climate >> 8) & 0xff;
+			
+			
+			if (Math.abs(bestrain - 150) > Math.abs(rain - 150) && Math.abs(besttemp - 150) > Math.abs(temp - 150)) {
+				bestrain = rain;
+				besttemp = temp;
+				
+				chunkposition = new BlockPos(l2, 0, i3);
+			}
+			
+			/*BiomeVC biomegenbase = BiomeVC.getBiome(aint[k2]);
 
 			if (biomeList.contains(biomegenbase) && (chunkposition == null || rand.nextInt(j2 + 1) == 0)) {
 				chunkposition = new BlockPos(l2, 0, i3);
 				++j2;
-			}
+			}*/
 		}
+		
 
-		return chunkposition;*/
-		
-		
-		return new BlockPos(0, 0, 0);
-		
+		return chunkposition;		
 	}
 
 	
@@ -193,4 +207,7 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	public void cleanupCache() {
 		
 	}
+	
+	
+	
 }

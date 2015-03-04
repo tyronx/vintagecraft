@@ -16,6 +16,7 @@ import net.minecraft.world.gen.layer.IntCache;
 public class WorldChunkManagerFlatVC extends WorldChunkManager {
 	protected World worldObj;
 	public long seed = 0;
+	GenLayerVC climateGen;
 
 	public WorldChunkManagerFlatVC(World world) {
 		this(world.getSeed(), world.getWorldInfo().getTerrainType());
@@ -25,6 +26,7 @@ public class WorldChunkManagerFlatVC extends WorldChunkManager {
 	public WorldChunkManagerFlatVC(long Seed, WorldType worldtype) {
 		super();
 		this.seed = Seed;
+		climateGen = GenLayerVC.genClimate(seed);
 	}
 	
 	@Override
@@ -43,7 +45,7 @@ public class WorldChunkManagerFlatVC extends WorldChunkManager {
 		}
 
 		for (int i = 0; i < width * height; ++i) {
-			biomes[i] = BiomeVC.Plains;
+			biomes[i] = BiomeVC.Flat;
 		}
 		
 		//System.out.println("length: " + biomes.length);
@@ -73,7 +75,7 @@ public class WorldChunkManagerFlatVC extends WorldChunkManager {
 		biomes = new BiomeVC[width * length];
 		
 		for (int i = 0; i < biomes.length; i++) {
-			biomes[i] = BiomeVC.Plains;
+			biomes[i] = BiomeVC.Flat;
 		}
 		
 		return biomes;

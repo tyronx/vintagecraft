@@ -92,7 +92,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
     	return color / 15;
     }
     
-    public int getMetaData(BlockVC block) {
+    public int getMetaData(Block block) {
         return this.meta;
     }
 
@@ -199,7 +199,7 @@ public enum EnumRockType implements IStringSerializable, IEnumState, IGenLayerSu
 	}
 
 	@Override
-	public void init(BlockVC block, int meta) {
+	public void init(Block block, int meta) {
 		
 	}
 }

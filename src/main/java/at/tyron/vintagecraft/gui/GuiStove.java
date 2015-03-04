@@ -35,11 +35,11 @@ public class GuiStove extends GuiContainer {
 		
         fontRendererObj.setUnicodeFlag(true);
         
-		String furntemp = stove.furnaceTemperature + " °C";
+		String furntemp = stove.furnaceTemperature + " deg.";
 		this.fontRendererObj.drawString(furntemp, this.xSize / 2 - 10, 56, 4210752);
 		
 		if (stove.oreSlot() != null) {
-			String itemtemp = stove.oreTemperature + " °C";
+			String itemtemp = stove.oreTemperature + " deg.";
 			this.fontRendererObj.drawString(itemtemp, this.xSize / 2 - 10, 20, 4210752);
 		}
 		
