@@ -26,8 +26,8 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	//     int id, boolean hasOre, int color, int weight, int averageHeight, int minDepth, int maxDepth, boolean relativeDepth
 	NODEPOSIT (-1,                  false, 0,  5000,   0,  0, 0),
 	
-	CLAY (0,           false, 30,   5,   2,  0,    1, true, 155),
-	PEAT (1,            false, 40,   10,   2,  0,    1, true, 155),
+	CLAY (0,           false, 30,   3,   2,  0,    1, true, 155),
+	PEAT (1,            false, 40,   8,   2,  0,    1, true, 155),
 	
 	
 	LIGNITE (2,         true,   60,   33,   1,  10,  50, true, 255),

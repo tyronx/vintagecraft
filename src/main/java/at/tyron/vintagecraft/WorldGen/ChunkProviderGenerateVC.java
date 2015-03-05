@@ -976,30 +976,41 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		// Returns climate = int[temp, fertility, rain]
 		int[] climate = VCraftWorld.instance.getClimate(new BlockPos(xcoord, 128, zcoord));
+		if (climate[2] < 60) return list;
 		
-		if (climate[0] > -10 && climate[2] > 60) {
-			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
-			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+
+		if (climate[0] > 25) {
+			list.add(new SpawnListEntry(EntityPig.class, 20, 2, 4));
+			list.add(new SpawnListEntry(EntityChicken.class, 30, 2, 4));
 			return list;
 		}
-		
-		if (climate[0] > 0 && climate[2] > 60) {
+
+
+		if (climate[0] > 10) {
 			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
 			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
 			list.add(new SpawnListEntry(EntityPig.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityChicken.class, 10, 2, 4));
 			return list;
 		}
 		
-		if (climate[0] > 10 && climate[2] > 60) {
+		if (climate[0] > 0) {
 			list.add(new SpawnListEntry(EntityCow.class, 15, 2, 4));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
+			list.add(new SpawnListEntry(EntitySheep.class, 10, 2, 4));
+			list.add(new SpawnListEntry(EntityPig.class, 5, 2, 4));
+			
+			return list;
+		}		
+
+		if (climate[0] > -10) {
+			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
 			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
-			list.add(new SpawnListEntry(EntityPig.class, 20, 2, 4));
-			list.add(new SpawnListEntry(EntityChicken.class, 20, 2, 4));
 			return list;
 		}
+		
 		
 		return list;
 	}

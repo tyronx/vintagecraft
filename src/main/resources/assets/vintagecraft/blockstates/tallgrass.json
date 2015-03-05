@@ -5,7 +5,19 @@
 		"grasstype=medium": { "model": "vintagecraft:tallgrass/medium" },
 		"grasstype=long": { "model": "vintagecraft:tallgrass/long" },
 		"grasstype=verylong": { "model": "vintagecraft:tallgrass/verylong" },
-		"grasstype=verylong_flowering": { "model": "vintagecraft:tallgrass/verylong_flowering" }
+		"grasstype=verylong_flowering": { "model": "vintagecraft:tallgrass/verylong_flowering" },
+		
+		"grasstype=fern": { "model": "vintagecraft:tallgrass/fern" },
+		"grasstype=fern2": { "model": "vintagecraft:tallgrass/fern2" },
+		"grasstype=fern3": { "model": "vintagecraft:tallgrass/fern3" },
+		
+		"grasstype=verylong_oxeyedaisy": { "model": "vintagecraft:tallgrass/verylong_oxeyedaisy" },
+		"grasstype=verylong_cornflower": { "model": "vintagecraft:tallgrass/verylong_cornflower" },
+		"grasstype=verylong_cornflower2": { "model": "vintagecraft:tallgrass/verylong_cornflower2" },
+		
+		"grasstype=verylong_forgetmenot": { "model": "vintagecraft:tallgrass/verylong_forgetmenot" },
+		"grasstype=verylong_forgetmenot2": { "model": "vintagecraft:tallgrass/verylong_forgetmenot2" },
+		"grasstype=verylong_forgetmenot3": { "model": "vintagecraft:tallgrass/verylong_forgetmenot3" }
 
 	}
 }

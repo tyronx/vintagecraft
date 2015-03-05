@@ -135,7 +135,7 @@ public class DynTreeGen {
 			
 			
 			dx += MathHelper.sin(anglever) * MathHelper.cos(anglehor);
-			dy += MathHelper.cos(anglever) - Math.min(1.8f, gravityDrag * MathHelper.sqrt_float(dx*dx + dz*dz));
+			dy += Math.min(1, Math.max(-1, MathHelper.cos(anglever) - gravityDrag * MathHelper.sqrt_float(dx*dx + dz*dz)));
 			dz += MathHelper.sin(anglever) * MathHelper.sin(anglehor);
 			
 			
@@ -643,41 +643,69 @@ public class DynTreeGen {
 		
 		
 		
-		// Reference: 
-		/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier, widthBranchLossBase),
-		 * new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier)
-   		 */
-
 		EnumTree.ELEPHANTTREE.setGenerators(
-				new DynTreeGen(
-						EnumTree.ELEPHANTTREE, 
-						null,
-						new DynTreeTrunk(
-		//					1f,
-							1f,
-							0.15f,
-							NatFloat.createGauss(0.30f, 0.15f), 
-							NatFloat.createUniform(0f, 0f), 
-							NatFloat.createGauss(NatFloat.PI / 2 - 0.55f, 0f), 
-							NatFloat.createUniform(0, 2*NatFloat.PI),
-							4, 
-							1f,
-							1f,
-							0.5f,
-							0.02f
-						),
-						new DynTreeBranch(
-							NatFloat.createUniform(5f, 0.5f),
-							NatFloat.createUniform(0, 2 * NatFloat.PI), 
-							NatFloat.createGauss(0.3f, 0f),
-							NatFloat.createUniform(0.2f, 0.01f), 
-							0.3f,
-							0.01f,
-							0.4f
-						),
-						1.5f
-				), null, null
-			);
+			new DynTreeGen(
+					EnumTree.ELEPHANTTREE, 
+					null,
+					new DynTreeTrunk(
+	//					1f,
+						1f,
+						0.15f,
+						NatFloat.createGauss(0.30f, 0.15f), 
+						NatFloat.createUniform(0f, 0f), 
+						NatFloat.createGauss(NatFloat.PI / 2 - 0.55f, 0f), 
+						NatFloat.createUniform(0, 2*NatFloat.PI),
+						4, 
+						1f,
+						1f,
+						0.5f,
+						0.02f
+					),
+					new DynTreeBranch(
+						NatFloat.createUniform(5f, 0.5f),
+						NatFloat.createUniform(0, 2 * NatFloat.PI), 
+						NatFloat.createGauss(0.3f, 0f),
+						NatFloat.createUniform(0.2f, 0.01f), 
+						0.3f,
+						0.01f,
+						0.4f
+					),
+					1.5f
+			), null, null
+		);
+		
+		
+		// Reference: 
+		/* new DynTreeTrunk(width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier, widthBranchLossBase, bend, bendCorrection)
+		 * new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag)
+   		 */
+		
+		
+		EnumTree.COCONUTPALM.setGenerators(new DynTreeGen(
+			EnumTree.COCONUTPALM, 
+			null,
+			trunk = new DynTreeTrunk(
+				1f, 
+				0.07f, 
+				NatFloat.createGauss(0.25f, 0.01f), 
+				NatFloat.createGauss(0f, 0f), 
+				NatFloat.createUniform(NatFloat.PI / 4, 0), 
+				NatFloat.createUniform(0, 2*NatFloat.PI),
+				16, 
+				1f,
+				0.3f,
+				0.5f,
+				0.05f
+			),
+			branch = new DynTreeBranch(
+				NatFloat.createInvGauss(NatFloat.PI / 4 + 0.1f, NatFloat.PI / 8),
+				NatFloat.createUniform(0, 2*NatFloat.PI), 
+				NatFloat.createUniform(4f, 0),
+				NatFloat.createGauss(5f, 0f), 
+				0.05f,
+				0.2f
+			)
+		), null, null);
 		 
 	}	
 }

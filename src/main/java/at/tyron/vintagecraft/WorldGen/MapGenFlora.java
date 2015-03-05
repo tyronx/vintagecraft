@@ -6,12 +6,7 @@ import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFertility;
-import at.tyron.vintagecraft.WorldProperties.EnumFlora;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.block.BlockCropsVC;
 import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
 import at.tyron.vintagecraft.block.BlockFlowerVC;
@@ -62,16 +57,22 @@ public class MapGenFlora {
 		
 			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
+			int climate[] = VCraftWorld.instance.getClimate(blockpos);
+			
 
-			if (random.nextInt(255) < density - Math.max(0, blockpos.getY() - 160)) {
-				placeGrass(world, blockpos, random);
-				if (density < 10) {
-					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random);
+			if (random.nextInt(255) < Math.min(200, density) - Math.max(0, blockpos.getY() - 180)) {
+				placeGrass(world, blockpos, random, climate[1]);
+				if (density < 20) {
+					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random, climate[1]);
 				}
+				if (density < 40) {
+					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random, climate[1]);
+				}
+
 			}
 			
 			//if (true) continue;
-			int climate[] = VCraftWorld.instance.getClimate(blockpos);
+			
 			
 			int forestDensityDiff = Math.max(1, climate[1] - 180);
 			
@@ -160,13 +161,11 @@ public class MapGenFlora {
 	}
 	
 	
-	void placeGrass(World world, BlockPos pos, Random random) {
+	void placeGrass(World world, BlockPos pos, Random random, int fertility) {
 		Block block = world.getBlockState(pos.down()).getBlock();
 		
 		if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
-			int fertility = VCraftWorld.instance.getFertily(pos);
-			
-			EnumTallGrass grasstype = EnumTallGrass.fromClimate(fertility, random);
+			EnumTallGrass grasstype = EnumTallGrassGroup.fromClimate(fertility, random);
 			if (grasstype != null) {
 				world.setBlockState(pos, BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrass.GRASSTYPE, grasstype), 2);
 			}

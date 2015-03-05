@@ -8,25 +8,30 @@ import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 
 public enum EnumTallGrass implements IEnumState, IStringSerializable {
-	/*VERYLONG_OXEYEDAISY 	(6),
-	VERYLONG_CORNFLOWER 	(7),
-	VERYLONG_CORNFLOWER2 	(8),
-	
-	VERYLONG_FORGETMENOT 	(9),
-	VERYLONG_FORGETMENOT2 	(10), 
-	VERYLONG_FORGETMENOT3 	(11)  */
-	
 	VERYSHORT 				(0, 30),
 	SHORT 					(1, 60),
 	MEDIUM 					(2, 90),
 	LONG 					(3, 120),
 	VERYLONG 				(4, 150),
-	VERYLONG_FLOWERING 		(5, 180)
+	VERYLONG_FLOWERING 		(5, 180),
+	
+	FERN					(12, 190),
+	FERN2					(13, 190),
+	FERN3					(14, 190),
+	
+	VERYLONG_OXEYEDAISY 	(6, 160, 1),
+	VERYLONG_CORNFLOWER 	(7, 160, 1),
+	VERYLONG_CORNFLOWER2 	(8, 160, 1),
+	
+	VERYLONG_FORGETMENOT 	(9, 160, 1),
+	VERYLONG_FORGETMENOT2 	(10, 160, 1), 
+	VERYLONG_FORGETMENOT3 	(11, 160, 1)
 	
 	;
 	
 	int id;
 	int minfertility;
+	int weight;
 	
 	
 	private static EnumTallGrass[] META_LOOKUP = new EnumTallGrass[values().length];
@@ -36,6 +41,13 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 	private EnumTallGrass (int meta, int minfertility) {
 		this.id = meta;
 		this.minfertility = minfertility;
+		this.weight = 100;
+	}
+
+	private EnumTallGrass (int meta, int minfertility, int weight) {
+		this.id = meta;
+		this.minfertility = minfertility;
+		this.weight = weight;
 	}
 
 	

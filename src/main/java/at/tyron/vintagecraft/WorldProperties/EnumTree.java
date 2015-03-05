@@ -19,9 +19,9 @@ public enum EnumTree implements IEnumState {
 	ASH						(0, 0,  0,  0,    0, 0,   0, 0f, 0.7f, 0, 255),
 	BIRCH					(100, 3, 12, 95, 220, 10, 100, 0f, 0.5f, 0, 255),		// http://en.wikipedia.org/wiki/Birch
 //	LARCH					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://upload.wikimedia.org/wikipedia/commons/2/28/Larix_sibirica_-_Siperianlehtikuusi,_Sibirisk_l%C3%A4rk,_Siberian_larch_IMG_9213_C.JPG
-	OAK						(30, 2, 22, 95,  170,  90,  255, 0f, 0.5f, 0, 150),  		// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
+	OAK						(60, 2, 22, 95,  170,  90,  255, 0f, 0.5f, 0, 150),  		// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
 	CRIMSONKINGMAPLE		(1, 5, 15, 95,  150,  90,  200, 0f, 0.5f, 0, 250),			// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
-	MOUNTAINDOGWOOD			(30, 10, 20, 90, 180,  90, 255, 0f, 1f, 0, 150),
+	MOUNTAINDOGWOOD			(50, 10, 20, 90, 180,  90, 255, 0f, 1f, 0, 150),
 //	WILLOW					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
 	
 //	APPLE					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://www.gardenista.com/files/styles/733_0s/public/img/sub/uimg/01-2013/700_pruned-apple-tree-jpeg.jpg
