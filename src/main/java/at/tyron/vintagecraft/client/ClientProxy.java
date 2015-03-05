@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.client;
 import java.io.IOException;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.entity.RenderItem;
@@ -38,6 +39,9 @@ import at.tyron.vintagecraft.item.*;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelShapes;
+import net.minecraft.client.renderer.block.statemap.StateMap;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
 	
@@ -189,6 +193,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	public void addVariantName(Item item, String... names) {
 		ModelBakery.addVariantName(item, names);
+	}
+	
+	
+	public void ignoreProperties(Block block, IProperty[] properties) {
+		BlockModelShapes bms = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes();
+		bms.registerBlockWithStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(properties).build());
 	}
 
 	

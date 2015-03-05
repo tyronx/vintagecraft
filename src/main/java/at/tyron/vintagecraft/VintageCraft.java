@@ -188,20 +188,20 @@ public class VintageCraft {
 	public void onEvent(LivingDropsEvent event) {
 	    if (event.entity instanceof EntityPig) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.porkchopRaw, 3 + event.entityLiving.getRNG().nextInt(8));
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.porkchopRaw, 2 + event.entityLiving.getRNG().nextInt(4));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
 	    if (event.entity instanceof EntityCow) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.beefRaw, 5 + event.entityLiving.getRNG().nextInt(12));
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.beefRaw, 2 + event.entityLiving.getRNG().nextInt(5));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	        
-	        itemStackToDrop = new ItemStack(Items.leather, 3 + event.entityLiving.getRNG().nextInt(3));
+	        itemStackToDrop = new ItemStack(Items.leather, 1 + event.entityLiving.getRNG().nextInt(4));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
 	    if (event.entity instanceof EntityChicken) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.chickenRaw, 1 + event.entityLiving.getRNG().nextInt(3));
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.chickenRaw, 1 + event.entityLiving.getRNG().nextInt(2));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
 	} 

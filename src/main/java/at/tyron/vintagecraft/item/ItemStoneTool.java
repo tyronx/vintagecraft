@@ -4,7 +4,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.interfaces.ItemToolVC;
 
 public class ItemStoneTool extends ItemToolVC {
 	@Override

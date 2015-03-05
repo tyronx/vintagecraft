@@ -12,7 +12,6 @@ import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.interfaces.ItemToolVC;
 
 public class ItemCopperTool extends ItemToolVC {
 	@Override

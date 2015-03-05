@@ -13,9 +13,6 @@ import net.minecraft.block.BlockFenceGate;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BlockModelShapes;
-import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -72,8 +69,8 @@ public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
 			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		
-		BlockModelShapes bms = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes();
-		bms.registerBlockWithStateMapper(this, (new StateMap.Builder()).addPropertiesToIgnore(new IProperty[] { POWERED }).build());
+		VintageCraft.instance.proxy.ignoreProperties(this, new IProperty[] { POWERED });
+		
 		return this;
 	}
 	

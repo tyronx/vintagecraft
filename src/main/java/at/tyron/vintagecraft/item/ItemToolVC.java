@@ -1,7 +1,7 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.item;
 
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.item.ItemVC;
+import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 
 import com.google.common.collect.Multimap;
 
@@ -109,7 +109,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	
     public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 
-		if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) {
+		if (!playerIn.canPlayerEdit(pos.offset(side), side, stack) || tooltype != EnumTool.HOE) {
 	        return false;
 	    } else {
 	        return net.minecraftforge.event.ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos) > 0;

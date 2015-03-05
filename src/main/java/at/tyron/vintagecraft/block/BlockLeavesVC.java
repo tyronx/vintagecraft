@@ -53,14 +53,11 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 		return 8;
 	}
 	
-	public boolean fancyGfx; 
-	
 	//public static PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
 	public PropertyBlockClass TREETYPE;
 	
 	
 //	int[] surroundings;
-	
     
 	
 	public BlockLeavesVC() {
@@ -82,7 +79,7 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 
     @SideOnly(Side.CLIENT)
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-        return !VintageCraft.proxy.isFancyGraphics() && worldIn.getBlockState(pos).getBlock() == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
+        return Blocks.leaves.isOpaqueCube() && worldIn.getBlockState(pos).getBlock() == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
     }
     
     
@@ -295,13 +292,14 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     }
 
     public boolean isOpaqueCube() {
-        return !VintageCraft.proxy.isFancyGraphics();
+        return Blocks.leaves.isOpaqueCube();
     }
 
    
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer() {
-        return VintageCraft.proxy.isFancyGraphics() ? EnumWorldBlockLayer.CUTOUT_MIPPED : EnumWorldBlockLayer.SOLID;
+    	System.out.println(Blocks.leaves.isOpaqueCube() ? EnumWorldBlockLayer.SOLID : EnumWorldBlockLayer.CUTOUT_MIPPED);
+        return Blocks.leaves.isOpaqueCube() ? EnumWorldBlockLayer.SOLID : EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
 
     public boolean isVisuallyOpaque() {

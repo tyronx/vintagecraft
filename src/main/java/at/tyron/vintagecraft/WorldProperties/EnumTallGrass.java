@@ -101,7 +101,6 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 
 	@Override
 	public void init(Block block, int meta) {
-		// TODO Auto-generated method stub
 		
 	}
 	

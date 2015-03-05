@@ -8,6 +8,7 @@ import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.gui.GuiStove;
 import net.minecraft.block.Block;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.item.Item;
@@ -99,5 +100,5 @@ public class CommonProxy implements IGuiHandler {
 	
 	public void addVariantName(Item item, String... names) {}
 	
-	
+	public void ignoreProperties(Block block, IProperty[] properties) {};
 }
