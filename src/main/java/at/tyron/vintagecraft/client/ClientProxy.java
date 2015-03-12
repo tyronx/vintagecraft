@@ -75,25 +75,6 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.rawore), BlocksVC.raworeName, null);
-    	
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.farmland), "farmland", null);
-    	
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.log), "log", "inventory");
-    	
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.planks), "planks", "inventory");
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.leaves), "leaves", "inventory");
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.leavesbranchy), "leavesbranchy", "inventory");
-    	
-    	/*for (BlockVC block : BlocksVC.doubleflowers) {
-    		registerModelLocation(Item.getItemFromBlock(block), "doubleflowers", "inventory");
-    	}
-    	for (BlockVC block : BlocksVC.flowers) {
-    		registerModelLocation(Item.getItemFromBlock(block), "flowers", "inventory");
-    	}*/
-    	
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.farmland), "farmland", "inventory");
-    	
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.peat), "peat", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.topsoil), "topsoil", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.sand), "sand", "inventory");
@@ -136,44 +117,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	        });
 		}	
 	}
-
-	/*@SubscribeEvent
-    public void onModelBakeEvent(ModelBakeEvent event) {
-        TextureAtlasSprite base = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/slime");
-//        TextureAtlasSprite overlay = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite("minecraft:blocks/redstone_block");
-        
-        //event.modelRegistry.putObject(BlocksVC.oremodelLocation, new BlockOreVCModel(base, overlay));
-        event.modelRegistry.putObject(oremodelLocation, new BlockOreVCModel(base));
-    }
-	*/
-	
-	/*@SubscribeEvent
-	public void registerTextures(TextureStitchEvent.Pre event) {
-        TextureMap map = event.map;
-        for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-        	if (deposit.getBlock() == BlocksVC.rawore) {
-        		for (EnumRockType rocktype: EnumRockType.values()) {
-        			event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/ore/" + deposit.getName() + "-" + rocktype.getName()));
-        		}
-        	}
-        }
-        
-      //  event.map.registerSprite(new ResourceLocation(ModInfo.ModID + ":blocks/farmland_dry"));
-        
-	}*/
-	
 	
 	
 	public boolean isFancyGraphics() {
 		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
 	}
 	
-	
-	/*@Override
-	public void registerBlockTexture(Block block, String folderprefix, String blockclassname, String subtype) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("vintagecraft:" + folderprefix + "/" + subtype, "inventory"));
-		ModelBakery.addVariantName(Item.getItemFromBlock(block), "vintagecraft:" + folderprefix + "/" + subtype);	
-	}*/
 	
 	@Override
 	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {

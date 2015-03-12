@@ -15,6 +15,7 @@ public interface ISoil {
 	boolean canSpreadGrass(World world, BlockPos pos);
 	boolean canGrowTree(World world, BlockPos pos, EnumTree tree);
 	boolean canGrowGrass(World world, BlockPos pos);
+	boolean canGrowTallGrass(World world, BlockPos pos);
 	
 	EnumFertility getFertility(World world, BlockPos pos);
 	

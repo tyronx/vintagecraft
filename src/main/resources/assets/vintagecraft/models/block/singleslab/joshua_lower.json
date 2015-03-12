@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/joshua",
+        "top": "vintagecraft:blocks/planks/joshua",
+        "side": "vintagecraft:blocks/planks/joshua"
+    }
+}

@@ -27,6 +27,10 @@
         "half=bottom,treetype=elephanttree": { "model": "vintagecraft:singleslab/elephanttree_lower" },
         "half=top,treetype=elephanttree":  { "model": "vintagecraft:singleslab/elephanttree_upper" },
         "half=bottom,treetype=myrtlebeech": { "model": "vintagecraft:singleslab/myrtlebeech_lower" },
-        "half=top,treetype=myrtlebeech":  { "model": "vintagecraft:singleslab/myrtlebeech_upper" }
+        "half=top,treetype=myrtlebeech":  { "model": "vintagecraft:singleslab/myrtlebeech_upper" },
+        "half=bottom,treetype=pear": { "model": "vintagecraft:singleslab/pear_lower" },
+        "half=top,treetype=pear":  { "model": "vintagecraft:singleslab/pear_upper" },
+        "half=bottom,treetype=joshua": { "model": "vintagecraft:singleslab/joshua_lower" },
+        "half=top,treetype=joshua":  { "model": "vintagecraft:singleslab/joshua_upper" }
 	}
 }

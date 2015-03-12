@@ -86,6 +86,12 @@ public class BlockRawClay extends BlockVC implements ISoil {
 	public boolean canGrowGrass(World world, BlockPos pos) {
 		return true;
 	}
+	
+	@Override
+	public boolean canGrowTallGrass(World world, BlockPos pos) {
+		return true;
+	}
+
 
 	@Override
 	public EnumFertility getFertility(World world, BlockPos pos) {

@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -28,7 +29,13 @@ import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.IModel;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.model.b3d.B3DLoader;
+import net.minecraftforge.common.property.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,6 +43,20 @@ public class BlockStove extends BlockContainer {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	private static boolean keepInventory;
 	boolean burning;
+	
+	
+	/*private ExtendedBlockState state = new ExtendedBlockState(this, new IProperty[0], new IUnlistedProperty[]{ B3DLoader.B3DFrameProperty.instance });
+	
+	
+	 @Override
+     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
+         IModel model = ModelLoaderRegistry.getModel(new ResourceLocation(ModInfo.ModID.toLowerCase(),"block/stove.b3d"));
+         B3DLoader.B3DState defaultState = ((B3DLoader.Wrapper)model).getDefaultState();
+         B3DLoader.B3DState newState = new B3DLoader.B3DState(defaultState.getAnimation(), 0);
+         return ((IExtendedBlockState)this.state.getBaseState()).withProperty(B3DLoader.B3DFrameProperty.instance, newState);
+     }
+*/
+
 	
     public BlockStove(boolean burning) {
 		super(Material.rock);

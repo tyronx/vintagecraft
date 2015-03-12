@@ -89,10 +89,6 @@ public class BlockPeat extends BlockVC implements ISoil {
 	}
 	
 	
-	
-	
-	
-	
 
 
 	@Override
@@ -106,6 +102,10 @@ public class BlockPeat extends BlockVC implements ISoil {
 		return true;
 	}
 
+	@Override
+	public boolean canGrowTallGrass(World world, BlockPos pos) {
+		return true;
+	}
 
 	@Override
 	public EnumFertility getFertility(World world, BlockPos pos) {

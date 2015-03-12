@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "particle": "vintagecraft:blocks/sapling/birch",
+        "cross": "vintagecraft:blocks/sapling/birch"
+    }
+}

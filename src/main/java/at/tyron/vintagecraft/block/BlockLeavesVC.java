@@ -293,12 +293,11 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 
     public boolean isOpaqueCube() {
         return Blocks.leaves.isOpaqueCube();
-    }
+    } 
 
    
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer() {
-    	System.out.println(Blocks.leaves.isOpaqueCube() ? EnumWorldBlockLayer.SOLID : EnumWorldBlockLayer.CUTOUT_MIPPED);
         return Blocks.leaves.isOpaqueCube() ? EnumWorldBlockLayer.SOLID : EnumWorldBlockLayer.CUTOUT_MIPPED;
     }
 

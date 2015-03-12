@@ -91,7 +91,7 @@ public abstract class BlockWoodenSlabVC extends BlockWoodSlab implements IMultib
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+		IBlockState state = getBlockClass().getBlockClassfromMeta(this, isDouble() ? meta : meta & 7).getBlockState();
 		if (!this.isDouble()) {
             state = state.withProperty(HALF, (meta & 8) == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
         }

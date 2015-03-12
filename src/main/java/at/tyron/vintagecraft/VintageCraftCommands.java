@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import at.tyron.vintagecraft.WorldGen.BlockStateSerializer;
 import at.tyron.vintagecraft.WorldGen.DynTreeBranch;
 import at.tyron.vintagecraft.WorldGen.DynTreeGen;
+import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.DynTreeRoot;
 import at.tyron.vintagecraft.WorldGen.DynTreeTrunk;
 import at.tyron.vintagecraft.WorldGen.NatFloat;
@@ -89,11 +90,11 @@ public class VintageCraftCommands extends CommandBase {
 			float bend = 0f;
 			EnumTree tree = EnumTree.SCOTSPINE;
 			
-			if (args.length == 2) {
+			if (args.length >= 2) {
 				tree = tree.valueOf(args[1].toUpperCase());
 			}
 			
-			if (args.length == 3) {
+			if (args.length >= 3) {
 				size = (float)parseDouble(args[2]);
 			}
 			
@@ -101,9 +102,11 @@ public class VintageCraftCommands extends CommandBase {
 				bend = (float)parseDouble(args[3]);
 			}
 			
+			
+			 
 			//new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier),
 			//new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier)
-			DynTreeGen.initGenerators();
+			DynTreeGenerators.initGenerators();
 			
 			DynTreeGen gen = tree.defaultGenerator;
 			if (args[0].equals("genltree")) gen = tree.lushGenerator;

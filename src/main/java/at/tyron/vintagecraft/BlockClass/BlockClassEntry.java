@@ -69,7 +69,7 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 
 	@Override
 	public String toString() {
-		return super.toString() + " - meta: " + metadata + " / id: " + key + " / block: " + block.getUnlocalizedName();
+		return key + " (meta= " + metadata + ", block=" + block.getUnlocalizedName() + ")";
 	}
 
 	@Override

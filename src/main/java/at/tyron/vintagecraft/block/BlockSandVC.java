@@ -93,6 +93,12 @@ public class BlockSandVC extends BlockRock implements ISoil {
 	}
 
 	@Override
+	public boolean canGrowTallGrass(World world, BlockPos pos) {
+		return true;
+	}
+
+	
+	@Override
 	public EnumFertility getFertility(World world, BlockPos pos) {
 		return null;
 	}

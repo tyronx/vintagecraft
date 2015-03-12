@@ -61,28 +61,31 @@ public class MapGenFlora {
 			
 
 			if (random.nextInt(255) < Math.min(200, density) - Math.max(0, blockpos.getY() - 180)) {
-				placeGrass(world, blockpos, random, climate[1]);
-				if (density < 20) {
-					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random, climate[1]);
+				float grassdensity = EnumTallGrassGroup.getDensity(density, climate[2], climate[0]);
+				while (grassdensity > 0) {
+					if (grassdensity >= 1 || random.nextFloat() < grassdensity) {
+						placeGrass(world, blockpos.add(random.nextInt(5) - 2, 0, random.nextInt(5) - 2), random, climate[0], climate[1]);
+					}
+					
+					//.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1)
+					
+					grassdensity--;
 				}
-				if (density < 40) {
-					placeGrass(world, blockpos.east(random.nextInt(2)*2 - 1).west(random.nextInt(2)*2 - 1), random, climate[1]);
-				}
-
 			}
 			
-			//if (true) continue;
 			
 			
-			int forestDensityDiff = Math.max(1, climate[1] - 180);
+			//int forestDensityDiff = Math.max(1, climate[1] - 180);
 			
-			if (i <= 50 + forestDensityDiff/4 && (random.nextInt(255) > density || random.nextInt(forestDensityDiff) > 0)) {
+			//if (i <= 50 + forestDensityDiff/4 && (random.nextInt(255) > density || random.nextInt(forestDensityDiff) > 0)) {
+			float forestdensity = EnumTree.getForestDensity(density, climate[2], climate[0]);
+			
+			if (i < 50 * forestdensity && random.nextFloat() < forestdensity) {
+			
 				Block block = world.getBlockState(blockpos.down()).getBlock();
 				if (!(block instanceof ISoil)) {
 					continue;
 				}
-				
-				
 				
 				int steepness = Math.max(
 					Math.abs(world.getHorizon(blockpos.east(2)).getY() - world.getHorizon(blockpos.west(2)).getY()),
@@ -161,11 +164,11 @@ public class MapGenFlora {
 	}
 	
 	
-	void placeGrass(World world, BlockPos pos, Random random, int fertility) {
+	void placeGrass(World world, BlockPos pos, Random random, int fertility, int temperature) {
 		Block block = world.getBlockState(pos.down()).getBlock();
 		
 		if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
-			EnumTallGrass grasstype = EnumTallGrassGroup.fromClimate(fertility, random);
+			EnumTallGrass grasstype = EnumTallGrassGroup.fromClimate(fertility, temperature, random);
 			if (grasstype != null) {
 				world.setBlockState(pos, BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrass.GRASSTYPE, grasstype), 2);
 			}

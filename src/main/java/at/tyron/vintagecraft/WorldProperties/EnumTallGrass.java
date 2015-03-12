@@ -71,7 +71,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 		return META_LOOKUP[meta];
 	}
 	
-	
+	/*
 	public static EnumTallGrass fromClimate(int fertility, Random rand) {
     	EnumTallGrass result = FERTILITY_LOOKUP[fertility / 10];
     	EnumTallGrass otherresult = result;
@@ -96,7 +96,7 @@ public enum EnumTallGrass implements IEnumState, IStringSerializable {
 		}
 		
     }
-	
+	*/
 	
 
 	@Override

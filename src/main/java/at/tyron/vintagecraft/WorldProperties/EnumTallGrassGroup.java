@@ -48,7 +48,7 @@ public enum EnumTallGrassGroup {
 	
 	
 	
-	private EnumTallGrassGroup(/*int averagefertility,*/ int minfertility, int maxfertility, EnumTallGrass[] grasses, int[] weights) {
+	private EnumTallGrassGroup(int minfertility, int maxfertility, EnumTallGrass[] grasses, int[] weights) {
 		this.minfertility = minfertility;
 		this.maxfertility = maxfertility;
 		//this.averagefertility = averagefertility;
@@ -64,7 +64,11 @@ public enum EnumTallGrassGroup {
 	}
 	
 	
-	public static EnumTallGrass fromClimate(int fertility, Random rand) {
+	public static EnumTallGrass fromClimate(int fertility, int temperature, Random rand) {
+		if (fertility < 150) {
+			fertility += Math.max(0, temperature);
+		}
+		
 		for (EnumTallGrassGroup group : values()) {
 			if (group.minfertility <= fertility && group.maxfertility > fertility) {
 				int rnd = rand.nextInt(group.totalweight);
@@ -75,6 +79,15 @@ public enum EnumTallGrassGroup {
 			}
 		}
 		return null;
+	}
+	
+	
+	public static float getDensity(int forestdensity, int rain, int temperature) {
+		float density = (255 - forestdensity) / 50;
+		
+		if (rain < 20) return 0;
+		
+		return density / (Math.max(1f, (temperature - 20 - rain/30)));
 	}
 	
 	

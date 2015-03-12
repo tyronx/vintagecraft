@@ -6,9 +6,12 @@ import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.ModInfo;
@@ -19,10 +22,12 @@ import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
+import at.tyron.vintagecraft.TileEntity.TESapling;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.block.*;
+import at.tyron.vintagecraft.client.VCraftModelLoader;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
@@ -97,6 +102,7 @@ public class BlocksVC {
 	public static TreeClass stairs;
 	public static TreeClass singleslab;
 	public static TreeClass doubleslab;
+	public static TreeClass sapling;
 	
 	//public static BlockVC leaves;
 	//public static BlockVC leavesbranchy;
@@ -108,12 +114,18 @@ public class BlocksVC {
 	}
 	
 
-	
 	public static void initBlocks() {
 		stove = new BlockStove(false).setHardness(3F);
+		GameRegistry.registerBlock(stove, ItemBlock.class, "stove");
+		stove.setUnlocalizedName("stove");
+		VintageCraft.instance.proxy.addVariantName(Item.getItemFromBlock(stove), ModInfo.ModID.toLowerCase() + ":stove.b3d");
+		Item item = Item.getItemFromBlock(stove);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(ModInfo.ModID.toLowerCase() + ":stove.b3d", "inventory"));
+        ModelLoaderRegistry.registerLoader(VCraftModelLoader.instance);
+		
 		stove_lit = new BlockStove(true).setHardness(3F);
 		stove_lit.setLightLevel(0.86f);
-		register(stove, "stove", ItemBlock.class);
+		//register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
 		
 		farmland = new BlockFarmlandVC().setHardness(2F);
@@ -152,12 +164,15 @@ public class BlocksVC {
 		doubleslab.init();
 
 		
-		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemLeaves.class, 0.2f, Block.soundTypeGrass, null, 0);
+		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemWoodProductVC.class, 0.2f, Block.soundTypeGrass, null, 0);
 		leaves.init();
 		
-		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemLeavesBranchy.class, 0.4f, Block.soundTypeGrass, "axe", 1);
+		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemWoodProductVC.class, 0.4f, Block.soundTypeGrass, "axe", 1);
 		leavesbranchy.init();
 		
+
+		sapling = new TreeClass("sapling", BlockSaplingVC.class, ItemWoodProductVC.class, 0.4f, Block.soundTypeGrass, null, 0);
+		sapling.init();
 		
 		
 		rawore = new OreClass();
@@ -187,13 +202,7 @@ public class BlocksVC {
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
-		
-		
-		//planks = initMultiBlock(Tree.values(), "planks", BlockPlanksVC.class, ItemPlanksVC.class, BlockPlanksVC.multistateAvailableTypes, 1.5F, Block.soundTypeWood, "axe", 1);
-		
-	//	leaves = new BlockLeaves().setHardness(0.2f).registerMultiState("leaves", ItemLeaves.class, "leaves", Tree.values());
-	//	leavesbranchy = new BlockLeavesBranchy().setHardness(0.4f).registerMultiState("leavesbranchy", ItemLeavesBranchy.class, "leavesbranchy", Tree.values());
-		
+
 		wheatcrops = new BlockCropsVC().setHardness(0.2f);
 		register(wheatcrops, "wheatcrops", ItemBlock.class);
 		
@@ -205,22 +214,9 @@ public class BlocksVC {
 	
 	
 	public static void initTileEntities() {
-		/*rawore = new BlockOreVC();
-		rawore.setUnlocalizedName(ModInfo.ModID + ":" + raworeName);
-		rawore.setHardness(2F);
-		
-		EnumMaterialDeposit.REDSTONE.init(rawore);
-		EnumMaterialDeposit.NATIVEGOLD.init(rawore);
-		EnumMaterialDeposit.LIMONITE.init(rawore);
-		EnumMaterialDeposit.LIGNITE.init(rawore);
-		EnumMaterialDeposit.BITUMINOUSCOAL.init(rawore);
-		EnumMaterialDeposit.NATIVECOPPER.init(rawore);*/
-		
-		
-		//GameRegistry.registerBlock(rawore, raworeName);	
-		//GameRegistry.registerTileEntity(TEOre.class, ModInfo.ModID + ":orete");
 		GameRegistry.registerTileEntity(TileEntityStove.class, ModInfo.ModID + ":stove");
 		GameRegistry.registerTileEntity(TEFarmland.class, ModInfo.ModID + ":farmlandte");
+		GameRegistry.registerTileEntity(TESapling.class, ModInfo.ModID + ":saplingte");
 	}
 
 
@@ -259,7 +255,7 @@ public class BlocksVC {
 		
 		for (EnumFertility state: values) {
 			System.out.println("register multi vintagecraft:" + blockclassname + "/" + state.getStateName());
-			VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname, state.shortName(), state.getMetaData());
+			//VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname, state.shortName(), state.getMetaData());
 		}
 	}
 	

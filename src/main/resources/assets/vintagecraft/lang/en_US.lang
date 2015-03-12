@@ -44,6 +44,8 @@ item.ore.limonite.name=Limonite
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite
+item.ore.cassiterite.name=Cassiterite
+item.redstone.cassiterite.name=Redstone
 
 item.ingot.copper.name=Copper Ingot
 item.ingot.bronze.name=Bronze Ingot
@@ -56,9 +58,9 @@ item.ingot.palladium.name=Palladium Ingot
 item.ingot.osmium.name=Osmium Ingot
 item.ingot.silver.name=Silver Ingot
 item.ingot.gold.name=Gold Ingot
+item.ingot.tin.name=Tin Ingot
+item.ingot.uranium.name=Uranium Ingot
 
-
-tile.log.mountaindogwood.name=Mountain Dogwood Log
 
 container.stove=Stove
 tile.stove.name=Stove
@@ -90,4 +92,145 @@ high.name=High Fertility
 
 verysparsegrass.name=Very Sparse Grass
 
+tile.tallgrass.veryshort.name=Very Short Tallgrass
+tile.tallgrass.short.name=Short Tallgrass
+tile.tallgrass.medium.name=Medium Tallgrass
+tile.tallgrass.long.name=Long Tallgrass
+tile.tallgrass.verylong.name=Very long Tallgrass
+tile.tallgrass.verylong_flowering.name=Very long flowering Tallgrass
+
+
 tile.cobblestone.name=Cobblestone
+tile.rawclay.name=Raw clay
+item.wheatseeds.name=Wheat Seeds
+
+tile.log.ash.name=Ash Log
+tile.log.birch.name=Birch Log
+tile.log.oak.name=Oak Log
+tile.log.crimsonkingmaple.name=Crimson King Maple Log
+tile.log.mountaindogwood.name=Mountain Dogwood Log
+tile.log.scotspine.name=Scots Pine Log
+tile.log.spruce.name=Spruce Log
+tile.log.acacia.name=Acacia Log
+tile.log.kapok.name=Kapok Log
+tile.log.purpleheartwood.name=Purple Heartwood Log
+tile.log.coconutpalm.name=Coconut Palm Log
+tile.log.elephanttree.name=Elephant Tree Log
+tile.log.myrtlebeech.name=Myrtle Beech Log
+tile.log.joshua.name=Joshua Tree Log
+tile.log.pear.name=Pear Log
+
+tile.planks.ash.name=Ash Planks
+tile.planks.birch.name=Birch Planks
+tile.planks.oak.name=Oak Planks
+tile.planks.crimsonkingmaple.name=Crimson King Maple Planks
+tile.planks.mountaindogwood.name=Mountain Dogwood Planks
+tile.planks.scotspine.name=Scots Pine Planks
+tile.planks.spruce.name=Spruce Planks
+tile.planks.acacia.name=Acacia Planks
+tile.planks.kapok.name=Kapok Planks
+tile.planks.purpleheartwood.name=Purple Heartwood Planks
+tile.planks.coconutpalm.name=Coconut Palm Planks
+tile.planks.elephanttree.name=Elephant Tree Planks
+tile.planks.myrtlebeech.name=Myrtle Beech Planks
+tile.planks.joshua.name=Joshua Tree Planks
+tile.planks.pear.name=Pear Planks
+
+sapling.ash.name=Ash Sapling
+sapling.birch.name=Birch Sapling
+sapling.oak.name=Oak Sapling
+sapling.crimsonkingmaple.name=Crimson King Maple Sapling
+sapling.mountaindogwood.name=Mountain Dogwood Sapling
+sapling.scotspine.name=Scots Pine Sapling
+sapling.spruce.name=Spruce Sapling
+sapling.acacia.name=Acacia Sapling
+sapling.kapok.name=Kapok Sapling
+sapling.purpleheartwood.name=Purple Heartwood Sapling
+sapling.coconutpalm.name=Coconut Palm Sapling
+sapling.elephanttree.name=Elephant Tree Sapling
+sapling.myrtlebeech.name=Myrtle Beech Sapling
+sapling.joshua.name=Joshua Tree Sapling
+sapling.pear.name=Pear Sapling
+
+leaves.ash.name=Ash Leaves
+leaves.birch.name=Birch Leaves
+leaves.oak.name=Oak Leaves
+leaves.crimsonkingmaple.name=Crimson King Maple Leaves
+leaves.mountaindogwood.name=Mountain Dogwood Leaves
+leaves.scotspine.name=Scots Pine Leaves
+leaves.spruce.name=Spruce Leaves
+leaves.acacia.name=Acacia Leaves
+leaves.kapok.name=Kapok Leaves
+leaves.purpleheartwood.name=Purple Heartwood Leaves
+leaves.coconutpalm.name=Coconut Palm Leaves
+leaves.elephanttree.name=Elephant Tree Leaves
+leaves.myrtlebeech.name=Myrtle Beech Leaves
+leaves.joshua.name=Joshua Tree Leaves
+leaves.pear.name=Pear Leaves
+
+
+fence.ash.name=Ash Fence
+fence.birch.name=Birch Fence
+fence.oak.name=Oak Fence
+fence.crimsonkingmaple.name=Crimson King Maple Fence
+fence.mountaindogwood.name=Mountain Dogwood Fence
+fence.scotspine.name=Scots Pine Fence
+fence.spruce.name=Spruce Fence
+fence.acacia.name=Acacia Fence
+fence.kapok.name=Kapok Fence
+fence.purpleheartwood.name=Purple Heartwood Fence
+fence.coconutpalm.name=Coconut Palm Fence
+fence.elephanttree.name=Elephant Tree Fence
+fence.myrtlebeech.name=Myrtle Beech Fence
+fence.joshua.name=Joshua Tree Fence
+fence.pear.name=Pear Fence
+
+fencegate.ash.name=Ash Fence Gate
+fencegate.birch.name=Birch Fence Gate
+fencegate.oak.name=Oak Fence Gate
+fencegate.crimsonkingmaple.name=Crimson King Maple Fence Gate
+fencegate.mountaindogwood.name=Mountain Dogwood Fence Gate
+fencegate.scotspine.name=Scots Pine Fence Gate
+fencegate.spruce.name=Spruce Fence Gate
+fencegate.acacia.name=Acacia Fence Gate
+fencegate.kapok.name=Kapok Fence Gate
+fencegate.purpleheartwood.name=Purple Heartwood Fence Gate
+fencegate.coconutpalm.name=Coconut Palm Fence Gate
+fencegate.elephanttree.name=Elephant Tree Fence Gate
+fencegate.myrtlebeech.name=Myrtle Beech Fence Gate
+fencegate.joshua.name=Joshua Tree Fence Gate
+fencegate.pear.name=Pear Fence Gate
+
+
+singleslab.ash.name=Ash Slab
+singleslab.birch.name=Birch Slab
+singleslab.oak.name=Oak Slab
+singleslab.crimsonkingmaple.name=Crimson King Maple Slab
+singleslab.mountaindogwood.name=Mountain Dogwood Slab
+singleslab.scotspine.name=Scots Pine Slab
+singleslab.spruce.name=Spruce Slab
+singleslab.acacia.name=Acacia Slab
+singleslab.kapok.name=Kapok Slab
+singleslab.purpleheartwood.name=Purple Heartwood Slab
+singleslab.coconutpalm.name=Coconut Palm Slab
+singleslab.elephanttree.name=Elephant Tree Slab
+singleslab.myrtlebeech.name=Myrtle Beech Slab
+singleslab.joshua.name=Joshua Tree Slab
+singleslab.pear.name=Pear Slab
+
+
+leavesbranchy.ash.name=Ash Leaves with Branches
+leavesbranchy.birch.name=Birch Leaves with Branches
+leavesbranchy.oak.name=Oak Leaves with Branches
+leavesbranchy.crimsonkingmaple.name=Crimson King Maple Leaves with Branches
+leavesbranchy.mountaindogwood.name=Mountain Dogwood Leaves with Branches
+leavesbranchy.scotspine.name=Scots Pine Leaves with Branches
+leavesbranchy.spruce.name=Spruce Leaves with Branches
+leavesbranchy.acacia.name=Acacia Leaves with Branches
+leavesbranchy.kapok.name=Kapok Leaves with Branches
+leavesbranchy.purpleheartwood.name=Purple Heartwood Leaves with Branches
+leavesbranchy.coconutpalm.name=Coconut Palm Leaves with Branches
+leavesbranchy.elephanttree.name=Elephant Tree Leaves with Branches
+leavesbranchy.myrtlebeech.name=Myrtle Beech Leaves with Branches
+leavesbranchy.joshua.name=Joshua Tree Leaves with Branches
+leavesbranchy.pear.name=Pear Leaves with Branches

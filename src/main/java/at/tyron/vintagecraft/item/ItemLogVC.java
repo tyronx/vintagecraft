@@ -34,10 +34,6 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		/*if (getTreeType(stack) == null) {
-			return super.getUnlocalizedName() + ".unknown";
-		}*/
-		
 		return super.getUnlocalizedName() + "." + getTreeType(stack).getStateName();
 	}
 	

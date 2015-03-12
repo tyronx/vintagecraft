@@ -32,18 +32,15 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
     @Override
     public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	Random rand = world instanceof World ? ((World)world).rand : new Random();
-    	
         java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-        
-        int chance = this.getSaplingDropChance(state);
-
-       /* if (rand.nextInt(chance) == 0) {
-            ret.add(new ItemStack(getItemDropped(state, rand, fortune), 1, damageDropped(state)));
-        }*/
         
         if (rand.nextInt(2) == 0) {
         	ret.add(new ItemStack(Items.stick, 1));
         }
+        
+        if (rand.nextInt(8) == 0) {
+    		ret.add(BlocksVC.sapling.getItemStackFor(((BlockClassEntry)state.getValue(getTypeProperty())).getKey()));
+    	}
 
 
         return ret;

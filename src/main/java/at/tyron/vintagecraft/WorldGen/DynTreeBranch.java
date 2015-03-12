@@ -21,23 +21,26 @@ public class DynTreeBranch {
 	
 	public float bendCorrection = 0f;
 	
+	//int numbranching = 1;
+	EvolvingNatFloat numBranching;
+	
+	//public EvolvingNatFloat bendAngleVert = EvolvingNatFloat.createUniform(0f, 0f);
+	
+	public EvolvingNatFloat angleVert = EvolvingNatFloat.createIdentical(0f);
+	public EvolvingNatFloat angleHori = EvolvingNatFloat.createIdentical(NatFloat.PI / 2);
+	
 	
 	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat spacing, float widthloss) {
-		this(verticalAngle, horizontalAngle, NatFloat.createUniform(0f, 0f), spacing, widthloss, 0f);
+		this(verticalAngle, horizontalAngle, NatFloat.createUniform(0f, 0f), spacing, widthloss, 0f, 0.5f);
 	}
 	
-	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag) {
-		this(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, 0.5f);
-	}
-
-	
-	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier) {
-		this(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier, 1f);
+	public DynTreeBranch(NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier) {
+		this(branchVerticalAngle, branchHorizontalAngle, branchStart, spacing, widthloss, EvolvingNatFloat.createIdentical(1f), gravitydrag, branchWidthMultiplier, 1f);
 	}
 	
-	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, float gravitydrag, float branchWidthMultiplier, float widthBranchLossBase) {
-		this.branchVerticalAngle = verticalAngle;
-		this.branchHorizontalAngle = horizontalAngle;
+	public DynTreeBranch(NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, NatFloat branchStart, NatFloat spacing, float widthloss, EvolvingNatFloat numbranching, float gravitydrag, float branchWidthMultiplier, float widthBranchLossBase) {
+		this.branchVerticalAngle = branchVerticalAngle;
+		this.branchHorizontalAngle = branchHorizontalAngle;
 		this.branchSpacing = spacing;
 		this.branchStart = branchStart;
 		
@@ -46,5 +49,7 @@ public class DynTreeBranch {
 		
 		this.branchWidthMultiplier = branchWidthMultiplier;
 		this.widthBranchLossBase = widthBranchLossBase;
+		
+		this.numBranching = numbranching;
 	}
 }

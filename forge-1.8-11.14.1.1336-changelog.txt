@@ -1,5 +1,393 @@
 Changelog:
-Build 1273:
+Build 1336:
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@3e7ae47f8f5d642b256adbe8b3395bb40daf85da Fix Event Bus Access Issues
+		MinecraftForge/FML@c8e2a5f377ddf8a35cceda6a14697dbe8cad4ca8 Fixed WorldInfo properties not loaded
+		MinecraftForge/FML@7f96b2c69ab8a2ed07b5b786b3d679ea4c509121 Fix Debug packet logger on local memory connections.
+
+Build 1.8-11.14.1.1335:
+	robin: remove translation and add a note for contributors
+
+Build 1.8-11.14.1.1334:
+	erju01: Fixed enchanting table applying secondary enchs.
+
+Build 1.8-11.14.1.1333:
+	mnmiller1: Add NeighborNotiftyEvent.
+
+Build 1.8-11.14.1.1332:
+	tmtravlrsmail:
+		Added Nether Fortress chest to the ChestGenHooks
+		
+		I tried to follow the directions on
+		
+		https://github.com/MinecraftForge/MinecraftForge/wiki/If-you-want-to-contribute-to-Forge
+		
+		as best as I could. =)
+		
+		If anything is wrong, let me know and I'll change it!
+	clienthax:
+		Current spawner implementation checks the EntitySpawnPlacementRegistry hashmap to check where a entity should spawn
+		as there is no way to modify this without the use of reflection or a AT, you can not specify where you want your entity to spawn
+		adding this helper method will allow developers to specify where they want their entity to spawn.
+		
+		Signed-off-by: Clienthax <clienthax@gmail.com>
+		
+		Update EntitySpawnPlacementRegistry.java.patch
+	LexManos: Fix compile error in ClientHax's PR.
+
+Build 1.8-11.14.1.1329:
+	fry: Hopefully fix NPE during baking of empty vanilla item models
+
+Build 1.8-11.14.1.1328:
+	LexManos: Fire WorldEvent.Load for Client worlds. Closes #1719
+
+Build 1.8-11.14.1.1327:
+	LexManos: Make Container.mergeItemStack respect Slot.isValidItem Closes #1630
+
+Build 1.8-11.14.1.1326:
+	LexManos: Fix JukeBoxes not storing the inserted record. All TE's in minecraft are in net.minecraft.tileentity EXCEPT JukeBoxes. Closes #1633 Closes #1714
+
+Build 1.8-11.14.1.1325:
+	LexManos: Fix NPEs in last commit.
+
+Build 1.8-11.14.1.1324:
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@c9cf3136c265b2e8e46eab102b2310a9312b8cfb New @Mod properties to define which environment to load the mod on.
+		clientSideOnly will only be loaded in the Client environment.
+		serverSideOnly will only be loaded in the Dedicated server environment.
+		Combine with acceptedMinecraftVersions to prevent users from loading the mod in the incorrect environment.
+
+Build 1.8-11.14.1.1323:
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@5eff40897545c9e6f597a202bc9e86c3b07761ad Filter more known libraries from potential mod canidates.
+		MinecraftForge/FML@feb4c436db27a249dd5190023edd38cb5884e90b Quiet ClassPatchManager debug spam by default. Reenable using -Dfml.debugClassPatchManager=true.
+		MinecraftForge/FML@41e806fa950839bf901ebf9c18d0c632a7c5538c Fix double decoding of UTF8 characters in lang files.
+
+Build 1.8-11.14.1.1322:
+	LexManos: Fixed using items on the wrong block client side caused by iChuns eyeheight update.
+
+Build 1.8-11.14.1.1321:
+	ohai.iChun: Reimplement variable eyeHeight for players which was removed in the 1.7 to 1.8 port.
+
+Build 1.8-11.14.1.1320:
+	fry: Removed event bus call from the ModelLoader
+
+Build 1.8-11.14.1.1319:
+	matthewprenger: Add the ability to add prefixes and suffixes to the player's display name.
+	LexManos: Add safty to URL detection in chat. Closes #1712
+
+Build 1.8-11.14.1.1318:
+	fry: Added a default white texture; Fixed B3DLoader crashing when the brush has empty texture specified
+	fry: RenderItem can now use baked quad color
+
+Build 1.8-11.14.1.1317:
+	Parker Young:
+		Added ATs for EnumFacing
+		
+		This publics the VALUES array and HORIZONTALS array in EnumFacing, thus giving modders access to these arrays, much like ForgeDirection had.
+
+Build 1.8-11.14.1.1316:
+	fry: Attributes.put (de)normalization now works as intended
+
+Build 1.8-11.14.1.1315:
+	LexManos: Hold a weak reference to the Minecraft fake player object. Closes #1705
+
+Build 1.8-11.14.1.1314:
+	matthewprenger: Minor tweak to UsernameCache to also cache usernames of offline players.
+
+Build 1.8-11.14.1.1313:
+	fry: Updated FML
+
+Build 1.8-11.14.1.1312:
+	fry: ModelRotation.getMatrix() now returns the correct matrix; fixed the application of custom transformations to vanilla models; fixed application of transformations to B3D models; fixed the culling of rotated vanilla models
+
+Build 1.8-11.14.1.1311:
+	fry: Alternative models work once again
+
+Build 1.8-11.14.1.1310:
+	fry: Updated FML
+
+Build 1.8-11.14.1.1309:
+	fry: fix ModelLoader.setCustomModelResourceLocation not storing same item with different metadata values
+
+Build 1.8-11.14.1.1308:
+	LexManos: Fixed debugging Dedicated server in Forge Dev workspace.
+	LexManos: Fixed being kicked from the server while swimming.
+	fry:
+		fixed NPE during loading of B3D models without textures/brushes.
+		changed default B3D color to have full opacity.
+	fry: Reworked vanilla texture resolution, hopefully fixes NPE bug in FaceBakery
+	fry: made renderLayer ThreadLocal, now it should hold correct value for use inside custom baked models
+	LexManos: Try a maven mirrior to fix build issues.
+
+Build 1.7.10-10.13.2.1307-1.7.10:
+	LexManos: Fixed potential NPEs in Structure code caused by componenets not being able to load.
+
+Build 1.8-11.14.1.1306:
+	LexManos: Fixed potential NPEs in Structure code caused by componenets not being able to load. Closes #1686
+
+Build 1.8-11.14.1.1305:
+	LexManos: Fixed InitMapGenEvent's fire order so values are used. And added OCEAN_MONUMENT type. Closes #1681
+	LexManos: Fixed BlockBush and BlockCrops not respecting custom soils. Closes #1683
+
+Build 1.8-11.14.1.1303:
+	fry: Restore binary backwards compatibility
+
+Build 1.8-11.14.1.1302:
+	fry: ModelBakeEvent now has ModelLoader as an argument instead of ModelBakery; Added various static hooks to ModelLoader to allow registering model-related information before it's needed (prevents file-not-found errors on first baking pass); ModelLoader waits until ModelBakeEvent is done before showing any missing model exceptions; It's now possible to define models completely in-code (as illustrated by ModelBakeEventDebug).
+
+Build 1.8-11.14.1.1301:
+	LexManos: Bump version to 11.14.1 for next development cycle.
+
+Build 1.8-11.14.0.1299:
+	fry: Fixed tracking of UV locking state. Closes #1679
+
+Build 1.8-11.14.0.1298:
+	LexManos: Fixed ItemFrames not having a model. Closes #1678
+	LexManos: Updated FML: MinecraftForge/FML@22c9656196dbbea8ed983663d536c3ca272d7282 Reset S->C CustomPayload data after Write, allowing the same packet to be written multiple times.
+
+Build 1.8-11.14.0.1297:
+	LexManos: Fixed domain support in ArmorMaterial texture name. Closes #1675
+	LexManos: Fixed Buttons not dropping anything when broken. Closes #1676
+
+Build 1.8-11.14.0.1296:
+	LexManos:
+		Initial update to 1.8, Super beta. Most rendering related hooks are out due to major changes in 1.8.
+		
+		Some notes:
+		Almost all int x, int y, int z parameters have been changed to BlockPos class
+		ForgeDirection has been removed, replaced by net.minecraft.util.EnumFacing.
+		All FML classes have moved from packet cpw.mods.fml to net.minecraftforge.fml
+		Fluid Rendering has been disabled for the time being, to be re-evaulated and a test mod created for it.
+		Minecraft now uses a Model based system for rendering blocks and Items. The intention is to expand the model format to better suit modder's needed once it is evaulated.
+		As such, The model loaders from Forge have been removed, to be replaced by expanding vanilla's model format.
+		Metadata has been extracted out in Minecraft to IBlockState, which holds a list of properties instead of magic number metadata. DO NOT listen to the fearmongering, you can do EVERYTHING with block states you could previously with metadata.
+		Stencil Bits are disabled entirely by for the main Display, Modders must enable and recreate the FrameBuffer if they wish to use Stencil Bits.
+	LexManos: Fix local variable conflict in Forge patch and latest MCP mappings.
+	LexManos: Fix fog colors, Closes #1524
+	LexManos: Fix acedential inversion causing some tress to not have leaves. Closes #1522
+	LexManos: Fix creative picking a CommandBlock minecart returning wrong item. Closes #1523
+	LexManos: Fixed crash with caomparators due to wrong position. Closes #1512
+	LexManos: Fix inverted logic preventing blocks from breaking.
+	LexManos: Fix Entityies not taking damage correctly. Closes #1511
+	LexManos: Fix wrong state being passed to Block.getDrops
+	LexManos: Fix potential NPE in Block.isToolEffective
+	LexManos: Update RecipeSorter for new 1.8 recipies.
+	LexManos: Fix destroy particles not being added. Closes #1528
+	LexManos: Fix debug screen not showing grey background. Closes #1529
+	LexManos: Fix not being able to place blocks in liquids, and related issues.
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@36644e97714b46dbbb24416febdde1332a3e753c Finalize modded handshakes in the World tick thread. Prevents potential CMEs when login event takes to long to fire.
+	LexManos: Fix interacting with entities.
+	LexManos: Fixed Entity extended properties init order. Closes #1532
+	LexManos: Fixed Entities not being able to climb ladders, Closes #1535
+	LexManos: Fixed snow layers not being able to stack more then twice. Closes #1534
+	LexManos: Fix BlockPane's connection detection.
+	LexManos: Fixed vanilla bug where top part of double plants would flicker a tifferent texture before dissapearing.
+	LexManos: Fix NPE with BlockSnapshots that caused items with TileEntities to be used up in creative mode.
+	LexManos: Fixed vanilla issue where exceptions in World tasks would not be logged.
+	LexManos: Fixed blocks not breaking properly when instantly destroied.
+	LexManos: Fix stickey pistons not retracting properly.
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@9c8ca4a4e3c4acc4980535e5c60da169b75a7810 Unlink banner block and item id. Mojang should of matched these up but they didn't -.-
+		MinecraftForge/FML@84a101f344b8fc21de1201fde717fbcbcba2aa79 Update Dev mcp mappings to 11-30 snapshot.
+	LexManos: Remove debug patch I left in.
+	LexManos: Fix finding of spawn location for mobs. Closes #1546
+	LexManos: Only call blockBreak when block itself changes, not just meta. Fixes bottles poping out of brewing stands.
+	fry: Added model bake event (allows mods to insert custom baked models, much like TextureStitchEvent allows to load custom textures), ISmartBlock/ItemModel (ability form models to react to block/item states), Block.getExtendedState, support for unlisted properties in block states. Includes example implementation of http://imgur.com/a/FyyJX
+	LexManos: Added Explosion Start and Detonate events to control explosion.
+	LexManos: Fixed bug in ServerConfigurationManager.transferPlayerToDimension where it would send the old dimension's information.
+	LexManos: Add "sand" to the OreDictionary
+	LexManos: Cleanup deprecated code, and TODOs in OreDictionary. Down-typed things from ArrayList to List. Asking for the ores with a null stack will now throw an Exception.
+	LexManos: Added CreateSpawnPosition event.
+	LexManos: Add LivingHealEvent called from EntityLivingBase.heal()
+	LexManos: Added PotionBrewEvent.Pre/Post. To allow for modification and cancelation of Brewing.
+	LexManos: Add quartz_ore tool init, more mojang special casing -.-
+	LexManos: Changed ToolMaterial's repair material to ItemStack version to allow metadata sensitive versions.
+	LexManos: Improved Control of Enchantment.canApplyTogether() in Mod Enchantments, allowing both enchantments to determine if they can apply together.
+	LexManos: Expand PlayerWakupEvent to expose the three parameters passed into EntityPlayer.wakeUp.
+	LexManos: Unbind Shaped/Shapeless Ore Recipies from Array list to normal List.
+	LexManos: Fixed NPE thrown when brewing event is fired and not all slots are filled. Closes #1564
+	LexManos: Make daylight sensor recipe use ore dictionary wooden slabs Closes #1565
+	LexManos: Fix missed patch causing Dispensed Armor to go into the wrong slot. Closes #1560
+	LexManos: Fixed log spam when breaking DoublePlants. Closes #1555
+	LexManos: Fix texture stitcher not using all avalible spaces.
+	LexManos: Fix EnumHelper for new ArmorTexture argument.
+	LexManos: Untie ItemModelMesher from using Item Ids internally by implementing our own simple mechanics using Trove.
+	LexManos: Fix userdev for new BlockState change.
+	LexManos: MinecraftForge/FML@e3785c28930a218cf9374458c67c34e7fba17922 Ensure that EntitySpawn and OpenGUI packets are handled in the world thread. Also log all errors that are thrown in FutureTasks.
+	LexManos: Remove our changes to Stitcher slot allocation.
+	LexManos: Fix incorrect logic in world change clumping.
+	LexManos: MinecraftForge/FML@5a4d362293fe70e1421d1f22c4a195944731d6ba Finish removing marker in mapping entry names. FMLMissingMappingsEvent/FMLModIdMappingEvent should fire with correct names now.
+	jadran.kotnik: Fixed messages not being added to the chat history and ClientCommandHandler not being called when sleeping.
+	LexManos: Fix BlockSnapshots not firing correctly due to patch mixup in 1.8 update. Closes #1591
+	palechip: Fix Scoreboard rendering for the sidebar.
+	LexManos: Removed exclusion of white stained glass recipes in ore dictionary.
+	LexManos: Added chests to the ore dictionary.
+	LexManos: Fix crafting of non-oak fences/gates.
+	LexManos: Fix MC-30864 (sending web links in chat)
+	LexManos: Fix recipies for stone variants.
+	Chicken-Bones: Allow blocks to render in multiple layers
+	lumien231: Fixes #1603: Moving the start of the update thread to the pre init of the forge mod container
+	LexManos: Fix potential NPE when loading a single player world where you were saved in a unloaded dimension. Closes #1575
+	LexManos: Call World.init from DimensionManager.initDimension Closes #1551
+	LexManos: Made Chunk.fillBlock respect TileEntity.shouldRefresh.
+	LexManos: Fix value passed for Item.getModel useRemaining argument. Closes #1623
+	LexManos: Silently eat exceptions when getting a TE's rendering bounding box, this 'fixes' Bukkit servers screwing up world data and causing clients to crash.
+	jadran.kotnik: Fixed NPE when canceling ClientChatRecievedEvent. Fixes #1644
+	Parker Young: Re-enabled Icon setting for Fluids
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@a55e4124531119f1c9c023cff74cfa09b49ef0e0 Save the mod list of players in their NetworkDispatcher (Make it accessable for mods)
+		MinecraftForge/FML@69d479d46ae658c5a5c2c00081be3df38e38c748 Fixed getEffectiveSide() for Netty Server threads
+		MinecraftForge/FML@0f9a33cf14165ddd424a7d82c2178cf5854bf32f Exclude only log4j2 queue from class loader
+	jadran.kotnik: Don't skip the first line when rendering (debug) text.
+	fry:
+		Added model loader registry
+		
+		Entry point: ModelLoaderRegistry
+		loader interface: ICustomModelLoader
+		custom model: IModel
+		
+		ModelLoader is responsible for splicing into vanilla model system.
+		(you probably don't need to use it directly)
+		
+		Interop with vanilla models isn't great yet
+		(vanilla models can't refer to custom ones as parents), will improve in
+		the future.
+		
+		Includes loader for B3D models, with animation support
+		(net.minecraftforge.client.model.b3d).
+		Blender export plugin with compatible coordinate system:
+		https://github.com/RainWarrior/B3DExport
+		
+		OBJ loader is being written, will be included at some point in the
+		future. For now you can convert OBJ to B3D via blender, or wait.
+	techStackLp:
+		Closes #1552
+		
+		Set the destination block the to the fluid.
+		In the previous code the destination block was still Air and would would
+		cause a crash because air doesn't have a property for LEVEL
+	fry: Removed leftover debug messages
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@d00feb58c762b0bbc506d79faf1ce40bc96732e9 Remove debug code that was causing console spam in Forge.
+		MinecraftForge/FML@1de3bf733aef754f15de55006b1750376871feb0 Fix FML's package for net.miencraftforge on maven. Fixes uploading of new builds. Note: 1.7.10 builds are bug fixes only while FML/Forge for 1.8 stabelizes.
+		MinecraftForge/FML@05ecefb53857ecc1dc52d4a577ed593c26da9659 Update to ASM5 for Java 8 support
+		MinecraftForge/FML@1112c455b9758c38eab385f48578bad17c0180f9 Merge pull request #595 from Grinch/master
+		MinecraftForge/FML@9c3013e02af1bd2f724d34a30e0b880b6e131645 Merge remote-tracking branch 'origin/1.8'
+
+Build 1.8-11.14.0.1295-1.8:
+	fry: Removed leftover debug messages
+
+Build 1.8-11.14.0.1294-1.8:
+	techStackLp:
+		Closes #1552
+		
+		Set the destination block the to the fluid.
+		In the previous code the destination block was still Air and would would
+		cause a crash because air doesn't have a property for LEVEL
+
+Build 1.8-11.14.0.1293-1.8:
+	jadran.kotnik: Don't skip the first line when rendering (debug) text.
+
+Build 1.8-11.14.0.1292-1.8:
+	fry:
+		Added model loader registry
+		
+		Entry point: ModelLoaderRegistry
+		loader interface: ICustomModelLoader
+		custom model: IModel
+		
+		ModelLoader is responsible for splicing into vanilla model system.
+		(you probably don't need to use it directly)
+		
+		Interop with vanilla models isn't great yet
+		(vanilla models can't refer to custom ones as parents), will improve in
+		the future.
+		
+		Includes loader for B3D models, with animation support
+		(net.minecraftforge.client.model.b3d).
+		Blender export plugin with compatible coordinate system:
+		https://github.com/RainWarrior/B3DExport
+		
+		OBJ loader is being written, will be included at some point in the
+		future. For now you can convert OBJ to B3D via blender, or wait.
+
+Build 1.7.10-10.13.2.1291:
+	lukastenbrink:
+		Fix fluid tanks incorrectly reading NBT when empty
+		
+		If the Empty flag was set, the tank would not correctly read the data, keeping the outdated FluidStack instead. This is especially relevant with updatable TileFluidHandler TEs.
+
+Build 1.8-11.14.0.1290-1.8:
+	LexManos:
+		Updated FML:
+		MinecraftForge/FML@a55e4124531119f1c9c023cff74cfa09b49ef0e0 Save the mod list of players in their NetworkDispatcher (Make it accessable for mods)
+		MinecraftForge/FML@69d479d46ae658c5a5c2c00081be3df38e38c748 Fixed getEffectiveSide() for Netty Server threads
+		MinecraftForge/FML@0f9a33cf14165ddd424a7d82c2178cf5854bf32f Exclude only log4j2 queue from class loader
+
+Build 1.8-11.14.0.1289-1.8:
+	Parker Young: Re-enabled Icon setting for Fluids
+
+Build 1.8-11.14.0.1288-1.8:
+	jadran.kotnik: Fixed NPE when canceling ClientChatRecievedEvent. Fixes #1644
+
+Build 1.8-11.14.0.1287-1.8:
+	LexManos: Silently eat exceptions when getting a TE's rendering bounding box, this 'fixes' Bukkit servers screwing up world data and causing clients to crash.
+
+Build 1.7.10-10.13.2.1286:
+	asiekierka: fix shouldRefresh being too broad in tile entity update
+
+Build 1.8-11.14.0.1285-1.8:
+	Chicken-Bones: Allow blocks to render in multiple layers
+
+Build 1.7.10-10.13.2.1284:
+	lumien231: Fix versionCheck config option
+
+Build 1.7.10-10.13.2.1283:
+	CovertJaguar: Bulk Chunk Data packets should also check TileEntity.shouldRefresh().
+
+Build 1.8-11.14.0.1282-1.8:
+	LexManos: Fix potential NPE when loading a single player world where you were saved in a unloaded dimension. Closes #1575
+	LexManos: Call World.init from DimensionManager.initDimension Closes #1551
+	LexManos: Made Chunk.fillBlock respect TileEntity.shouldRefresh.
+	LexManos: Fix value passed for Item.getModel useRemaining argument. Closes #1623
+
+Build 1.8-11.14.0.1281-1.8:
+	lumien231: Fixes #1603: Moving the start of the update thread to the pre init of the forge mod container
+
+Build 1.8-11.14.0.1280-1.8:
+	LexManos: Fix recipies for stone variants.
+
+Build 1.8-11.14.0.1279-1.8:
+	palechip: Fix Scoreboard rendering for the sidebar.
+
+Build 1.8-11.14.0.1278-1.8:
+	LexManos: Removed exclusion of white stained glass recipes in ore dictionary.
+	LexManos: Added chests to the ore dictionary.
+	LexManos: Fix crafting of non-oak fences/gates.
+	LexManos: Fix MC-30864 (sending web links in chat)
+
+Build 1.7.10-10.13.2.1277:
+	mattmess1221: Fix MC-30864 (sending web links in chat)
+
+Build 1.7.10-10.13.2.1276:
+	clashsoft: Fix Stained Glass pane rendering issues
+
+Build 1.7.10-10.13.2.1275:
+	Kittychanley: Removed exclusion of white stained glass recipes in ore dictionary. Closes #1502 & #1481
+
+Build 1.8-11.14.0.1274-1.8:
+	LexManos: Fix BlockSnapshots not firing correctly due to patch mixup in 1.8 update. Closes #1591
+
+Build 1.8-11.14.0.1273-1.8:
 	jadran.kotnik: Fixed messages not being added to the chat history and ClientCommandHandler not being called when sleeping.
 
 Build 1.7.10-10.13.2.1272:
@@ -21,7 +409,7 @@ Build 1.8-11.14.0.1268-1.8:
 	LexManos: Fix userdev for new BlockState change.
 
 Build 1.8-11.14.0.1267-1.8:
-	rainwarrior: Added model bake event (allows mods to insert custom baked models, much like TextureStitchEvent allows to load custom textures), ISmartBlock/ItemModel (ability form models to react to block/item states), Block.getExtendedState, support for unlisted properties in block states. Includes example implementation of http://imgur.com/a/FyyJX
+	fry: Added model bake event (allows mods to insert custom baked models, much like TextureStitchEvent allows to load custom textures), ISmartBlock/ItemModel (ability form models to react to block/item states), Block.getExtendedState, support for unlisted properties in block states. Includes example implementation of http://imgur.com/a/FyyJX
 
 Build 1.8-11.14.0.1266-1.8:
 	LexManos: Untie ItemModelMesher from using Item Ids internally by implementing our own simple mechanics using Trove.
@@ -186,7 +574,7 @@ Build 1.7.10-10.13.2.1230:
 	LexManos: Bump version for new RB.
 
 Build 1.7.10-10.13.1.1229:
-	AbrarSyed: implemented crowdin support
+	Abrar Syed: implemented crowdin support
 	matthewprenger: Add username cache for determining a player's last known username
 	azanor1:
 		Fix for biome weights under 10
@@ -553,7 +941,7 @@ Build 1.7.10-10.13.0.1170:
 	LexManos: STENCIL buffer and DEPTH buffer, attempt a fix for GL errors.
 
 Build 1.7.10-10.13.0.1169:
-	alexrusso225: Added Javadoc comments for Forge Event documentation.
+	Alexander Ibrahim: Added Javadoc comments for Forge Event documentation.
 
 Build 1.7.10-10.13.0.1168:
 	LexManos: MinecraftForge/FML@ac994e178a3533aa3c2ad8359aef9e5852c27a72 Scala people test your shit.
@@ -884,7 +1272,7 @@ Build 1.7.2-10.12.1.1096:
 	Christian: MinecraftForge/FML@4512f8e5e316ddaf6a4fe35470f1f88dcdddae1a Warn when the objectholder finds nothing in the registry. Helps debug mismatched names. Also, actually make the scoping thing work with objectholder
 
 Build 1.7.2-10.12.1.1095:
-	rainwarrior: Added world display list render events
+	fry: Added world display list render events
 
 Build 1.7.2-10.12.1.1094:
 	foka_12:
@@ -1124,11 +1512,11 @@ Build 1.7.2-10.12.0.1049:
 	LexManos: Advanced Model Loader available server-side for data driven models. To be cleanuped and re-evaluated in 1.8. Closes #773
 
 Build 1.7.2-10.12.0.1048:
-	AbrarSyed: COnverted patches to SRG names
-	AbrarSyed: updated for ForgeGradle 1.2
-	AbrarSyed: added .exe file.. fixed a bunch of patches
-	AbrarSyed: updated FML to latest master
-	AbrarSyed: fixed remaining noop patches and exc derp
+	Abrar Syed: COnverted patches to SRG names
+	Abrar Syed: updated for ForgeGradle 1.2
+	Abrar Syed: added .exe file.. fixed a bunch of patches
+	Abrar Syed: updated FML to latest master
+	Abrar Syed: fixed remaining noop patches and exc derp
 	LexManos: Update patches for new Fixed FernFlower used in FG 1.2.
 
 Build 1.7.2-10.12.0.1047:
@@ -1637,12 +2025,12 @@ Build 1.6.4-9.11.1.961:
 	LexManos: Updated FML: MinecraftForge/FML@c2b919d339e5f63271cfb67a77235c21c5c3b80e Don't validate signatures in dev env.
 
 Build 960:
-	AbrarSyed: Step 1: The Purge
-	AbrarSyed: update FML for gradle changes
-	AbrarSyed: Step 2: The Reformation
-	AbrarSyed: Step 3: The Rebirth
-	AbrarSyed: fixed versioning and stuff
-	AbrarSyed: added buildSrc to the gitIgnore
+	Abrar Syed: Step 1: The Purge
+	Abrar Syed: update FML for gradle changes
+	Abrar Syed: Step 2: The Reformation
+	Abrar Syed: Step 3: The Rebirth
+	Abrar Syed: fixed versioning and stuff
+	Abrar Syed: added buildSrc to the gitIgnore
 	LexManos: Fix for new FML, and publish to maven local
 	LexManos: Update run configs.
 	LexManos:
@@ -1651,7 +2039,7 @@ Build 960:
 		MinecraftForge/FML@30894f7afadf5d3f3c3d5a54c3f904413d5f2309 Merge pull request #307 from AbrarSyed/master
 		MinecraftForge/FML@c4b8a393f90b00ad7ee4992ea4341ffb6d676abb Make the working directory the root of the eclipse workspace.
 	LexManos: Regenerate all patches, No functional change as added this is a formatting change only.
-	AbrarSyed: update build.gradle
+	Abrar Syed: update build.gradle
 	porcariadagata: Make the gradle wrapper executable.
 	LexManos: Proper configuratuion name for jenkins.
 	LexManos: Fix build file pom closures.
@@ -1846,7 +2234,7 @@ Build 1.6.4-9.11.0.910:
 	LexManos: Stack sensitive version of Item.getItemStackLimit. Closes #771
 
 Build 1.6.4-9.11.0.909:
-	anthonylomeli11: Villager Trading GUI will not open if Player is sneaking.
+	Anthony Lomeli: Villager Trading GUI will not open if Player is sneaking.
 
 Build 1.6.4-9.11.0.908:
 	LexManos: Added all the vanilla records to the ore dictionary. Closes #731

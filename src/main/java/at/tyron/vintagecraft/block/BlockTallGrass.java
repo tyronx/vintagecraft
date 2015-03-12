@@ -129,7 +129,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     }
 
     protected boolean canPlaceBlockOn(Block ground) {
-        return ground instanceof ISoil && ((ISoil)ground).canGrowGrass(null, null);
+        return ground instanceof ISoil && ((ISoil)ground).canGrowTallGrass(null, null);
     }
 
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {

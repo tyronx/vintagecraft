@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/pear",
+		"side": "vintagecraft:blocks/log/pear_bark"
+	}
+}

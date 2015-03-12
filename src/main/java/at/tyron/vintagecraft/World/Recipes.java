@@ -84,6 +84,8 @@ public class Recipes {
 
 			GameRegistry.addShapedRecipe(BlocksVC.fence.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'W', planksstack, 'S', Items.stick});
 			GameRegistry.addShapedRecipe(BlocksVC.fencegate.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'S', planksstack, 'W', Items.stick});
+			
+			GameRegistry.addShapedRecipe(new ItemStack(Items.bed, 1), new Object[] { "   ", "WWW", "PPP", 'W', Blocks.wool, 'P', planksstack});
 		}
 		
 		
@@ -113,12 +115,12 @@ public class Recipes {
 		
 		
 		
-		RecipeSorter.register("vintagecraft:findings", RecipePlanks.class, Category.SHAPELESS, "after:minecraft:shapeless");
+		RecipeSorter.register("vintagecraft:planks", RecipePlanks.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		List recipes = CraftingManager.getInstance().getRecipeList();
 		recipes.add(new RecipePlanks());
 
 		
-		RecipeSorter.register("vintagecraft:findings", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
+		RecipeSorter.register("vintagecraft:slabs", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		recipes.add(new RecipeSlabs());
 		
 		

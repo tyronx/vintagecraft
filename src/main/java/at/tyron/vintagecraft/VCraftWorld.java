@@ -11,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.resources.IResourceManager;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +34,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Climate;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
 import at.tyron.vintagecraft.WorldGen.WorldChunkManagerVC;
+import at.tyron.vintagecraft.WorldGen.GenLayers.PseudoNumberGen;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
@@ -61,10 +63,16 @@ public class VCraftWorld {
 	private HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
 	
 	WorldChunkManagerVC wcm;
+	PseudoNumberGen grassspeckle;  
+	
 	
 	public VCraftWorld(long seed, WorldChunkManager wcm) {
 		this.seed = seed;
 		this.wcm = (WorldChunkManagerVC)wcm;
+		
+		grassspeckle = new PseudoNumberGen(1);
+		grassspeckle.initWorldGenSeed(seed);
+		
 	}
 	
 	
@@ -358,6 +366,10 @@ public class VCraftWorld {
 		} else {
 			if (steepness > 2) return null;
 			
+			if (temperature <= -18) {
+				return Blocks.snow.getDefaultState();
+			}
+			
 			if (temperature < 10) {
 				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravelVC.STONETYPE, rocktype);
 			} else {
@@ -375,12 +387,25 @@ public class VCraftWorld {
 			if (steepness > 2 || y > 200) return null;
 			return rocktype.getRockVariantForBlock(BlocksVC.subsoil);
 		} else {
+			if (temperature <= -23) {
+				return Blocks.ice.getDefaultState();
+			}
+
 			if (temperature < 10) {
 				return BlocksVC.gravel.getDefaultState().withProperty(BlockGravelVC.STONETYPE, rocktype);
 			} else {
 				return BlocksVC.sand.getDefaultState().withProperty(BlockSandVC.STONETYPE, rocktype);
 			}
 		}
+	}
+
+	
+	public IBlockState getReoglithLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
+		int temperature = getTemperature(new BlockPos(x, y, z));
+		
+		if (temperature <= -28) return Blocks.packed_ice.getDefaultState();
+		if (steepness < 1) return rocktype.getRockVariantForBlock(BlocksVC.regolith);
+		return null;
 	}
 
 
@@ -406,11 +431,21 @@ public class VCraftWorld {
     public int getGrassColorAtPos(BlockPos pos, int rainfallmodifier) {
     	int climate = _getClimate(pos);
     	
+    	grassspeckle.initPosSeed(pos.getX(), pos.getZ());
+    	
     	int temperature = (climate >> 16) & 0xff  - (pos.getY() - seaLevel)/2;
     	int rainfall = normalizeRainFall(climate & 0xff, pos);
     	//System.out.println(temperature + "/" + (255-rainfall));
-    	return grassBuffer[temperature + 256 * Math.min(255, (255-rainfall+rainfallmodifier))];
+    	return grassBuffer[Math.min(255, Math.max(0, temperature + grassspeckle.nextInt(15))) + 256 * Math.min(255, (255-rainfall+rainfallmodifier))];
     }
+    
+    
+    
+    
+    
+    
+    
+    
     
     
       
@@ -436,5 +471,7 @@ public class VCraftWorld {
 			((BlockVC)block).hoeUsed(event);
 		}
 	}
+
+
 
 }

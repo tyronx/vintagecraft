@@ -1,7 +1,7 @@
 <?php
 
-$blockclasses = array("log", "leaves", "leavesbranchy", "planks");
-$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech");
+$blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
+$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua");
 
 /********** 1. Logs, Leaves, Branches, Planks *************/
 foreach ($blockclasses as $blockclass) {
@@ -172,6 +172,16 @@ function getBlockStates($variants) {
 }
 
 function getBlockModel($modeltype, $blockclass, $blocktype) {
+	if ($blockclass == "sapling") {
+		return '{
+    "parent": "block/cross",
+    "textures": {
+        "particle": "vintagecraft:blocks/sapling/'.$blocktype.'",
+        "cross": "vintagecraft:blocks/sapling/'.$blocktype.'"
+    }
+}';
+	}
+	
 	switch ($modeltype) {
 		case "bark":
 return '{
@@ -239,6 +249,26 @@ return '{
 
 
 function getItemModel($blockclass, $blocktype) {
+	if ($blockclass == "sapling") {
+		return '{
+    "parent": "builtin/generated",
+    "textures": {
+        "layer0": "vintagecraft:blocks/sapling/'.$blocktype.'"
+    },
+    "display": {
+        "thirdperson": {
+            "rotation": [ -90, 0, 0 ],
+            "translation": [ 0, 1, -3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 0, 4, 2 ],
+            "scale": [ 1.7, 1.7, 1.7 ]
+        }
+    }
+}';
+	}
 	if ($blockclass == "fencegate") {
 	return '{
     "parent": "vintagecraft:block/'.$blockclass.'/'.$blocktype.'_closed",

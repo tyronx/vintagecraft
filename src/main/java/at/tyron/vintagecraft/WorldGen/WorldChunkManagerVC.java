@@ -119,13 +119,15 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 	@Override
 	public BlockPos findBiomePosition(int xCoord, int zCoord, int radius, List biomeList, Random rand) {
 		IntCache.resetIntCache();
-		int l = xCoord - radius >> 2;
-		int i1 = zCoord - radius >> 2;
-		int j1 = xCoord + radius >> 2;
-		int k1 = zCoord + radius >> 2;
-		int l1 = j1 - l + 1;
-		int i2 = k1 - i1 + 1;
-		int[] aint = this.climateGen.getInts(l, i1, l1, i2);
+		int xr = xCoord - radius >> 2;
+		int zr = zCoord - radius >> 2;
+		int xr2 = xCoord + radius >> 2;
+		int zr2 = zCoord + radius >> 2;
+		
+		int sizeX = xr2 - xr + 1;
+		int sizeZ = zr2 - zr + 1;
+		
+		int[] aint = this.climateGen.getInts(xr, zr, sizeX, sizeZ);
 		BlockPos chunkposition = null;
 		int j2 = 0;
 		
@@ -133,12 +135,12 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 		int bestrain = 0;
 		int besttemp = 0;
 
-		for (int k2 = 0; k2 < l1 * i2; ++k2) {
-			int l2 = l + k2 % l1 << 2;
-			int i3 = i1 + k2 / l1 << 2;
+		for (int i = 0; i < sizeX * sizeZ; ++i) {
+			int x = xr + i % sizeX << 2;
+			int z = zr + i / sizeX << 2;
 			
-			int climate = aint[k1];
-			int rain = aint[k1] & 0xff;
+			int climate = aint[i];
+			int rain = aint[i] & 0xff;
 			int temp = (climate >> 8) & 0xff;
 			
 			
@@ -146,15 +148,8 @@ public class WorldChunkManagerVC extends WorldChunkManager {
 				bestrain = rain;
 				besttemp = temp;
 				
-				chunkposition = new BlockPos(l2, 0, i3);
+				chunkposition = new BlockPos(x, 0, z);
 			}
-			
-			/*BiomeVC biomegenbase = BiomeVC.getBiome(aint[k2]);
-
-			if (biomeList.contains(biomegenbase) && (chunkposition == null || rand.nextInt(j2 + 1) == 0)) {
-				chunkposition = new BlockPos(l2, 0, i3);
-				++j2;
-			}*/
 		}
 		
 

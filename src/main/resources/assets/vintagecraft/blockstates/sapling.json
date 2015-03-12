@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"treetype=ash": { "model": "vintagecraft:sapling/ash" },
+		"treetype=birch": { "model": "vintagecraft:sapling/birch" },
+		"treetype=oak": { "model": "vintagecraft:sapling/oak" },
+		"treetype=maple": { "model": "vintagecraft:sapling/maple" },
+		"treetype=mountaindogwood": { "model": "vintagecraft:sapling/mountaindogwood" },
+		"treetype=scotspine": { "model": "vintagecraft:sapling/scotspine" },
+		"treetype=spruce": { "model": "vintagecraft:sapling/spruce" },
+		"treetype=acacia": { "model": "vintagecraft:sapling/acacia" },
+		"treetype=kapok": { "model": "vintagecraft:sapling/kapok" },
+		"treetype=coconutpalm": { "model": "vintagecraft:sapling/coconutpalm" },
+		"treetype=purpleheartwood": { "model": "vintagecraft:sapling/purpleheartwood" },
+		"treetype=crimsonkingmaple": { "model": "vintagecraft:sapling/crimsonkingmaple" },
+		"treetype=elephanttree": { "model": "vintagecraft:sapling/elephanttree" },
+		"treetype=myrtlebeech": { "model": "vintagecraft:sapling/myrtlebeech" },
+		"treetype=pear": { "model": "vintagecraft:sapling/pear" },
+		"treetype=joshua": { "model": "vintagecraft:sapling/joshua" }
+	}
+}

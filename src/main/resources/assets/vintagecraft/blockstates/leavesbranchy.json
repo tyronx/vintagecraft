@@ -13,6 +13,8 @@
 		"treetype=purpleheartwood": { "model": "vintagecraft:leavesbranchy/purpleheartwood" },
 		"treetype=crimsonkingmaple": { "model": "vintagecraft:leavesbranchy/crimsonkingmaple" },
 		"treetype=elephanttree": { "model": "vintagecraft:leavesbranchy/elephanttree" },
-		"treetype=myrtlebeech": { "model": "vintagecraft:leavesbranchy/myrtlebeech" }
+		"treetype=myrtlebeech": { "model": "vintagecraft:leavesbranchy/myrtlebeech" },
+		"treetype=pear": { "model": "vintagecraft:leavesbranchy/pear" },
+		"treetype=joshua": { "model": "vintagecraft:leavesbranchy/joshua" }
 	}
 }

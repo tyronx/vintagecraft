@@ -61,7 +61,7 @@ public enum EnumFertility implements IEnumState, IStringSerializable {
 		for (EnumFertility fertility : EnumFertility.values()) {
 			if (fertility.meta == meta) return fertility;
 		}
-		return null;
+		return EnumFertility.LOW;
 	}
 	
 	

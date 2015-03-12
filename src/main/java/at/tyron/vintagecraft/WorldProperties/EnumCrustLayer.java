@@ -49,7 +49,7 @@ public enum EnumCrustLayer {
 		switch (this) { 
 			case TOPSOIL: return VCraftWorld.instance.getTopLayerAtPos(x, y, z, rocktype, steepness); 
 			case SUBSOIL: return VCraftWorld.instance.getSubLayerAtPos(x, y, z, rocktype, steepness);
-			case REGOLITH: if (steepness < 1) return rocktype.getRockVariantForBlock(BlocksVC.regolith);
+			case REGOLITH: return VCraftWorld.instance.getReoglithLayerAtPos(x, y, z, rocktype, steepness);
 			default: return null;
 		}
 	}

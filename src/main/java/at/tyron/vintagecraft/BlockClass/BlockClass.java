@@ -255,6 +255,10 @@ public abstract class BlockClass {
 		
 		throw new RuntimeException("Meta not found for state " + state + "\r\n num values: " + values().length);
 	}
+	
+	public String getName() {
+		return name;
+	}
 		
    
 
