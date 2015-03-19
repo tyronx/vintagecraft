@@ -167,6 +167,9 @@ public abstract class BlockClass {
 	}
 	
 	
+	public BlockClassEntry getBlockClassfromState(IBlockState state) {
+		return getBlockClassfromMeta(state.getBlock(), state.getBlock().getMetaFromState(state));
+	}
 	
 	public BlockClassEntry getBlockClassfromMeta(Block block, int meta) {
 		for (BlockClassEntry enumitem: values()) {
@@ -177,16 +180,23 @@ public abstract class BlockClass {
 			System.out.println(enumitem.metadata+" == "+meta+" && "+enumitem.block.getUnlocalizedName()+" == "+block.getUnlocalizedName());
 		}
 		
-		throw new RuntimeException("Blockstate not found for block " + block + " / meta " + meta);
+		throw new RuntimeException("BlockClassEntry not found for block " + block + " / meta " + meta);
 	}
 	
-	public int getMetaFromBlockClass(BlockClassEntry blockclassentry) {
+	
+	public BlockClassEntry getFromKey(IEnumState key) {
+		return values.get(key);
+	}
+
+	
+	
+	/*public int getMetaFromBlockClass(BlockClassEntry blockclassentry) {
 		for (BlockClassEntry enumitem: values()) {
 			if (enumitem.getId() == blockclassentry.getId()) return enumitem.metadata;
 		}
 
 		throw new RuntimeException("Meta not found for blockclass " + blockclassentry);
-	}
+	}*/
 	
 	public int getMetaFromState(IBlockState state) {
 		for (BlockClassEntry enumitem: values()) {
@@ -211,9 +221,6 @@ public abstract class BlockClass {
 		return new PropertyBlockClass(name, BlockClassEntry.class, values);
 	}
 	
-	public BlockClassEntry fromKey(IEnumState key) {
-		return values.get(key);
-	}
 
 
 	public int getLength() {
@@ -239,11 +246,22 @@ public abstract class BlockClass {
 		}
 		return null;
 	}
+	
+	public boolean containsBlock(Block block) {
+		for (BlockClassEntry entry : values()) {
+			if (entry.block == block) return true;
+		}
+		return false;
+	}
 
 	public ItemStack getItemStackFor(IEnumState enumitem) {
 		return values.get(enumitem).getItemStack();
 	}
+	public ItemStack getItemStackFor(IEnumState enumitem, int quantity) {
+		return values.get(enumitem).getItemStack(quantity);
+	}
 
+	
 	public ItemStack getItemStackFor(IBlockState state) {
 		for (BlockClassEntry enumitem: values()) {
 			if (enumitem.block == state.getBlock() && enumitem == state.getValue(((IMultiblock)enumitem.block).getTypeProperty())) return enumitem.getItemStack();

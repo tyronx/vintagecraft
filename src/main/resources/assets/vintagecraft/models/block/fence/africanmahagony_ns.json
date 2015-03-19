@@ -1,0 +1,6 @@
+{
+	"parent": "block/fence_ns",
+	"textures": {
+		"texture": "vintagecraft:blocks/planks/africanmahagony"
+	}
+}

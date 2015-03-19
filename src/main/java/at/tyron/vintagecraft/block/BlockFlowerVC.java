@@ -132,7 +132,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     }
 
     protected boolean canPlaceBlockOn(Block ground) {
-        return ground == BlocksVC.topsoil || ground == BlocksVC.subsoil;
+        return ground == BlocksVC.topsoil || BlocksVC.subsoil.containsBlock(ground);
     }
 
     public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {

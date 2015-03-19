@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/gneiss",
+"parent": "vintagecraft:block/rock/gneiss",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

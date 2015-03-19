@@ -47,6 +47,18 @@ public class SimplexNoise {
         }
 
         return result;
+    }
+    
+    
+    public double getNoise(double x, double y, double z, float highoctavefactor) {
+        double result = 0;
+
+        for(int i = 0; i < octaves.length; i++) {
+        	result += octaves[i].noise(x * frequencys[i], y * frequencys[i], z * frequencys[i]) * amplitudes[i] * (1 - (i * 1f) / octaves.length * highoctavefactor);
+        }
+
+        return result;
 
     }
+    
 }

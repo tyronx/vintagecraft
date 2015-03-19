@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/shale",
+"parent": "vintagecraft:block/subsoil/shale",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

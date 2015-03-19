@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/shale",
+"parent": "vintagecraft:block/rock/shale",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

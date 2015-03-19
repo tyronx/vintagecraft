@@ -69,6 +69,15 @@ tile.flower.orangebutterflymilkweed.name=Orange Butterfly Milkweed
 tile.flower.purplebutterflymilkweed.name=Purple Butterfly Milkweed
 tile.flower.catmint.name=Catmint
 
+item.ceramicvessel.name=Ceramic Vessel
+item.clayvessen.name=Clay Vessel
+
+item.bronze_axe.name=Bronze Axe
+item.bronze_pickaxe.name=Bronze Pickaxe
+item.bronze_shovel.name=Bronze Shovel
+item.bronze_sword.name=Bronze Sword
+item.bronze_hoe.name=Bronze Hoe
+item.bronze_saw.name=Bronze Saw
 
 item.copper_axe.name=Copper Axe
 item.copper_pickaxe.name=Copper Pickaxe
@@ -119,6 +128,11 @@ tile.log.elephanttree.name=Elephant Tree Log
 tile.log.myrtlebeech.name=Myrtle Beech Log
 tile.log.joshua.name=Joshua Tree Log
 tile.log.pear.name=Pear Log
+tile.log.africanmahagony.name=African Mahagony Log
+tile.log.poplar.name=Poplar Log
+tile.log.larch.name=Larch Log
+tile.log.willow.name=Willow Log
+
 
 tile.planks.ash.name=Ash Planks
 tile.planks.birch.name=Birch Planks
@@ -135,6 +149,11 @@ tile.planks.elephanttree.name=Elephant Tree Planks
 tile.planks.myrtlebeech.name=Myrtle Beech Planks
 tile.planks.joshua.name=Joshua Tree Planks
 tile.planks.pear.name=Pear Planks
+tile.planks.africanmahagony.name=African Mahagony Planks
+tile.planks.poplar.name=Poplar Planks
+tile.planks.larch.name=Larch Planks
+tile.planks.willow.name=Willow Planks
+
 
 sapling.ash.name=Ash Sapling
 sapling.birch.name=Birch Sapling
@@ -151,6 +170,11 @@ sapling.elephanttree.name=Elephant Tree Sapling
 sapling.myrtlebeech.name=Myrtle Beech Sapling
 sapling.joshua.name=Joshua Tree Sapling
 sapling.pear.name=Pear Sapling
+sapling.africanmahagony.name=African Mahagony Sapling
+sapling.poplar.name=Poplar Sapling
+sapling.larch.name=Larch Sapling
+sapling.willow.name=Willow Sapling
+
 
 leaves.ash.name=Ash Leaves
 leaves.birch.name=Birch Leaves
@@ -167,6 +191,10 @@ leaves.elephanttree.name=Elephant Tree Leaves
 leaves.myrtlebeech.name=Myrtle Beech Leaves
 leaves.joshua.name=Joshua Tree Leaves
 leaves.pear.name=Pear Leaves
+leaves.africanmahagony.name=African Mahagony Leaves
+leaves.poplar.name=Poplar Leaves
+leaves.larch.name=Larch Leaves
+leaves.willow.name=Willow Leaves
 
 
 fence.ash.name=Ash Fence
@@ -184,6 +212,11 @@ fence.elephanttree.name=Elephant Tree Fence
 fence.myrtlebeech.name=Myrtle Beech Fence
 fence.joshua.name=Joshua Tree Fence
 fence.pear.name=Pear Fence
+fence.africanmahagony.name=African Mahagony Fence
+fence.poplar.name=Poplar Fence
+fence.larch.name=Larch Fence
+fence.willow.name=Willow Fence
+
 
 fencegate.ash.name=Ash Fence Gate
 fencegate.birch.name=Birch Fence Gate
@@ -200,6 +233,10 @@ fencegate.elephanttree.name=Elephant Tree Fence Gate
 fencegate.myrtlebeech.name=Myrtle Beech Fence Gate
 fencegate.joshua.name=Joshua Tree Fence Gate
 fencegate.pear.name=Pear Fence Gate
+fencegate.africanmahagony.name=African Mahagony Fence Gate
+fencegate.poplar.name=Poplar Fence Gate
+fencegate.larch.name=Larch Fence Gate
+fencegate.willow.name=Willow Fence Gate
 
 
 singleslab.ash.name=Ash Slab
@@ -217,6 +254,10 @@ singleslab.elephanttree.name=Elephant Tree Slab
 singleslab.myrtlebeech.name=Myrtle Beech Slab
 singleslab.joshua.name=Joshua Tree Slab
 singleslab.pear.name=Pear Slab
+singleslab.africanmahagony.name=African Mahagony Slab
+singleslab.poplar.name=Poplar Slab
+singleslab.larch.name=Larch Slab
+singleslab.willow.name=Willow Slab
 
 
 leavesbranchy.ash.name=Ash Leaves with Branches
@@ -234,3 +275,7 @@ leavesbranchy.elephanttree.name=Elephant Tree Leaves with Branches
 leavesbranchy.myrtlebeech.name=Myrtle Beech Leaves with Branches
 leavesbranchy.joshua.name=Joshua Tree Leaves with Branches
 leavesbranchy.pear.name=Pear Leaves with Branches
+leavesbranchy.africanmahagony.name=African Mahagony Leaves with Branches
+leavesbranchy.poplar.name=Poplar Leaves with Branches
+leavesbranchy.larch.name=Larch Leaves with Branches
+leavesbranchy.willow.name=Willow with Branches

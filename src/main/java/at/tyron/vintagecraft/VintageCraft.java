@@ -46,6 +46,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLootBonus;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -188,23 +189,49 @@ public class VintageCraft {
 	
 	@SubscribeEvent
 	public void onEvent(LivingDropsEvent event) {
+		float growth = 1f;
+		float dropquantity;
+		Random rand = null;
+		
+		if (event.entity instanceof EntityAgeable) {
+			int age = ((EntityAgeable)event.entity).getGrowingAge();
+			if (age < 0) {
+				growth = (1 - age / 24000f);
+			}
+			rand = event.entityLiving.getRNG();
+		}
+		
+		
+		
 	    if (event.entity instanceof EntityPig) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.porkchopRaw, 2 + event.entityLiving.getRNG().nextInt(4));
+	        
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.porkchopRaw, getDropQuantity(3, growth, rand) + rand.nextInt(2));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
+	    
 	    if (event.entity instanceof EntityCow) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.beefRaw, 2 + event.entityLiving.getRNG().nextInt(5));
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.beefRaw, getDropQuantity(5, growth, rand) + rand.nextInt(2));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	        
-	        itemStackToDrop = new ItemStack(Items.leather, 1 + event.entityLiving.getRNG().nextInt(4));
+	        itemStackToDrop = new ItemStack(Items.leather, getDropQuantity(2, growth, rand) + rand.nextInt(2));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
+	    
 	    if (event.entity instanceof EntityChicken) {
 	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.chickenRaw, 1 + event.entityLiving.getRNG().nextInt(2));
+	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.chickenRaw, getDropQuantity(1, growth, rand));
+	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
+	        
+	        itemStackToDrop = new ItemStack(Items.feather, getDropQuantity(3, growth, rand));
 	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
 	    }
-	} 
+	}
+	
+	
+	int getDropQuantity(int max, float factor, Random rand) {
+		int q = (int) (max * factor);
+		return q + (rand.nextFloat() < max*factor - q ? 1 : 0);
+	}
 }

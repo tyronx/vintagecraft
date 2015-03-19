@@ -10,6 +10,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.item.ItemBronzeTool;
 import at.tyron.vintagecraft.item.ItemCopperTool;
 import at.tyron.vintagecraft.item.ItemFoodVC;
 import at.tyron.vintagecraft.item.ItemIngot;
@@ -18,6 +19,8 @@ import at.tyron.vintagecraft.item.ItemPeatBrick;
 import at.tyron.vintagecraft.item.ItemStone;
 import at.tyron.vintagecraft.item.ItemStoneTool;
 import at.tyron.vintagecraft.item.ItemToolVC;
+import at.tyron.vintagecraft.item.ItemVessel;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
@@ -31,6 +34,16 @@ public class ItemsVC {
 	public static Item ore;
 	public static Item ingot;
 	public static Item peatbrick;
+
+	
+	
+	public static Item bronzeAxe;
+	public static Item bronzePickaxe;
+	public static Item bronzeShovel;
+	public static Item bronzeSword;
+	public static Item bronzeHoe;
+	public static Item bronzeSaw;
+
 	
 	public static Item copperAxe;
 	public static Item copperPickaxe;
@@ -56,6 +69,8 @@ public class ItemsVC {
 	public static Item chickenCooked;
 	
 	public static Item wheatSeeds;
+	public static Item ceramicVessel;
+	public static Item clayVessel;
 	
 	
 	public static void init() {
@@ -80,8 +95,10 @@ public class ItemsVC {
 		}
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
+		ceramicVessel = new ItemVessel(true).register("ceramicvessel");
+		clayVessel = new ItemVessel(false).register("clayvessel");
 		
-		
+		registerTools("bronze", ItemBronzeTool.class);
 		registerTools("copper", ItemCopperTool.class);
 		registerTools("stone", ItemStoneTool.class);
 		
@@ -90,7 +107,7 @@ public class ItemsVC {
 		beefRaw = new ItemFoodVC(3, 0.3f, true).register("beefRaw");
 		beefCooked = new ItemFoodVC(8, 0.8f, true).register("beefCooked");
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
-		chickenCooked = new ItemFoodVC(6, 0.6f, true).register("chickenCooked");
+		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
 		
 		wheatSeeds = new ItemSeeds(BlocksVC.wheatcrops, BlocksVC.farmland);
 		register(wheatSeeds, "wheatseeds");

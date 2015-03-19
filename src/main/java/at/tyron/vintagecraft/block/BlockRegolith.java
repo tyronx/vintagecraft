@@ -3,10 +3,14 @@ package at.tyron.vintagecraft.block;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.item.ItemStone;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockRegolith extends BlockRock {
+	
 	public BlockRegolith() {
 		super(Material.ground);
 	}
@@ -38,7 +43,8 @@ public class BlockRegolith extends BlockRock {
     		List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
 	   
 	        ItemStack itemstack = new ItemStack(ItemsVC.stone, 1);
-	        ItemStone.setRockType(itemstack, (EnumRockType) state.getValue(STONETYPE));
+	        EnumRockType rocktype = (EnumRockType) getRockType(state).getKey();
+	        ItemStone.setRockType(itemstack, rocktype);
 	        
 	        ret.add(itemstack);
 	        
@@ -48,4 +54,9 @@ public class BlockRegolith extends BlockRock {
     	return super.getDrops(world, pos, state, fortune);
     }
     
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.regolith;
+	}
 }

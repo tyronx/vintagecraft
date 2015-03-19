@@ -1,12 +1,12 @@
 package at.tyron.vintagecraft.WorldGen;
 
+import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BiomeVC;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
 
 public class WorldTypeVC extends WorldType {
-	
 	public static WorldTypeVC DEFAULT = new WorldTypeVC(0, "VCDefault");
 	public static WorldTypeVC FLAT = new WorldTypeVC(1, "VCFlat");
 	
@@ -20,20 +20,6 @@ public class WorldTypeVC extends WorldType {
 	}
 	
 	
-	
-/*	private static final BiomeVC[] biomesDefault = {
-		BiomeVC.ocean,
-		BiomeVC.HighHills,
-		BiomeVC.plains,
-		BiomeVC.HighPlains,
-		BiomeVC.swampland,
-		BiomeVC.rollingHills,
-		BiomeVC.Mountains,
-	};
-	*/
-	
-	
-	
 	@Override
 	public WorldChunkManager getChunkManager(World world) {
 		if (this == FLAT) {
@@ -45,7 +31,7 @@ public class WorldTypeVC extends WorldType {
 	
 	@Override
 	public int getMinimumSpawnHeight(World world) {
-		return 120;
+		return VCraftWorld.seaLevel;
 	}
 	
 	

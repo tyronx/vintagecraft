@@ -16,7 +16,7 @@ import at.tyron.vintagecraft.WorldGen.DynTreeTrunk;
 import at.tyron.vintagecraft.WorldGen.NatFloat;
 import at.tyron.vintagecraft.WorldGen.GenLayers.*;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumFlora;
+import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -202,11 +202,15 @@ public class VintageCraftCommands extends CommandBase {
 				GenLayerVC.genErosion(seed);
 			}
 			if (args[1].equals("deposits")) {
+				EnumMaterialDeposit.NODEPOSIT.weight = 12000;
 				GenLayerVC.genDeposits(seed);
 			}
-			if (args[1].equals("rocks")) {	
-				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
+			if (args[1].equals("age")) {
+				GenLayerVC.genAgemap(seed);
 			}
+			/*if (args[1].equals("rocks")) {	
+				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
+			}*/
 			if (args[1].equals("heightmap")) {	
 				GenLayerVC.genHeightmap(seed);
 			}
@@ -225,17 +229,20 @@ public class VintageCraftCommands extends CommandBase {
 		
 		if (args[0].equals("climate")) {
 			
-			int temp = VCraftWorld.instance.getTemperature(sender.getPosition());
+			/*int temp = VCraftWorld.instance.getTemperature(sender.getPosition());
 			int rainfall = VCraftWorld.instance.getRainfall(sender.getPosition());
-			int fertility = VCraftWorld.instance.getFertily(sender.getPosition());
-			int forest =  VCraftWorld.instance.getForest(sender.getPosition());
+			int fertility = VCraftWorld.instance.getFertily(rainfall, temp, sender.getPosition());*/
 			
-			sender.addChatMessage(new ChatComponentText("Temperature " + temp + ", Rainfall " + rainfall + ", Fertility " + fertility + ", Forest " + forest));
+			int climate[] = VCraftWorld.instance.getClimate(sender.getPosition());
 			
-			EnumFlora flora = EnumFlora.getRandomFlowerForClimate(rainfall, temp, forest, sender.getEntityWorld().rand);
+			int forest = VCraftWorld.instance.getForest(sender.getPosition());
+			
+			sender.addChatMessage(new ChatComponentText("Temperature " + climate[0] + ", Rainfall " + climate[2] + ", Fertility " + climate[1] + ", Forest " + forest + ", mod forest " + EnumTree.getForestDensity(forest, climate[2], climate[0])));
+			
+			EnumFlowerGroup flora = EnumFlowerGroup.getRandomFlowerForClimate(climate[2], climate[0], forest, sender.getEntityWorld().rand);
 			System.out.println("chosen flower " + flora);
 			
-			EnumTree tree = EnumTree.getRandomTreeForClimate(rainfall, temp, forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
+			EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
 			System.out.println("chosen tree " + tree);
 			/*if (flora != null) {
 				sender.getEntityWorld().setBlockState(sender.getPosition(), flora.variants[0].getBlockState());

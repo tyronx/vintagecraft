@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/basalt",
+"parent": "vintagecraft:block/subsoil/basalt",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

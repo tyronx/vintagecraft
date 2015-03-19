@@ -35,8 +35,6 @@ public class BlockPlanksVC extends BlockLogVC {
         
     	return ret;
     }
-
-	
 	
 	@Override
 	public IProperty getTypeProperty() {

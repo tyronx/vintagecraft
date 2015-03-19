@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/sandstone",
+"parent": "vintagecraft:block/rock/sandstone",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

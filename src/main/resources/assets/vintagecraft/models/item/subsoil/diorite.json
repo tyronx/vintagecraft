@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/diorite",
+"parent": "vintagecraft:block/subsoil/diorite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

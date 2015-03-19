@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/quartzite",
+"parent": "vintagecraft:block/subsoil/quartzite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

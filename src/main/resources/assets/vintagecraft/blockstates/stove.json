@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "vintagecraft:stove.b3d" },
-        "facing=south": { "model": "vintagecraft:stove.b3d", "y": 180 },
-        "facing=west":  { "model": "vintagecraft:stove.b3d", "y": 270 },
-        "facing=east":  { "model": "vintagecraft:stove.b3d", "y": 90 }
+        "facing=north": { "model": "vintagecraft:stove" },
+        "facing=south": { "model": "vintagecraft:stove", "y": 180 },
+        "facing=west":  { "model": "vintagecraft:stove", "y": 270 },
+        "facing=east":  { "model": "vintagecraft:stove", "y": 90 }
     }
 }

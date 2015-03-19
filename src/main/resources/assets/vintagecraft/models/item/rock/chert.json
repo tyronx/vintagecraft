@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/chert",
+"parent": "vintagecraft:block/rock/chert",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

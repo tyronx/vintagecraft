@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.block;
 
+import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -9,6 +10,7 @@ import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemStone;
 import net.minecraft.block.BlockContainer;
@@ -132,12 +134,18 @@ public class BlockFarmlandVC extends BlockContainer {
         	
         	ItemStack itemstack = new ItemStack(BlocksVC.topsoil, EnumOrganicLayer.NoGrass.getMetaData(null) + (fertility.getMetaData(null) << 2));           
             spawnAsEntity(worldIn, pos, itemstack);
+            
 
         }
     	
     	super.breakBlock(worldIn, pos, state);
     }
     
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	return new java.util.ArrayList<ItemStack>();
+    }
     
     public boolean canSustainPlant(IBlockAccess world, BlockPos pos, EnumFacing direction, net.minecraftforge.common.IPlantable plantable) {
     	net.minecraftforge.common.EnumPlantType plantType = plantable.getPlantType(world, pos.up());

@@ -15,6 +15,10 @@
 		"treetype=elephanttree": { "model": "vintagecraft:leaves/elephanttree" },
 		"treetype=myrtlebeech": { "model": "vintagecraft:leaves/myrtlebeech" },
 		"treetype=pear": { "model": "vintagecraft:leaves/pear" },
-		"treetype=joshua": { "model": "vintagecraft:leaves/joshua" }
+		"treetype=joshua": { "model": "vintagecraft:leaves/joshua" },
+		"treetype=poplar": { "model": "vintagecraft:leaves/poplar" },
+		"treetype=africanmahagony": { "model": "vintagecraft:leaves/africanmahagony" },
+		"treetype=blackwalnut": { "model": "vintagecraft:leaves/blackwalnut" },
+		"treetype=willow": { "model": "vintagecraft:leaves/willow" }
 	}
 }

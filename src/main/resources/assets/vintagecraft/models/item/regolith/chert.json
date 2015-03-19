@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/chert",
+"parent": "vintagecraft:block/regolith/chert",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

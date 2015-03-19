@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.8-0.2.21"
+version = "1.8-0.3.25"
 group= "at.tyron.vintagecraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "vintagecraft"
 

@@ -8,22 +8,8 @@ import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.common.MinecraftForge;
 
 public class WorldProviderVC extends WorldProvider {
-
-	private int moonPhase = 0;
-	private int moonPhaseLastCalculated = 0;
-	
-	
 	@Override
-	protected void registerWorldChunkManager()
-	{
-		/**
-		 * ChunkEventHandler.onLoadWorld gets called after the NEW World gen stuff.
-		 * Trying to make a NEW World will produce a crash because the cache is empty.
-		 * ..maybe this is not the best place for this, but it works :)
-		 */
-		//TFC_Climate.worldPair.put(worldObj, new WorldCacheManager(worldObj));
-		//TFC_Core.addCDM(worldObj);
-		
+	protected void registerWorldChunkManager() {
 		super.registerWorldChunkManager();
 		
 		VCraftWorld.instance = new VCraftWorld(worldObj.getSeed(), this.worldChunkMgr);
@@ -45,15 +31,6 @@ public class WorldProviderVC extends WorldProvider {
 	@Override
 	public boolean canCoordinateBeSpawn(int x, int z) {
 		return worldObj.getHorizon(new BlockPos(x, 0, z)).getY() > VCraftWorld.instance.seaLevel;
-		//BlockPos pos = worldObj.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
-		
-		//if(y < Global.SEALEVEL || y > Global.SEALEVEL + 25) return false;
-		
-		/*Block b = worldObj.getBlock(x, y, z);
-		return (TFC_Core.isSand(b) || TFC_Core.isGrass(b));*/
-		
-		//worldObj.getBlockState(pos).getBlock() == Blocks.grass;
-		//return true;
 	}
 	
 	

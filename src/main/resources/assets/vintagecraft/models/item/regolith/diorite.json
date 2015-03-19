@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/diorite",
+"parent": "vintagecraft:block/regolith/diorite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

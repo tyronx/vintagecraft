@@ -69,7 +69,7 @@ public class WorldGenAnimals {
 	public static void performWorldGenSpawning(World world, BiomeVC biome, int xCoord, int zCoord, int xSize, int zSize, Random rand) {
 		List list = ChunkProviderGenerateVC.getCreatureSpawnsByChunk(world, biome, xCoord, zCoord); //par1BiomeGenBase.getSpawnableList(EnumCreatureType.creature);
 		if (!list.isEmpty()) {
-			while (rand.nextFloat() < 0.1f) { //biome.getSpawningChance()) {
+			while (rand.nextFloat() < 0.02f) { //biome.getSpawningChance()) {
 				
 				SpawnListEntry spawnlistentry = (SpawnListEntry)WeightedRandom.getRandomItem(world.rand, list);
 				IEntityLivingData entitylivingdata = null;

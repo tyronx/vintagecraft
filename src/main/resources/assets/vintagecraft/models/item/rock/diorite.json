@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/diorite",
+"parent": "vintagecraft:block/rock/diorite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -9,9 +9,11 @@ import java.util.Collections;
 
 import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
+import at.tyron.vintagecraft.WorldGen.GenLayers.GenRockLayers;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
@@ -26,6 +28,7 @@ import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntityWolf;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -42,18 +45,21 @@ import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
-	GenLayerVC depositLayer;
+	//GenLayerVC depositLayer;
 	
 //	GenLayerVC heightmapGen;
+	
+	GenRockLayers genrocklayers;
+	GenLayerVC ageLayer;
 	
 	GenLayerVC noiseFieldModifier;
 	int noiseFieldModifierArray[];
 	
-	GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
+	//GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
 	
 	
 	/** The 7 rocklayers **/
-	int[][] rockData;
+	//int[][] rockData;
 	/** The biomes that are used to generate the chunk */
 	private BiomeGenBase[] biomeMap;
 	
@@ -120,7 +126,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	float[] parabolicField;
 
 	int[] seaLevelOffsetMap = new int[256];
-	int[] chunkGroundLevelMap = new int[256];
+	int[] chunkGroundLevelMap = new int[256]; // Skips floating islands
+	int[] chunkHeightMap = new int[256];
 	
 	
 	ChunkPrimer primer;
@@ -150,12 +157,15 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed);
 		
-		loadRockLayers();
+		//loadRockLayers();
+		
+		genrocklayers = new GenRockLayers(seed);
+		ageLayer = GenLayerVC.genAgemap(seed);
 		
 		//heightmapGen = GenLayerVC.genHeightmap(seed);
 	}
 	
-	
+	/*
 	
 	public void loadRockLayers() {
 		// The RockLayer generators do not generate rocks evenly, so shuffle them per world so each rock once gets more rare or more common
@@ -166,8 +176,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 		
 		rockData = new int[rockLayers.length][];
-		depositLayer = GenLayerVC.genDeposits(seed+2);
-	}
+//		depositLayer = GenLayerVC.genDeposits(seed+2);
+	}*/
 	
 	
 	@Override
@@ -195,7 +205,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
 			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
 			
-	//	}
+		//}
 		
 		Chunk chunk = new Chunk(this.worldObj, primer, chunkX, chunkZ);
 		
@@ -223,8 +233,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				primer.setBlockState(x, 64, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0));
-				primer.setBlockState(x, 63, z, EnumRockType.GRANITE.getRockVariantForBlock(BlocksVC.rock));
+				primer.setBlockState(x, 128, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0));
+				primer.setBlockState(x, 127, z, BlocksVC.rock.getFromKey(EnumRockType.GRANITE).getBlockState());
 			}
 		}
 		
@@ -257,7 +267,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public void populate(IChunkProvider chunkprovider, int chunkX, int chunkZ) {
 		
 		// Actually working check on whether or not to populate a chunk (prevents runaway chunk generation)
-		// Vanilla pop-check extremely strange and not working 
+		// Vanilla pop-check is very strangely programmed and fails to prevent runaway chunk generation
 		if (chunkprovider instanceof ChunkProviderServer) {
 			int x, z;
 			
@@ -338,26 +348,29 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-
 	void decorate(int chunkX, int chunkZ, Random rand, ChunkPrimer primer) {
 		Arrays.fill(chunkGroundLevelMap, 0);
+		Arrays.fill(chunkHeightMap, 0);
 		
-		for (int i = 0; i < rockLayers.length; i++) {
+		
+	/*for (int i = 0; i < rockLayers.length; i++) {
 			rockData[i] = rockLayers[i].getInts(chunkZ*16, chunkX*16, 16, 16);
-		}
+		}*/
 		
 		//int []heightmap = this.heightmapGen.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
 		
-		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);		
+		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
+		
+		EnumCrustLayer[] crustLayersByDepth = new EnumCrustLayer[255];
+		
+		int age[] = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
+		
 		
 		for (int x = 0; x < 16; ++x) {
 			for (int z = 0; z < 16; ++z) {
+				
+				//crustLayersByDepth = buildStrata(crustLayersByDepth, x, z);
+				
 				int arrayIndexChunk = z*16 + x;
 				int arrayIndexHeightmap = (z+1)*18 + (x+1);
 				
@@ -365,6 +378,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 
 				int airblocks = 0;
 				
+				/*prevCrustlayerDepth = 0;
+				prevCrustlayer = null;
+				*/
 				//for (int y = Math.max(VCraftWorld.seaLevel, heightmap[arrayIndexHeightmap]); y >= 0; --y) {
 				for (int y = 255; y >= 0; --y) {
 					if (y <= 0) {
@@ -380,11 +396,28 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						if (chunkGroundLevelMap[arrayIndexChunk] == 0) {
 							chunkGroundLevelMap[arrayIndexChunk] = y;
 						}
+						if (chunkHeightMap[arrayIndexChunk] == 0) {
+							chunkHeightMap[arrayIndexChunk] = y;
+						}
 						
 						//int steepness = Math.max(Math.abs(heightmap[(z+1)*18 + (x+1)-1] - heightmap[(z+1)*18 + (x+1)+1]), Math.abs(heightmap[(z+1-1)*18 + (x+1)] - heightmap[(z+1+1)*18 + (x+1)]));
 						//buildCrustLayers(x, y, z, /*chunkGroundLevelMap[arrayIndexChunk] - y*/ heightmap[arrayIndexHeightmap] - y, primer, biome, chunkX, chunkZ, steepness);
 						
-						buildCrustLayers(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);
+						int depth = chunkGroundLevelMap[arrayIndexChunk] - y;
+						//placeCrustLayerBlock(crustLayersByDepth[depth], x, y, z, primer, chunkX, chunkZ, depth);
+						
+						
+
+						
+						if (y < Math.abs(age[arrayIndexChunk]) / 10) {
+							primer.setBlockState(x, y, z, BlocksVC.rock.getFromKey(EnumRockType.KIMBERLITE).getBlockState());
+						} else {
+							EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, depth, chunkZ * 16 + z, Math.abs(age[arrayIndexChunk]));
+							primer.setBlockState(x, y, z, EnumCrustLayer.getBlock(rand, rocktype, chunkX * 16 + x, y, chunkZ*16 + z, depth));
+						}
+						
+						
+						//placeCrustLayerBlock(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);
 					}
 					
 					if (chunkGroundLevelMap[arrayIndexChunk] != 0 && primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
@@ -395,31 +428,121 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					if (airblocks > 8) {
 						chunkGroundLevelMap[arrayIndexChunk] = 0;
 						airblocks = 0;
+						/*prevCrustlayerDepth = 0;
+						prevCrustlayer = null;*/
+
+						
 					}
 				}
 			}
 		}
 		
-		rockData = new int[rockLayers.length][];
+		//rockData = new int[rockLayers.length][];
 	}
 	
 	
-	public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ) {
+	/*public EnumCrustLayer[] buildStrata(EnumCrustLayer[] strataByDepth, int x, int z) {
+		EnumCrustLayer[] crustLayers = EnumCrustLayer.values();
+		int currentCrustLayer = -1;
+		int thicknesslefttouse = 0;
+		
+		int arrayIndexChunk = z*16 + x;
+		
+		for (int i = 0; i < 255; i++) {
+			if (currentCrustLayer >= 6 && thicknesslefttouse <= 0) {
+				strataByDepth[i] = strataByDepth[i - 1];
+				continue;
+			}
+			
+			if (thicknesslefttouse <= 0) {
+				currentCrustLayer++;
+				
+				if (crustLayers[currentCrustLayer].dataLayerIndex == -1) {
+					thicknesslefttouse = crustLayers[currentCrustLayer].thickness;
+				} else {
+					thicknesslefttouse = (rockData[currentCrustLayer][arrayIndexChunk] >> 16) & 0xff;
+				}
+			}
+			
+			strataByDepth[i] = crustLayers[currentCrustLayer];
+			
+			thicknesslefttouse--;
+		}
+		
+		return strataByDepth;
+	}
+	
+	EnumCrustLayer prevCrustlayer = null;
+	int prevCrustlayerDepth = 0;
+	
+	public void placeCrustLayerBlock(EnumCrustLayer crustlayer, int x, int y, int z, ChunkPrimer primer, int chunkX, int chunkZ, int depth) {
+		if (crustlayer == null) return;
+
+		int arrayIndexChunk = z*16 + x;
+		IBlockState blockstate = crustlayer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth, 0);
+		
+		if (blockstate == null) {
+			int depthsincelastcrustlayer = depth - prevCrustlayerDepth;
+			
+			if (prevCrustlayer == null || crustlayer != prevCrustlayer) {
+				prevCrustlayer = crustlayer;
+				prevCrustlayerDepth = depth; 
+			}
+			
+			if (crustlayer.dataLayerIndex == -1) crustlayer = EnumCrustLayer.ROCK_1;
+			
+			int rockcolor = rockData[crustlayer.dataLayerIndex][arrayIndexChunk] & 0xffff;
+			int remainder = rockcolor - (rockcolor / EnumRockType.colorFactor()) * EnumRockType.colorFactor();
+			
+			
+			rockcolor = (rockcolor / EnumRockType.colorFactor()) * EnumRockType.colorFactor();
+			
+			if (depthsincelastcrustlayer >= remainder) {
+				// Normal rock
+				// use rockcolor
+				
+			} else {
+				// Previous rock
+				// use prev rockcolor
+				rockcolor += EnumRockType.colorFactor();
+			}
+
+			if (EnumRockType.byColor(rockcolor) == null) {
+				System.out.println("no rock for color " + rockcolor);
+				System.out.println(depthsincelastcrustlayer + " / " + remainder + " / " + (rockData[crustlayer.dataLayerIndex][arrayIndexChunk] & 0xffff));
+			}
+			blockstate = BlocksVC.rock.getFromKey(EnumRockType.byColor(rockcolor)).getBlockState();
+		}
+		
+		primer.setBlockState(x, y, z, blockstate);
+
+		if(rand.nextBoolean() && y > 0 && depth > 0) {
+			primer.setBlockState(x, y - 1, z, blockstate);
+			
+			if(rand.nextBoolean() && y > 1 && depth > 5) {
+				primer.setBlockState(x, y - 2, z, blockstate);
+			}
+			
+			if(rand.nextBoolean() && y > 2 && depth > 15) {
+				primer.setBlockState(x, y - 3, z, blockstate);
+			}
+		}
+	}*/
+	
+	
+	/*public void placeCrustLayerBlock(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ) {
 	//public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ, int steepness) {
 		int arrayIndexChunk = z*16 + x;
 		
 		EnumCrustLayer layer = EnumCrustLayer.crustLayerForDepth(depth, rockData, arrayIndexChunk, primer.getBlockState(x, chunkGroundLevelMap[arrayIndexChunk]+1, z).getBlock() == Blocks.water);
-		
-		
 		if (layer == null) return;
 		
-		
-		
 		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth, 0);
+
 		
 		if (blockstate == null) {
 			if (layer.dataLayerIndex == -1) layer = EnumCrustLayer.ROCK_1;
-			blockstate = EnumRockType.byColor(rockData[layer.dataLayerIndex][arrayIndexChunk] & 0xff).getRockVariantForBlock(BlocksVC.rock);
+			blockstate = BlocksVC.rock.getFromKey(EnumRockType.byColor(rockData[layer.dataLayerIndex][arrayIndexChunk] & 0xff)).getBlockState();
 		} else {
 			//System.out.println(chunkX + " / " + x + "   " + chunkZ + " / " + z);
 		}
@@ -443,7 +566,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	
 	
-	
+	*/
 	
 	
 	
@@ -580,37 +703,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					this.parabolicField[xR + smoothingRadius + (zR + smoothingRadius) * 5] = var10;
 				}
 			}
-		}
-
-		// Determines the height of the terrain i guess
-		/*
-		 * Cool settings! 
-		 
-		double horizontalScale = 684.412D; //684.412D;
-		double verticalScale = 50D; // 684.412D;
-		*/
+		}		
 		
-		/* Very sharp cliffs to moutain  
-		double horizontalScale = 684.412D;
-		double verticalScale = 1D;
-		*/
-		
-		/* Rather flat with extreme overhangs - very nice!
-		double horizontalScale = 684.412D;
-		double verticalScale = 2000D;
-		*/
-		
-		
-		// No overhangs, large mountains, shallow lakes 
-		/*double horizontalScale = 300D;
-		double verticalScale = 300D;      // probably horizontal scale*/
-		
-		
-		// Normal VCraft Settings
-		/*double horizontalScale = 384.412D;
-		double verticalScale = 684.412D;*/
-		
-		// Normal TFCraft Settings
 		double horizontalScale = 1000D;
 		double verticalScale = 1000D;
 		
@@ -622,7 +716,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
 
-		// one of the higher octaves
+		// Seems to be a high or highest octave
 		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 60.0D, verticalScale / 120.0D, horizontalScale / 60.0D);
 
 		
@@ -759,202 +853,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 
 	
-	//private double[] layer2Noise = new double[256];
-	
-	
-
-/*	private void replaceBlocksForBiomeHigh(int chunkX, int chunkZ, Random rand, ChunkPrimer primer) {
-		int seaLevel = 16;
-		int worldHeight = 256;
-		int indexOffset = 128;
-		double var6 = 0.03125D;
-		stoneNoise = noiseGen4.generateNoiseOctaves(stoneNoise, chunkX * 16, chunkZ * 16, 0, 16, 16, 1, var6 * 4.0D, var6 * 1.0D, var6 * 4.0D);
-		boolean[] cliffMap = new boolean[256];
-		
-		for (int xCoord = 0; xCoord < 16; ++xCoord) {
-			for (int zCoord = 0; zCoord < 16; ++zCoord) {
-				int arrayIndex = xCoord + zCoord * 16;
-				int arrayIndexDL = zCoord + xCoord * 16;
-				int arrayIndex2 = xCoord+1 + zCoord+1 * 16;
-				VCBiome biome = (VCBiome)getBiome(xCoord,zCoord);
-				
-				DataLayer rock1 = rockLayer1[arrayIndexDL] == null ? DataLayer.Granite : rockLayer1[arrayIndexDL];
-				DataLayer rock2 = rockLayer2[arrayIndexDL] == null ? DataLayer.Granite : rockLayer2[arrayIndexDL];
-				DataLayer rock3 = rockLayer3[arrayIndexDL] == null ? DataLayer.Granite : rockLayer3[arrayIndexDL];
-				DataLayer evt = evtLayer[arrayIndexDL] == null ? DataLayer.EVT_0_125 : evtLayer[arrayIndexDL];
-				
-				float rain = rainfallLayer[arrayIndexDL] == null ? DataLayer.Rain_125.floatdata1 : rainfallLayer[arrayIndexDL].floatdata1;
-				DataLayer drainage = drainageLayer[arrayIndexDL] == null ? DataLayer.DrainageNormal : drainageLayer[arrayIndexDL];
-				int var12 = (int)(stoneNoise[arrayIndex2] / 3.0D + 6.0D);
-				int var13 = -1;
-
-				IBlockState surfaceBlock = Blocks.grass.getDefaultState(); // VC_Core.getTypeForGrassWithRain(rock1.data1, rain);
-				IBlockState subSurfaceBlock = Blocks.dirt.getDefaultState(); // VC_Core.getTypeForDirtFromGrass(surfaceBlock);
-
-				float _temp = 0.5f; //VC_Climate.getBioTemperature(worldObj, chunkX * 16 + xCoord, chunkZ * 16 + zCoord);
-				int h = 0;
-				
-
-				if(VCBiome.isShore(getBiome(xCoord-1, zCoord).biomeID) || VCBiome.isShore(getBiome(xCoord+1, zCoord).biomeID) || VCBiome.isShore(getBiome(xCoord, zCoord+1).biomeID) || VCBiome.isShore(getBiome(xCoord, zCoord-1).biomeID)) {
-					if(!VCBiome.isShore(getBiome(xCoord, zCoord).biomeID))
-						cliffMap[arrayIndex] = true;
-				}
-				
-				
-				for (int height = 127; height >= 0; --height) {
-					int indexBig = ((arrayIndex) * worldHeight + height + indexOffset);
-					int index = ((arrayIndex) * 128 + height);
-
-					float temp = 0.5f; //VC_Climate.adjustHeightToTemp(height, _temp);
-					
-					if(VCBiome.isShore(biome.biomeID) && height > seaLevel+h && primer.getBlockState(index).getBlock() == Blocks.stone) {
-						// idsTop[index] = Blocks.air;
-						primer.setBlockState(index, Blocks.stone.getDefaultState());
-						
-						if (h == 0) {
-							h = (height-16)/4;
-						}
-					}
-					
-					/*if(idsBig[indexBig] == null) {
-						idsBig[indexBig] = idsTop[index];
-						if (indexBig+1 < idsBig.length && VC_Core.isSoilOrGravel(idsBig[indexBig+1]) && idsBig[indexBig] == Blocks.air) {
-							for (int upCount = 1; VC_Core.isSoilOrGravel(idsBig[indexBig+upCount]); upCount++) {
-								idsBig[indexBig+upCount] = Blocks.air;
-							}
-						}
-					}
-
-					if (idsBig[indexBig] == Blocks.stone) {
-						if(seaLevelOffsetMap[arrayIndex] == 0 && height-16 >= 0) {
-							seaLevelOffsetMap[arrayIndex] = height-16;
-						}
-
-						if(chunkHeightMap[arrayIndex] == 0) {
-							chunkHeightMap[arrayIndex] = height+indexOffset;
-						}
-
-						convertStone(indexOffset+height, arrayIndex, indexBig, idsBig, metaBig, rock1, rock2, rock3);
-
-						//First we check to see if its a cold desert
-						if(rain < 125 && temp < 1.5f) {
-							surfaceBlock = VC_Core.getTypeForSand(rock1.data1);
-							subSurfaceBlock = VC_Core.getTypeForSand(rock1.data1);
-						} else {
-						
-						//Next we check for all other warm deserts
-							if (rain < 125 && biome.heightVariation < 0.5f && temp > 20f) {
-								surfaceBlock = VC_Core.getTypeForSand(rock1.data1);
-								subSurfaceBlock = VC_Core.getTypeForSand(rock1.data1);
-							}
-						}
-
-						if (biome == VCBiome.beach || biome == VCBiome.ocean || biome == VCBiome.DeepOcean) {
-							subSurfaceBlock = surfaceBlock = VC_Core.getTypeForSand(rock1.data1);
-						} else if(biome == VCBiome.gravelbeach) {
-							subSurfaceBlock = surfaceBlock = VC_Core.getTypeForGravel(rock1.data1);
-						}
-
-						if (var13 == -1) {
-							//The following makes dirt behave nicer and more smoothly, instead of forming sharp cliffs.
-							int arrayIndexx = xCoord > 0? (xCoord - 1) + (zCoord * 16):-1;
-							int arrayIndexX = xCoord < 15? (xCoord + 1) + (zCoord * 16):-1;
-							int arrayIndexz = zCoord > 0? xCoord + ((zCoord-1) * 16):-1;
-							int arrayIndexZ = zCoord < 15? xCoord + ((zCoord+1) * 16):-1;
-							int var12Temp = var12;
-							for (int counter = 1; counter < var12Temp / 3; counter++) {
-								
-								if(arrayIndexx >= 0 && seaLevelOffsetMap[arrayIndex]-(3*counter) > seaLevelOffsetMap[arrayIndexx]) {
-									seaLevelOffsetMap[arrayIndex]--;
-									var12--;
-									height--;
-									indexBig = ((arrayIndex) * worldHeight + height + indexOffset);
-									index = ((arrayIndex) * 128 + height);
-								}
-								else if(arrayIndexX >= 0 && seaLevelOffsetMap[arrayIndex]-(3*counter) > seaLevelOffsetMap[arrayIndexX]) {
-									seaLevelOffsetMap[arrayIndex]--;
-									var12--;
-									height--;
-									indexBig = ((arrayIndex) * worldHeight + height + indexOffset);
-									index = ((arrayIndex) * 128 + height);
-								}
-								else if(arrayIndexz >= 0 && seaLevelOffsetMap[arrayIndex]-(3*counter) > seaLevelOffsetMap[arrayIndexz]) {
-									seaLevelOffsetMap[arrayIndex]--;
-									var12--;
-									height--;
-									indexBig = ((arrayIndex) * worldHeight + height + indexOffset);
-									index = ((arrayIndex) * 128 + height);
-								}
-								else if(arrayIndexZ >= 0 && seaLevelOffsetMap[arrayIndex]-(3*counter) > seaLevelOffsetMap[arrayIndexZ]) {
-									seaLevelOffsetMap[arrayIndex]--;
-									var12--;
-									height--;
-									indexBig = ((arrayIndex) * worldHeight + height + indexOffset);
-									index = ((arrayIndex) * 128 + height);
-								}
-							}
-							var13 = (int)(var12 * (1d-Math.max(Math.min(((height - 16) / 80d), 1), 0)));
-
-							//Set soil below water
-							for (int c = 1; c < 3; c++) {
-								if (indexBig + c < idsBig.length && (
-										(idsBig[indexBig + c] != surfaceBlock) &&
-										(idsBig[indexBig + c] != subSurfaceBlock) &&
-										(idsBig[indexBig + c] != VCBlocks.SaltWaterStationary) &&
-										(idsBig[indexBig + c] != VCBlocks.FreshWaterStationary) &&
-										(idsBig[indexBig + c] != VCBlocks.HotWater))) {
-									idsBig[indexBig + c] = Blocks.air;
-									//metaBig[indexBig + c] = 0;
-									if (indexBig + c + 1 < idsBig.length && idsBig[indexBig + c + 1] == VCBlocks.SaltWaterStationary) {
-										idsBig[indexBig + c] = subSurfaceBlock;
-										metaBig[indexBig + c] = (byte)VC_Core.getSoilMeta(rock1.data1);
-									}
-								}
-							}
-
-							//Determine the soil depth based on world height
-							int dirtH = Math.max(8-((height + 96 - Global.SEALEVEL) / 16), 0);
-
-							if(var13 > 0) {
-								if (height >= seaLevel - 1 && index+1 < idsTop.length && idsTop[index + 1] != VCBlocks.SaltWaterStationary && dirtH > 0) {
-									idsBig[indexBig] = surfaceBlock;
-									metaBig[indexBig] = (byte)VC_Core.getSoilMeta(rock1.data1);
-
-
-									for (int c = 1; c < dirtH && !VC_Core.isMountainBiome(biome.biomeID) && 
-											biome != VCBiome.HighHills && biome != VCBiome.HighHillsEdge && !cliffMap[arrayIndex]; c++) {
-										int _height = height - c;
-										int _indexBig = ((arrayIndex) * worldHeight + _height + indexOffset);
-										idsBig[_indexBig] = subSurfaceBlock;
-										metaBig[_indexBig] = (byte)VC_Core.getSoilMeta(rock1.data1);
-
-										if (c > 1+(5-drainage.data1)) {
-											idsBig[_indexBig] = VC_Core.getTypeForGravel(rock1.data1);
-											metaBig[_indexBig] = (byte)VC_Core.getSoilMeta(rock1.data1);
-										}
-									}
-								}
-							}
-						}
-						
-						if (!(biome == VCBiome.swampland)) {
-							if (((height > seaLevel - 2 && height < seaLevel && idsTop[index + 1] == VCBlocks.SaltWaterStationary)) || (height < seaLevel && idsTop[index + 1] == VCBlocks.SaltWaterStationary)) {
-								if (idsBig[indexBig] != VC_Core.getTypeForSand(rock1.data1) && rand.nextInt(5) != 0) {
-									idsBig[indexBig] = VC_Core.getTypeForGravel(rock1.data1);
-									metaBig[indexBig] = (byte)VC_Core.getSoilMeta(rock1.data1);
-								}
-							}
-						}
-					}
-					else if (idsTop[index] == VCBlocks.SaltWaterStationary && biome != VCBiome.ocean && biome != VCBiome.DeepOcean && biome != VCBiome.beach && biome != VCBiome.gravelbeach) {
-						idsBig[indexBig] = VCBlocks.FreshWaterStationary;
-					}
-				}
-			}
-		}
-	}
-	*/
-	
 	
 	
 	
@@ -978,6 +876,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		int[] climate = VCraftWorld.instance.getClimate(new BlockPos(xcoord, 128, zcoord));
 		if (climate[2] < 60) return list;
 		
+		if (climate[0] < -3 && climate[0] > -15 && climate[2] > 70) {
+			list.add(new SpawnListEntry(EntityWolf.class, 2, 1, 2));
+		}
 
 		if (climate[0] > 25) {
 			list.add(new SpawnListEntry(EntityPig.class, 20, 2, 4));

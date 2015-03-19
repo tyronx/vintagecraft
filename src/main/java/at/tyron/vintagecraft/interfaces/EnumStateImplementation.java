@@ -36,5 +36,11 @@ public class EnumStateImplementation implements IEnumState {
 	public int getId() {
 		return id;
 	}
+	
+	
+	@Override
+	public String toString() {
+		return " (meta= " + metadata + ", block=" + statename + ")";
+	}
 
 }

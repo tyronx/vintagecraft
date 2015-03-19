@@ -115,4 +115,8 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	        return net.minecraftforge.event.ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos) > 0;
 	    }
     }
+    
+    public boolean isRepairable() {
+    	return false;
+    }
 }

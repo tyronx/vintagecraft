@@ -207,6 +207,13 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	}
 
 
+	@Override
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
 	
 	/*@Override
 	public float getSpawningChance() {

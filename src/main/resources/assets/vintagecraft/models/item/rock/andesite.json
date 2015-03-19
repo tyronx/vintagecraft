@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/rock/andesite",
+"parent": "vintagecraft:block/rock/andesite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

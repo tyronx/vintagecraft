@@ -26,80 +26,80 @@ public class MapGenCavesVC extends MapGenBase {
 	// I wish someone could figure out what this actually does :/
 	
 	//this.func_180703_a(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
-    protected void func_180703_a(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
-        this.func_180702_a(randNum, chunkX, chunkZ, primer, xcoord, ycoord, zcoord, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
+    protected void digCave(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
+        this.digCave(randNum, chunkX, chunkZ, primer, xcoord, ycoord, zcoord, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
     }
 
-    protected void func_180702_a(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord, float p_180702_12_, float p_180702_13_, float p_180702_14_, int p_180702_15_, int p_180702_16_, double p_180702_17_)
+    protected void digCave(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord, float p_180702_12_, float coordangle, float angle1, int counter, int maxiterations, double p_180702_17_)
     {
-        double d4 = (double)(chunkX * 16 + 8);
-        double d5 = (double)(chunkZ * 16 + 8);
+        double xchunkmiddle = (double)(chunkX * 16 + 8);
+        double zchunkmiddle = (double)(chunkZ * 16 + 8);
         float f3 = 0.0F;
         float f4 = 0.0F;
         Random random = new Random(randNum);
 
-        if (p_180702_16_ <= 0)
+        if (maxiterations <= 0)
         {
             int j1 = this.range * 16 - 16;
-            p_180702_16_ = j1 - random.nextInt(j1 / 4);
+            maxiterations = j1 - random.nextInt(j1 / 4);
         }
 
         boolean flag2 = false;
 
-        if (p_180702_15_ == -1)
+        if (counter == -1)
         {
-            p_180702_15_ = p_180702_16_ / 2;
+            counter = maxiterations / 2;
             flag2 = true;
         }
 
-        int k1 = random.nextInt(p_180702_16_ / 2) + p_180702_16_ / 4;
+        int k1 = random.nextInt(maxiterations / 2) + maxiterations / 4;
 
-        for (boolean flag = random.nextInt(6) == 0; p_180702_15_ < p_180702_16_; ++p_180702_15_)
+        for (boolean rnd = random.nextInt(6) == 0; counter < maxiterations; ++counter)
         {
-            double d6 = 1.5D + (double)(MathHelper.sin((float)p_180702_15_ * (float)Math.PI / (float)p_180702_16_) * p_180702_12_ * 1.0F);
+            double d6 = 1.5D + (double)(MathHelper.sin((float)counter * (float)Math.PI / (float)maxiterations) * p_180702_12_ * 1.0F);
             double d7 = d6 * p_180702_17_;
-            float f5 = MathHelper.cos(p_180702_14_);
-            float f6 = MathHelper.sin(p_180702_14_);
-            xcoord += (double)(MathHelper.cos(p_180702_13_) * f5);
+            float f5 = MathHelper.cos(angle1);
+            float f6 = MathHelper.sin(angle1);
+            xcoord += (double)(MathHelper.cos(coordangle) * f5);
             ycoord += (double)f6;
-            zcoord += (double)(MathHelper.sin(p_180702_13_) * f5);
+            zcoord += (double)(MathHelper.sin(coordangle) * f5);
 
-            if (flag)
+            if (rnd)
             {
-                p_180702_14_ *= 0.92F;
+                angle1 *= 0.92F;
             }
             else
             {
-                p_180702_14_ *= 0.7F;
+                angle1 *= 0.7F;
             }
 
-            p_180702_14_ += f4 * 0.1F;
-            p_180702_13_ += f3 * 0.1F;
+            angle1 += f4 * 0.1F;
+            coordangle += f3 * 0.1F;
             f4 *= 0.9F;
             f3 *= 0.75F;
             f4 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
             f3 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
 
-            if (!flag2 && p_180702_15_ == k1 && p_180702_12_ > 1.0F && p_180702_16_ > 0)
+            if (!flag2 && counter == k1 && p_180702_12_ > 1.0F && maxiterations > 0)
             {
-                this.func_180702_a(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, p_180702_13_ - ((float)Math.PI / 2F), p_180702_14_ / 3.0F, p_180702_15_, p_180702_16_, 1.0D);
-                this.func_180702_a(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, p_180702_13_ + ((float)Math.PI / 2F), p_180702_14_ / 3.0F, p_180702_15_, p_180702_16_, 1.0D);
+                this.digCave(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle - ((float)Math.PI / 2F), angle1 / 3.0F, counter, maxiterations, 1.0D);
+                this.digCave(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle + ((float)Math.PI / 2F), angle1 / 3.0F, counter, maxiterations, 1.0D);
                 return;
             }
 
             if (flag2 || random.nextInt(4) != 0)
             {
-                double d8 = xcoord - d4;
-                double d9 = zcoord - d5;
-                double d10 = (double)(p_180702_16_ - p_180702_15_);
+                double dx = xcoord - xchunkmiddle;
+                double dz = zcoord - zchunkmiddle;
+                double iterationsleft = (double)(maxiterations - counter);
                 double d11 = (double)(p_180702_12_ + 2.0F + 16.0F);
 
-                if (d8 * d8 + d9 * d9 - d10 * d10 > d11 * d11)
+                if (dx * dx + dz * dz - iterationsleft * iterationsleft > d11 * d11)
                 {
                     return;
                 }
 
-                if (xcoord >= d4 - 16.0D - d6 * 2.0D && zcoord >= d5 - 16.0D - d6 * 2.0D && xcoord <= d4 + 16.0D + d6 * 2.0D && zcoord <= d5 + 16.0D + d6 * 2.0D)
+                if (xcoord >= xchunkmiddle - 16.0D - d6 * 2.0D && zcoord >= zchunkmiddle - 16.0D - d6 * 2.0D && xcoord <= xchunkmiddle + 16.0D + d6 * 2.0D && zcoord <= zchunkmiddle + 16.0D + d6 * 2.0D)
                 {
                     int k3 = MathHelper.floor_double(xcoord - d6) - chunkX * 16 - 1;
                     int l1 = MathHelper.floor_double(xcoord + d6) - chunkX * 16 + 1;
@@ -240,7 +240,7 @@ public class MapGenCavesVC extends MapGenBase {
 
             if (this.rand.nextInt(4) == 0)
             {
-                this.func_180703_a(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
+                this.digCave(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
                 k1 += this.rand.nextInt(4);
             }
 
@@ -255,7 +255,7 @@ public class MapGenCavesVC extends MapGenBase {
                     f2 *= this.rand.nextFloat() * this.rand.nextFloat() * 3.0F + 1.0F;
                 }
 
-                this.func_180702_a(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord, f2, f, f1, 0, 0, 1.0D);
+                this.digCave(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord, f2, f, f1, 0, 0, 1.0D);
             }
         }
     }

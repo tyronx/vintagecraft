@@ -11,7 +11,6 @@ public class ItemBrick extends ItemBlock {
 
 	public ItemBrick(Block block) {
 		super(block);
-		// TODO Auto-generated constructor stub
 	}
 
 	

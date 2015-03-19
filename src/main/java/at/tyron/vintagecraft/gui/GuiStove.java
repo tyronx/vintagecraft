@@ -30,17 +30,17 @@ public class GuiStove extends GuiContainer {
 		
 		
 		String s = stove.getDisplayName().getUnformattedText();
-        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 4210752);
+        this.fontRendererObj.drawString(s, this.xSize / 2 - this.fontRendererObj.getStringWidth(s) / 2, 6, 0);
         this.fontRendererObj.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 		
         fontRendererObj.setUnicodeFlag(true);
         
 		String furntemp = stove.furnaceTemperature + " deg.";
-		this.fontRendererObj.drawString(furntemp, this.xSize / 2 - 10, 56, 4210752);
+		this.fontRendererObj.drawString(furntemp, this.xSize / 2 - 10, 56, 0);
 		
 		if (stove.oreSlot() != null) {
 			String itemtemp = stove.oreTemperature + " deg.";
-			this.fontRendererObj.drawString(itemtemp, this.xSize / 2 - 10, 20, 4210752);
+			this.fontRendererObj.drawString(itemtemp, this.xSize / 2 - 10, 20, 0);
 		}
 		
 		fontRendererObj.setUnicodeFlag(false);

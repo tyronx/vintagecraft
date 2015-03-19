@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "particle": "vintagecraft:blocks/sapling/africanmahagony",
+        "cross": "vintagecraft:blocks/sapling/africanmahagony"
+    }
+}

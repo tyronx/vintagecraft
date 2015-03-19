@@ -3,10 +3,12 @@ package at.tyron.vintagecraft;
 import java.util.HashMap;
 
 import at.tyron.vintagecraft.Inventory.ContainerStove;
+import at.tyron.vintagecraft.Inventory.ContainerVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.gui.GuiStove;
+import at.tyron.vintagecraft.gui.GuiVessel;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,6 +74,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 0) {
 			return new ContainerStove(player.inventory, (TileEntityStove) world.getTileEntity(new BlockPos(x, y, z)));
 		}
+		if (ID == 1) {
+			return new ContainerVessel(player.inventory, player.getHeldItem().getTagCompound());
+		}
 		
 		return null;
 	}
@@ -80,6 +85,10 @@ public class CommonProxy implements IGuiHandler {
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		if (ID == 0) {
 			return new GuiStove(player.inventory, world, (TileEntityStove) world.getTileEntity(new BlockPos(x, y, z)));
+		}
+		
+		if (ID == 1) {
+			return new GuiVessel(player.inventory, world, player.getHeldItem().getTagCompound());
 		}
 			
 			

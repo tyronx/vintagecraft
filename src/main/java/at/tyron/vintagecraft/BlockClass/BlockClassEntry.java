@@ -34,7 +34,6 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 		return metadata;
 	}
 	
-	
 	public int getId() {
 		return key.getId();
 	}
@@ -45,7 +44,6 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 
 	
 	public IBlockState getBlockState() {
-		//return block.getDefaultState().withProperty(((IMultiblock)block).getTypeProperty(), metadata);
 		return block.getDefaultState().withProperty(((IMultiblock)block).getTypeProperty(), this);
 	}
 	
@@ -53,7 +51,6 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 		return baseState.withProperty(((IMultiblock)block).getTypeProperty(), this);
 	}
 
-	
 	public IBlockState getBlockState(IBlockState baseState, IProperty property) {
 		return baseState.withProperty(property, this);
 	}
@@ -62,6 +59,9 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 		return new ItemStack(Item.getItemFromBlock(block), 1, metadata);
 	}
 	
+	public ItemStack getItemStack(int quantity) {
+		return new ItemStack(Item.getItemFromBlock(block), quantity, metadata);
+	}
 
 
 	

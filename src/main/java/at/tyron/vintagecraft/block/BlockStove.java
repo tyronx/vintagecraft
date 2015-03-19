@@ -71,6 +71,17 @@ public class BlockStove extends BlockContainer {
         return 3;
     }
     
+    
+    
+            @Override
+            public boolean isOpaqueCube() { return true; }
+    
+            @Override
+            public boolean isFullCube() { return true; }
+    
+            @Override
+            public boolean isVisuallyOpaque() { return true; }
+    
     public boolean hasComparatorInputOverride() {
         return true;
     }

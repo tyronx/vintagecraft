@@ -13,8 +13,15 @@ import at.tyron.vintagecraft.WorldGen.DynTreeGen;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 
+
+//http://www.hoovedesigns.com/woods.html
+//http://www.piecesofwood.com/woods.html
+
+//Black wood: http://en.wikipedia.org/wiki/Dalbergia_melanoxylon
+
+
 public enum EnumTree implements IEnumState {
-	// weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
+	// growthspeed, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
 	
 	ASH						(1f, 0, 0,  0,  0,    0, 0,   0, 0f, 0.7f, 0, 255),
 //	LARCH					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://upload.wikimedia.org/wikipedia/commons/2/28/Larix_sibirica_-_Siperianlehtikuusi,_Sibirisk_l%C3%A4rk,_Siberian_larch_IMG_9213_C.JPG
@@ -22,7 +29,6 @@ public enum EnumTree implements IEnumState {
 	OAK						(1.8f, 75, 2, 22, 95,  170,  90,  255, 0f, 0.65f, 0, 150),  		// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
 	CRIMSONKINGMAPLE		(1.2f, 1, 5, 15, 95,  150,  90,  200, 0f, 0.5f, 0, 250),			// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
 	MOUNTAINDOGWOOD			(0.7f, 60, 10, 20, 90, 180,  90, 255, 0f, 1f, 0, 150),
-//	WILLOW					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
 	
 //	APPLE					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://www.gardenista.com/files/styles/733_0s/public/img/sub/uimg/01-2013/700_pruned-apple-tree-jpeg.jpg
 	
@@ -34,7 +40,7 @@ public enum EnumTree implements IEnumState {
 	
 //	AFRICANBLACKWOOD		(100, 0,  0,  0,    0, 0,   0, 0f, 0f),  		// http://www.prota4u.org/plantphotos/Dalbergia%20melanoxylon%202.jpg
 //	BAOBAB					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),
-	ACACIA					(1.1f, 97, 23, 30, 80, 140,  50, 200, 0f, 0.8f, 0, 255),			// http://static.panoramio.com/photos/large/37061566.jpg
+	ACACIA					(1.1f, 100, 23, 30, 80, 140,  50, 200, 0f, 0.8f, 0, 255),			// http://static.panoramio.com/photos/large/37061566.jpg
 	KAPOK					(1.6f,   0, 0,  0,  0,     0,   0,   0, 0f, 0f, 0, 255),			// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
 	PURPLEHEARTWOOD 		(2f, 100, 24, 30, 185, 255, 160, 255,  0, 1f, 100, 255),
 //	SEQUOIA					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// 
@@ -47,15 +53,22 @@ public enum EnumTree implements IEnumState {
 //	DATEPALM				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),
 	
 	
-	ELEPHANTTREE			(1.3f, 95, 20, 26, 30, 60, 20, 100, 0, 0.75f, 0, 255),
+	ELEPHANTTREE			(1.3f, 92, 20, 26, 30, 60, 20, 100, 0, 0.75f, 0, 255),
 
 	MYRTLEBEECH				(1.15f, 100, 15, 22, 190, 255, 130, 255, 0f, 0.8f, 0, 255),  // http://api.ning.com/files/MqhG5otblM36rGP5RG6jXZBh7Zo3GaqEoLpCbeE6R2iWuRYcGYXPrC3070Xuqd7SUBMFB0OxF9gl8Py3gCQZ2483-NhiYqbl/NothofagusCunninghammii.jpg
 
 	JOSHUA					(0.9f, 95, 24, 30, 20, 60, 20, 100, 0, 0.6f, 0, 255),
 
-	PEAR					(1.2f, 70, 6, 20, 100,  180,  100,  200, 0f, 0.8f, 0, 100)
+	PEAR					(1.2f, 70, 6, 20, 100,  180,  100,  200, 0f, 0.8f, 0, 100),
 
 //	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
+	
+	
+	AFRICANMAHAGONY			(1.2f, 96, 23, 30, 145, 220,  100,  230, 0f, 0.8f, 0, 200),
+	BLACKWALNUT				(1.15f, 10, 15, 22, 170, 255, 130, 255, 0f, 0.5f, 0, 255),
+	POPLAR					(0.6f, 85, 3, 20, 115,  255,  100,  255, 0f, 0.8f, 0, 255),
+	WILLOW					(0.5f, 100, -6,  18,  65,  255,  50,  255, 0f, 0.9f, 0, 250)			// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
+	
 	;
 
 
@@ -136,14 +149,14 @@ public enum EnumTree implements IEnumState {
 		
 		for (EnumTree tree : EnumTree.values()) {
 			if (tree.weight == 0) continue;
-			
-			/*System.out.println(flora.name() + "   " +
-					rainfall + " > " + flora.minrain  
-					+ " || " + rainfall + " < " + flora.maxrain 
-					+ " || "+ temperature + " > " + flora.mintemp   
-					+ " || "+ temperature + " < " + flora.maxtemp 
-					+ " || "+ forest + " > " + flora.minforest  
-					+ " || "+ forest + " < " + flora.maxforest);
+			/*
+			System.out.println(tree.name() + "   " +
+					rainfall + " > " + tree.minrain  
+					+ " || " + rainfall + " < " + tree.maxrain 
+					+ " || "+ temperature + " > " + tree.mintemp   
+					+ " || "+ temperature + " < " + tree.maxtemp 
+					+ " || "+ forest + " > " + tree.minforest  
+					+ " || "+ forest + " < " + tree.maxforest);
 			*/
 			if (
 				rainfall < tree.minrain 
@@ -193,7 +206,9 @@ public enum EnumTree implements IEnumState {
 		// forest == 0  => dense forest
 		// forest == 255 => no forest
 		
-		return 1 - forest/255f + Math.max(0, 2 * (rain + temperature / 5 - 150) / 255f) - 2 * Math.min(0, rain - 130) / 255f;
+		float humidity = rain / Math.max(1f, 1f * VCraftWorld.instance.deScaleTemperature(temperature) - 2 * Math.max(0, rain - 180));
+		
+		return (1 - forest/255f) * humidity; // * (0.15f + rain / 255f + Math.max(0, rain / 255f - 0.4f));    //   + Math.max(0, 2 * (rain + temperature / 5 - 150) / 255f) - 8 * Math.min(0, rain - 130) / 255f;
 	}
 	
 	

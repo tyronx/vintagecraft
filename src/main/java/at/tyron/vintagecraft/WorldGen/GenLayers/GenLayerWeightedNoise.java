@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers;
 
+import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
 
 public class GenLayerWeightedNoise extends GenLayerNoise {
@@ -8,9 +9,16 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 	int[] colors;*/
 	
 	int weightsum;
-
+	boolean weightDistributionTriangular = false;
+	
 	public GenLayerWeightedNoise(long seed, IGenLayerSupplier[] genlayersupplier) {
+		this(seed, genlayersupplier, false);
+	}
+
+	public GenLayerWeightedNoise(long seed, IGenLayerSupplier[] genlayersupplier, boolean weightDistributionTriangular) {
 		super(seed);
+		
+		this.weightDistributionTriangular = weightDistributionTriangular;
 		
 		for (int i = 0; i < genlayersupplier.length; i++) {
 			weightsum += genlayersupplier[i].getWeight();
@@ -23,6 +31,7 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 	public int[] getInts(int xCoord, int zCoord, int sizeX, int sizeZ) {
 		int[] cache = new int[sizeX * sizeZ];
 		int rnd, sum=0;
+		
 		
 		for (int z = 0; z < sizeZ; ++z) {
 			for (int x = 0; x < sizeX; ++x) {
@@ -37,9 +46,22 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 					sum += genlayersuppliers[i].getWeight();
 					
 					if (rnd < sum) {
-						cache[x + z * sizeX] =
-								((genlayersuppliers[i].getDepthMin() + nextInt(1 + genlayersuppliers[i].getDepthMax() - genlayersuppliers[i].getDepthMin())) << 16)
-								+ genlayersuppliers[i].getColor(); //+ (i * 255) / (weights.length-1);
+						cache[x + z * sizeX] = (getDepth(genlayersuppliers[i]) << 16) + genlayersuppliers[i].getColor(); 
+						
+						
+						if (genlayersuppliers[i].getSize() > 1) {
+							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+							
+							cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+							
+							cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+						}
+						
 						break;
 					}
 				}
@@ -52,6 +74,16 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 
 		return cache;
 	}
+	
+	
+	int getDepth(IGenLayerSupplier genlayersupplier) {
+		if (weightDistributionTriangular) {
+			return genlayersupplier.getDepthMin() + (nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin()) + nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin()))/2;
+		} else {
+			return genlayersupplier.getDepthMin() + nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin());
+		}
+	}
+	
 }
 
 

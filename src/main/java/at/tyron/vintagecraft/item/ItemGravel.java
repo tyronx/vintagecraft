@@ -19,7 +19,7 @@ public class ItemGravel extends ItemSand {
 
 	@Override
 	public int getMeltingPoint(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return 1700;
 		}
 		return 0;

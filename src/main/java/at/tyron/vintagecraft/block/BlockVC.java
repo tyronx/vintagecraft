@@ -142,6 +142,9 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     	
     	if (organiclayer != EnumOrganicLayer.NoGrass) {
     		BlockPos above = pos.up();
+
+    		if (!worldIn.isAreaLoaded(pos.add(-1, 0, -1), pos.add(1, 1, 1))) return;
+    		
     		int light = Math.max(worldIn.getLight(above), Math.max(Math.max(Math.max(worldIn.getLight(above.north()), worldIn.getLight(above.south())), worldIn.getLight(above.east())), worldIn.getLight(above.west())));
     		
     		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToEnviroment(light, VCraftWorld.instance.getRainfall(pos), VCraftWorld.instance.getTemperature(pos));

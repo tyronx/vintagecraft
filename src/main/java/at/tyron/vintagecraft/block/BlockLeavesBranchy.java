@@ -38,7 +38,7 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
         	ret.add(new ItemStack(Items.stick, 1));
         }
         
-        if (rand.nextInt(8) == 0) {
+        if (rand.nextInt(12) == 0) {
     		ret.add(BlocksVC.sapling.getItemStackFor(((BlockClassEntry)state.getValue(getTypeProperty())).getKey()));
     	}
 

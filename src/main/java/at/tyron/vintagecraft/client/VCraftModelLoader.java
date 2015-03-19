@@ -47,16 +47,19 @@ import com.google.common.primitives.Ints;
 
 public class VCraftModelLoader implements ICustomModelLoader {
 	public static final VCraftModelLoader instance = new VCraftModelLoader();
-    public static final ResourceLocation dummyTexture = new ResourceLocation("minecraft:blocks/dirt");
+    public static final ResourceLocation dummyTexture = new ResourceLocation("vintagecraft:blocks/stove.b3d");
 
     public boolean accepts(ResourceLocation modelLocation)
     {
-        return modelLocation.getResourceDomain().equals("forgedebug") && modelLocation.getResourcePath().contains("dummymodel");
+    	if (modelLocation.getResourceDomain().equals("vintagecraft") && modelLocation.getResourcePath().equals("stove")) {
+    		System.out.println("bla / " + modelLocation.getResourcePath());
+    	}
+        return modelLocation.getResourceDomain().equals("vintagecraft") && modelLocation.getResourcePath().equals("models/block/stove.b3d");
     }
 
     public IModel loadModel(ResourceLocation model)
     {
-        return (IModel) VCraftModelLoader.instance;
+        return VCraftModel.instance;
     }
 
     public static enum VCraftModel implements IModel

@@ -49,7 +49,7 @@ public class ItemCopperTool extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		return 250;
+		return 220;
 	}
 
 	@Override

@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/chert",
+"parent": "vintagecraft:block/subsoil/chert",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

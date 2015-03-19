@@ -18,14 +18,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IStringSerializable;
 
 
-// http://www.hoovedesigns.com/woods.html
-// http://www.piecesofwood.com/woods.html
-
-// Black wood: http://en.wikipedia.org/wiki/Dalbergia_melanoxylon
-
 public class TreeClass extends BlockClass {
-
-	
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
@@ -54,45 +47,5 @@ public class TreeClass extends BlockClass {
 		initBlocks(getBlockClassName(), getBlockClass(), getItemClass(), getHardness(), getStepSound(), getHarvestTool(), getHarvestLevel());
 		return this;
 	}
-	
-	
-/*	public static TreeClass ASH = new TreeClass("ash");
-	public static TreeClass BIRCH = new TreeClass("birch");
-	public static TreeClass DOUGLASFIR = new TreeClass("douglasfir");
-	public static TreeClass OAK = new TreeClass("oak");
-	public static TreeClass MAPLE = new TreeClass("maple");
-	public static TreeClass MOUNTAINDOGWOOD = new TreeClass("mountaindogwood");
-	public static TreeClass PINE = new TreeClass("pine");
-	public static TreeClass SPRUCE = new TreeClass("spruce");*/
-	
-	// http://www.oxfordlearnersdictionaries.com/media/american_english/fullsize/d/dec/decid/deciduous_trees.jpg
-	
-
-	// in forests: http://www.sfu.ca/geog/geog351fall07/Group06/Final%20Project%20Images/Interior%20Douglas-fir/douglas%20fir.jpg
-	//             http://www2.humboldt.edu/redwoods/images/photos/dougfir/1_WA_young-canopy1.jpg
-	
-	// alone: http://www.christmastreesucut.com/wp-content/uploads/2010/10/Douglas-Fir.jpg
-	
-	
-	//https://tce-staging.s3.amazonaws.com/media/media/36d500de-8303-45ea-8e6b-78b94b7bc8d2.jpg
-	
-	
-	
-
-	
-
-
-	
-	/*
-	public static TreeClass fromMeta(BlockVC block, int meta) {
-		for (TreeClass tree : values()) {
-			if (block instanceof BlockLogVC && tree.metadata == meta && tree.block == block) return tree;
-			if (block instanceof BlockLeaves && tree.metadata == meta && tree.block == block) return tree;
-			if (block instanceof BlockLeavesBranchy && tree.metadata == meta && tree.block == block) return tree;
-		}
-		return null;
-	}*/
-
-	
 }
 

@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/subsoil/andesite",
+"parent": "vintagecraft:block/subsoil/andesite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

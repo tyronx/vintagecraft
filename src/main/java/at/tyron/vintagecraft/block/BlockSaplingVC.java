@@ -185,7 +185,7 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
     }
 
     protected boolean canPlaceBlockOn(Block ground) {
-        return ground == BlocksVC.topsoil || ground == BlocksVC.subsoil;
+        return ground == BlocksVC.topsoil || BlocksVC.subsoil.containsBlock(ground);
     }
 
 

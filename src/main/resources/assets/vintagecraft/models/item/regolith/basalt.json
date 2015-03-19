@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/basalt",
+"parent": "vintagecraft:block/regolith/basalt",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

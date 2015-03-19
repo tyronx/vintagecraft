@@ -66,7 +66,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		
-		nbt.setInteger("oretype", oretype.meta);
+		nbt.setInteger("oretype", oretype.getId());
 		itemstack.setTagCompound(nbt);
 	}
 
@@ -105,8 +105,15 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	public ItemStack getSmelted(ItemStack ore) {
 		switch (getOreType(ore)) {
 			case LIMONITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRON);
-			case NATIVEGOLD: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.GOLD);
+			case NATIVEGOLD_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.GOLD);
 			case NATIVECOPPER: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
+			case CASSITERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.TIN);
+			case NATIVESILVER_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.SILVER);
+			case PLATINUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.PLATINUM);
+			case RHODIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.RHODIUM);
+			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRIDIUM);
+			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.ZINC);
+			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.BISMUTH);
 			
 			default:
 				break; 
@@ -120,7 +127,14 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		switch (getOreType(ore)) {
 			case LIMONITE:
 			case NATIVECOPPER: return 4;
-			case NATIVEGOLD: return 8;
+			case NATIVEGOLD_QUARTZ: return 8;
+			case CASSITERITE: return 4;
+			case NATIVESILVER_QUARTZ: return 4;
+			case PLATINUM: return 4;
+			case RHODIUM: return 4;
+			case IRIDIUM: return 4;
+			case SPHALERITE: return 4;
+			case BISMUTHINITE: return 4;
 			default: break;
 		
 		}
@@ -131,9 +145,16 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	@Override
 	public int getMeltingPoint(ItemStack ore) {
 		switch (getOreType(ore)) {
+			case CASSITERITE: return EnumMetal.TIN.meltingpoint;
 			case LIMONITE: return EnumMetal.IRON.meltingpoint;
 			case NATIVECOPPER: return EnumMetal.COPPER.meltingpoint;
-			case NATIVEGOLD: return EnumMetal.GOLD.meltingpoint;
+			case NATIVEGOLD_QUARTZ: return EnumMetal.GOLD.meltingpoint;
+			case NATIVESILVER_QUARTZ: return EnumMetal.SILVER.meltingpoint;
+			case BISMUTHINITE: return EnumMetal.BISMUTH.meltingpoint;
+			case IRIDIUM: return EnumMetal.IRIDIUM.meltingpoint;
+			case PLATINUM: return EnumMetal.PLATINUM.meltingpoint;
+			case RHODIUM: return EnumMetal.RHODIUM.meltingpoint;
+			case SPHALERITE: return EnumMetal.ZINC.meltingpoint;
 			default: break;
 		}
 		return 0;

@@ -14,7 +14,8 @@ public class ItemSand extends ItemRock implements ISmeltable {
 
 	@Override
 	public ItemStack getSmelted(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return new ItemStack(Blocks.glass);
 		}
 		return null;
@@ -22,7 +23,7 @@ public class ItemSand extends ItemRock implements ISmeltable {
 
 	@Override
 	public int getRaw2SmeltedRatio(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return 1;
 		}
 		return 0;
@@ -30,7 +31,7 @@ public class ItemSand extends ItemRock implements ISmeltable {
 
 	@Override
 	public int getMeltingPoint(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return 1600;
 		}
 		return 0;

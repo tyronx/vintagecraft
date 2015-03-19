@@ -129,57 +129,76 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     }
  
     
+    public static EnumOreType getOreType(IBlockState state) {
+    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getBlockClassfromState(state).block).getTypeProperty())).getName().split("-");
+    	return EnumOreType.valueOf(type[0].toUpperCase());
+    }
+
+    
+    public static EnumRockType getRockType(IBlockState state) {
+    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getBlockClassfromState(state).block).getTypeProperty())).getName().split("-");
+    	return EnumRockType.valueOf(type[1].toUpperCase());
+    }
+
     
     @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    	/*
-    	TileEntity te = worldIn.getTileEntity(pos);
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    /*	return super.getDrops(world, pos, state, fortune);
+    }
+    
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {*/
+    	java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
-        if(te instanceof TEOre) {
-        	TEOre teOre = (TEOre) te;
-        	
-        	ItemStack itemstack = new ItemStack(ItemsVC.stone, worldIn.rand.nextInt(2));
-            ItemStone.setRockType(itemstack, teOre.getRockType());          
-            spawnAsEntity(worldIn, pos, itemstack);
-
-            if (teOre.getOreType() == EnumMaterialDeposit.REDSTONE) {
-            	itemstack = new ItemStack(Items.redstone, 2 + worldIn.rand.nextInt(2));
-            } else { 
-            	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
-            	ItemOreVC.setOreType(itemstack, teOre.getOreType());          
-            }
-            spawnAsEntity(worldIn, pos, itemstack);
-        }*/
-    	
+    	World worldIn = (World)world;
     	
      	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	
      	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
      	
-     	ItemStack itemstack = new ItemStack(ItemsVC.stone, worldIn.rand.nextInt(2));
-        ItemStone.setRockType(itemstack, rocktype);          
-        spawnAsEntity(worldIn, pos, itemstack);
+
+     //	System.out.println("bla!");
+     	
+     	ItemStack itemstack;
+     	if (worldIn.rand.nextInt(2) > 0) {
+	     	ret.add(ItemStone.setRockType(new ItemStack(ItemsVC.stone, 1), rocktype));
+	        //spawnAsEntity(worldIn, pos, itemstack);
+     	}
         
-        
-        if (oretype == EnumOreType.REDSTONE) {
-        	itemstack = new ItemStack(Items.redstone, 2 + worldIn.rand.nextInt(2));
-        } else { 
-        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
-        	ItemOreVC.setOreType(itemstack, oretype);          
+        switch (oretype) {
+        	case REDSTONE:
+        		itemstack = new ItemStack(Items.redstone, 2 + worldIn.rand.nextInt(2));
+        		ret.add(itemstack);
+        		break;
+        	
+        		
+        	case OLIVINE:
+        		/*itemstack = new ItemStack(ItemsVC.stone, worldIn.rand.nextInt(2));
+    	        ItemStone.setRockType(itemstack, rocktype);
+    	        spawnAsEntity(worldIn, pos, itemstack);*/
+    	        break;
+        		
+        	default: 
+	        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
+	        	ItemOreVC.setOreType(itemstack, oretype);
+	        	ret.add(itemstack);
+	        	break;
         }
         
-        spawnAsEntity(worldIn, pos, itemstack);
+        //spawnAsEntity(worldIn, pos, itemstack);
+        
     	
-    	super.breakBlock(worldIn, pos, state);
+    	//super.breakBlock(worldIn, pos, state);
+        return ret;
     }
 
-    
+    /*
     @Override
     public void dropBlockAsItemWithChance(World worldIn, BlockPos pos,
     		IBlockState state, float chance, int fortune) {
     	
-    }
+    }*/
 
 
 	@Override

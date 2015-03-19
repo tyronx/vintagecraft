@@ -77,6 +77,11 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
 		itemstack.setTagCompound(nbt);
 		return itemstack;
 	}
+	
+	public static ItemStack getItemStack(EnumMetal metal, int quantity) {
+		System.out.println(new ItemStack(ItemsVC.ingot, quantity).getItem());
+		return setMetal(new ItemStack(ItemsVC.ingot, quantity), metal);
+	}
 
 	
 	@Override

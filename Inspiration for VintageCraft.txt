@@ -73,6 +73,21 @@
 - Mineshafts like these http://imgur.com/a/idI07
 - Some Mineshafts have Entrances
   http://imgur.com/JGPGf
+
+
+- Cave features:
+  - River
+  - Pillars
+  - Stalactites & Stalagmites
+  - Slopes
+  - Domes
+  - Steep near the surface
+  - Lake
+  - completely Submerged
+  - Wet stone => make water drip
+  - Spawners
+  - Collapse of domes near surface = below sealevel vegetation
+  
    
 ========= Landforms =============
 
@@ -286,6 +301,18 @@ Import schematic files: https://github.com/tehbeard/LibSchematic
 
 - Sell stuff you cannot normally get to. E.g. Seed Vendor (sells seeds for flowers that don't or rarely grow in nature)
 
+
+
+- Villager Jobs
+  - Carpenter: Makes your planks look nicer.
+  - Fletcher: Makes stronger arrows
+  - Glassblower: Makes beautiful stained glass from lithos or conquest pack
+  - Gem Cutter: Cuts and Polishes Gems. 95% of Villagers only buy cut/refined gems
+  - Stonemason: Makes beautiful decoration on your smooth stone blocks
+  - Florist: Sells flowers that don't grow naturally
+
+
+- Some Villages are connected via Gravel Roads, Bridges and Tunnels
 
 - Examples: 
 	http://upload.wikimedia.org/wikipedia/commons/1/1c/ScaleRepoductionOfaCucutenivillage.JPG   

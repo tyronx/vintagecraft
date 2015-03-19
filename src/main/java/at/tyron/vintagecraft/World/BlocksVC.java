@@ -20,6 +20,7 @@ import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
+import at.tyron.vintagecraft.BlockClass.RockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
 import at.tyron.vintagecraft.TileEntity.TESapling;
@@ -45,6 +46,8 @@ import at.tyron.vintagecraft.item.ItemTopSoil;
 import at.tyron.vintagecraft.item.ItemRock;
 
 public class BlocksVC {
+	public static String raworeName = "rawore";
+
 	public static Block stove;
 	public static Block stove_lit;
 	
@@ -52,32 +55,19 @@ public class BlocksVC {
 	//public static BlockVC[] doubleflowers;
 	
 	public static BlockVC tallgrass;
-
 	public static BlockVC uppermantle;
-	
-	public static BlockVC rock;
-	public static BlockVC bedrock;
-	public static BlockVC cobblestone;
-	public static BlockVC brick;
-	//public static VCBlock soil;
-
-	public static BlockVC regolith;
-	public static BlockVC subsoil;
+	//public static BlockVC bedrock;
+		
 	public static BlockVC topsoil;
-	public static BlockVC sand;
-	public static BlockVC gravel;
-	
 	public static Block farmland;
-	public static Block vine;
+	public static Block wheatcrops;
+	
 	
 	// Todo
 	public static BlockVC charredtopsoil;  // Burned dirt when in contact with lava 
 	public static BlockVC lichen; // Mossy stuff that grows on stones
+	public static Block vine;
 	
-	
-	// Deposits
-	//public static BlockOreVC rawore;
-	public static String raworeName = "rawore";
 	
 	
 	public static BlockVC rawclay;
@@ -85,18 +75,14 @@ public class BlocksVC {
 	public static BlockVC lignite;
 	public static BlockVC coal;
 	
-
-	//public static BlockVC[] logs;
+	
 	public static FlowerClass flower;
 	public static FlowerClass doubleflower;
+	
 	public static TreeClass log;
 	public static TreeClass leaves;
 	public static TreeClass leavesbranchy;
-	
 	public static TreeClass planks;
-	public static Block wheatcrops;
-	
-	public static OreClass rawore;
 	public static TreeClass fence;
 	public static TreeClass fencegate;
 	public static TreeClass stairs;
@@ -104,8 +90,17 @@ public class BlocksVC {
 	public static TreeClass doubleslab;
 	public static TreeClass sapling;
 	
-	//public static BlockVC leaves;
-	//public static BlockVC leavesbranchy;
+	public static RockClass rock;
+	public static RockClass cobblestone;
+	public static RockClass regolith;
+	public static RockClass subsoil;
+	public static RockClass sand;
+	public static RockClass gravel;
+	//public static RockClass brick;
+
+	public static OreClass rawore;
+	
+
 	
 	public static void init() {
 		initBlocks();
@@ -116,24 +111,29 @@ public class BlocksVC {
 
 	public static void initBlocks() {
 		stove = new BlockStove(false).setHardness(3F);
-		GameRegistry.registerBlock(stove, ItemBlock.class, "stove");
+		/*GameRegistry.registerBlock(stove, ItemBlock.class, "stove");
 		stove.setUnlocalizedName("stove");
-		VintageCraft.instance.proxy.addVariantName(Item.getItemFromBlock(stove), ModInfo.ModID.toLowerCase() + ":stove.b3d");
+		
+		String modelLocation = ModInfo.ModID.toLowerCase() + ":stove.b3d";
+		
+		VintageCraft.instance.proxy.addVariantName(Item.getItemFromBlock(stove), modelLocation);
 		Item item = Item.getItemFromBlock(stove);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(ModInfo.ModID.toLowerCase() + ":stove.b3d", "inventory"));
-        ModelLoaderRegistry.registerLoader(VCraftModelLoader.instance);
+        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(modelLocation, "inventory"));
+        //ModelLoaderRegistry.registerLoader(VCraftModelLoader.instance);
+		*/
 		
 		stove_lit = new BlockStove(true).setHardness(3F);
 		stove_lit.setLightLevel(0.86f);
-		//register(stove, "stove", ItemBlock.class);
+		register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
 		
-		farmland = new BlockFarmlandVC().setHardness(2F);
+		farmland = new BlockFarmlandVC().setHardness(2F).setStepSound(Block.soundTypeGravel);
 		registerMulti(farmland, "farmland", ItemBlock.class, EnumFertility.values());
 		
 		
 		
-		
+		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertility()).setStepSound(Block.soundTypeGrass);
+	
 		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 		
 		flower = new FlowerClass();
@@ -178,27 +178,33 @@ public class BlocksVC {
 		rawore = new OreClass();
 		rawore.init();
 		
-//		/logs = TreeClass.init("log", BlockLogVC.class, ItemLogVC.class, BlockLogVC.multistateAvailableTypes, 3F, Block.soundTypeWood, "axe", 2);
-		
-		//flowers = initMultiBlock(Flower.values(false), "flower", BlockFlowerVC.class, ItemFlowerVC.class, BlockFlowerVC.multistateAvailableTypes, 0.2f, Block.soundTypeGrass, null, 0);
-		//doubleflowers = initMultiBlock(Flower.values(true), "doubleflower", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
-
-		//System.out.println("created " + flowers.length + " flower blocks and " + doubleflowers.length + " double flower blocks");
-		
-		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertility()).setStepSound(Block.soundTypeGrass);
-		//topsoil = initMultiBlock(EnumFlower.values(true), "topsoil", BlockDoubleFlowerVC.class, ItemFlowerVC.class, BlockDoubleFlowerVC.multistateAvailableTypes, 0.6f, Block.soundTypeGrass, null, 0);
 		
 		
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
 		
-		subsoil = new BlockSubSoil().setHardness(1.5F).registerMultiState("subsoil", ItemRock.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
+		sand = new RockClass("sand", BlockSandVC.class, ItemSand.class, 1f, Block.soundTypeSand, "shovel", 0);
+		sand.init();
+		gravel = new RockClass("gravel", BlockGravelVC.class, ItemGravel.class, 1.3f, Block.soundTypeGravel, "shovel", 0);
+		gravel.init();
+		subsoil = new RockClass("subsoil", BlockSubSoil.class, ItemRock.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
+		subsoil.init();
+		regolith = new RockClass("regolith", BlockRegolith.class, ItemRock.class, 2.5f, Block.soundTypeGravel, "shovel", 0);
+		regolith.init();
+		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 2f, Block.soundTypeStone, "pickaxe", 0);
+		rock.init();
+		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemRock.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
+		cobblestone.init();
+		
+		
+		
+		/*subsoil = new BlockSubSoil().setHardness(1.5F).registerMultiState("subsoil", ItemRock.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
 		regolith = new BlockRegolith().setHardness(2.5F).registerMultiState("regolith", ItemRock.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
 		rock = new BlockRock().setHardness(2F).registerMultiState("rock", ItemRock.class, EnumRockType.values());
 		gravel = new BlockGravelVC().setHardness(1.3F).registerMultiState("gravel", ItemGravel.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
 		sand = new BlockSandVC().setHardness(1F).registerMultiState("sand", ItemSand.class, EnumRockType.values()).setStepSound(Block.soundTypeSand);
-		cobblestone = new BlockCobblestone().setHardness(1.3f).registerMultiState("cobblestone", ItemRock.class, EnumRockType.values());
+		cobblestone = new BlockCobblestone().setHardness(1.3f).registerMultiState("cobblestone", ItemRock.class, EnumRockType.values());*/
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
@@ -225,16 +231,16 @@ public class BlocksVC {
 
 
 	private static void initHardness() {
-		rock.setHarvestLevel("pickaxe", 0);
-		cobblestone.setHarvestLevel("pickaxe", 0);
+		//rock.setHarvestLevel("pickaxe", 0);
+		//cobblestone.setHarvestLevel("pickaxe", 0);
 		
 		topsoil.setHarvestLevel("shovel", 0);
-		subsoil.setHarvestLevel("shovel", 0);
+		//subsoil.setHarvestLevel("shovel", 0);
 		rawclay.setHarvestLevel("shovel", 0);
-		gravel.setHarvestLevel("shovel", 0);
-		sand.setHarvestLevel("shovel", 0);
+		//gravel.setHarvestLevel("shovel", 0);
+		//sand.setHarvestLevel("shovel", 0);
 		
-		regolith.setHarvestLevel("shovel", 1);
+		//regolith.setHarvestLevel("shovel", 1);
 		peat.setHarvestLevel("shovel", 1);
 	}
 	

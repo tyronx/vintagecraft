@@ -40,7 +40,7 @@ public class ItemStoneTool extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		return 50;
+		return 45;
 	}
 
 	@Override

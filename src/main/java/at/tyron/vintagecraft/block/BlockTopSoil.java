@@ -148,7 +148,11 @@ public class BlockTopSoil extends BlockVC implements ISoil {
 	public void hoeUsed(UseHoeEvent event) {
 		EnumFertility fertility = getFertility(event.world, event.pos);
 		
-		event.world.setBlockState(event.pos, BlocksVC.farmland.getDefaultState().withProperty(BlockFarmlandVC.fertility, fertility));
+		IBlockState newState = BlocksVC.farmland.getDefaultState().withProperty(BlockFarmlandVC.fertility, fertility);
+		
+		event.world.playSoundEffect((double)((float)event.entityPlayer.posX + 0.5F), (double)((float)event.entityPlayer.posY + 0.5F), (double)((float)event.entityPlayer.posZ + 0.5F), newState.getBlock().stepSound.getStepSound(), (newState.getBlock().stepSound.getVolume() + 1.0F) / 2.0F, newState.getBlock().stepSound.getFrequency() * 0.8F);
+		
+		event.world.setBlockState(event.pos, newState);
 		TEFarmland tileentity = (TEFarmland)event.world.getTileEntity(event.pos);
 		if (tileentity != null) {
 			tileentity.setFertility(fertility.getId() * 10);			

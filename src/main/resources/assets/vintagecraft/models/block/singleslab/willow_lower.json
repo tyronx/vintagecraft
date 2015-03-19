@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/willow",
+        "top": "vintagecraft:blocks/planks/willow",
+        "side": "vintagecraft:blocks/planks/willow"
+    }
+}

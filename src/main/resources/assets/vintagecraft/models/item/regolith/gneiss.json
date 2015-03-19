@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/gneiss",
+"parent": "vintagecraft:block/regolith/gneiss",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

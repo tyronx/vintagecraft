@@ -1,7 +1,8 @@
 <?php
 
 $blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
-$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua");
+$blockclassavailabletypes = array("log" => 16, "leaves" => 8, "leavesbranchy" => 8, "planks" => 16, "sapling" => 16);
+$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahagony", "blackwalnut", "willow");
 
 /********** 1. Logs, Leaves, Branches, Planks *************/
 foreach ($blockclasses as $blockclass) {
@@ -31,12 +32,16 @@ foreach ($blockclasses as $blockclass) {
 		}
 	}
 	
-	file_put_contents("blockstates/" . $blockclass.".json", getBlockStates($variants));
-	file_put_contents("blockstates/" . $blockclass."2.json", getBlockStates($variants));
+	$availtypes = $blockclassavailabletypes[$blockclass];
+	
+	for ($i = 0; $i < ceil(count($blocktypes) / $availtypes); $i++) {
+		file_put_contents("blockstates/" . $blockclass . (($i > 0) ? ($i+1) : "")  .".json", getBlockStates($variants));
+	}
 	
 	if ($blockclass == "planks") {
-		file_put_contents("blockstates/doubleslab.json", getBlockStates($variants));
-		file_put_contents("blockstates/doubleslab2.json", getBlockStates($variants));
+		for ($i = 0; $i < ceil(count($blocktypes) / 8); $i++) {
+			file_put_contents("blockstates/doubleslab" . (($i > 0) ? ($i+1) : "")  .".json", getBlockStates($variants));
+		}
 	}
 }
 

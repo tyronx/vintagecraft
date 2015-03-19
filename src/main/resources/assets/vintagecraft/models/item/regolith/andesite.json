@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/andesite",
+"parent": "vintagecraft:block/regolith/andesite",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -2,7 +2,10 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
@@ -17,7 +20,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockSandVC extends BlockRock implements ISoil {
+	public PropertyBlockClass ROCKTYPE;
+	
 	public static boolean fallInstantly;
+	
 	
 	public BlockSandVC() {
 		super(Material.sand);
@@ -112,6 +118,24 @@ public class BlockSandVC extends BlockRock implements ISoil {
 	public boolean canGrowTree(World world, BlockPos pos, EnumTree tree) {
 		return true;
 	}
+	
+	
+	
+	@Override
+	public IProperty getTypeProperty() {
+		return ROCKTYPE;
+	}
+
+	@Override
+	public void setTypeProperty(PropertyBlockClass property) {
+		this.ROCKTYPE = property;
+	}
+
+	@Override
+	public BlockClass getBlockClass() {
+		return BlocksVC.sand;
+	}
+
 
 	
 }

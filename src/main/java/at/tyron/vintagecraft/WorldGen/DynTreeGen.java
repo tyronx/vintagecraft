@@ -16,7 +16,9 @@ import net.minecraft.world.World;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.EvolvingNatFloat.Function;
+import at.tyron.vintagecraft.WorldProperties.DynTreeGenMode;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.block.BlockFlowerVC;
 import at.tyron.vintagecraft.block.BlockLeavesVC;
 import at.tyron.vintagecraft.block.BlockLeavesBranchy;
 import at.tyron.vintagecraft.block.BlockLogVC;
@@ -47,6 +49,8 @@ public class DynTreeGen {
 	public IBlockState leavesbranchy;
 	public IBlockState leaves;
 	
+	public DynTreeGenMode mode;
+	
 	
 	
 	public DynTreeGen(EnumTree treetype, DynTreeRoot roots, DynTreeTrunk trunk, DynTreeBranch branches) {
@@ -54,10 +58,14 @@ public class DynTreeGen {
 	}
 
 	public DynTreeGen(EnumTree treetype, DynTreeRoot roots, DynTreeTrunk trunk, DynTreeBranch branches, float sizemodifier) {
-		this(treetype, roots, trunk, branches, sizemodifier, 0);
+		this(treetype, roots, trunk, branches, sizemodifier, 0, DynTreeGenMode.NORMAL);
 	}
 
 	public DynTreeGen(EnumTree treetype, DynTreeRoot roots, DynTreeTrunk trunk, DynTreeBranch branches, float sizemodifier, int yOffset) {
+		this(treetype, roots, trunk, branches, sizemodifier, 0, DynTreeGenMode.NORMAL);
+	}
+	
+	public DynTreeGen(EnumTree treetype, DynTreeRoot roots, DynTreeTrunk trunk, DynTreeBranch branches, float sizemodifier, int yOffset, DynTreeGenMode mode) {
 		this.roots = roots;
 		this.trunk = trunk;
 		this.branches = branches;
@@ -65,6 +73,7 @@ public class DynTreeGen {
 		this.yOffset = yOffset;
 		
 		this.tree = treetype;
+		this.mode = mode;
 		setTree(treetype);
 	}
 	
@@ -83,7 +92,7 @@ public class DynTreeGen {
 		this.vineGrowthChance = vineGrowthChance;
 		
 		if (yOffset > 0) {
-			this.pos = pos.down(yOffset);
+			this.pos = pos.down((int) (yOffset * size));
 		}
 		
 		//float relheight = trunk.avgHeight; // getWithGaussVariance(world.rand, trunk.avgHeight, trunk.variance);
@@ -178,8 +187,9 @@ public class DynTreeGen {
 	private void genTrunk(float curx, float cury, float curz, float curwidth, EvolvingNatFloat anglehor, /*float anglever,*/ EvolvingNatFloat angleVert) {
 		//float val = trunk.numBranching.nextFloat(0); 
 		//float numBranches = Math.round((float)val * (size / 2) + (float)val / 2); 
+		trunk.branchWidthMultiplier.init();
 		
-		growBranch(0, pos, 0f, 0f, 0f, angleVert, /*bendAngleVert,*/ anglehor, trunk.width, trunk.widthloss, trunk.numBranching, /*numBranches,*/ trunk.branchStart, trunk.branchSpacing, trunk.branchWidthMultiplier, 0f, trunk.branchVerticalAngle, trunk.branchHorizontalAngle, trunk.widthBranchLossBase, this.roots);
+		growBranch(0, pos, 0f, 0f, 0f, angleVert, /*bendAngleVert,*/ anglehor, trunk.width, trunk.widthloss, trunk.numBranching, /*numBranches,*/ trunk.branchStart, trunk.branchSpacing, trunk.branchWidthMultiplier.nextFloat(0), 0f, trunk.branchVerticalAngle, trunk.branchHorizontalAngle, trunk.widthBranchLossBase, this.roots);
 	}
 	
 	
@@ -189,6 +199,7 @@ public class DynTreeGen {
 		
 		angleVert.init();
 		angleHori.init();
+		
 		
 		
 		
@@ -209,20 +220,23 @@ public class DynTreeGen {
 			rootSpacing = roots.rootSpacing.nextFloat();
 		}
 		
-		float anglever = 0f, anglehor = 0f;
+		float anglever = 0f, anglehor = 0f, ddrag = 0f;
 		
 		while (baseWidth > 0 && iteration++ < 5000) {
 			baseWidth -= widthloss / size;
 			
+			if (baseWidth < 0.0001f) break;
+			
 			anglever = angleVert.nextFloat(sequencesPerIteration * (iteration-1));
 			anglehor = angleHori.nextFloat(sequencesPerIteration * (iteration-1));
+
 			
-		//	System.out.println(baseWidth + "     " + anglever + " / " + anglehor);
+			ddrag = gravityDrag * MathHelper.sqrt_float(dx*dx + dz*dz);
+	
 			
-			dx += MathHelper.sin(anglever) * MathHelper.cos(anglehor);
-			dy += Math.min(1, Math.max(-1, MathHelper.cos(anglever) - gravityDrag * MathHelper.sqrt_float(dx*dx + dz*dz)));
-			dz += MathHelper.sin(anglever) * MathHelper.sin(anglehor);
-			
+			dx += MathHelper.sin(anglever) * MathHelper.cos(anglehor) / Math.max(1, ddrag);
+			dy += Math.min(1, Math.max(-1, MathHelper.cos(anglever) - ddrag));
+			dz += MathHelper.sin(anglever) * MathHelper.sin(anglehor) / Math.max(1, ddrag);
 			
 			
 			IBlockState blockstate = block(baseWidth);
@@ -246,6 +260,9 @@ public class DynTreeGen {
 			
 			reldistance = MathHelper.sqrt_float(dx*dx + dy*dy + dz*dz) / totaldistance;
 			
+			if (recursion == 0) {
+				branchWidthMultiplier = trunk.branchWidthMultiplier.nextFloat(sequencesPerIteration * (iteration-1));
+			}
 			
 			if (roots != null && recursion == 0 && rootEnd > reldistance && reldistance > rootLastReldistance + rootSpacing * (1f - reldistance)) {
 				rootLastReldistance = reldistance;
@@ -307,6 +324,11 @@ public class DynTreeGen {
 
 	
 	public IBlockState block(float width) {
+		if (mode == DynTreeGenMode.BUSH) {
+			if (width < 0.04f) return leaves;
+			return leavesbranchy;
+		}
+		
 		if (width < 0.1f)
 			return leaves;
 		if (width < 0.3f)
@@ -322,8 +344,10 @@ public class DynTreeGen {
 		return 
 			blockatpos.getBlock() == Blocks.air || blockatpos.getBlock() == Blocks.vine 
 			|| blockatpos.getBlock() == BlocksVC.tallgrass
+			|| blockatpos.getBlock() instanceof BlockFlowerVC
 			|| (blockstate == log && (blockatpos.getBlock() instanceof BlockLeavesVC))
 			|| (blockstate == leavesbranchy && (blockatpos.getBlock() instanceof BlockLeavesVC) && !(blockatpos.getBlock() instanceof BlockLeavesBranchy))
+			
 		;
 	
 	}

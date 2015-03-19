@@ -19,20 +19,20 @@ public enum EnumTallGrassGroup {
 								EnumTallGrass.VERYLONG_FORGETMENOT3,*/
 								EnumTallGrass.VERYLONG_FLOWERING
 							}, 
-							new int[] { 25, 250, 1, 1, 1, 35}),
+							new int[] { 40, 270, 1, 1, 1, 90}),
 	VERYLONG_FLOWERING 		(151, 185, new EnumTallGrass[] { 
 								EnumTallGrass.VERYLONG,
 								EnumTallGrass.VERYLONG_FLOWERING, 
 								EnumTallGrass.VERYLONG_CORNFLOWER, 
 								EnumTallGrass.VERYLONG_CORNFLOWER2, 
-								EnumTallGrass.VERYLONG_OXEYEDAISY }, new int[] { 60, 125, 1, 1, 1 }),
+								EnumTallGrass.VERYLONG_OXEYEDAISY }, new int[] { 70, 180, 1, 1, 1 }),
 	FERN					(186, 255, new EnumTallGrass[] {
 								EnumTallGrass.VERYLONG,
 								EnumTallGrass.LONG,
 								EnumTallGrass.FERN, 
 								EnumTallGrass.FERN2, 
 								EnumTallGrass.FERN3 
-							}, new int[] { 2, 2, 100, 100, 100 })
+							}, new int[] { 20, 20, 100, 100, 100 })
 	
 	;
 	
@@ -82,8 +82,8 @@ public enum EnumTallGrassGroup {
 	}
 	
 	
-	public static float getDensity(int forestdensity, int rain, int temperature) {
-		float density = (255 - forestdensity) / 50;
+	public static float getDensity(float modifiedforestdensity, int rain, int temperature) {
+		float density = modifiedforestdensity * 5;
 		
 		if (rain < 20) return 0;
 		

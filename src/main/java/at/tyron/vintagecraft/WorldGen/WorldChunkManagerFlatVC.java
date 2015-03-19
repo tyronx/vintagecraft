@@ -6,6 +6,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
+import at.tyron.vintagecraft.interfaces.ClimateGenWorldChunkManager;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
@@ -13,7 +14,7 @@ import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.IntCache;
 
-public class WorldChunkManagerFlatVC extends WorldChunkManager {
+public class WorldChunkManagerFlatVC extends WorldChunkManager implements ClimateGenWorldChunkManager {
 	protected World worldObj;
 	public long seed = 0;
 	GenLayerVC climateGen;
@@ -79,6 +80,12 @@ public class WorldChunkManagerFlatVC extends WorldChunkManager {
 		}
 		
 		return biomes;
+	}
+
+	
+	@Override
+	public int[] getClimateInts(int x, int z, int xSize, int zSize) {
+		return climateGen.getInts(x, z, xSize, zSize);
 	}
 		
 }

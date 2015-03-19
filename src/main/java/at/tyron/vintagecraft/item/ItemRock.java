@@ -5,8 +5,10 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 import net.minecraft.block.Block;
@@ -37,20 +39,32 @@ public class ItemRock extends ItemBlock implements ISmeltable {
 	public String getUnlocalizedName(ItemStack itemstack) {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
-		if (item.getBlock() == BlocksVC.rock) {
-			return getUnlocalizedName() + "." + EnumRockType.byMetadata(itemstack.getMetadata()).getUnlocalizedName();
+		if (BlocksVC.rock.containsBlock(item.getBlock())) {
+			return getUnlocalizedName() + "." + getRockType(itemstack).getUnlocalizedName();
 		} else {
 			return getUnlocalizedName();
 		}
 	}
 	
 	
+	public static EnumRockType getRockType(ItemStack itemstack) {
+		Block block = ((ItemBlock)itemstack.getItem()).block;
+		return (EnumRockType) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
+	}
+	
+	public static BlockClass getBlockClass(Block block) {
+		return BlocksVC.rock;
+	}
+
+	
+	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
-		if (item.getBlock() != BlocksVC.rock) {
-			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getUnlocalizedName() + "." + EnumRockType.byMetadata(itemstack.getItemDamage()).getUnlocalizedName() + ".name"));
+		if (BlocksVC.rock.containsBlock(item.getBlock())) {
+			EnumRockType rocktype = getRockType(itemstack);
+			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + rocktype.getUnlocalizedName() + ".name"));
 		}
 	}
 	
@@ -71,19 +85,10 @@ public class ItemRock extends ItemBlock implements ISmeltable {
         return damage;
     }
 	
-/*	@Override
-	public ModelResourceLocation getModel(ItemStack stack, EntityPlayer player, int useRemaining) {
-		String rockname = EnumRockType.byMetadata(stack.getMetadata()).getUnlocalizedName();
-		ModelResourceLocation mrl = new ModelResourceLocation("vintagecraft:block/rock/" + rockname);
-		System.out.println(mrl.toString());
-		return mrl;
-    }
-*/
-
 	
 	@Override
 	public ItemStack getSmelted(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return new ItemStack(Blocks.glass);
 		}
 		return null;
@@ -91,7 +96,7 @@ public class ItemRock extends ItemBlock implements ISmeltable {
 
 	@Override
 	public int getRaw2SmeltedRatio(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return 1;
 		}
 		return 0;
@@ -99,7 +104,7 @@ public class ItemRock extends ItemBlock implements ISmeltable {
 
 	@Override
 	public int getMeltingPoint(ItemStack raw) {
-		if (EnumRockType.byMetadata(raw.getMetadata()) == EnumRockType.QUARTZITE) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
 			return 1800;
 		}
 		return 0;

@@ -39,12 +39,12 @@ public class MapGenFlora {
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
 		chunkX *= 16;
 		chunkZ *= 16;
-
+	
 		int[] forestLayer = forestGen.getInts(chunkX, chunkZ, 16, 16);
 		VCraftWorld.instance.setChunkNBT(chunkX/16, chunkZ/16, "forest", forestLayer);
 		
 		/**** 1. Flowers and Wheat ****/
-		if (random.nextInt(8) == 0) {
+		if (random.nextInt(15) == 0) {
 			placeFlowers(world, chunkX, chunkZ, forestLayer, random);
 		}
 
@@ -58,10 +58,10 @@ public class MapGenFlora {
 			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
 			int climate[] = VCraftWorld.instance.getClimate(blockpos);
-			
+			float forestdensity = EnumTree.getForestDensity(density, climate[2], climate[0]);
 
-			if (random.nextInt(255) < Math.min(200, density) - Math.max(0, blockpos.getY() - 180)) {
-				float grassdensity = EnumTallGrassGroup.getDensity(density, climate[2], climate[0]);
+			if (random.nextFloat() > forestdensity + Math.max(0, (blockpos.getY() - 180) / 255f) || random.nextFloat() < 0.01f) {
+				float grassdensity = EnumTallGrassGroup.getDensity(forestdensity, climate[2], climate[0]);
 				while (grassdensity > 0) {
 					if (grassdensity >= 1 || random.nextFloat() < grassdensity) {
 						placeGrass(world, blockpos.add(random.nextInt(5) - 2, 0, random.nextInt(5) - 2), random, climate[0], climate[1]);
@@ -78,9 +78,9 @@ public class MapGenFlora {
 			//int forestDensityDiff = Math.max(1, climate[1] - 180);
 			
 			//if (i <= 50 + forestDensityDiff/4 && (random.nextInt(255) > density || random.nextInt(forestDensityDiff) > 0)) {
-			float forestdensity = EnumTree.getForestDensity(density, climate[2], climate[0]);
 			
-			if (i < 50 * forestdensity && random.nextFloat() < forestdensity) {
+			
+			if (i < 65 * forestdensity && random.nextFloat() < forestdensity) {
 			
 				Block block = world.getBlockState(blockpos.down()).getBlock();
 				if (!(block instanceof ISoil)) {
@@ -108,25 +108,31 @@ public class MapGenFlora {
 	}
 	
 	
-	void placeFlowers(World world, int chunkX, int chunkZ, int[] forestLayer, Random random) {
+	void placeFlowers(World world, int xCoord, int zCoord, int[] forestLayer, Random random) {
 		BlockPos pos;
+		float chance = 1.1f;
 		
+		// Flowers
 		for (int i = 0; i < 3; i++) {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int climate[] = VCraftWorld.instance.getClimate(pos = new BlockPos(chunkX + x, 0, chunkZ + z));
-			EnumFlora flora = EnumFlora.getRandomFlowerForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], random);
+			pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z));
+			
+			// Decrease the chance of multiple flowers being placed in the same chunk  
+			if (random.nextFloat() > chance) break;
+			
+			int climate[] = VCraftWorld.instance.getClimate(pos);
+			EnumFlowerGroup flora = EnumFlowerGroup.getRandomFlowerForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], random);
 			//System.out.println("try place flower "  + flora);
 			
 			if (flora == null) continue;
-			
-			//System.out.println("try place flower "  + flora);
+			chance /= 4;
 			
 			int quantity = (random.nextInt(25) + random.nextInt(25) + random.nextInt(25)) / 3;
 			
 			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(chunkX + x + (random.nextInt(17)+random.nextInt(17))/2 - 6, 0, chunkZ + z + (random.nextInt(17)+random.nextInt(17))/2 - 6));
+				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(17)+random.nextInt(17))/2 - 6, 0, zCoord + z + (random.nextInt(17)+random.nextInt(17))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				BlockClassEntry[] variants = BlocksVC.flower.values(flora);
@@ -142,17 +148,19 @@ public class MapGenFlora {
 			
 		}
 		
+		
+		// Wheat Crops
 		if (random.nextInt(12) == 0) {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int fertility = VCraftWorld.instance.getFertily(pos = new BlockPos(chunkX + x, 0, chunkZ + z));
-			if (fertility < 140 ) return;
+			int climate[] = VCraftWorld.instance.getClimate(pos = new BlockPos(xCoord + x, 0, zCoord + z));
+			if (climate[1] < 120 ) return;
 			
 			int quantity = random.nextInt(10) + 2;
 			
 			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(chunkX + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, chunkZ + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {

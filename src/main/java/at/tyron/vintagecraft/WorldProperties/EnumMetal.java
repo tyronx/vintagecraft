@@ -20,7 +20,9 @@ public enum EnumMetal implements IStringSerializable {
 	SILVER (10, 961, 3f),
 	GOLD (11, 1063, 2.75f),
 	
-	URANIUM (12, 1132, 9f)
+	URANIUM (12, 1132, 9f), 
+	ZINC (13, 419, 2.5f), 
+	BISMUTH (14, 271, 2.2f)
 	
 	;
 	
@@ -50,6 +52,10 @@ public enum EnumMetal implements IStringSerializable {
 	@Override
 	public String getName() {
 		return name().toLowerCase();
+	}
+	
+	public String getCode() {
+		return getName().substring(0, 2);
 	}
 }
 

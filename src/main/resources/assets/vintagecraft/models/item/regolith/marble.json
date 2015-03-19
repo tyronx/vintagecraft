@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/marble",
+"parent": "vintagecraft:block/regolith/marble",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

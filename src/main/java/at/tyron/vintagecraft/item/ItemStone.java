@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
@@ -23,7 +24,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISmeltable {
+public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 
 	public ItemStone() {
 		setHasSubtypes(true);
@@ -32,12 +33,8 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISmel
 	
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
-    	ItemStack stack;
     	for (EnumRockType rocktype : EnumRockType.values()) {
-    		stack = new ItemStack(ItemsVC.stone);
-    		setRockType(stack, rocktype);
-    		subItems.add(stack);
-    		
+    		subItems.add(setRockType(new ItemStack(ItemsVC.stone), rocktype));
     	}
     }
 
@@ -46,13 +43,8 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISmel
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getUnlocalizedName() + "." + ItemStone.getRockType(itemstack) + ".name"));
-		if (getMeltingPoint(itemstack) > 0) {
-			tooltip.add("Melting Point: " + getMeltingPoint(itemstack) + " °C");
-		}
-
+		tooltip.add(StatCollector.translateToLocal("rock." + ItemStone.getRockType(itemstack) + ".name"));
 	}
-	
 	
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
@@ -70,33 +62,28 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISmel
 	
 	
 	public static EnumRockType getRockType(ItemStack itemstack) {
-		return EnumRockType.byMetadata(itemstack.getItemDamage());
+		if (itemstack.getTagCompound() != null) {
+			return EnumRockType.byId(itemstack.getTagCompound().getInteger("rocktype"));
+		}
+		return null;
 	}
 	
-	public static void setRockType(ItemStack itemstack, EnumRockType rocktype) {
-		itemstack.setItemDamage(rocktype.meta);
+	public static ItemStack setRockType(ItemStack itemstack, EnumRockType rocktype) {
+		NBTTagCompound nbt = itemstack.getTagCompound(); 
+		if (nbt == null) {
+			itemstack.setTagCompound(nbt = new NBTTagCompound());
+		}	
+		
+		nbt.setInteger("rocktype", rocktype.id);
+		itemstack.setTagCompound(nbt);
+		return itemstack;
 	}
+
+	
 
 	@Override
 	public String getSubType(ItemStack stack) {
 		return getRockType(stack).getName();
-	}
-
-	@Override
-	public ItemStack getSmelted(ItemStack raw) {
-		EnumRockType rocktype = getRockType(raw);
-		
-		return new ItemStack(BlocksVC.rock, 1, rocktype.meta);
-	}
-
-	@Override
-	public int getRaw2SmeltedRatio(ItemStack raw) {
-		return 4;
-	}
-
-	@Override
-	public int getMeltingPoint(ItemStack raw) {
-		return 600;
 	}
 	
 }

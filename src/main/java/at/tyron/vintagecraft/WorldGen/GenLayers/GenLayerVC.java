@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -24,6 +25,7 @@ import at.tyron.vintagecraft.WorldGen.GenLayers.River.GenLayerRiver;*/
 import at.tyron.vintagecraft.WorldGen.GenLayers.Rock.GenLayerRockInit;
 import at.tyron.vintagecraft.WorldProperties.*;
 import net.minecraft.world.gen.layer.GenLayer;
+import net.minecraftforge.fml.common.asm.transformers.DeobfuscationTransformer;
 
 public abstract class GenLayerVC extends GenLayer {
 
@@ -34,9 +36,20 @@ public abstract class GenLayerVC extends GenLayer {
 	
 	
 	public static GenLayerVC genNoiseFieldModifier(long seed) {	
-		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.85f, 150, 50);
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.95f, 170, 0);
 		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
 		
+		GenLayerVC noisemod = new GenLayerBlurAll(seed, 1, 4, noise);
+		GenLayerVC.drawImageGrayScale(512, noisemod, "NoiseFieldModifier 1 Blur");
+		
+		return noisemod;
+	}
+	
+	
+	public static GenLayerVC genAgemap(long seed) {
+		GenLayerSimplexNoiseUnclamped noise = new GenLayerSimplexNoiseUnclamped(seed, 3, 0.7f, 45, 20);
+		GenLayerVC.drawImageGrayScale(512, noise, "Age 0 Noise");
+
 		return noise;
 	}
 	
@@ -120,7 +133,14 @@ public abstract class GenLayerVC extends GenLayer {
 	
 
 	public static GenLayerVC genDeposits(long seed) {
-		GenLayerVC noise = new GenLayerWeightedNoise(1L, EnumMaterialDeposit.values());
+		ArrayList<EnumMaterialDeposit> largedeposits = new ArrayList<EnumMaterialDeposit>();
+		
+		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
+			if (deposit.deposittype == DepositType.LARGE || deposit.deposittype == DepositType.SMALLANDLARGE || deposit.deposittype == DepositType.NONE || deposit.deposittype == DepositType.HUGE)
+				largedeposits.add(deposit);
+		}
+		
+		GenLayerVC noise = new GenLayerWeightedNoise(1L, largedeposits.toArray(new EnumMaterialDeposit[0]));
 		GenLayerVC.drawImageRGB(512, noise, "Deposits 0 Noise");
 		
 		noise.initWorldGenSeed(seed);
@@ -131,12 +151,13 @@ public abstract class GenLayerVC extends GenLayer {
 		deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 30, deposits);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add heightmap (green)");
 
-		deposits = new GenLayerBlurSelective(2L, 1, 5, false, 8, deposits);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 Blur Heightmap (green)");
+		deposits = GenLayerZoom.magnify(4L, deposits, 2);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 2x Magnify");
 
-		deposits = GenLayerZoom.magnify(4L, deposits, 1);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 1x Magnify");
-		
+		deposits = new GenLayerBlurSelective(2L, 2, 5, false, 8, deposits);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 Blur Heightmap (green)");
+
+
 		deposits.initWorldGenSeed(seed);
 		
 		return deposits;
@@ -163,6 +184,10 @@ public abstract class GenLayerVC extends GenLayer {
 		
 		forest = GenLayerZoom.magnify(1000L, forest, 2);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 4 Zoom");
+
+		forest = new GenLayerBlurAll(2L, 1, 3, forest);
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 5 Blur");
+
 		
 		forest.initWorldGenSeed(seed);
 		
@@ -175,23 +200,29 @@ public abstract class GenLayerVC extends GenLayer {
 	// Red value = layer thickness
 	// Green value = temporary value layer for substracting thickness from red 
 	public static GenLayerVC genRockLayer(long seed, EnumRockType[] rocktypes) {
-		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes);
+		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes, true);
 		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise - rocks and thickness");
 		
-		rocklayer = new GenLayerExactZoom(2001L, 2, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 2 Exact Zoom");
+		/*rocklayer = new GenLayerExactZoom(2001L, 2, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 2 Exact Zoom");*/
+		
+		rocklayer = GenLayerZoom.magnify(seed, rocklayer, 8);
+		drawImageRGB(512, rocklayer, "Rocks 2 8x magnify");
 	
-		rocklayer = new GenLayerBlurAll(2L, 1, 2, rocklayer);
+		rocklayer = new GenLayerBlurAll(2L, 2, 5, rocklayer);
+		drawImageRGB(512, rocklayer, "Rocks 3 Blur");
+		
+		/*rocklayer = new GenLayerBlurAll(2L, 1, 2, rocklayer);
 		drawImageRGB(512, rocklayer, "Rocks 3 Blur");
 		
 		rocklayer = new GenLayerBlurAll(2L, 1, 5, rocklayer);
 		drawImageRGB(512, rocklayer, "Rocks 4 Blur blue");
 
 		rocklayer = new GenLayerReducePallette(2001L, rocktypes, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 5 reducepallete");
+		drawImageRGB(512, rocklayer, "Rocks 5 reducepallete");*/
 
-		rocklayer = GenLayerZoom.magnify(seed, rocklayer, 12);
-		drawImageRGB(512, rocklayer, "Rocks 6 12x magnify");
+	/*	rocklayer = GenLayerZoom.magnify(seed, rocklayer, 4);
+		drawImageRGB(512, rocklayer, "Rocks 6 12x magnify");*/
 		
 		rocklayer.initWorldGenSeed(seed);
 		
@@ -245,85 +276,6 @@ public abstract class GenLayerVC extends GenLayer {
 		
 		return erosion;
 	}
-	
-	/*public static GenLayerVC[] genBiomes(long seed) {
-		GenLayerVC continent = genContinent(0, false);
-		continent = new GenLayerDeepOcean(4L, continent);
-		drawImageContinent(512, continent, "Continents 8b Done Deep Ocean");
-		byte var4 = 4;
-
-		//Create Biomes
-		GenLayerVC continentCopy2 = GenLayerZoom.magnify(1000L, continent, 0);
-		drawImageContinent(512, continentCopy2, "Continents 14 Zoom");
-		GenLayerVC var17 = new GenLayerBiome(200L, continentCopy2);
-		drawImageContinent(512, var17, "Continents15 Biome");
-		GenLayerLakes lakes = new GenLayerLakes(200L, var17);
-		drawImageContinent(512, var17, "Continents15b Lakes");
-		continentCopy2 = GenLayerZoom.magnify(1000L, lakes, 2);
-		drawImageContinent(512, continentCopy2, "Continents 16 ZoomBiome");
-		GenLayerVC var18 = new GenLayerBiomeEdge(1000L, continentCopy2);
-		drawImageContinent(512, var18, "Continents 17 BiomeEdge");
-		for (int var7 = 0; var7 < var4; ++var7) {
-			var18 = new GenLayerZoom(1000 + var7, var18);
-			drawImageContinent(512, var18, "Continents 18-"+var7+" Zoom");
-			if (var7 == 0)
-				var18 = new GenLayerAddIsland(3L, var18);
-			if (var7 == 1)
-			{
-				var18 = new GenLayerShore(1000L, var18);
-				drawImageContinent(512, var18, "Continents 18z Shore");
-			}
-		}
-
-		//Create Rivers
-		GenLayerVC riverCont = GenLayerZoom.magnify(1000L, continent, 2);
-		drawImageContinent(512, riverCont, "Continents 9 ContinentsZoom");
-		riverCont = new GenLayerRiverInit(100L, riverCont);
-		drawImageContinent(512, riverCont, "Continents 10 RiverInit");
-		riverCont = GenLayerZoom.magnify(1000L, riverCont, 6);
-		drawImageContinent(512, riverCont, "Continents 11 RiverInitZoom");
-		riverCont = new GenLayerRiver(1L, riverCont);
-		drawImageContinent(512, riverCont, "Continents 12 River");
-		riverCont = new GenLayerSmooth(1000L, riverCont);
-		drawImageContinent(512, riverCont, "Continents 13 SmoothRiver");
-
-		GenLayerSmoothBiome smoothContinent = new GenLayerSmoothBiome(1000L, var18);
-		drawImageContinent(512, smoothContinent, "Continents Biome 19");
-		GenLayerRiverMix riverMix = new GenLayerRiverMix(100L, smoothContinent, riverCont);
-		drawImageContinent(512, riverMix, "Continents Biome 20");
-		GenLayerVC finalCont = GenLayerZoom.magnify(1000L, riverMix, 2);
-		drawImageContinent(512, finalCont, "Continents Biome 20-zoom");
-		finalCont = new GenLayerSmoothBiome(1001L, finalCont);
-		drawImageContinent(512, finalCont, "Continents Biome 21");
-		
-		
-		riverMix.initWorldGenSeed(seed);
-		finalCont.initWorldGenSeed(seed);
-		
-		return new GenLayerVC[]{riverMix, finalCont};
-	}
-
-	public static GenLayerVC genContinent(long seed, boolean oceanReduction) {
-		GenLayerVC continentStart = new GenLayerIsland(1L+seed);
-		drawImageContinent(512, continentStart, "Continents 0 Start");
-		GenLayerFuzzyZoom continentFuzzyZoom = new GenLayerFuzzyZoom(2000L, continentStart);
-		drawImageContinent(512, continentFuzzyZoom, "Continents 1 FuzzyZoom");
-		GenLayerVC var10 = new GenLayerAddIsland(1L, continentFuzzyZoom);
-		drawImageContinent(512, var10, "Continents 2 AddIsland");
-		GenLayerVC var11 = new GenLayerZoom(2001L, var10);
-		drawImageContinent(512, var11, "Continents 3 AddIslandZoom");
-		var10 = new GenLayerAddIsland(2L, var11);
-		drawImageContinent(512, var10, "4 AddIsland2");
-		var11 = new GenLayerZoom(2002L, var10);
-		drawImageContinent(512, var11, "Continents 5 AddIslandZoom2");
-		var10 = new GenLayerAddIsland(3L, var11);
-		drawImageContinent(512, var10, "Continents 6 AddIsland3");
-		var11 = new GenLayerZoom(2003L, var10);
-		drawImageContinent(512, var11, "Continents 7 AddIslandZoom3");
-		GenLayerVC continent = new GenLayerAddIsland(4L, var11);
-		drawImageContinent(512, continent, "Continents 8 Done");
-		return continent;
-	}*/
 	
 	
 

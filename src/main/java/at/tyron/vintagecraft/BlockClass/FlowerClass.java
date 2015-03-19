@@ -9,7 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.item.ItemBlock;
-import at.tyron.vintagecraft.WorldProperties.EnumFlora;
+import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
 import at.tyron.vintagecraft.block.BlockFlowerVC;
@@ -41,7 +41,7 @@ public class FlowerClass extends BlockClass {
 			hardness = 0.4f;
 		}
 		
-		for (EnumFlora group : EnumFlora.values()) {
+		for (EnumFlowerGroup group : EnumFlowerGroup.values()) {
 			for (EnumFlower flower : group.variants) {
 				if (doublehigh == flower.doubleHigh) {
 					values.put((IEnumState) flower, new FlowerClassEntry((IEnumState)flower, flower.doubleHigh, group));
@@ -68,7 +68,7 @@ public class FlowerClass extends BlockClass {
 	}
 
 	
-	public BlockClassEntry[] values(EnumFlora group) {
+	public BlockClassEntry[] values(EnumFlowerGroup group) {
 		ArrayList<BlockClassEntry> flowers = new ArrayList<BlockClassEntry>();
 		
 		for (BlockClassEntry flower : values()) {

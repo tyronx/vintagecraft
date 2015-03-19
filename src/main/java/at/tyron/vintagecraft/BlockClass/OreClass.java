@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.BlockClass;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.item.ItemBlock;
-import at.tyron.vintagecraft.WorldProperties.EnumFlora;
+import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumOreType;

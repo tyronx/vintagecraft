@@ -55,8 +55,8 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 	
 	@Override
 	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-		for (BlockClassEntry tree : subtypes) {
-			list.add(new ItemStack(itemIn, 1, tree.getMetaData(this)));
+		for (BlockClassEntry entry : subtypes) {
+			list.add(entry.getItemStack());
 		}
 		super.getSubBlocks(itemIn, tab, list);
 	}

@@ -11,4 +11,6 @@ public interface IGenLayerSupplier {
 	public int getColor();
 	
 	public int getWeight();
+	
+	public int getSize();
 }

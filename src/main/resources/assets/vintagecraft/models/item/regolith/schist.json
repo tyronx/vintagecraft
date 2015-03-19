@@ -1,5 +1,5 @@
 {
-    "parent": "vintagecraft:block/regolith/schist",
+"parent": "vintagecraft:block/regolith/schist",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],
