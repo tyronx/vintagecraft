@@ -77,9 +77,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.peat), "peat", "inventory");
     	registerModelLocation(Item.getItemFromBlock(BlocksVC.topsoil), "topsoil", "inventory");
-//    	registerModelLocation(Item.getItemFromBlock(BlocksVC.sand), "sand", "inventory");
-//    	registerModelLocation(Item.getItemFromBlock(BlocksVC.gravel), "gravel", "inventory");
-    	//registerModelLocation(Item.getItemFromBlock(BlocksVC.cobblestone), "cobblestone", "inventory");
+
     	
     	registerModelLocation(ItemsVC.stone, "stone", "inventory");
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
@@ -90,9 +88,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.clayVessel, "clayvessel", "inventory");
     	registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
     	
-    	registerModelLocation(new Item[]{ItemsVC.bronzeAxe, ItemsVC.bronzeHoe, ItemsVC.bronzePickaxe, ItemsVC.bronzeShovel, ItemsVC.bronzeSword, ItemsVC.bronzeSaw}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw}, "tool", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeAxe, ItemsVC.bismuthbronzeHoe, ItemsVC.bismuthbronzePickaxe, ItemsVC.bismuthbronzeShovel, ItemsVC.bismuthbronzeSword, ItemsVC.bismuthbronzeSaw, ItemsVC.bismuthbronzeShears}, "tool", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.bronzeAxe, ItemsVC.bronzeHoe, ItemsVC.bronzePickaxe, ItemsVC.bronzeShovel, ItemsVC.bronzeSword, ItemsVC.bronzeSaw, ItemsVC.bronzeShears}, "tool", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw, ItemsVC.copperShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.stoneAxe, ItemsVC.stoneHoe, ItemsVC.stonePickaxe, ItemsVC.stoneShovel, ItemsVC.stoneSword}, "tool", "inventory");
+    	
+    	
     	registerModelLocation(new Item[]{ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
     }
 	

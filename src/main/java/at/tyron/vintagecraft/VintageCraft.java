@@ -123,7 +123,7 @@ public class VintageCraft {
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
     	
-    	B3DLoader.instance.addDomain(ModInfo.ModID.toLowerCase());
+   // 	B3DLoader.instance.addDomain(ModInfo.ModID.toLowerCase());
     	
     	proxy.registerRenderInformation();
     	//proxy.registerTileEntities();

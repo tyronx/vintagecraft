@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.block;
 
+import java.util.List;
+
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
@@ -13,13 +15,15 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFenceVC extends BlockFence implements IMultiblock {
-	public static PropertyBlockClass TREETYPE;
+	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
 	
 	public int multistateAvailableTypes() {
@@ -60,6 +64,14 @@ public class BlockFenceVC extends BlockFence implements IMultiblock {
 		return BlocksVC.fence;
 	}
 
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (BlockClassEntry entry : subtypes) {
+			list.add(entry.getItemStack());
+		}
+		super.getSubBlocks(itemIn, tab, list);
+	}
+	
 	@Override
 	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types) {
 		return registerMultiState(blockclassname, itemclass, types, blockclassname);

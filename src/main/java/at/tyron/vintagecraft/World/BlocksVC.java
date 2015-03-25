@@ -31,6 +31,7 @@ import at.tyron.vintagecraft.block.*;
 import at.tyron.vintagecraft.client.VCraftModelLoader;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
+import at.tyron.vintagecraft.item.ItemCobblestoneVC;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
 import at.tyron.vintagecraft.item.ItemWoodProductVC;
 import at.tyron.vintagecraft.item.ItemFlowerVC;
@@ -194,7 +195,7 @@ public class BlocksVC {
 		regolith.init();
 		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 2f, Block.soundTypeStone, "pickaxe", 0);
 		rock.init();
-		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemRock.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
+		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemCobblestoneVC.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
 		cobblestone.init();
 		
 		

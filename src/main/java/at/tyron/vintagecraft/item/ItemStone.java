@@ -61,6 +61,15 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 	 */
 	
 	
+	
+	@Override
+	public int getMetadata(ItemStack stack) {
+		if (stack.getTagCompound() != null) {
+			return stack.getTagCompound().getInteger("rocktype");
+		}
+		return 0;
+	}
+	
 	public static EnumRockType getRockType(ItemStack itemstack) {
 		if (itemstack.getTagCompound() != null) {
 			return EnumRockType.byId(itemstack.getTagCompound().getInteger("rocktype"));

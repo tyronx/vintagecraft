@@ -17,8 +17,9 @@
 		"treetype=pear": { "model": "vintagecraft:planks/pear" },
 		"treetype=joshua": { "model": "vintagecraft:planks/joshua" },
 		"treetype=poplar": { "model": "vintagecraft:planks/poplar" },
-		"treetype=africanmahagony": { "model": "vintagecraft:planks/africanmahagony" },
+		"treetype=africanmahogany": { "model": "vintagecraft:planks/africanmahogany" },
 		"treetype=blackwalnut": { "model": "vintagecraft:planks/blackwalnut" },
-		"treetype=willow": { "model": "vintagecraft:planks/willow" }
+		"treetype=willow": { "model": "vintagecraft:planks/willow" },
+		"treetype=larch": { "model": "vintagecraft:planks/larch" }
 	}
 }

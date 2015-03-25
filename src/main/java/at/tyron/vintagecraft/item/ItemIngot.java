@@ -39,6 +39,13 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
     		subItems.add(stack);
     	}
     }
+    
+    
+	@Override
+	public int getMetadata(ItemStack stack) {
+		return stack.getTagCompound().getInteger("metal");
+	}
+
 
 	
 	@Override
@@ -79,17 +86,17 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
 	}
 	
 	public static ItemStack getItemStack(EnumMetal metal, int quantity) {
-		System.out.println(new ItemStack(ItemsVC.ingot, quantity).getItem());
+//		System.out.println(new ItemStack(ItemsVC.ingot, quantity).getItem());
 		return setMetal(new ItemStack(ItemsVC.ingot, quantity), metal);
 	}
 
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		if (worldIn.isRemote) {
+	/*	if (worldIn.isRemote) {
 			System.out.println("refresh resources");
 			Minecraft.getMinecraft().refreshResources();
-		}
+		}*/
 		
 		return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 	}

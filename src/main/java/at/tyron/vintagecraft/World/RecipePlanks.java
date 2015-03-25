@@ -28,7 +28,7 @@ public class RecipePlanks implements IRecipe {
 				ItemStack itemstack = inventory.getStackInRowAndColumn(y, x);
 				if (itemstack == null) continue;
 				
-				if (itemstack.getItem() instanceof ItemBlock && BlocksVC.log.getBlockClassfromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage()) != null) {
+				if (itemstack.getItem() instanceof ItemBlock && BlocksVC.log.containsBlock(((ItemBlock)itemstack.getItem()).block)) {
 					found |= 1;
 					quantityfound++;
 					log = BlocksVC.log.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());

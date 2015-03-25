@@ -17,8 +17,9 @@
 		"treetype=pear": { "model": "vintagecraft:log/pear" },
 		"treetype=joshua": { "model": "vintagecraft:log/joshua" },
 		"treetype=poplar": { "model": "vintagecraft:log/poplar" },
-		"treetype=africanmahagony": { "model": "vintagecraft:log/africanmahagony" },
+		"treetype=africanmahogany": { "model": "vintagecraft:log/africanmahogany" },
 		"treetype=blackwalnut": { "model": "vintagecraft:log/blackwalnut" },
-		"treetype=willow": { "model": "vintagecraft:log/willow" }
+		"treetype=willow": { "model": "vintagecraft:log/willow" },
+		"treetype=larch": { "model": "vintagecraft:log/larch" }
 	}
 }

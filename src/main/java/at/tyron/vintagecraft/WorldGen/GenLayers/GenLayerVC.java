@@ -120,9 +120,9 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC.drawImageRGB(512, climate, "Climate 7 Blur");
 
 		climate = GenLayerZoom.magnify(1000L, climate, 3);
-		GenLayerVC.drawImageRGB(512, climate, "Climate 8 3xZoom");
+		GenLayerVC.drawImageRGB(512, climate, "Climate 8 4xZoom");
 
-		climate = new GenLayerBlurAll(2L, 1, 2, climate);
+		climate = new GenLayerBlurAll(2L, 1, 3, climate);
 		GenLayerVC.drawImageRGB(512, climate, "Climate 9 Blur");
 
 		
@@ -136,7 +136,7 @@ public abstract class GenLayerVC extends GenLayer {
 		ArrayList<EnumMaterialDeposit> largedeposits = new ArrayList<EnumMaterialDeposit>();
 		
 		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.deposittype == DepositType.LARGE || deposit.deposittype == DepositType.SMALLANDLARGE || deposit.deposittype == DepositType.NONE || deposit.deposittype == DepositType.HUGE)
+			if (deposit.size == DepositSize.LARGE || deposit.size == DepositSize.SMALLANDLARGE || deposit.size == DepositSize.NONE || deposit.size == DepositSize.HUGE)
 				largedeposits.add(deposit);
 		}
 		

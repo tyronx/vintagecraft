@@ -95,11 +95,18 @@ public class MapGenFlora {
 				DynTreeGen treegen = EnumTree.getRandomTreeGenForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], climate[1], steepness, blockpos.getY(), random);				
 				
 				if (treegen != null) {
-					if (treegen.tree == EnumTree.PURPLEHEARTWOOD) {
-						
-						treegen.growTree(world, blockpos.down(), 0.4f + random.nextFloat(), Math.max(0, climate[2] - 190));
+					float size;
+					if (treegen.tree == EnumTree.PURPLEHEARTWOOD || treegen.tree == EnumTree.KAPOK) {
+						size = 0.4f + random.nextFloat();
+						if (random.nextInt(500) == 1) size = 1.3f + random.nextFloat()*0.6f;
 					} else {
-						treegen.growTree(world, blockpos.down(), 0.66f + random.nextFloat()/3 - Math.max(0, (blockpos.getY() * 1f / treegen.tree.maxy) - 0.5f), Math.max(0, climate[2] - 190));
+						size = 0.66f + random.nextFloat()/3;
+					}
+					
+					size = size - Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f);
+					
+					if (size > 0.23f) {
+						treegen.growTree(world, blockpos.down(), size, Math.max(0, climate[2] - 190));
 					}
 				}
 			}

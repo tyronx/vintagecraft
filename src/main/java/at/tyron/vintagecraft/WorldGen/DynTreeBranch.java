@@ -26,8 +26,8 @@ public class DynTreeBranch {
 	
 	//public EvolvingNatFloat bendAngleVert = EvolvingNatFloat.createUniform(0f, 0f);
 	
-	public EvolvingNatFloat angleVert = EvolvingNatFloat.createIdentical(0f);
-	public EvolvingNatFloat angleHori = EvolvingNatFloat.createIdentical(NatFloat.PI / 2);
+	public EvolvingNatFloat angleVert = EvolvingNatFloat.createIdentical(NatFloat.PI / 2);
+	public EvolvingNatFloat angleHori = EvolvingNatFloat.createIdentical(0f);
 	
 	
 	public DynTreeBranch(NatFloat verticalAngle, NatFloat horizontalAngle, NatFloat spacing, float widthloss) {

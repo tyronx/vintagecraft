@@ -21,58 +21,52 @@ import at.tyron.vintagecraft.interfaces.IEnumState;
 
 
 public enum EnumTree implements IEnumState {
-	// growthspeed, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
+	// growthspeed, saplingdroprate weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
 	
-	ASH						(1f, 0, 0,  0,  0,    0, 0,   0, 0f, 0.7f, 0, 255),
-//	LARCH					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://upload.wikimedia.org/wikipedia/commons/2/28/Larix_sibirica_-_Siperianlehtikuusi,_Sibirisk_l%C3%A4rk,_Siberian_larch_IMG_9213_C.JPG
-	BIRCH					(0.6f, 100, 3, 12, 95, 220, 10, 100, 0f, 0.5f, 0, 255),		// http://en.wikipedia.org/wiki/Birch
-	OAK						(1.8f, 75, 2, 22, 95,  170,  90,  255, 0f, 0.65f, 0, 150),  		// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
-	CRIMSONKINGMAPLE		(1.2f, 1, 5, 15, 95,  150,  90,  200, 0f, 0.5f, 0, 250),			// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
-	MOUNTAINDOGWOOD			(0.7f, 60, 10, 20, 90, 180,  90, 255, 0f, 1f, 0, 150),
+	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minf   maxf
+	ASH					(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,  0.7f,   0,  255),
+	BIRCH				( 0.6f,  0.08f, 100,   3,  12,  95,  220,  10,   100,    0f, 0.65f,   0,  255),		// http://en.wikipedia.org/wiki/Birch
+	OAK					( 1.8f,  0.08f,  75,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
+	CRIMSONKINGMAPLE	( 1.2f,  0.08f,   1,   5,  15,  95,  150,  90,   200,    0f,  0.5f,   0,  250),		// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
+	MOUNTAINDOGWOOD		( 0.7f,  0.08f,  60,  10,  20,  90,  180,  90,   255,    0f,    1f,   0,  150),
+	SCOTSPINE			( 0.8f,  0.08f, 100, -20,  12,  50,  150,  30,   255, 0.55f, 0.85f,   0,  255),		// http://www.treetopics.com/pinus_sylvestris/scots_pine_1220645.png | http://en.wikipedia.org/wiki/Scots_pine
+	SPRUCE				(   1f,  0.12f, 100, -12,  15,  70,  255,  60,   255,    0f, 0.85f,   0,  255),
+	ACACIA				( 1.1f,  0.06f, 100,  23,  30,  80,  140,  50,   200,    0f,  0.8f,   0,  255),		// http://static.panoramio.com/photos/large/37061566.jpg
+	KAPOK				( 1.6f,  0.00f, 100,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),		// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
+	PURPLEHEARTWOOD 	(   2f,  0.00f,   3,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),
+	COCONUTPALM			(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,    0f,   0,  255),
+	ELEPHANTTREE		( 1.3f,  0.08f,  95,  22,  30,  30,   75,  20,   100,     0, 0.75f,   0,  255),
+	MYRTLEBEECH			(1.15f,  0.08f, 100,  15,  22, 190,  255, 130,   255,    0f,  0.8f,   0,  255), 	 // http://api.ning.com/files/MqhG5otblM36rGP5RG6jXZBh7Zo3GaqEoLpCbeE6R2iWuRYcGYXPrC3070Xuqd7SUBMFB0OxF9gl8Py3gCQZ2483-NhiYqbl/NothofagusCunninghammii.jpg
+	JOSHUA				( 0.9f,  0.08f,  95,  24,  30,  20,   60,  20,   100,     0,  0.6f,   0,  255),
+	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100),
+	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200),
+	BLACKWALNUT			( 1.15f, 0.08f, 10,  15,  22, 170,  255,  130,  255,    0f,  0.5f,   0,  255),
+	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true),
+	WILLOW				( 0.5f,  0.06f, 100,  -6,  18,  65,  255,   50,  255,    0f,  0.9f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
+	LARCH				( 0.8f,  0.04f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true),
 	
+	
+	
+//	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
 //	APPLE					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://www.gardenista.com/files/styles/733_0s/public/img/sub/uimg/01-2013/700_pruned-apple-tree-jpeg.jpg
-	
-	SCOTSPINE				(0.8f, 100, -20,  12,  50,  150, 30, 255, 0f, 1f, 0, 255),			// http://www.treetopics.com/pinus_sylvestris/scots_pine_1220645.png | http://en.wikipedia.org/wiki/Scots_pine
-	//FOXTAILPINE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://en.wikipedia.org/wiki/Pinus_balfouriana
+//	FOXTAILPINE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://en.wikipedia.org/wiki/Pinus_balfouriana
 //	PINYONPINE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://www.history.com/images/media/slideshow/new-mexico/new-mexico-state-tree-pinyon-pine.jpg  | http://images.fineartamerica.com/images-medium-large/pinyon-pine-tree-james-marvin-phelps.jpg
-	
-	SPRUCE					(1f, 100, -12,  15,  70,  255,  60,  255, 0f, 1f, 0, 255),
-	
 //	AFRICANBLACKWOOD		(100, 0,  0,  0,    0, 0,   0, 0f, 0f),  		// http://www.prota4u.org/plantphotos/Dalbergia%20melanoxylon%202.jpg
 //	BAOBAB					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),
-	ACACIA					(1.1f, 100, 23, 30, 80, 140,  50, 200, 0f, 0.8f, 0, 255),			// http://static.panoramio.com/photos/large/37061566.jpg
-	KAPOK					(1.6f,   0, 0,  0,  0,     0,   0,   0, 0f, 0f, 0, 255),			// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
-	PURPLEHEARTWOOD 		(2f, 100, 24, 30, 185, 255, 160, 255,  0, 1f, 100, 255),
 //	SEQUOIA					(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// 
 	
 	// Jungle Trees: http://www.rainfor.org/upload/publication-store/2013/ter%20Steege/ter%20Steege%20et%20al%202013%20Hyperdominance%20in%20the%20Amazonian%20Tree%20Flora%20Science.pdf
 	
 //	DIPTEROCARP				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			//   http://atbioversity.net/edukitmys/images/Shorea.JPG (http://en.wikipedia.org/wiki/Dipterocarpaceae)
-	
-	COCONUTPALM				(1f, 0, 0,  0,  0,    0, 0,   0, 0f, 0f, 0, 255),
 //	DATEPALM				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),
 	
-	
-	ELEPHANTTREE			(1.3f, 92, 20, 26, 30, 60, 20, 100, 0, 0.75f, 0, 255),
 
-	MYRTLEBEECH				(1.15f, 100, 15, 22, 190, 255, 130, 255, 0f, 0.8f, 0, 255),  // http://api.ning.com/files/MqhG5otblM36rGP5RG6jXZBh7Zo3GaqEoLpCbeE6R2iWuRYcGYXPrC3070Xuqd7SUBMFB0OxF9gl8Py3gCQZ2483-NhiYqbl/NothofagusCunninghammii.jpg
-
-	JOSHUA					(0.9f, 95, 24, 30, 20, 60, 20, 100, 0, 0.6f, 0, 255),
-
-	PEAR					(1.2f, 70, 6, 20, 100,  180,  100,  200, 0f, 0.8f, 0, 100),
-
-//	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
-	
-	
-	AFRICANMAHAGONY			(1.2f, 96, 23, 30, 145, 220,  100,  230, 0f, 0.8f, 0, 200),
-	BLACKWALNUT				(1.15f, 10, 15, 22, 170, 255, 130, 255, 0f, 0.5f, 0, 255),
-	POPLAR					(0.6f, 85, 3, 20, 115,  255,  100,  255, 0f, 0.8f, 0, 255),
-	WILLOW					(0.5f, 100, -6,  18,  65,  255,  50,  255, 0f, 0.9f, 0, 250)			// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
-	
 	;
 
 
 	public float growthspeed;
+	public float saplingdropchance;
+	
 	int weight;
 	int mintemp;
 	int maxtemp ;
@@ -82,6 +76,7 @@ public enum EnumTree implements IEnumState {
 	int maxfertility;
 	int minforest;
 	int maxforest;
+	boolean competitive;
 	
 	// Height of 0f == sealevel
 	// Height of 1f == 255
@@ -106,7 +101,13 @@ public enum EnumTree implements IEnumState {
 		return defaultGenerator;
 	}
 	
-	EnumTree(float growthspeed, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest) {
+	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest) {
+		this(growthspeed, saplingdropchance, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minfertility, maxforest, false);
+	}
+	
+	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, boolean competitive) {
+		this.competitive = competitive;
+		this.saplingdropchance = saplingdropchance;
 		this.growthspeed = growthspeed;
 		this.weight = weight;
 		this.mintemp = mintemp;
@@ -146,6 +147,8 @@ public enum EnumTree implements IEnumState {
 		//ArrayList<Integer> distances = new ArrayList<Integer>();
 		HashMap<EnumTree, Integer> distances = new HashMap<EnumTree, Integer>();
 		
+		int lowestdistance = 99999; 
+		EnumTree lowestdistancetree = null;
 		
 		for (EnumTree tree : EnumTree.values()) {
 			if (tree.weight == 0) continue;
@@ -182,16 +185,35 @@ public enum EnumTree implements IEnumState {
 			
 			distances.put(tree, distance);
 			
+			if (lowestdistance > distance) {
+				lowestdistancetree = tree;
+			}
+			lowestdistance = Math.min(lowestdistance, distance);
 			
 			//System.out.println(tree + " " + distance);
 		}
+		
+		
+		
+		
 		
 		Set<EnumTree> keys = distances.keySet();
 		List<EnumTree> keyList = new ArrayList(keys);
 		Collections.shuffle(keyList);
 		
+		int dist;
+		
 		for (EnumTree tree : keyList) {
-			if (random.nextInt(distances.get(tree)) == 0) return tree;
+			dist = distances.get(tree);
+			
+			if (tree.competitive) {
+				if (tree == lowestdistancetree) dist = Math.max(2, dist / 4);
+				else dist*=4;
+			} else {
+				if (lowestdistancetree.competitive) dist *= 4;
+			}
+			
+			if (random.nextInt(dist) == 0) return tree;
 		}
 		
 		return null;

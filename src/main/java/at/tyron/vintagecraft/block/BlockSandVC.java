@@ -20,8 +20,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class BlockSandVC extends BlockRock implements ISoil {
-	public PropertyBlockClass ROCKTYPE;
-	
 	public static boolean fallInstantly;
 	
 	
@@ -120,16 +118,6 @@ public class BlockSandVC extends BlockRock implements ISoil {
 	}
 	
 	
-	
-	@Override
-	public IProperty getTypeProperty() {
-		return ROCKTYPE;
-	}
-
-	@Override
-	public void setTypeProperty(PropertyBlockClass property) {
-		this.ROCKTYPE = property;
-	}
 
 	@Override
 	public BlockClass getBlockClass() {

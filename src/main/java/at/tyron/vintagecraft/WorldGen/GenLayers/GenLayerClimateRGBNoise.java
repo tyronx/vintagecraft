@@ -15,27 +15,29 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 			for (int x = 0; x < sizeX; ++x) {
 				this.initChunkSeed(xCoord + x, zCoord + z);
 				
-				// lumpyInt creates Bell curves with max. at 195.5, clipped to 0-255
-				// Results in a predominant average temperature of 16 degree and rather good rainfall
-				
+	
+				// 1 in 15 chance for really cold areas
 				if (nextInt(15) == 0) {
 					temp = lumpyInt3(55);
 					rain = lumpyInt3(130);
+				
+				// 1 in 13 chance for deserty areas
 				} else if (nextInt(13) == 0) {
 					temp = 200 + lumpyInt3(55);
 					rain = lumpyInt3(55);
-				} else {
-					temp = lumpyInt3(350);
-					rain = lumpyInt3(350 - (255 - temp));
-				}
 				
+				// Otherwise temp mostly around average of 170
+				} else {
+					temp = lumpyInt3(330);
+					rain = lumpyInt3(330 - (255 - temp));
+				}
 				   
 				
-				//System.out.println("temp is " + temp + " = " + (int)(temp/4.25f - 30));
+				//System.out.println("temp is " + temp + " = " + rain); // (int)(temp/4.25f - 30));
 				
 				cache[x + z * sizeX] =
 						(temp << 16)
-						+ (Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256)) << 8)				// high rain + high temp = high fertility, see also  http://www.ctahr.hawaii.edu/mauisoil/a_factor_form.aspx
+						+ (Math.min(255, rain + (int)Math.max(0, (rain-128)*(temp-128)/256f)) << 8)				// high rain + high temp = high fertility, see also  http://www.ctahr.hawaii.edu/mauisoil/a_factor_form.aspx
 						+ rain
 				;
 			}

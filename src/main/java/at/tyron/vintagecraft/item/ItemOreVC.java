@@ -161,6 +161,12 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	}
 	
 	
+	@Override
+	public float getSmeltingSpeedModifier(ItemStack raw) {
+		return 1f;
+	}
+
+	
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {

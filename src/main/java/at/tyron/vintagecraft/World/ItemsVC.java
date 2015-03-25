@@ -10,14 +10,15 @@ import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.item.ItemBronzeTool;
-import at.tyron.vintagecraft.item.ItemCopperTool;
+import at.tyron.vintagecraft.item.ItemToolBismuthBronze;
+import at.tyron.vintagecraft.item.ItemToolTinBronze;
+import at.tyron.vintagecraft.item.ItemToolCopper;
 import at.tyron.vintagecraft.item.ItemFoodVC;
 import at.tyron.vintagecraft.item.ItemIngot;
 import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemPeatBrick;
 import at.tyron.vintagecraft.item.ItemStone;
-import at.tyron.vintagecraft.item.ItemStoneTool;
+import at.tyron.vintagecraft.item.ItemToolStone;
 import at.tyron.vintagecraft.item.ItemToolVC;
 import at.tyron.vintagecraft.item.ItemVessel;
 import net.minecraft.block.Block;
@@ -37,12 +38,21 @@ public class ItemsVC {
 
 	
 	
+	public static Item bismuthbronzeAxe;
+	public static Item bismuthbronzePickaxe;
+	public static Item bismuthbronzeShovel;
+	public static Item bismuthbronzeSword;
+	public static Item bismuthbronzeHoe;
+	public static Item bismuthbronzeSaw;
+	public static Item bismuthbronzeShears;
+
 	public static Item bronzeAxe;
 	public static Item bronzePickaxe;
 	public static Item bronzeShovel;
 	public static Item bronzeSword;
 	public static Item bronzeHoe;
 	public static Item bronzeSaw;
+	public static Item bronzeShears;
 
 	
 	public static Item copperAxe;
@@ -51,6 +61,7 @@ public class ItemsVC {
 	public static Item copperSword;
 	public static Item copperHoe;
 	public static Item copperSaw;
+	public static Item copperShears;
 
 	
 	public static Item stoneAxe;
@@ -58,6 +69,7 @@ public class ItemsVC {
 	public static Item stoneShovel;
 	public static Item stoneSword;
 	public static Item stoneHoe;
+	public static Item stoneShears;
 
 	
 	public static Item porkchopRaw;
@@ -89,7 +101,7 @@ public class ItemsVC {
 		
 		ore = new ItemOreVC().register("ore");
 		for (EnumMaterialDeposit oretype : EnumMaterialDeposit.values()) {
-			if (oretype.hasOre) {
+			if (oretype.dropsOre) {
 				VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
 			}
 		}
@@ -98,9 +110,10 @@ public class ItemsVC {
 		ceramicVessel = new ItemVessel(true).register("ceramicvessel");
 		clayVessel = new ItemVessel(false).register("clayvessel");
 		
-		registerTools("bronze", ItemBronzeTool.class);
-		registerTools("copper", ItemCopperTool.class);
-		registerTools("stone", ItemStoneTool.class);
+		registerTools("bismuthbronze", ItemToolBismuthBronze.class);
+		registerTools("bronze", ItemToolTinBronze.class);
+		registerTools("copper", ItemToolCopper.class);
+		registerTools("stone", ItemToolStone.class);
 		
 		porkchopRaw = new ItemFoodVC(3, 0.3f, true).register("porkchopRaw");
 		porkchopCooked = new ItemFoodVC(8, 0.8f, true).register("porkchopCooked");

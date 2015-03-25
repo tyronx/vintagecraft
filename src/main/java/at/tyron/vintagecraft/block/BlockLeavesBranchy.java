@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
@@ -21,8 +22,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLeavesBranchy extends BlockLeavesVC {
-	public PropertyBlockClass TREETYPE;
-	
 
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
         return false;
@@ -38,8 +37,10 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
         	ret.add(new ItemStack(Items.stick, 1));
         }
         
-        if (rand.nextInt(12) == 0) {
-    		ret.add(BlocksVC.sapling.getItemStackFor(((BlockClassEntry)state.getValue(getTypeProperty())).getKey()));
+        EnumTree tree = (EnumTree) ((BlockClassEntry)state.getValue(getTypeProperty())).getKey();
+        
+        if (rand.nextFloat() < tree.saplingdropchance) {
+       		ret.add(BlocksVC.sapling.getItemStackFor(tree));
     	}
 
 
@@ -52,18 +53,6 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
     }
     
     
-
-    
-    @Override
-	public IProperty getTypeProperty() {
-		return TREETYPE;
-	}
-
-
-	@Override
-	public void setTypeProperty(PropertyBlockClass property) {
-		TREETYPE = property;
-	}
 
 
 	@Override

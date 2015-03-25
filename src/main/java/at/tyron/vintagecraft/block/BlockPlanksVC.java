@@ -18,7 +18,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class BlockPlanksVC extends BlockLogVC {
-	public static PropertyBlockClass TREETYPE;
 	
 	@Override
 	public boolean canSustainLeaves(IBlockAccess world, BlockPos pos) {
@@ -36,15 +35,6 @@ public class BlockPlanksVC extends BlockLogVC {
     	return ret;
     }
 	
-	@Override
-	public IProperty getTypeProperty() {
-		return TREETYPE;
-	}
-
-	@Override
-	public void setTypeProperty(PropertyBlockClass property) {
-		this.TREETYPE = property;
-	}
 
 	@Override
 	public BlockClass getBlockClass() {

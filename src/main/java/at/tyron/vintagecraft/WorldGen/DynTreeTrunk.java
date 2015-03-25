@@ -25,22 +25,22 @@ public class DynTreeTrunk {
 	public EvolvingNatFloat angleVert = EvolvingNatFloat.createIdentical(0f);
 	public EvolvingNatFloat angleHori = EvolvingNatFloat.createUniform(0, NatFloat.PI * 2, Function.IDENTICAL, 0f);
 	
-	public DynTreeTrunk(float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat verticalAngle, NatFloat horizontalAngle, EvolvingNatFloat numBranching, EvolvingNatFloat branchWidthMultiplier) {
-		this(width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier, 1f, EvolvingNatFloat.createIdentical(0f));
+	public DynTreeTrunk(float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, EvolvingNatFloat numBranching, EvolvingNatFloat branchWidthMultiplier) {
+		this(width, widthloss, branchStart, branchSpacing, branchVerticalAngle, branchHorizontalAngle, numBranching, branchWidthMultiplier, 1f, EvolvingNatFloat.createIdentical(0f));
 	}
 	
 	public DynTreeTrunk(float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat verticalAngle, NatFloat horizontalAngle, EvolvingNatFloat numBranching, EvolvingNatFloat branchWidthMultiplier, float widthBranchLossBase) {
 		this(width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier, widthBranchLossBase, EvolvingNatFloat.createIdentical(0f));
 	}
 	
-	public DynTreeTrunk(float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat verticalAngle, NatFloat horizontalAngle, EvolvingNatFloat numBranching, EvolvingNatFloat branchWidthMultiplier, float widthBranchLossBase, EvolvingNatFloat angleVert/*, EvolvingNatFloat bendAngleVert*/) {
+	public DynTreeTrunk(float width, float widthloss, NatFloat branchStart, NatFloat branchSpacing, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, EvolvingNatFloat numBranching, EvolvingNatFloat branchWidthMultiplier, float widthBranchLossBase, EvolvingNatFloat angleVert/*, EvolvingNatFloat bendAngleVert*/) {
 		
 		this.width = width;
 		this.widthloss = widthloss;
 		this.branchStart = branchStart;
 		this.branchSpacing = branchSpacing;
-		this.branchVerticalAngle = verticalAngle;
-		this.branchHorizontalAngle = horizontalAngle;
+		this.branchVerticalAngle = branchVerticalAngle;
+		this.branchHorizontalAngle = branchHorizontalAngle;
 		
 		this.numBranching = numBranching;
 		this.branchWidthMultiplier = branchWidthMultiplier;

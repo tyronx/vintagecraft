@@ -60,7 +60,7 @@ public class GenRockLayers {
 	
 	
 	public EnumRockType getRockType(int xCoord, int depth, int zCoord, int age) {
-		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegenLow.getNoise(xCoord / 524288.0, depth / 65536.0, zCoord / 524288.0))))); //65536   32768
+		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegenLow.getNoise(xCoord / 524288.0, depth / 122880.0, zCoord / 524288.0))))); //65536   32768
 		
 		EnumRockType rock = color2Rock.get(value);
 		

@@ -26,7 +26,7 @@ public class RecipeSlabs implements IRecipe {
 				ItemStack itemstack = inventory.getStackInRowAndColumn(y, x);
 				if (itemstack == null) continue;
 				
-				if (itemstack.getItem() instanceof ItemBlock && ((ItemBlock)itemstack.getItem()).block instanceof BlockPlanksVC && itemstack.getItem().getUnlocalizedName().equals("tile.planks")) {
+				if (itemstack.getItem() instanceof ItemBlock && BlocksVC.planks.containsBlock(((ItemBlock)itemstack.getItem()).block)) {
 					if (px != -1) {
 						return false;
 					}

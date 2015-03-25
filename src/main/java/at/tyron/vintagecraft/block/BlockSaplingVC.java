@@ -30,6 +30,7 @@ import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -220,6 +221,20 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
     }
 	
 	
+    @Override
+    public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+    	if (!worldIn.isRemote) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			
+	        if(te instanceof TESapling) {
+	        	TESapling cte = (TESapling) te;
+	            cte.updateGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(worldIn.getBlockState(pos)).getKey());
+	        }
+		}
+    	
+    	
+    	return super.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer);
+    }
 	
 
 	@Override

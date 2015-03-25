@@ -70,7 +70,7 @@ public class GuiStove extends GuiContainer {
 	
 	
     private int smeltprogress(int multiplicator) {
-        int orecookingtime = stove.oreCookingTime;
+        int orecookingtime = (int) stove.oreCookingTime;
         int maxcookingtime = stove.maxCookingTime();
         
         return maxcookingtime != 0 && orecookingtime != 0 ? orecookingtime * multiplicator / maxcookingtime : 0;

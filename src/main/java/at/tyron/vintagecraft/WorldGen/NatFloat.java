@@ -2,10 +2,11 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-/* A more natural float number generator (nature usually doesn't always grow by the exact same numbers ) */
+/* A more natural float number generator (nature usually doesn't  grow by the exact same numbers nor does it completely randomly) */
 
 public class NatFloat {
 	public static final float PI = (float)Math.PI;
+	public static final float PIHALF = (float)Math.PI/2;
 	
 	public float offset = 0f;
 	

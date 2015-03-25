@@ -185,23 +185,18 @@ public class DynTreeGen {
 
 
 	private void genTrunk(float curx, float cury, float curz, float curwidth, EvolvingNatFloat anglehor, /*float anglever,*/ EvolvingNatFloat angleVert) {
-		//float val = trunk.numBranching.nextFloat(0); 
-		//float numBranches = Math.round((float)val * (size / 2) + (float)val / 2); 
 		trunk.branchWidthMultiplier.init();
 		
-		growBranch(0, pos, 0f, 0f, 0f, angleVert, /*bendAngleVert,*/ anglehor, trunk.width, trunk.widthloss, trunk.numBranching, /*numBranches,*/ trunk.branchStart, trunk.branchSpacing, trunk.branchWidthMultiplier.nextFloat(0), 0f, trunk.branchVerticalAngle, trunk.branchHorizontalAngle, trunk.widthBranchLossBase, this.roots);
+		growBranch(0, pos, 0f, 0f, 0f, angleVert, anglehor, trunk.width, trunk.widthloss, trunk.numBranching, /*numBranches,*/ trunk.branchStart, trunk.branchSpacing, trunk.branchWidthMultiplier.nextFloat(0), 0f, trunk.branchVerticalAngle, trunk.branchHorizontalAngle, trunk.widthBranchLossBase, this.roots);
 	}
 	
 	
 	
-	public void growBranch(int recursion, BlockPos pos, float dx, float dy, float dz, /*float anglever, EvolvingNatFloat bendAngleVert, */ EvolvingNatFloat angleVert, EvolvingNatFloat angleHori, float baseWidth, float widthloss,/* float numbranching, */ EvolvingNatFloat numBranching, NatFloat branchStart, NatFloat branchSpacing, float branchWidthMultiplier, float gravityDrag, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, float widthBranchLossBase, DynTreeRoot roots) {
+	public void growBranch(int recursion, BlockPos pos, float dx, float dy, float dz, EvolvingNatFloat angleVert, EvolvingNatFloat angleHori, float baseWidth, float widthloss, EvolvingNatFloat numBranching, NatFloat branchStart, NatFloat branchSpacing, float branchWidthMultiplier, float gravityDrag, NatFloat branchVerticalAngle, NatFloat branchHorizontalAngle, float widthBranchLossBase, DynTreeRoot roots) {
 		if (recursion > 30) { System.out.println("too many branches!"); return; }
 		
 		angleVert.init();
 		angleHori.init();
-		
-		
-		
 		
 		float branchspacing = branchSpacing.nextFloat();
 		float branchstart = branchStart.nextFloat();
@@ -221,6 +216,10 @@ public class DynTreeGen {
 		}
 		
 		float anglever = 0f, anglehor = 0f, ddrag = 0f;
+		BlockPos nextblock;
+		
+		// we want to place around the trunk/branch => offset the coordinates when growing stuff from the base
+		float trunkOffsetX = 0, trunkOffsetZ = 0, trunkOffsetY = 0;
 		
 		while (baseWidth > 0 && iteration++ < 5000) {
 			baseWidth -= widthloss / size;
@@ -230,9 +229,12 @@ public class DynTreeGen {
 			anglever = angleVert.nextFloat(sequencesPerIteration * (iteration-1));
 			anglehor = angleHori.nextFloat(sequencesPerIteration * (iteration-1));
 
+		
+			trunkOffsetX = Math.max(-0.5f, Math.min(0.5f, 0.7f * MathHelper.sin(anglever) * MathHelper.cos(anglehor))) + 0.5f;
+			trunkOffsetY = Math.max(-0.5f, Math.min(0.5f, 0.7f * MathHelper.cos(anglever))) + 0.5f;
+			trunkOffsetZ = Math.max(-0.5f, Math.min(0.5f, 0.7f * MathHelper.sin(anglever) * MathHelper.sin(anglehor))) + 0.5f;
 			
 			ddrag = gravityDrag * MathHelper.sqrt_float(dx*dx + dz*dz);
-	
 			
 			dx += MathHelper.sin(anglever) * MathHelper.cos(anglehor) / Math.max(1, ddrag);
 			dy += Math.min(1, Math.max(-1, MathHelper.cos(anglever) - ddrag));
@@ -243,6 +245,7 @@ public class DynTreeGen {
 
 			if (canPlace(blockstate, world.getBlockState(pos.add(dx, dy, dz)))) {
 				world.setBlockState(pos.add(dx, dy, dz), blockstate, 2);
+				
 				//System.out.println("block @" + dx + "/" + dy + "/"+ dz);
 				if (vineGrowthChance > 0 && rand.nextInt(100) < vineGrowthChance) {
 					EnumFacing facing = EnumFacing.getHorizontal(rand.nextInt(4));
@@ -255,6 +258,8 @@ public class DynTreeGen {
 						vinePos = vinePos.down();
 					}
 				}
+			} else {
+				//System.out.println("cant place " + blockstate + " @ angle " + anglehor);
 			}
 			
 			
@@ -270,7 +275,7 @@ public class DynTreeGen {
 				int num = (int) roots.numBranching.nextFloat();
 				
 				for (int i = 0; i < num; i++) {
-					growRoots(pos, dx, dy, dz, roots.verticalAngle, roots.horizontalAngle, roots.baseWidth, roots.widthloss, roots.numBranching, roots.branchStart, roots.branchSpacing, roots.widthBranchLossBase, roots.branchVerticalAngle, roots.branchHorizontalAngle);
+					growRoots(pos, dx + trunkOffsetX, dy, dz + trunkOffsetZ, roots.verticalAngle, roots.horizontalAngle, roots.baseWidth, roots.widthloss, roots.numBranching, roots.branchStart, roots.branchSpacing, roots.widthBranchLossBase, roots.branchVerticalAngle, roots.branchHorizontalAngle);
 				}
 			}
 
@@ -278,6 +283,8 @@ public class DynTreeGen {
 
 			
 			if (reldistance < branchstart) continue;
+			
+			//if (recursion > 1) continue;
 			
 			if (reldistance > lastreldistance + branchspacing * (1f - reldistance)) {
 				branchspacing = branchSpacing.nextFloat();
@@ -293,10 +300,10 @@ public class DynTreeGen {
 					
 					growBranch(
 						recursion+1, 
-						pos, dx, dy, dz, 
+						pos, dx + trunkOffsetX, dy, dz + trunkOffsetZ, 
 						branches.angleVert.copyWithOffset(branchVerticalAngle.nextFloat()),
-						branches.angleVert.copyWithOffset(branchHorizontalAngle.nextFloat()),
-						baseWidth * branchWidthMultiplier, 
+						branches.angleHori.copyWithOffset(branchHorizontalAngle.nextFloat()),
+						baseWidth * branchWidthMultiplier * (mode == DynTreeGenMode.RANDOMLENGTHBRANCHES ? 1F : (0.5f + rand.nextFloat()*0.5f)), 
 						branches.widthloss, 
 						branches.numBranching,
 						branches.branchStart, 

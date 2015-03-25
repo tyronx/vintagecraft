@@ -62,7 +62,7 @@ public class ItemRock extends ItemBlock implements ISmeltable {
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
-		if (BlocksVC.rock.containsBlock(item.getBlock())) {
+		if (getBlockClass(item.getBlock()).containsBlock(item.getBlock())) {
 			EnumRockType rocktype = getRockType(itemstack);
 			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + rocktype.getUnlocalizedName() + ".name"));
 		}
@@ -109,5 +109,11 @@ public class ItemRock extends ItemBlock implements ISmeltable {
 		}
 		return 0;
 	}
+	
+	@Override
+	public float getSmeltingSpeedModifier(ItemStack raw) {
+		return 1f;
+	}
+
 
 }

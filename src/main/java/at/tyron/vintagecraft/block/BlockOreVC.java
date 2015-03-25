@@ -44,17 +44,9 @@ import at.tyron.vintagecraft.item.ItemStone;
 public class BlockOreVC extends BlockVC implements IMultiblock {
 	public PropertyBlockClass OREANDROCKTYPE;
 	
-	/*public static final IUnlistedProperty<Enum>[] properties = new IUnlistedProperty[2];
-
-	static {
-		properties[0] = Properties.toUnlisted(PropertyEnum.create("rocktype", EnumRockType.class));
-		properties[1] = Properties.toUnlisted(PropertyEnum.create("oretype", EnumMaterialDeposit.class));
-    }*/
-
-	 
 	public BlockOreVC() {
 		super(Material.iron);
-		
+		setCreativeTab(CreativeTabs.tabBlock);
 		this.setDefaultState(this.blockState.getBaseState());
 	}
 
@@ -69,44 +61,16 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	}
 	
 	
-   /* @Override
-    public int getRenderType() { return 3; }
-*/
-    
-    /*@Override
-    public TileEntity createNewTileEntity(World world, int meta) {
-        return new TEOre();
-    }*/
-
-    @SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer() {
-        return EnumWorldBlockLayer.CUTOUT_MIPPED;
-    }
-
-    /*
-    
-    @Override
-    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        TileEntity te = world.getTileEntity(pos);
-        if(te instanceof TEOre) {
-        	TEOre cte = (TEOre) te;
-            return cte.getState();
-        } else {
-        	//if (te == null) {
-        	//	System.out.println("getExtendedState() Error: tileentity is null!");
-        	//} else {
-        	//	System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
-        	//}
-        }
-        return state;
-    }
-
-    @Override
-    protected BlockState createBlockState() {
-        return new ExtendedBlockState(this, new IProperty[0], properties);
-    }
-    
-   */
+	
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (BlockClassEntry entry : subtypes) {
+			list.add(entry.getItemStack());
+		}
+		super.getSubBlocks(itemIn, tab, list);
+	}
+	
+	
     
     @Override
     protected BlockState createBlockState() {
@@ -143,11 +107,6 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    /*	return super.getDrops(world, pos, state, fortune);
-    }
-    
-    @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {*/
     	java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
     	World worldIn = (World)world;
@@ -193,12 +152,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
         return ret;
     }
 
-    /*
-    @Override
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos,
-    		IBlockState state, float chance, int fortune) {
-    	
-    }*/
+
 
 
 	@Override

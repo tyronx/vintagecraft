@@ -20,7 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
-	public static PropertyBlockClass TREETYPE;
+	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
 	
 	public int multistateAvailableTypes() {

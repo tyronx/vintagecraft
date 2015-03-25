@@ -85,6 +85,16 @@ public class VintageCraftCommands extends CommandBase {
 		}
 		
 		
+		if (args[0].equals("cgentree") || args[0].equals("cgenltree") || args[0].equals("cgenptree")) {
+			args[0] = args[0].substring(1);
+			int wdt = 30;
+			int hgt = 80;
+			
+			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
+			
+		}
+		
+		
 		if (args[0].equals("gentree") || args[0].equals("genltree") || args[0].equals("genptree")) {
 			float size = 1f;
 			float bend = 0f;
@@ -202,15 +212,11 @@ public class VintageCraftCommands extends CommandBase {
 				GenLayerVC.genErosion(seed);
 			}
 			if (args[1].equals("deposits")) {
-				EnumMaterialDeposit.NODEPOSIT.weight = 12000;
 				GenLayerVC.genDeposits(seed);
 			}
 			if (args[1].equals("age")) {
 				GenLayerVC.genAgemap(seed);
 			}
-			/*if (args[1].equals("rocks")) {	
-				GenLayerVC.genRockLayer(seed, EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.ROCK_1));
-			}*/
 			if (args[1].equals("heightmap")) {	
 				GenLayerVC.genHeightmap(seed);
 			}

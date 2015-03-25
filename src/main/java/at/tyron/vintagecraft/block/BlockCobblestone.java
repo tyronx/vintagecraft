@@ -28,28 +28,6 @@ public class BlockCobblestone extends BlockRock {
 		super(Material.rock);
 	}
 	
-    @Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    	if (getBlockClass() == BlocksVC.rock) {
-	        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-	
-	        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
-	        
-	        EnumRockType rocktype = (EnumRockType) getRockType(state).getKey();
-	        
-	        ItemStack itemstack = new ItemStack(ItemsVC.stone, 2 + rand.nextInt(3));
-	        ItemStone.setRockType(itemstack, rocktype);
-	        
-	        ret.add(itemstack);
-	        
-	        
-	        itemstack = new ItemStack(Items.clay_ball, 3 + rand.nextInt(2));
-	        ret.add(itemstack);
-	        
-			return ret;
-    	}
-    	return super.getDrops(world, pos, state, fortune);
-    }
 
 	@Override
 	public BlockClass getBlockClass() {

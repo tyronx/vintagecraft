@@ -3,6 +3,9 @@ package at.tyron.vintagecraft.TileEntity;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;
 import at.tyron.vintagecraft.block.BlockFarmlandVC;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
@@ -87,9 +90,30 @@ public class TESapling extends TileEntity {
     
     public long getGrowthEnd(long worldtime, EnumTree tree) {
     	if (growthEnd == 0) {
-    		setGrowthEnd((long) (worldtime + 24000 * 8 * tree.growthspeed - 1));
+    		updateGrowthEnd(worldtime, tree);
     	}
     	
     	return growthEnd;
+    }
+    
+    public void updateGrowthEnd(long worldtime, EnumTree tree) {
+    	if (growthEnd == 0) {
+    		setGrowthEnd((long) (worldtime + 24000 * 8 * tree.growthspeed - 1));
+    	}
+    }
+    
+    
+    @Override
+    public Packet getDescriptionPacket() {
+    	NBTTagCompound tagCompound = new NBTTagCompound();
+        writeToNBT(tagCompound);
+        return new S35PacketUpdateTileEntity(this.pos, 1, tagCompound);
+    }
+    
+    
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+    	readFromNBT(pkt.getNbtCompound());
+    	super.onDataPacket(net, pkt);
     }
 }

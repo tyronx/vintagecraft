@@ -55,7 +55,7 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     // Maximum temperature that can be reached with the currently used fuel
     public int maxTemperature;
     // For how long the ore has been cooking
-    public int oreCookingTime;
+    public float oreCookingTime;
     // How much of the current fuel is consumed
     public int fuelBurnTime;
     // How much fuel is available
@@ -202,7 +202,7 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     	if (tick == 0) return;
 
     	
-    	// Out of fuel
+    	// Burn up fuel
     	if (fuelBurnTime > 0) {
     		fuelBurnTime -= tick;
     		if (fuelBurnTime == 0) {
@@ -212,11 +212,12 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     	}
     	
     	
-    	// Furnace is burning: Heat furnace and ore
+    	// Furnace is burning: Heat furnace
 		if (isBurning()) {
    			furnaceTemperature = changeTemperature(furnaceTemperature, maxTemperature, tick); 			
 		}
 		
+		// Ore follows furnace temperature
 		heatOre();
 		
 		
@@ -302,6 +303,14 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     	return 0;    	
     }
     
+    float oreItemSmeltingDurationModifier() {
+    	if (oreSlot()!= null && oreSlot().getItem() instanceof ISmeltable) {
+    		ISmeltable smeltable = (ISmeltable)oreSlot().getItem();
+    		return smeltable.getSmeltingSpeedModifier(oreSlot());
+    	}
+    	return 1f;    	
+    	
+    }
     
     ItemStack smeltedItem() {
     	return furnaceItemStacks[2];
@@ -329,19 +338,22 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
 
     
     public void heatOre() {
+    	// Adjust temperature of ore
     	if (oreItemSmeltedMeltingPoint() > 0) {
     		oreTemperature = changeTemperature(oreTemperature, furnaceTemperature, 2);
     	} else {
     		oreTemperature = enviromentTemperature();
     	}
     	
+    	// Begin smelting when hot enough
 		if (oreItemSmeltedMeltingPoint() > 0 && oreTemperature >= oreItemSmeltedMeltingPoint()) {
 			float diff = (1f * oreTemperature / oreItemSmeltedMeltingPoint());
-			oreCookingTime += MathHelper.clamp_int((int) (diff), 1, 30);
+			oreCookingTime += MathHelper.clamp_int((int) (diff), 1, 30) * oreItemSmeltingDurationModifier();
 		} else {
 			if (oreCookingTime > 0) oreCookingTime--;
 		}
 		
+		// Finished smelting? Turn to smelted item
 		if (oreCookingTime > maxCookingTime()) {
 			smeltItem();
 		}
@@ -461,7 +473,7 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
             case 3:
                 return maxTemperature;
             case 4:
-                return oreCookingTime;
+                return (int) oreCookingTime;
             case 5:
                 return fuelBurnTime;
             case 6:

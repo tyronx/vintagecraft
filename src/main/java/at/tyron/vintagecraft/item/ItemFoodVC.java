@@ -59,5 +59,10 @@ public class ItemFoodVC extends ItemFood implements ISmeltable, ISubtypeFromStac
 		return internalname;
 	}
 
+	@Override
+	public float getSmeltingSpeedModifier(ItemStack raw) {
+		return 0.9f;
+	}
+
 	
 }

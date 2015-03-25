@@ -9,4 +9,6 @@ public interface ISmeltable {
 	public int getRaw2SmeltedRatio(ItemStack raw);
 	
 	public int getMeltingPoint(ItemStack raw);
+
+	public float getSmeltingSpeedModifier(ItemStack raw);
 }

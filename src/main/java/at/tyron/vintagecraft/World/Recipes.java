@@ -36,7 +36,7 @@ public class Recipes {
 		ItemStack stick = new ItemStack(Items.stick);
 
 		
-		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.clayVessel), new Object[] { "   ", "C C", " C ", 'C', Items.clay_ball});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.clayVessel), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 		
 		ItemStack copperingot = new ItemStack(ItemsVC.ingot);
 		ItemIngot.setMetal(copperingot, EnumMetal.COPPER);
@@ -47,6 +47,7 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperShovel), new Object[] { " S ", " W ", " W ", 'S', copperingot, 'W', Items.stick});	
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperSword), new Object[] { " S ", " S ", " W ", 'S', copperingot, 'W', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperSaw), new Object[] { "S  ", "WS ", " WS", 'S', copperingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperShears), new Object[] { "  M", "MM ", " M ", 'M', copperingot});
 
 
 		ItemStack bronzeingot = new ItemStack(ItemsVC.ingot);
@@ -58,14 +59,25 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bronzeShovel), new Object[] { " S ", " W ", " W ", 'S', bronzeingot, 'W', Items.stick});	
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bronzeSword), new Object[] { " S ", " S ", " W ", 'S', bronzeingot, 'W', Items.stick});
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bronzeSaw), new Object[] { "S  ", "WS ", " WS", 'S', bronzeingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bronzeShears), new Object[] { "  M", "MM ", " M ", 'M', bronzeingot});
+		
 
+		ItemStack bismuthbronzeingot = new ItemStack(ItemsVC.ingot);
+		ItemIngot.setMetal(bismuthbronzeingot, EnumMetal.BISMUTHBRONZE);
 
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeAxe), new Object[] { "SS ", "SW ", " W ", 'S', bismuthbronzeingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeHoe), new Object[] { "SS ", " W ", " W ", 'S', bismuthbronzeingot, 'W',  Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzePickaxe), new Object[] { "SSS", " W ", " W ", 'S', bismuthbronzeingot, 'W',  Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeShovel), new Object[] { " S ", " W ", " W ", 'S', bismuthbronzeingot, 'W', Items.stick});	
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeSword), new Object[] { " S ", " S ", " W ", 'S', bismuthbronzeingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeSaw), new Object[] { "S  ", "WS ", " WS", 'S', bismuthbronzeingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.bismuthbronzeShears), new Object[] { "  M", "MM ", " M ", 'M', bismuthbronzeingot});
+		
 		
 		
 		//for (EnumRockType rocktype : EnumRockType.values()) {
 		for (BlockClassEntry rock : BlocksVC.rock.values()) {
 			EnumRockType rocktype = (EnumRockType) rock.getKey();
-			
 			ItemStack stone = ItemStone.setRockType(new ItemStack(ItemsVC.stone), rocktype);
 			
 			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SCS", "CSC", "SCS", 'C', Items.clay_ball, 'S', stone});

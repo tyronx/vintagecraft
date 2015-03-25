@@ -7,7 +7,8 @@ public enum EnumTool {
 	SWORD (3, true),
 	//CHISEL (4),
 	HOE (5, true),
-	SAW (6, false)
+	SAW (6, false),
+	SHEARS (7, false)
 	;
 	
 	public int meta;

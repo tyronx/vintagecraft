@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/africanmahogany",
+		"side": "vintagecraft:blocks/log/africanmahogany_bark"
+	}
+}

@@ -17,7 +17,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockStairsVC extends BlockStairs implements IMultiblock {
-	public static PropertyBlockClass TREETYPE;
+	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
 
 	protected BlockStairsVC() {

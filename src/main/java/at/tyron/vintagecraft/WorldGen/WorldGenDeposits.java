@@ -9,7 +9,9 @@ import at.tyron.vintagecraft.VintageCraftConfig;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
-import at.tyron.vintagecraft.WorldProperties.DepositType;
+import at.tyron.vintagecraft.WorldProperties.DepositOccurence;
+import at.tyron.vintagecraft.WorldProperties.DepositOccurenceType;
+import at.tyron.vintagecraft.WorldProperties.DepositSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
@@ -39,9 +41,12 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//if (true) return;
 		
 		for (int i = 0; i < depositsPerChunk.length; i++) {
-			depositsPerChunk[i] = Math.max(1, (deposits[i].maxDepth - deposits[i].minDepth) / 8);
+			depositsPerChunk[i] = Math.max(1, (deposits[i].occurence.maxdepth - deposits[i].occurence.mindepth) / 8);
 			depositsMax = Math.max(depositsMax, depositsPerChunk[i]);
 		}
+		
+		
+		/***** Large and Huge Deposits *****/
 		
 		for (int i = 0; i < depositsMax; i++) {
 			int[] depositLayer = GenLayerVC.genDeposits(world.getSeed() + i + 1).getInts(chunkX, chunkZ, 16, 16);
@@ -49,41 +54,50 @@ public class WorldGenDeposits implements IWorldGenerator {
 			generateLargeDeposits(depositsPerChunk, depositLayer, chunkX, chunkZ, random, world);
 		}
 		
+		
+		
+		/***** Single, Tiny and Small Deposits *****/
+		int tries = 6;
+		
 		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.deposittype != DepositType.SMALL && deposit.deposittype != DepositType.SMALLANDLARGE && deposit.deposittype != DepositType.TINY) continue;
+			if (deposit.size != DepositSize.SMALL && deposit.size != DepositSize.SMALLANDLARGE && deposit.size != DepositSize.TINY && deposit.size != DepositSize.SINGLE) continue;
+			if (deposit.occurence.type == DepositOccurenceType.INDEPOSIT || deposit.occurence.type == DepositOccurenceType.NODEPOSIT) continue;   
 			
-			for (int i = 0; i < 3; i++) {
-				if (random.nextInt(100) < deposit.weight) {
-					generateSmallDeposit(deposit, world, random, chunkX + 2 + random.nextInt(12), chunkZ + 2 + random.nextInt(12), false);
+			tries = 6;
+			while(tries-- > 0) {
+				if (random.nextInt(100) < deposit.occurence.weight) {
+					generateSmallDeposit(deposit, world, random, chunkX + 2 + random.nextInt(12), chunkZ + 2 + random.nextInt(12));
 				}
 			}
-			for (int i = 0; i < 3; i++) {
-				if (random.nextInt(100) < deposit.weight) {
-					generateSmallDeposit(deposit, world, random, chunkX + 2 + random.nextInt(12), chunkZ + 2 + random.nextInt(12), true);
-				}
-			}
-			
 		}
 		
 	
 	}
 
-	void generateSmallDeposit(EnumMaterialDeposit deposit, World world, Random rand, int x, int z, boolean forceunderground) {
+	void generateSmallDeposit(EnumMaterialDeposit deposit, World world, Random rand, int x, int z) {
 		BlockPos surface;
 		
 		//System.out.println("gen " + deposit);
 		
-		if (deposit.relativeDepth && !forceunderground) {
+		boolean underground =
+			deposit.occurence.type == DepositOccurenceType.ANYBELOWSEALEVEL
+			|| (deposit.occurence.type == DepositOccurenceType.MIXEDDEPTHS && rand.nextFloat() < deposit.occurence.belowSealLevelRatio)
+		;
+		
+		if (underground) {
 			surface = world.getHorizon(new BlockPos(x, 0, z));	
 		} else {
 			surface = new BlockPos(x, VCraftWorld.seaLevel, z);
 		}
 
-		int depth = deposit.minDepth + rand.nextInt(deposit.maxDepth - deposit.minDepth);
+		int depth = deposit.occurence.mindepth + rand.nextInt(deposit.occurence.maxdepth - deposit.occurence.mindepth);
 		
 		if (surface.getY() - depth <= 1) return;
 			
 		if (!deposit.isParentMaterial(world.getBlockState(surface.down(depth)), surface)) return;
+		
+		
+		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println(surface + " / " + depth);
 		
 		generateSmallDeposit(deposit, world, rand, surface, depth);
 	}
@@ -95,8 +109,11 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//if (deposit == EnumMaterialDeposit.NATIVEGOLD_QUARTZ || deposit == EnumMaterialDeposit.NATIVEGOLD_QUARTZ || deposit==EnumMaterialDeposit.SYLVITE_ROCKSALT)
 		//	System.out.println(deposit + " @ " + surface.down(depth));
 		
+		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("overground copper @ " + surface + " + depth " + depth);
+		
 		int width = (rand.nextInt(9) + rand.nextInt(9)) / 2;
-		if (deposit.deposittype == DepositType.TINY) width = 1 + rand.nextInt(3);
+		if (deposit.size == DepositSize.TINY) width = 1 + rand.nextInt(3);
+		if (deposit.size == DepositSize.SINGLE) width = 0;
 		
 		for (int dx = -width / 2; dx <= width/2; dx++) {
 			if (rand.nextInt(8) == 0) depth+=rand.nextInt(2) * 2 - 1;
@@ -105,10 +122,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				pos = surface.add(dx, -depth, dz);
 				
 				if (pos.getY() > 0 && dx * dx + dz * dz <= width * width && deposit.isParentMaterial(world.getBlockState(pos), pos)) {
-					/*if (deposit == EnumMaterialDeposit.PERIDOT_OLIVINE) {
-						System.out.println("PERIDOT_OLIVINE @ " + pos);
-					}*/
-					//System.out.println("genn small " + deposit + " @ " + pos + ": "+ deposit.getBlockStateForDepth(depth, world.getBlockState(pos)));
+					
 					world.setBlockState(pos, deposit.getBlockStateForDepth(depth, world.getBlockState(pos)), 2);
 				}
 				
@@ -132,7 +146,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int depositColor = depositLayer[x+z*16] & 0xFF;
 				if (depositColor == 0) continue;
 				
-				EnumMaterialDeposit deposit = EnumMaterialDeposit.depositForColor(depositColor);
+				EnumMaterialDeposit deposit = EnumMaterialDeposit.byColor(depositColor);
 				
 				if (depositsPerChunk[deposit.id] <= 0) continue;
 				
@@ -143,35 +157,30 @@ public class WorldGenDeposits implements IWorldGenerator {
 
 				
 				int horizon = VCraftWorld.instance.seaLevel;
-				if (deposit.relativeDepth) {
+				
+				if (deposit.occurence.type == DepositOccurenceType.ANYRELATIVEDEPTH) {
 					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
-					if (horizon > deposit.maxheightOnRelDepth) continue;
+					
+					if (horizon > deposit.occurence.untilyheight) continue;
 				}
 				
-				pos = new BlockPos(xCoord + x, depositDepth = Math.max(horizon - deposit.maxDepth, horizon - depositDepth), zCoord + z);
+				pos = new BlockPos(xCoord + x, depositDepth = Math.max(horizon - deposit.occurence.maxdepth, horizon - depositDepth), zCoord + z);
+				//spos = new BlockPos(xCoord + x, depositDepth = Math.max(horizon - deposit.maxDepth, horizon - depositDepth), zCoord + z);
+				
 				if (pos.getY() < 1) continue;
 				
-				
-				if (deposit == EnumMaterialDeposit.QUARTZ) {
-					if (EnumMaterialDeposit.NATIVESILVER_QUARTZ.weight > random.nextInt(100) * 150) subdeposits.put(pos, EnumMaterialDeposit.NATIVESILVER_QUARTZ);
-					if (EnumMaterialDeposit.NATIVEGOLD_QUARTZ.weight > random.nextInt(100) * 150) subdeposits.put(pos, EnumMaterialDeposit.NATIVEGOLD_QUARTZ);
+				if (deposit.subdeposits != null) {
+					for (EnumMaterialDeposit subdeposit : deposit.subdeposits) {
+						if (subdeposit.occurence.weight > random.nextInt(100) * 150) {
+							subdeposits.put(pos, subdeposit);
+						}
+					}
 				}
 				
-				if (deposit == EnumMaterialDeposit.ROCKSALT) {
-					if (EnumMaterialDeposit.SYLVITE_ROCKSALT.weight > random.nextInt(100) * 150) subdeposits.put(pos, EnumMaterialDeposit.SYLVITE_ROCKSALT);
-				}
-
-				if (deposit == EnumMaterialDeposit.OLIVINE) {
-					if (EnumMaterialDeposit.PERIDOT_OLIVINE.weight > random.nextInt(100) * 150) subdeposits.put(pos, EnumMaterialDeposit.PERIDOT_OLIVINE);
-				}
-
 				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos), pos)) {
-					/*if (deposit == EnumMaterialDeposit.OLIVINE) {
-						System.out.println("olivine @ " + pos);
-					}*/
-					int hgt = deposit.height;
-					//if(deposit == EnumMaterialDeposit.OLIVINE) System.out.println(pos);
+					int hgt = deposit.occurence.height;
+					
 					while (hgt-- > 0) {
 						if (pos.getY() < 1) continue;
 						world.setBlockState(pos, deposit.getBlockStateForDepth(horizon - depositDepth, parentmaterial), 2);

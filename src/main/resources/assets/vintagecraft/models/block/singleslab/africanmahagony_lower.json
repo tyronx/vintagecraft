@@ -1,8 +1,0 @@
-{
-    "parent": "block/half_slab",
-    "textures": {
-        "bottom": "vintagecraft:blocks/planks/africanmahagony",
-        "top": "vintagecraft:blocks/planks/africanmahagony",
-        "side": "vintagecraft:blocks/planks/africanmahagony"
-    }
-}

@@ -18,22 +18,42 @@ tile.peat.name=Peat
 tile.subsoil.name=Subsoil
 tile.uppermantle.name=Upper Mantle
 
-tile.rock.gneiss.name=Gneiss
-tile.rock.limestone.name=Limestone
-tile.rock.claystone.name=Claystone
-tile.rock.marble.name=Marble
-tile.rock.granite.name=Granite
-tile.rock.basalt.name=Basalt
-tile.rock.andesite.name=Andesite
-tile.rock.conglomerate.name=Conglomerate
-tile.rock.diorite.name=Diorite
-tile.rock.sandstone.name=Sandstone
-tile.rock.redsandstone.name=Red Sandstone
-tile.rock.quartzite.name=Quartzite
-tile.rock.chert.name=Chert
-tile.rock.gabbro.name=Gabbro
-tile.rock.shale.name=Shale
-tile.rock.schist.name=Green Schist
+rock.gneiss.name=Gneiss
+rock.limestone.name=Limestone
+rock.claystone.name=Claystone
+rock.marble.name=Marble
+rock.granite.name=Granite
+rock.basalt.name=Basalt
+rock.andesite.name=Andesite
+rock.conglomerate.name=Conglomerate
+rock.diorite.name=Diorite
+rock.sandstone.name=Sandstone
+rock.redsandstone.name=Red Sandstone
+rock.quartzite.name=Quartzite
+rock.chert.name=Chert
+rock.gabbro.name=Gabbro
+rock.shale.name=Shale
+rock.schist.name=Green Schist
+
+
+
+
+tile.tock.gneiss.name=Gneiss
+tile.tock.limestone.name=Limestone
+tile.tock.claystone.name=Claystone
+tile.tock.marble.name=Marble
+tile.tock.granite.name=Granite
+tile.tock.basalt.name=Basalt
+tile.tock.andesite.name=Andesite
+tile.tock.conglomerate.name=Conglomerate
+tile.tock.diorite.name=Diorite
+tile.tock.sandstone.name=Sandstone
+tile.tock.redsandstone.name=Red Sandstone
+tile.tock.quartzite.name=Quartzite
+tile.tock.chert.name=Chert
+tile.tock.gabbro.name=Gabbro
+tile.tock.shale.name=Shale
+tile.tock.schist.name=Green Schist
 
 item.stone.name=Stone
 stone.name=Stone
@@ -46,6 +66,9 @@ item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite
 item.ore.cassiterite.name=Cassiterite
 item.redstone.cassiterite.name=Redstone
+item.ore.bismuthinite.name=Bismuthinite
+item.ore.sphalerite.name=Sphalerite
+
 
 item.ingot.copper.name=Copper Ingot
 item.ingot.bronze.name=Bronze Ingot
@@ -60,6 +83,10 @@ item.ingot.silver.name=Silver Ingot
 item.ingot.gold.name=Gold Ingot
 item.ingot.tin.name=Tin Ingot
 item.ingot.uranium.name=Uranium Ingot
+item.ingot.bismuth.name=Bismuth Ingot
+item.ingot.zinc.name=Zinc Ingot
+item.ingot.bismuthbronze.name=Bismuth Bronze Ingot
+
 
 
 container.stove=Stove
@@ -70,7 +97,16 @@ tile.flower.purplebutterflymilkweed.name=Purple Butterfly Milkweed
 tile.flower.catmint.name=Catmint
 
 item.ceramicvessel.name=Ceramic Vessel
-item.clayvessen.name=Clay Vessel
+item.clayvessel.name=Clay Vessel
+
+
+item.bismuthbronze_axe.name=Bismuth Bronze Axe
+item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
+item.bismuthbronze_shovel.name=Bismuth Bronze Shovel
+item.bismuthbronze_sword.name=Bismuth Bronze Sword
+item.bismuthbronze_hoe.name=Bismuth Bronze Hoe
+item.bismuthbronze_saw.name=Bismuth Bronze Saw
+item.bismuthbronze_shears.name=Bismuth Bronze Shears
 
 item.bronze_axe.name=Bronze Axe
 item.bronze_pickaxe.name=Bronze Pickaxe
@@ -78,6 +114,8 @@ item.bronze_shovel.name=Bronze Shovel
 item.bronze_sword.name=Bronze Sword
 item.bronze_hoe.name=Bronze Hoe
 item.bronze_saw.name=Bronze Saw
+item.bronze_shears.name=Bronze Shears
+
 
 item.copper_axe.name=Copper Axe
 item.copper_pickaxe.name=Copper Pickaxe
@@ -85,6 +123,7 @@ item.copper_shovel.name=Copper Shovel
 item.copper_sword.name=Copper Sword
 item.copper_hoe.name=Copper Hoe
 item.copper_saw.name=Copper Saw
+item.copper_shears.name=Copper Shears
 
 item.stone_axe.name=Stone Axe
 item.stone_pickaxe.name=Stone Pickaxe

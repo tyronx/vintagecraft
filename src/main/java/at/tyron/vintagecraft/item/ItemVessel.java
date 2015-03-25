@@ -1,7 +1,12 @@
 package at.tyron.vintagecraft.item;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.ArrayUtils;
+
+import jdk.nashorn.internal.ir.LiteralNode.ArrayLiteralNode.ArrayUnit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,19 +14,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 
 public class ItemVessel extends ItemVC implements ISmeltable {
 	boolean burned;
-	String []ratios = new String[]{"co-9 ti-1", "ti-1 co-9"};
-	ItemStack []smelted = null;
-	
-	void initSmelted() {
-		 smelted = new ItemStack[]{ItemIngot.getItemStack(EnumMetal.BRONZE, 10), ItemIngot.getItemStack(EnumMetal.BRONZE, 10) };
-	}
-	
+		
 	public ItemVessel(boolean burned) {
 		this.burned = burned;
 	}
@@ -29,7 +29,7 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	@Override
 	public ItemStack getSmelted(ItemStack raw) {
 		if (burned) {
-			ItemStack alloy = getSmeltableAlloy(raw);
+			ItemStack alloy = EnumAlloy.getSmeltedItemStack(getContainedItemStacks(raw));
 			//System.out.println(alloy.getItem());
 			if (alloy != null) {
 				return saveContents(new ItemStack(ItemsVC.ceramicVessel, 1), new ItemStack[]{alloy, null, null, null});
@@ -45,13 +45,25 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 		return 1;
 	}
 
+	
+	@Override
+	public float getSmeltingSpeedModifier(ItemStack raw) {
+		if (burned) {
+			ItemStack alloy = EnumAlloy.getSmeltedItemStack(getContainedItemStacks(raw));
+			if (alloy != null) {
+				return 2f / alloy.stackSize;
+			}
+		}
+		return 2f;
+	}
+
+	
 	@Override
 	public int getMeltingPoint(ItemStack raw) {
 		if (burned) {
-			/*ItemStack alloy = getSmeltableAlloy(raw);
-			if (alloy == null) return 0;
-			return ItemIngot.getMetal(alloy).meltingpoint;*/
-			return EnumMetal.COPPER.meltingpoint;
+			EnumAlloy alloy = EnumAlloy.getSuitableAlloy(getContainedItemStacks(raw)); 
+			return alloy == null ? 0 : alloy.meltingpoint;
+
 		} else {
 			return 450;
 		}
@@ -59,35 +71,23 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	
 	
 	
-	public ItemStack getSmeltableAlloy(ItemStack stack) {
+	
+	public ItemStack[] getContainedItemStacks(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return null;
 		
-		String ratio = "";
-		
+		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
+			
 		NBTTagList nbttaglist = nbt.getTagList("Items", 10);
 		for(int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
 			byte byte0 = nbttagcompound1.getByte("Slot");
 			if(byte0 >= 0 && byte0 < 4) {
-				ItemStack is = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				if(is != null && is.stackSize >= 1 && is.getItem() instanceof ItemIngot) {
-					if (ratio.length() > 0) ratio+=" ";
-					ratio += ItemIngot.getMetal(is).getCode() + "-" + is.stackSize;
-				}
+				stacks.add(ItemStack.loadItemStackFromNBT(nbttagcompound1));
 			}
 		}
 		
-		if (smelted == null) initSmelted();
-		for (int i = 0; i < ratios.length; i++) {
-			if (ratios[i].equals(ratio)) {
-				//System.out.println(i + " / " + smelted[i].getItem());
-				return smelted[i];
-			}
-		}
-		
-		
-		return null;		
+		return stacks.toArray(new ItemStack[0]);
 	}
 	
 	
@@ -126,13 +126,51 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		if (getSmelted(itemstack) != null) {
-			if (burned) {
-				tooltip.add("Will create " + ItemIngot.getMetal(getSmeltableAlloy(itemstack)).getName().toLowerCase());
-				tooltip.add("Melting Point: " + getMeltingPoint(itemstack) + " deg.");
-			} else {
-				tooltip.add("Baking Point: " + getMeltingPoint(itemstack) + " deg.");
+		if (burned) {
+			ItemStack[] stacks = getContainedItemStacks(itemstack);
+			EnumAlloy alloy = EnumAlloy.getSuitableAlloy(stacks);
+			
+			if (alloy != null) {
+				tooltip.add("Will create " + alloy.toMetal.getName().toLowerCase() + " if melted");
+				tooltip.add("Melting Point: " + alloy.meltingpoint + " deg.");
 			}
+			
+			if (stacks != null) {
+				if (stacks.length > 0) tooltip.add("Contents");
+				for (ItemStack stack : stacks) {
+					tooltip.add("  " + stack.stackSize + "x " + stack.getDisplayName());
+				}
+			}
+			
+		} else {
+			tooltip.add("Baking Point: " + getMeltingPoint(itemstack) + " deg.");
 		}
 	}
+	
+	
+	
+
+	private static int[] apply_cd(int[] input) {
+	    int result = input[0];
+	    for (int i = 1; i < input.length; i++) {
+	    	result = gcd(result, input[i]);
+	    }
+	    
+	    int[] output = new int[input.length];
+	    for (int i = 1; i < input.length; i++) {
+	    	output[i] = input[i] / result;
+	    }
+	    return output;
+	}
+	
+	private static int gcd(int a, int b) {
+	    while (b > 0) {
+	        int temp = b;
+	        b = a % b; // % is remainder
+	        a = temp;
+	    }
+	    return a;
+	}
+
+	
 }
