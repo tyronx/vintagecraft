@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.WorldProperties;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.block.BlockRock;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;

@@ -12,8 +12,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.block.*;
 import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
@@ -29,6 +29,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	OLIVINE (21, 		true, DepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 
 	CLAY (0,		   false, DepositSize.LARGE, DepositOccurence.inTopSoil(5, 2, 155)),
+	FIRECLAY (22,      false, DepositSize.LARGE, DepositOccurence.anyRelativeDepth(1, 2, 1, 3, 160)),
 	PEAT (1,		   false, DepositSize.LARGE, DepositOccurence.inTopSoil(60, 2, 165)),
 	
 	
@@ -42,7 +43,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	REDSTONE (7,		true, DepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(20, 2, 30, 100)),
 	
-	CASSITERITE (8,		true, DepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(3, 1, 0, 40, 0.5f)),
+	CASSITERITE (8,		true, DepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(6, 1, 0, 40, 0.5f)),
 	
 	IRIDIUM (9,			    true, DepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
 	PLATINUM (10, 		    true, DepositSize.TINY, DepositOccurence.anyBelowSealevel(2, 1, 90, 110)),
@@ -149,6 +150,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		switch (this) {
 			case PEAT: state = BlocksVC.peat.getDefaultState(); break;
 			case CLAY: state = BlocksVC.rawclay.getDefaultState(); break;
+			case FIRECLAY: state = BlocksVC.rawfireclay.getDefaultState(); break;
 			case SYLVITE_ROCKSALT:
 			case NATIVEGOLD_QUARTZ:
 			case NATIVESILVER_QUARTZ:

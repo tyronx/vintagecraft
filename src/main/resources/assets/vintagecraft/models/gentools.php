@@ -1,6 +1,6 @@
 <?php
 
-$metals = array("stone", "copper", "bronze", "bismuthbronze");
+$metals = array("stone", "copper", "tinbronze", "bismuthbronze");
 $tooltypes = array("axe", "shovel", "pickaxe", "shears", "sword", "saw", "hoe");
 
 

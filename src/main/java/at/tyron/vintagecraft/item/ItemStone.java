@@ -52,16 +52,6 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 	}
 	
 	
-	/*
-	 *     public String getUnlocalizedName(ItemStack stack)
-    {
-        int i = stack.getMetadata();
-        return super.getUnlocalizedName() + "." + EnumDyeColor.byDyeDamage(i).getUnlocalizedName();
-    }
-	 */
-	
-	
-	
 	@Override
 	public int getMetadata(ItemStack stack) {
 		if (stack.getTagCompound() != null) {

@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.google.common.util.concurrent.Service.State;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.interfaces.IEnumState;

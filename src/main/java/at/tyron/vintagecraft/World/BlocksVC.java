@@ -23,16 +23,20 @@ import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
+import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TESapling;
+import at.tyron.vintagecraft.TileEntity.TEToolRack;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.block.*;
 import at.tyron.vintagecraft.client.VCraftModelLoader;
+import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
 import at.tyron.vintagecraft.item.ItemCobblestoneVC;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.item.ItemToolRack;
 import at.tyron.vintagecraft.item.ItemWoodProductVC;
 import at.tyron.vintagecraft.item.ItemFlowerVC;
 import at.tyron.vintagecraft.item.ItemGrassVC;
@@ -47,10 +51,17 @@ import at.tyron.vintagecraft.item.ItemTopSoil;
 import at.tyron.vintagecraft.item.ItemRock;
 
 public class BlocksVC {
+
 	public static String raworeName = "rawore";
 
 	public static Block stove;
 	public static Block stove_lit;
+	
+	public static Block furnace;
+	public static Block furnace_lit;
+	
+	
+	public static Block fireclaybricks;
 	
 	//public static BlockVC[] flowers;
 	//public static BlockVC[] doubleflowers;
@@ -72,6 +83,7 @@ public class BlocksVC {
 	
 	
 	public static BlockVC rawclay;
+	public static BlockVC rawfireclay;
 	public static BlockVC peat;
 	public static BlockVC lignite;
 	public static BlockVC coal;
@@ -90,7 +102,8 @@ public class BlocksVC {
 	public static TreeClass singleslab;
 	public static TreeClass doubleslab;
 	public static TreeClass sapling;
-	
+	public static Block toolrack;
+
 	public static RockClass rock;
 	public static RockClass cobblestone;
 	public static RockClass regolith;
@@ -100,6 +113,7 @@ public class BlocksVC {
 	//public static RockClass brick;
 
 	public static OreClass rawore;
+	public static Block ingotPile;
 	
 
 	
@@ -111,7 +125,6 @@ public class BlocksVC {
 	
 
 	public static void initBlocks() {
-		stove = new BlockStove(false).setHardness(3F);
 		/*GameRegistry.registerBlock(stove, ItemBlock.class, "stove");
 		stove.setUnlocalizedName("stove");
 		
@@ -123,10 +136,30 @@ public class BlocksVC {
         //ModelLoaderRegistry.registerLoader(VCraftModelLoader.instance);
 		*/
 		
+		stove = new BlockStove(false).setHardness(3F);
 		stove_lit = new BlockStove(true).setHardness(3F);
 		stove_lit.setLightLevel(0.86f);
 		register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
+
+		
+		furnace = new BlockFurnace(false).setHardness(3.5F);
+		furnace_lit = new BlockFurnace(true).setHardness(3.5F);
+		furnace_lit.setLightLevel(0.86f);
+		register(furnace, "furnace", ItemBlock.class);
+		register(furnace_lit, "furnace_lit", ItemBlock.class);
+
+		
+		
+		toolrack = new BlockToolRack().registerMultiState("toolrack", ItemToolRack.class, EnumTree.values()).setHardness(1.2f);  //.registerSingleState("toolrack", null); // 
+		
+		
+		
+		ingotPile = new BlockIngotPile();
+		ingotPile.setHardness(1f);
+		register(ingotPile, "ingotpile", null);
+		
+		
 		
 		farmland = new BlockFarmlandVC().setHardness(2F).setStepSound(Block.soundTypeGravel);
 		registerMulti(farmland, "farmland", ItemBlock.class, EnumFertility.values());
@@ -182,6 +215,13 @@ public class BlocksVC {
 		
 		
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
+		rawfireclay = new BlockRawFireClay().setHardness(2F).registerSingleState("rawfireclay", ItemBlock.class).setStepSound(Block.soundTypeGravel);
+		fireclaybricks = new BlockFireBrick().setHardness(2F).registerSingleState("fireclaybricks", ItemBlock.class).setStepSound(Block.soundTypeStone);
+		
+		/*GameRegistry.registerBlock(rawfireclay, ItemBlock.class, "rawfireclay");
+		rawfireclay.setUnlocalizedName("rawfireclay");*/
+		
+		
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
 		
@@ -217,6 +257,10 @@ public class BlocksVC {
 		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");
 		vine.setUnlocalizedName("vine");
 		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
+		
+		
+		
+		
 	}
 	
 	
@@ -224,6 +268,11 @@ public class BlocksVC {
 		GameRegistry.registerTileEntity(TileEntityStove.class, ModInfo.ModID + ":stove");
 		GameRegistry.registerTileEntity(TEFarmland.class, ModInfo.ModID + ":farmlandte");
 		GameRegistry.registerTileEntity(TESapling.class, ModInfo.ModID + ":saplingte");
+		
+		
+		GameRegistry.registerTileEntity(TEIngotPile.class, ModInfo.ModID + ":ingotpile");
+		GameRegistry.registerTileEntity(TEToolRack.class, ModInfo.ModID + ":toolrack");
+		
 	}
 
 
@@ -232,16 +281,9 @@ public class BlocksVC {
 
 
 	private static void initHardness() {
-		//rock.setHarvestLevel("pickaxe", 0);
-		//cobblestone.setHarvestLevel("pickaxe", 0);
-		
 		topsoil.setHarvestLevel("shovel", 0);
-		//subsoil.setHarvestLevel("shovel", 0);
 		rawclay.setHarvestLevel("shovel", 0);
-		//gravel.setHarvestLevel("shovel", 0);
-		//sand.setHarvestLevel("shovel", 0);
-		
-		//regolith.setHarvestLevel("shovel", 1);
+		rawfireclay.setHarvestLevel("shovel", 0);
 		peat.setHarvestLevel("shovel", 1);
 	}
 	
@@ -250,7 +292,12 @@ public class BlocksVC {
 	
 	
 	public static void register(Block block, String blockclassname, Class<? extends ItemBlock> itemclass) {
-		GameRegistry.registerBlock(block, itemclass, blockclassname);
+		if (itemclass == null) {
+			GameRegistry.registerBlock(block, blockclassname);
+		} else {
+			GameRegistry.registerBlock(block, itemclass, blockclassname);
+		}
+		
 		block.setUnlocalizedName(blockclassname);
 		
 		VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname);

@@ -8,7 +8,8 @@ import java.util.Random;
 import java.util.Set;
 
 import net.minecraft.block.Block;
-import at.tyron.vintagecraft.VCraftWorld;
+import net.minecraft.util.IStringSerializable;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.DynTreeGen;
 import at.tyron.vintagecraft.block.BlockVC;
 import at.tyron.vintagecraft.interfaces.IEnumState;
@@ -20,7 +21,7 @@ import at.tyron.vintagecraft.interfaces.IEnumState;
 //Black wood: http://en.wikipedia.org/wiki/Dalbergia_melanoxylon
 
 
-public enum EnumTree implements IEnumState {
+public enum EnumTree implements IEnumState, IStringSerializable {
 	// growthspeed, saplingdroprate weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
 	
 	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minf   maxf
@@ -257,7 +258,19 @@ public enum EnumTree implements IEnumState {
 	}
 	
 	
-	
+	public static EnumTree byId(int id) {
+		for (EnumTree tree : values()) {
+			if (tree.getId() == id) {
+				return tree;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String getName() {
+		return name().toLowerCase();
+	}
 	
 	
 }

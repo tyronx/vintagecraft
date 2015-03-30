@@ -182,7 +182,11 @@ public class DynTreeGen {
 		
 	}
 
-
+	
+/*	private void setBlock(BlockPos pos, IBlockState state) {
+		 
+	}
+*/
 
 	private void genTrunk(float curx, float cury, float curz, float curwidth, EvolvingNatFloat anglehor, /*float anglever,*/ EvolvingNatFloat angleVert) {
 		trunk.branchWidthMultiplier.init();

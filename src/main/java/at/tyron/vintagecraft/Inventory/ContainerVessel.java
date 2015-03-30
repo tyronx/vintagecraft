@@ -24,10 +24,10 @@ public class ContainerVessel extends Container {
 		this.playerInventory = inventoryplayer;
 		this.bagNbt = bagNbt;
 		
-		this.addSlotToContainer(new Slot(containerInv, 0, 71, 25));
-		this.addSlotToContainer(new Slot(containerInv, 1, 89, 25));
-		this.addSlotToContainer(new Slot(containerInv, 2, 71, 43));
-		this.addSlotToContainer(new Slot(containerInv, 3, 89, 43));
+		this.addSlotToContainer(new SlotVessel(containerInv, 0, 71, 25));
+		this.addSlotToContainer(new SlotVessel(containerInv, 1, 89, 25));
+		this.addSlotToContainer(new SlotVessel(containerInv, 2, 71, 43));
+		this.addSlotToContainer(new SlotVessel(containerInv, 3, 89, 43));
         
         int i;
 
@@ -70,8 +70,12 @@ public class ContainerVessel extends Container {
 
 	@Override
 	public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn) {
+		if (playerInventory.currentItem == slotId - 27 - 4) {
+			return null;
+		}
+		
 		ItemStack stack = super.slotClick(slotId, clickedButton, mode, playerIn);
-		//System.out.println(stack);
+		
 		saveContents(playerInventory.getCurrentItem());
 		return stack;
 	}
@@ -131,38 +135,27 @@ public class ContainerVessel extends Container {
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
+            
 
-            if (index == 2) {
+            if (index < 3) {
                 if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
                     return null;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
             }
-            else if (index != 1 && index != 0) {
-                /*if (itemstack1.getItem() instanceof ISmeltable && ((ISmeltable)itemstack1.getItem()).getSmelted(itemstack1) != null) {
-                    if (!this.mergeItemStack(itemstack1, 0, 1, false))
-                    {
-                        return null;
-                    }
-                }
-                else if (itemstack1.getItem() instanceof IFuel && ((IFuel)itemstack1.getItem()).getBurningHeat(itemstack1) != 0) {
-                    if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
-                        return null;
-                    }
-                }
-                else*/ if (index >= 3 && index < 30) {
+            else {
+            	
+            	if (index >= 3 && index < 30) {
                     if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
                         return null;
                     }
                 }
-                else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 3, 30, false)) {
+                else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 0, 30, false)) {
                     return null;
                 }
             }
-            else if (!this.mergeItemStack(itemstack1, 3, 39, false)) {
-                return null;
-            }
+            
 
             if (itemstack1.stackSize == 0) {
                 slot.putStack((ItemStack)null);

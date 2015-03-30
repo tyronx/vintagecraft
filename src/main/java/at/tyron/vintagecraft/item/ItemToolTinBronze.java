@@ -54,7 +54,7 @@ public class ItemToolTinBronze extends ItemToolVC {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return "bronze_" + tooltype.getName();
+		return "tinbronze_" + tooltype.getName();
 	}
 
 

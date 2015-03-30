@@ -4,7 +4,7 @@ import at.tyron.vintagecraft.interfaces.IFuel;
 import net.minecraft.item.ItemStack;
 
 public enum EnumFurnace {
-	STOVE ("Stove", 1, 1, 1100),
+	STOVE ("Stove", 1, 1, 1200),
 	FURNACE ("Furnace", 2, 3, 1600),
 	BLASTFURNACE ("Blast Furnace", 3, 5, 2500)
 	

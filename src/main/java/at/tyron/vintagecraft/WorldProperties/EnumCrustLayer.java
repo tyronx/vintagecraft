@@ -5,10 +5,10 @@ import java.util.Random;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.BiomeVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
 

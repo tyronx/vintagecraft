@@ -128,7 +128,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 			case LIMONITE:
 			case NATIVECOPPER: return 4;
 			case NATIVEGOLD_QUARTZ: return 8;
-			case CASSITERITE: return 4;
+			case CASSITERITE: return 8;				// "even a rich cassiterite ore only has 5% tin" @ http://en.wikipedia.org/wiki/Smelting
 			case NATIVESILVER_QUARTZ: return 4;
 			case PLATINUM: return 4;
 			case RHODIUM: return 4;
@@ -163,7 +163,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	
 	@Override
 	public float getSmeltingSpeedModifier(ItemStack raw) {
-		return 1f;
+		return 0.25f * getRaw2SmeltedRatio(raw);
 	}
 
 	

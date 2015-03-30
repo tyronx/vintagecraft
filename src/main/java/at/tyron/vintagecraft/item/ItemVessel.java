@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 
 import jdk.nashorn.internal.ir.LiteralNode.ArrayLiteralNode.ArrayUnit;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,8 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 		
 	public ItemVessel(boolean burned) {
 		this.burned = burned;
+		maxStackSize = 1;
+		setCreativeTab(CreativeTabs.tabMisc);
 	}
 	
 	@Override
@@ -143,7 +146,7 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 			}
 			
 		} else {
-			tooltip.add("Baking Point: " + getMeltingPoint(itemstack) + " deg.");
+			tooltip.add("Baking Temperature: " + getMeltingPoint(itemstack) + " deg.");
 		}
 	}
 	

@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.block;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.EnumTree;

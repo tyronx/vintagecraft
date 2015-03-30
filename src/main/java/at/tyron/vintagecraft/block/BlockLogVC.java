@@ -130,6 +130,9 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 		return 16;
 	}
 	
-	
+	@Override
+	public String getUnlocalizedName() {
+		return "tile.log";
+	}
     
 }

@@ -13,6 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 
+
+/* There's probably a better way to do this :| */
+
 public class RecipeSlabs implements IRecipe {
 	BlockClassEntry planks;
 

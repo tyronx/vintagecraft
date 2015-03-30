@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Collections;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.BiomeVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenRockLayers;
 import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;

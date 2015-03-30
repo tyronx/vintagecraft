@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers;
 
-import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.World.VCraftWorld;
 
 public class GenLayerSimplexNoise extends GenLayerVC {
 	int amplitude;

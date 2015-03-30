@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.VintageCraftConfig;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.DepositOccurence;
 import at.tyron.vintagecraft.WorldProperties.DepositOccurenceType;

@@ -20,19 +20,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.TileEntity.TEIngotPile;
+import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
+import at.tyron.vintagecraft.client.Render.TESR.TESRToolRack;
 //import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.item.*;
@@ -75,11 +80,13 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.peat), "peat", "inventory");
-    	registerModelLocation(Item.getItemFromBlock(BlocksVC.topsoil), "topsoil", "inventory");
-
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory"); //ItemsVC.toolrack
+        registerModelLocation(ItemsVC.stone, "stone", "inventory");
+        
+    	registerModelLocation(ItemsVC.fireclay_ball, "fireclay_ball", "inventory");
+    	registerModelLocation(ItemsVC.fireclay_brick_raw, "fireclay_brick_raw", "inventory");
+    	registerModelLocation(ItemsVC.fireclay_brick, "fireclay_brick", "inventory");
     	
-    	registerModelLocation(ItemsVC.stone, "stone", "inventory");
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
     	registerModelLocation(ItemsVC.ingot, "ingot", "inventory");
     	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");
@@ -89,12 +96,23 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
     	
     	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeAxe, ItemsVC.bismuthbronzeHoe, ItemsVC.bismuthbronzePickaxe, ItemsVC.bismuthbronzeShovel, ItemsVC.bismuthbronzeSword, ItemsVC.bismuthbronzeSaw, ItemsVC.bismuthbronzeShears}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.bronzeAxe, ItemsVC.bronzeHoe, ItemsVC.bronzePickaxe, ItemsVC.bronzeShovel, ItemsVC.bronzeSword, ItemsVC.bronzeSaw, ItemsVC.bronzeShears}, "tool", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.tinbronzeAxe, ItemsVC.tinbronzeHoe, ItemsVC.tinbronzePickaxe, ItemsVC.tinbronzeShovel, ItemsVC.tinbronzeSword, ItemsVC.tinbronzeSaw, ItemsVC.tinbronzeShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw, ItemsVC.copperShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.stoneAxe, ItemsVC.stoneHoe, ItemsVC.stonePickaxe, ItemsVC.stoneShovel, ItemsVC.stoneSword}, "tool", "inventory");
     	
     	
+    	registerModelLocation(new Item[]{ItemsVC.copperHelmet, ItemsVC.copperChestplate, ItemsVC.copperLeggings, ItemsVC.copperBoots}, "armor", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.tinbronzeHelmet, ItemsVC.tinbronzeChestplate, ItemsVC.tinbronzeLeggings, ItemsVC.tinbronzeBoots}, "armor", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeHelmet, ItemsVC.bismuthbronzeChestplate, ItemsVC.bismuthbronzeLeggings, ItemsVC.bismuthbronzeBoots}, "armor", "inventory");
+    	
+    	
     	registerModelLocation(new Item[]{ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
+    	
+    	
+    	
+		ClientRegistry.registerTileEntity(TEIngotPile.class, "ingotpile", new TESRIngotPile());
+		ClientRegistry.registerTileEntity(TEToolRack.class, "ToolRack", new TESRToolRack());
+
     }
 	
     private void registerModelLocation(final Item[] items, final String name, final String type) {
@@ -105,7 +123,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	private void registerModelLocation(final Item item, final String name, final String type) {
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		
+		//System.out.println("registerModelLocation");
 		if (renderItem != null) {
 	        renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
 	            @Override

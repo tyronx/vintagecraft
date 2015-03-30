@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.GenLayers;
 
-import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 

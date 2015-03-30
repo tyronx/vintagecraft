@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldGen;
 
-import at.tyron.vintagecraft.VCraftWorld;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldProvider;

@@ -3,9 +3,9 @@ package at.tyron.vintagecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
 import at.tyron.vintagecraft.interfaces.ISoil;
 import net.minecraft.block.Block;

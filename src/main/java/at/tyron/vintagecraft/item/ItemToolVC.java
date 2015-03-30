@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.block.BlockLeavesVC;
+import at.tyron.vintagecraft.interfaces.IRackable;
 import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 
 import com.google.common.base.Functions;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider {	
+public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IRackable {	
 	public EnumTool tooltype;
 	
 	public ItemToolVC() {

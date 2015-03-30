@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Network.PacketPipeline;
-import at.tyron.vintagecraft.World.Climate;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Recipes;

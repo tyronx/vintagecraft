@@ -4,6 +4,29 @@ $blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
 $blockclassavailabletypes = array("log" => 16, "leaves" => 8, "leavesbranchy" => 8, "planks" => 16, "sapling" => 16);
 $blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahogany", "blackwalnut", "willow", "larch");
 
+
+/********** 0. Toolracks *************/
+foreach ($blocktypes as $blocktype) {
+	file_put_contents("models/item/toolrack/{$blocktype}.json", '{
+    "parent": "builtin/generated",
+    "textures": {
+        "layer0": "vintagecraft:items/toolrack/'.$blocktype.'"
+    },
+    "display": {
+        "thirdperson": {
+            "rotation": [ -90, 0, 0 ],
+            "translation": [ 0, 1, -3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 0, 4, 2 ],
+            "scale": [ 1.7, 1.7, 1.7 ]
+        }
+    }
+}');
+}
+
 /********** 1. Logs, Leaves, Branches, Planks *************/
 foreach ($blockclasses as $blockclass) {
 	$variants = array();

@@ -1,0 +1,8 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "vintagecraft:blocks/furnace_top",
+        "front": "vintagecraft:blocks/furnace_front_on",
+        "side": "vintagecraft:blocks/furnace_side"
+    }
+}

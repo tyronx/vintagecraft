@@ -40,8 +40,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockStove extends BlockContainer {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	private static boolean keepInventory;
+	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	private boolean keepInventory;
 	boolean burning;
 	
 	
@@ -72,15 +72,16 @@ public class BlockStove extends BlockContainer {
     }
     
     
-    
-            @Override
-            public boolean isOpaqueCube() { return true; }
-    
-            @Override
-            public boolean isFullCube() { return true; }
-    
-            @Override
-            public boolean isVisuallyOpaque() { return true; }
+
+    @Override
+    public boolean isOpaqueCube() { return true; }
+
+    @Override
+    public boolean isFullCube() { return true; }
+
+    @Override
+    public boolean isVisuallyOpaque() { return true; }
+
     
     public boolean hasComparatorInputOverride() {
         return true;
@@ -115,12 +116,12 @@ public class BlockStove extends BlockContainer {
     
     
     
-    public static void setState(boolean burning, World worldIn, BlockPos pos) {
+    public void setState(boolean burning, World worldIn, BlockPos pos) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         
-        Block block = BlocksVC.stove;
-        if (burning) block = BlocksVC.stove_lit;
+        Block block = getExtinguishedVersion();
+        if (burning) block = getLitVersion();
         
         keepInventory = true;
         worldIn.setBlockState(pos, block.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
@@ -162,6 +163,18 @@ public class BlockStove extends BlockContainer {
         return Item.getItemFromBlock(BlocksVC.stove);
     }
     
+    
+    public Block getLitVersion() {
+    	return BlocksVC.stove_lit;
+    }
+    public Block getExtinguishedVersion() {
+    	return BlocksVC.stove;
+    }
+    
+    public boolean isBurning() {
+    	return burning;
+    }
+
     
     public IBlockState getStateFromMeta(int meta) {
         EnumFacing enumfacing = EnumFacing.getFront(meta);

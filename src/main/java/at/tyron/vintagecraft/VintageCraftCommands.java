@@ -7,6 +7,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.BlockStateSerializer;
 import at.tyron.vintagecraft.WorldGen.DynTreeBranch;
 import at.tyron.vintagecraft.WorldGen.DynTreeGen;

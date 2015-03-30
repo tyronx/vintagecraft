@@ -164,7 +164,7 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
 
     public String getName()
     {
-        return this.hasCustomName() ? this.furnaceCustomName : "container.stove";
+        return this.hasCustomName() ? this.furnaceCustomName : (furnace == EnumFurnace.STOVE ? "container.stove" : "container.furnace");
     }
 
     public boolean hasCustomName()
@@ -374,10 +374,10 @@ public class TileEntityStove extends TileEntityLockable implements IUpdatePlayer
     }
     
     public void setStoveBurning(boolean burning) {
-    	boolean nowburning = worldObj.getBlockState(pos).getBlock() == BlocksVC.stove_lit;
+    	BlockStove block = (BlockStove) worldObj.getBlockState(pos).getBlock();
     	
-    	if (nowburning != burning) {
-    		BlockStove.setState(burning, worldObj, pos);
+    	if (block.isBurning() != burning) {
+    		block.setState(burning, worldObj, pos);
     	}
     }
     

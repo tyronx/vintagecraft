@@ -6,7 +6,7 @@ public enum EnumMetal implements IStringSerializable {
 	
 	COPPER (0, 1084, 2.5f),
 	TIN (1, 232, 1.5f), 
-	BRONZE (2, 950, 4f),
+	TINBRONZE (2, 950, 4f),
 	
 	IRON (3, 1482, 5f),
 	STEEL (4, 1510, 7f),

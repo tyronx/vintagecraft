@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.WorldGen;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.World.BiomeVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;

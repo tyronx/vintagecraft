@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.VCraftWorld;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.block.BlockCropsVC;
