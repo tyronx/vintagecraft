@@ -7,24 +7,33 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 
 import jdk.nashorn.internal.ir.LiteralNode.ArrayLiteralNode.ArrayUnit;
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 
-public class ItemVessel extends ItemVC implements ISmeltable {
+public class ItemClayVessel extends ItemBlock implements ISmeltable {
 	boolean burned;
 		
-	public ItemVessel(boolean burned) {
-		this.burned = burned;
+	public ItemClayVessel(Block block) {
+		super(block);
+		this.burned = false;
 		maxStackSize = 1;
 		setCreativeTab(CreativeTabs.tabMisc);
 	}
@@ -35,11 +44,11 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 			ItemStack alloy = EnumAlloy.getSmeltedItemStack(getContainedItemStacks(raw));
 			//System.out.println(alloy.getItem());
 			if (alloy != null) {
-				return saveContents(new ItemStack(ItemsVC.ceramicVessel, 1), new ItemStack[]{alloy, null, null, null});
+				return putItemStacks(new ItemStack(Item.getItemFromBlock(BlocksVC.ceramicVessel), 1), new ItemStack[]{alloy, null, null, null});
 			}
 			return null;
 		} else {
-			return new ItemStack(ItemsVC.ceramicVessel, 1);
+			return new ItemStack(Item.getItemFromBlock(BlocksVC.ceramicVessel), 1);
 		}
 	}
 
@@ -57,7 +66,7 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 				return 2f / alloy.stackSize;
 			}
 		}
-		return 2f;
+		return 0.5f;
 	}
 
 	
@@ -75,9 +84,9 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	
 	
 	
-	public ItemStack[] getContainedItemStacks(ItemStack stack) {
+	public static ItemStack[] getContainedItemStacks(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) return null;
+		if (nbt == null) return new ItemStack[4];
 		
 		ArrayList<ItemStack> stacks = new ArrayList<ItemStack>();
 			
@@ -94,7 +103,7 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	}
 	
 	
-	public static ItemStack saveContents(ItemStack vessel, ItemStack[] bag)  {
+	public static ItemStack putItemStacks(ItemStack vessel, ItemStack[] bag)  {
 		NBTTagList nbttaglist = new NBTTagList();
 		for(int i = 0; i < 4; i++) {
 			if(bag[i] != null) {
@@ -117,13 +126,33 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	
 	
 	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (!playerIn.isSneaking()) return false;
+		
+		return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+	}
+	
+	@Override
 	public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
-		if (burned) {
+		if (burned && !playerIn.isSneaking()) {
 			playerIn.openGui(VintageCraft.instance, 1, worldIn, (int)playerIn.posX, (int)playerIn.posY, (int)playerIn.posZ);
 			return itemStackIn;
 		} else {
 			return super.onItemRightClick(itemStackIn, worldIn, playerIn);
 		}
+	}
+	
+	
+	@Override
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+		boolean ok = super.placeBlockAt(stack, player, world, pos, side, hitX, hitY, hitZ, newState);
+		
+		if (ok) {
+			TEVessel tevessel = (TEVessel) world.getTileEntity(pos);
+			if (burned) tevessel.setContents(getContainedItemStacks(stack));
+		}
+		
+		return ok;
 	}
 
 	
@@ -139,10 +168,20 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 			}
 			
 			if (stacks != null) {
-				if (stacks.length > 0) tooltip.add("Contents");
+				boolean hascontents = false;
+				
 				for (ItemStack stack : stacks) {
-					tooltip.add("  " + stack.stackSize + "x " + stack.getDisplayName());
+					if (stack != null) hascontents = true;
+					
 				}
+				
+				if (hascontents) {
+					if (stacks.length > 0) tooltip.add("Contents");
+					for (ItemStack stack : stacks) {
+						if(stack != null) tooltip.add("  " + stack.stackSize + "x " + stack.getDisplayName());
+					}
+				}
+				
 			}
 			
 		} else {
@@ -151,29 +190,5 @@ public class ItemVessel extends ItemVC implements ISmeltable {
 	}
 	
 	
-	
 
-	private static int[] apply_cd(int[] input) {
-	    int result = input[0];
-	    for (int i = 1; i < input.length; i++) {
-	    	result = gcd(result, input[i]);
-	    }
-	    
-	    int[] output = new int[input.length];
-	    for (int i = 1; i < input.length; i++) {
-	    	output[i] = input[i] / result;
-	    }
-	    return output;
-	}
-	
-	private static int gcd(int a, int b) {
-	    while (b > 0) {
-	        int temp = b;
-	        b = a % b; // % is remainder
-	        a = temp;
-	    }
-	    return a;
-	}
-
-	
 }

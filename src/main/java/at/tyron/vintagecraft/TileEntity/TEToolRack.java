@@ -17,8 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class TEToolRack extends NetworkTileEntity implements IInventory
-{
+public class TEToolRack extends NetworkTileEntity implements IInventory {
 	public ItemStack[] storage;
 	public EnumTree woodtype;
 	public EnumFacing facing;
@@ -48,22 +47,16 @@ public class TEToolRack extends NetworkTileEntity implements IInventory
 		return bb;
 	}
 
-	public boolean contentsMatch(int index, ItemStack is) {
-		if(storage[index] != null &&
-				storage[index].getItem() == is.getItem() &&
-				storage[index].getItemDamage() == is.getItemDamage() &&
-				storage[index].stackSize < storage[index].getMaxStackSize())
-			return true;
-		else
-			return false;
-	}
 
+	public boolean canRenderBreaking() {
+		return true;
+	}
+	
+	
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
-		if(storage[i] != null)
-		{
-			if(storage[i].stackSize <= j)
-			{
+		if(storage[i] != null) {
+			if(storage[i].stackSize <= j) {
 				ItemStack itemstack = storage[i];
 				storage[i] = null;
 				return itemstack;
@@ -79,8 +72,7 @@ public class TEToolRack extends NetworkTileEntity implements IInventory
 		}
 	}
 
-	public void ejectContents()
-	{
+	public void ejectContents() {
 		float f3 = 0.05F;
 		EntityItem entityitem;
 		Random rand = new Random();
@@ -103,38 +95,84 @@ public class TEToolRack extends NetworkTileEntity implements IInventory
 	
 	
 	public void grabItem(int index, EnumFacing dir, EntityPlayer player) {
-		
-		
-		
-		/*float f3 = 0.05F;
-		EntityItem entityitem;
-		Random rand = new Random();
-		float f = rand.nextFloat() * 0.8F + 0.1F;
-		float f1 = rand.nextFloat() * 0.2F + 0.1F;
-		float f2 = rand.nextFloat() * 0.8F + 0.1F;*/
-
 		if(storage[index] != null) {
 			
 			if (!player.inventory.addItemStackToInventory(storage[index])) {
-				getWorld().spawnEntityInWorld(
-					new EntityItem(getWorld(),
-						getPos().getX() + 0.5f,
-						getPos().getY() + 0.5f, 
-						getPos().getZ() + 0.5f, 
-						storage[index]
-				));
+				if (!getWorld().isRemote) {
+					getWorld().spawnEntityInWorld(
+						new EntityItem(getWorld(),
+							getPos().getX() + 0.5f,
+							getPos().getY() + 0.5f, 
+							getPos().getZ() + 0.5f, 
+							storage[index]
+					));
+				}
 			}
 			
-			/*entityitem = new EntityItem(worldObj, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, storage[index]);
-			entityitem.motionX = (float)rand.nextGaussian() * f3;
-			entityitem.motionY = 0;
-			entityitem.motionZ = (float)rand.nextGaussian() * f3;
-			worldObj.spawnEntityInWorld(entityitem);*/
-					
 			storage[index] = null;
 		}
 	}
 
+
+
+	@Override
+	public void setInventorySlotContents(int i, ItemStack itemstack)  {
+		storage[i] = itemstack;
+		if(itemstack != null && itemstack.stackSize > getInventoryStackLimit())
+			itemstack.stackSize = getInventoryStackLimit();
+	}
+
+
+	
+
+	@Override
+	public void readFromNBT(NBTTagCompound nbttagcompound) {
+		super.readFromNBT(nbttagcompound);
+		
+		facing = EnumFacing.getHorizontal(nbttagcompound.getInteger("facing"));
+		
+		woodtype = EnumTree.byId(nbttagcompound.getInteger("woodType"));
+		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
+		storage = new ItemStack[getSizeInventory()];
+		for(int i = 0; i < nbttaglist.tagCount(); i++) {
+			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
+			byte byte0 = nbttagcompound1.getByte("Slot");
+			if(byte0 >= 0 && byte0 < storage.length)
+				storage[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+		}
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound nbt) {
+		super.writeToNBT(nbt);
+		NBTTagList nbttaglist = new NBTTagList();
+		for(int i = 0; i < storage.length; i++) {
+			if(storage[i] != null) {
+				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
+				nbttagcompound1.setByte("Slot", (byte)i);
+				storage[i].writeToNBT(nbttagcompound1);
+				nbttaglist.appendTag(nbttagcompound1);
+			}
+		}
+		nbt.setTag("Items", nbttaglist);
+		nbt.setInteger("woodType", woodtype == null ? 0 : woodtype.getId());
+		
+		nbt.setInteger("facing", facing.getHorizontalIndex());
+	}
+	
+	
+	
+	
+	
+	
+
+
+	@Override
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
+		return false;
+	}
+	
+	
 	@Override
 	public int getInventoryStackLimit() {
 		return 1;
@@ -155,70 +193,10 @@ public class TEToolRack extends NetworkTileEntity implements IInventory
 		return null;
 	}
 
-	public void injectContents(int index, int count) {
-		if(storage[index] != null)
-			storage[index] = new ItemStack(storage[index].getItem(),storage[index].stackSize+count,storage[index].getItemDamage());
-	}
 
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return false;
-	}
-
-	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack)  {
-		storage[i] = itemstack;
-		if(itemstack != null && itemstack.stackSize > getInventoryStackLimit())
-			itemstack.stackSize = getInventoryStackLimit();
-	}
-	
-	
-
-
-	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack)
-	{
-		return false;
-	}
-
-
-	
-
-	@Override
-	public void readFromNBT(NBTTagCompound nbttagcompound)
-	{
-		super.readFromNBT(nbttagcompound);
-		
-		facing = EnumFacing.getHorizontal(nbttagcompound.getInteger("facing"));
-		
-		woodtype = EnumTree.byId(nbttagcompound.getInteger("woodType"));
-		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
-		storage = new ItemStack[getSizeInventory()];
-		for(int i = 0; i < nbttaglist.tagCount(); i++) {
-			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte byte0 = nbttagcompound1.getByte("Slot");
-			if(byte0 >= 0 && byte0 < storage.length)
-				storage[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
-		}
-	}
-
-	@Override
-	public void writeToNBT(NBTTagCompound nbt)
-	{
-		super.writeToNBT(nbt);
-		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < storage.length; i++) {
-			if(storage[i] != null) {
-				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				storage[i].writeToNBT(nbttagcompound1);
-				nbttaglist.appendTag(nbttagcompound1);
-			}
-		}
-		nbt.setTag("Items", nbttaglist);
-		nbt.setInteger("woodType", woodtype == null ? 0 : woodtype.getId());
-		
-		nbt.setInteger("facing", facing.getHorizontalIndex());
 	}
 
 	@Override
@@ -250,7 +228,6 @@ public class TEToolRack extends NetworkTileEntity implements IInventory
 
 	@Override
 	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

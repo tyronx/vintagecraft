@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.block.BlockOreVC;
@@ -77,6 +78,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 1) {
 			return new ContainerVessel(player.inventory, player.getHeldItem().getTagCompound());
 		}
+		if (ID == 2) {
+			return new ContainerVessel(player.inventory, (TEVessel) world.getTileEntity(new BlockPos(x, y, z)));
+		}
 		
 		return null;
 	}
@@ -86,19 +90,20 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 0) {
 			return new GuiStove(player.inventory, world, (TileEntityStove) world.getTileEntity(new BlockPos(x, y, z)));
 		}
-		
 		if (ID == 1) {
 			return new GuiVessel(player.inventory, world, player.getHeldItem().getTagCompound());
 		}
+		if (ID == 2) {
+			return new GuiVessel(player.inventory, (TEVessel) world.getTileEntity(new BlockPos(x, y, z)));
+		}
+		
+		
 			
 			
 		return null;
 	}
 	
 	
-	/*public void registerBlockTexture(Block block, String folderprefix, String blockclassname, String subtype) {
-		
-	}*/
 	
 	
 	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {}

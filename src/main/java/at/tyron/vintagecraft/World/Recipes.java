@@ -21,6 +21,7 @@ import at.tyron.vintagecraft.item.ItemStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -36,7 +37,7 @@ public class Recipes {
 		ItemStack stick = new ItemStack(Items.stick);
 
 		
-		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.clayVessel), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
+		GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlocksVC.clayVessel)), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 		
 		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
 		ItemStack tinbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.TINBRONZE);
@@ -180,7 +181,7 @@ public class Recipes {
 		recipes.add(new RecipeSlabs());
 		
 		
-		RecipeSorter.register("vintagecraft:toolracks", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
+		RecipeSorter.register("vintagecraft:toolrack", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		recipes.add(new RecipeToolRack());
 		
 		
@@ -196,6 +197,9 @@ public class Recipes {
 		
 		removeRecipe(new ItemStack(Items.arrow, 4));
 		GameRegistry.addShapedRecipe(new ItemStack(Items.arrow, 1), new Object[] { " F ", " S ", " F ", 'F', Items.flint, 'S', Items.stick, 'F', Items.feather});
+		
+		
+		GameRegistry.addShapedRecipe(new ItemStack(Items.armor_stand), new Object[] {"SSS", " S ", "SCS", 'S', Items.stick, 'C', Items.clay_ball});
 	}
 	
 	

@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.block;
 import java.util.Random;
 
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.item.ItemIngot;
@@ -15,6 +16,7 @@ import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -93,11 +95,6 @@ public class BlockIngotPile extends BlockContainer
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
 		ItemStack equippedItem = entityplayer.getCurrentEquippedItem();
 
-		if(world.isRemote) {
-			world.getTileEntity(pos).validate();
-			return true;
-		}
-		
 		TEIngotPile teingotpile = (TEIngotPile)world.getTileEntity(pos);
 		if(teingotpile == null) return false;
 		
@@ -106,7 +103,7 @@ public class BlockIngotPile extends BlockContainer
 				teingotpile.tryTransferIngot(equippedItem);
 			}
 		} else {
-			teingotpile.grabIngot(entityplayer);
+			teingotpile.tryGrabIngot(entityplayer);
 		}
 		
 		world.markBlockForUpdate(pos);
@@ -195,6 +192,13 @@ public class BlockIngotPile extends BlockContainer
 	
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		TileEntity tileentity = world.getTileEntity(pos);
+
+        if (tileentity instanceof TEIngotPile) {
+            InventoryHelper.dropInventoryItems(world, pos, (TEIngotPile)tileentity);
+        }
+
+        /*
 		TEIngotPile te = (TEIngotPile)world.getTileEntity(pos);
 		if (te != null)
 		{
@@ -227,9 +231,9 @@ public class BlockIngotPile extends BlockContainer
 						}
 					}
 				}
-			}
+			}*/
 			super.breakBlock(world, pos, state);
-		}
+		//}
 	}
 	
 	@Override

@@ -24,7 +24,7 @@ import at.tyron.vintagecraft.item.ItemPeatBrick;
 import at.tyron.vintagecraft.item.ItemStone;
 import at.tyron.vintagecraft.item.ItemToolStone;
 import at.tyron.vintagecraft.item.ItemToolVC;
-import at.tyron.vintagecraft.item.ItemVessel;
+import at.tyron.vintagecraft.item.ItemClayVessel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -104,8 +104,8 @@ public class ItemsVC {
 	public static Item chickenCooked;
 	
 	public static Item wheatSeeds;
-	public static Item ceramicVessel;
-	public static Item clayVessel;
+	//public static Item ceramicVessel;
+	//public static Item clayVessel;
 	
 	//public static Item toolrack;
 	
@@ -142,8 +142,9 @@ public class ItemsVC {
 		}
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
-		ceramicVessel = new ItemVessel(true).register("ceramicvessel");
-		clayVessel = new ItemVessel(false).register("clayvessel");
+		//ceramicVessel = new ItemClayVessel(true).register("ceramicvessel");
+		//clayVessel = new ItemClayVessel(null); //.register("clayvessel");
+		//register(clayVessel, "clayvessel");
 		
 		registerTools("bismuthbronze", ItemToolBismuthBronze.class);
 		registerTools("tinbronze", ItemToolTinBronze.class);

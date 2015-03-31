@@ -52,7 +52,7 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	
 	
 	public boolean tryTransferIngot(ItemStack stack) {
-		TEIngotPile pile = getTopmostTEPile();
+		TEIngotPile pile = getTopmostIngotPile();
 		
 		if (stack.getItem() != pile.storage[0].getItem() || ItemIngot.getMetal(stack) != getMetal()) return false;
 		
@@ -69,22 +69,23 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	}
 
 	
-	
 
-	public void grabIngot(EntityPlayer player) {
-		TEIngotPile pile = getTopmostTEPile();
+	public void tryGrabIngot(EntityPlayer player) {
+		TEIngotPile pile = getTopmostIngotPile();
 		
 		if (pile.storage[0].stackSize > 0) {
 			ItemStack ejectedstack = pile.storage[0].splitStack(1);
 			
 			if (!player.inventory.addItemStackToInventory(ejectedstack)) {
-				getWorld().spawnEntityInWorld(
-					new EntityItem(getWorld(),
-						pile.getPos().getX(),
-						pile.getPos().getY() + 1, 
-						pile.getPos().getZ(), 
-						ejectedstack
-				));
+				if (!getWorld().isRemote) {
+					getWorld().spawnEntityInWorld(
+						new EntityItem(getWorld(),
+							pile.getPos().getX(),
+							pile.getPos().getY() + 1, 
+							pile.getPos().getZ(), 
+							ejectedstack
+					));
+				}
 			}
 		}
 		
@@ -97,7 +98,7 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	
 
 	
-	public TEIngotPile getTopmostTEPile() {
+	public TEIngotPile getTopmostIngotPile() {
 		BlockPos pos = getPos();
 		TEIngotPile pile = this;
 		
@@ -116,23 +117,23 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 
 	@Override
 	public ItemStack decrStackSize(int i, int j) {
-		if(storage[i] != null)
-		{
-			if(storage[i].stackSize <= j)
-			{
+		if(storage[i] != null) {
+			if(storage[i].stackSize <= j) {
 				ItemStack itemstack = storage[i];
 				storage[i] = null;
 				updateNeighbours();
 				return itemstack;
 			}
 			ItemStack itemstack1 = storage[i].splitStack(j);
-			if(storage[i].stackSize == 0)
+			if(storage[i].stackSize == 0) {
 				storage[i] = null;
+			}
 			updateNeighbours();
 			return itemstack1;
-		}
-		else
+			
+		} else {
 			return null;
+		}
 	}
 
 	public void ejectContents() {
@@ -143,10 +144,8 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 		float f1 = rand.nextFloat() * 2.0F + 0.4F;
 		float f2 = rand.nextFloat() * 0.8F + 0.1F;
 
-		for (int i = 0; i < getSizeInventory(); i++)
-		{
-			if(storage[i]!= null)
-			{
+		for (int i = 0; i < getSizeInventory(); i++) {
+			if(storage[i]!= null) {
 				entityitem = new EntityItem(worldObj, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, storage[i]);
 				entityitem.motionX = (float)rand.nextGaussian() * f3;
 				entityitem.motionY = (float)rand.nextGaussian() * f3 + 0.2F;
@@ -158,85 +157,28 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 		updateNeighbours();
 	}
 
-	@Override
-	public int getInventoryStackLimit()
-	{
-		return 64;
-	}
-
-	/*@Override
-	public String getInventoryName()
-	{
-		return "Ingot Pile";
-	}*/
 
 	@Override
-	public int getSizeInventory()
-	{
-		return storage.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int i)
-	{
-		return this.storage[i];
-	}
-
-	@Override
-	public ItemStack getStackInSlotOnClosing(int var1)
-	{
-		return null;
-	}
-
-	public void injectContents(int index, int count)
-	{
-		if(storage[index] != null)
-		{
-			if(storage[index].stackSize > 0)
-			{
-				storage[index] = new ItemStack(storage[index].getItem(), storage[index].stackSize + count, storage[index].getItemDamage());
-				worldObj.markBlockForUpdate(pos);
-			}
-		}
-		updateNeighbours();
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer entityplayer)
-	{
+	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
 		return false;
 	}
 
-	/*@Override
-	public void openInventory()
-	{
-	}*/
 
 	@Override
-	public void setInventorySlotContents(int i, ItemStack itemstack) 
-	{
+	public void setInventorySlotContents(int i, ItemStack itemstack)  {
 		storage[i] = itemstack;
 		if(itemstack != null && itemstack.stackSize > getInventoryStackLimit())
 			itemstack.stackSize = getInventoryStackLimit();
 	}
 
-	public void updateNeighbours()
-	{
-		
-		if(/*worldObj.blockExists(pos.up()) && */!worldObj.isAirBlock(pos.up()))
+	public void updateNeighbours() {
+		if(!worldObj.isAirBlock(pos.up()))
 			worldObj.getBlockState(pos.up()).getBlock().onNeighborBlockChange(worldObj, pos.up(), worldObj.getBlockState(pos.up()), BlocksVC.ingotPile);
-			//worldObj.getBlock(xCoord, yCoord+1, zCoord).onNeighborBlockChange(worldObj, xCoord, yCoord+1, zCoord, TFCBlocks.IngotPile);
 	}
 
-	/*@Override
-	public boolean hasCustomInventoryName()
-	{
-		return false;
-	}*/
 
 	@Override
-	public boolean isItemValidForSlot(int i, ItemStack itemstack)
-	{
+	public boolean isItemValidForSlot(int i, ItemStack itemstack) {
 		return false;
 	}
 
@@ -278,15 +220,11 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 
 	@Override
 	public void handleDataPacket(NBTTagCompound nbt) {
-		//storage[0] = ItemStack.loadItemStackFromNBT(nbt);
 		readFromNBT(nbt);
 	}
 
 	@Override
 	public void createDataNBT(NBTTagCompound nbt) {
-		/*if(storage[0] != null) {
-			storage[0].writeToNBT(nbt);
-		}*/
 		writeToNBT(nbt);
 	}
 
@@ -296,28 +234,18 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	@Override
 	public void createInitNBT(NBTTagCompound nbt) {
 		writeToNBT(nbt);
-		
-		/*if(storage[0] != null) {
-			ItemStack is = storage[0].copy();
-			is.setTagCompound(null);
-			is.writeToNBT(nbt);
-		}*/
 	}
 	
 	@Override
 	public void handleInitPacket(NBTTagCompound nbt) {
 		readFromNBT(nbt);
-		
-		//storage[0] = ItemStack.loadItemStackFromNBT(nbt);
-		/*updateNeighbours();
-		worldObj.markBlockForUpdate(pos);*/
 	}
 	
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
-		AxisAlignedBB bb = new AxisAlignedBB(pos, pos.add(1, 1, 1)); //  AxisAlignedBB.fromBounds(xCoord, yCoord, zCoord, xCoord +1, yCoord + 1, zCoord + 1);
+		AxisAlignedBB bb = new AxisAlignedBB(pos, pos.add(1, 1, 1));
 		return bb;
 	}
 	
@@ -325,12 +253,36 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	
 	
 	@Override
+	public int getInventoryStackLimit()
+	{
+		return 64;
+	}
+
+	@Override
+	public int getSizeInventory()
+	{
+		return storage.length;
+	}
+
+	@Override
+	public ItemStack getStackInSlot(int i)
+	{
+		return this.storage[i];
+	}
+
+	@Override
+	public ItemStack getStackInSlotOnClosing(int var1)
+	{
+		return null;
+	}
+
+	
+	@Override
 	public String getName() {
 		return "ingotpile";
 	}
 	@Override
 	public boolean hasCustomName() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	
@@ -341,35 +293,25 @@ public class TEIngotPile extends NetworkTileEntity implements IInventory {
 	
 	@Override
 	public void openInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public void closeInventory(EntityPlayer player) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public int getField(int id) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public void setField(int id, int value) {
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public int getFieldCount() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
 	}
 
 

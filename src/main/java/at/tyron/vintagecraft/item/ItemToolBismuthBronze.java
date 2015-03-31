@@ -35,6 +35,7 @@ public class ItemToolBismuthBronze extends ItemToolTinBronze {
 	
 	@Override
 	public int getMaxUses() {
+		if (tooltype == EnumTool.SHEARS) return 920;
 		return 460;
 	}
 

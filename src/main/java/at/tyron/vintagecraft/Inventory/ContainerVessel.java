@@ -1,5 +1,8 @@
 package at.tyron.vintagecraft.Inventory;
 
+import javax.management.RuntimeErrorException;
+
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.interfaces.IFuel;
 import at.tyron.vintagecraft.interfaces.ISmeltable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,17 +16,44 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class ContainerVessel extends Container {
 	public InventoryPlayer playerInventory;
-	public NBTTagCompound bagNbt;
-	public InventoryCrafting containerInv = new InventoryCrafting(this, 2, 2);
+	public IInventory containerInv;
+
 	
-	public ContainerVessel(InventoryPlayer inventoryplayer, NBTTagCompound bagNbt) {
-		this.playerInventory = inventoryplayer;
-		this.bagNbt = bagNbt;
+	public NBTTagCompound bagNbt; // When opened from item
+	public TEVessel tevessel; // When opened from block
+	
+	
+	public ContainerVessel(InventoryPlayer inventoryplayer, TEVessel tileentityvessel) {
 		
+		if (tileentityvessel == null) throw new RuntimeException("tileentityvessel cannot be null!");
+		if (inventoryplayer == null) throw new RuntimeException("inventoryplayer cannot be null!");
+		
+		containerInv = tileentityvessel;
+		tevessel = tileentityvessel;
+		this.playerInventory = inventoryplayer;
+		bagNbt = null;
+		
+		initSlots();
+	}
+	
+	
+	public ContainerVessel(InventoryPlayer playerInventory, NBTTagCompound bagNbt) {
+		containerInv = new InventoryCrafting(this, 2, 2);
+		this.playerInventory = playerInventory;
+		this.bagNbt = bagNbt;
+		tevessel =  null;
+		
+		initSlots();
+		loadBagInventory();
+	}
+	
+	
+	void initSlots() {		
 		this.addSlotToContainer(new SlotVessel(containerInv, 0, 71, 25));
 		this.addSlotToContainer(new SlotVessel(containerInv, 1, 89, 25));
 		this.addSlotToContainer(new SlotVessel(containerInv, 2, 71, 43));
@@ -33,21 +63,33 @@ public class ContainerVessel extends Container {
 
         for (i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlotToContainer(new Slot(inventoryplayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlotToContainer(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
             }
         }
 
         for (i = 0; i < 9; ++i) {
-            this.addSlotToContainer(new Slot(inventoryplayer, i, 8 + i * 18, 142));
-        }        
-
-        
-		//if(!world.isRemote) {
-			loadBagInventory();
-		//}
+            this.addSlotToContainer(new Slot(playerInventory, i, 8 + i * 18, 142));
+        }        		
 	}
 
 	
+
+
+
+	@Override
+	public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn) {
+		if (playerInventory.currentItem == slotId - 27 - 4 && tevessel == null) {
+			return null;
+		}
+		
+		ItemStack stack = super.slotClick(slotId, clickedButton, mode, playerIn);
+		
+		if (tevessel == null) {
+			saveBagInventory(playerInventory.getCurrentItem());
+		}
+		return stack;
+	}
+
 
 	public void loadBagInventory() {
 		if(bagNbt != null) {
@@ -67,22 +109,7 @@ public class ContainerVessel extends Container {
 		}
 	}
 	
-
-	@Override
-	public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn) {
-		if (playerInventory.currentItem == slotId - 27 - 4) {
-			return null;
-		}
-		
-		ItemStack stack = super.slotClick(slotId, clickedButton, mode, playerIn);
-		
-		saveContents(playerInventory.getCurrentItem());
-		return stack;
-	}
-
-
-	public void saveContents(ItemStack is) {
-		//System.out.println(is);
+	public void saveBagInventory(ItemStack is) {
 		NBTTagList nbttaglist = new NBTTagList();
 		for(int i = 0; i < containerInv.getSizeInventory(); i++) {
 			if(containerInv.getStackInSlot(i) != null) {
@@ -100,25 +127,7 @@ public class ContainerVessel extends Container {
 		}
 	}
 
-	/*@Override
-	public ItemStack loadContents(int slot) {
-		if(player.inventory.getStackInSlot(bagsSlotNum) != null && 
-				player.inventory.getStackInSlot(bagsSlotNum).hasTagCompound())
-		{
-			NBTTagList nbttaglist = player.inventory.getStackInSlot(bagsSlotNum).getTagCompound().getTagList("Items", 10);
-			if(nbttaglist != null)
-			{
-				for(int i = 0; i < nbttaglist.tagCount(); i++)
-				{
-					NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-					byte byte0 = nbttagcompound1.getByte("Slot");
-					if(byte0 == slot)
-						return ItemStack.loadItemStackFromNBT(nbttagcompound1);
-				}
-			}
-		}
-		return null;
-	}*/
+	
 
 	@Override
 	public boolean canInteractWith(EntityPlayer var1) {
@@ -128,49 +137,35 @@ public class ContainerVessel extends Container {
 
 
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
-        ItemStack itemstack = null;
-        Slot slot = (Slot)this.inventorySlots.get(index);
+    public ItemStack transferStackInSlot(EntityPlayer player, int clickedIndex) {
+    	ItemStack returnedStack = null;
+		Slot clickedSlot = (Slot)this.inventorySlots.get(clickedIndex);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
-            
+		if (clickedSlot != null && clickedSlot.getHasStack()) {
+			ItemStack clickedStack = clickedSlot.getStack();
+			returnedStack = clickedStack.copy();
 
-            if (index < 3) {
-                if (!this.mergeItemStack(itemstack1, 3, 39, true)) {
-                    return null;
-                }
+			if (clickedIndex < 4) {
+				if (!this.mergeItemStack(clickedStack, 4, inventorySlots.size(), true))
+					return null;
+			}
+			else if (clickedIndex >= 4 && clickedIndex < inventorySlots.size()) {
+				if (SlotVessel.validItem(clickedStack) && !this.mergeItemStack(clickedStack, 0, 4, false))
+					return null;
+			}
 
-                slot.onSlotChange(itemstack1, itemstack);
-            }
-            else {
-            	
-            	if (index >= 3 && index < 30) {
-                    if (!this.mergeItemStack(itemstack1, 30, 39, false)) {
-                        return null;
-                    }
-                }
-                else if (index >= 30 && index < 39 && !this.mergeItemStack(itemstack1, 0, 30, false)) {
-                    return null;
-                }
-            }
-            
+			if (clickedStack.stackSize == 0)
+				clickedSlot.putStack((ItemStack)null);
+			else
+				clickedSlot.onSlotChanged();
 
-            if (itemstack1.stackSize == 0) {
-                slot.putStack((ItemStack)null);
-            }
-            else {
-                slot.onSlotChanged();
-            }
+			if (clickedStack.stackSize == returnedStack.stackSize)
+				return null;
 
-            if (itemstack1.stackSize == itemstack.stackSize) {
-                return null;
-            }
-
-            slot.onPickupFromSlot(playerIn, itemstack1);
-        }
-
-        return itemstack;
+			clickedSlot.onPickupFromSlot(player, clickedStack);
+		}
+		
+		detectAndSendChanges();
+		return returnedStack;
     }
 }

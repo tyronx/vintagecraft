@@ -112,7 +112,7 @@ public class BlockToolRack extends BlockContainerVC {
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if(!world.isRemote) {
+	//	if(!world.isRemote) {
 			TileEntity te = world.getTileEntity(pos);
 			if(te != null && te instanceof TEToolRack) {
 				TEToolRack tet = (TEToolRack) te;
@@ -133,7 +133,7 @@ public class BlockToolRack extends BlockContainerVC {
 					return true;
 				}
 			}
-		}
+//		}
 		return true;
 	}
 

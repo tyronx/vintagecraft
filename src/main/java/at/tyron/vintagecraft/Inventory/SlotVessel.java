@@ -15,8 +15,9 @@ public class SlotVessel extends Slot {
         super(inventoryIn, slotIndex, xPosition, yPosition);
     }
 
+    @Override
     public boolean isItemValid(ItemStack stack) {
-        return stack.getItem() instanceof ItemOreVC || stack.getItem() instanceof ItemIngot || stack.getItem() instanceof ItemStone; 
+         return validItem(stack);
     }
 
     public int getItemStackLimit(ItemStack stack) {
@@ -24,5 +25,7 @@ public class SlotVessel extends Slot {
     }
 
     
-    
+    public static boolean validItem(ItemStack stack) {
+    	return stack.getItem() instanceof ItemOreVC || stack.getItem() instanceof ItemIngot || stack.getItem() instanceof ItemStone;
+    }
 }

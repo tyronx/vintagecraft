@@ -26,6 +26,7 @@ import at.tyron.vintagecraft.TileEntity.TEFarmland;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TESapling;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TileEntityStove;
 import at.tyron.vintagecraft.WorldProperties.*;
@@ -34,19 +35,19 @@ import at.tyron.vintagecraft.client.VCraftModelLoader;
 import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
 import at.tyron.vintagecraft.interfaces.IEnumState;
 import at.tyron.vintagecraft.item.ItemBrick;
-import at.tyron.vintagecraft.item.ItemCobblestoneVC;
+import at.tyron.vintagecraft.item.ItemCeramicVessel;
 import at.tyron.vintagecraft.item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.item.ItemRockTyped;
 import at.tyron.vintagecraft.item.ItemToolRack;
-import at.tyron.vintagecraft.item.ItemWoodProductVC;
+import at.tyron.vintagecraft.item.ItemClayVessel;
+import at.tyron.vintagecraft.item.ItemWoodtyped;
 import at.tyron.vintagecraft.item.ItemFlowerVC;
 import at.tyron.vintagecraft.item.ItemGrassVC;
-import at.tyron.vintagecraft.item.ItemGravel;
 import at.tyron.vintagecraft.item.ItemLeaves;
 import at.tyron.vintagecraft.item.ItemLeavesBranchy;
 import at.tyron.vintagecraft.item.ItemLogVC;
 import at.tyron.vintagecraft.item.ItemOreVC;
 import at.tyron.vintagecraft.item.ItemPlanksVC;
-import at.tyron.vintagecraft.item.ItemSand;
 import at.tyron.vintagecraft.item.ItemTopSoil;
 import at.tyron.vintagecraft.item.ItemRock;
 
@@ -113,7 +114,10 @@ public class BlocksVC {
 	//public static RockClass brick;
 
 	public static OreClass rawore;
+	
 	public static Block ingotPile;
+	public static Block ceramicVessel;
+	public static Block clayVessel;
 	
 
 	
@@ -160,6 +164,12 @@ public class BlocksVC {
 		register(ingotPile, "ingotpile", null);
 		
 		
+		ceramicVessel = new BlockCeramicVessel().setHardness(0.8f);
+		register(ceramicVessel, "ceramicvessel2", ItemCeramicVessel.class);
+		
+		clayVessel = new BlockClayVessel().setHardness(0.8f);
+		register(clayVessel, "clayvessel2", ItemClayVessel.class);
+
 		
 		farmland = new BlockFarmlandVC().setHardness(2F).setStepSound(Block.soundTypeGravel);
 		registerMulti(farmland, "farmland", ItemBlock.class, EnumFertility.values());
@@ -182,30 +192,30 @@ public class BlocksVC {
 		planks = new TreeClass("planks", BlockPlanksVC.class, ItemPlanksVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		planks.init();
 		
-		fence = new TreeClass("fence", BlockFenceVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		fence = new TreeClass("fence", BlockFenceVC.class, ItemWoodtyped.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		fence.init();
 		
-		fencegate = new TreeClass("fencegate", BlockFenceGateVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		fencegate = new TreeClass("fencegate", BlockFenceGateVC.class, ItemWoodtyped.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		fencegate.init();
 		
 		/*stairs = new TreeClass("stairs", BlockStairsVC.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		stairs.init();
 */
-		singleslab = new TreeClass("singleslab", BlockSingleWoodenSlab.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		singleslab = new TreeClass("singleslab", BlockSingleWoodenSlab.class, ItemWoodtyped.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		singleslab.init();
 
-		doubleslab = new TreeClass("doubleslab", BlockDoubleWoodenSlab.class, ItemWoodProductVC.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		doubleslab = new TreeClass("doubleslab", BlockDoubleWoodenSlab.class, ItemWoodtyped.class, 1.5f, Block.soundTypeWood, "axe", 1);
 		doubleslab.init();
 
 		
-		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemWoodProductVC.class, 0.2f, Block.soundTypeGrass, null, 0);
+		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemWoodtyped.class, 0.2f, Block.soundTypeGrass, null, 0);
 		leaves.init();
 		
-		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemWoodProductVC.class, 0.4f, Block.soundTypeGrass, "axe", 1);
+		leavesbranchy = new TreeClass("leavesbranchy", BlockLeavesBranchy.class, ItemWoodtyped.class, 0.4f, Block.soundTypeGrass, "axe", 1);
 		leavesbranchy.init();
 		
 
-		sapling = new TreeClass("sapling", BlockSaplingVC.class, ItemWoodProductVC.class, 0.4f, Block.soundTypeGrass, null, 0);
+		sapling = new TreeClass("sapling", BlockSaplingVC.class, ItemWoodtyped.class, 0.4f, Block.soundTypeGrass, null, 0);
 		sapling.init();
 		
 		
@@ -225,17 +235,17 @@ public class BlocksVC {
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
 		
-		sand = new RockClass("sand", BlockSandVC.class, ItemSand.class, 1f, Block.soundTypeSand, "shovel", 0);
+		sand = new RockClass("sand", BlockSandVC.class, ItemRockTyped.class, 1f, Block.soundTypeSand, "shovel", 0);
 		sand.init();
-		gravel = new RockClass("gravel", BlockGravelVC.class, ItemGravel.class, 1.3f, Block.soundTypeGravel, "shovel", 0);
+		gravel = new RockClass("gravel", BlockGravelVC.class, ItemRockTyped.class, 1.3f, Block.soundTypeGravel, "shovel", 0);
 		gravel.init();
-		subsoil = new RockClass("subsoil", BlockSubSoil.class, ItemRock.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
+		subsoil = new RockClass("subsoil", BlockSubSoil.class, ItemRockTyped.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
 		subsoil.init();
-		regolith = new RockClass("regolith", BlockRegolith.class, ItemRock.class, 2.5f, Block.soundTypeGravel, "shovel", 0);
+		regolith = new RockClass("regolith", BlockRegolith.class, ItemRockTyped.class, 2.5f, Block.soundTypeGravel, "shovel", 0);
 		regolith.init();
 		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 2f, Block.soundTypeStone, "pickaxe", 0);
 		rock.init();
-		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemCobblestoneVC.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
+		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemRockTyped.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
 		cobblestone.init();
 		
 		
@@ -273,6 +283,7 @@ public class BlocksVC {
 		GameRegistry.registerTileEntity(TEIngotPile.class, ModInfo.ModID + ":ingotpile");
 		GameRegistry.registerTileEntity(TEToolRack.class, ModInfo.ModID + ":toolrack");
 		
+		GameRegistry.registerTileEntity(TEVessel.class, ModInfo.ModID + ":ceramicvessel2");
 	}
 
 

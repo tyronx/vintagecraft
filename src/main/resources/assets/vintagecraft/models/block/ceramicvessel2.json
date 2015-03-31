@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "vintagecraft:items/pottery/ceramicvessel",
+		"particle": "vintagecraft:items/pottery/ceramicvessel"
+	}
+}

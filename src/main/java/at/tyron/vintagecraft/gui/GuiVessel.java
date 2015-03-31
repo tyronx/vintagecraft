@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 
 public class GuiVessel extends GuiContainer {
 	private static final ResourceLocation texture = new ResourceLocation("vintagecraft:textures/gui/container/gui_vessel.png");
@@ -20,6 +21,12 @@ public class GuiVessel extends GuiContainer {
 	
 	public GuiVessel(InventoryPlayer player, World world, NBTTagCompound nbt) {
 		super(new ContainerVessel(player, nbt));
+		
+		this.playerInventory = player;
+	}
+	
+	public GuiVessel(InventoryPlayer player, TEVessel tevessel) {
+		super(new ContainerVessel(player, tevessel));
 		
 		this.playerInventory = player;
 	}

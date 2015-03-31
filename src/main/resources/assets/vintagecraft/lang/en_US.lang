@@ -8,6 +8,12 @@
 generator.VCDefault=VC Default
 generator.VCFlat=VC Flat
 
+sand.name=Sand
+gravel.name=Gravel
+subsoil.name=Subsoil
+regolith.name=Regolith
+cobblestone.name=Cobblestone
+
 nograss.name=No Gras
 sparsegrass.name=Sparse Grass
 normalgrass.name=Normal Grass
@@ -34,7 +40,8 @@ rock.chert.name=Chert
 rock.gabbro.name=Gabbro
 rock.shale.name=Shale
 rock.schist.name=Green Schist
-
+rock.kimberlite.name=Kimberlite
+rock.slate.name=Slate
 
 
 
@@ -59,7 +66,10 @@ item.stone.name=Stone
 stone.name=Stone
 item.peatbrick.name=Peat Brick
 
-item.ore.nativegold.name=Native Gold
+item.ore.nativegold_quartz.name=Native Gold
+item.ore.nativesilver_quartz.name=Native Silver
+item.ore.sylvite_rocksalt.name=Sylvite
+item.ore.rocksalt.name=Rock Salt
 item.ore.limonite.name=Limonite
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
@@ -68,10 +78,17 @@ item.ore.cassiterite.name=Cassiterite
 item.redstone.cassiterite.name=Redstone
 item.ore.bismuthinite.name=Bismuthinite
 item.ore.sphalerite.name=Sphalerite
-
+item.ore.emerald.name=Raw Emerald
+item.ore.diamond.name=Raw Diamond
+item.ore.olivine.name=Olivine Crystal
+item.ore.lapislazuli.name=Lapis Lazuli
+item.ore.rhodium.name=Rhodium Ore
+item.ore.platinum.name=Platinum Ore
+item.ore.iridium.name=Iridium Ore
+item.ore.quartz.name=Quartz
 
 item.ingot.copper.name=Copper Ingot
-item.ingot.tinbronze.name=Bronze Ingot
+item.ingot.tinbronze.name=Tin Bronze Ingot
 item.ingot.iron.name=Iron Ingot
 item.ingot.steel.name=Steel Ingot
 item.ingot.rhodium.name=Rhodium Ingot
@@ -96,8 +113,11 @@ tile.flower.orangebutterflymilkweed.name=Orange Butterfly Milkweed
 tile.flower.purplebutterflymilkweed.name=Purple Butterfly Milkweed
 tile.flower.catmint.name=Catmint
 
-item.ceramicvessel.name=Ceramic Vessel
-item.clayvessel.name=Clay Vessel
+tile.ceramicvessel.name=Ceramic Vessel
+tile.clayvessel.name=Clay Vessel
+
+tile.ceramicvessel2.name=Ceramic Vessel
+tile.clayvessel2.name=Clay Vessel
 
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe

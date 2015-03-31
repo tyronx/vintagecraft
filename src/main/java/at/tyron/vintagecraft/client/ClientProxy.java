@@ -28,6 +28,7 @@ import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -36,6 +37,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.block.BlockOreVC;
 import at.tyron.vintagecraft.block.BlockTopSoil;
 import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.client.Render.TESR.TESRCeramicVessel;
 import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
 import at.tyron.vintagecraft.client.Render.TESR.TESRToolRack;
 //import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
@@ -92,8 +94,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");
     	
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
-    	registerModelLocation(ItemsVC.clayVessel, "clayvessel", "inventory");
-    	registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
+    	//registerModelLocation(ItemsVC.clayVessel, "clayvessel", "inventory");
+    	//registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
     	
     	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeAxe, ItemsVC.bismuthbronzeHoe, ItemsVC.bismuthbronzePickaxe, ItemsVC.bismuthbronzeShovel, ItemsVC.bismuthbronzeSword, ItemsVC.bismuthbronzeSaw, ItemsVC.bismuthbronzeShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.tinbronzeAxe, ItemsVC.tinbronzeHoe, ItemsVC.tinbronzePickaxe, ItemsVC.tinbronzeShovel, ItemsVC.tinbronzeSword, ItemsVC.tinbronzeSaw, ItemsVC.tinbronzeShears}, "tool", "inventory");
@@ -112,6 +114,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
 		ClientRegistry.registerTileEntity(TEIngotPile.class, "ingotpile", new TESRIngotPile());
 		ClientRegistry.registerTileEntity(TEToolRack.class, "ToolRack", new TESRToolRack());
+		ClientRegistry.registerTileEntity(TEVessel.class, "ceramicvessel2", new TESRCeramicVessel());
 
     }
 	
