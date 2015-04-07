@@ -1,4 +1,5 @@
 {
 	"variants": {
+		"normal": { "model": "vintagecraft:ingotpile" }
 	}
 }

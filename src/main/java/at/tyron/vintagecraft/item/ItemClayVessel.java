@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +20,13 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Interfaces.ISmeltable;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.interfaces.ISmeltable;
 
 public class ItemClayVessel extends ItemBlock implements ISmeltable {
 	boolean burned;

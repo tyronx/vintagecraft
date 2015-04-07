@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
@@ -44,6 +44,10 @@ public class ItemToolBismuthBronze extends ItemToolTinBronze {
 		if (tooltype == EnumTool.SWORD) {
 			return 3.5f;
 		}
+		if (tooltype == EnumTool.AXE) {
+			return 3f;
+		}
+
 		return 1.5f;
 	}
 

@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "buildstage=stones": { "model": "vintagecraft:firepit/lit" },
+		"buildstage=log1": { "model": "vintagecraft:firepit/lit" },
+		"buildstage=log2": { "model": "vintagecraft:firepit/lit" },
+		"buildstage=log3": { "model": "vintagecraft:firepit/lit" }
+    }
+}

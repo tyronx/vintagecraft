@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.block.BlockFarmlandVC;
-import at.tyron.vintagecraft.block.BlockOreVC;
+import at.tyron.vintagecraft.Block.BlockFarmlandVC;
+import at.tyron.vintagecraft.Block.BlockOreVC;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.property.IExtendedBlockState;
 

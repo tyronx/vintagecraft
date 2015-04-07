@@ -1,22 +1,22 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockDoubleWoodenSlab;
+import at.tyron.vintagecraft.Block.BlockFenceGateVC;
+import at.tyron.vintagecraft.Block.BlockFenceVC;
+import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.BlockSaplingVC;
+import at.tyron.vintagecraft.Block.BlockSingleWoodenSlab;
+import at.tyron.vintagecraft.Block.BlockStairsVC;
+import at.tyron.vintagecraft.Block.BlockWoodenSlabVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.Interfaces.IFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockDoubleWoodenSlab;
-import at.tyron.vintagecraft.block.BlockFenceGateVC;
-import at.tyron.vintagecraft.block.BlockFenceVC;
-import at.tyron.vintagecraft.block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.block.BlockLeavesVC;
-import at.tyron.vintagecraft.block.BlockPlanksVC;
-import at.tyron.vintagecraft.block.BlockSaplingVC;
-import at.tyron.vintagecraft.block.BlockSingleWoodenSlab;
-import at.tyron.vintagecraft.block.BlockStairsVC;
-import at.tyron.vintagecraft.block.BlockWoodenSlabVC;
-import at.tyron.vintagecraft.interfaces.IFuel;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
@@ -77,10 +77,7 @@ public class ItemWoodtyped extends ItemBlock implements IFuel {
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add("Heat produced when burned");
-		for (EnumFurnace furnace : EnumFurnace.values()) {
-			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
-		}
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 
 

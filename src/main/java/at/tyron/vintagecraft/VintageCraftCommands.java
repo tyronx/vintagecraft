@@ -8,19 +8,21 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.BlockStateSerializer;
-import at.tyron.vintagecraft.WorldGen.DynTreeBranch;
-import at.tyron.vintagecraft.WorldGen.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
-import at.tyron.vintagecraft.WorldGen.DynTreeRoot;
-import at.tyron.vintagecraft.WorldGen.DynTreeTrunk;
-import at.tyron.vintagecraft.WorldGen.NatFloat;
-import at.tyron.vintagecraft.WorldGen.GenLayers.*;
-import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.WorldGen.GenLayerVC;
+import at.tyron.vintagecraft.WorldGen.Helper.BlockStateSerializer;
+import at.tyron.vintagecraft.WorldGen.Helper.DynTreeBranch;
+import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
+import at.tyron.vintagecraft.WorldGen.Helper.DynTreeRoot;
+import at.tyron.vintagecraft.WorldGen.Helper.DynTreeTrunk;
+import at.tyron.vintagecraft.WorldGen.Helper.NatFloat;
+import at.tyron.vintagecraft.WorldGen.LayerTransform.*;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
@@ -91,8 +93,7 @@ public class VintageCraftCommands extends CommandBase {
 			int wdt = 30;
 			int hgt = 80;
 			
-			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
-			
+			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);	
 		}
 		
 		
@@ -113,10 +114,6 @@ public class VintageCraftCommands extends CommandBase {
 				bend = (float)parseDouble(args[3]);
 			}
 			
-			
-			 
-			//new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier),
-			//new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag, branchWidthMultiplier)
 			DynTreeGenerators.initGenerators();
 			
 			DynTreeGen gen = tree.defaultGenerator;
@@ -126,67 +123,6 @@ public class VintageCraftCommands extends CommandBase {
 			gen.growTree(sender.getEntityWorld(), sender.getPosition().down().east(3), size);
 		}
 		
-		
-		
-		if (args[0].equals("genpalm")) {
-			float size = 1f;
-			float bend = 0.07f;
-			
-			if (args.length == 2) {
-				size = (float)parseDouble(args[1]);
-			}
-
-			if (args.length == 3) {
-				bend = (float)parseDouble(args[2]);
-			}
-			
-			// Reference: http://upload.wikimedia.org/wikipedia/commons/3/31/A_trio_of_Scots_Pine_-_geograph.org.uk_-_1750728.jpg
-			
-			/* new DynTreeTrunk(avgHeight, width, widthloss, branchStart, branchSpacing, branchVarianceSpacing, variance, numBranching, branchWidthMultiplier),
-			 *	new DynTreeBranch(anglevert, varianceAnglevert, anglehori, varianceAnglehori, spacing, varianceSpacing, widthloss, gravityDrag)
-	   		 */
-			/*DynTreeGen scotspine = new DynTreeGen(
-				EnumTree.SCOTSPINE, 
-				null,
-				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.5f, 0.02f, 0f, 0.1f, 3, 0.4f, Math.PI / 2, 0f, 0, 2*Math.PI),
-				new DynTreeBranch(Math.PI / 2, 0f, 0, Math.PI / 2, 0.25f, 0f, 0.02f, 0f)
-			);
-
-			 scotspine.gen(sender.getEntityWorld(), sender.getPosition().down().east(3), size, bend);*/
-		}
-		
-		
-		
-	/*	if (args[0].equals("gentrees")) {
-			DynTreeGen birch = new DynTreeGen(
-				EnumTree.BIRCH, 
-				null,
-				new DynTreeTrunk(0.8f, 1f, 0.05f, 0.08f, 0.35f, 0.17f, 0.3f, 0.9f, 0.2f, 0.1f),
-				new DynTreeBranch(Math.PI / 4, Math.PI / 8, 0, 2*Math.PI, 5f, 2f)
-			);
-			
-			float size = 0;
-			int width = 5;
-			for (int i = 0; i < 15; i++) {
-				size += 0.2f;
-				
-				clearArea(sender.getEntityWorld(), sender.getPosition().east(width), 50, 80);
-				
-				width += Math.max(10, size * 10);
-			}
-			
-			
-			size = 0;
-			width = 5;
-			for (int i = 0; i < 15; i++) {
-				size += 0.2f;
-				
-				birch.gen(sender.getEntityWorld(), sender.getPosition().east(width), size);
-				
-				width += (int) Math.max(10, size * 10);
-			}
-			
-		}*/
 		
 		
 		
@@ -235,22 +171,23 @@ public class VintageCraftCommands extends CommandBase {
 
 		
 		if (args[0].equals("climate")) {
-			
-			/*int temp = VCraftWorld.instance.getTemperature(sender.getPosition());
-			int rainfall = VCraftWorld.instance.getRainfall(sender.getPosition());
-			int fertility = VCraftWorld.instance.getFertily(rainfall, temp, sender.getPosition());*/
-			
 			int climate[] = VCraftWorld.instance.getClimate(sender.getPosition());
-			
 			int forest = VCraftWorld.instance.getForest(sender.getPosition());
 			
-			sender.addChatMessage(new ChatComponentText("Temperature " + climate[0] + ", Rainfall " + climate[2] + ", Fertility " + climate[1] + ", Forest " + forest + ", mod forest " + EnumTree.getForestDensity(forest, climate[2], climate[0])));
+			sender.addChatMessage(new ChatComponentText(
+				"Temperature " + climate[0] + 
+				", Rainfall " + climate[2] + 
+				", Fertility " + climate[1] + 
+				", Forest " + forest + 
+				", mod forest " + EnumTree.getForestDensity(forest, climate[2], climate[0]) + 
+				", descaled temp " + VCraftWorld.instance.deScaleTemperature(climate[0])
+			));
 			
 			EnumFlowerGroup flora = EnumFlowerGroup.getRandomFlowerForClimate(climate[2], climate[0], forest, sender.getEntityWorld().rand);
 			System.out.println("chosen flower " + flora);
 			
-			EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
-			System.out.println("chosen tree " + tree);
+			//EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
+			//System.out.println("chosen tree " + tree);
 			/*if (flora != null) {
 				sender.getEntityWorld().setBlockState(sender.getPosition(), flora.variants[0].getBlockState());
 			}*/
@@ -264,6 +201,18 @@ public class VintageCraftCommands extends CommandBase {
 		
 		if (args[0].equals("grasscolor")) {
 			sender.addChatMessage(new ChatComponentText("#" + Integer.toHexString(VCraftWorld.instance.getGrassColorAtPos(sender.getPosition()))));
+		}
+		
+		if (args[0].equals("toplayers")) {
+			EnumRockType rocktype = EnumRockType.CHERT;
+			
+			IBlockState[]states = EnumCrustLayerGroup.getTopLayers(rocktype, sender.getPosition().down(), sender.getEntityWorld().rand);
+			
+			System.out.println(states.length);
+			
+			for (IBlockState state : states) {
+				System.out.println(state);
+			}
 		}
 		
 		if (args[0].equals("noisegen")) {

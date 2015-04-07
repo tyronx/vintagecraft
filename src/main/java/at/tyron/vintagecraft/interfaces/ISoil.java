@@ -1,9 +1,9 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.WorldProperties.EnumFertility;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;

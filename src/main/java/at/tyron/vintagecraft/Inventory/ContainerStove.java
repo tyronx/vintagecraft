@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.TileEntity.TileEntityStove;
-import at.tyron.vintagecraft.interfaces.IFuel;
-import at.tyron.vintagecraft.interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

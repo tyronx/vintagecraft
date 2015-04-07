@@ -1,14 +1,14 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -39,18 +39,6 @@ public class ItemFlowerVC extends ItemBlock {
 			return (EnumFlower) BlocksVC.flower.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("flowertype")).getKey();
 		}
 		return null;
-	}
-	
-	
-	public static ItemStack withFlowerType(ItemStack itemstack, BlockClassEntry flowertype) {
-		NBTTagCompound nbt = itemstack.getTagCompound(); 
-		if (nbt == null) {
-			itemstack.setTagCompound(nbt = new NBTTagCompound());
-		}	
-		
-		nbt.setInteger("flowertype", flowertype.getMetaData((BlockVC) ((ItemBlock)itemstack.getItem()).block));
-		itemstack.setTagCompound(nbt);
-		return itemstack;
 	}
 
 	

@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumTallGrass;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
 
 public class ItemGrassVC extends ItemBlock {
 

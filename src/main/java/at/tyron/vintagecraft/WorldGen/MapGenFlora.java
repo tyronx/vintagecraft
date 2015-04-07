@@ -2,17 +2,21 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.Block.BlockCropsVC;
+import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.BlockTallGrass;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.Interfaces.ISoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
+import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldProperties.*;
-import at.tyron.vintagecraft.block.BlockCropsVC;
-import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.block.BlockFlowerVC;
-import at.tyron.vintagecraft.block.BlockTallGrass;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.ISoil;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrassGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockVine;
@@ -95,15 +99,7 @@ public class MapGenFlora {
 				DynTreeGen treegen = EnumTree.getRandomTreeGenForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], climate[1], steepness, blockpos.getY(), random);				
 				
 				if (treegen != null) {
-					float size;
-					if (treegen.tree == EnumTree.PURPLEHEARTWOOD || treegen.tree == EnumTree.KAPOK) {
-						size = 0.4f + random.nextFloat();
-						if (random.nextInt(500) == 1) size = 1.3f + random.nextFloat()*0.6f;
-					} else {
-						size = 0.66f + random.nextFloat()/3;
-					}
-					
-					size = size - Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f);
+					float size = treegen.tree.getTreeSize(random, Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f));
 					
 					if (size > 0.23f) {
 						treegen.growTree(world, blockpos.down(), size, Math.max(0, climate[2] - 190));

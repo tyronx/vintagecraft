@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client.Render.TESR;
+package at.tyron.vintagecraft.Client.Render.TESR;
 
 import org.lwjgl.opengl.GL11;
 
@@ -8,8 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
-import at.tyron.vintagecraft.block.BlockClayVessel;
-import at.tyron.vintagecraft.client.Model.ModelVessel;
+import at.tyron.vintagecraft.Block.BlockClayVessel;
+import at.tyron.vintagecraft.Client.Model.ModelVessel;
 
 public class TESRCeramicVessel extends TESRBase {
 	ModelVessel modelvessel = new ModelVessel();

@@ -1,13 +1,13 @@
 package at.tyron.vintagecraft.World;
 
+import at.tyron.vintagecraft.Block.BlockLogVC;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Item.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockLogVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.item.ItemPlanksVC;
-import at.tyron.vintagecraft.item.ItemToolVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;

@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client;
+package at.tyron.vintagecraft.Client;
 
 import java.io.IOException;
 
@@ -26,23 +26,20 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Block.BlockTopSoil;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Client.Render.TESR.*;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockOreVC;
-import at.tyron.vintagecraft.block.BlockTopSoil;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.client.Render.TESR.TESRCeramicVessel;
-import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
-import at.tyron.vintagecraft.client.Render.TESR.TESRToolRack;
-//import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.item.*;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -97,6 +94,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	//registerModelLocation(ItemsVC.clayVessel, "clayvessel", "inventory");
     	//registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
     	
+    	registerModelLocation(new Item[]{ItemsVC.ironAxe, ItemsVC.ironHoe, ItemsVC.ironPickaxe, ItemsVC.ironShovel, ItemsVC.ironSword, ItemsVC.ironSaw, ItemsVC.ironShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeAxe, ItemsVC.bismuthbronzeHoe, ItemsVC.bismuthbronzePickaxe, ItemsVC.bismuthbronzeShovel, ItemsVC.bismuthbronzeSword, ItemsVC.bismuthbronzeSaw, ItemsVC.bismuthbronzeShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.tinbronzeAxe, ItemsVC.tinbronzeHoe, ItemsVC.tinbronzePickaxe, ItemsVC.tinbronzeShovel, ItemsVC.tinbronzeSword, ItemsVC.tinbronzeSaw, ItemsVC.tinbronzeShears}, "tool", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw, ItemsVC.copperShears}, "tool", "inventory");

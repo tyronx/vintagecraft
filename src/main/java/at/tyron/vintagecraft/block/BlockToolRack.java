@@ -1,14 +1,14 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import at.tyron.vintagecraft.Interfaces.IRackable;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IRackable;
-import at.tyron.vintagecraft.item.ItemToolRack;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -269,7 +269,7 @@ public class BlockToolRack extends BlockContainerVC {
 	
 
 	
-	public ItemStack getItemStackFor(IEnumState key) {
+	public ItemStack getItemStackFor(IStateEnum key) {
 		return ItemToolRack.getItemStack((EnumTree)key);
 	}
 

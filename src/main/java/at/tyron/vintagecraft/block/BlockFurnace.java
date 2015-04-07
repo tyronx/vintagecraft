@@ -1,8 +1,8 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
-import at.tyron.vintagecraft.TileEntity.TileEntityStove;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -23,20 +23,20 @@ public class BlockFurnace extends BlockStove {
 	
 	
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityStove(EnumFurnace.FURNACE);
+        return new TEHeatSourceWithGUI(EnumStrongHeatSource.STOVE);
     }
     
     @SideOnly(Side.CLIENT)
     public Item getItem(World worldIn, BlockPos pos) {
-        return Item.getItemFromBlock(BlocksVC.furnace);
+        return null; //Item.getItemFromBlock(BlocksVC.furnace);
     }
     
     public Block getLitVersion() {
-    	return BlocksVC.furnace_lit;
+    	return null; //BlocksVC.furnace_lit;
     }
 
     public Block getExtinguishedVersion() {
-    	return BlocksVC.furnace;
+    	return null;// BlocksVC.furnace;
     }    
 
 }

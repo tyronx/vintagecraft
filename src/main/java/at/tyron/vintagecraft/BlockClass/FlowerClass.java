@@ -9,13 +9,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.item.ItemBlock;
-import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.block.BlockFlowerVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.item.ItemFlowerVC;
+import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 
 public class FlowerClass extends BlockClass {
 	String getBlockClassName() { return name; }
@@ -44,7 +44,7 @@ public class FlowerClass extends BlockClass {
 		for (EnumFlowerGroup group : EnumFlowerGroup.values()) {
 			for (EnumFlower flower : group.variants) {
 				if (doublehigh == flower.doubleHigh) {
-					values.put((IEnumState) flower, new FlowerClassEntry((IEnumState)flower, flower.doubleHigh, group));
+					values.put((IStateEnum) flower, new FlowerClassEntry((IStateEnum)flower, flower.doubleHigh, group));
 				}
 			}
 		}

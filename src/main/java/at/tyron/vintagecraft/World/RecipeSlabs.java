@@ -1,12 +1,12 @@
 package at.tyron.vintagecraft.World;
 
+import at.tyron.vintagecraft.Block.BlockLogVC;
+import at.tyron.vintagecraft.Block.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.block.BlockLogVC;
-import at.tyron.vintagecraft.block.BlockPlanksVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.item.ItemToolVC;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;

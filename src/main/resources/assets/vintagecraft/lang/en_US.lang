@@ -45,22 +45,22 @@ rock.slate.name=Slate
 
 
 
-tile.tock.gneiss.name=Gneiss
-tile.tock.limestone.name=Limestone
-tile.tock.claystone.name=Claystone
-tile.tock.marble.name=Marble
-tile.tock.granite.name=Granite
-tile.tock.basalt.name=Basalt
-tile.tock.andesite.name=Andesite
-tile.tock.conglomerate.name=Conglomerate
-tile.tock.diorite.name=Diorite
-tile.tock.sandstone.name=Sandstone
-tile.tock.redsandstone.name=Red Sandstone
-tile.tock.quartzite.name=Quartzite
-tile.tock.chert.name=Chert
-tile.tock.gabbro.name=Gabbro
-tile.tock.shale.name=Shale
-tile.tock.schist.name=Green Schist
+tile.rock.gneiss.name=Gneiss
+tile.rock.limestone.name=Limestone
+tile.rock.claystone.name=Claystone
+tile.rock.marble.name=Marble
+tile.rock.granite.name=Granite
+tile.rock.basalt.name=Basalt
+tile.rock.andesite.name=Andesite
+tile.rock.conglomerate.name=Conglomerate
+tile.rock.diorite.name=Diorite
+tile.rock.sandstone.name=Sandstone
+tile.rock.redsandstone.name=Red Sandstone
+tile.rock.quartzite.name=Quartzite
+tile.rock.chert.name=Chert
+tile.rock.gabbro.name=Gabbro
+tile.rock.shale.name=Shale
+tile.rock.schist.name=Green Schist
 
 item.stone.name=Stone
 stone.name=Stone
@@ -106,6 +106,7 @@ item.ingot.bismuthbronze.name=Bismuth Bronze Ingot
 
 
 
+container.firepit=Fire pit
 container.stove=Stove
 tile.stove.name=Stove
 
@@ -119,6 +120,14 @@ tile.clayvessel.name=Clay Vessel
 tile.ceramicvessel2.name=Ceramic Vessel
 tile.clayvessel2.name=Clay Vessel
 
+
+item.iron_axe.name=Iron Axe
+item.iron_pickaxe.name=Iron Pickaxe
+item.iron_shovel.name=Iron Shovel
+item.iron_sword.name=Iron Sword
+item.iron_hoe.name=Iron Hoe
+item.iron_saw.name=Iron Saw
+item.iron_shears.name=Iron Shears
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe
 item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
@@ -351,3 +360,6 @@ tile.fireclaybricks.name=Fire Clay Bricks
 
 toolrack.name=Tool Rack
 toolrackitem.name=Tool Rack
+
+tile.bloomerybase.name=Bloomery Base
+tile.bloomerychimney.name=Bloomery Chimney

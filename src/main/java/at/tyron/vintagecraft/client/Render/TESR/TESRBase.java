@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client.Render.TESR;
+package at.tyron.vintagecraft.Client.Render.TESR;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderItem;

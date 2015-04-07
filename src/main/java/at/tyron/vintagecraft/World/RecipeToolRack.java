@@ -1,11 +1,11 @@
 package at.tyron.vintagecraft.World;
 
 
+import at.tyron.vintagecraft.Block.BlockToolRack;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.block.BlockToolRack;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.item.ItemToolVC;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemBlock;

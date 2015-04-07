@@ -2,16 +2,16 @@ package at.tyron.vintagecraft.BlockClass;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockFlowerVC;
-import at.tyron.vintagecraft.block.BlockLeavesVC;
-import at.tyron.vintagecraft.block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.block.BlockLogVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.item.ItemFlowerVC;
+import at.tyron.vintagecraft.Block.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.BlockLogVC;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -42,7 +42,7 @@ public class RockClass extends BlockClass {
 	
 	public RockClass init() {
 		for (Enum item : EnumRockType.values()) {
-			values.put((IEnumState) item, new BlockClassEntry((IEnumState)item));
+			values.put((IStateEnum) item, new BlockClassEntry((IStateEnum)item));
 		}
 		
 		initBlocks(getBlockClassName(), getBlockClass(), getItemClass(), getHardness(), getStepSound(), getHarvestTool(), getHarvestLevel());

@@ -1,10 +1,10 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Interfaces.ISmeltable;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.interfaces.ISmeltable;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

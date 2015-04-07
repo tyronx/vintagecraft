@@ -1,22 +1,26 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockFirepit;
+import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.BlockFirepit.EnumBuildStage;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockLeavesVC;
-import at.tyron.vintagecraft.block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.block.BlockPlanksVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IFuel;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -66,20 +70,17 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 
 	@Override
 	public int getBurningHeat(ItemStack stack) {
-		return 900;
+		return 800;
 	}
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 1f;
+		return 2f;
 	}
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add("Heat produced when burned");
-		for (EnumFurnace furnace : EnumFurnace.values()) {
-			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
-		}
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 	
 	
@@ -91,5 +92,48 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 		
 		return BlocksVC.log;
 	}
+	
+	
+	
+	public BlockFirepit.EnumBuildStage getNextFirepitStage(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side) {
+		IBlockState state = world.getBlockState(pos);
+		
+		if(state.getBlock() instanceof BlockFirepit) {
+			BlockFirepit.EnumBuildStage stage = (EnumBuildStage) state.getValue(BlockFirepit.buildstage);
+			return stage.getNextStage();
+		} else {
+			return null;
+		}
+	}
+	
+	
+	@Override
+	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		BlockFirepit.EnumBuildStage stage = getNextFirepitStage(itemstack, entityplayer, world, pos, side);
+		
+		if (stage != null) {
+			world.setBlockState(pos, BlocksVC.firepit.getDefaultState().withProperty(BlockFirepit.buildstage, stage));
+			itemstack.stackSize -=3;
+			return true;
+		}
+		
+		
+    	if (entityplayer.getCurrentEquippedItem() != null && entityplayer.isSneaking()) {
+    		IBlockState state = world.getBlockState(pos);
+    		if(state.getBlock() instanceof BlockFirepit) {
+    			TEHeatSourceWithGUI teheatsource = (TEHeatSourceWithGUI) world.getTileEntity(pos);
+        		if (teheatsource.tryPutItemStack(itemstack)) {
+        			return true;
+        		}
+    		}
+    	}
+    	
+
+    	
+		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
+	}
+
+	
+	
 
 }

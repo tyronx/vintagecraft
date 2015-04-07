@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.gui;
+package at.tyron.vintagecraft.Gui;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;

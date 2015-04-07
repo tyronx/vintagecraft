@@ -1,9 +1,9 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
 import net.minecraft.block.Block;
-import at.tyron.vintagecraft.block.BlockVC;
+import at.tyron.vintagecraft.Block.BlockVC;
 
-public class EnumStateImplementation implements IEnumState {
+public class EnumStateImplementation implements IStateEnum {
 	int id;
 	
 	int metadata;

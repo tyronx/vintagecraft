@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
 import net.minecraft.item.ItemStack;
 

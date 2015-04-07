@@ -1,11 +1,11 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;

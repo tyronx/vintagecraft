@@ -1,18 +1,23 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.Block.BlockFirepit;
+import at.tyron.vintagecraft.Block.BlockSaplingVC;
+import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.interfaces.IFuel;
-import at.tyron.vintagecraft.interfaces.ISmeltable;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -22,6 +27,9 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -53,14 +61,19 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	}
 	
 	
-	public static EnumMaterialDeposit getOreType(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null) {
-			return EnumMaterialDeposit.byId(itemstack.getTagCompound().getInteger("oretype"));
+	public static EnumOreType getOreType(ItemStack itemstack) {
+		if (itemstack.getTagCompound() != null && itemstack.getTagCompound().hasKey("oretype")) {
+			return EnumOreType.byId(itemstack.getTagCompound().getInteger("oretype"));
 		}
 		return null;
 	}
 	
-	public static void setOreType(ItemStack itemstack, EnumOreType oretype) {
+	public static ItemStack getItemStackFor(EnumOreType oretype, int quantity) {
+		return setOreType(new ItemStack(ItemsVC.ore, quantity), oretype);
+		
+	}
+	
+	public static ItemStack setOreType(ItemStack itemstack, EnumOreType oretype) {
 		NBTTagCompound nbt = itemstack.getTagCompound(); 
 		if (nbt == null) {
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
@@ -68,6 +81,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		
 		nbt.setInteger("oretype", oretype.getId());
 		itemstack.setTagCompound(nbt);
+		return itemstack;
 	}
 
 
@@ -79,10 +93,10 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 
 	@Override
 	public int getBurningHeat(ItemStack stack) {
-		if (getOreType(stack) == EnumMaterialDeposit.LIGNITE) {
+		if (getOreType(stack) == EnumOreType.LIGNITE) {
 			return 1100;
 		}
-		if (getOreType(stack) == EnumMaterialDeposit.BITUMINOUSCOAL) {
+		if (getOreType(stack) == EnumOreType.BITUMINOUSCOAL) {
 			return 1200;
 		}
 		return 0;
@@ -91,11 +105,11 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		if (getOreType(stack) == EnumMaterialDeposit.LIGNITE) {
-			return 1.5f;
+		if (getOreType(stack) == EnumOreType.LIGNITE) {
+			return 2.2f;
 		}
-		if (getOreType(stack) == EnumMaterialDeposit.BITUMINOUSCOAL) {
-			return 2f;
+		if (getOreType(stack) == EnumOreType.BITUMINOUSCOAL) {
+			return 2.4f;
 		}
 		return 0;
 	}
@@ -170,21 +184,52 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		if (getBurningHeat(itemstack) > 0) {
-			tooltip.add("Heat produced when burned");
-			for (EnumFurnace furnace : EnumFurnace.values()) {
-				tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
-			}
-			
-		}
-		
-		if (getMeltingPoint(itemstack) > 0) {
-			tooltip.add("Melting Point: " + getMeltingPoint(itemstack) + " deg.");
-		}
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 
 		
+	@Override
+	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (!entityplayer.canPlayerEdit(pos.offset(side), side, itemstack)) {
+            return false;
+        }
+        
+        if (applyFertilizer(itemstack, world, pos, entityplayer)) {
+            if (!world.isRemote) {
+                world.playAuxSFX(2005, pos, 0);
+            }
+
+            return true;
+        }
+        
+		
+    	if (entityplayer.getCurrentEquippedItem() != null && entityplayer.isSneaking()) {
+    		IBlockState state = world.getBlockState(pos);
+    		if(state.getBlock() instanceof BlockFirepit) {
+    			TEHeatSourceWithGUI teheatsource = (TEHeatSourceWithGUI) world.getTileEntity(pos);
+        		if (teheatsource.tryPutItemStack(itemstack)) {
+        			return true;
+        		}
+    		}
+    	}
+    	
+		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
+	}
 
 	
+	
+	private boolean applyFertilizer(ItemStack stack, World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		if (getOreType(stack) != EnumOreType.SYLVITE_ROCKSALT) return false;
+		
+		IBlockState state = worldIn.getBlockState(pos);
+		
+		if (state.getBlock() instanceof BlockSaplingVC) {
+			boolean success = ((BlockSaplingVC)state.getBlock()).fertilize(worldIn, worldIn.rand, pos, state, stack);
+			if (success) stack.stackSize--;
+			return success;
+		}
+		
+		return false;
+	}
 	
 }

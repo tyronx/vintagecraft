@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client;
+package at.tyron.vintagecraft.Client;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -5,8 +5,8 @@ public class ModInfo {
 	public static final String ModName = "VintageCraft";
 
 	public static final int VersionMajor = 0;
-	public static final int VersionMinor = 4;
-	public static final int VersionRevision = 35;
+	public static final int VersionMinor = 5;
+	public static final int VersionRevision = 38;
 
 	public static final String ModVersion = VersionMajor+"."+VersionMinor+"."+VersionRevision;
 

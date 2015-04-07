@@ -1,12 +1,12 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockFenceGate;
@@ -53,18 +53,18 @@ public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
 	}
 
 	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types) {
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types) {
 		return registerMultiState(blockclassname, itemclass, types, blockclassname);
 	}
 
 	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types, String folderprefix) {
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
 		System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		
 		for (int i = 0; i < types.length; i++) {
-			IEnumState enumstate = types[i]; 
+			IStateEnum enumstate = types[i]; 
 			
 			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}

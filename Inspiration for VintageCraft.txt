@@ -246,9 +246,18 @@ http://www.planetminecraft.com/project/european-tree-pack/  - best birch tree ev
 (http://minecraftbuildinginc.com/mother-of-trees-largest-ever-and-a-town/)
 
 
-=== Weapons ===
+==== Weapons ====
 
 - Arrowheads can be made of metal too (not only flint)
+
+
+
+===== Animals ====
+
+
+Tamed Wolfs warn you off incoming dangers. Examples: Mobs that are targeting you or a new very dangerous mob
+
+
 
 
 ===== Plant Life ====

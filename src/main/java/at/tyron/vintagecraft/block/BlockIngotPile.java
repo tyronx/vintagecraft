@@ -1,12 +1,12 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.item.ItemIngot;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

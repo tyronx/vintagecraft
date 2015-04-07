@@ -1,6 +1,6 @@
-package at.tyron.vintagecraft.client.Model;
+package at.tyron.vintagecraft.Client.Model;
 
-import at.tyron.vintagecraft.client.Render.Model.ModelRendererVC;
+import at.tyron.vintagecraft.Client.Render.Model.ModelRendererVC;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 

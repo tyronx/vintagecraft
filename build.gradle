@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.8-0.4.35"
+version = "1.8-0.5.38"
 group= "at.tyron.vintagecraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "vintagecraft"
 
@@ -67,6 +67,8 @@ processResources
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+        exclude '**/*.psd'
+        exclude '**/*.php'
     }
 }
 
@@ -74,4 +76,13 @@ jar {
     manifest.attributes(
 			'FMLAT': 'vc_at.cfg'
     )
+}
+
+sourceSets {
+    main {
+        resources {
+            exclude '**/*.psd'
+            exclude '**/*.php'
+        }
+    }
 }

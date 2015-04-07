@@ -1,11 +1,7 @@
 package at.tyron.vintagecraft.World;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-
-import com.sun.security.ntlm.Client;
+import java.util.*;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -30,19 +26,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockGravelVC;
+import at.tyron.vintagecraft.Block.BlockSandVC;
+import at.tyron.vintagecraft.Block.BlockTopSoil;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.ClimateGenWorldChunkManager;
 import at.tyron.vintagecraft.Network.ChunkPutNbt;
 import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
-import at.tyron.vintagecraft.WorldGen.WorldChunkManagerVC;
-import at.tyron.vintagecraft.WorldGen.GenLayers.PseudoNumberGen;
-import at.tyron.vintagecraft.WorldProperties.EnumFertility;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockGravelVC;
-import at.tyron.vintagecraft.block.BlockSandVC;
-import at.tyron.vintagecraft.block.BlockTopSoil;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.ClimateGenWorldChunkManager;
+import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerVC;
+import at.tyron.vintagecraft.WorldGen.Noise.PseudoNumberGen;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class VCraftWorld {
 	public static boolean chunkdataprofiling = false;
@@ -305,7 +301,7 @@ public class VCraftWorld {
     	int rain = normalizeRainFall(climate & 0xff, pos);
     	int temp = normalizeTemperature((climate >> 16) & 0xff, pos);
     	
-    	return new int[]{temp, normalizeFertility((climate >> 8) & 0xff, rain, deScaleTemperature(temp), pos), rain};
+    	return new int[]{temp, getFertility(/*(climate >> 8) & 0xff,*/ rain, deScaleTemperature(temp), pos), rain};
     }
     
     public int getTemperature(BlockPos pos) {
@@ -317,7 +313,7 @@ public class VCraftWorld {
     }
     
     public int getFertily(int rain, int temperature, BlockPos pos) {
-    	return normalizeFertility((_getClimate(pos) >> 8) & 0xff, rain, temperature, pos);
+    	return getFertility(/*(_getClimate(pos) >> 8) & 0xff,*/ rain, temperature, pos);
     }
     
     
@@ -340,8 +336,17 @@ public class VCraftWorld {
     
     
     
-    public int normalizeFertility(int fertility, int rain, int temp, BlockPos pos) {
-    	return Math.max(0, Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256) - (pos.getY() - seaLevel)));
+    public int getFertility(int rain, int temp, BlockPos pos) {
+    	//int f = Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256));
+    	
+    	float f = Math.min(255, rain/2f + Math.max(0, rain*temp/512f));
+    	
+    	int heightloss = Math.max(0, pos.getY() - seaLevel - 20);
+    	float weight = 1 - Math.max(0, (80 - f) / 80f);
+    //	System.out.println("f = " + f + " / weight = " + weight);
+    	return (int) Math.max(0, f - heightloss * weight );     // Math.max(0, Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256) - (pos.getY() - seaLevel)));
+    	
+    	//return Math.max(0, f - heightloss / (f > 25 ? 1 : 2));
     }
     
     
@@ -359,14 +364,10 @@ public class VCraftWorld {
     
     
     
-    public IBlockState getTopLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
+    public IBlockState getTopLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness, Random rand) {
     	BlockPos pos = new BlockPos(x, y, z);
     	int []climate = getClimate(pos);
     	
-		/*int temperature = getTemperature(pos);
-		int rainfall = getRainfall(pos);
-		int fertilityvalue = getFertily(pos);*/
-		
 		EnumFertility fertility = EnumFertility.fromFertilityValue(climate[1]);
 
 		if (climate[0] <= -18) {
@@ -380,7 +381,7 @@ public class VCraftWorld {
 		} else {
 			if (steepness > 2) return null;
 			
-			if (climate[0] < 10) {
+			if (climate[0] < 10 || (climate[0] < 14 && rand.nextInt(2*climate[0] - 18) == 0)) {
 				return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
 			} else {
 				return BlocksVC.sand.getFromKey(rocktype).getBlockState();
@@ -389,6 +390,8 @@ public class VCraftWorld {
 	}
 
 	public IBlockState getSubLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
+		if (steepness > 1 || y > 200) return null;
+		
 		int []climate = getClimate(new BlockPos(x, y, z));
 		
 		//int fertilityvalue = getFertily(new BlockPos(x, y, z));
@@ -400,9 +403,9 @@ public class VCraftWorld {
 		}
 
 		if (fertility != null) {
-			if (steepness > 2 || y > 200) {
+			/*if (y > 200) {
 				return BlocksVC.regolith.getFromKey(rocktype).getBlockState();
-			}
+			}*/
 			return BlocksVC.subsoil.getFromKey(rocktype).getBlockState();
 		} else {
 			if (climate[0] < 10) {
@@ -415,9 +418,12 @@ public class VCraftWorld {
 
 	
 	public IBlockState getReoglithLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
-		int temperature = getTemperature(new BlockPos(x, y, z));
+		int []climate = getClimate(new BlockPos(x, y, z));
 		
-		if (temperature <= -28) return Blocks.packed_ice.getDefaultState();
+		if (climate[0] <= -28) return Blocks.packed_ice.getDefaultState();
+		
+		if (climate[1] < 40) return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
+		
 		
 		// Above y 200 the sublayer turns into regolith, so no need to generate it here again
 		if (steepness < 1 && y <= 200) return BlocksVC.regolith.getFromKey(rocktype).getBlockState();

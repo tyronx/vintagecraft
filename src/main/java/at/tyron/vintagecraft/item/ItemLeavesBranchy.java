@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;

@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import at.tyron.vintagecraft.Block.BlockSaplingVC;
+import at.tyron.vintagecraft.Interfaces.IFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
-import at.tyron.vintagecraft.block.BlockSaplingVC;
-import at.tyron.vintagecraft.interfaces.IFuel;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 
 public class ItemPeatBrick extends ItemVC implements IFuel {
 
@@ -23,21 +23,18 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 	
 	@Override
 	public int getBurningHeat(ItemStack stack) {
-		return 1000;
+		return 900;
 	}
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 0.6f;
+		return 1f;
 	}
 	
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add("Heat produced when burned");
-		for (EnumFurnace furnace : EnumFurnace.values()) {
-			tooltip.add("  " + furnace.name + ": " + (int)(getBurningHeat(itemstack) * furnace.maxHeatModifier()) + " deg.");	
-		}
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 	
 	
@@ -63,7 +60,7 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 		IBlockState state = worldIn.getBlockState(pos);
 		
 		if (state.getBlock() instanceof BlockSaplingVC) {
-			boolean success = ((BlockSaplingVC)state.getBlock()).fertilize(worldIn, worldIn.rand, pos, state);
+			boolean success = ((BlockSaplingVC)state.getBlock()).fertilize(worldIn, worldIn.rand, pos, state, stack);
 			if (success) stack.stackSize--;
 			return success;
 		}

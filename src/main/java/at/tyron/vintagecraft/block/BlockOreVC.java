@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -31,15 +31,15 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class BlockOreVC extends BlockVC implements IMultiblock {
 	public PropertyBlockClass OREANDROCKTYPE;
@@ -112,7 +112,6 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     	World worldIn = (World)world;
     	
      	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
-     	
      	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
      	
@@ -141,6 +140,9 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
         	default: 
 	        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
 	        	ItemOreVC.setOreType(itemstack, oretype);
+	        	
+	        	if (oretype == EnumOreType.BITUMINOUSCOAL) itemstack.stackSize *= 2;
+	        	
 	        	ret.add(itemstack);
 	        	break;
         }
@@ -177,5 +179,16 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	public int multistateAvailableTypes() {
 		return 16;
 	}
+	
+	
+    public int getHarvestLevel(IBlockState state) {
+     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
 
+        return oretype.getHarvestlevel();
+    }
+
+
+    
+    
 }

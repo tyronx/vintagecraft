@@ -1,12 +1,13 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.TileEntity.TileEntityStove;
+import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnace;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockFurnace;
@@ -39,23 +40,10 @@ import net.minecraftforge.common.property.*;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStove extends BlockContainer {
+public class BlockStove extends BlockContainer implements IStrongHeatSource {
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	private boolean keepInventory;
 	boolean burning;
-	
-	
-	/*private ExtendedBlockState state = new ExtendedBlockState(this, new IProperty[0], new IUnlistedProperty[]{ B3DLoader.B3DFrameProperty.instance });
-	
-	
-	 @Override
-     public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-         IModel model = ModelLoaderRegistry.getModel(new ResourceLocation(ModInfo.ModID.toLowerCase(),"block/stove.b3d"));
-         B3DLoader.B3DState defaultState = ((B3DLoader.Wrapper)model).getDefaultState();
-         B3DLoader.B3DState newState = new B3DLoader.B3DState(defaultState.getAnimation(), 0);
-         return ((IExtendedBlockState)this.state.getBaseState()).withProperty(B3DLoader.B3DFrameProperty.instance, newState);
-     }
-*/
 
 	
     public BlockStove(boolean burning) {
@@ -106,7 +94,7 @@ public class BlockStove extends BlockContainer {
         } else {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityStove) {
+            if (tileentity instanceof TEHeatSourceWithGUI) {
             	playerIn.openGui(VintageCraft.instance, 0, worldIn, pos.getX(), pos.getY(), pos.getZ());
             }
 
@@ -125,7 +113,6 @@ public class BlockStove extends BlockContainer {
         
         keepInventory = true;
         worldIn.setBlockState(pos, block.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)), 3);
-        //worldIn.setBlockState(pos, BlocksVC.stove.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(LIT, burning), 3);
         keepInventory = false;
         
         
@@ -155,7 +142,7 @@ public class BlockStove extends BlockContainer {
     
     
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return new TileEntityStove(EnumFurnace.STOVE);
+        return new TEHeatSourceWithGUI(EnumStrongHeatSource.STOVE);
     }
     
     @SideOnly(Side.CLIENT)

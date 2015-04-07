@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -17,14 +17,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldProperties.EnumFertility;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.interfaces.ISoil;
-import at.tyron.vintagecraft.item.ItemLogVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class BlockPeat extends BlockVC implements ISoil {
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);

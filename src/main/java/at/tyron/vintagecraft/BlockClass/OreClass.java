@@ -3,19 +3,19 @@ package at.tyron.vintagecraft.BlockClass;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.item.ItemBlock;
-import at.tyron.vintagecraft.WorldProperties.EnumFlowerGroup;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.block.BlockFlowerVC;
-import at.tyron.vintagecraft.block.BlockOreVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.item.ItemFlowerVC;
-import at.tyron.vintagecraft.item.ItemOreVC;
+import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class OreClass extends BlockClass {
 	String getBlockClassName() { return name; }

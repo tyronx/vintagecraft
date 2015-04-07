@@ -5,17 +5,16 @@ import java.util.HashMap;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Block.BlockRock;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
-import at.tyron.vintagecraft.WorldProperties.DepositOccurence;
-import at.tyron.vintagecraft.WorldProperties.DepositOccurenceType;
-import at.tyron.vintagecraft.WorldProperties.DepositSize;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockOreVC;
-import at.tyron.vintagecraft.block.BlockRock;
+import at.tyron.vintagecraft.WorldGen.Helper.DepositOccurence;
+import at.tyron.vintagecraft.WorldProperties.EnumDepositOccurenceType;
+import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
@@ -60,8 +59,8 @@ public class WorldGenDeposits implements IWorldGenerator {
 		int tries = 6;
 		
 		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.size != DepositSize.SMALL && deposit.size != DepositSize.SMALLANDLARGE && deposit.size != DepositSize.TINY && deposit.size != DepositSize.SINGLE) continue;
-			if (deposit.occurence.type == DepositOccurenceType.INDEPOSIT || deposit.occurence.type == DepositOccurenceType.NODEPOSIT) continue;   
+			if (deposit.size != EnumDepositSize.SMALL && deposit.size != EnumDepositSize.SMALLANDLARGE && deposit.size != EnumDepositSize.TINY && deposit.size != EnumDepositSize.SINGLE) continue;
+			if (deposit.occurence.type == EnumDepositOccurenceType.INDEPOSIT || deposit.occurence.type == EnumDepositOccurenceType.NODEPOSIT) continue;   
 			
 			tries = 6;
 			while(tries-- > 0) {
@@ -80,8 +79,8 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//System.out.println("gen " + deposit);
 		
 		boolean underground =
-			deposit.occurence.type == DepositOccurenceType.ANYBELOWSEALEVEL
-			|| (deposit.occurence.type == DepositOccurenceType.MIXEDDEPTHS && rand.nextFloat() < deposit.occurence.belowSealLevelRatio)
+			deposit.occurence.type == EnumDepositOccurenceType.ANYBELOWSEALEVEL
+			|| (deposit.occurence.type == EnumDepositOccurenceType.MIXEDDEPTHS && rand.nextFloat() < deposit.occurence.belowSealLevelRatio)
 		;
 		
 		if (underground) {
@@ -112,8 +111,8 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("overground copper @ " + surface + " + depth " + depth);
 		
 		int width = (rand.nextInt(9) + rand.nextInt(9)) / 2;
-		if (deposit.size == DepositSize.TINY) width = 1 + rand.nextInt(3);
-		if (deposit.size == DepositSize.SINGLE) width = 0;
+		if (deposit.size == EnumDepositSize.TINY) width = 1 + rand.nextInt(3);
+		if (deposit.size == EnumDepositSize.SINGLE) width = 0;
 		
 		for (int dx = -width / 2; dx <= width/2; dx++) {
 			if (rand.nextInt(8) == 0) depth+=rand.nextInt(2) * 2 - 1;
@@ -158,7 +157,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				
 				int horizon = VCraftWorld.instance.seaLevel;
 				
-				if (deposit.occurence.type == DepositOccurenceType.ANYRELATIVEDEPTH) {
+				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH) {
 					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
 					
 					if (horizon > deposit.occurence.untilyheight) continue;
@@ -184,6 +183,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 					while (hgt-- > 0) {
 						if (pos.getY() < 1) continue;
 						world.setBlockState(pos, deposit.getBlockStateForDepth(horizon - depositDepth, parentmaterial), 2);
+						//if (deposit == EnumMaterialDeposit.FIRECLAY) System.out.println("fireclay @ " + pos);
 						pos = pos.down();
 						depositDepth--;
 					}

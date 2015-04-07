@@ -1,12 +1,12 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import at.tyron.vintagecraft.Block.BlockLeavesVC;
+import at.tyron.vintagecraft.Interfaces.IRackable;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.block.BlockLeavesVC;
-import at.tyron.vintagecraft.interfaces.IRackable;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
@@ -68,7 +68,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
     	if (tooltype == EnumTool.SHEARS) {
     		stack.damageItem(1, playerIn);
     		
-    		int uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, Math.min(4, stack.getMaxDamage() - stack.getItemDamage()), BlockLeavesVC.class);
+    		int uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, Math.min(5, stack.getMaxDamage() - stack.getItemDamage()), BlockLeavesVC.class);
     		
     		stack.damageItem(uses, playerIn);
     		

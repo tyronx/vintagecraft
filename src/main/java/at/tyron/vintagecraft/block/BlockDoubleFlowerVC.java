@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,11 +11,11 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.item.ItemDoublePlantVC;
-import at.tyron.vintagecraft.item.ItemLogVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.material.Material;
@@ -222,9 +222,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
-    	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-        ItemDoublePlantVC.withFlowerType(itemstack, getFlowerType(state));
-        ret.add(itemstack);
+    	ret.add(getFlowerType(state).getItemStack());
         
     	return ret;
     }

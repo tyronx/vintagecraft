@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
 
 public class BlockDoubleWoodenSlab extends BlockWoodenSlabVC {
     @SideOnly(Side.CLIENT)
@@ -37,7 +37,7 @@ public class BlockDoubleWoodenSlab extends BlockWoodenSlabVC {
 	}
 
 	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types, String folderprefix) {
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
 		System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);

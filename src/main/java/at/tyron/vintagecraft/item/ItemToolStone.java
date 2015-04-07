@@ -1,9 +1,9 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
 
 public class ItemToolStone extends ItemToolVC {
 	@Override
@@ -47,6 +47,9 @@ public class ItemToolStone extends ItemToolVC {
 	public float getDamageGainOnEntities() {
 		if (tooltype == EnumTool.SWORD) {
 			return 2f;
+		}
+		if (tooltype == EnumTool.AXE) {
+			return 1.5f;
 		}
 		return 1f;
 	}

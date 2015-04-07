@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import net.minecraft.block.material.Material;
@@ -50,6 +50,10 @@ public class ItemToolTinBronze extends ItemToolVC {
 		if (tooltype == EnumTool.SWORD) {
 			return 4f;
 		}
+		if (tooltype == EnumTool.AXE) {
+			return 3.5f;
+		}
+
 		return 2f;
 	}
 

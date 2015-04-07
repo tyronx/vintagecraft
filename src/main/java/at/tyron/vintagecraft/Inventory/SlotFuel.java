@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.IFuel;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

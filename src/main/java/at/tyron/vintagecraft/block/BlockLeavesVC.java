@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -8,17 +8,18 @@ import javax.naming.spi.StateFactory;
 import com.google.common.collect.Lists;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC.EnumBlockHalf;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemLeaves;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.block.BlockDoubleFlowerVC.EnumBlockHalf;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.item.ItemLeaves;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.material.Material;
@@ -31,6 +32,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemSlab;
@@ -66,6 +68,10 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 		this.setLightOpacity(1);
         this.setCreativeTab(CreativeTabs.tabMaterials);    
 	}
+	
+	
+	
+
 	
 	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
@@ -317,11 +323,27 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
         }
     }*/
 
-    @Override
-    public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-        return ret;
-    }
+
+
+	@Override
+	public java.util.List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		Random rand = world instanceof World ? ((World)world).rand : new Random();
+		java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+
+		if (rand.nextFloat() < 0.1f) {
+			ret.add(new ItemStack(Items.stick, 1));
+		}
+
+		EnumTree tree = (EnumTree) ((BlockClassEntry)state.getValue(getTypeProperty())).getKey();
+
+		if (rand.nextFloat() < tree.saplingdropchance * 0.1f) {
+			ret.add(BlocksVC.sapling.getItemStackFor(tree));
+		}
+
+
+		return ret;
+	}
+
     
     
     

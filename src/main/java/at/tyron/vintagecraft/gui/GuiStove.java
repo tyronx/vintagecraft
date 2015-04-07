@@ -1,7 +1,7 @@
-package at.tyron.vintagecraft.gui;
+package at.tyron.vintagecraft.Gui;
 
 import at.tyron.vintagecraft.Inventory.ContainerStove;
-import at.tyron.vintagecraft.TileEntity.TileEntityStove;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 public class GuiStove extends GuiContainer {
 	private static final ResourceLocation furnaceGuiTextures = new ResourceLocation("textures/gui/container/furnace.png");
 	
-	TileEntityStove stove;
+	TEHeatSourceWithGUI stove;
 	InventoryPlayer playerInventory;
 	
-	public GuiStove(InventoryPlayer player, World world, TileEntityStove tileEntity) {
+	public GuiStove(InventoryPlayer player, World world, TEHeatSourceWithGUI tileEntity) {
 		super(new ContainerStove(player, tileEntity));
 		
 		this.playerInventory = player;

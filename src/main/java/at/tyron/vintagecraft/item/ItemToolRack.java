@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.Block.BlockToolRack;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockToolRack;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider {
 	//static Block block = BlocksVC.toolrack;

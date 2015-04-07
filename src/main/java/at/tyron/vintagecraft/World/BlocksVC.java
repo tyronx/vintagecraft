@@ -17,39 +17,44 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.Block.*;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Client.VCraftModelLoader;
+import at.tyron.vintagecraft.Client.Render.TESR.TESRIngotPile;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemBrick;
+import at.tyron.vintagecraft.Item.ItemCeramicVessel;
+import at.tyron.vintagecraft.Item.ItemClayVessel;
+import at.tyron.vintagecraft.Item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.Item.ItemGrassVC;
+import at.tyron.vintagecraft.Item.ItemLeaves;
+import at.tyron.vintagecraft.Item.ItemLeavesBranchy;
+import at.tyron.vintagecraft.Item.ItemLogVC;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.ItemRock;
+import at.tyron.vintagecraft.Item.ItemRockTyped;
+import at.tyron.vintagecraft.Item.ItemToolRack;
+import at.tyron.vintagecraft.Item.ItemTopSoil;
+import at.tyron.vintagecraft.Item.ItemWoodtyped;
+import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TESapling;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.TileEntity.TileEntityStove;
+import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.WorldProperties.*;
-import at.tyron.vintagecraft.block.*;
-import at.tyron.vintagecraft.client.VCraftModelLoader;
-import at.tyron.vintagecraft.client.Render.TESR.TESRIngotPile;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.item.ItemBrick;
-import at.tyron.vintagecraft.item.ItemCeramicVessel;
-import at.tyron.vintagecraft.item.ItemDoublePlantVC;
-import at.tyron.vintagecraft.item.ItemRockTyped;
-import at.tyron.vintagecraft.item.ItemToolRack;
-import at.tyron.vintagecraft.item.ItemClayVessel;
-import at.tyron.vintagecraft.item.ItemWoodtyped;
-import at.tyron.vintagecraft.item.ItemFlowerVC;
-import at.tyron.vintagecraft.item.ItemGrassVC;
-import at.tyron.vintagecraft.item.ItemLeaves;
-import at.tyron.vintagecraft.item.ItemLeavesBranchy;
-import at.tyron.vintagecraft.item.ItemLogVC;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemPlanksVC;
-import at.tyron.vintagecraft.item.ItemTopSoil;
-import at.tyron.vintagecraft.item.ItemRock;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class BlocksVC {
 
@@ -58,9 +63,8 @@ public class BlocksVC {
 	public static Block stove;
 	public static Block stove_lit;
 	
-	public static Block furnace;
-	public static Block furnace_lit;
-	
+	public static Block bloomerybase;
+	public static Block bloomerychimney;
 	
 	public static Block fireclaybricks;
 	
@@ -118,7 +122,9 @@ public class BlocksVC {
 	public static Block ingotPile;
 	public static Block ceramicVessel;
 	public static Block clayVessel;
-	
+
+	public static Block firepit_lit;
+	public static Block firepit;
 
 	
 	public static void init() {
@@ -129,16 +135,13 @@ public class BlocksVC {
 	
 
 	public static void initBlocks() {
-		/*GameRegistry.registerBlock(stove, ItemBlock.class, "stove");
-		stove.setUnlocalizedName("stove");
+		firepit = new BlockFirepit(false);
+		firepit.setHardness(1f);
+		register(firepit, "firepit", ItemBlock.class);
 		
-		String modelLocation = ModInfo.ModID.toLowerCase() + ":stove.b3d";
-		
-		VintageCraft.instance.proxy.addVariantName(Item.getItemFromBlock(stove), modelLocation);
-		Item item = Item.getItemFromBlock(stove);
-        Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, 0, new ModelResourceLocation(modelLocation, "inventory"));
-        //ModelLoaderRegistry.registerLoader(VCraftModelLoader.instance);
-		*/
+		firepit_lit = new BlockFirepit(true);
+		firepit_lit.setHardness(1F).setLightLevel(0.86f);
+		register(firepit_lit, "firepit_lit", ItemBlock.class);
 		
 		stove = new BlockStove(false).setHardness(3F);
 		stove_lit = new BlockStove(true).setHardness(3F);
@@ -146,13 +149,13 @@ public class BlocksVC {
 		register(stove, "stove", ItemBlock.class);
 		register(stove_lit, "stove_lit", ItemBlock.class);
 
-		
-		furnace = new BlockFurnace(false).setHardness(3.5F);
-		furnace_lit = new BlockFurnace(true).setHardness(3.5F);
-		furnace_lit.setLightLevel(0.86f);
-		register(furnace, "furnace", ItemBlock.class);
-		register(furnace_lit, "furnace_lit", ItemBlock.class);
+		bloomerybase = new BlockBloomeryBase().setHardness(3.8f);
+		register(bloomerybase, "bloomerybase", ItemBlock.class);
 
+		bloomerychimney = new BlockBloomeryChimney().setHardness(2.5f);
+		register(bloomerychimney, "bloomerychimney", ItemBlock.class);
+
+		
 		
 		
 		toolrack = new BlockToolRack().registerMultiState("toolrack", ItemToolRack.class, EnumTree.values()).setHardness(1.2f);  //.registerSingleState("toolrack", null); // 
@@ -228,23 +231,26 @@ public class BlocksVC {
 		rawfireclay = new BlockRawFireClay().setHardness(2F).registerSingleState("rawfireclay", ItemBlock.class).setStepSound(Block.soundTypeGravel);
 		fireclaybricks = new BlockFireBrick().setHardness(2F).registerSingleState("fireclaybricks", ItemBlock.class).setStepSound(Block.soundTypeStone);
 		
-		/*GameRegistry.registerBlock(rawfireclay, ItemBlock.class, "rawfireclay");
-		rawfireclay.setUnlocalizedName("rawfireclay");*/
-		
+	
 		
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
 		
-		sand = new RockClass("sand", BlockSandVC.class, ItemRockTyped.class, 1f, Block.soundTypeSand, "shovel", 0);
+		sand = new RockClass("sand", BlockSandVC.class, ItemRockTyped.class, 0.8f, Block.soundTypeSand, "shovel", 0);
 		sand.init();
-		gravel = new RockClass("gravel", BlockGravelVC.class, ItemRockTyped.class, 1.3f, Block.soundTypeGravel, "shovel", 0);
+		
+		gravel = new RockClass("gravel", BlockGravelVC.class, ItemRockTyped.class, 1f, Block.soundTypeGravel, "shovel", 0);
 		gravel.init();
+		
 		subsoil = new RockClass("subsoil", BlockSubSoil.class, ItemRockTyped.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
 		subsoil.init();
+		
 		regolith = new RockClass("regolith", BlockRegolith.class, ItemRockTyped.class, 2.5f, Block.soundTypeGravel, "shovel", 0);
 		regolith.init();
+		
 		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 2f, Block.soundTypeStone, "pickaxe", 0);
 		rock.init();
+		
 		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemRockTyped.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
 		cobblestone.init();
 		
@@ -275,15 +281,13 @@ public class BlocksVC {
 	
 	
 	public static void initTileEntities() {
-		GameRegistry.registerTileEntity(TileEntityStove.class, ModInfo.ModID + ":stove");
+		GameRegistry.registerTileEntity(TEHeatSourceWithGUI.class, ModInfo.ModID + ":stove");
 		GameRegistry.registerTileEntity(TEFarmland.class, ModInfo.ModID + ":farmlandte");
 		GameRegistry.registerTileEntity(TESapling.class, ModInfo.ModID + ":saplingte");
-		
-		
 		GameRegistry.registerTileEntity(TEIngotPile.class, ModInfo.ModID + ":ingotpile");
 		GameRegistry.registerTileEntity(TEToolRack.class, ModInfo.ModID + ":toolrack");
-		
 		GameRegistry.registerTileEntity(TEVessel.class, ModInfo.ModID + ":ceramicvessel2");
+		GameRegistry.registerTileEntity(TEBloomery.class, ModInfo.ModID + ":bloomery");
 	}
 
 
@@ -292,10 +296,13 @@ public class BlocksVC {
 
 
 	private static void initHardness() {
+//		rawore.setHarvestLevel("pickaxe", 0);
 		topsoil.setHarvestLevel("shovel", 0);
 		rawclay.setHarvestLevel("shovel", 0);
 		rawfireclay.setHarvestLevel("shovel", 0);
 		peat.setHarvestLevel("shovel", 1);
+		bloomerybase.setHarvestLevel("pickaxe", 0);
+		bloomerychimney.setHarvestLevel("pickaxe", 1);
 	}
 	
 

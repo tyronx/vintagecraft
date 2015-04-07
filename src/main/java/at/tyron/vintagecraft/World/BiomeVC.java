@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.World;
 
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.interfaces.IGenLayerSupplier;
+import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {

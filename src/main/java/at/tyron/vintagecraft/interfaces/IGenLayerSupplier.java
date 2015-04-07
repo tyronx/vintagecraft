@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
 
 /* For classes/enums that supply infos on how to generate layers */ 

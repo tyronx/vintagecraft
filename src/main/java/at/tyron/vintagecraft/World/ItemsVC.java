@@ -5,26 +5,27 @@ import java.lang.reflect.Method;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.ItemClayVessel;
+import at.tyron.vintagecraft.Item.ItemFireClay;
+import at.tyron.vintagecraft.Item.ItemFoodVC;
+import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.ItemStone;
+import at.tyron.vintagecraft.Item.ItemToolBismuthBronze;
+import at.tyron.vintagecraft.Item.ItemToolCopper;
+import at.tyron.vintagecraft.Item.ItemToolIron;
+import at.tyron.vintagecraft.Item.ItemToolRack;
+import at.tyron.vintagecraft.Item.ItemToolStone;
+import at.tyron.vintagecraft.Item.ItemToolTinBronze;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.item.ItemArmorVC;
-import at.tyron.vintagecraft.item.ItemFireClay;
-import at.tyron.vintagecraft.item.ItemToolBismuthBronze;
-import at.tyron.vintagecraft.item.ItemToolRack;
-import at.tyron.vintagecraft.item.ItemToolTinBronze;
-import at.tyron.vintagecraft.item.ItemToolCopper;
-import at.tyron.vintagecraft.item.ItemFoodVC;
-import at.tyron.vintagecraft.item.ItemIngot;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemPeatBrick;
-import at.tyron.vintagecraft.item.ItemStone;
-import at.tyron.vintagecraft.item.ItemToolStone;
-import at.tyron.vintagecraft.item.ItemToolVC;
-import at.tyron.vintagecraft.item.ItemClayVessel;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -44,6 +45,15 @@ public class ItemsVC {
 	public static Item fireclay_brick_raw;
 	public static Item fireclay_brick;
 	
+	
+	public static Item ironAxe;
+	public static Item ironPickaxe;
+	public static Item ironShovel;
+	public static Item ironSword;
+	public static Item ironHoe;
+	public static Item ironSaw;
+	public static Item ironShears;
+
 	
 	public static Item bismuthbronzeAxe;
 	public static Item bismuthbronzePickaxe;
@@ -104,11 +114,7 @@ public class ItemsVC {
 	public static Item chickenCooked;
 	
 	public static Item wheatSeeds;
-	//public static Item ceramicVessel;
-	//public static Item clayVessel;
-	
-	//public static Item toolrack;
-	
+
 	
 	public static void init() {
 		initItems();
@@ -146,6 +152,7 @@ public class ItemsVC {
 		//clayVessel = new ItemClayVessel(null); //.register("clayvessel");
 		//register(clayVessel, "clayvessel");
 		
+		registerTools("iron", ItemToolIron.class);
 		registerTools("bismuthbronze", ItemToolBismuthBronze.class);
 		registerTools("tinbronze", ItemToolTinBronze.class);
 		registerTools("copper", ItemToolCopper.class);

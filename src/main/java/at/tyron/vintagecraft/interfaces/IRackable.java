@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
 public interface IRackable {
 

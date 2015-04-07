@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client.Render.Model;
+package at.tyron.vintagecraft.Client.Render.Model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;

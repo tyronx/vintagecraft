@@ -1,9 +1,9 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.Block.SoundType;
@@ -41,17 +41,17 @@ public abstract class BlockContainerVC extends BlockContainer implements ISubtyp
 	}
 
 	
-	public BlockContainerVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types) {
+	public BlockContainerVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types) {
 		return registerMultiState(blockclassname, itemclass, types, blockclassname);
 	}
 	
-	public BlockContainerVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types, String folderprefix) {
+	public BlockContainerVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
 		System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		
 		for (int i = 0; i < types.length; i++) {
-			IEnumState enumstate = types[i]; 
+			IStateEnum enumstate = types[i]; 
 			
 			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}

@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -18,10 +18,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class BlockCobblestone extends BlockRock {
 	public BlockCobblestone() {

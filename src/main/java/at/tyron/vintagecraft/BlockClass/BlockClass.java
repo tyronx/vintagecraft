@@ -23,12 +23,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public abstract class BlockClass {
-	LinkedHashMap<IEnumState, BlockClassEntry> values = new LinkedHashMap<IEnumState, BlockClassEntry>();
+	LinkedHashMap<IStateEnum, BlockClassEntry> values = new LinkedHashMap<IStateEnum, BlockClassEntry>();
 	
 
 	String name;
@@ -53,7 +53,7 @@ public abstract class BlockClass {
 	
 	public Block[] initFromEnum(Class<? extends Enum> enumclass) {
 		for (Enum item : enumclass.getEnumConstants()) {
-			values.put((IEnumState) item, new BlockClassEntry((IEnumState)item));
+			values.put((IStateEnum) item, new BlockClassEntry((IStateEnum)item));
 		}
 		
 		return initBlocks(getBlockClassName(), getBlockClass(), getItemClass(), getHardness(), getStepSound(), getHarvestTool(), getHarvestLevel());
@@ -184,7 +184,7 @@ public abstract class BlockClass {
 	}
 	
 	
-	public BlockClassEntry getFromKey(IEnumState key) {
+	public BlockClassEntry getFromKey(IStateEnum key) {
 		return values.get(key);
 	}
 
@@ -236,12 +236,12 @@ public abstract class BlockClass {
 	}
 	
 	
-	public IBlockState getBlockStateFor(IEnumState enumitem) {
+	public IBlockState getBlockStateFor(IStateEnum enumitem) {
 		return values.get(enumitem).getBlockState();
 	}
 	
 	public IBlockState getBlockStateFor(String statename) {
-		for (IEnumState state : values.keySet()) {
+		for (IStateEnum state : values.keySet()) {
 			if (state.getStateName().equals(statename)) return values.get(state).getBlockState();
 		}
 		return null;
@@ -254,10 +254,10 @@ public abstract class BlockClass {
 		return false;
 	}
 
-	public ItemStack getItemStackFor(IEnumState enumitem) {
+	public ItemStack getItemStackFor(IStateEnum enumitem) {
 		return values.get(enumitem).getItemStack();
 	}
-	public ItemStack getItemStackFor(IEnumState enumitem, int quantity) {
+	public ItemStack getItemStackFor(IStateEnum enumitem, int quantity) {
 		return values.get(enumitem).getItemStack(quantity);
 	}
 

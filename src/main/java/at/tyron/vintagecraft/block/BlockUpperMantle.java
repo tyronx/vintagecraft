@@ -1,6 +1,6 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;

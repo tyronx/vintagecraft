@@ -1,7 +1,9 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockFarmlandVC;
+import at.tyron.vintagecraft.Block.BlockFarmlandVC;
+import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -15,7 +17,8 @@ public class TESapling extends TileEntity {
 	public float size = 0.35f;
 	private long growthEnd;
 	public long lastBonemealTime = -1;
-	public int fertilizersUsed = 0;
+	public int peatsUsed = 0;
+	public int sylvitesUsed = 0;
 	
    /* public IExtendedBlockState getState() {
         if(state == null) {
@@ -50,7 +53,8 @@ public class TESapling extends TileEntity {
 	public void readFromNBT(NBTTagCompound compound) {
 		size = compound.getFloat("size");
 		growthEnd = compound.getLong("growthEnd");
-		fertilizersUsed = compound.getInteger("fertilizersUser");
+		peatsUsed = compound.getInteger("peatsUsed");
+		sylvitesUsed = compound.getInteger("sylvitesUsed");
 		lastBonemealTime = compound.getLong("lastBonemealTime");
 		super.readFromNBT(compound);
 	}
@@ -59,7 +63,9 @@ public class TESapling extends TileEntity {
 	public void writeToNBT(NBTTagCompound compound) {
 		compound.setFloat("size", size);
 		compound.setLong("growthEnd", growthEnd);
-		compound.setInteger("fertilizersUser", fertilizersUsed);
+		compound.setInteger("peatsUsed", peatsUsed);
+		compound.setInteger("sylvitesUsed", sylvitesUsed);
+		
 		compound.setLong("lastBonemealTime", lastBonemealTime);
 		super.writeToNBT(compound);
 	}
@@ -73,14 +79,22 @@ public class TESapling extends TileEntity {
 		this.size = fertility;
 	}
     
-    public boolean canUseFertilizer() {
-    	return fertilizersUsed < 10;
+    public boolean canUseFertilizer(ItemStack stack) {
+    	if (stack.getItem() instanceof ItemPeatBrick) {
+    		return peatsUsed < 10;
+    	}
+    	return sylvitesUsed < 5;
     }
     
-    public void incSize() {
-   		this.size+=0.05f;
+    public void incSize(ItemStack stack) {
+    	if (stack.getItem() instanceof ItemPeatBrick) {
+    		this.size += 0.05f;
+    		peatsUsed++;
+    		return;
+    	}
     	
-    	fertilizersUsed++;
+   		this.size += 0.05f;
+   		sylvitesUsed++;
     }
 
     

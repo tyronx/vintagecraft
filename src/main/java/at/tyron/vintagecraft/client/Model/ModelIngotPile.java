@@ -1,8 +1,8 @@
-package at.tyron.vintagecraft.client.Model;
+package at.tyron.vintagecraft.Client.Model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraftforge.fml.relauncher.*;
-import at.tyron.vintagecraft.client.Render.Model.*;
+import at.tyron.vintagecraft.Client.Render.Model.*;
 
 @SideOnly(Side.CLIENT)
 public class ModelIngotPile extends ModelBase {

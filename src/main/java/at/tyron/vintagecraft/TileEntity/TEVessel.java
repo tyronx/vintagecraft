@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.item.ItemIngot;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemStone;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;

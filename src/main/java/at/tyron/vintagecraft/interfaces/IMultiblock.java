@@ -1,8 +1,8 @@
-package at.tyron.vintagecraft.interfaces;
+package at.tyron.vintagecraft.Interfaces;
 
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
-import at.tyron.vintagecraft.block.BlockVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -16,6 +16,6 @@ public interface IMultiblock {
 	
 	public BlockClass getBlockClass();
 	
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types);
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState []types, String folderprefix);
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types);
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix);
 }

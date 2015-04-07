@@ -1,0 +1,24 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "0": "vintagecraft:blocks/ironcoalmix",
+        "1": "vintagecraft:blocks/log/oak_bark",
+        "2": "vintagecraft:blocks/cobblestone/andesite",
+        "particle": "vintagecraft:blocks/log/oak_bark",
+    },
+    "elements": [
+        {
+            "name": "Stone 1",
+            "from": [ 2.0, 0.0, 2.0 ], 
+            "to": [ 14.0, 1.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 4.0, 15.0, 16.0, 16.0 ] },
+                "east": { "texture": "#2", "uv": [ 4.0, 15.0, 16.0, 16.0 ] },
+                "south": { "texture": "#2", "uv": [ 4.0, 15.0, 16.0, 16.0 ] },
+                "west": { "texture": "#2", "uv": [ 4.0, 15.0, 16.0, 16.0 ] },
+                "up": { "texture": "#2", "uv": [ 4.0, 4.0, 16.0, 16.0 ] },
+                "down": { "texture": "#2", "uv": [ 4.0, 4.0, 16.0, 16.0 ] }
+            }
+        }
+    ]
+}

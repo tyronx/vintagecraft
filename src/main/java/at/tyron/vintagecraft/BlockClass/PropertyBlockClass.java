@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import at.tyron.vintagecraft.interfaces.IEnumState;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;

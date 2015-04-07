@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.client.Render.TESR;
+package at.tyron.vintagecraft.Client.Render.TESR;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBox;
@@ -17,9 +17,9 @@ import org.lwjgl.opengl.GL11;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.block.*;
-import at.tyron.vintagecraft.client.Model.ModelToolRack;
-import at.tyron.vintagecraft.client.Render.Model.ModelRendererVC;
+import at.tyron.vintagecraft.Block.*;
+import at.tyron.vintagecraft.Client.Model.ModelToolRack;
+import at.tyron.vintagecraft.Client.Render.Model.ModelRendererVC;
 
 public class TESRToolRack extends TESRBase {
 	ModelToolRack modeltoolrack = new ModelToolRack(); 

@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -7,7 +7,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
@@ -33,7 +33,7 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
     	Random rand = world instanceof World ? ((World)world).rand : new Random();
         java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
         
-        if (rand.nextInt(2) == 0) {
+        if (rand.nextFloat() < 0.7f) {
         	ret.add(new ItemStack(Items.stick, 1));
         }
         

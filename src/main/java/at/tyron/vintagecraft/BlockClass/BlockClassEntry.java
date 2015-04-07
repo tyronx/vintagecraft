@@ -6,18 +6,18 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
+import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
-public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comparable<E> {
-	IEnumState key;
+public class BlockClassEntry<E> implements IStateEnum, IStringSerializable, Comparable<E> {
+	IStateEnum key;
 	
 	public Block block;
 	public int metadata;
 	
 	
-	public BlockClassEntry(IEnumState key) {
+	public BlockClassEntry(IStateEnum key) {
 		this.key = key;
 	}
 	
@@ -38,7 +38,7 @@ public class BlockClassEntry<E> implements IEnumState, IStringSerializable, Comp
 		return key.getId();
 	}
 	
-	public IEnumState getKey() {
+	public IStateEnum getKey() {
 		return key;
 	}
 

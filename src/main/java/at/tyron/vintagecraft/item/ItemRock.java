@@ -1,16 +1,16 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.Interfaces.ISmeltable;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockRock;
-import at.tyron.vintagecraft.interfaces.ISmeltable;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.model.ModelBakery;

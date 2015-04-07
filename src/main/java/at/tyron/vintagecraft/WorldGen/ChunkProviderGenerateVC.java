@@ -8,17 +8,19 @@ import java.util.Random;
 import java.util.Collections;
 
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.GenLayers.GenLayerVC;
-import at.tyron.vintagecraft.WorldGen.GenLayers.GenRockLayers;
-import at.tyron.vintagecraft.WorldProperties.EnumCrustLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.EnumOrganicLayer;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.block.BlockRock;
+import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerFlatVC;
+import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -45,95 +47,60 @@ import net.minecraft.world.gen.MapGenCaves;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
-	//GenLayerVC depositLayer;
-	
-//	GenLayerVC heightmapGen;
+	World worldObj;
+	long seed;
+	private Random rand;
+	ChunkPrimer primer;
+
 	
 	GenRockLayers genrocklayers;
 	GenLayerVC ageLayer;
-	
-	GenLayerVC noiseFieldModifier;
-	int noiseFieldModifierArray[];
-	
-	//GenLayerVC[] rockLayers = new GenLayerVC[EnumCrustLayer.values().length - EnumCrustLayer.quantityFixedTopLayers];
-	
-	
-	/** The 7 rocklayers **/
-	//int[][] rockData;
-	/** The biomes that are used to generate the chunk */
-	private BiomeGenBase[] biomeMap;
+	GenLayerVC noiseFieldModifier;	
 	
 	MapGenCavesVC caveGenerator;
 	MapGenFlora floragenerator;
-	
-	
-	
-	long seed;
-	
-	/** RNG. */
-	private Random rand;
 
-	/** A NoiseGeneratorOctaves used in generating terrain */
+	
+	
+	/** The biomes that are used to generate the chunk */
+	private BiomeGenBase[] biomeMap;
+	
+	
+	
+	
+
+	/** NoiseGeneratorOctaves used in generating terrain */
 	private NoiseGeneratorOctaves noiseGen1;
-
-	/** A NoiseGeneratorOctaves used in generating terrain */
 	private NoiseGeneratorOctaves noiseGen2;
-
-	/** A NoiseGeneratorOctaves used in generating terrain */
 	private NoiseGeneratorOctaves noiseGen3;
-
-	/** A NoiseGeneratorOctaves used in generating terrain */
 	private NoiseGeneratorOctaves noiseGen4;
-
-	/** A NoiseGeneratorOctaves used in generating terrain */
 	public NoiseGeneratorOctaves noiseGen5;
-
-	/** A NoiseGeneratorOctaves used in generating terrain */
 	public NoiseGeneratorOctaves noiseGen6;
-	public NoiseGeneratorOctaves mobSpawnerNoise;
-
-	/** Reference to the World object. */
-	World worldObj;
-
+	
+	
 	/** Holds the overall noise array used in chunk generation */
 	double[] noiseArray;
-	//double[] stoneNoise = new double[256];
+
+	int[] seaLevelOffsetMap = new int[256];
+	int[] chunkGroundLevelMap = new int[256]; // Skips floating islands
+	int[] chunkHeightMap = new int[256];
+
+
+
+	/** A double array that hold terrain noise*/
+	double[] noise3;
+	double[] noise1;
+	double[] noise2;
+	double[] noise5;
+	double[] noise6;
+	int noiseFieldModifierArray[];
 
 	
-
-	int[] sealevelOffsetMap = new int[256];
-
-
-
-	/** A double array that hold terrain noise from noiseGen3 */
-	double[] noise3;
-
-	/** A double array that hold terrain noise */
-	double[] noise1;
-
-	/** A double array that hold terrain noise from noiseGen2 */
-	double[] noise2;
-
-	/** A double array that hold terrain noise from noiseGen5 */
-	double[] noise5;
-
-	/** A double array that holds terrain noise from noiseGen6 */
-	double[] noise6;
-
 	/**
 	 * Used to store the 5x5 parabolic field that is used during terrain generation.
 	 */
 	float[] parabolicField;
 
-	int[] seaLevelOffsetMap = new int[256];
-	int[] chunkGroundLevelMap = new int[256]; // Skips floating islands
-	int[] chunkHeightMap = new int[256];
-	
-	
-	ChunkPrimer primer;
-	
-	
-	//ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
 	
 	
 	public ChunkProviderGenerateVC(World worldIn, long seed, boolean mapfeaturesenabled, String customgenjson) {
@@ -141,8 +108,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		caveGenerator = new MapGenCavesVC();
 		floragenerator = new MapGenFlora(seed);
-		
-		//VCraftWorld.instance.setUnpopChunkList(unpopulatedChunks);
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
@@ -157,27 +122,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed);
 		
-		//loadRockLayers();
-		
 		genrocklayers = new GenRockLayers(seed);
 		ageLayer = GenLayerVC.genAgemap(seed);
 		
 		//heightmapGen = GenLayerVC.genHeightmap(seed);
 	}
-	
-	/*
-	
-	public void loadRockLayers() {
-		// The RockLayer generators do not generate rocks evenly, so shuffle them per world so each rock once gets more rare or more common
-		for (int i = 0; i < rockLayers.length; i++) {
-			List rocktypes = Arrays.asList(EnumRockType.getRockTypesForCrustLayer(EnumCrustLayer.fromDataLayerIndex(i)));
-			Collections.shuffle(rocktypes, this.rand);
-			rockLayers[i] = GenLayerVC.genRockLayer(seed+i, (EnumRockType[])rocktypes.toArray());
-		}
-		
-		rockData = new int[rockLayers.length][];
-//		depositLayer = GenLayerVC.genDeposits(seed+2);
-	}*/
 	
 	
 	@Override
@@ -210,8 +159,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		Chunk chunk = new Chunk(this.worldObj, primer, chunkX, chunkZ);
 		
 		
-		//biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
-		
 		byte biomeMapbytes[] = new byte[256];
 		for (int i = 0; i < biomeMap.length; i++) {
 			biomeMapbytes[i] = (byte) biomeMap[i].biomeID;
@@ -228,12 +175,12 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	private Chunk provideFlatChunk(int chunkX, int chunkZ, WorldChunkManagerFlatVC wcm) {
 		primer = new ChunkPrimer();
-		//System.out.println("provide flat chunk");
 		VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "climate", wcm.climateGen.getInts(chunkX * 16, chunkZ * 16, 16, 16));
+		Random rand = new Random();
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				primer.setBlockState(x, 128, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0));
+				primer.setBlockState(x, 128, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0, rand));
 				primer.setBlockState(x, 127, z, BlocksVC.rock.getFromKey(EnumRockType.GRANITE).getBlockState());
 			}
 		}
@@ -268,6 +215,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		// Actually working check on whether or not to populate a chunk (prevents runaway chunk generation)
 		// Vanilla pop-check is very strangely programmed and fails to prevent runaway chunk generation
+
+		// Seems to be buggy on rare occassions where a stripe of chunks are not populated, but still much better than the game crashing from endless chunk generation   
+		
 		if (chunkprovider instanceof ChunkProviderServer) {
 			int x, z;
 			
@@ -353,23 +303,16 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		Arrays.fill(chunkHeightMap, 0);
 		
 		
-	/*for (int i = 0; i < rockLayers.length; i++) {
-			rockData[i] = rockLayers[i].getInts(chunkZ*16, chunkX*16, 16, 16);
-		}*/
-		
 		//int []heightmap = this.heightmapGen.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
-		
-		//biomeMap = this.worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
 		EnumCrustLayer[] crustLayersByDepth = new EnumCrustLayer[255];
 		
 		int age[] = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
 		
+		IBlockState[] toplayers;
 		
 		for (int x = 0; x < 16; ++x) {
 			for (int z = 0; z < 16; ++z) {
-				
-				//crustLayersByDepth = buildStrata(crustLayersByDepth, x, z);
 				
 				int arrayIndexChunk = z*16 + x;
 				int arrayIndexHeightmap = (z+1)*18 + (x+1);
@@ -377,11 +320,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				BiomeVC biome = (BiomeVC) biomeMap[arrayIndexChunk];
 
 				int airblocks = 0;
+				toplayers = null;
 				
-				/*prevCrustlayerDepth = 0;
-				prevCrustlayer = null;
-				*/
-				//for (int y = Math.max(VCraftWorld.seaLevel, heightmap[arrayIndexHeightmap]); y >= 0; --y) {
 				for (int y = 255; y >= 0; --y) {
 					if (y <= 0) {
 						primer.setBlockState(x, y, z, BlocksVC.uppermantle.getDefaultState());
@@ -395,16 +335,18 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					if (primer.getBlockState(x, y, z).getBlock() == Blocks.stone) {
 						if (chunkGroundLevelMap[arrayIndexChunk] == 0) {
 							chunkGroundLevelMap[arrayIndexChunk] = y;
+							
+							EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, 4, chunkZ * 16 + z, Math.abs(age[arrayIndexHeightmap]), rand);
+							toplayers = EnumCrustLayerGroup.getTopLayers(rocktype, new BlockPos(chunkX*16 + x, y, chunkZ*16 + z), rand);
 						}
+						
 						if (chunkHeightMap[arrayIndexChunk] == 0) {
 							chunkHeightMap[arrayIndexChunk] = y;
 						}
 						
 						//int steepness = Math.max(Math.abs(heightmap[(z+1)*18 + (x+1)-1] - heightmap[(z+1)*18 + (x+1)+1]), Math.abs(heightmap[(z+1-1)*18 + (x+1)] - heightmap[(z+1+1)*18 + (x+1)]));
-						//buildCrustLayers(x, y, z, /*chunkGroundLevelMap[arrayIndexChunk] - y*/ heightmap[arrayIndexHeightmap] - y, primer, biome, chunkX, chunkZ, steepness);
 						
 						int depth = chunkGroundLevelMap[arrayIndexChunk] - y;
-						//placeCrustLayerBlock(crustLayersByDepth[depth], x, y, z, primer, chunkX, chunkZ, depth);
 						
 						
 
@@ -412,8 +354,13 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						if (y < Math.abs(age[arrayIndexChunk]) / 10) {
 							primer.setBlockState(x, y, z, BlocksVC.rock.getFromKey(EnumRockType.KIMBERLITE).getBlockState());
 						} else {
-							EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, depth, chunkZ * 16 + z, Math.abs(age[arrayIndexChunk]));
-							primer.setBlockState(x, y, z, EnumCrustLayer.getBlock(rand, rocktype, chunkX * 16 + x, y, chunkZ*16 + z, depth));
+							if (toplayers.length > depth) {
+								primer.setBlockState(x, y, z, toplayers[depth]);
+							} else {
+								EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, depth, chunkZ * 16 + z, Math.abs(age[arrayIndexHeightmap]), rand);
+								primer.setBlockState(x, y, z, EnumCrustType.ROCK.getBlock(rocktype, null));
+							}
+							
 						}
 						
 						
@@ -436,137 +383,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 				}
 			}
 		}
-		
-		//rockData = new int[rockLayers.length][];
 	}
 	
 	
-	/*public EnumCrustLayer[] buildStrata(EnumCrustLayer[] strataByDepth, int x, int z) {
-		EnumCrustLayer[] crustLayers = EnumCrustLayer.values();
-		int currentCrustLayer = -1;
-		int thicknesslefttouse = 0;
-		
-		int arrayIndexChunk = z*16 + x;
-		
-		for (int i = 0; i < 255; i++) {
-			if (currentCrustLayer >= 6 && thicknesslefttouse <= 0) {
-				strataByDepth[i] = strataByDepth[i - 1];
-				continue;
-			}
-			
-			if (thicknesslefttouse <= 0) {
-				currentCrustLayer++;
-				
-				if (crustLayers[currentCrustLayer].dataLayerIndex == -1) {
-					thicknesslefttouse = crustLayers[currentCrustLayer].thickness;
-				} else {
-					thicknesslefttouse = (rockData[currentCrustLayer][arrayIndexChunk] >> 16) & 0xff;
-				}
-			}
-			
-			strataByDepth[i] = crustLayers[currentCrustLayer];
-			
-			thicknesslefttouse--;
-		}
-		
-		return strataByDepth;
-	}
-	
-	EnumCrustLayer prevCrustlayer = null;
-	int prevCrustlayerDepth = 0;
-	
-	public void placeCrustLayerBlock(EnumCrustLayer crustlayer, int x, int y, int z, ChunkPrimer primer, int chunkX, int chunkZ, int depth) {
-		if (crustlayer == null) return;
-
-		int arrayIndexChunk = z*16 + x;
-		IBlockState blockstate = crustlayer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth, 0);
-		
-		if (blockstate == null) {
-			int depthsincelastcrustlayer = depth - prevCrustlayerDepth;
-			
-			if (prevCrustlayer == null || crustlayer != prevCrustlayer) {
-				prevCrustlayer = crustlayer;
-				prevCrustlayerDepth = depth; 
-			}
-			
-			if (crustlayer.dataLayerIndex == -1) crustlayer = EnumCrustLayer.ROCK_1;
-			
-			int rockcolor = rockData[crustlayer.dataLayerIndex][arrayIndexChunk] & 0xffff;
-			int remainder = rockcolor - (rockcolor / EnumRockType.colorFactor()) * EnumRockType.colorFactor();
-			
-			
-			rockcolor = (rockcolor / EnumRockType.colorFactor()) * EnumRockType.colorFactor();
-			
-			if (depthsincelastcrustlayer >= remainder) {
-				// Normal rock
-				// use rockcolor
-				
-			} else {
-				// Previous rock
-				// use prev rockcolor
-				rockcolor += EnumRockType.colorFactor();
-			}
-
-			if (EnumRockType.byColor(rockcolor) == null) {
-				System.out.println("no rock for color " + rockcolor);
-				System.out.println(depthsincelastcrustlayer + " / " + remainder + " / " + (rockData[crustlayer.dataLayerIndex][arrayIndexChunk] & 0xffff));
-			}
-			blockstate = BlocksVC.rock.getFromKey(EnumRockType.byColor(rockcolor)).getBlockState();
-		}
-		
-		primer.setBlockState(x, y, z, blockstate);
-
-		if(rand.nextBoolean() && y > 0 && depth > 0) {
-			primer.setBlockState(x, y - 1, z, blockstate);
-			
-			if(rand.nextBoolean() && y > 1 && depth > 5) {
-				primer.setBlockState(x, y - 2, z, blockstate);
-			}
-			
-			if(rand.nextBoolean() && y > 2 && depth > 15) {
-				primer.setBlockState(x, y - 3, z, blockstate);
-			}
-		}
-	}*/
-	
-	
-	/*public void placeCrustLayerBlock(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ) {
-	//public void buildCrustLayers(int x, int y, int z, int depth, ChunkPrimer primer, BiomeVC biome, int chunkX, int chunkZ, int steepness) {
-		int arrayIndexChunk = z*16 + x;
-		
-		EnumCrustLayer layer = EnumCrustLayer.crustLayerForDepth(depth, rockData, arrayIndexChunk, primer.getBlockState(x, chunkGroundLevelMap[arrayIndexChunk]+1, z).getBlock() == Blocks.water);
-		if (layer == null) return;
-		
-		IBlockState blockstate = layer.getFixedBlock(EnumRockType.byColor(rockData[0][arrayIndexChunk] & 0xff), chunkX * 16 + x, y, chunkZ * 16 + z, depth, 0);
-
-		
-		if (blockstate == null) {
-			if (layer.dataLayerIndex == -1) layer = EnumCrustLayer.ROCK_1;
-			blockstate = BlocksVC.rock.getFromKey(EnumRockType.byColor(rockData[layer.dataLayerIndex][arrayIndexChunk] & 0xff)).getBlockState();
-		} else {
-			//System.out.println(chunkX + " / " + x + "   " + chunkZ + " / " + z);
-		}
-		
-		primer.setBlockState(x, y, z, blockstate);
-
-		if(rand.nextBoolean() && y > 0 && depth > 0) {
-			primer.setBlockState(x, y - 1, z, blockstate);
-			
-			if(rand.nextBoolean() && y > 1 && depth > 5) {
-				primer.setBlockState(x, y - 2, z, blockstate);
-			}
-			
-			if(rand.nextBoolean() && y > 2 && depth > 15) {
-				primer.setBlockState(x, y - 3, z, blockstate);
-			}
-		}
-	}
-	
-	
-	
-	
-	
-	*/
 	
 	
 	
@@ -593,14 +412,10 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	public void generateTerrainHigh(int chunkX, int chunkZ, ChunkPrimer primer) {
 		byte horizontalPart = 4;
 		byte verticalPart = 20;
-		//int seaLevel = VCraftWorld.instance.seaLevel; // - VCraftWorld.instance.terrainGenLevel;
 		
 		int xSize = horizontalPart + 1;
 		byte ySize = 21;
 		int zSize = horizontalPart + 1;
-		
-		//short arrayYHeight = 128;
-		//VCraftWorld.instance.terrainGenHiLevel = 65;
 		
 		largerBiomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(largerBiomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
 		

@@ -1,7 +1,7 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;

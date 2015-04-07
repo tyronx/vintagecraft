@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,13 +12,13 @@ import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.item.ItemFlowerVC;
-import at.tyron.vintagecraft.item.ItemLogVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.material.Material;
@@ -72,12 +72,13 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
     	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
-    	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-        ItemFlowerVC.withFlowerType(itemstack, getFlowerType(state));
-        ret.add(itemstack);
-        
+    	ret.add(getFlowerType(state).getItemStack());
+    	
     	return ret;
     }
+    
+    
+    
     
 	public BlockClassEntry getFlowerType(IBlockState state) {
 		return (BlockClassEntry)state.getValue(getTypeProperty());
@@ -87,7 +88,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-    	for (IEnumState flower : getSubTypes()) {
+    	for (IStateEnum flower : getSubTypes()) {
     		list.add(new ItemStack(itemIn, 1, flower.getMetaData(this)));
     	}
     }

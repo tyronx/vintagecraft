@@ -1,11 +1,11 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
-import at.tyron.vintagecraft.item.ItemCeramicVessel;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

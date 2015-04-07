@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.item;
+package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
@@ -7,11 +7,11 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 
 public class ItemToolCopper extends ItemToolVC {
 	@Override
@@ -58,6 +58,10 @@ public class ItemToolCopper extends ItemToolVC {
 		if (tooltype == EnumTool.SWORD) {
 			return 3f;
 		}
+		if (tooltype == EnumTool.AXE) {
+			return 2.5f;
+		}
+
 		return 1.5f;
 	}
 

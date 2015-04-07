@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.block;
+package at.tyron.vintagecraft.Block;
 
 import java.util.List;
 import java.util.Random;
@@ -8,18 +8,18 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemLogVC;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
 import at.tyron.vintagecraft.TileEntity.TESapling;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.interfaces.IEnumState;
-import at.tyron.vintagecraft.interfaces.IMultiblock;
-import at.tyron.vintagecraft.item.ItemLogVC;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockSlab;
@@ -130,15 +130,15 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
 		return BlocksVC.sapling;
 	}
 	
-	public boolean fertilize(World world, Random rand, BlockPos pos, IBlockState state) {
+	public boolean fertilize(World world, Random rand, BlockPos pos, IBlockState state, ItemStack itemstack) {
 		TileEntity te = world.getTileEntity(pos);
         if(te instanceof TESapling) {
         	
         	TESapling cte = (TESapling) te;
         	
-        	if(!cte.canUseFertilizer()) return false;
+        	if(!cte.canUseFertilizer(itemstack)) return false;
         	
-            cte.incSize();
+            cte.incSize(itemstack);
         }
         return true;
 	}
@@ -238,18 +238,18 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
 	
 
 	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types) {
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types) {
 		return registerMultiState(blockclassname, itemclass, types, blockclassname);
 	}
 
 	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IEnumState[] types, String folderprefix) {
+	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
 		System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		
 		for (int i = 0; i < types.length; i++) {
-			IEnumState enumstate = types[i]; 
+			IStateEnum enumstate = types[i]; 
 			//System.out.println("REG " + folderprefix + "/" + enumstate.getStateName());
 			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}

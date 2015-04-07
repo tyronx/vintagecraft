@@ -3,21 +3,21 @@ package at.tyron.vintagecraft.World;
 import java.util.ArrayList;
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockLogVC;
+import at.tyron.vintagecraft.Block.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.WorldProperties.EnumMaterialDeposit;
+import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.ItemLogVC;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.EnumTree;
-import at.tyron.vintagecraft.block.BlockLogVC;
-import at.tyron.vintagecraft.block.BlockPlanksVC;
-import at.tyron.vintagecraft.block.BlockVC;
-import at.tyron.vintagecraft.item.ItemIngot;
-import at.tyron.vintagecraft.item.ItemLogVC;
-import at.tyron.vintagecraft.item.ItemOreVC;
-import at.tyron.vintagecraft.item.ItemPlanksVC;
-import at.tyron.vintagecraft.item.ItemStone;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -42,7 +42,7 @@ public class Recipes {
 		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
 		ItemStack tinbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.TINBRONZE);
 		ItemStack bismuthbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.BISMUTHBRONZE);
-		
+		ItemStack ironingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRON);
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperHelmet), new Object[] { "III", "I I", "   ", 'I', copperingot});
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.copperChestplate), new Object[] { "I I", "III", "III", 'I', copperingot});
@@ -92,6 +92,15 @@ public class Recipes {
 
 		
 		
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironAxe), new Object[] { "SS ", "SW ", " W ", 'S', ironingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironHoe), new Object[] { "SS ", " W ", " W ", 'S', ironingot, 'W',  Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironPickaxe), new Object[] { "SSS", " W ", " W ", 'S', ironingot, 'W',  Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironShovel), new Object[] { " S ", " W ", " W ", 'S', ironingot, 'W', Items.stick});	
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironSword), new Object[] { " S ", " S ", " W ", 'S', ironingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironSaw), new Object[] { "S  ", "WS ", " WS", 'S', ironingot, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.ironShears), new Object[] { "  M", "MM ", " M ", 'M', ironingot});
+		
+		
 		//for (EnumRockType rocktype : EnumRockType.values()) {
 		for (BlockClassEntry rock : BlocksVC.rock.values()) {
 			EnumRockType rocktype = (EnumRockType) rock.getKey();
@@ -99,7 +108,6 @@ public class Recipes {
 			
 			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SCS", "CSC", "SCS", 'C', Items.clay_ball, 'S', stone});
 			
-			GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "SSS", "S S", "SSS", 'S', stone});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneAxe), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneHoe), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stonePickaxe), new Object[] { "SSS", " W ", " W ", 'S', stone, 'W',  Items.stick});
@@ -165,10 +173,19 @@ public class Recipes {
 		
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.fireclay_brick_raw, 1), new Object[] { "CC", "CC", 'C', ItemsVC.fireclay_ball});
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.fireclaybricks, 1), new Object[] { "CC", "CC", 'C', ItemsVC.fireclay_brick});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.fireclaybricks, 1), new Object[] { "CCC", "CCC", "CCC", 'C', ItemsVC.fireclay_brick});
 		
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.furnace, 1), new Object[] { "CCC", "CBC", "CCC", 'C', BlocksVC.fireclaybricks, 'B', tinbronzeingot});
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.furnace, 1), new Object[] { "CCC", "CBC", "CCC", 'C', BlocksVC.fireclaybricks, 'B', bismuthbronzeingot});
+		
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.bloomerybase, 1), new Object[] { "CCC", "CCC", "C C", 'C', ItemsVC.fireclay_brick});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.bloomerychimney, 1), new Object[] { " C ", "CCC", "   ", 'C', ItemsVC.fireclay_brick});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.bloomerychimney, 1), new Object[] { "   ", " C ", "CCC", 'C', ItemsVC.fireclay_brick});
+		
+		//GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.furnace, 1), new Object[] { "CCC", "CBC", "CCC", 'C', BlocksVC.fireclaybricks, 'B', tinbronzeingot});
+		//GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.furnace, 1), new Object[] { "CCC", "CBC", "CCC", 'C', BlocksVC.fireclaybricks, 'B', bismuthbronzeingot});
+		
+		
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', ironingot});
+		
 		
 		
 		
@@ -181,7 +198,7 @@ public class Recipes {
 		recipes.add(new RecipeSlabs());
 		
 		
-		RecipeSorter.register("vintagecraft:toolrack", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
+		RecipeSorter.register("vintagecraft:toolrack", RecipeToolRack.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		recipes.add(new RecipeToolRack());
 		
 		
