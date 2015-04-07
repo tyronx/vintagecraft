@@ -1,0 +1,333 @@
+﻿#fr_FR
+#This is the Main language configuration file
+#
+#If you want to color code the text then I recommend you visit http://www.minecraftwiki.net/wiki/Formatting_codes#Color_codes
+#To create the § symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
+#This file needs to be UTF-8 encoded to work with MC 1.7+
+
+generator.VCDefault=VC par défaut
+generator.VCFlat=VC plat
+
+nograss.name=Sans herbe
+sparsegrass.name=Herbe clairsemée
+normalgrass.name=Herbe normale
+
+tile.regolith.name=Régolithe
+tile.topsoil.name=Terre arable
+tile.peat.name=Tourbe
+tile.subsoil.name=Sous-sol
+tile.uppermantle.name=Couche supérieure
+
+rock.gneiss.name=Gneiss
+rock.limestone.name=Calcaire
+rock.claystone.name=Sol argileux
+rock.marble.name=Marbre
+rock.granite.name=Granite
+rock.basalt.name=Basalte
+rock.andesite.name=Andésite
+rock.conglomerate.name=Conglomérat
+rock.diorite.name=Diorite
+rock.sandstone.name=Grès
+rock.redsandstone.name=Grès rouge
+rock.quartzite.name=Quartzite
+rock.chert.name=Silex
+rock.gabbro.name=Gabbro
+rock.shale.name=Schiste argileux
+rock.schist.name=Schiste vert
+
+
+
+
+tile.tock.gneiss.name=Gneiss
+tile.tock.limestone.name=Calcaire
+tile.tock.claystone.name=Sol argileux
+tile.tock.marble.name=Marbre
+tile.tock.granite.name=Granite
+tile.tock.basalt.name=Basalte
+tile.tock.andesite.name=Andésite
+tile.tock.conglomerate.name=Conglomérat
+tile.tock.diorite.name=Diorite
+tile.tock.sandstone.name=Grès
+tile.tock.redsandstone.name=Grès rouge
+tile.tock.quartzite.name=Quartzite
+tile.tock.chert.name=Silex
+tile.tock.gabbro.name=Gabbro
+tile.tock.shale.name=Schiste argileux
+tile.tock.schist.name=Schiste vert
+
+item.stone.name=Pierre
+stone.name=Pierre
+item.peatbrick.name=Brique de tourbe
+
+item.ore.nativegold.name=Or natif
+item.ore.limonite.name=Limonite
+item.ore.nativecopper.name=Cuivre natif
+item.ore.bituminouscoal.name=Charbon bitumineux
+item.ore.lignite.name=Lignite
+item.ore.cassiterite.name=Cassitérite
+item.redstone.cassiterite.name=Redstone
+item.ore.bismuthinite.name=Bismuthinite
+item.ore.sphalerite.name=Sphalérite
+
+
+item.ingot.copper.name=Lingot de cuivre
+item.ingot.tinbronze.name=Lingot de bronze
+item.ingot.iron.name=Lingot de fer
+item.ingot.steel.name=Lingot d'acier
+item.ingot.rhodium.name=Lingot de rhodium
+item.ingot.platinum.name=Lingot de platine
+item.ingot.iridium.name=Lingot d'iridium
+item.ingot.palladium.name=Lingot de palladium
+item.ingot.osmium.name=Lingot d'osmium
+item.ingot.silver.name=Lingot d'argent
+item.ingot.gold.name=Lingot d'or
+item.ingot.tin.name=Lingot d'étain
+item.ingot.uranium.name=Lingot d'uranium
+item.ingot.bismuth.name=Lingot de bismuth
+item.ingot.zinc.name=Lingot de zinc
+item.ingot.bismuthbronze.name=Lingot de bronze de bismuth
+
+
+
+container.stove=Fourneau
+tile.stove.name=Fourneau
+
+tile.flower.orangebutterflymilkweed.name=Asclepias tuberosa orange
+tile.flower.purplebutterflymilkweed.name=Asclepias tuberosa pourpre
+tile.flower.catmint.name=Népéta
+
+item.ceramicvessel.name=Récipient en céramique
+item.clayvessel.name=Récipient en argile
+
+
+item.bismuthbronze_axe.name=hache en bronze de bismuth
+item.bismuthbronze_pickaxe.name=Pioche en bronze de bismuth
+item.bismuthbronze_shovel.name=Pelle en bronze de bismuth
+item.bismuthbronze_sword.name=Épée en bronze de bismuth
+item.bismuthbronze_hoe.name=Houe en bronze de bismuth
+item.bismuthbronze_saw.name=Scie en bronze de bismuth
+item.bismuthbronze_shears.name=Cisailles en bronze de bismuth
+
+item.tinbronze_axe.name=Hache en bronze d'étain
+item.tinbronze_pickaxe.name=Pioche en bronze d'étain
+item.tinbronze_shovel.name=Pelle en bronze d'étain
+item.tinbronze_sword.name=Épée en bronze d'étain
+item.tinbronze_hoe.name=Houe en bronze d'étain
+item.tinbronze_saw.name=Scie en bronze d'étain
+item.tinbronze_shears.name=Cisailes en bronze d'étain
+
+
+item.copper_axe.name=Hache en cuivre
+item.copper_pickaxe.name=Pioche en cuivre
+item.copper_shovel.name=Pelle en cuivre
+item.copper_sword.name=Épée en cuivre
+item.copper_hoe.name=Houe en cuivre
+item.copper_saw.name=Scie en cuivre
+item.copper_shears.name=Cisailes en cuivre
+
+item.stone_axe.name=Hache en pierre
+item.stone_pickaxe.name=Pioche en pierre
+item.stone_shovel.name=Pelle en pierre
+item.stone_sword.name=Épée en pierre
+item.stone_hoe.name=Houe en pierre
+item.stone_saw.name=Scie en pierre
+
+tile.planks.name=Planches
+
+low.name=Fertilité basse
+medium.name=Fertilité moyenne
+high.name=Fertilité haute
+
+verysparsegrass.name=Herbe très clairsemée
+
+tile.tallgrass.veryshort.name=Herbes hautes très courtes
+tile.tallgrass.short.name=Herbes hautes courtes
+tile.tallgrass.medium.name=Herbes hautes moyennes
+tile.tallgrass.long.name=Herbes hautes longues
+tile.tallgrass.verylong.name=Herbes hautes très longues
+tile.tallgrass.verylong_flowering.name=Herbes hautes très longues et fleurissantes
+
+
+tile.cobblestone.name=Pavé
+tile.rawclay.name=Argile brut
+item.wheatseeds.name=Graines de blé
+
+tile.log.ash.name=Rondin de frêne
+tile.log.birch.name=Rondin de bouleau
+tile.log.oak.name=Rondin de chêne
+tile.log.crimsonkingmaple.name=Rondin d'érable plane
+tile.log.mountaindogwood.name=Rondin de cornouiller du pacifique 
+tile.log.scotspine.name=Rondin de pin sylvestre
+tile.log.spruce.name=Rondin de sapin
+tile.log.acacia.name=Rondin d'acacia
+tile.log.kapok.name=Rondin de kapok
+tile.log.purpleheartwood.name=Rondin d'amarante
+tile.log.coconutpalm.name=Rondin de cocotier
+tile.log.elephanttree.name=Rondin d'arbre éléphant
+tile.log.myrtlebeech.name=Rondin de hêtre de Cunningham
+tile.log.joshua.name=Rondin d'arbre de Josué
+tile.log.pear.name=Rondin de poirier
+tile.log.africanmahogany.name=Rondin de mahogany africain
+tile.log.poplar.name=Rondin de peuplier
+tile.log.larch.name=Rondin de mélèze
+tile.log.willow.name=Rondin de saule
+tile.log.blackwalnut.name=Rondin de noyer noir
+
+
+tile.planks.ash.name=Planches de frêne
+tile.planks.birch.name=Planches de bouleau
+tile.planks.oak.name=Planches de chêne
+tile.planks.crimsonkingmaple.name=Planches d'érable plane
+tile.planks.mountaindogwood.name=Planches de cornouiller du pacifique
+tile.planks.scotspine.name=Planches de pin sylvestre
+tile.planks.spruce.name=Planches de sapin
+tile.planks.acacia.name=Planches d'acacia
+tile.planks.kapok.name=Planches de kapok
+tile.planks.purpleheartwood.name=Planches d'amarante
+tile.planks.coconutpalm.name=Planches de cocotier
+tile.planks.elephanttree.name=Planches d'arbre éléphant
+tile.planks.myrtlebeech.name=Planches de hêtre de Cunningham
+tile.planks.joshua.name=Planches d'arbre de Josué
+tile.planks.pear.name=Planches de poirier
+tile.planks.africanmahogany.name=Planches de mahogany africain
+tile.planks.poplar.name=Planches de peuplier
+tile.planks.larch.name=Planches de mélèze
+tile.planks.willow.name=Planches de saule
+tile.planks.blackwalnut.name=Planches de noyer noir
+
+
+sapling.ash.name=Pousse de frêne
+sapling.birch.name=Pousse de bouleau
+sapling.oak.name=Pousse de chêne
+sapling.crimsonkingmaple.name=Pousse d'érable plane
+sapling.mountaindogwood.name=Pousse de cornouiller du pacifique
+sapling.scotspine.name=Pousse de pin sylvestre
+sapling.spruce.name=Pousse de sapin
+sapling.acacia.name=Pousse d'acacia
+sapling.kapok.name=Pousse de kapok
+sapling.purpleheartwood.name=Pousse d'amarante
+sapling.coconutpalm.name=Pousse de cocotier
+sapling.elephanttree.name=Pousse d'arbre éléphant
+sapling.myrtlebeech.name=Pousse de hêtre de Cunningham
+sapling.joshua.name=Pousse d'arbre de Josué
+sapling.pear.name=Pousse de poirier
+sapling.africanmahogany.name=Pousse de mahogany africain
+sapling.poplar.name=Pousse de peuplier
+sapling.larch.name=Pousse de mélèze
+sapling.willow.name=Pousse de saule
+sapling.blackwalnut.name=Pousse de noyer noir
+
+
+leaves.ash.name=Feuilles de frêne
+leaves.birch.name=Feuilles de bouleau
+leaves.oak.name=Feuilles de chêne
+leaves.crimsonkingmaple.name=Feuilles d'érable plane
+leaves.mountaindogwood.name=Feuilles de cornouiller du pacifique
+leaves.scotspine.name=Feuilles de pin sylvestre
+leaves.spruce.name=Feuilles de sapin
+leaves.acacia.name=Feuilles d'acacia
+leaves.kapok.name=Feuilles de kapok
+leaves.purpleheartwood.name=Feuilles d'amarante
+leaves.coconutpalm.name=Feuilles de cocotier
+leaves.elephanttree.name=Feuilles d'arbre éléphant
+leaves.myrtlebeech.name=Feuilles de hêtre de Cunningham
+leaves.joshua.name=Feuilles d'arbre de Josué
+leaves.pear.name=Feuilles de poirier
+leaves.africanmahogany.name=Feuilles de mahogany africain
+leaves.poplar.name=Feuilles de peuplier
+leaves.larch.name=Feuilles de mélèze
+leaves.willow.name=Feuilles de saule
+leaves.blackwalnut.name=Feuilles de noyer noir
+
+fence.ash.name=Barrière de frêne
+fence.birch.name=Barrière de bouleau
+fence.oak.name=Barrière de chêne
+fence.crimsonkingmaple.name=Barrière d'érable plane
+fence.mountaindogwood.name=Barrière de cornouiller du pacifique
+fence.scotspine.name=Barrière de pin sylvestre
+fence.spruce.name=Barrière de sapin
+fence.acacia.name=Barrière d'acacia
+fence.kapok.name=Barrière de kapok
+fence.purpleheartwood.name=Barrière d'amarante
+fence.coconutpalm.name=Barrière de cocotier
+fence.elephanttree.name=Barrière d'arbre éléphant
+fence.myrtlebeech.name=Barrière de hêtre de Cunningham
+fence.joshua.name=Barrière d'arbre de Josué
+fence.pear.name=Barrière de poirier
+fence.africanmahogany.name=Barrière de mahogany africain
+fence.poplar.name=Barrière de peuplier
+fence.larch.name=Barrière de mélèze
+fence.willow.name=Barrière de saule
+fence.blackwalnut.name=Barrière de noyer noir
+
+fencegate.ash.name=Portillon de frêne
+fencegate.birch.name=Portillon de bouleau
+fencegate.oak.name=Portillon de chêne
+fencegate.crimsonkingmaple.name=Portillon d'érable plane
+fencegate.mountaindogwood.name=Portillon de cornouiller du pacifique
+fencegate.scotspine.name=Portillon de pin sylvestre
+fencegate.spruce.name=Portillon de sapin
+fencegate.acacia.name=Portillon d'acacia
+fencegate.kapok.name=Portillon de kapok
+fencegate.purpleheartwood.name=Portillon d'amarante
+fencegate.coconutpalm.name=Portillon de cocotier
+fencegate.elephanttree.name=Portillon d'arbre éléphant
+fencegate.myrtlebeech.name=Portillon de hêtre de Cunningham
+fencegate.joshua.name=Portillon d'arbre de Josué
+fencegate.pear.name=Portillon de poirier
+fencegate.africanmahogany.name=Portillon de mahogany africain
+fencegate.poplar.name=Portillon de peuplier
+fencegate.larch.name=Portillon de mélèze
+fencegate.willow.name=Portillon de saule
+fencegate.blackwalnut.name=Portillon de noyer noir
+
+singleslab.ash.name=Dalle de frêne
+singleslab.birch.name=Dalle de bouleau
+singleslab.oak.name=Dalle de chêne
+singleslab.crimsonkingmaple.name=Dalle d'érable plane
+singleslab.mountaindogwood.name=Dalle de cornouiller du pacifique
+singleslab.scotspine.name=Dalle de pin sylvestre
+singleslab.spruce.name=Dalle de sapin
+singleslab.acacia.name=Dalle d'acacia
+singleslab.kapok.name=Dalle de kapok
+singleslab.purpleheartwood.name=Dalle d'amarante
+singleslab.coconutpalm.name=Dalle de cocotier
+singleslab.elephanttree.name=Dalle d'arbre éléphant
+singleslab.myrtlebeech.name=Dalle de hêtre de Cunningham
+singleslab.joshua.name=Dalle d'arbre de Josué
+singleslab.pear.name=Dalle de poirier
+singleslab.africanmahogany.name=Dalle de mahogany africain
+singleslab.poplar.name=Dalle de peuplier
+singleslab.larch.name=Dalle de mélèze
+singleslab.willow.name=Dalle de saule
+singleslab.blackwalnut.name=Dalle de noyer noir
+
+leavesbranchy.ash.name=Feuilles de frêne sur branches
+leavesbranchy.birch.name=Feuilles de bouleau sur branches
+leavesbranchy.oak.name=Feuilles de chêne sur branches
+leavesbranchy.crimsonkingmaple.name=Feuilles d'érable plane sur branches
+leavesbranchy.mountaindogwood.name=Feuilles de cornouiller du pacifique sur branches
+leavesbranchy.scotspine.name=Feuilles de pin sylvestre sur branches
+leavesbranchy.spruce.name=Feuilles de sapin sur branches
+leavesbranchy.acacia.name=Feuilles d'acacia sur branches
+leavesbranchy.kapok.name=Feuilles de kapok sur branches
+leavesbranchy.purpleheartwood.name=Feuilles d'amarante sur branches
+leavesbranchy.coconutpalm.name=Feuilles de cocotier sur branches
+leavesbranchy.elephanttree.name=Feuilles d'arbre éléphant sur branches
+leavesbranchy.myrtlebeech.name=Feuilles de hêtre de Cunningham sur branches
+leavesbranchy.joshua.name=Feuilles d'arbre de Josué sur branches
+leavesbranchy.pear.name=Feuilles de poirier sur branches
+leavesbranchy.africanmahogany.name=Feuilles de mahogany africain sur branches
+leavesbranchy.poplar.name=Feuilles de peuplier sur branches
+leavesbranchy.larch.name=Feuilles de mélèze sur branches
+leavesbranchy.willow.name=Feuilles de saule sur branches
+leavesbranchy.blackwalnut.name=Feuilles de noyer noir sur branches
+
+item.fireclay_ball.name=Argile réfractaire
+item.fireclay_brick_raw.name=Brique d'argile réfractaire brute
+item.fireclay_brick.name=Brique d'argile réfractaire
+tile.rawfireclay.name=Argile réfractaire brute
+tile.fireclaybricks.name=Briques d'argile réfractaire
+
+toolrack.name=Porte-outils
+toolrackitem.name=Porte-outils
