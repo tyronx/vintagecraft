@@ -5,7 +5,7 @@ import java.util.Random;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
@@ -19,7 +19,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockSandVC extends BlockRock implements ISoil {
+public class BlockSandVC extends BlockRock implements IBlockSoil {
 	public static boolean fallInstantly;
 	
 	

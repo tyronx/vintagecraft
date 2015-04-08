@@ -1,8 +1,12 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.BlockFarmlandVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
+import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -12,28 +16,39 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class TESapling extends TileEntity {
-	//private IExtendedBlockState state;
-
 	public float size = 0.35f;
 	private long growthEnd;
 	public long lastBonemealTime = -1;
 	public int peatsUsed = 0;
 	public int sylvitesUsed = 0;
 	
-   /* public IExtendedBlockState getState() {
-        if(state == null) {
-        	state = (IExtendedBlockState)getBlockType().getDefaultState();
-        	state = state.withProperty(BlockFarmlandVC.fertilityExact, size);
-        }
-        return state;
-    }
 
-    public void setState(IExtendedBlockState state) {
-        this.state = state;
-    }*/
+
 	
 	public TESapling() {
 		size = 0.35f;
+	}
+	
+	
+	public boolean tryPutItemStack(ItemStack itemstack) {
+		// bone meal
+		if (itemstack.getItem() == Items.dye && itemstack.getItemDamage() == 15) {
+			boolean ok = canApplyBonemeal(worldObj.getWorldTime()) && applyBonemeal(worldObj.getWorldTime());
+			if (ok) itemstack.stackSize--;
+			return ok;
+		}
+		
+		// peat or sylvite
+		if (itemstack.getItem() instanceof ItemPeatBrick || (itemstack.getItem() instanceof ItemOreVC && ItemOreVC.getOreType(itemstack) == EnumOreType.SYLVITE_ROCKSALT)) {
+			if (canUseFertilizer(itemstack)) {
+				incSize(itemstack);
+				itemstack.stackSize--;
+				return true;
+			}
+			return false;
+		}
+		
+		return false;
 	}
 	
 	public boolean canApplyBonemeal(long worldtime) {

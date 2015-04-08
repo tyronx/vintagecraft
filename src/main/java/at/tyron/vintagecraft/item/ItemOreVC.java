@@ -3,10 +3,10 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.Block.BlockFirepit;
-import at.tyron.vintagecraft.Block.BlockSaplingVC;
-import at.tyron.vintagecraft.Interfaces.IFuel;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
+import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -33,7 +33,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel, ISmeltable {
+public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable {
 
 	public ItemOreVC() {
         this.setHasSubtypes(true);
@@ -187,7 +187,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 
-		
+/*		
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!entityplayer.canPlayerEdit(pos.offset(side), side, itemstack)) {
@@ -231,5 +231,5 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IFuel
 		
 		return false;
 	}
-	
+	*/
 }

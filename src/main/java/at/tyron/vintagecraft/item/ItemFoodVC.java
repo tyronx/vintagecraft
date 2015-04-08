@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.ItemsVC;
 import net.minecraft.creativetab.CreativeTabs;
@@ -11,7 +11,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemFoodVC extends ItemFood implements ISmeltable, ISubtypeFromStackPovider {
+public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFromStackPovider {
 	String internalname;
 	
 	public ItemFoodVC(int amount, boolean isWolfFood) {

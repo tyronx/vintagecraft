@@ -19,7 +19,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.Block.BlockToolRack;
+import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;

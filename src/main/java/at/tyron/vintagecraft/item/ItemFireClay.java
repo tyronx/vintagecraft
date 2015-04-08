@@ -2,14 +2,14 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ItemFireClay extends ItemVC implements ISmeltable {
+public class ItemFireClay extends ItemVC implements IItemSmeltable {
 	boolean bakeable;
 	
 	public ItemFireClay(boolean bakeable) {

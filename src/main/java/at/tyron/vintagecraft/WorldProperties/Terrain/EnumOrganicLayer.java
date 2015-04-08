@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.BlockTopSoil;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.VCraftWorld;

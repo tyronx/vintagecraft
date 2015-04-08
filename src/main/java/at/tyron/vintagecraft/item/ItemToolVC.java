@@ -3,8 +3,8 @@ package at.tyron.vintagecraft.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import at.tyron.vintagecraft.Block.BlockLeavesVC;
-import at.tyron.vintagecraft.Interfaces.IRackable;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 
@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IRackable {	
+public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IItemRackable {	
 	public EnumTool tooltype;
 	
 	public ItemToolVC() {

@@ -5,8 +5,8 @@ import java.util.Random;
 import com.google.common.base.Objects;
 
 import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.BlockSubSoil;
-import at.tyron.vintagecraft.Block.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockOre;

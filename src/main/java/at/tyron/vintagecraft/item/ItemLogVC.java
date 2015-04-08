@@ -2,16 +2,16 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Block.BlockFirepit;
-import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.BlockPlanksVC;
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.BlockFirepit.EnumBuildStage;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
+import at.tyron.vintagecraft.Block.Utility.BlockFirepit.EnumBuildStage;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -29,7 +29,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IFuel {
+public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IItemFuel {
 
 	public ItemLogVC(Block block) {
 		super(block);
@@ -107,13 +107,15 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 	}
 	
 	
+	
+/*	
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		BlockFirepit.EnumBuildStage stage = getNextFirepitStage(itemstack, entityplayer, world, pos, side);
 		
 		if (stage != null) {
 			world.setBlockState(pos, BlocksVC.firepit.getDefaultState().withProperty(BlockFirepit.buildstage, stage));
-			itemstack.stackSize -=3;
+			itemstack.stackSize--;
 			return true;
 		}
 		
@@ -131,9 +133,7 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IF
 
     	
 		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
-	}
+	}*/
 
 	
-	
-
 }

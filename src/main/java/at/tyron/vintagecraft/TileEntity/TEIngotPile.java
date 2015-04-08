@@ -17,7 +17,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.Block.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;

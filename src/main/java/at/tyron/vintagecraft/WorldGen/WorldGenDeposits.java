@@ -78,15 +78,15 @@ public class WorldGenDeposits implements IWorldGenerator {
 		
 		//System.out.println("gen " + deposit);
 		
-		boolean underground =
+		boolean belowsealevel =
 			deposit.occurence.type == EnumDepositOccurenceType.ANYBELOWSEALEVEL
 			|| (deposit.occurence.type == EnumDepositOccurenceType.MIXEDDEPTHS && rand.nextFloat() < deposit.occurence.belowSealLevelRatio)
 		;
 		
-		if (underground) {
-			surface = world.getHorizon(new BlockPos(x, 0, z));	
+		if (belowsealevel) {
+			surface = new BlockPos(x, VCraftWorld.seaLevel, z);	
 		} else {
-			surface = new BlockPos(x, VCraftWorld.seaLevel, z);
+			surface = world.getHorizon(new BlockPos(x, 0, z));
 		}
 
 		int depth = deposit.occurence.mindepth + rand.nextInt(deposit.occurence.maxdepth - deposit.occurence.mindepth);
@@ -182,7 +182,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 					
 					while (hgt-- > 0) {
 						if (pos.getY() < 1) continue;
-						world.setBlockState(pos, deposit.getBlockStateForDepth(horizon - depositDepth, parentmaterial), 2);
+						world.setBlockState(pos, deposit.getBlockStateForDepth(depositDepth, parentmaterial), 2);
 						//if (deposit == EnumMaterialDeposit.FIRECLAY) System.out.println("fireclay @ " + pos);
 						pos = pos.down();
 						depositDepth--;

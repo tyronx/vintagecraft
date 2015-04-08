@@ -13,9 +13,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.Block.*;
+import at.tyron.vintagecraft.Block.Organic.BlockPeat;
+import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
-import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.DepositOccurence;
@@ -46,7 +49,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	REDSTONE (7,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(0, 2, 30, 100)),
 	
-	CASSITERITE (8,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(6, 1, 0, 40, 0.5f)),
+	CASSITERITE (8,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(6, 1, 0, 40)),
 	
 	IRIDIUM (9,			    true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
 	PLATINUM (10, 		    true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(2, 1, 90, 110)),
@@ -187,8 +190,8 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		if (state == null) System.out.println("block state for " + this + " is null!");
 		
 		
-		if (depth > 1 && state.getBlock() instanceof ISoil) {
-			return state.withProperty(((ISoil)state.getBlock()).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
+		if (depth > 1 && state.getBlock() instanceof IBlockSoil) {
+			return state.withProperty(((IBlockSoil)state.getBlock()).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
 		}
 		
 		

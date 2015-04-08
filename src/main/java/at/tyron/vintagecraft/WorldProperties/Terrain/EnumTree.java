@@ -24,7 +24,7 @@ import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 public enum EnumTree implements IStateEnum, IStringSerializable {
 	// growthspeed, saplingdroprate weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
 	
-	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minf   maxf
+	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minfo   maxfo
 	ASH					(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,  0.7f,   0,  255),
 	BIRCH				( 0.6f,  0.12f, 100,   3,  12,  95,  220,  10,   100,    0f, 0.65f,   0,  255),		// http://en.wikipedia.org/wiki/Birch
 	OAK					( 1.8f,  0.12f,  75,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
@@ -41,9 +41,10 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	JOSHUA				( 0.9f,  0.08f,  99,  24,  30,  20,   60,  20,   100,     0,  0.6f,   0,  255),
 	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100),		 // http://fc06.deviantart.net/fs40/f/2009/004/e/f/An_old_pear_tree_by_SzekelyCsaba.jpg
 	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200),
-	BLACKWALNUT			( 1.15f, 0.08f, 10,  15,  22, 170,  255,  130,  255,    0f,  0.5f,   0,  255),
+	BLACKWALNUT			( 1.15f, 0.08f, 10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255),
 	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true),
-	WILLOW				( 0.5f,  0.06f, 100,  -6,  18,  65,  255,   50,  255,    0f,  0.9f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
+	WEEPINGWILLOW		( 0.5f,  0.06f,  96,  -6,  18,  65,  255,   50,  255,    0f,    1f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
+	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250),
 	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true),
 	
 	
@@ -241,7 +242,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 		float size;
 		
 		switch (this) {
-			case WILLOW:
+			case WEEPINGWILLOW:
 			case LARCH:
 			case SPRUCE:
 			case ELEPHANTTREE:

@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.World;
 
-import at.tyron.vintagecraft.Block.BlockLogVC;
-import at.tyron.vintagecraft.Block.BlockPlanksVC;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
+import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemToolVC;

@@ -4,7 +4,7 @@
         "0": "vintagecraft:blocks/ironcoalmix",
         "1": "vintagecraft:blocks/log/oak_bark",
         "2": "vintagecraft:blocks/cobblestone/andesite",
-        "particle": "vintagecraft:blocks/log/oak_bark",
+        "particle": "vintagecraft:blocks/log/oak_bark"
     },
     "elements": [
         {

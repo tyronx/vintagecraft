@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block;
 import java.util.Random;
 
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRawClay extends BlockVC implements ISoil {
+public class BlockRawClay extends BlockVC implements IBlockSoil {
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
 
 	public BlockRawClay() {

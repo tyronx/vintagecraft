@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.BlockFlowerVC;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;

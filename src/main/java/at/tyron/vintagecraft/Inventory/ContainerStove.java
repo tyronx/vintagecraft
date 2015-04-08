@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IFuel;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -99,13 +99,13 @@ public class ContainerStove extends Container {
                 slot.onSlotChange(itemstack1, itemstack);
             }
             else if (index != 1 && index != 0) {
-                if (itemstack1.getItem() instanceof ISmeltable && ((ISmeltable)itemstack1.getItem()).getSmelted(itemstack1) != null) {
+                if (itemstack1.getItem() instanceof IItemSmeltable && ((IItemSmeltable)itemstack1.getItem()).getSmelted(itemstack1) != null) {
                     if (!this.mergeItemStack(itemstack1, 0, 1, false))
                     {
                         return null;
                     }
                 }
-                else if (itemstack1.getItem() instanceof IFuel && ((IFuel)itemstack1.getItem()).getBurningHeat(itemstack1) != 0) {
+                else if (itemstack1.getItem() instanceof IItemFuel && ((IItemFuel)itemstack1.getItem()).getBurningHeat(itemstack1) != 0) {
                     if (!this.mergeItemStack(itemstack1, 1, 2, false)) {
                         return null;
                     }

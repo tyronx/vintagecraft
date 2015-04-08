@@ -2,13 +2,13 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.BlockCropsVC;
-import at.tyron.vintagecraft.Block.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.BlockFlowerVC;
-import at.tyron.vintagecraft.Block.BlockTallGrass;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
+import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
@@ -87,7 +87,7 @@ public class MapGenFlora {
 			if (i < 65 * forestdensity && random.nextFloat() < forestdensity) {
 			
 				Block block = world.getBlockState(blockpos.down()).getBlock();
-				if (!(block instanceof ISoil)) {
+				if (!(block instanceof IBlockSoil)) {
 					continue;
 				}
 				
@@ -143,7 +143,7 @@ public class MapGenFlora {
 				
 				IBlockState flower = variants[random.nextInt(variants.length)].getBlockState();
 				
-				if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
+				if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
 					world.setBlockState(pos, flower, 2);
 				}
 				
@@ -166,7 +166,7 @@ public class MapGenFlora {
 				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
-				if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
+				if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
 					world.setBlockState(pos, BlocksVC.wheatcrops.getDefaultState().withProperty(BlockCropsVC.AGE, random.nextInt(4)), 2);
 				}
 			}
@@ -178,7 +178,7 @@ public class MapGenFlora {
 	void placeGrass(World world, BlockPos pos, Random random, int fertility, int temperature) {
 		Block block = world.getBlockState(pos.down()).getBlock();
 		
-		if (block instanceof ISoil && block.canPlaceBlockAt(world, pos)) {
+		if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
 			EnumTallGrass grasstype = EnumTallGrassGroup.fromClimate(fertility, temperature, random);
 			if (grasstype != null) {
 				world.setBlockState(pos, BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrass.GRASSTYPE, grasstype), 2);

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.Block.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Client.Model.ModelIngotPile;
 
 public class TESRIngotPile extends TESRBase 

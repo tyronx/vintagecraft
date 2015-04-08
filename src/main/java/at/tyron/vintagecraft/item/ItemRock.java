@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 
 import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
@@ -25,7 +25,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRock extends ItemBlock implements ISmeltable {
+public class ItemRock extends ItemBlock implements IItemSmeltable {
 
 	public ItemRock(Block block) {
 		super(block);

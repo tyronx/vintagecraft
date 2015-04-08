@@ -787,25 +787,19 @@ public class DynTreeGenerators {
 		
 		
 		
-		
-		
-		
-		EnumTree.WILLOW.setGenerators(
+		EnumTree.COYOTEWILLOW.setGenerators(
 			new DynTreeGen(
-				EnumTree.WILLOW, 
+				EnumTree.COYOTEWILLOW, 
 				null,
 				new DynTreeTrunk(
-					1f,
-					0.1f,
+					1.5f,
+					0.3f,
 					NatFloat.createUniform(0.1f, 0f), 
 					NatFloat.createUniform(0f, 0f), 
-					NatFloat.createUniform(5*NatFloat.PI / 4, 0.25f), 
+					NatFloat.createUniform(NatFloat.PI + 0.4f, 0.25f), 
 					NatFloat.createUniform(0, NatFloat.PI),
-					branching(6), 
-					branchWidthMul(1f),
-					1f,
-					EvolvingNatFloat.createInvGauss(0, 0.5f, EnumTransformFunction.IDENTICAL, 0f)
-
+					branching(5), 
+					branchWidthMul(1f)
 				),
 				new DynTreeBranch(
 					NatFloat.createUniform(5f, 0.5f),
@@ -820,9 +814,67 @@ public class DynTreeGenerators {
 				0,
 				EnumTreeGenMode.BUSH
 			), 
-			null,			
+			null, 
 			new DynTreeGen(
-				EnumTree.WILLOW, 
+				EnumTree.COYOTEWILLOW, 
+				null,
+				new DynTreeTrunk(
+					1.5f,
+					0.25f,
+					NatFloat.createUniform(0.2f, 0f), 
+					NatFloat.createUniform(0f, 0f), 
+					NatFloat.createUniform(NatFloat.PI + 0.8f, 0.25f), 
+					NatFloat.createUniform(0, NatFloat.PI),
+					branching(5), 
+					branchWidthMul(1f)
+				),
+				new DynTreeBranch(
+					NatFloat.createUniform(5f, 0.5f),
+					NatFloat.createUniform(0, NatFloat.PI), 
+					NatFloat.createUniform(5f, 0f),
+					NatFloat.createUniform(5f, 0f), 
+					0.17f,
+					0f,
+					1f
+				),
+				0.7f,
+				0,
+				EnumTreeGenMode.BUSH
+			)
+		);
+		
+		
+		EnumTree.WEEPINGWILLOW.setGenerators(
+			new DynTreeGen(
+				EnumTree.WEEPINGWILLOW, 
+				null,
+				new DynTreeTrunk(
+					1f,
+					0.06f,
+					NatFloat.createUniform(0.23f, 0f), 
+					NatFloat.createUniform(0f, 0f), 
+					NatFloat.createUniform(5*NatFloat.PI / 4, 0.25f), 
+					NatFloat.createUniform(0, NatFloat.PI),
+					branching(7), 
+					EvolvingNatFloat.createUniform(0.01f, 0f, EnumTransformFunction.LINEAR, 0.0008f),
+					1f,
+					EvolvingNatFloat.createInvGauss(0, 0.25f, EnumTransformFunction.COSINUS, 0.0004f)
+
+				),
+				new DynTreeBranch(
+					NatFloat.createUniform(5f, 0.5f),
+					NatFloat.createUniform(0, NatFloat.PI), 
+					NatFloat.createUniform(0.7f, 0.3f),
+					NatFloat.createUniform(0.7f, 0.5f), 
+					0.008f,
+					0.23f,
+					0.2f
+				),
+				0.4f
+			),
+			null,
+			new DynTreeGen(
+				EnumTree.WEEPINGWILLOW, 
 				null,
 				new DynTreeTrunk(
 					1f,
@@ -855,8 +907,8 @@ public class DynTreeGenerators {
 		/* new DynTreeTrunk(width, widthloss, branchStart, branchSpacing, verticalAngle, horizontalAngle, numBranching, branchWidthMultiplier, widthBranchLossBase, bend, bendCorrection)
 		 * new DynTreeBranch(verticalAngle, horizontalAngle, branchStart, spacing, widthloss, gravitydrag)
    		 */
-		
 		/*
+		
 		EnumTree.COCONUTPALM.setGenerators(new DynTreeGen(
 			EnumTree.COCONUTPALM, 
 			null,

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -15,7 +15,7 @@ public class SlotFuel extends Slot {
     }
 
     public boolean isItemValid(ItemStack stack) {
-        return (stack.getItem() instanceof IFuel) && ((IFuel)stack.getItem()).getBurningHeat(stack) > 0;
+        return (stack.getItem() instanceof IItemFuel) && ((IItemFuel)stack.getItem()).getBurningHeat(stack) > 0;
     }
 
     public int getItemStackLimit(ItemStack stack) {

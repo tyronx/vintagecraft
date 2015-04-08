@@ -38,8 +38,10 @@
         "half=top,treetype=africanmahogany":  { "model": "vintagecraft:singleslab/africanmahogany_upper" },
         "half=bottom,treetype=blackwalnut": { "model": "vintagecraft:singleslab/blackwalnut_lower" },
         "half=top,treetype=blackwalnut":  { "model": "vintagecraft:singleslab/blackwalnut_upper" },
-        "half=bottom,treetype=willow": { "model": "vintagecraft:singleslab/willow_lower" },
-        "half=top,treetype=willow":  { "model": "vintagecraft:singleslab/willow_upper" },
+        "half=bottom,treetype=weepingwillow": { "model": "vintagecraft:singleslab/weepingwillow_lower" },
+        "half=top,treetype=weepingwillow":  { "model": "vintagecraft:singleslab/weepingwillow_upper" },
+        "half=bottom,treetype=coyotewillow": { "model": "vintagecraft:singleslab/coyotewillow_lower" },
+        "half=top,treetype=coyotewillow":  { "model": "vintagecraft:singleslab/coyotewillow_upper" },
         "half=bottom,treetype=larch": { "model": "vintagecraft:singleslab/larch_lower" },
         "half=top,treetype=larch":  { "model": "vintagecraft:singleslab/larch_upper" }
 	}

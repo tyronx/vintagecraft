@@ -19,7 +19,8 @@
 		"treetype=poplar": { "model": "vintagecraft:leavesbranchy/poplar" },
 		"treetype=africanmahogany": { "model": "vintagecraft:leavesbranchy/africanmahogany" },
 		"treetype=blackwalnut": { "model": "vintagecraft:leavesbranchy/blackwalnut" },
-		"treetype=willow": { "model": "vintagecraft:leavesbranchy/willow" },
+		"treetype=weepingwillow": { "model": "vintagecraft:leavesbranchy/weepingwillow" },
+		"treetype=coyotewillow": { "model": "vintagecraft:leavesbranchy/coyotewillow" },
 		"treetype=larch": { "model": "vintagecraft:leavesbranchy/larch" }
 	}
 }

@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.WorldProperties;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Interfaces.IFuel;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import net.minecraft.item.ItemStack;
 
 public enum EnumStrongHeatSource {
@@ -33,7 +33,7 @@ public enum EnumStrongHeatSource {
 	
 	
 	public static void addItemStackInformation(ItemStack itemstack, List tooltip) {
-		if (itemstack != null && itemstack.getItem() instanceof IFuel && ((IFuel)itemstack.getItem()).getBurningHeat(itemstack) > 0) {
+		if (itemstack != null && itemstack.getItem() instanceof IItemFuel && ((IItemFuel)itemstack.getItem()).getBurningHeat(itemstack) > 0) {
 			tooltip.add("Can be used as fuel");
 			for (EnumStrongHeatSource heatsource : EnumStrongHeatSource.values()) {
 				if (heatsource.hasgui) {
@@ -42,23 +42,23 @@ public enum EnumStrongHeatSource {
 			}	
 		}
 		
-		if (itemstack != null && itemstack.getItem() instanceof ISmeltable && ((ISmeltable)itemstack.getItem()).getMeltingPoint(itemstack) > 0) {
-			tooltip.add("Melting Point: " + ((ISmeltable)itemstack.getItem()).getMeltingPoint(itemstack) + " deg.");
+		if (itemstack != null && itemstack.getItem() instanceof IItemSmeltable && ((IItemSmeltable)itemstack.getItem()).getMeltingPoint(itemstack) > 0) {
+			tooltip.add("Melting Point: " + ((IItemSmeltable)itemstack.getItem()).getMeltingPoint(itemstack) + " deg.");
 		}
 		
 	}
 	
 	public int getProducedHeat(ItemStack stack) {
-		if (stack != null && stack.getItem() instanceof IFuel) {
-			IFuel fuel = (IFuel)stack.getItem();
+		if (stack != null && stack.getItem() instanceof IItemFuel) {
+			IItemFuel fuel = (IItemFuel)stack.getItem();
 			return (int) (fuel.getBurningHeat(stack) * heatmodifier);
 		}
 		return 0;
 	}
 	
 	public int getHeatDuration(ItemStack stack) {
-		if (stack != null && stack.getItem() instanceof IFuel) {
-			IFuel fuel = (IFuel)stack.getItem();
+		if (stack != null && stack.getItem() instanceof IItemFuel) {
+			IItemFuel fuel = (IItemFuel)stack.getItem();
 			return (int)(fuel.getBurnDurationMultiplier(stack) * 35f * burndurationmodifier);
 		}
 		return 0;

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemStone;

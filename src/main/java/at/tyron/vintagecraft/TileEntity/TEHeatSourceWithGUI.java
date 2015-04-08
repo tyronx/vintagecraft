@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.BlockStove;
-import at.tyron.vintagecraft.Interfaces.IFuel;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Block.Utility.BlockStove;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -95,7 +95,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
     
     public boolean tryPutItemStack(ItemStack itemstack) {
-    	if (itemstack.getItem() instanceof ISmeltable && ((ISmeltable)itemstack.getItem()).getSmelted(itemstack) != null) {
+    	if (itemstack.getItem() instanceof IItemSmeltable && ((IItemSmeltable)itemstack.getItem()).getSmelted(itemstack) != null) {
     		if (furnaceItemStacks[0] == null) {
     			furnaceItemStacks[0] = itemstack.splitStack(1);
     			return true;
@@ -108,7 +108,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     		}
     	}
 
-    	if (itemstack.getItem() instanceof IFuel && ((IFuel)itemstack.getItem()).getBurningHeat(itemstack) > 0) {
+    	if (itemstack.getItem() instanceof IItemFuel && ((IItemFuel)itemstack.getItem()).getBurningHeat(itemstack) > 0) {
     		if (furnaceItemStacks[1] == null) {
     			furnaceItemStacks[1] = itemstack.splitStack(1);
     			return true;
@@ -311,32 +311,32 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     }
     
     ItemStack oreItemSmelted() {
-    	if (oreSlot() != null && oreSlot().getItem() instanceof ISmeltable) {
-    		ISmeltable smeltable = (ISmeltable)oreSlot().getItem();
+    	if (oreSlot() != null && oreSlot().getItem() instanceof IItemSmeltable) {
+    		IItemSmeltable smeltable = (IItemSmeltable)oreSlot().getItem();
     		return smeltable.getSmelted(oreSlot());
     	}
     	return null;
     }
 
     int oreItemSmeltedRatio() {
-    	if (oreSlot() != null && oreSlot().getItem() instanceof ISmeltable) {
-    		ISmeltable smeltable = (ISmeltable)oreSlot().getItem();
+    	if (oreSlot() != null && oreSlot().getItem() instanceof IItemSmeltable) {
+    		IItemSmeltable smeltable = (IItemSmeltable)oreSlot().getItem();
     		return smeltable.getRaw2SmeltedRatio(oreSlot());
     	}
     	return 0;
     }
     
     int oreItemSmeltedMeltingPoint() {
-    	if (oreSlot()!= null && oreSlot().getItem() instanceof ISmeltable) {
-    		ISmeltable smeltable = (ISmeltable)oreSlot().getItem();
+    	if (oreSlot()!= null && oreSlot().getItem() instanceof IItemSmeltable) {
+    		IItemSmeltable smeltable = (IItemSmeltable)oreSlot().getItem();
     		return smeltable.getMeltingPoint(oreSlot());
     	}
     	return 0;    	
     }
     
     float oreItemSmeltingDurationModifier() {
-    	if (oreSlot()!= null && oreSlot().getItem() instanceof ISmeltable) {
-    		ISmeltable smeltable = (ISmeltable)oreSlot().getItem();
+    	if (oreSlot()!= null && oreSlot().getItem() instanceof IItemSmeltable) {
+    		IItemSmeltable smeltable = (IItemSmeltable)oreSlot().getItem();
     		return smeltable.getSmeltingSpeedModifier(oreSlot());
     	}
     	return 1f;    	

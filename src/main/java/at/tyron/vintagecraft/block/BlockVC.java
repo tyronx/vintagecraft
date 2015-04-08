@@ -7,7 +7,7 @@ import com.google.common.util.concurrent.Service.State;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Interfaces.ISoil;
+import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -38,7 +38,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class BlockVC extends Block implements ISubtypeFromStackPovider {
-	BlockClassEntry[] subtypes;
+	protected BlockClassEntry[] subtypes;
 	
 	protected BlockVC(Material materialIn) {
 		super(materialIn);
@@ -131,9 +131,9 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     
     
     void soilUpdate(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-    	if (! (this instanceof ISoil)) return;
+    	if (! (this instanceof IBlockSoil)) return;
     	
-    	ISoil soil = (ISoil)this;    	
+    	IBlockSoil soil = (IBlockSoil)this;    	
     	
     	// Up or downgrade grass depending on light conditions
     	IProperty property = soil.getOrganicLayerProperty(worldIn, pos);
@@ -164,8 +164,8 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 
                     
                     
-                    if (neighbourblockstate.getBlock() instanceof ISoil && ((ISoil)neighbourblockstate.getBlock()).canGrowGrass(worldIn, pos)) {
-                    	soil = (ISoil)neighbourblockstate.getBlock();
+                    if (neighbourblockstate.getBlock() instanceof IBlockSoil && ((IBlockSoil)neighbourblockstate.getBlock()).canGrowGrass(worldIn, pos)) {
+                    	soil = (IBlockSoil)neighbourblockstate.getBlock();
                     	IProperty neighbourproperty = soil.getOrganicLayerProperty(worldIn, pos);
                     	EnumOrganicLayer neighbourorganiclayer = (EnumOrganicLayer)neighbourblockstate.getValue(neighbourproperty);
                     	
@@ -190,7 +190,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	@Override
     @SideOnly(Side.CLIENT)
     public int getBlockColor() {
-		if (this instanceof ISoil) {
+		if (this instanceof IBlockSoil) {
 			return ColorizerGrass.getGrassColor(0.5D, 1.0D);
 		} else {
 			return 16777215;
@@ -200,7 +200,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	@Override
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state) {
-		if (this instanceof ISoil) {
+		if (this instanceof IBlockSoil) {
 			return this.getBlockColor();
 		} else {
 			return 16777215;
@@ -210,7 +210,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	@Override
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-		if (this instanceof ISoil) {
+		if (this instanceof IBlockSoil) {
 			//return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
 			return VCraftWorld.instance.getGrassColorAtPos(pos);
 		} else {
@@ -222,7 +222,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	
     @SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer() {
-    	if (this instanceof ISoil) {
+    	if (this instanceof IBlockSoil) {
     		return EnumWorldBlockLayer.CUTOUT_MIPPED;
     	} else {
     		return EnumWorldBlockLayer.SOLID;

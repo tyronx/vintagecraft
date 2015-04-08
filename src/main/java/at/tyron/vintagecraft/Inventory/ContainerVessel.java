@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.Inventory;
 
 import javax.management.RuntimeErrorException;
 
-import at.tyron.vintagecraft.Interfaces.IFuel;
-import at.tyron.vintagecraft.Interfaces.ISmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

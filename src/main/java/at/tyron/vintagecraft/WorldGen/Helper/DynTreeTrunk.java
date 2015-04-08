@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
-import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldGen.Helper.*;
 import at.tyron.vintagecraft.WorldProperties.EnumTransformFunction;

@@ -12,7 +12,7 @@ public class ModInfo {
 
 	public static final String ModChannel = "VintageCraft";
 	public static final String SERVER_PROXY_CLASS = "at.tyron.vintagecraft.CommonProxy";
-	public static final String CLIENT_PROXY_CLASS = "at.tyron.vintagecraft.client.ClientProxy";
+	public static final String CLIENT_PROXY_CLASS = "at.tyron.vintagecraft.Client.ClientProxy";
 
 	public static final String AssetPath = "/assets/" + ModID + "/";
 	public static final String AssetPathGui = "textures/gui/";

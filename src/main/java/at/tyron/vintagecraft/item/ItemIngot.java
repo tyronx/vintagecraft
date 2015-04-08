@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.Block.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.World.BlocksVC;

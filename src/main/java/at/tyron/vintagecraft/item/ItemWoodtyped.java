@@ -2,18 +2,18 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Block.BlockDoubleWoodenSlab;
-import at.tyron.vintagecraft.Block.BlockFenceGateVC;
-import at.tyron.vintagecraft.Block.BlockFenceVC;
-import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.BlockPlanksVC;
-import at.tyron.vintagecraft.Block.BlockSaplingVC;
-import at.tyron.vintagecraft.Block.BlockSingleWoodenSlab;
-import at.tyron.vintagecraft.Block.BlockStairsVC;
-import at.tyron.vintagecraft.Block.BlockWoodenSlabVC;
+import at.tyron.vintagecraft.Block.Organic.BlockDoubleWoodenSlab;
+import at.tyron.vintagecraft.Block.Organic.BlockFenceGateVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFenceVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
+import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
+import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
+import at.tyron.vintagecraft.Block.Organic.BlockWoodenSlabVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
-import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
@@ -22,7 +22,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemWoodtyped extends ItemBlock implements IFuel {
+public class ItemWoodtyped extends ItemBlock implements IItemFuel {
 
 	public ItemWoodtyped(Block block) {
 		super(block);

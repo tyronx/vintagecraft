@@ -10,12 +10,12 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
-import at.tyron.vintagecraft.Block.BlockSaplingVC;
-import at.tyron.vintagecraft.Interfaces.IFuel;
+import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 
-public class ItemPeatBrick extends ItemVC implements IFuel {
+public class ItemPeatBrick extends ItemVC implements IItemFuel {
 
 	public ItemPeatBrick() {
 		setCreativeTab(CreativeTabs.tabMisc);
@@ -38,6 +38,9 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 	}
 	
 	
+	
+	
+	/*
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
@@ -66,5 +69,5 @@ public class ItemPeatBrick extends ItemVC implements IFuel {
 		}
 		
 		return false;
-	}
+	}*/
 }

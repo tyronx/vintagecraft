@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.BlockBloomeryChimney;
+import at.tyron.vintagecraft.Block.Utility.BlockBloomeryChimney;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemVC;

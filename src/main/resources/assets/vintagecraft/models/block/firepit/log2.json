@@ -3,7 +3,7 @@
     "textures": {
         "1": "vintagecraft:blocks/log/oak_bark",
         "2": "vintagecraft:blocks/cobblestone/andesite",
-        "particle": "vintagecraft:blocks/log/oak_bark",
+        "particle": "vintagecraft:blocks/log/oak_bark"
     },
     "elements": [
         {
@@ -12,12 +12,12 @@
             "to": [ 14.0, 4.0, 12.0 ], 
             "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
             "faces": {
-                "north": { "texture": "#1", "uv": [ 4.0, 13.0, 16.0, 16.0 ] },
-                "east": { "texture": "#1", "uv": [ 29.0, 16.0, 16.0, 16.0 ] },
-                "south": { "texture": "#1", "uv": [ 4.0, 13.0, 16.0, 16.0 ] },
-                "west": { "texture": "#1", "uv": [ 13.0, 13.0, 16.0, 16.0 ] },
-                "up": { "texture": "#1", "uv": [ 4.0, 13.0, 16.0, 16.0 ] },
-                "down": { "texture": "#1", "uv": [ 4.0, 13.0, 16.0, 16.0 ] }
+                "north": { "texture": "#1" },
+                "east": { "texture": "#1" },
+                "south": { "texture": "#1" },
+                "west": { "texture": "#1" },
+                "up": { "texture": "#1" },
+                "down": { "texture": "#1" }
             }
         },
         {
@@ -26,12 +26,12 @@
             "to": [ 10.0, 5.0, 13.0 ], 
             "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 22.5 },
             "faces": {
-                "north": { "texture": "#1", "uv": [ 13.0, 13.0, 16.0, 16.0 ], "rotation": 90 },
-                "east": { "texture": "#1", "uv": [ 21.0, 16.0, 16.0, 16.0 ] },
-                "south": { "texture": "#1", "uv": [ 13.0, 16.0, 16.0, 16.0 ] },
-                "west": { "texture": "#1", "uv": [ 21.0, 16.0, 16.0, 16.0 ] },
-                "up": { "texture": "#1", "uv": [ 13.0, 5.0, 16.0, 16.0 ], "rotation": 90 },
-                "down": { "texture": "#1", "uv": [ 13.0, 5.0, 16.0, 16.0 ] }
+                "north": { "texture": "#1", "rotation": 90 },
+                "east": { "texture": "#1" },
+                "south": { "texture": "#1" },
+                "west": { "texture": "#1" },
+                "up": { "texture": "#1"},
+                "down": { "texture": "#1" }
             }
         },
         {

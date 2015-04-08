@@ -2,11 +2,11 @@ package at.tyron.vintagecraft.BlockClass;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Block.BlockFlowerVC;
-import at.tyron.vintagecraft.Block.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.BlockLogVC;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;

@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.*;
 
-import at.tyron.vintagecraft.Block.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 
 public enum EnumFlowerGroup {
 	// (int mintemp, int maxtemp, int minforest, int maxforest, int minrain, int maxrain, int weight, EnumFlower []variants)
