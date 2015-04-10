@@ -16,7 +16,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemTopSoil extends ItemBlock implements ISubtypeFromStackPovider {
+public class ItemTopSoil extends ItemBlockVC implements ISubtypeFromStackPovider {
 
 	public ItemTopSoil(Block block) {
 		super(block);

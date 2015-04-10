@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldProperties;
 
 public enum EnumDepositOccurenceType {
 	NODEPOSIT,
-	INTOPSOIL,					// Within Topsoil
+	FOLLOWSURFACE,					// Within Topsoil
 	INDEPOSIT,  				// Within another deposit
 	
 	ANYBELOWSEALEVEL,			// Anywhere below sealevel. Mindepth = fixed coordinate below sealevel

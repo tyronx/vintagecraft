@@ -25,7 +25,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRock extends ItemBlock implements IItemSmeltable {
+public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 
 	public ItemRock(Block block) {
 		super(block);

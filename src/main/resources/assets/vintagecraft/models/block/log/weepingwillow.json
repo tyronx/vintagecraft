@@ -1,0 +1,7 @@
+{
+	"parent": "block/cube_column",
+	"textures": {
+		"end": "vintagecraft:blocks/log/weepingwillow",
+		"side": "vintagecraft:blocks/log/weepingwillow_bark"
+	}
+}

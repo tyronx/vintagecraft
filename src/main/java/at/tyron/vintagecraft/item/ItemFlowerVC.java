@@ -16,7 +16,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemFlowerVC extends ItemBlock {
+public class ItemFlowerVC extends ItemBlockVC {
 
 	public ItemFlowerVC(Block block) {
 		super(block);

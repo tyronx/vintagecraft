@@ -47,7 +47,10 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 					sum += genlayersuppliers[i].getWeight();
 					
 					if (rnd < sum) {
-						cache[x + z * sizeX] = (getDepth(genlayersuppliers[i]) << 16) + genlayersuppliers[i].getColor(); 
+						
+						cache[x + z * sizeX] = 
+							(getDepth(genlayersuppliers[i]) << 16) + 		// Reference depth
+							genlayersuppliers[i].getColor();				// Type of deposit 
 						
 						
 						if (genlayersuppliers[i].getSize() > 1) {
@@ -78,23 +81,13 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 	
 	
 	int getDepth(IGenLayerSupplier genlayersupplier) {
+		int range = genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin();
+				
 		if (weightDistributionTriangular) {
-			return genlayersupplier.getDepthMin() + (nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin()) + nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin()))/2;
+			return genlayersupplier.getDepthMin() + (nextInt(1 + range) + nextInt(1 + range))/2;
 		} else {
-			return genlayersupplier.getDepthMin() + nextInt(1 + genlayersupplier.getDepthMax() - genlayersupplier.getDepthMin());
+			return genlayersupplier.getDepthMin() + nextInt(1 + range);
 		}
 	}
 	
 }
-
-
-
-/*
-
-	int[] depositDepths = new int[deposits.length];
-
-for (int i = 0; i < deposits.length; i++) {
-	depositDepths[i] = deposits[i].minDepth + random.nextInt(deposits[i].maxDepth - deposits[i].minDepth);
-}
-
-*/

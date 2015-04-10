@@ -7,7 +7,7 @@ import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 
-public class ItemFarmLand extends ItemBlock implements ISubtypeFromStackPovider {
+public class ItemFarmLand extends ItemBlockVC implements ISubtypeFromStackPovider {
 
 	public ItemFarmLand(Block block) {
 		super(block);

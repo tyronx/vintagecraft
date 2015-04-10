@@ -36,12 +36,12 @@ public class DepositOccurence {
 	}
 	
 	
-	public static DepositOccurence inTopSoil(int weight, int height) {
-		return new DepositOccurence(EnumDepositOccurenceType.INTOPSOIL, weight, height, 0, 1, 255);
+	public static DepositOccurence atSurface(int weight, int height) {
+		return new DepositOccurence(EnumDepositOccurenceType.FOLLOWSURFACE, weight, height, 0, 1, 255);
 	}
 
-	public static DepositOccurence inTopSoil(int weight, int height, int untilyheight) {
-		return new DepositOccurence(EnumDepositOccurenceType.INTOPSOIL, weight, height, 0, 1, untilyheight);
+	public static DepositOccurence followSurface(int weight, int height, int depth, int untilyheight) {
+		return new DepositOccurence(EnumDepositOccurenceType.FOLLOWSURFACE, weight, height, depth, depth+1, untilyheight);
 	}
 
 	

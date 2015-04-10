@@ -106,7 +106,7 @@ public class Recipes {
 			EnumRockType rocktype = (EnumRockType) rock.getKey();
 			ItemStack stone = ItemStone.setRockType(new ItemStack(ItemsVC.stone), rocktype);
 			
-			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SCS", "CSC", "SCS", 'C', Items.clay_ball, 'S', stone});
+			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SSS", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
 			
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneAxe), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneHoe), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});

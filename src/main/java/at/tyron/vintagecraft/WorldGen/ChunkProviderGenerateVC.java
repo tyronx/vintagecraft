@@ -57,6 +57,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	GenLayerVC ageLayer;
 	GenLayerVC noiseFieldModifier;	
 	
+	GenLayerVC rockOffsetNoiseX;
+	GenLayerVC rockOffsetNoiseZ;
+	
 	MapGenCavesVC caveGenerator;
 	MapGenFlora floragenerator;
 
@@ -124,7 +127,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		genrocklayers = new GenRockLayers(seed);
 		ageLayer = GenLayerVC.genAgemap(seed);
-		
+		rockOffsetNoiseX = GenLayerVC.genHorizontalRockOffsetMap(seed);
+		rockOffsetNoiseZ = GenLayerVC.genHorizontalRockOffsetMap(seed+500);
 		//heightmapGen = GenLayerVC.genHeightmap(seed);
 	}
 	
@@ -180,7 +184,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				primer.setBlockState(x, 128, z, VCraftWorld.instance.getTopLayerAtPos(chunkX * 16 + x, 128, chunkZ * 16 + z, EnumRockType.GRANITE, 0, rand));
+				primer.setBlockState(x, 128, z, EnumCrustType.TOPSOIL.getBlock(EnumRockType.GRANITE, VCraftWorld.instance.getClimate(new BlockPos(chunkX*16 + x, 128, chunkZ*16+z))));
 				primer.setBlockState(x, 127, z, BlocksVC.rock.getFromKey(EnumRockType.GRANITE).getBlockState());
 			}
 		}
@@ -308,6 +312,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		EnumCrustLayer[] crustLayersByDepth = new EnumCrustLayer[255];
 		
 		int age[] = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
+		int rockoffsetx[] = rockOffsetNoiseX.getInts(chunkX*16, chunkZ*16, 16, 16);
+		int rockoffsetz[] = rockOffsetNoiseZ.getInts(chunkX*16, chunkZ*16, 16, 16);
 		
 		IBlockState[] toplayers;
 		
@@ -336,7 +342,13 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						if (chunkGroundLevelMap[arrayIndexChunk] == 0) {
 							chunkGroundLevelMap[arrayIndexChunk] = y;
 							
-							EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, 4, chunkZ * 16 + z, Math.abs(age[arrayIndexHeightmap]), rand);
+							EnumRockType rocktype = genrocklayers.getRockType(
+								chunkX * 16 + x + rockoffsetx[arrayIndexChunk], 
+								2, 
+								chunkZ * 16 + z + rockoffsetz[arrayIndexChunk], 
+								Math.abs(age[arrayIndexHeightmap]), 
+								rand
+							);
 							toplayers = EnumCrustLayerGroup.getTopLayers(rocktype, new BlockPos(chunkX*16 + x, y, chunkZ*16 + z), rand);
 						}
 						
@@ -357,7 +369,13 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 							if (toplayers.length > depth) {
 								primer.setBlockState(x, y, z, toplayers[depth]);
 							} else {
-								EnumRockType rocktype = genrocklayers.getRockType(chunkX * 16 + x, depth, chunkZ * 16 + z, Math.abs(age[arrayIndexHeightmap]), rand);
+								EnumRockType rocktype = genrocklayers.getRockType(
+									chunkX * 16 + x + rockoffsetx[arrayIndexChunk], 
+									depth, 
+									chunkZ * 16 + z + rockoffsetz[arrayIndexChunk], 
+									Math.abs(age[arrayIndexHeightmap]), 
+									rand
+								);
 								primer.setBlockState(x, y, z, EnumCrustType.ROCK.getBlock(rocktype, null));
 							}
 							

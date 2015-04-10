@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
+import at.tyron.vintagecraft.WorldGen.Noise.GenLayerNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.SimplexNoise;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -16,6 +17,8 @@ public class GenRockLayers {
 	int offset = 0;
 	
 	HashMap<Integer, EnumRockType> color2Rock = new HashMap<Integer, EnumRockType>(255);
+	
+	
 	
 	public GenRockLayers(long seed) {
 		int octaves = 6;
@@ -43,7 +46,7 @@ public class GenRockLayers {
 		for (int i = 0; i < colors.length; i++) {
 			colors[i] = 255 - currentcolor++;
 		}
-		shuffleArray(colors);
+		shuffleArray(seed, colors);
 		
 		int k = 0;
 		for (EnumRockType rocktype : rocktypes) {
@@ -56,6 +59,9 @@ public class GenRockLayers {
 		while(currentcolor <= 255) {
 			color2Rock.put(255 - currentcolor++, EnumRockType.GRANITE);
 		}
+		
+		
+		
 	}
 	
 	
@@ -75,11 +81,9 @@ public class GenRockLayers {
 	
 	
 	  // Implementing Fisher–Yates shuffle
-	  static void shuffleArray(int[] ar)
-	  {
-	    Random rnd = new Random();
-	    for (int i = ar.length - 1; i > 0; i--)
-	    {
+	  static void shuffleArray(long seed, int[] ar) {
+	    Random rnd = new Random(seed);
+	    for (int i = ar.length - 1; i > 0; i--) {
 	      int index = rnd.nextInt(i + 1);
 	      // Simple swap
 	      int a = ar[index];

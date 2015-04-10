@@ -160,6 +160,9 @@ public class VintageCraftCommands extends CommandBase {
 			if (args[1].equals("noisemod")) {
 				GenLayerVC.genNoiseFieldModifier(seed);
 			}
+			if (args[1].equals("rockoffset")) {
+				GenLayerVC.genHorizontalRockOffsetMap(seed);
+			}
 			
 			
 			GenLayerVC.shouldDraw = false;

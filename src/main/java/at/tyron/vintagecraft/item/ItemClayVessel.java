@@ -28,7 +28,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 
-public class ItemClayVessel extends ItemBlock implements IItemSmeltable {
+public class ItemClayVessel extends ItemBlockVC implements IItemSmeltable {
 	boolean burned;
 		
 	public ItemClayVessel(Block block) {

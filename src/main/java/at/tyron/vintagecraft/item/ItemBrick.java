@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemBrick extends ItemBlock {
+public class ItemBrick extends ItemBlockVC {
 
 	public ItemBrick(Block block) {
 		super(block);

@@ -274,12 +274,10 @@ public class VCraftWorld {
     	
     	if (nbt == null || !nbt.hasKey("climate")) {
     		nbt = recreateClimateNBT(pos);
-    		/*printProfiling*/System.out.println("_climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " at coord " + pos + " missing - recreated!" + " (@index " + BlockPos2Index(pos) + ")");
+    		System.out.println("_climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " at coord " + pos + " missing - recreated!" + " (@index " + BlockPos2Index(pos) + ")");
     	}
     	
     	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
-    	
-    	//int sealevelheight = pos.getY() - seaLevel;
     	
     	return climate;
     }
@@ -330,23 +328,18 @@ public class VCraftWorld {
     	return Math.min(30, Math.max(-30, (int) ((temperature - (pos.getY() - seaLevel)/2) / 4.25f) - 30));
     }
     
-    public int deScaleTemperature(int temperature) {
+    public static int deScaleTemperature(int temperature) {
     	return (int) ((temperature + 30) * 4.25f);
     }
     
     
     
     public int getFertility(int rain, int temp, BlockPos pos) {
-    	//int f = Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256));
-    	
     	float f = Math.min(255, rain/2f + Math.max(0, rain*temp/512f));
     	
     	int heightloss = Math.max(0, pos.getY() - seaLevel - 20);
     	float weight = 1 - Math.max(0, (80 - f) / 80f);
-    //	System.out.println("f = " + f + " / weight = " + weight);
-    	return (int) Math.max(0, f - heightloss * weight );     // Math.max(0, Math.min(255, rain + Math.max(0, (rain-128)*(temp-128)/256) - (pos.getY() - seaLevel)));
-    	
-    	//return Math.max(0, f - heightloss / (f > 25 ? 1 : 2));
+    	return (int) Math.max(0, f - heightloss * weight );
     }
     
     
@@ -360,77 +353,6 @@ public class VCraftWorld {
 
     
     
-    
-    
-    
-    
-    public IBlockState getTopLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness, Random rand) {
-    	BlockPos pos = new BlockPos(x, y, z);
-    	int []climate = getClimate(pos);
-    	
-		EnumFertility fertility = EnumFertility.fromFertilityValue(climate[1]);
-
-		if (climate[0] <= -18) {
-			return Blocks.snow.getDefaultState();
-		}
-		
-		if (fertility != null) {
-			if (steepness > 3 && climate[2] < 180) return null;
-			EnumOrganicLayer layer = EnumOrganicLayer.fromClimate(climate[2], climate[0]);
-			return BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, layer).withProperty(BlockTopSoil.fertility, fertility);
-		} else {
-			if (steepness > 2) return null;
-			
-			if (climate[0] < 10 || (climate[0] < 14 && rand.nextInt(2*climate[0] - 18) == 0)) {
-				return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
-			} else {
-				return BlocksVC.sand.getFromKey(rocktype).getBlockState();
-			}
-		}
-	}
-
-	public IBlockState getSubLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
-		if (steepness > 1 || y > 200) return null;
-		
-		int []climate = getClimate(new BlockPos(x, y, z));
-		
-		//int fertilityvalue = getFertily(new BlockPos(x, y, z));
-		EnumFertility fertility = EnumFertility.fromFertilityValue(climate[1]);
-		//int temperature = getTemperature(new BlockPos(x, y, z));
-		
-		if (climate[0] <= -23) {
-			return Blocks.ice.getDefaultState();
-		}
-
-		if (fertility != null) {
-			/*if (y > 200) {
-				return BlocksVC.regolith.getFromKey(rocktype).getBlockState();
-			}*/
-			return BlocksVC.subsoil.getFromKey(rocktype).getBlockState();
-		} else {
-			if (climate[0] < 10) {
-				return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
-			} else {
-				return BlocksVC.sand.getFromKey(rocktype).getBlockState();
-			}
-		}
-	}
-
-	
-	public IBlockState getReoglithLayerAtPos(int x, int y, int z, EnumRockType rocktype, int steepness) {
-		int []climate = getClimate(new BlockPos(x, y, z));
-		
-		if (climate[0] <= -28) return Blocks.packed_ice.getDefaultState();
-		
-		if (climate[1] < 40) return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
-		
-		
-		// Above y 200 the sublayer turns into regolith, so no need to generate it here again
-		if (steepness < 1 && y <= 200) return BlocksVC.regolith.getFromKey(rocktype).getBlockState();
-		return null;
-	}
-
-
     
     
     

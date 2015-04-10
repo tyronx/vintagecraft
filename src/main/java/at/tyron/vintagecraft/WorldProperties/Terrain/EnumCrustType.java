@@ -25,10 +25,12 @@ public enum EnumCrustType {
 				EnumOrganicLayer layer = EnumOrganicLayer.fromClimate(climate[2], climate[0]);
 				EnumFertility fertility = EnumFertility.fromFertilityValue(climate[1]);
 				
-				if (fertility != null) {
-					return BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, layer).withProperty(BlockTopSoil.fertility, fertility);
+				if (fertility == null) {
+					fertility = EnumFertility.LOW;
 				}
-				break;
+				return BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, layer).withProperty(BlockTopSoil.fertility, fertility);
+				
+				//break;
 				
 			case SUBOIL:
 				return BlocksVC.subsoil.getFromKey(rocktype).getBlockState();
@@ -59,7 +61,7 @@ public enum EnumCrustType {
 		
 		
 		
-		//System.out.println("block not found for " + this + " defaulting to stone!!");
+		System.out.println("block not found for " + this + " defaulting to null!! fertility = "  + climate[1]);
 		
 		return null; //Blocks.stone.getDefaultState();
 	}

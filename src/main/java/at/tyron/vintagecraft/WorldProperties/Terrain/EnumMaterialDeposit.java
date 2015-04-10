@@ -34,9 +34,9 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	ROCKSALT (20, 		true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(35, 2, 5, 255, 160)),
 	OLIVINE (21, 		true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 
-	CLAY (0,		   false, EnumDepositSize.LARGE, DepositOccurence.inTopSoil(5, 2, 155)),
-	FIRECLAY (22,      false, EnumDepositSize.LARGE, DepositOccurence.anyRelativeDepth(1, 1, 2, 3, 160)),
-	PEAT (1,		   false, EnumDepositSize.HUGE, DepositOccurence.inTopSoil(80, 2, 165)),
+	CLAY (0,		   false, EnumDepositSize.LARGE, DepositOccurence.followSurface(5, 2, 1, 155)),
+	FIRECLAY (22,      false, EnumDepositSize.LARGE, DepositOccurence.followSurface(1, 1, 2, 160)),
+	PEAT (1,		   false, EnumDepositSize.HUGE, DepositOccurence.followSurface(80, 2, 1, 165)),
 	
 	
 	LIGNITE (2,         true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(50, 1, 10, 50, 0.5f)), 
@@ -58,12 +58,12 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	SYLVITE_ROCKSALT (13,   true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 40)), 
 	NATIVESILVER_QUARTZ (14,true, EnumDepositSize.NONE, DepositOccurence.inDeposit(QUARTZ, 2)), 
 	
-	LAPISLAZULI (15,	true, EnumDepositSize.SMALL, DepositOccurence.anyRelativeDepth(50, 1, 0, 35, 220)),
-	DIAMOND (16,		true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(45, 1, 100, 140)),
+	LAPISLAZULI (15,	true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(5, 1, 0, 35, 220)),
+	DIAMOND (16,		true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(15, 1, 100, 140)),
 	EMERALD (17,		true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(60, 1, 100, 140)),
 	BISMUTHINITE (18,	true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(5, 1, 0, 35)),
 	
-	PERIDOT_OLIVINE (22,true, EnumDepositSize.NONE, DepositOccurence.inDeposit(OLIVINE, 20)),  
+	PERIDOT_OLIVINE (23,true, EnumDepositSize.NONE, DepositOccurence.inDeposit(OLIVINE, 20)),  
 	;
 
 	
@@ -147,27 +147,17 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		
 	}
 
-	/*public Block getBlock() {
-		return block;
-	}*/
 	
 	public IBlockState getBlockStateForDepth(int depth, IBlockState parentmaterial) {
 		IBlockState state;
 		
 		switch (this) {
 			case PEAT: 
-				state = BlocksVC.peat.getDefaultState();
-				if (depth > 0) {
-					state = state.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NoGrass);
-				}
+				state = BlocksVC.peat.getDefaultState(); //.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NormalGrass);
 			break;
 			
 			case CLAY: 
 				state = BlocksVC.rawclay.getDefaultState();
-				if (depth > 0) {
-					state = state.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NoGrass);
-				}
-
 				break;
 			
 			case FIRECLAY: 
@@ -190,9 +180,9 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		if (state == null) System.out.println("block state for " + this + " is null!");
 		
 		
-		if (depth > 1 && state.getBlock() instanceof IBlockSoil) {
+		/*if (depth > 0 && state.getBlock() instanceof IBlockSoil) {
 			return state.withProperty(((IBlockSoil)state.getBlock()).getOrganicLayerProperty(null, null), EnumOrganicLayer.NoGrass);
-		}
+		}*/
 		
 		
 		

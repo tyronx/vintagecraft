@@ -74,9 +74,9 @@ public class WorldGenDeposits implements IWorldGenerator {
 	}
 
 	void generateSmallDeposit(EnumMaterialDeposit deposit, World world, Random rand, int x, int z) {
-		BlockPos surface;
+		BlockPos referencePos;
 		
-		//System.out.println("gen " + deposit);
+		
 		
 		boolean belowsealevel =
 			deposit.occurence.type == EnumDepositOccurenceType.ANYBELOWSEALEVEL
@@ -84,21 +84,26 @@ public class WorldGenDeposits implements IWorldGenerator {
 		;
 		
 		if (belowsealevel) {
-			surface = new BlockPos(x, VCraftWorld.seaLevel, z);	
+			referencePos = new BlockPos(x, VCraftWorld.seaLevel, z);	
 		} else {
-			surface = world.getHorizon(new BlockPos(x, 0, z));
+			referencePos = world.getHorizon(new BlockPos(x, 0, z));
 		}
 
 		int depth = deposit.occurence.mindepth + rand.nextInt(deposit.occurence.maxdepth - deposit.occurence.mindepth);
+
+		/*if (deposit == EnumMaterialDeposit.CLAY || deposit == EnumMaterialDeposit.FIRECLAY || deposit == EnumMaterialDeposit.PEAT) {
+			System.out.println("gen " + deposit + " at depth = " + depth + " (ref pos = " + referencePos+")");
+		}*/
 		
-		if (surface.getY() - depth <= 1) return;
+
+		if (referencePos.getY() - depth <= 1) return;
 			
-		if (!deposit.isParentMaterial(world.getBlockState(surface.down(depth)), surface)) return;
+		if (!deposit.isParentMaterial(world.getBlockState(referencePos.down(depth)), referencePos)) return;
 		
 		
 		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println(surface + " / " + depth);
 		
-		generateSmallDeposit(deposit, world, rand, surface, depth);
+		generateSmallDeposit(deposit, world, rand, referencePos, depth);
 	}
 	
 	
@@ -111,8 +116,15 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("overground copper @ " + surface + " + depth " + depth);
 		
 		int width = (rand.nextInt(9) + rand.nextInt(9)) / 2;
-		if (deposit.size == EnumDepositSize.TINY) width = 1 + rand.nextInt(3);
-		if (deposit.size == EnumDepositSize.SINGLE) width = 0;
+		
+		
+		if (deposit.size == EnumDepositSize.TINY) {
+			width = 1 + rand.nextInt(3);
+		}
+		
+		if (deposit.size == EnumDepositSize.SINGLE) {
+			width = 0;
+		}
 		
 		for (int dx = -width / 2; dx <= width/2; dx++) {
 			if (rand.nextInt(8) == 0) depth+=rand.nextInt(2) * 2 - 1;
@@ -121,7 +133,6 @@ public class WorldGenDeposits implements IWorldGenerator {
 				pos = surface.add(dx, -depth, dz);
 				
 				if (pos.getY() > 0 && dx * dx + dz * dz <= width * width && deposit.isParentMaterial(world.getBlockState(pos), pos)) {
-					
 					world.setBlockState(pos, deposit.getBlockStateForDepth(depth, world.getBlockState(pos)), 2);
 				}
 				
@@ -151,20 +162,33 @@ public class WorldGenDeposits implements IWorldGenerator {
 				
 				drawnDeposits[deposit.id] = 1;
 				
+				// Depositlayer:
+				// r    bits 16 - 23   reference depth of deposit
+				// g    bits 8 - 15    height variation of deposit (between 0 and 14)
+				// b    bits 0 - 7     type of deposit
 				
 				int depositDepth = ((depositLayer[x+z*16] >> 16) & 0xFF) + (((depositLayer[x+z*16] >> 8) & 0xFF) - 7);
 
 				
+				// Discard height variation for near surface deposits
+				if (deposit.occurence.type == EnumDepositOccurenceType.FOLLOWSURFACE) {
+					depositDepth = ((depositLayer[x+z*16] >> 16) & 0xFF);
+				}
+				
+			
+				
 				int horizon = VCraftWorld.instance.seaLevel;
 				
-				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH) {
+				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH || deposit.occurence.type == EnumDepositOccurenceType.FOLLOWSURFACE) {
 					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
 					
 					if (horizon > deposit.occurence.untilyheight) continue;
 				}
 				
-				pos = new BlockPos(xCoord + x, depositDepth = Math.max(horizon - deposit.occurence.maxdepth, horizon - depositDepth), zCoord + z);
-				//spos = new BlockPos(xCoord + x, depositDepth = Math.max(horizon - deposit.maxDepth, horizon - depositDepth), zCoord + z);
+				
+				pos = new BlockPos(xCoord + x, horizon - depositDepth, zCoord + z);
+
+				
 				
 				if (pos.getY() < 1) continue;
 				

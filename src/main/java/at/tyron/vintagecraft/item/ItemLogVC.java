@@ -29,7 +29,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, IItemFuel {
+public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, IItemFuel {
 
 	public ItemLogVC(Block block) {
 		super(block);
@@ -91,49 +91,5 @@ public class ItemLogVC extends ItemBlock implements ISubtypeFromStackPovider, II
 		if (block instanceof BlockPlanksVC) return BlocksVC.planks;
 		
 		return BlocksVC.log;
-	}
-	
-	
-	
-	public BlockFirepit.EnumBuildStage getNextFirepitStage(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side) {
-		IBlockState state = world.getBlockState(pos);
-		
-		if(state.getBlock() instanceof BlockFirepit) {
-			BlockFirepit.EnumBuildStage stage = (EnumBuildStage) state.getValue(BlockFirepit.buildstage);
-			return stage.getNextStage();
-		} else {
-			return null;
-		}
-	}
-	
-	
-	
-/*	
-	@Override
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		BlockFirepit.EnumBuildStage stage = getNextFirepitStage(itemstack, entityplayer, world, pos, side);
-		
-		if (stage != null) {
-			world.setBlockState(pos, BlocksVC.firepit.getDefaultState().withProperty(BlockFirepit.buildstage, stage));
-			itemstack.stackSize--;
-			return true;
-		}
-		
-		
-    	if (entityplayer.getCurrentEquippedItem() != null && entityplayer.isSneaking()) {
-    		IBlockState state = world.getBlockState(pos);
-    		if(state.getBlock() instanceof BlockFirepit) {
-    			TEHeatSourceWithGUI teheatsource = (TEHeatSourceWithGUI) world.getTileEntity(pos);
-        		if (teheatsource.tryPutItemStack(itemstack)) {
-        			return true;
-        		}
-    		}
-    	}
-    	
-
-    	
-		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
-	}*/
-
-	
+	}	
 }

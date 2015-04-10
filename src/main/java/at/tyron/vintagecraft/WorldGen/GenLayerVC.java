@@ -37,6 +37,14 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long baseSeed;
 	
 	
+	public static GenLayerVC genHorizontalRockOffsetMap(long seed) {
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 2, 0.6f, 50, 0);
+		noise.scale = 128;
+		GenLayerVC.drawImageGrayScale(512, noise, "HorizontalRockOffsetMap 0 Noise");
+		
+		return noise;
+	}
+	
 	public static GenLayerVC genNoiseFieldModifier(long seed) {	
 		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 4, 0.96f, 170, 0);
 		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
@@ -55,39 +63,13 @@ public abstract class GenLayerVC extends GenLayer {
 		return noise;
 	}
 	
+	
+	// Currently unused
 	public static GenLayerVC genHeightmap(long seed) {
 		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 6, 0.6f, 67, 80);
 		GenLayerVC.drawImageGrayScale(512, noise, "Heightmap 0 Noise");
 		
 		return noise;
-		
-		//GenLayerVC noise = new GenLayerHeightmap(seed);
-/*		GenLayerVC noise = new GenLayerNoise(seed, 40);
-		GenLayerVC.drawImageGrayScale(512, noise, "Heightmap 0 Noise");
-		
-		noise.initWorldGenSeed(seed);
-		
-		GenLayerVC heightmap = new GenLayerBlurAll(seed, 2, 3, noise);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 1 Blur");
-		
-		heightmap = GenLayerZoom.magnify(1000L, heightmap, 2);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 2 2xZoom");
-
-		heightmap = new GenLayerBlurAll(seed, 2, 5, heightmap);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 3 Blur");
-
-		heightmap = GenLayerZoom.magnify(1000L, heightmap, 4);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 4 2xZoom");
-		
-		heightmap = new GenLayerBlurAll(seed, 2, 5, heightmap);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 6 Blur");
-
-		heightmap = new GenLayerAddPerlin(seed, 3, 0.65f, 150, heightmap);
-		GenLayerVC.drawImageGrayScale(512, heightmap, "Heightmap 8 Add Perlin");
-		
-		heightmap.initWorldGenSeed(seed);
-
-		return heightmap;*/
 	}
 	
 	// Generates Fertility, Temperature and Rainfall map
@@ -138,8 +120,9 @@ public abstract class GenLayerVC extends GenLayer {
 		ArrayList<EnumMaterialDeposit> largedeposits = new ArrayList<EnumMaterialDeposit>();
 		
 		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.size == EnumDepositSize.LARGE || deposit.size == EnumDepositSize.SMALLANDLARGE || deposit.size == EnumDepositSize.NONE || deposit.size == EnumDepositSize.HUGE)
+			if (deposit.size == EnumDepositSize.LARGE || deposit.size == EnumDepositSize.SMALLANDLARGE || deposit.size == EnumDepositSize.NONE || deposit.size == EnumDepositSize.HUGE) {
 				largedeposits.add(deposit);
+			}
 		}
 		
 		GenLayerVC noise = new GenLayerWeightedNoise(1L, largedeposits.toArray(new EnumMaterialDeposit[0]));
@@ -150,14 +133,14 @@ public abstract class GenLayerVC extends GenLayer {
 		GenLayerVC deposits = GenLayerZoom.magnify(2L, noise, 2);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 1 2x Magnify");
 		
-		deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 30, deposits);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add heightmap (green)");
+		deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 22, deposits);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add height variation (green)");
 
 		deposits = GenLayerZoom.magnify(4L, deposits, 2);
 		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 2x Magnify");
 
 		deposits = new GenLayerBlurSelective(2L, 2, 5, false, 8, deposits);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 Blur Heightmap (green)");
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 Blur height variation (green)");
 
 
 		deposits.initWorldGenSeed(seed);
@@ -166,21 +149,15 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genForest(long seed) {
-		//System.out.println("gen forest " + seed);
-		
 		GenLayerVC noise = new GenLayerNoise(1L, 46);
 		GenLayerVC.drawImageGrayScale(512, noise, "Forest 0 Noise");
 		
-	//	noise.initWorldGenSeed(seed);
-		
-		//GenLayerVC forest = new GenLayerBlur(seed, 8, 3, noise);
 		GenLayerVC forest = new GenLayerBlurAll(2L, 2, 8, noise);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 1 Blur");
 		
 		forest = new GenLayerContrastAndBrightnessSelective(3L, 4f, 0, forest);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 2 Contrast");
 		
-		//forest = new GenLayerSubstract(seed, forest, new GenLayerBlur(seed, 2, 5, noise));
 		forest = new GenLayerClampedSubstractSelective(4L, 0, 1, forest, new GenLayerBlurAll(seed, 1, 15,  noise));
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 3 Unsharp Mask");
 		
@@ -197,72 +174,6 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 
 	
-
-	// Blue value = rocktype
-	// Red value = layer thickness
-	// Green value = temporary value layer for substracting thickness from red 
-	public static GenLayerVC genRockLayer(long seed, EnumRockType[] rocktypes) {
-		GenLayerVC rocklayer = new GenLayerWeightedNoise(1L, rocktypes, true);
-		GenLayerVC.drawImageRGB(512, rocklayer, "Rocks 0 Noise - rocks and thickness");
-		
-		/*rocklayer = new GenLayerExactZoom(2001L, 2, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 2 Exact Zoom");*/
-		
-		rocklayer = GenLayerZoom.magnify(seed, rocklayer, 8);
-		drawImageRGB(512, rocklayer, "Rocks 2 8x magnify");
-	
-		rocklayer = new GenLayerBlurAll(2L, 2, 5, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 3 Blur");
-		
-		/*rocklayer = new GenLayerBlurAll(2L, 1, 2, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 3 Blur");
-		
-		rocklayer = new GenLayerBlurAll(2L, 1, 5, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 4 Blur blue");
-
-		rocklayer = new GenLayerReducePallette(2001L, rocktypes, rocklayer);
-		drawImageRGB(512, rocklayer, "Rocks 5 reducepallete");*/
-
-	/*	rocklayer = GenLayerZoom.magnify(seed, rocklayer, 4);
-		drawImageRGB(512, rocklayer, "Rocks 6 12x magnify");*/
-		
-		rocklayer.initWorldGenSeed(seed);
-		
-		return rocklayer;
-	}
-	
-	
-	
-	public static GenLayerVC genRockDeformation(long seed) {
-		GenLayerVC deformationlayer = new GenLayerNoise(1L, 25, 3);
-		drawImageRGB(512, deformationlayer, "Rock Deform 0 Noise");
-		
-		deformationlayer.initWorldGenSeed(seed);
-
-		deformationlayer = new GenLayerBlurSelective(2L, 1, 3, false, deformationlayer);
-		drawImageRGB(512, deformationlayer, "Rock Deform 1 Blur");
-
-	
-		deformationlayer = new GenLayerExactZoom(5L, 2, deformationlayer);
-		drawImageRGB(512, deformationlayer, "Rock Deform 2 2x exact zoom");
-
-	
-		deformationlayer = new GenLayerBlurSelective(2L, 1, 3, false, deformationlayer);
-		drawImageRGB(512, deformationlayer, "Rock Deform 3 Blur");
-
-	
-		deformationlayer = new GenLayerExactZoom(5L, 5, deformationlayer);
-		drawImageRGB(512, deformationlayer, "Rock Deform 5 5x exact zoom");
-
-		deformationlayer = new GenLayerBlurSelective(2L, 1, 5, false, deformationlayer);
-		drawImageRGB(512, deformationlayer, "Rock Deform 6 Blur");
-		
-		deformationlayer = new GenLayerContrastAndBrightnessSelective(4L, 0.3f, 15, deformationlayer);
-		GenLayerVC.drawImageRGB(512, deformationlayer, "Rock Deform 7 Contrast");
-		
-		
-		return deformationlayer;
-	}
 	
 	
 	// Formerly Biomes

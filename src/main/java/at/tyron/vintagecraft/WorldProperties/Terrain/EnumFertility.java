@@ -7,7 +7,7 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public enum EnumFertility implements IStateEnum, IStringSerializable {
 	LOW (0, "lowf", 4),
-	MEDIUM (1, "medf", 10),
+	MEDIUM (1, "medf", 9),
 	HIGH (2, "hif", 21)
 	;
 

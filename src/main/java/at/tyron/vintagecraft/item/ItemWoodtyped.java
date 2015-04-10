@@ -22,7 +22,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
-public class ItemWoodtyped extends ItemBlock implements IItemFuel {
+public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 	public ItemWoodtyped(Block block) {
 		super(block);
