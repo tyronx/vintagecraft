@@ -19,6 +19,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.property.ExtendedBlockState;
@@ -116,12 +117,9 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
      	
 
-     //	System.out.println("bla!");
-     	
      	ItemStack itemstack;
      	if (worldIn.rand.nextInt(2) > 0) {
 	     	ret.add(ItemStone.setRockType(new ItemStack(ItemsVC.stone, 1), rocktype));
-	        //spawnAsEntity(worldIn, pos, itemstack);
      	}
         
         switch (oretype) {
@@ -132,10 +130,19 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
         	
         		
         	case OLIVINE:
-        		/*itemstack = new ItemStack(ItemsVC.stone, worldIn.rand.nextInt(2));
+        		itemstack = new ItemStack(ItemsVC.stone, 1);
     	        ItemStone.setRockType(itemstack, rocktype);
-    	        spawnAsEntity(worldIn, pos, itemstack);*/
+    	        spawnAsEntity(worldIn, pos, itemstack);
     	        break;
+    	        
+    	    
+        	case QUARTZ:
+        		if (worldIn.rand.nextInt(10) == 0) {
+            		itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
+    	        	ItemOreVC.setOreType(itemstack, EnumOreType.QUARTZCRYSTAL);
+    	        	ret.add(itemstack);
+        		}
+	        	
         		
         	default: 
 	        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
@@ -184,11 +191,29 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     public int getHarvestLevel(IBlockState state) {
      	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
-
+     	
         return oretype.getHarvestlevel();
     }
 
 
     
+    public float getBlockHardnessMultiplier(IBlockState state) {
+    	if (!BlocksVC.rawore.containsBlock(state.getBlock())) return 1f;
+    	
+     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
+     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
+     	
+        return oretype.hardnessmultiplier * rocktype.getHardnessMultiplier();
+    }
+
     
+	public int getHarvetLevel(IBlockState state) {
+    	if (!BlocksVC.rawore.containsBlock(state.getBlock())) return 1;
+    	
+     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
+
+     	return oretype.harvestlevel;
+	}
 }

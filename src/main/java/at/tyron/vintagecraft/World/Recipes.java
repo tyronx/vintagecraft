@@ -37,6 +37,8 @@ public class Recipes {
 		ItemStack stick = new ItemStack(Items.stick);
 
 		
+		
+		
 		GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlocksVC.clayVessel)), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 		
 		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
@@ -112,7 +114,7 @@ public class Recipes {
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneHoe), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stonePickaxe), new Object[] { "SSS", " W ", " W ", 'S', stone, 'W',  Items.stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneShovel), new Object[] { " S ", " W ", " W ", 'S', stone, 'W', Items.stick});	
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneSword), new Object[] { " S ", " S ", " W ", 'S', stone, 'W', Items.stick});
+			//GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneSword), new Object[] { " S ", " S ", " W ", 'S', stone, 'W', Items.stick});
 		}
 		
 		for (BlockClassEntry log : BlocksVC.log.values()) {
@@ -147,6 +149,9 @@ public class Recipes {
 			GameRegistry.addShapedRecipe(BlocksVC.fencegate.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'S', planksstack, 'W', Items.stick});
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Items.bed, 1), new Object[] { "   ", "WWW", "PPP", 'W', Blocks.wool, 'P', planksstack});
+			
+			ItemStack quartzcrystal = ItemOreVC.getItemStackFor(EnumOreType.QUARTZCRYSTAL, 1);
+			GameRegistry.addShapedRecipe(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
 		}
 		
 		

@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -52,7 +53,15 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	
 	@Override
 	public float getDigSpeed(ItemStack itemstack, IBlockState state) {
-		return getEfficiencyOnMaterial(itemstack, state.getBlock().getMaterial());
+		boolean harvestable = canHarvestBlock(state);
+		
+		float f = getEfficiencyOnMaterial(itemstack, state.getBlock().getMaterial());
+		
+		if (state.getBlock() instanceof BlockVC) {
+			f /= ((BlockVC)state.getBlock()).getBlockHardnessMultiplier(state);
+		}
+		
+		return f / (harvestable ? 1 : 20f);
 	}
 	
 
@@ -97,10 +106,23 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	
 	@Override
 	public boolean canHarvestBlock(Block blockIn) {
-		return blockIn.getBlockHardness(null, null) - getHarvestLevel() < 2;
+		return true;
     }
+	
+	
+	public boolean canHarvestBlock(IBlockState state) {
+		if (state.getBlock() instanceof BlockVC) {
+			BlockVC block = (BlockVC)state.getBlock();
+			return block.getHarvetLevel(state) <= getHarvestLevel();
+		}
+		return true;
+	}
 
 	 
+	@Override
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, EntityPlayer player) {
+		return !canHarvestBlock(player.worldObj.getBlockState(pos));
+	}
     
     @SideOnly(Side.CLIENT)
     public boolean isFull3D() {
@@ -147,7 +169,6 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
     
     
     public int destroyBlocksOfClass(World world, BlockPos playerpos, BlockPos centerpos, int quantity, Class blockclass) {
-    	//ArrayList<BlockPos> positions = new ArrayList<BlockPos>();
     	HashMap<BlockPos, Double> positions = new HashMap<BlockPos, Double>(); 
 		BlockPos pos;
 		
@@ -157,11 +178,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 					if (dx != 0 || dz != 0 || dy != 0) {
 						pos = centerpos.add(dx, dy, dz);
 						if (blockclass.isInstance(world.getBlockState(pos).getBlock())) {
-							//positions.add(centerpos);
 							positions.put(pos, playerpos.distanceSq(pos.getX(), pos.getY(), pos.getZ()));
-							
-							//System.out.println("added block with distance " + playerpos.distanceSq(pos.getX(), pos.getY(), pos.getZ()));
-							
 						}
 					}
 				}

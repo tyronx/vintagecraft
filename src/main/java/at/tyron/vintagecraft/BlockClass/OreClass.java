@@ -10,6 +10,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.Item.ItemOreBlock;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
@@ -21,7 +22,7 @@ public class OreClass extends BlockClass {
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
-	float getHardness() { return 2.5f; }
+	float getHardness() { return 2.25f; }
 	SoundType getStepSound() { return Block.soundTypeStone; }
 	String getHarvestTool() { return "pickaxe"; }
 	int getHarvestLevel() { return 1; }
@@ -31,14 +32,16 @@ public class OreClass extends BlockClass {
 	public OreClass init() {
 		name="rawore";
 		blockclass = BlockOreVC.class;
-		itemclass = ItemBlock.class;
+		itemclass = ItemOreBlock.class;
 		
 		int i = 0;
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			for (EnumOreType oretype : EnumOreType.values()) {
-				EnumStateImplementation key = new EnumStateImplementation(i++, 0, oretype.getName() + "-" + rocktype.getName());
+			for (EnumOreType oretype : EnumOreType.valuesSorted()) {
+				if (oretype.isParentMaterial(rocktype)) {
+					EnumStateImplementation key = new EnumStateImplementation(i++, 0, oretype.getName() + "-" + rocktype.getName());
 				
-				values.put(key, new OreClassEntry(key, rocktype, oretype));
+					values.put(key, new OreClassEntry(key, rocktype, oretype));
+				}
 			}
 		}
 		

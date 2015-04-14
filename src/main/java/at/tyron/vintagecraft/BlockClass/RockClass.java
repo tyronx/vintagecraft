@@ -45,7 +45,15 @@ public class RockClass extends BlockClass {
 			values.put((IStateEnum) item, new BlockClassEntry((IStateEnum)item));
 		}
 		
-		initBlocks(getBlockClassName(), getBlockClass(), getItemClass(), getHardness(), getStepSound(), getHarvestTool(), getHarvestLevel());
+		initBlocks(
+			getBlockClassName(), 
+			getBlockClass(), 
+			getItemClass(), 
+			getHardness(), 
+			getStepSound(), 
+			getHarvestTool(), 
+			getHarvestLevel()
+		);
 		return this;
 	}
 }

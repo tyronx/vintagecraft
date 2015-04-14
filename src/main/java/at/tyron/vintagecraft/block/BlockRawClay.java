@@ -27,7 +27,7 @@ public class BlockRawClay extends BlockVC implements IBlockSoil {
 
 	public BlockRawClay() {
 		super(Material.ground);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NormalGrass));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NORMALGRASS));
 		this.setTickRandomly(true);
 		this.setCreativeTab(CreativeTabs.tabBlock);
 	}
@@ -99,8 +99,13 @@ public class BlockRawClay extends BlockVC implements IBlockSoil {
 	}
 
 	@Override
-	public IProperty getOrganicLayerProperty(World world, BlockPos pos) {
-		return organicLayer;
+	public EnumOrganicLayer getOrganicLayer(World world, BlockPos pos) {
+		return (EnumOrganicLayer)world.getBlockState(pos).getValue(organicLayer);
+	}
+	
+	@Override
+	public void setOrganicLayer(EnumOrganicLayer layer, World world, BlockPos pos) {
+		world.setBlockState(pos, world.getBlockState(pos).withProperty(organicLayer, layer));		
 	}
 
 

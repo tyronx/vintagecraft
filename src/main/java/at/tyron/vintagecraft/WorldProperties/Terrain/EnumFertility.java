@@ -6,22 +6,25 @@ import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public enum EnumFertility implements IStateEnum, IStringSerializable {
-	LOW (0, "lowf", 4),
-	MEDIUM (1, "medf", 9),
-	HIGH (2, "hif", 21)
+	VERYLOW (3, "verylowf", 1, false),
+	LOW (0, "lowf", 4, true),
+	MEDIUM (1, "medf", 9, true),
+	HIGH (2, "hif", 21, true), 
 	;
 
 	int meta;
 	int minfertility; // value between 0 - 25 for it to be classified as this type fertilty
+	public boolean topsoil;
 	String shortname;
 	
 	private static EnumFertility[] FERTILITY_LOOKUP = new EnumFertility[26];
 	
 	
-	private EnumFertility(int meta, String shortname, int minfertility) {
+	private EnumFertility(int meta, String shortname, int minfertility, boolean topsoil) {
 		this.meta = meta;
 		this.shortname = shortname;
 		this.minfertility = minfertility;
+		this.topsoil = topsoil;
 	}
 	
 	@Override

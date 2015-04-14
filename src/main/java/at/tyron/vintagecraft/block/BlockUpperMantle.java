@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Block;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 
 
@@ -24,4 +25,7 @@ public class BlockUpperMantle extends BlockVC {
 
 
 	
+	public int getHarvetLevel(IBlockState state) {
+		return 9999;
+	}
 }

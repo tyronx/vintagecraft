@@ -41,7 +41,7 @@ public class ItemToolTinBronze extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		if (tooltype == EnumTool.SHEARS) return 800;
+		if (tooltype == EnumTool.SHEARS) return 880;
 		return 400;
 	}
 

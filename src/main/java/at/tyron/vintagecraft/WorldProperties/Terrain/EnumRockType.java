@@ -58,6 +58,7 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
     private static EnumRockType[] ID_LOOKUP = new EnumRockType[values().length+1];
     
     
+    
     public static EnumRockType getSedimentary(EnumRockType rocktype, int age, int depth, Random rand) {
     	/*if (age > 35 || (depth < 4 && age > 30 && rand.nextInt(37 - age) == 0)) {
     		return SANDSTONE;
@@ -194,14 +195,15 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
         	EnumRockType rocktype = rocktypes[i];
             ID_LOOKUP[rocktype.id] = rocktype;
         }
-        
-        
-        
-
+  
         
     }
 
+    public float getHardnessMultiplier() {
+    	return group.getHardNess();
+    }
 
+    
 	@Override
 	public int getWeight() {
 		return weight;

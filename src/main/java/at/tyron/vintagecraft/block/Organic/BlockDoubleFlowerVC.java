@@ -228,10 +228,10 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     	return ret;
     }
     
-	public BlockClassEntry getFlowerType(IBlockState state) {
+/*	public BlockClassEntry getFlowerType(IBlockState state) {
 		return BlocksVC.doubleflower.getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(FLOWERTYPE));
 	}
-	
+	*/
 
 	
     

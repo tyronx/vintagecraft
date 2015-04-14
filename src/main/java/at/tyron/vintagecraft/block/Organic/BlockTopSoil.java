@@ -44,12 +44,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTopSoil extends BlockVC implements IBlockSoil {
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
-	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class);
+	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class, EnumFertility.LOW, EnumFertility.MEDIUM, EnumFertility.HIGH);  //PropertyEnum.create("fertility", EnumFertility.class);
+
 
 	
 	public BlockTopSoil() {
 		super(Material.grass);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NormalGrass).withProperty(fertility, EnumFertility.MEDIUM));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NORMALGRASS).withProperty(fertility, EnumFertility.MEDIUM));
 		this.setTickRandomly(true);
 		this.setCreativeTab(CreativeTabs.tabBlock);
 	}
@@ -106,7 +107,7 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
     	return 
     		this.blockState.getBaseState()
     			.withProperty(organicLayer, EnumOrganicLayer.fromMeta(meta & 3))
-    			.withProperty(fertility, EnumFertility.fromMeta((meta >> 2) & 3))
+    			.withProperty(fertility, EnumFertility.fromMeta(1+(meta >> 2) & 3))
     	;
     }
 
@@ -137,8 +138,13 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
 	}
 
 	@Override
-	public IProperty getOrganicLayerProperty(World world, BlockPos pos) {
-		return organicLayer;
+	public EnumOrganicLayer getOrganicLayer(World world, BlockPos pos) {
+		return (EnumOrganicLayer)world.getBlockState(pos).getValue(organicLayer);
+	}
+	
+	@Override
+	public void setOrganicLayer(EnumOrganicLayer layer, World world, BlockPos pos) {
+		world.setBlockState(pos, world.getBlockState(pos).withProperty(organicLayer, layer));		
 	}
 
 

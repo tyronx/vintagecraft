@@ -15,6 +15,7 @@ regolith.name=Regolith
 cobblestone.name=Cobblestone
 
 nograss.name=No Gras
+verysparsegrass.name=Very Sparse Grass
 sparsegrass.name=Sparse Grass
 normalgrass.name=Normal Grass
 
@@ -61,6 +62,7 @@ tile.rock.chert.name=Chert
 tile.rock.gabbro.name=Gabbro
 tile.rock.shale.name=Shale
 tile.rock.schist.name=Green Schist
+tile.rock.slate.name=Slate
 
 item.stone.name=Stone
 stone.name=Stone
@@ -74,10 +76,10 @@ item.ore.limonite.name=Limonite
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite
-item.ore.cassiterite.name=Cassiterite
+item.ore.cassiterite.name=Cassiterite (Tin)
 item.redstone.cassiterite.name=Redstone
-item.ore.bismuthinite.name=Bismuthinite
-item.ore.sphalerite.name=Sphalerite
+item.ore.bismuthinite.name=Bismuthinite (Bismuth)
+item.ore.sphalerite.name=Sphalerite (Zinc)
 item.ore.emerald.name=Raw Emerald
 item.ore.diamond.name=Raw Diamond
 item.ore.olivine.name=Olivine Crystal
@@ -85,7 +87,8 @@ item.ore.lapislazuli.name=Lapis Lazuli
 item.ore.rhodium.name=Rhodium Ore
 item.ore.platinum.name=Platinum Ore
 item.ore.iridium.name=Iridium Ore
-item.ore.quartz.name=Quartz
+item.ore.quartz.name=Milky Quartz
+item.ore.quartzcrystal.name=Clear Quartz
 
 item.ingot.copper.name=Copper Ingot
 item.ingot.tinbronze.name=Tin Bronze Ingot
@@ -163,11 +166,11 @@ item.stone_saw.name=Stone Saw
 
 tile.planks.name=Planks
 
+verylow.name=Very Low Fertility
 low.name=Low Fertility
 medium.name=Medium Fertility
 high.name=High Fertility
 
-verysparsegrass.name=Very Sparse Grass
 
 tile.tallgrass.veryshort.name=Very Short Tallgrass
 tile.tallgrass.short.name=Short Tallgrass
@@ -199,7 +202,8 @@ tile.log.pear.name=Pear Log
 tile.log.africanmahogany.name=African Mahagony Log
 tile.log.poplar.name=Poplar Log
 tile.log.larch.name=Larch Log
-tile.log.willow.name=Willow Log
+tile.log.weepingwillow.name=Weeping Willow Log
+tile.log.coyotewillow.name=Coyote Willow Log
 tile.log.blackwalnut.name=Black Walnut Log
 
 
@@ -221,7 +225,8 @@ tile.planks.pear.name=Pear Planks
 tile.planks.africanmahogany.name=African Mahagony Planks
 tile.planks.poplar.name=Poplar Planks
 tile.planks.larch.name=Larch Planks
-tile.planks.willow.name=Willow Planks
+tile.planks.coyotewillow.name=Willow Planks
+tile.planks.weepingwillow.name=Willow Planks
 tile.planks.blackwalnut.name=Black Walnut Planks
 
 
@@ -243,7 +248,8 @@ sapling.pear.name=Pear Sapling
 sapling.africanmahogany.name=African Mahagony Sapling
 sapling.poplar.name=Poplar Sapling
 sapling.larch.name=Larch Sapling
-sapling.willow.name=Willow Sapling
+sapling.coyotewillow.name=Coyote Willow Sapling
+sapling.weepingwillow.name=Weeping Willow Sapling
 sapling.blackwalnut.name=Black Walnut Sapling
 
 
@@ -265,7 +271,8 @@ leaves.pear.name=Pear Leaves
 leaves.africanmahogany.name=African Mahagony Leaves
 leaves.poplar.name=Poplar Leaves
 leaves.larch.name=Larch Leaves
-leaves.willow.name=Willow Leaves
+leaves.coyotewillow.name=Coyote Willow Leaves
+leaves.weepingwillow.name=Weeping Willow Leaves
 leaves.blackwalnut.name=Black Walnut Leaves
 
 fence.ash.name=Ash Fence
@@ -286,7 +293,8 @@ fence.pear.name=Pear Fence
 fence.africanmahogany.name=African Mahagony Fence
 fence.poplar.name=Poplar Fence
 fence.larch.name=Larch Fence
-fence.willow.name=Willow Fence
+fence.weepingwillow.name=Willow Fence
+fence.coyotewillow.name=Willow Fence
 fence.blackwalnut.name=Black Walnut Fence
 
 fencegate.ash.name=Ash Fence Gate
@@ -307,7 +315,8 @@ fencegate.pear.name=Pear Fence Gate
 fencegate.africanmahogany.name=African Mahagony Fence Gate
 fencegate.poplar.name=Poplar Fence Gate
 fencegate.larch.name=Larch Fence Gate
-fencegate.willow.name=Willow Fence Gate
+fencegate.weepingwillow.name=Willow Fence Gate
+fencegate.coyotewillow.name=Willow Fence Gate
 fencegate.blackwalnut.name=Black Walnut Fence Gate
 
 singleslab.ash.name=Ash Slab
@@ -328,7 +337,8 @@ singleslab.pear.name=Pear Slab
 singleslab.africanmahogany.name=African Mahagony Slab
 singleslab.poplar.name=Poplar Slab
 singleslab.larch.name=Larch Slab
-singleslab.willow.name=Willow Slab
+singleslab.coyotewillow.name=Willow Slab
+singleslab.weepingwillow.name=Willow Slab
 singleslab.blackwalnut.name=Black Walnut Slab
 
 leavesbranchy.ash.name=Ash Leaves with Branches
@@ -349,8 +359,33 @@ leavesbranchy.pear.name=Pear Leaves with Branches
 leavesbranchy.africanmahogany.name=African Mahagony Leaves with Branches
 leavesbranchy.poplar.name=Poplar Leaves with Branches
 leavesbranchy.larch.name=Larch Leaves with Branches
-leavesbranchy.willow.name=Willow Leaves with Branches
+leavesbranchy.weepingwillow.name=Weeping Willow Leaves with Branches
+leavesbranchy.coyotewillow.name=Coyote Willow Leaves with Branches
 leavesbranchy.blackwalnut.name=Black Walnut Leaves with Branches
+
+
+quartzglass.ash.name=Ash Quartzglass
+quartzglass.birch.name=Birch Quartzglass
+quartzglass.oak.name=Oak Quartzglass
+quartzglass.crimsonkingmaple.name=Crimson King Maple Quartzglass
+quartzglass.mountaindogwood.name=Mountain Dogwood Quartzglass
+quartzglass.scotspine.name=Scots Pine Quartzglass
+quartzglass.spruce.name=Spruce Quartzglass
+quartzglass.acacia.name=Acacia Quartzglass
+quartzglass.kapok.name=Kapok Quartzglass
+quartzglass.purpleheartwood.name=Purple Heartwood Quartzglass
+quartzglass.coconutpalm.name=Coconut Palm Quartzglass
+quartzglass.elephanttree.name=Elephant Tree Quartzglass
+quartzglass.myrtlebeech.name=Myrtle Beech Quartzglass
+quartzglass.joshua.name=Joshua Tree Quartzglass
+quartzglass.pear.name=Pear Quartzglass
+quartzglass.africanmahogany.name=African Mahagony Quartzglass
+quartzglass.poplar.name=Poplar Quartzglass
+quartzglass.larch.name=Larch Quartzglass
+quartzglass.coyotewillow.name=Willow Quartzglass
+quartzglass.weepingwillow.name=Willow Quartzglass
+quartzglass.blackwalnut.name=Black Walnut Quartzglass
+
 
 item.fireclay_ball.name=Fire Clay
 item.fireclay_brick_raw.name=Raw Fire Clay Brick

@@ -132,25 +132,12 @@ public class ItemsVC {
 			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());
 		}
 		
-		
-	/*	toolrack = new ItemToolRack().register("toolrackitem");
-		for (EnumTree treetype : EnumTree.values()) {
-			VintageCraft.instance.proxy.addVariantName(toolrack, ModInfo.ModID + ":toolrackitem/" + treetype.getStateName());
-		}*/
-		
-		
-		
 		ore = new ItemOreVC().register("ore");
-		for (EnumMaterialDeposit oretype : EnumMaterialDeposit.values()) {
-			if (oretype.dropsOre) {
-				VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
-			}
+		for (EnumOreType oretype : EnumOreType.values()) {
+			VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
 		}
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
-		//ceramicVessel = new ItemClayVessel(true).register("ceramicvessel");
-		//clayVessel = new ItemClayVessel(null); //.register("clayvessel");
-		//register(clayVessel, "clayvessel");
 		
 		registerTools("iron", ItemToolIron.class);
 		registerTools("bismuthbronze", ItemToolBismuthBronze.class);
@@ -172,9 +159,6 @@ public class ItemsVC {
 		
 		wheatSeeds = new ItemSeeds(BlocksVC.wheatcrops, BlocksVC.farmland);
 		register(wheatSeeds, "wheatseeds");
-		
-	//	toolrack = new ItemToolRack();
-	//	register(toolrack, "toolrack");
 	}
 	
 	public static Item register(Item item, String internalname) {

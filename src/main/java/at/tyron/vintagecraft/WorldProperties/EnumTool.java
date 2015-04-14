@@ -4,7 +4,7 @@ public enum EnumTool {
 	PICKAXE (0, true),
 	AXE (1, true),
 	SHOVEL (2, true),
-	SWORD (3, true),
+	SWORD (3, false),
 	//CHISEL (4),
 	HOE (5, true),
 	SAW (6, false),

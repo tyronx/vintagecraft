@@ -1,0 +1,10 @@
+{
+	"parent": "vintagecraft:block/topsoil/grass",
+	"textures": {
+		"particle": "vintagecraft:blocks/subsoil/kimberlite",
+		"bottom": "vintagecraft:blocks/subsoil/kimberlite",
+		"top": "vintagecraft:blocks/topsoil/grass_top_verysparse1",
+		"side": "vintagecraft:blocks/subsoil/kimberlite",
+		"overlay": "vintagecraft:blocks/topsoil/grass_side_verysparse"
+	}
+}

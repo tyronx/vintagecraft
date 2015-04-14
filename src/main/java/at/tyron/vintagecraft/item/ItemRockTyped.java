@@ -16,6 +16,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -42,7 +43,6 @@ public class ItemRockTyped extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		//return getBlockClass(((ItemBlock)stack.getItem()).block).getName()  + "." + getRockType(stack).getStateName();
 		return getBlockClass(((ItemBlock)stack.getItem()).block).getName();
 	}
 
@@ -52,6 +52,14 @@ public class ItemRockTyped extends ItemBlock {
 		Block block = ((ItemBlock)itemstack.getItem()).block;
 		return (EnumRockType) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
 	}
+	
+	
+	public static ItemStack withRockTypeType(ItemStack itemstack, BlockClassEntry rocktype) {
+		itemstack.setItemDamage(rocktype.metadata);
+		return itemstack;
+	}
+
+	
 
 	public static BlockClass getBlockClass(Block block) {
 		if (block instanceof BlockRegolith) return BlocksVC.regolith;

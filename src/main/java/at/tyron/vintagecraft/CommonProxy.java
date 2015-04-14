@@ -3,6 +3,7 @@ package at.tyron.vintagecraft;
 import java.util.HashMap;
 
 import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Gui.GuiStove;
 import at.tyron.vintagecraft.Gui.GuiVessel;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
@@ -12,6 +13,7 @@ import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerFurnace;
 import net.minecraft.item.Item;
@@ -22,6 +24,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class CommonProxy implements IGuiHandler {
@@ -55,7 +58,10 @@ public class CommonProxy implements IGuiHandler {
 
 
 	public void init(FMLInitializationEvent event) {
-		// TODO Auto-generated method stub
+		int entityId = EntityRegistry.findGlobalUniqueEntityId();
+		 
+		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", entityId, VintageCraft.instance, 64, 1, true);  
+		EntityList.addMapping(EntityStone.class, "stonethrown", entityId);
 		
 	}
 

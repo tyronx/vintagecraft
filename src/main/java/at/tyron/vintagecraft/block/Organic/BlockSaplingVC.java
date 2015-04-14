@@ -37,6 +37,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -334,7 +335,10 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
 	public boolean tryPutItemstack(World world, BlockPos pos, EntityPlayer player, EnumFacing side, ItemStack itemstack) {
 		TileEntity te = world.getTileEntity(pos);
         if(te instanceof TESapling) {
-        	return ((TESapling)te).tryPutItemStack(itemstack);
+        	boolean ok = ((TESapling)te).tryPutItemStack(itemstack);
+        	
+        	if (ok) ItemDye.spawnBonemealParticles(world, pos, 10);
+        	return ok; 
         }
         return false;
 	}

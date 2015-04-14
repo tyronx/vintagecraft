@@ -3,25 +3,12 @@ package at.tyron.vintagecraft.Block;
 import java.util.List;
 import java.util.Random;
 
-
-
-
-
-
-
-
-
-
-
-
-import at.tyron.vintagecraft.BlockClass.BlockClass;
-import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.BlockClass.*;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemRock;
+import at.tyron.vintagecraft.Item.ItemRockTyped;
 import at.tyron.vintagecraft.Item.ItemStone;
-//import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
@@ -43,11 +30,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-
-//- rock is solid rock - is below bedrock until world bottom - 1
-//- hard to mine
-//- graphics will be like smooth stone 
 
 
 public class BlockRock extends BlockVC implements IMultiblock {
@@ -103,7 +85,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
     	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
     	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
-        ItemPlanksVC.withTreeType(itemstack, getRockType(state));
+    	ItemRockTyped.withRockTypeType(itemstack, getRockType(state));
         ret.add(itemstack);
         
     	return ret;
@@ -163,6 +145,15 @@ public class BlockRock extends BlockVC implements IMultiblock {
 	@Override
 	public BlockClass getBlockClass() {
 		return BlocksVC.rock;
+	}
+	
+		
+	public float getBlockHardnessMultiplier(IBlockState state) {
+		if (!BlocksVC.rock.containsBlock(state.getBlock())) return 1f;
+		
+		BlockClassEntry rockclass = getRockType(state);
+		EnumRockType rocktype = (EnumRockType)rockclass.getKey();
+		return rocktype.getHardnessMultiplier();
 	}
     
     

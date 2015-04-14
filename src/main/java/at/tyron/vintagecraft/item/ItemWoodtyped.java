@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.Block.BlockQuartzGlass;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockFenceGateVC;
 import at.tyron.vintagecraft.Block.Organic.BlockFenceVC;
@@ -48,6 +49,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	}
 
 	public static BlockClass getBlockClass(Block block) {
+		if (block instanceof BlockQuartzGlass) return BlocksVC.quartzglass;
 		if (block instanceof BlockStairsVC) return BlocksVC.stairs;
 		if (block instanceof BlockSingleWoodenSlab) return BlocksVC.singleslab;
 		if (block instanceof BlockDoubleWoodenSlab) return BlocksVC.doubleslab;

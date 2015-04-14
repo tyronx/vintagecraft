@@ -15,10 +15,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
-	NoGrass         (0,  -30,    0, 0),
-	VerySparseGrass (1,  -25,   20, 3),
-	SparseGrass     (2,  -20,   40, 7),
-	NormalGrass     (3,   -5,   70, 11), 
+	NOGRASS         (0,  -30,    0, 0),
+	VERYSPARSEGRASS (1,  -25,   20, 3),
+	SPARSEGRASS     (2,  -20,   40, 7),
+	NORMALGRASS     (3,   -5,   70, 11), 
 	//LushousGrass	(4,   12,  120, 11),
 	
 	;
@@ -62,12 +62,12 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
 	
 	
 	EnumOrganicLayer shrink() {
-		if (this != NoGrass) return fromMeta(meta - 1);
+		if (this != NOGRASS) return fromMeta(meta - 1);
 		return this;
 	}
 	
 	EnumOrganicLayer grow() {
-		if (this != NormalGrass) return fromMeta(meta + 1);
+		if (this != NORMALGRASS) return fromMeta(meta + 1);
 		return this;
 	}
 	
@@ -122,7 +122,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
     
 
 	private static EnumOrganicLayer _fromBlockLight(int blocklight) {
-		EnumOrganicLayer result = NoGrass;
+		EnumOrganicLayer result = NOGRASS;
 		
 		for (EnumOrganicLayer layer : EnumOrganicLayer.values()) {
 			if (blocklight > layer.minblocklight) result = layer;
@@ -146,19 +146,19 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
         	LIGHT_LOOKUP[i] = _fromBlockLight(i);
         }
         
-        EnumOrganicLayer layer = NoGrass, nextlayer = NoGrass;
+        EnumOrganicLayer layer = NOGRASS, nextlayer = NOGRASS;
         for (int temp = 0; temp <= 60; temp++) {
-        	if (layer != NormalGrass) nextlayer = fromMeta(layer.meta + 1);
+        	if (layer != NORMALGRASS) nextlayer = fromMeta(layer.meta + 1);
         	if (nextlayer.mintemp <= temp-30) layer = nextlayer;
         	//System.out.println("TEMP_LOOKUP["+temp+"] = "+layer);
         	TEMP_LOOKUP[temp] = layer;
         }
         
         
-        layer = NoGrass;
-        nextlayer = NoGrass;
+        layer = NOGRASS;
+        nextlayer = NOGRASS;
         for (int rain = 0; rain <= 25; rain++) {
-        	if (layer != NormalGrass) nextlayer = fromMeta(layer.meta + 1);
+        	if (layer != NORMALGRASS) nextlayer = fromMeta(layer.meta + 1);
         	if (nextlayer.minrain/10 <= rain) layer = nextlayer;
         	//System.out.println("RAIN_LOOKUP["+rain+"] = "+layer);
         	RAIN_LOOKUP[rain] = layer;
@@ -170,12 +170,15 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
 
 
 
-	public static IStateEnum[] valuesWithFertility() {
-		IStateEnum[] results = new EnumStateImplementation[values().length * EnumFertility.values().length];
+	public static IStateEnum[] valuesWithFertilityForTopsoil() {
+		
+		IStateEnum[] results = new EnumStateImplementation[values().length * (EnumFertility.values().length - 1)]; // hardcoded lazy approach
 		int i = 0;
 		for (EnumOrganicLayer organiclayer : values()) {
 			for (EnumFertility fertility : EnumFertility.values()) {
-				results[i++] = new EnumStateImplementation(organiclayer.getId(), organiclayer.meta + (fertility.meta << 2), fertility.shortname + "_" + organiclayer.getName());
+				if (fertility.topsoil) {
+					results[i++] = new EnumStateImplementation(organiclayer.getId(), organiclayer.meta + (fertility.meta << 2), fertility.shortname + "_" + organiclayer.getName());
+				}
 			}
 		}
 		return results;

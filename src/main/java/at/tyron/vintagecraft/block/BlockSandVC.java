@@ -108,8 +108,13 @@ public class BlockSandVC extends BlockRock implements IBlockSoil {
 	}
 
 	@Override
-	public IProperty getOrganicLayerProperty(World world, BlockPos pos) {
+	public EnumOrganicLayer getOrganicLayer(World world, BlockPos pos) {
 		return null;
+	}
+	
+	@Override
+	public void setOrganicLayer(EnumOrganicLayer layer, World world, BlockPos pos) {
+				
 	}
 
 	@Override

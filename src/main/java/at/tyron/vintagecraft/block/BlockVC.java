@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.common.util.concurrent.Service.State;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
@@ -123,6 +124,10 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     
     /**** Soil blocks ****/
     
+    // 1 = max speed, 0 = doesn't grow
+    public float grassGrowthSpeed() {
+    	return 1f;
+    }
     
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     	if (worldIn.isRemote) return;
@@ -133,15 +138,14 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     void soilUpdate(World worldIn, BlockPos pos, IBlockState state, Random rand) {
     	if (! (this instanceof IBlockSoil)) return;
     	
+    	
+    	
     	IBlockSoil soil = (IBlockSoil)this;    	
     	
     	// Up or downgrade grass depending on light conditions
-    	IProperty property = soil.getOrganicLayerProperty(worldIn, pos);
-    	EnumOrganicLayer organiclayer = (EnumOrganicLayer)state.getValue(property);
+    	EnumOrganicLayer organiclayer = soil.getOrganicLayer(worldIn, pos);
     	
-    	
-    	
-    	if (organiclayer != EnumOrganicLayer.NoGrass) {
+    	if (organiclayer != EnumOrganicLayer.NOGRASS && rand.nextFloat() <= grassGrowthSpeed()) {
     		BlockPos above = pos.up();
 
     		if (!worldIn.isAreaLoaded(pos.add(-1, 0, -1), pos.add(1, 1, 1))) return;
@@ -151,31 +155,33 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToEnviroment(light, VCraftWorld.instance.getRainfall(pos), VCraftWorld.instance.getTemperature(pos));
     		
     		if (adjustedorganiclayer != organiclayer) {
-    			worldIn.setBlockState(pos, state.withProperty(property, adjustedorganiclayer));
+    			//System.out.println(organiclayer + " => " + adjustedorganiclayer + " @ " + pos);
+    			soil.setOrganicLayer(adjustedorganiclayer, worldIn, pos);
     			return;
     		}
     		
     		// Spread grass
             if (worldIn.getLightFromNeighbors(pos.up()) >= 9) {
                 for (int i = 0; i < 4; ++i) {
-                    BlockPos blockpos1 = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
-                    Block block = worldIn.getBlockState(blockpos1.up()).getBlock();
-                    IBlockState neighbourblockstate = worldIn.getBlockState(blockpos1);
+                    BlockPos posneighbour = pos.add(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+                    Block block = worldIn.getBlockState(posneighbour.up()).getBlock();
+                    IBlockState neighbourblockstate = worldIn.getBlockState(posneighbour);
 
                     
                     
                     if (neighbourblockstate.getBlock() instanceof IBlockSoil && ((IBlockSoil)neighbourblockstate.getBlock()).canGrowGrass(worldIn, pos)) {
                     	soil = (IBlockSoil)neighbourblockstate.getBlock();
-                    	IProperty neighbourproperty = soil.getOrganicLayerProperty(worldIn, pos);
-                    	EnumOrganicLayer neighbourorganiclayer = (EnumOrganicLayer)neighbourblockstate.getValue(neighbourproperty);
+                    	EnumOrganicLayer neighbourorganiclayer = soil.getOrganicLayer(worldIn, posneighbour);
                     	
-                    	//if (neighbourblockstate.getBlock() instanceof BlockRawClay) System.out.println(neighbourorganiclayer);
 
-                        if (worldIn.getLight(blockpos1.up()) >= neighbourorganiclayer.minblocklight 
-                            && block.getLightOpacity(worldIn, blockpos1.up()) <= 2
-                            && neighbourorganiclayer == EnumOrganicLayer.NoGrass) {
+                    	
+                    	if (neighbourorganiclayer == null) System.out.println("neighbourorganiclayer is null! " + neighbourblockstate);
+
+                        if (worldIn.getLight(posneighbour.up()) >= neighbourorganiclayer.minblocklight &&
+                            block.getLightOpacity(worldIn, posneighbour.up()) <= 2 &&
+                            neighbourorganiclayer == EnumOrganicLayer.NOGRASS) {
                         	
-                        	worldIn.setBlockState(blockpos1, neighbourblockstate.withProperty(neighbourproperty, EnumOrganicLayer.VerySparseGrass));
+                        	soil.setOrganicLayer(EnumOrganicLayer.VERYSPARSEGRASS, worldIn, posneighbour);
                         }
 
                     }
@@ -237,5 +243,13 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     	return null;
     }
 
+    
+	public float getBlockHardnessMultiplier(IBlockState state) {
+		return 1f;
+	}
+	
+	public int getHarvetLevel(IBlockState state) {
+		return 1;
+	}
     
 }

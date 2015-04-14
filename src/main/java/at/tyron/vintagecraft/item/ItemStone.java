@@ -4,6 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -18,10 +19,13 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntitySnowball;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.StatCollector;
@@ -116,5 +120,42 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 	}
 
 
+	
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityPlayer playerIn) {
+        worldIn.playSoundAtEntity(playerIn, "random.bow", 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
+
+        if (!worldIn.isRemote) {
+            worldIn.spawnEntityInWorld(new EntityStone(stack.splitStack(1), worldIn, playerIn));
+        }
+
+        playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
+        
+        return stack;
+    }
+
+	
+	 /**
+     * How long it takes to use or consume an item
+     */
+    public int getMaxItemUseDuration(ItemStack stack) {
+        return 15;
+    }
+
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.BOW;
+    }
+
+    /**
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     */
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn) {
+    	playerIn.setItemInUse(itemStackIn, this.getMaxItemUseDuration(itemStackIn));
+        return itemStackIn;
+    }
+
+    
 
 }

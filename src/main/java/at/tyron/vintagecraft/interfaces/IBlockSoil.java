@@ -18,6 +18,9 @@ public interface IBlockSoil {
 	boolean canGrowTallGrass(World world, BlockPos pos);
 	
 	EnumFertility getFertility(World world, BlockPos pos);
+	EnumOrganicLayer getOrganicLayer(World world, BlockPos pos);
 	
-	IProperty getOrganicLayerProperty(World world, BlockPos pos);
+	void setOrganicLayer(EnumOrganicLayer layer, World world, BlockPos pos);
+	
+
 }

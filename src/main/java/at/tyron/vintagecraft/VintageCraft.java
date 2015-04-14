@@ -52,6 +52,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -200,7 +201,10 @@ public class VintageCraft {
 			rand = event.entityLiving.getRNG();
 		}
 		
-		
+		if (event.entity instanceof EntitySheep) {
+			event.drops.clear();
+			event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(Blocks.wool)));
+		}
 		
 	    if (event.entity instanceof EntityPig) {
 	        event.drops.clear();

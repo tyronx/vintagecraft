@@ -27,6 +27,13 @@ import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
+
+/* This class acts as an abstraction layer to blocks and their meta data 
+ *
+ * This allows for near Zero-Configuration subtyping of blocks as it takes out the mess of registering and comparing subblocks
+ * 
+ */
+
 public abstract class BlockClass {
 	LinkedHashMap<IStateEnum, BlockClassEntry> values = new LinkedHashMap<IStateEnum, BlockClassEntry>();
 	
@@ -113,7 +120,6 @@ public abstract class BlockClass {
 					blockclassentry.init(block, meta++);
 				}
 				
-				//blockclass.getDeclaredMethod("init", new Class[]{BlockClassEntry[].class, PropertyInteger.class}).invoke(block, new Object[]{blockstates, createProperty(name, blockstates.length)});
 				invokeMethod(blockclass, block, "init", new Object[]{blockclassentrychunk, createProperty(getTypeName(), blockclassentrychunk)});
 				
 				((IMultiblock)block).registerMultiState(name + ((blocks.size() > 1) ? blocks.size() : "") , itemclass, blockclassentrychunk, name);
@@ -134,27 +140,9 @@ public abstract class BlockClass {
 	}
 	
 	
-	/*public void genBlockStateJson(String name, IProperty[] properties) {
-		IProperty property = properties[0];
-				
-		for (Object value : property.getAllowedValues()) {
-			IStringSerializable val = (IStringSerializable)value;
-			
-		}
-		
-		for (IProperty property : properties) {
-			
-			
-		}
-	}*/
-	
 	
 	static <T> T[][] split(T[] elements, int chunksize) {
 		int chunks = (int) Math.ceil((1f * elements.length) / chunksize);
-		
-		/*for (T element : elements) {
-			System.out.println(((IEnumState)element).getStateName());
-		}*/
 		
 		ArrayList<T> result = new ArrayList<T>(); 
 		
@@ -183,21 +171,18 @@ public abstract class BlockClass {
 		throw new RuntimeException("BlockClassEntry not found for block " + block + " / meta " + meta);
 	}
 	
-	
 	public BlockClassEntry getFromKey(IStateEnum key) {
 		return values.get(key);
 	}
-
 	
-	
-	/*public int getMetaFromBlockClass(BlockClassEntry blockclassentry) {
-		for (BlockClassEntry enumitem: values()) {
-			if (enumitem.getId() == blockclassentry.getId()) return enumitem.metadata;
+	public BlockClassEntry getFromItemStack(ItemStack itemstack) {
+		if (itemstack.getItem() instanceof ItemBlock) {
+			return getBlockClassfromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 		}
-
-		throw new RuntimeException("Meta not found for blockclass " + blockclassentry);
-	}*/
+		return null;
+	}
 	
+
 	public int getMetaFromState(IBlockState state) {
 		for (BlockClassEntry enumitem: values()) {
 			if (enumitem.block == state.getBlock() && enumitem == state.getValue(((IMultiblock)enumitem.block).getTypeProperty())) return enumitem.metadata;

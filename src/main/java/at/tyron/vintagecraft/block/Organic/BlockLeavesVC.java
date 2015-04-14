@@ -153,110 +153,6 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
         }
     }
 
-    /*public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-    	if (true) return;
-    	
-        if (!worldIn.isRemote && ((Boolean)state.getValue(CHECK_DECAY)).booleanValue()) {
-            byte b0 = 4;
-            int i = b0 + 1;
-            int j = pos.getX();
-            int k = pos.getY();
-            int l = pos.getZ();
-            byte b1 = 32;
-            int i1 = b1 * b1;
-            int j1 = b1 / 2;
-
-            if (this.surroundings == null) {
-                this.surroundings = new int[b1 * b1 * b1];
-            }
-
-            int k1;
-
-            if (worldIn.isAreaLoaded(new BlockPos(j - i, k - i, l - i), new BlockPos(j + i, k + i, l + i))) {
-                int l1;
-                int i2;
-
-                for (k1 = -b0; k1 <= b0; ++k1) {
-                    for (l1 = -b0; l1 <= b0; ++l1) {
-                        for (i2 = -b0; i2 <= b0; ++i2) {
-                            BlockPos tmp = new BlockPos(j + k1, k + l1, l + i2);
-                            Block block = worldIn.getBlockState(tmp).getBlock();
-
-                            if (!block.canSustainLeaves(worldIn, tmp)) {
-                                if (block.isLeaves(worldIn, tmp)) {
-                                    this.surroundings[(k1 + j1) * i1 + (l1 + j1) * b1 + i2 + j1] = -2;
-                                }
-                                else
-                                {
-                                    this.surroundings[(k1 + j1) * i1 + (l1 + j1) * b1 + i2 + j1] = -1;
-                                }
-                            }
-                            else
-                            {
-                                this.surroundings[(k1 + j1) * i1 + (l1 + j1) * b1 + i2 + j1] = 0;
-                            }
-                        }
-                    }
-                }
-
-                for (k1 = 1; k1 <= 4; ++k1)
-                {
-                    for (l1 = -b0; l1 <= b0; ++l1)
-                    {
-                        for (i2 = -b0; i2 <= b0; ++i2)
-                        {
-                            for (int j2 = -b0; j2 <= b0; ++j2)
-                            {
-                                if (this.surroundings[(l1 + j1) * i1 + (i2 + j1) * b1 + j2 + j1] == k1 - 1)
-                                {
-                                    if (this.surroundings[(l1 + j1 - 1) * i1 + (i2 + j1) * b1 + j2 + j1] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1 - 1) * i1 + (i2 + j1) * b1 + j2 + j1] = k1;
-                                    }
-
-                                    if (this.surroundings[(l1 + j1 + 1) * i1 + (i2 + j1) * b1 + j2 + j1] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1 + 1) * i1 + (i2 + j1) * b1 + j2 + j1] = k1;
-                                    }
-
-                                    if (this.surroundings[(l1 + j1) * i1 + (i2 + j1 - 1) * b1 + j2 + j1] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1) * i1 + (i2 + j1 - 1) * b1 + j2 + j1] = k1;
-                                    }
-
-                                    if (this.surroundings[(l1 + j1) * i1 + (i2 + j1 + 1) * b1 + j2 + j1] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1) * i1 + (i2 + j1 + 1) * b1 + j2 + j1] = k1;
-                                    }
-
-                                    if (this.surroundings[(l1 + j1) * i1 + (i2 + j1) * b1 + (j2 + j1 - 1)] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1) * i1 + (i2 + j1) * b1 + (j2 + j1 - 1)] = k1;
-                                    }
-
-                                    if (this.surroundings[(l1 + j1) * i1 + (i2 + j1) * b1 + j2 + j1 + 1] == -2)
-                                    {
-                                        this.surroundings[(l1 + j1) * i1 + (i2 + j1) * b1 + j2 + j1 + 1] = k1;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            k1 = this.surroundings[j1 * i1 + j1 * b1 + j1];
-
-            if (k1 >= 0)
-            {
-                worldIn.setBlockState(pos, state.withProperty(CHECK_DECAY, Boolean.valueOf(false)), 4);
-            }
-            else
-            {
-                this.destroy(worldIn, pos);
-            }
-        }
-    }*/
 
     @SideOnly(Side.CLIENT)
     public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
@@ -315,15 +211,6 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     public boolean isLeaves(IBlockAccess world, BlockPos pos){ return true; }
 
     
-    /*@Override
-    public void beginLeavesDecay(World world, BlockPos pos) {
-        IBlockState state = world.getBlockState(pos);
-        if (!(Boolean)state.getValue(CHECK_DECAY))
-        {
-            world.setBlockState(pos, state.withProperty(CHECK_DECAY, true), 4);
-        }
-    }*/
-
 
 
 	@Override
@@ -369,17 +256,10 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     @Override
     public int getMetaFromState(IBlockState state) {
     	return getBlockClass().getMetaFromState(state);
-    	
-    	/*return
-    		(Boolean)state.getValue(CHECK_DECAY) ? 1 : 0
-    		| getBlockClass().getMetaFromState(state) << 1
-    	;*/
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	//return getBlockClass().getBlockClassfromMeta(this, meta >> 1).getBlockState().withProperty(CHECK_DECAY, (meta & 1) > 0 ? true : false);
-    	
     	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
     }
     

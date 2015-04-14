@@ -7,6 +7,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -21,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,7 +31,9 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.*;
+import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -58,7 +62,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	public void registerRenderInformation() {
 		
 		IReloadableResourceManager IRRM = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
-		IRRM.registerReloadListener(this);	
+		IRRM.registerReloadListener(this);
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
 	}
 
 	@Override

@@ -1,0 +1,10 @@
+{
+	"parent": "vintagecraft:block/topsoil/grass",
+	"textures": {
+		"particle": "vintagecraft:blocks/subsoil/schist",
+		"bottom": "vintagecraft:blocks/subsoil/schist",
+		"top": "vintagecraft:blocks/topsoil/grass_top_sparse1",
+		"side": "vintagecraft:blocks/subsoil/schist",
+		"overlay": "vintagecraft:blocks/topsoil/grass_side_sparse"
+	}
+}

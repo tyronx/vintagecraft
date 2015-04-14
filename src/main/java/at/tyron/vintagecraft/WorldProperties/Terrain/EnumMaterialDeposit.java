@@ -28,42 +28,41 @@ import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
 	// int id, hasOre, adjdepth, color, weight, height, minDepth, maxDepth, relativeDepth, deposittype
 	
-	NODEPOSIT (-1,      false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
-	
-	QUARTZ (19, 		true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
-	ROCKSALT (20, 		true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(35, 2, 5, 255, 160)),
-	OLIVINE (21, 		true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
+	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
 
-	CLAY (0,		   false, EnumDepositSize.LARGE, DepositOccurence.followSurface(5, 2, 1, 155)),
-	FIRECLAY (22,      false, EnumDepositSize.LARGE, DepositOccurence.followSurface(1, 1, 2, 160)),
-	PEAT (1,		   false, EnumDepositSize.HUGE, DepositOccurence.followSurface(80, 2, 1, 165)),
-	
-	
-	LIGNITE (2,         true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(50, 1, 10, 50, 0.5f)), 
-	BITUMINOUSCOAL (3,  true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(37, 1, 8, 103)),
-	
-	NATIVECOPPER (4,    true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
-	
-	LIMONITE (5,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(23, 1, 15, 103)),
-	NATIVEGOLD_QUARTZ(6,true, EnumDepositSize.TINY, DepositOccurence.inDeposit(QUARTZ, 1)),
+	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(50, 2, 1, 165)),
+	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(50, 1, 10, 50, 0.5f)), 
+	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(37, 1, 8, 103)),
 
-	REDSTONE (7,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(0, 2, 30, 100)),
+	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(7, 2, 1, 155)),
+	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(2, 1, 2, 160)),
+
+	QUARTZ 				(19, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
+	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(35, 2, 5, 255, 160)),
+	OLIVINE 			(21, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 	
-	CASSITERITE (8,		true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(6, 1, 0, 40)),
+	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
+	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(10, 1, 0, 35)),
+	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(6, 1, 0, 40)),
+	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(5, 1, 0, 35)),
+
+	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(23, 1, 15, 103)),
+
+	IRIDIUM 			( 9, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
+	PLATINUM 			(10, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(2, 1, 90, 110)),
+	RHODIUM 			(11, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 100, 140)),
 	
-	IRIDIUM (9,			    true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
-	PLATINUM (10, 		    true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(2, 1, 90, 110)),
-	RHODIUM (11,		    true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 100, 140)),
-	SPHALERITE (12,		    true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(10, 1, 0, 35)),
-	SYLVITE_ROCKSALT (13,   true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 40)), 
-	NATIVESILVER_QUARTZ (14,true, EnumDepositSize.NONE, DepositOccurence.inDeposit(QUARTZ, 2)), 
+	LAPISLAZULI 		(15, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(5, 1, 0, 35, 220)),
+	DIAMOND 			(16, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(15, 1, 100, 140)),
+	EMERALD 			(17, true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(60, 1, 100, 140)),
+		
+	NATIVEGOLD_QUARTZ   ( 6, true, EnumDepositSize.TINY, DepositOccurence.inDeposit(QUARTZ, 1)),
+	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 40)), 
+	NATIVESILVER_QUARTZ (14, true, EnumDepositSize.NONE, DepositOccurence.inDeposit(QUARTZ, 2)), 
+	PERIDOT_OLIVINE     (23, true, EnumDepositSize.NONE, DepositOccurence.inDeposit(OLIVINE, 20)),  
+
 	
-	LAPISLAZULI (15,	true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(5, 1, 0, 35, 220)),
-	DIAMOND (16,		true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(15, 1, 100, 140)),
-	EMERALD (17,		true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(60, 1, 100, 140)),
-	BISMUTHINITE (18,	true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(5, 1, 0, 35)),
-	
-	PERIDOT_OLIVINE (23,true, EnumDepositSize.NONE, DepositOccurence.inDeposit(OLIVINE, 20)),  
+	REDSTONE 			( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(0, 2, 30, 100))
 	;
 
 	
@@ -104,7 +103,10 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	public boolean isParentMaterial(IBlockState state, BlockPos pos) {
 		boolean isrock = state.getBlock() instanceof BlockRock && state.getBlock().getMaterial() == Material.rock;
 		
-		
+		EnumRockType rocktype = null;
+		if (isrock) {
+			rocktype = (EnumRockType) BlocksVC.rock.getBlockClassfromState(state).getKey();
+		}
 		
 		switch (this) {
 			case PEAT:
@@ -118,30 +120,18 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 			case FIRECLAY:
 				return state.getBlock() instanceof BlockTopSoil || state.getBlock() instanceof BlockSubSoil || state.getBlock() instanceof BlockRegolith;
 			
-			case LAPISLAZULI:
-				return isrock && BlocksVC.rock.getBlockClassfromState(state).getKey() == EnumRockType.LIMESTONE;
-				
 			case NATIVEGOLD_QUARTZ:
 			case NATIVESILVER_QUARTZ:
-				//if (state.getBlock() instanceof BlockOreVC) System.out.println(BlockOreVC.getOreType(state) == EnumOreType.QUARTZ);
 				return state.getBlock() instanceof BlockOreVC && BlockOreVC.getOreType(state) == EnumOreType.QUARTZ;
 				
 			case SYLVITE_ROCKSALT: 
 				return state.getBlock() instanceof BlockOreVC && BlockOreVC.getOreType(state) == EnumOreType.ROCKSALT;
-				
-			case EMERALD:
-			case DIAMOND:
-				return isrock && BlocksVC.rock.getBlockClassfromState(state).getKey() == EnumRockType.KIMBERLITE;
-			
-			case OLIVINE:
-				//System.out.println(isrock && BlocksVC.rock.getBlockClassfromState(state).getKey() == EnumRockType.BASALT);
-				return isrock && BlocksVC.rock.getBlockClassfromState(state).getKey() == EnumRockType.BASALT;
-				
+								
 			case PERIDOT_OLIVINE:
 				return state.getBlock() instanceof BlockOreVC && BlockOreVC.getOreType(state) == EnumOreType.OLIVINE;
 				
 			default:
-				return isrock;
+				return EnumOreType.byId(this.id).isParentMaterial(rocktype);
 		}
 		
 		
@@ -193,6 +183,30 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	//	this.block = block;
 	}
 	
+	
+	
+	public static EnumMaterialDeposit[] valuesSorted() {
+		EnumMaterialDeposit []values = values();
+		EnumMaterialDeposit []sorted = new EnumMaterialDeposit[values.length];
+		
+		int id = -1;
+		int remaining = values().length;
+		int i = 0;
+		
+		while(remaining > 0) {
+			for (EnumMaterialDeposit value : values) {
+				if (value.id == id) {
+					sorted[i++] = value;
+					remaining--;
+					break;
+				}
+			}
+			
+			id++;
+		}
+		
+		return sorted;
+	}
 	
 	
 	public static EnumMaterialDeposit byId(int id) {

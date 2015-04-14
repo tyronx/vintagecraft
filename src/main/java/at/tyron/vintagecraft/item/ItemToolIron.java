@@ -13,9 +13,9 @@ public class ItemToolIron extends ItemToolVC {
 				if (material == Material.wood) return 5.5f; 
 				break;
 			case PICKAXE: 
-				if (material == Material.rock) return 3.8f; 
+				if (material == Material.rock) return 4f; 
 				if (material == Material.ground) return 2.7f;
-				if (material == Material.iron) return 1.6f;
+				if (material == Material.iron) return 2f;
 
 				break;
 			case SHOVEL: 
@@ -40,7 +40,7 @@ public class ItemToolIron extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		if (tooltype == EnumTool.SHEARS) return 1440;
+		if (tooltype == EnumTool.SHEARS) return 1584;
 		return 720;
 	}
 

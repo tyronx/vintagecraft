@@ -132,7 +132,7 @@ public class BlockFarmlandVC extends BlockContainer {
         	
         	EnumFertility fertility = EnumFertility.values()[teFarmland.getFertility() / 10];
         	
-        	ItemStack itemstack = new ItemStack(BlocksVC.topsoil, EnumOrganicLayer.NoGrass.getMetaData(null) + (fertility.getMetaData(null) << 2));           
+        	ItemStack itemstack = new ItemStack(BlocksVC.topsoil, EnumOrganicLayer.NOGRASS.getMetaData(null) + (fertility.getMetaData(null) << 2));           
             spawnAsEntity(worldIn, pos, itemstack);
             
 

@@ -1,8 +1,27 @@
 <?php
+// This script generates all json files tree type dependent blocks
+// toolracks, logs, leaves, leaves, branchyleaves, planks, fence, fencegates, slabs, stairs, quartzglass
 
 $blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
 $blockclassavailabletypes = array("log" => 16, "leaves" => 8, "leavesbranchy" => 8, "planks" => 16, "sapling" => 16);
 $blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahogany", "blackwalnut", "weepingwillow", "coyotewillow", "larch");
+
+
+/***************** Quartzglass *************/
+$variants = array();
+foreach ($blocktypes as $blocktype) {
+	file_put_contents("models/block/quartzglass/{$blocktype}.json", quartzglasmodel($blocktype));
+	
+	$variants[] = "\t\t" . '"eastwest=false,treetype='.$blocktype.'": { "model": "vintagecraft:quartzglass/'.$blocktype.'" }';
+	$variants[] = "\t\t" . '"eastwest=true,treetype='.$blocktype.'": { "model": "vintagecraft:quartzglass/'.$blocktype.'", "y":90 }';
+	
+	$itemjson = getItemModel("quartzglass", $blocktype);
+	file_put_contents("models/item/quartzglass/{$blocktype}.json", $itemjson);
+}
+
+for ($i = 0; $i < ceil(count($blocktypes) / 8); $i++) {
+		file_put_contents("blockstates/quartzglass" . (($i > 0) ? ($i+1) : "")  .".json", getBlockStates($variants));
+}
 
 
 /********** 0. Toolracks *************/
@@ -350,5 +369,85 @@ function getItemModel($blockclass, $blocktype) {
 			"scale": [ 0.375, 0.375, 0.375 ]
 		}
 	}
+}';
+}
+
+function quartzglasmodel($blocktype) {
+	return '{
+    "__comment": "Model generated using MrCrayfishs Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "0": "vintagecraft:blocks/planks/'.$blocktype.'",
+        "1": "vintagecraft:blocks/quartzglass",
+		"particle": "vintagecraft:blocks/planks/'.$blocktype.'"
+    },
+    "elements": [
+        {
+            "name": "Glass",
+            "from": [ 4.0, 4.0, 7.0 ], 
+            "to": [ 12.0, 12.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#1" },
+                "east": { "texture": "#1" },
+                "south": { "texture": "#1" },
+                "west": { "texture": "#1" },
+                "up": { "texture": "#1" },
+                "down": { "texture": "#1" }
+            }
+        },
+        {
+		
+            "name": "Down Plank",
+            "from": [ 0.0, 0.0, 6.0 ], 
+            "to": [ 12.0, 4.0, 10.0 ], 
+				"faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 8.0, 14.0, 12.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 8.0, 12.0, 12.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 12.0, 4.0, 16.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Left Plank",
+            "from": [ 0.0, 4.0, 6.0 ], 
+            "to": [ 4.0, 16.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Right Plank",
+            "from": [ 12.0, 0.0, 6.0 ], 
+            "to": [ 16.0, 12.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 12.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Top Plank",
+            "from": [ 4.0, 12.0, 6.0 ], 
+            "to": [ 16.0, 16.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 4.0, 4.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 12.0, 4.0 ] }
+            }
+        }
+
+    ]
 }';
 }

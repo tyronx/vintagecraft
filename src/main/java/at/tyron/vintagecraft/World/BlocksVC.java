@@ -46,6 +46,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
+import at.tyron.vintagecraft.BlockClass.SoilRockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Client.VCraftModelLoader;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRIngotPile;
@@ -63,6 +64,7 @@ import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemRock;
 import at.tyron.vintagecraft.Item.ItemRockTyped;
+import at.tyron.vintagecraft.Item.ItemSubsoil;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
@@ -136,7 +138,7 @@ public class BlocksVC {
 	public static RockClass rock;
 	public static RockClass cobblestone;
 	public static RockClass regolith;
-	public static RockClass subsoil;
+	public static SoilRockClass subsoil;
 	public static RockClass sand;
 	public static RockClass gravel;
 	//public static RockClass brick;
@@ -151,6 +153,8 @@ public class BlocksVC {
 	public static Block firepit;
 
 	
+	public static TreeClass quartzglass;
+	
 	public static void init() {
 		initBlocks();
 		initHardness();
@@ -159,6 +163,8 @@ public class BlocksVC {
 	
 
 	public static void initBlocks() {
+		
+		
 		firepit = new BlockFirepit(false);
 		firepit.setHardness(1f);
 		register(firepit, "firepit", ItemBlock.class);
@@ -203,7 +209,7 @@ public class BlocksVC {
 		
 		
 		
-		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertility()).setStepSound(Block.soundTypeGrass);
+		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertilityForTopsoil()).setStepSound(Block.soundTypeGrass);
 	
 		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 		
@@ -235,6 +241,10 @@ public class BlocksVC {
 		doubleslab.init();
 
 		
+		quartzglass = new TreeClass("quartzglass", BlockQuartzGlass.class, ItemWoodtyped.class, 1.5f, Block.soundTypeWood, "axe", 1);
+		quartzglass.init();
+		
+		
 		leaves = new TreeClass("leaves", BlockLeavesVC.class, ItemWoodtyped.class, 0.2f, Block.soundTypeGrass, null, 0);
 		leaves.init();
 		
@@ -250,14 +260,12 @@ public class BlocksVC {
 		rawore.init();
 		
 		
-		
+		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
 		rawfireclay = new BlockRawFireClay().setHardness(2F).registerSingleState("rawfireclay", ItemBlock.class).setStepSound(Block.soundTypeGravel);
 		fireclaybricks = new BlockFireBrick().setHardness(2F).registerSingleState("fireclaybricks", ItemBlock.class).setStepSound(Block.soundTypeStone);
 		
-	
 		
-		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		
 		
 		sand = new RockClass("sand", BlockSandVC.class, ItemRockTyped.class, 0.8f, Block.soundTypeSand, "shovel", 0);
@@ -266,26 +274,17 @@ public class BlocksVC {
 		gravel = new RockClass("gravel", BlockGravelVC.class, ItemRockTyped.class, 1f, Block.soundTypeGravel, "shovel", 0);
 		gravel.init();
 		
-		subsoil = new RockClass("subsoil", BlockSubSoil.class, ItemRockTyped.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
+		subsoil = new SoilRockClass("subsoil", BlockSubSoil.class, ItemSubsoil.class, 1.5f, Block.soundTypeGravel, "shovel", 0);
 		subsoil.init();
 		
 		regolith = new RockClass("regolith", BlockRegolith.class, ItemRockTyped.class, 2.5f, Block.soundTypeGravel, "shovel", 0);
 		regolith.init();
 		
-		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 2f, Block.soundTypeStone, "pickaxe", 0);
+		rock = new RockClass("rock", BlockRock.class, ItemRock.class, 1.8f, Block.soundTypeStone, "pickaxe", 0);
 		rock.init();
 		
 		cobblestone = new RockClass("cobblestone", BlockCobblestone.class, ItemRockTyped.class, 1.5f, Block.soundTypeStone, "pickaxe", 0);
 		cobblestone.init();
-		
-		
-		
-		/*subsoil = new BlockSubSoil().setHardness(1.5F).registerMultiState("subsoil", ItemRock.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
-		regolith = new BlockRegolith().setHardness(2.5F).registerMultiState("regolith", ItemRock.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
-		rock = new BlockRock().setHardness(2F).registerMultiState("rock", ItemRock.class, EnumRockType.values());
-		gravel = new BlockGravelVC().setHardness(1.3F).registerMultiState("gravel", ItemGravel.class, EnumRockType.values()).setStepSound(Block.soundTypeGravel);
-		sand = new BlockSandVC().setHardness(1F).registerMultiState("sand", ItemSand.class, EnumRockType.values()).setStepSound(Block.soundTypeSand);
-		cobblestone = new BlockCobblestone().setHardness(1.3f).registerMultiState("cobblestone", ItemRock.class, EnumRockType.values());*/
 		
 		uppermantle = new BlockUpperMantle().registerSingleState("uppermantle", ItemBlock.class).setBlockUnbreakable().setResistance(6000000.0F);
 		
@@ -297,10 +296,6 @@ public class BlocksVC {
 		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");
 		vine.setUnlocalizedName("vine");
 		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
-		
-		
-		
-		
 	}
 	
 	
