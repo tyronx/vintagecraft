@@ -22,6 +22,7 @@ public class BlockStairsVC extends BlockStairs implements IMultiblock {
 
 	protected BlockStairsVC() {
 		super(Blocks.planks.getDefaultState());
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 
 	

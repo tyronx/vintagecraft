@@ -171,14 +171,13 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
 
 
 	public static IStateEnum[] valuesWithFertilityForTopsoil() {
+		EnumFertility fertilities[] = EnumFertility.valuesForTopsoil();
 		
-		IStateEnum[] results = new EnumStateImplementation[values().length * (EnumFertility.values().length - 1)]; // hardcoded lazy approach
+		IStateEnum[] results = new EnumStateImplementation[values().length * fertilities.length];
 		int i = 0;
 		for (EnumOrganicLayer organiclayer : values()) {
-			for (EnumFertility fertility : EnumFertility.values()) {
-				if (fertility.topsoil) {
-					results[i++] = new EnumStateImplementation(organiclayer.getId(), organiclayer.meta + (fertility.meta << 2), fertility.shortname + "_" + organiclayer.getName());
-				}
+			for (EnumFertility fertility : fertilities) {
+				results[i++] = new EnumStateImplementation(organiclayer.getId(), organiclayer.meta + (fertility.meta << 2), fertility.getStateName() + "_" + organiclayer.getName());
 			}
 		}
 		return results;

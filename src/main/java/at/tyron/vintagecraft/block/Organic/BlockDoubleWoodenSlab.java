@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -38,7 +39,7 @@ public class BlockDoubleWoodenSlab extends BlockWoodenSlabVC {
 
 	@Override
 	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
-		System.out.println("register block " + this);
+		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		

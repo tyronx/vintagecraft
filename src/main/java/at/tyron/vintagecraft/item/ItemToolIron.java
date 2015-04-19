@@ -19,7 +19,8 @@ public class ItemToolIron extends ItemToolVC {
 
 				break;
 			case SHOVEL: 
-				if (material == Material.grass || material == Material.ground) return 5.5f;  
+				if (material == Material.grass || material == Material.ground) return 5.5f;
+				if (material == Material.sand) return 2f;
 				break;
 			case SWORD:
 				if (material == Material.leaves) return 2.8f;

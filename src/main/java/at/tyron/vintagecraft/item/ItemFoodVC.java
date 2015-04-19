@@ -16,10 +16,12 @@ public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFrom
 	
 	public ItemFoodVC(int amount, boolean isWolfFood) {
 		super(amount, isWolfFood);
+		setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
     public ItemFoodVC(int amount, float saturation, boolean isWolfFood) {
         super(amount, saturation, isWolfFood);
+        setCreativeTab(VintageCraft.resourcesTab);
     }
 
 	public Item register(String internalname) {

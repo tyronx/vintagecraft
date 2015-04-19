@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.World;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
@@ -22,6 +23,7 @@ import at.tyron.vintagecraft.Item.ItemToolTinBronze;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -119,9 +121,19 @@ public class ItemsVC {
 	public static void init() {
 		initItems();
 		initIngots();
+		initTabIcons();
 	}
 	
 	
+	private static void initTabIcons() {
+		VintageCraft.terrainTab.icon = Item.getItemFromBlock(BlocksVC.topsoil);
+		VintageCraft.floraTab.icon = Item.getItemFromBlock(BlocksVC.flower.getBlockStateFor(EnumFlower.CATMINT).getBlock());
+		VintageCraft.resourcesTab.icon = ItemsVC.stone;
+		VintageCraft.craftedBlocksTab.icon = Item.getItemFromBlock(BlocksVC.fireclaybricks);
+		VintageCraft.toolsarmorTab.icon = ItemsVC.copperSaw;
+	}
+
+
 	static void initItems() {
 		fireclay_ball = new ItemFireClay(false).register("fireclay_ball");
 		fireclay_brick_raw = new ItemFireClay(true).register("fireclay_brick_raw");

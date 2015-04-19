@@ -2,26 +2,12 @@ package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.property.IExtendedBlockState;
 
-public class TEFarmland extends TileEntity {
-	private IExtendedBlockState state;
-
-	int fertility;
-	
-    public IExtendedBlockState getState() {
-        if(state == null) {
-        	state = (IExtendedBlockState)getBlockType().getDefaultState();
-        	state = state.withProperty(BlockFarmlandVC.fertilityExact, fertility);
-        }
-        return state;
-    }
-
-    public void setState(IExtendedBlockState state) {
-        this.state = state;
-    }
-    
+public class TEFarmland extends NetworkTileEntity {
+	private int fertility;
     
     public int getFertility() {
 		return fertility;
@@ -29,6 +15,38 @@ public class TEFarmland extends TileEntity {
     
     public void setFertility(int fertility) {
 		this.fertility = fertility;
+	}
+
+	public void consumeFertility() {
+		fertility--;
+		if (worldObj.rand.nextBoolean()) fertility--;
+		worldObj.markBlockForUpdate(pos);
+	}
+
+	
+	@Override
+	public void createInitNBT(NBTTagCompound nbt) {
+		writeToNBT(nbt);
+	}
+	
+	@Override
+	public void handleInitPacket(NBTTagCompound nbt) {
+		readFromNBT(nbt);
+	}
+	
+
+	
+	@Override
+	public void readFromNBT(NBTTagCompound nbttagcompound) {
+		fertility = nbttagcompound.getInteger("fertility");
+		super.readFromNBT(nbttagcompound);
+	}
+
+	
+	@Override
+	public void writeToNBT(NBTTagCompound nbttagcompound) {
+		nbttagcompound.setInteger("fertility", fertility);
+		super.writeToNBT(nbttagcompound);
 	}
 
 }

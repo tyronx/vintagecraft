@@ -3,6 +3,8 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -35,10 +37,7 @@ public class ItemFlowerVC extends ItemBlockVC {
 
 	
 	public static EnumFlower getFlowerType(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null) {
-			return (EnumFlower) BlocksVC.flower.getBlockClassfromMeta((BlockVC) ((ItemBlock)itemstack.getItem()).block, itemstack.getTagCompound().getInteger("flowertype")).getKey();
-		}
-		return null;
+		return (EnumFlower) getBlockClass(itemstack).getFromItemStack(itemstack).getKey();
 	}
 
 	
@@ -49,6 +48,16 @@ public class ItemFlowerVC extends ItemBlockVC {
 		return damage;
 	}
 	
+	
+	static BlockClass getBlockClass(ItemStack itemstack) {
+		ItemBlock itemblock = (ItemBlock)itemstack.getItem();
+		
+		if (itemblock.block instanceof BlockDoubleFlowerVC) {
+			return BlocksVC.doubleflower;
+		}
+		
+		return BlocksVC.flower;
+	}
 
 	
 

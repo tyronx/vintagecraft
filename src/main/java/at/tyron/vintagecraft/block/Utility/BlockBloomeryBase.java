@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Block.Utility;
 
 import java.util.List;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
@@ -36,7 +37,7 @@ public class BlockBloomeryBase extends BlockContainerVC implements IBlockItemSin
 	
 	public BlockBloomeryBase() {
 		super(Material.rock);
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 		setDefaultState(blockState.getBaseState().withProperty(fillheight, EnumBloomeryState.UNLIT_EMPTY).withProperty(FACING, EnumFacing.NORTH));
 	}
 	

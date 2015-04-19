@@ -42,6 +42,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLootBonus;
 import net.minecraft.enchantment.EnumEnchantmentType;
@@ -112,6 +113,13 @@ public class VintageCraft {
 
  	
  	
+ 	public static CreativeTabsVC terrainTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "terrain");
+ 	public static CreativeTabsVC floraTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "flora");
+ 	public static CreativeTabsVC resourcesTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "resources");
+ 	public static CreativeTabsVC craftedBlocksTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "craftedblocks");
+ 	public static CreativeTabsVC toolsarmorTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "toolsandarmor");
+ 	
+ 	
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
     	BlocksVC.init();
@@ -161,6 +169,10 @@ public class VintageCraft {
 		proxy.init(event);
 		
 		Recipes.addRecipes();
+		
+		
+
+		
     }
     
     

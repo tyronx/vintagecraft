@@ -20,7 +20,8 @@ public class ItemToolBismuthBronze extends ItemToolTinBronze {
 
 				break;
 			case SHOVEL: 
-				if (material == Material.grass || material == Material.ground) return 4.4f;  
+				if (material == Material.grass || material == Material.ground) return 4.4f;
+				if (material == Material.sand) return 1.8f;
 				break;
 			case SWORD:
 				if (material == Material.leaves) return 2.6f;

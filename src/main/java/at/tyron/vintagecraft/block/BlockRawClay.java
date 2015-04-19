@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -29,7 +30,7 @@ public class BlockRawClay extends BlockVC implements IBlockSoil {
 		super(Material.ground);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NORMALGRASS));
 		this.setTickRandomly(true);
-		this.setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.terrainTab);
 	}
 	
 

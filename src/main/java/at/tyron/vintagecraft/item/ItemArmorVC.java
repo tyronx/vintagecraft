@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemArmor;
@@ -17,10 +18,7 @@ public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider {
 	
 	public ItemArmorVC(ArmorMaterial material, int renderIndex, int armorType) {
 		super(material, renderIndex, armorType);
-		setCreativeTab(CreativeTabs.tabCombat);
-	    //this.textureName = textureName;
-	    //this.setUnlocalizedName("sdf");
-	    //this.setTextureName(ModInfo.ModID + ":" + "sdf");
+		setCreativeTab(VintageCraft.toolsarmorTab);
 	}
 
 	

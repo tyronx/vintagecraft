@@ -73,7 +73,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 0.2f;
+		return 0.25f;
 	}
 	
 	

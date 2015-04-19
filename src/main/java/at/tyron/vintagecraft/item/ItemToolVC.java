@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
@@ -35,7 +36,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	public EnumTool tooltype;
 	
 	public ItemToolVC() {
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(VintageCraft.toolsarmorTab);
 		maxStackSize = 1;
 		setMaxDamage(getMaxUses());
 	}

@@ -130,9 +130,9 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 			id++;
 		}
 		
-		for (EnumOreType value : sorted) {
+		/*for (EnumOreType value : sorted) {
 			System.out.println(value);
-		}
+		}*/
 		
 		return sorted;
 	}

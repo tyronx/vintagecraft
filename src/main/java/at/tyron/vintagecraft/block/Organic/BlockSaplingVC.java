@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
@@ -53,14 +54,14 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrowable, IBlockItemSink {
+public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGrowable, IBlockItemSink {
 	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
 	
 
 	public BlockSaplingVC() {
 		super(Material.plants);
-		setCreativeTab(CreativeTabs.tabDecorations);
+		setCreativeTab(VintageCraft.floraTab);
 		setTickRandomly(true);
 		this.setDefaultState(this.blockState.getBaseState());
 		
@@ -234,25 +235,6 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
     }
 	
 
-	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types) {
-		return registerMultiState(blockclassname, itemclass, types, blockclassname);
-	}
-
-	@Override
-	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
-		System.out.println("register block " + this);
-		GameRegistry.registerBlock(this, itemclass, blockclassname);
-		setUnlocalizedName(blockclassname);
-		
-		for (int i = 0; i < types.length; i++) {
-			IStateEnum enumstate = types[i]; 
-			//System.out.println("REG " + folderprefix + "/" + enumstate.getStateName());
-			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
-		}
-		
-		return this;
-	}
 	
 	
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
@@ -341,6 +323,11 @@ public class BlockSaplingVC extends BlockContainer implements IMultiblock, IGrow
         	return ok; 
         }
         return false;
+	}
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		return BlocksVC.sapling.getFromItemStack(stack).getStateName();
 	}
 	
 	

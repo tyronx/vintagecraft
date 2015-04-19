@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit.EnumBuildStage;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
@@ -44,7 +45,7 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 	
 	public BlockLogVC() {
 		super(Material.wood);
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(VintageCraft.floraTab);
 	}
 	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {

@@ -27,7 +27,9 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
+import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
@@ -50,14 +52,12 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.creativetab.CreativeTabs;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
-	
 	public static ModelResourceLocation oremodelLocation = new ModelResourceLocation(ModInfo.ModID + ":" + BlocksVC.raworeName, null);
 	
-	
-
-	
+		
 	@Override
 	public void registerRenderInformation() {
 		
@@ -78,6 +78,40 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		MinecraftForge.EVENT_BUS.register(this);
+		
+		
+		
+		if (VintageCraftConfig.rearrangeCreativeTabs) {
+			int i = 0;
+			
+			CreativeTabs [] tabs = new CreativeTabs[CreativeTabs.creativeTabArray.length];
+			
+			for (CreativeTabs tab : CreativeTabs.creativeTabArray) {
+				if (tab instanceof CreativeTabsVC) {
+					if (i == 5 || i == 11) i++; // don't touch search tab or inventory tab
+					tab.tabIndex = i;
+					tabs[i++] = tab;
+				}
+			}
+			
+			tabs[5] = CreativeTabs.tabAllSearch;
+			tabs[11] = CreativeTabs.tabInventory;
+			i = 6;
+			
+			for (CreativeTabs tab : CreativeTabs.creativeTabArray) {
+				if (!(tab instanceof CreativeTabsVC) && !tab.getTabLabel().equals("search") && !tab.getTabLabel().equals("inventory")) {
+					if (i == 11) i++;
+					tab.tabIndex = i;
+					tabs[i++] = tab;
+				}
+			}
+			
+			CreativeTabs.creativeTabArray = tabs;
+
+			/*for (CreativeTabs tab : CreativeTabs.creativeTabArray) {
+				System.out.println(tab.getTabLabel() + ": " + tab.tabIndex);
+			}*/
+		}
 	}
 	
 	

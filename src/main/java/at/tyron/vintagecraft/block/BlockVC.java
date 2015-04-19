@@ -5,6 +5,7 @@ import java.util.Random;
 import com.google.common.util.concurrent.Service.State;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
@@ -59,7 +60,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	}
 	
 	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
-		System.out.println("register block " + this);
+		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		

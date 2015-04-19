@@ -23,6 +23,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
@@ -35,6 +36,8 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
  */
 
 public abstract class BlockClass {
+	boolean debug = VintageCraftConfig.debugBlockRegistration;
+	
 	LinkedHashMap<IStateEnum, BlockClassEntry> values = new LinkedHashMap<IStateEnum, BlockClassEntry>();
 	
 
@@ -96,7 +99,7 @@ public abstract class BlockClass {
 	}
 	
 	protected Block[] initBlocks(String name, Class<? extends Block> blockclass, Class<? extends ItemBlock> itemclass, float hardness, SoundType stepsound, String harvesLevelTool, int harvestLevel) {
-		System.out.println("init " + (values().length) + " of type " + name + " (block = " + blockclass + ")");
+		if(debug) System.out.println("init " + (values().length) + " of type " + name + " (block = " + blockclass + ")");
 		
 		// I hate Java not being able to allow method overriding of static methods :/
 		int typesperblock = 1;
@@ -108,7 +111,7 @@ public abstract class BlockClass {
 		ArrayList<Block> blocks = new ArrayList<Block>();
 		
 		for (BlockClassEntry[] blockclassentrychunk : chunked) {
-			System.out.println("register chunk piece of size " + blockclassentrychunk.length);
+			if(debug) System.out.println("register chunk piece of size " + blockclassentrychunk.length);
 			Block block;
 			try {
 				block = blockclass.newInstance();
@@ -116,7 +119,7 @@ public abstract class BlockClass {
 				
 				int meta = 0;
 				for (BlockClassEntry blockclassentry : blockclassentrychunk) {
-					System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta + "     (key = " + blockclassentry.key.getStateName() + ")");
+					if(debug) System.out.println("init blockclassentry " + (name + ((blocks.size() > 1) ? blocks.size() : "")) + " with meta " + meta + "     (key = " + blockclassentry.key.getStateName() + ")");
 					blockclassentry.init(block, meta++);
 				}
 				

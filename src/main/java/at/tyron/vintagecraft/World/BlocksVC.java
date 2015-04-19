@@ -54,7 +54,8 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Item.ItemBrick;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.Item.ItemClayVessel;
-import at.tyron.vintagecraft.Item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.Item.ItemDoubleFlower;
+import at.tyron.vintagecraft.Item.ItemFarmLand;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;
 import at.tyron.vintagecraft.Item.ItemGrassVC;
 import at.tyron.vintagecraft.Item.ItemLeaves;
@@ -102,7 +103,7 @@ public class BlocksVC {
 	//public static BlockVC bedrock;
 		
 	public static BlockVC topsoil;
-	public static Block farmland;
+	public static BlockContainerVC farmland;
 	public static Block wheatcrops;
 	
 	
@@ -141,7 +142,6 @@ public class BlocksVC {
 	public static SoilRockClass subsoil;
 	public static RockClass sand;
 	public static RockClass gravel;
-	//public static RockClass brick;
 
 	public static OreClass rawore;
 	
@@ -163,8 +163,6 @@ public class BlocksVC {
 	
 
 	public static void initBlocks() {
-		
-		
 		firepit = new BlockFirepit(false);
 		firepit.setHardness(1f);
 		register(firepit, "firepit", ItemBlock.class);
@@ -188,7 +186,7 @@ public class BlocksVC {
 		
 		
 		
-		toolrack = new BlockToolRack().registerMultiState("toolrack", ItemToolRack.class, EnumTree.values()).setHardness(1.2f);  //.registerSingleState("toolrack", null); // 
+		toolrack = new BlockToolRack().registerMultiState("toolrack", ItemToolRack.class, EnumTree.values()).setHardness(1.2f); 
 		
 		
 		
@@ -204,9 +202,8 @@ public class BlocksVC {
 		register(clayVessel, "clayvessel2", ItemClayVessel.class);
 
 		
-		farmland = new BlockFarmlandVC().setHardness(2F).setStepSound(Block.soundTypeGravel);
-		registerMulti(farmland, "farmland", ItemBlock.class, EnumFertility.values());
-		
+		farmland = new BlockFarmlandVC().registerMultiState("farmland", ItemFarmLand.class, EnumFertility.values());
+		farmland.setHardness(2f).setStepSound(Block.soundTypeGravel);		
 		
 		
 		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertilityForTopsoil()).setStepSound(Block.soundTypeGrass);
@@ -315,7 +312,6 @@ public class BlocksVC {
 
 
 	private static void initHardness() {
-//		rawore.setHarvestLevel("pickaxe", 0);
 		topsoil.setHarvestLevel("shovel", 0);
 		rawclay.setHarvestLevel("shovel", 0);
 		rawfireclay.setHarvestLevel("shovel", 0);
@@ -339,37 +335,6 @@ public class BlocksVC {
 		
 		VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname);
 	}
-	
-	public static void registerMulti(Block block, String blockclassname, Class<? extends ItemBlock> itemclass, EnumFertility[] values) {
-		GameRegistry.registerBlock(block, itemclass, blockclassname);
-		block.setUnlocalizedName(blockclassname);
-		
-		for (EnumFertility state: values) {
-			System.out.println("register multi vintagecraft:" + blockclassname + "/" + state.getStateName());
-			//VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname, state.shortName(), state.getMetaData());
-		}
-	}
-	
 
-
-
-
-
-
-
-	static <T> T[][] split(T[] elements, int chunksize) {
-		int chunks = 1 + elements.length / chunksize;
-		
-		ArrayList<T> result = new ArrayList<T>(); 
-		
-		for (int i = 0; i < chunks; i++) {
-			result.add((T) Arrays.copyOfRange(elements, i * chunksize, Math.min(elements.length, i*chunksize + chunksize)));
-		}
-		
-		return (T[][]) result.toArray((T[])Array.newInstance(elements.getClass(), 0));
-		
-	}
-	
-	
 
 }

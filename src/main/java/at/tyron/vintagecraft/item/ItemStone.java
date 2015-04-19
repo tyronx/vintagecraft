@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
@@ -37,7 +38,7 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 
 	public ItemStone() {
 		setHasSubtypes(true);
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
     @SideOnly(Side.CLIENT)
@@ -73,7 +74,7 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider {
 		if (itemstack.getTagCompound() != null) {
 			return EnumRockType.byId(itemstack.getTagCompound().getInteger("rocktype"));
 		}
-		return null;
+		return EnumRockType.ANDESITE;
 	}
 	
 	public static ItemStack setRockType(ItemStack itemstack, EnumRockType rocktype) {

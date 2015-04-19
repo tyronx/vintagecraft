@@ -13,6 +13,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.TileEntity.TEBloomery;
@@ -22,7 +23,7 @@ public class BlockBloomeryChimney extends BlockVC implements IBlockItemSink {
 
 	public BlockBloomeryChimney() {
 		super(Material.rock);
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 
 	@Override

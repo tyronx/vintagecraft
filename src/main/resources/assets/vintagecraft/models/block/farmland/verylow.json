@@ -1,0 +1,10 @@
+{
+	"parent": "vintagecraft:block/farmland/farmland",
+	"textures": {
+        "particle": "vintagecraft:blocks/topsoil/topsoil_verylow",
+		"bottom": "vintagecraft:blocks/topsoil/topsoil_verylow",
+		"side": "vintagecraft:blocks/topsoil/topsoil_verylow",
+		"top": "vintagecraft:blocks/farmland/verylow"
+
+	}
+}

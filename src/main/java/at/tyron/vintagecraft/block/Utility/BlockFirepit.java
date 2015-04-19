@@ -48,7 +48,7 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 		this.burning = burning;
 		
 		if (!burning) { 
-			setCreativeTab(CreativeTabs.tabDecorations);
+			//setCreativeTab(CreativeTabs.tabDecorations);
 			setDefaultState(getDefaultState().withProperty(buildstage, EnumBuildStage.STONES));
 		}
 	}

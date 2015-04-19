@@ -50,7 +50,7 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
 		super(Material.rock);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		if (!burning) { 
-			setCreativeTab(CreativeTabs.tabDecorations);
+			setCreativeTab(VintageCraft.craftedBlocksTab);
 		}
 		this.burning = burning;
 	}

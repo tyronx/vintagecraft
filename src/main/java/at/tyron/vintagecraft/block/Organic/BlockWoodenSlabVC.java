@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
@@ -38,6 +39,10 @@ public abstract class BlockWoodenSlabVC extends BlockWoodSlab implements IMultib
 	BlockClassEntry[] subtypes;
 
 	
+	public BlockWoodenSlabVC() {
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+	}
+	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
 		this.subtypes = subtypes;
 		setTypeProperty(property);
@@ -65,7 +70,7 @@ public abstract class BlockWoodenSlabVC extends BlockWoodSlab implements IMultib
 
 	@Override
 	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
-		System.out.println("register block " + this);
+		if (VintageCraftConfig.debugBlockRegistration)  System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		

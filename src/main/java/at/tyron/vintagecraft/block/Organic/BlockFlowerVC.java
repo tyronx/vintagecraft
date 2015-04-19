@@ -7,6 +7,7 @@ import java.util.Random;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
@@ -51,7 +52,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 	
 	public BlockFlowerVC() {
 		super(Material.plants);
-		setCreativeTab(CreativeTabs.tabDecorations);
+		setCreativeTab(VintageCraft.floraTab);
 		this.setTickRandomly(true);
 		float f = 0.2F;
 	    this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);

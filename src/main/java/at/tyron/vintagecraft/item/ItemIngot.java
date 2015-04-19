@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -34,7 +35,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
 	
 	public ItemIngot() {
         this.setHasSubtypes(true);
-        setCreativeTab(CreativeTabs.tabMaterials);
+        setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
 	

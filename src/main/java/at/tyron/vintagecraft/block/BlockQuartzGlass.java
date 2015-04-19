@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
@@ -31,6 +32,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockQuartzGlass extends BlockLogVC {
 	public static PropertyBool eastwest = PropertyBool.create("eastwest");
+	
+	
+	public BlockQuartzGlass() {
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+	}
+	
 	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
 		this.subtypes = subtypes;

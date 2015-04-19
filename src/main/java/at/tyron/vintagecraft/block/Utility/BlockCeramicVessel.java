@@ -28,7 +28,7 @@ public class BlockCeramicVessel extends BlockContainerVC {
 
 	public BlockCeramicVessel() {
 		super(Material.rock);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 	
 	public BlockCeramicVessel(Material mat) {

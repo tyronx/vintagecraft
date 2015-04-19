@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Block.Utility;
 
+import at.tyron.vintagecraft.VintageCraft;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.util.BlockPos;
@@ -10,7 +11,7 @@ public class BlockClayVessel extends BlockCeramicVessel {
 
 	public BlockClayVessel() {
 		super(Material.clay);
-		setCreativeTab(CreativeTabs.tabTools);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 	
 	@Override

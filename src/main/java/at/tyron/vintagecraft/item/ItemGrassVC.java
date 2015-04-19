@@ -43,7 +43,7 @@ public class ItemGrassVC extends ItemBlock {
 	
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
-        return BlocksVC.topsoil.getRenderColor(BlocksVC.topsoil.getStateFromMeta(stack.getMetadata()));
+        return BlocksVC.topsoil.getBlockColor();
     }
 
 	

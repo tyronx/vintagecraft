@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Block;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -15,7 +16,7 @@ public class BlockUpperMantle extends BlockVC {
 		super(material);
 		
 		this.setDefaultState(this.blockState.getBaseState());
-        this.setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.terrainTab);
 	}
 	
 

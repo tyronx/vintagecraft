@@ -42,7 +42,7 @@ public class ItemTopSoil extends ItemBlockVC implements ISubtypeFromStackPovider
 		EnumFertility fertility = EnumFertility.fromMeta((itemstack.getItemDamage() >> 2) & 3);
 		EnumOrganicLayer organiclayer = EnumOrganicLayer.fromMeta(itemstack.getItemDamage() & 3);
 		
-		return fertility.shortName() + "_" + organiclayer.getName();
+		return fertility.getStateName() + "_" + organiclayer.getName();
 	}
 	
 	

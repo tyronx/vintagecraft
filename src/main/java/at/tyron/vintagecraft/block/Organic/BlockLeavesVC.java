@@ -67,7 +67,7 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 		super(Material.leaves);
 		this.setTickRandomly(true);
 		this.setLightOpacity(1);
-        this.setCreativeTab(CreativeTabs.tabMaterials);    
+		setCreativeTab(VintageCraft.floraTab);    
 	}
 	
 	

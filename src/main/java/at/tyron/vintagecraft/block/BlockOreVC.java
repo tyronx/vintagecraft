@@ -28,6 +28,7 @@ import net.minecraftforge.common.property.Properties;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
@@ -47,7 +48,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	
 	public BlockOreVC() {
 		super(Material.iron);
-		setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.terrainTab);
 		this.setDefaultState(this.blockState.getBaseState());
 	}
 

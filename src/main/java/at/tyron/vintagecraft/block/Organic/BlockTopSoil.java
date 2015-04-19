@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.Item.ItemLogVC;
@@ -44,7 +45,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockTopSoil extends BlockVC implements IBlockSoil {
 	public static final PropertyEnum organicLayer = PropertyEnum.create("organiclayer", EnumOrganicLayer.class);
-	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class, EnumFertility.LOW, EnumFertility.MEDIUM, EnumFertility.HIGH);  //PropertyEnum.create("fertility", EnumFertility.class);
+	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class, EnumFertility.valuesForTopsoil());
 
 
 	
@@ -52,14 +53,14 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
 		super(Material.grass);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NORMALGRASS).withProperty(fertility, EnumFertility.MEDIUM));
 		this.setTickRandomly(true);
-		this.setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.floraTab);
 	}
 	
 	
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumOrganicLayer organiclayer : EnumOrganicLayer.values()) {
-    		for (EnumFertility fertility : EnumFertility.values()) {
+    		for (EnumFertility fertility : EnumFertility.valuesForTopsoil()) {
     			list.add(new ItemStack(itemIn, 1, organiclayer.getMetaData(this) + (fertility.getMetaData(this) << 2)));
     		}
     	}
@@ -104,10 +105,12 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
+    	/*System.out.println("convert from meta " + meta);
+    	System.out.println("convert from meta fertility " + ((meta >> 2) & 3));*/
     	return 
     		this.blockState.getBaseState()
     			.withProperty(organicLayer, EnumOrganicLayer.fromMeta(meta & 3))
-    			.withProperty(fertility, EnumFertility.fromMeta(1+(meta >> 2) & 3))
+    			.withProperty(fertility, EnumFertility.fromMeta((meta >> 2) & 3))
     	;
     }
 
@@ -165,7 +168,7 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
 		event.world.setBlockState(event.pos, newState);
 		TEFarmland tileentity = (TEFarmland)event.world.getTileEntity(event.pos);
 		if (tileentity != null) {
-			tileentity.setFertility(fertility.getId() * 10);			
+			tileentity.setFertility(fertility.getMinFertility() * 10);			
 		} else {
 			System.out.println("tileentity was not created?");
 		}

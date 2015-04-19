@@ -33,14 +33,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockIngotPile extends BlockContainer implements IBlockItemSink
-{
+public class BlockIngotPile extends BlockContainer implements IBlockItemSink {
 	PropertyBool sideways = PropertyBool.create("sideways");
 	
 	private Random random = new Random();
 
-	public BlockIngotPile()
-	{
+	public BlockIngotPile() {
 		super(Material.iron);
 	}
 

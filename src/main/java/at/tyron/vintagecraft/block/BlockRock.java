@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Block;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.*;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
@@ -45,7 +46,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
     
 	public BlockRock(Material materialIn) {
 		super(materialIn);
-        this.setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.terrainTab);
 	}
 
 	

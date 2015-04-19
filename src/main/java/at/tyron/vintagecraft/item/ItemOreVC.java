@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
@@ -37,7 +38,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 
 	public ItemOreVC() {
         this.setHasSubtypes(true);
-        setCreativeTab(CreativeTabs.tabMaterials);
+        setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
 	

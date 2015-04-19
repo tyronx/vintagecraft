@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.World.ItemsVC;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +14,7 @@ public class BlockRawFireClay extends BlockVC {
 	
 	public BlockRawFireClay() {
 		super(Material.ground);
-		this.setCreativeTab(CreativeTabs.tabBlock);
+		setCreativeTab(VintageCraft.terrainTab);
 	}
 
 

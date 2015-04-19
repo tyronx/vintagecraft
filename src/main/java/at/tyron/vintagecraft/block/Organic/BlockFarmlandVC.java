@@ -3,6 +3,9 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockContainerVC;
+import at.tyron.vintagecraft.Item.ItemFarmLand;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -22,8 +25,11 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -35,46 +41,18 @@ import net.minecraftforge.common.property.ExtendedBlockState;
 import net.minecraftforge.common.property.IUnlistedProperty;
 import net.minecraftforge.common.property.Properties;
 
-public class BlockFarmlandVC extends BlockContainer {
+public class BlockFarmlandVC extends BlockContainerVC {
 	public static final PropertyEnum fertility = PropertyEnum.create("fertility", EnumFertility.class);
 	
-	public static final IUnlistedProperty<Integer> fertilityExact = Properties.toUnlisted(PropertyInteger.create("fertility", 0, 40));
-
 	
 	public BlockFarmlandVC() {
 		super(Material.ground);
 		this.setDefaultState(this.blockState.getBaseState());
+		setCreativeTab(VintageCraft.floraTab);
 	}
-	
-
-	/*public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		int i = ((Integer)state.getValue(MOISTURE)).intValue();
-
-		if (!this.hasWater(worldIn, pos) && !worldIn.canLightningStrike(pos.up()))
-		{
-			if (i > 0)
-			{
-				worldIn.setBlockState(pos, state.withProperty(MOISTURE, Integer.valueOf(i - 1)), 2);
-			}
-			else if (!this.hasCrops(worldIn, pos))
-			{
-				worldIn.setBlockState(pos, Blocks.dirt.getDefaultState());
-			}
-		}
-		else if (i < 7)
-		{
-			worldIn.setBlockState(pos, state.withProperty(MOISTURE, Integer.valueOf(7)), 2);
-		}
-	}*/
-
 	
 	
 	public boolean isFertile(World world, BlockPos pos) {
-       /* if (this == net.minecraft.init.Blocks.farmland) {
-            return ((Integer)world.getBlockState(pos).getValue(BlockFarmland.MOISTURE)) > 0;
-        }
-
-        return false;*/
 		return false;
     }
 
@@ -82,38 +60,48 @@ public class BlockFarmlandVC extends BlockContainer {
     @Override
     public int getRenderType() { return 3; }
 
-	
+    
+
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TEFarmland();
 	}
-
-	
-	 @Override
-    public IBlockState getExtendedState(IBlockState state, IBlockAccess world, BlockPos pos) {
-        TileEntity te = world.getTileEntity(pos);
-        if(te instanceof TEFarmland) {
-        	TEFarmland cte = (TEFarmland) te;
-            return cte.getState();
-        } else {
-        	/*if (te == null) {
-        		System.out.println("getExtendedState() Error: tileentity is null!");
-        	} else {
-        		System.out.println("getExtendedState() Error: te is NOT of instance TEOre at pos " + pos);
-        	}*/
-        }
-        return state;
-    }
-	 
-	 
-	    public IBlockState getStateFromMeta(int meta) {
-	        return this.getDefaultState().withProperty(fertility, EnumFertility.fromMeta(meta));
-	    }
-
-	    public int getMetaFromState(IBlockState state) {
-	        return ((EnumFertility)state.getValue(fertility)).getMetaData();
-	    }
 	    
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		ItemFarmLand farmlanditem = (ItemFarmLand)stack.getItem();
+		setFertility(farmlanditem.getFertility(stack).getAsNumber(), worldIn, pos);
+	}
+	
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if(te instanceof TEFarmland) {
+			TEFarmland cte = (TEFarmland) te;
+			EnumFertility fert = EnumFertility.fromFertilityValue(cte.getFertility());
+			
+			if (fert != null) return getDefaultState().withProperty(fertility, fert);
+		}
+		
+		
+		return this.getDefaultState();
+	}
+    
+
+ 
+    public int getMetaFromState(IBlockState state) {
+        return  (((EnumFertility)state.getValue(fertility)).getMetaData(this) << 2);
+    }
+    
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+    	return this.blockState.getBaseState().withProperty(fertility, EnumFertility.fromMeta((meta >> 2) & 3));
+    }
+
+    
+  
 
     @Override
     protected BlockState createBlockState() {
@@ -121,26 +109,52 @@ public class BlockFarmlandVC extends BlockContainer {
     }
     
     
-    
-    @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    	
+    public void reduceFertility(World worldIn, BlockPos pos) {
     	TileEntity te = worldIn.getTileEntity(pos);
     	
         if(te instanceof TEFarmland) {
         	TEFarmland teFarmland = (TEFarmland) te;
-        	
-        	EnumFertility fertility = EnumFertility.values()[teFarmland.getFertility() / 10];
-        	
-        	ItemStack itemstack = new ItemStack(BlocksVC.topsoil, EnumOrganicLayer.NOGRASS.getMetaData(null) + (fertility.getMetaData(null) << 2));           
-            spawnAsEntity(worldIn, pos, itemstack);
-            
-
+        	teFarmland.consumeFertility();
         }
-    	
-    	super.breakBlock(worldIn, pos, state);
     }
     
+    
+    public EnumFertility getFertility(IBlockAccess worldIn, BlockPos pos) {
+    	TileEntity te = worldIn.getTileEntity(pos);
+    	
+    	System.out.println(te + " " + pos);
+        if(te instanceof TEFarmland) {
+        	TEFarmland teFarmland = (TEFarmland) te;
+        	System.out.println(teFarmland.getFertility());
+        	return EnumFertility.fromFertilityValue(teFarmland.getFertility());
+        }
+        
+        return null;
+    }
+    
+    
+    public void setFertility(int fertility, World worldIn, BlockPos pos) {
+    	TileEntity te = worldIn.getTileEntity(pos);
+    	
+        if(te instanceof TEFarmland) {
+        	TEFarmland teFarmland = (TEFarmland) te;
+        	teFarmland.setFertility(fertility);
+        }
+    }
+    
+        
+    @Override
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+    	EnumFertility fertility = getFertility(worldIn, pos);
+    	
+    	if (fertility != null && fertility != EnumFertility.VERYLOW) {
+    		ItemStack itemstack = new ItemStack(BlocksVC.topsoil, 1, EnumOrganicLayer.NOGRASS.getMetaData(null) + (fertility.getMetaData(null) << 2));
+    		spawnAsEntity(worldIn, pos, itemstack);
+    	}
+    	
+    	
+    	return;
+    }
     
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
@@ -155,6 +169,13 @@ public class BlockFarmlandVC extends BlockContainer {
     }
 		return false;
     }
-	    
-	    
+
+
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		EnumFertility fertility = EnumFertility.fromMeta((stack.getItemDamage() >> 2) & 3);		
+		return fertility.getStateName();
+	}
+
 }

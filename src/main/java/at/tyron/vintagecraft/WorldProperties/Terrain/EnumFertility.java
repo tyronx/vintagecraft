@@ -6,35 +6,45 @@ import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public enum EnumFertility implements IStateEnum, IStringSerializable {
-	VERYLOW (3, "verylowf", 1, false),
-	LOW (0, "lowf", 4, true),
-	MEDIUM (1, "medf", 9, true),
-	HIGH (2, "hif", 21, true), 
+	VERYLOW (3, 1, 0.00002f, false),
+	LOW (0, 4, 0.5f, true),
+	MEDIUM (1, 9, 1f, true),
+	HIGH (2, 21, 1.35f, true) 
 	;
 
 	int meta;
 	int minfertility; // value between 0 - 25 for it to be classified as this type fertilty
 	public boolean topsoil;
-	String shortname;
+	public float growthspeedmultiplier;
 	
 	private static EnumFertility[] FERTILITY_LOOKUP = new EnumFertility[26];
 	
 	
-	private EnumFertility(int meta, String shortname, int minfertility, boolean topsoil) {
+	private EnumFertility(int meta, int minfertility, float growthspeedmultiplier, boolean topsoil) {
 		this.meta = meta;
-		this.shortname = shortname;
 		this.minfertility = minfertility;
+		this.growthspeedmultiplier = growthspeedmultiplier;
 		this.topsoil = topsoil;
+	}
+	
+	
+	public int getAsNumber() {
+		if (this == VERYLOW) return 20;
+		if (this == LOW) return 65;
+		if (this == MEDIUM) return 150;
+		return 235;
 	}
 	
 	@Override
 	public String getName() {
 		return name().toLowerCase();
 	}
-	
-	public String shortName() {
-		return shortname;
+	@Override
+	public String getStateName() {
+		return name().toLowerCase();
 	}
+	
+	
 	
 	@Override
 	public int getMetaData(Block block) {
@@ -48,11 +58,6 @@ public enum EnumFertility implements IStateEnum, IStringSerializable {
 	@Override
 	public int getId() {
 		return meta;
-	}
-	
-	@Override
-	public String getStateName() {
-		return getName();
 	}
 	
 	public int getMinFertility() {
@@ -81,6 +86,10 @@ public enum EnumFertility implements IStateEnum, IStringSerializable {
 	}
 	
 	
+	public static EnumFertility[] valuesForTopsoil() {
+		return new EnumFertility[] {LOW, MEDIUM, HIGH};
+	}
+	
 	
 	static {
 		EnumFertility fertility = null, nextfertility = null;
@@ -92,8 +101,10 @@ public enum EnumFertility implements IStateEnum, IStringSerializable {
         	FERTILITY_LOOKUP[i] = fertility;
         }
         
-        
-        
+        FERTILITY_LOOKUP[0] = VERYLOW;
+        FERTILITY_LOOKUP[1] = VERYLOW;
+        FERTILITY_LOOKUP[2] = VERYLOW;
+        FERTILITY_LOOKUP[3] = VERYLOW;        
 	}
 
 }

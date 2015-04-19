@@ -3,6 +3,9 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 import java.util.Random;
 
+import com.sun.java_cup.internal.runtime.virtual_parse_stack;
+
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -37,7 +40,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	
 	public BlockTallGrass() {
 		super(Material.plants);
-		setCreativeTab(CreativeTabs.tabDecorations);
+		setCreativeTab(VintageCraft.floraTab);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(GRASSTYPE, EnumTallGrass.LONG));
 		this.setTickRandomly(true);
 		float f = 0.5F;
@@ -52,23 +55,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
         return null;
     }
     
-   /* @Override
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    	super.breakBlock(worldIn, pos, state);
-    	
-    	Item item = null;
-    	if (worldIn.rand.nextInt(10) == 0) {
-    		//if (worldIn.rand.nextInt(25) == 0) item = Items.carrot;
-    		//else if (worldIn.rand.nextInt(25) == 0) item = Items.potato;
-    		//else 
-    		item = Items.wheat_seeds;
-    	}
-    	
-    	if (item != null) {
-    		ItemStack itemstack = new ItemStack(item);
-    		spawnAsEntity(worldIn, pos, itemstack);
-    	}
-    }*/
+
 
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
@@ -176,6 +163,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     public net.minecraftforge.common.EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
         return net.minecraftforge.common.EnumPlantType.Plains;
     }
+    
     @Override
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.getDefaultState();

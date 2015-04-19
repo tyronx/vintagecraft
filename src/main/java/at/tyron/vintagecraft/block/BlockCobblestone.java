@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -26,6 +27,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 public class BlockCobblestone extends BlockRock {
 	public BlockCobblestone() {
 		super(Material.rock);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 	
 

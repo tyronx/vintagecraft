@@ -7,13 +7,14 @@ import java.util.Random;
 
 import com.google.common.collect.Lists;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
-import at.tyron.vintagecraft.Item.ItemDoublePlantVC;
+import at.tyron.vintagecraft.Item.ItemDoubleFlower;
 import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
@@ -54,7 +55,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 
 	public BlockDoubleFlowerVC() {
 		super();
-		setCreativeTab(CreativeTabs.tabDecorations);
+		setCreativeTab(VintageCraft.floraTab);
 		this.setTickRandomly(true);
 		float f = 0.2F;
 	    this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);

@@ -398,3 +398,12 @@ toolrackitem.name=Tool Rack
 
 tile.bloomerybase.name=Bloomery Base
 tile.bloomerychimney.name=Bloomery Chimney
+
+itemGroup.terrain=Terrain
+itemGroup.flora=Flora
+itemGroup.resources=Resources
+itemGroup.craftedblocks=Crafted blocks
+itemGroup.toolsandarmor=Tools and Armor
+
+
+farmland.name=Farmland

@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Block.Organic;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
@@ -22,6 +23,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
 	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
+	
+	public BlockFenceGateVC() {
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+	}
 	
 	public int multistateAvailableTypes() {
 		return 1;
@@ -59,7 +64,7 @@ public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
 
 	@Override
 	public Block registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum[] types, String folderprefix) {
-		System.out.println("register block " + this);
+		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		
