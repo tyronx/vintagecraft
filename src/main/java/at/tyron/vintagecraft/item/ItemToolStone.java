@@ -6,6 +6,11 @@ import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 
 public class ItemToolStone extends ItemToolVC {
+	public ItemToolStone(EnumTool tooltype) {
+		super(tooltype);
+	}
+
+
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {

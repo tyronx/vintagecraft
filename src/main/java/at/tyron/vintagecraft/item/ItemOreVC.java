@@ -8,10 +8,12 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
@@ -34,7 +36,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable {
+public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable, ISizedItem {
 
 	public ItemOreVC() {
         this.setHasSubtypes(true);
@@ -188,49 +190,10 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 
-/*		
+
 	@Override
-	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!entityplayer.canPlayerEdit(pos.offset(side), side, itemstack)) {
-            return false;
-        }
-        
-        if (applyFertilizer(itemstack, world, pos, entityplayer)) {
-            if (!world.isRemote) {
-                world.playAuxSFX(2005, pos, 0);
-            }
-
-            return true;
-        }
-        
-		
-    	if (entityplayer.getCurrentEquippedItem() != null && entityplayer.isSneaking()) {
-    		IBlockState state = world.getBlockState(pos);
-    		if(state.getBlock() instanceof BlockFirepit) {
-    			TEHeatSourceWithGUI teheatsource = (TEHeatSourceWithGUI) world.getTileEntity(pos);
-        		if (teheatsource.tryPutItemStack(itemstack)) {
-        			return true;
-        		}
-    		}
-    	}
-    	
-		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
+	public EnumItemSize getItemSize() {
+		return EnumItemSize.SMALL;
 	}
 
-	
-	
-	private boolean applyFertilizer(ItemStack stack, World worldIn, BlockPos pos, EntityPlayer playerIn) {
-		if (getOreType(stack) != EnumOreType.SYLVITE_ROCKSALT) return false;
-		
-		IBlockState state = worldIn.getBlockState(pos);
-		
-		if (state.getBlock() instanceof BlockSaplingVC) {
-			boolean success = ((BlockSaplingVC)state.getBlock()).fertilize(worldIn, worldIn.rand, pos, state, stack);
-			if (success) stack.stackSize--;
-			return success;
-		}
-		
-		return false;
-	}
-	*/
 }

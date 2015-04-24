@@ -35,7 +35,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IItemRackable {	
 	public EnumTool tooltype;
 	
-	public ItemToolVC() {
+	public ItemToolVC(EnumTool tooltype) {
+		this.tooltype = tooltype;
 		setCreativeTab(VintageCraft.toolsarmorTab);
 		maxStackSize = 1;
 		setMaxDamage(getMaxUses());
@@ -192,7 +193,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		
 		for (int i = 0; i < quantity; i++) {
 			if (nearestblocks.size() <= i) break;
-			world.destroyBlock(nearestblocks.get(i), true);
+			if (world.isRemote) world.destroyBlock(nearestblocks.get(i), true);
 			destroyed++;
 		}
 		

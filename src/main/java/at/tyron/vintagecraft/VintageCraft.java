@@ -131,10 +131,7 @@ public class VintageCraft {
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
     	
-   // 	B3DLoader.instance.addDomain(ModInfo.ModID.toLowerCase());
-    	
     	proxy.registerRenderInformation();
-    	//proxy.registerTileEntities();
     	
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
     	
@@ -190,12 +187,6 @@ public class VintageCraft {
 		manager.registerCommand(new VintageCraftCommands());
 	}
 		
-	/*@SubscribeEvent
-	public void onServerPostTick(ServerTickEvent evt) {
-		//System.out.println("server post tick: " + evt.type);
-		MinecraftServer.getServer().theProfiler.profilingEnabled = true;
-		MinecraftServer.getServer().theProfiler.getProfilingData("root");
-	}*/
 
 	
 	

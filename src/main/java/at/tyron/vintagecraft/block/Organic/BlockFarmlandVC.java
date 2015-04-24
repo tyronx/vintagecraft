@@ -122,10 +122,8 @@ public class BlockFarmlandVC extends BlockContainerVC {
     public EnumFertility getFertility(IBlockAccess worldIn, BlockPos pos) {
     	TileEntity te = worldIn.getTileEntity(pos);
     	
-    	System.out.println(te + " " + pos);
         if(te instanceof TEFarmland) {
         	TEFarmland teFarmland = (TEFarmland) te;
-        	System.out.println(teFarmland.getFertility());
         	return EnumFertility.fromFertilityValue(teFarmland.getFertility());
         }
         
@@ -145,13 +143,13 @@ public class BlockFarmlandVC extends BlockContainerVC {
         
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-    	EnumFertility fertility = getFertility(worldIn, pos);
+    	/*EnumFertility fertility = getFertility(worldIn, pos);
     	
     	if (fertility != null && fertility != EnumFertility.VERYLOW) {
     		ItemStack itemstack = new ItemStack(BlocksVC.topsoil, 1, EnumOrganicLayer.NOGRASS.getMetaData(null) + (fertility.getMetaData(null) << 2));
     		spawnAsEntity(worldIn, pos, itemstack);
     	}
-    	
+    	*/
     	
     	return;
     }

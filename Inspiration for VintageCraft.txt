@@ -68,6 +68,31 @@
 - use red layer (= just a blurred version of blue layer) for smooth transitions?!
 
 
+
+===== Soil System ======
+
+- Acidity map:
+  - Base value = Acidity of topmost rock layer
+  - Account for Temperature. Higher temperature => stronger weathering => stronger base value
+  - Account for Rainfall. More rain => more acid
+  - Account for Vegetation. Heavy Vegetation => more acid
+
+
+- Soil thickness map
+  - Account for Elevation. Higher elevation => stronger rain runoff
+  - Account for Age. Greater Age => thicker soil 
+
+
+- Nutrient map (NKP)
+  - Nitrogen: 
+    - Base value = Rainfall. 
+    - Account for Elevation. Higher elevation => stronger rain runoff
+  - 
+
+
+
+
+
 ========= Cave Stuff =====
 
 - Mineshafts like these http://imgur.com/a/idI07

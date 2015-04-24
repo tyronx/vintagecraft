@@ -75,7 +75,7 @@ public class BlockIngotPile extends BlockContainer implements IBlockItemSink {
 	
 	
 	public static boolean tryCreatePile(ItemStack itemstack, World world, BlockPos pos) {
-		if (world.isRemote || !suitableGround(world, pos, ItemIngot.getMetal(itemstack))) return false;
+		if (world.isRemote || !suitableGround(world, pos, ItemIngot.getMetal(itemstack)) || !world.isAirBlock(pos)) return false;
 		
 		world.setBlockState(pos, BlocksVC.ingotPile.getDefaultState());
 		

@@ -6,6 +6,10 @@ import at.tyron.vintagecraft.WorldProperties.EnumTool;
 
 public class ItemToolBismuthBronze extends ItemToolTinBronze {
 
+	public ItemToolBismuthBronze(EnumTool tooltype) {
+		super(tooltype);
+	}
+
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {

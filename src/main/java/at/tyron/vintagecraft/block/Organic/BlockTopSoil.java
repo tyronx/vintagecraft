@@ -168,7 +168,7 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
 		event.world.setBlockState(event.pos, newState);
 		TEFarmland tileentity = (TEFarmland)event.world.getTileEntity(event.pos);
 		if (tileentity != null) {
-			tileentity.setFertility(fertility.getMinFertility() * 10);			
+			tileentity.setFertility(fertility.getAsNumber());			
 		} else {
 			System.out.println("tileentity was not created?");
 		}

@@ -59,13 +59,33 @@ public class BlockRock extends BlockVC implements IMultiblock {
 		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState(), getTypeProperty()));
 	}
 
+	
+	public boolean isFreeFloating(World world, BlockPos pos) {
+		return 
+			world.isAirBlock(pos.up()) &&
+			world.isAirBlock(pos.down()) &&
+			world.isAirBlock(pos.east()) &&
+			world.isAirBlock(pos.west()) && 
+			world.isAirBlock(pos.north()) &&
+			world.isAirBlock(pos.south())
+			;
+	}
 
 
+	@Override
+	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+		if (isFreeFloating(worldIn, pos)) {
+			worldIn.destroyBlock(pos, true);
+		}
+		
+		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+	}
+	
     @Override
     public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    	if (getBlockClass() == BlocksVC.rock) {
-	        List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-	
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	
+    	if (getBlockClass() == BlocksVC.rock && !isFreeFloating((World) world, pos)) {
 	        Random rand = world instanceof World ? ((World)world).rand : RANDOM;
 	
 	        EnumRockType rocktype = (EnumRockType) getRockType(state).getKey();
@@ -83,7 +103,6 @@ public class BlockRock extends BlockVC implements IMultiblock {
     	}
 
     	
-    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
     	
     	ItemStack itemstack = new ItemStack(Item.getItemFromBlock(this));
     	ItemRockTyped.withRockTypeType(itemstack, getRockType(state));

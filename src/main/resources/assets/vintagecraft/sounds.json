@@ -1,0 +1,4 @@
+{
+    "thud": { "category": "player", "sounds": [ "thud" ] },
+	"fireplace": { "category": "player", "sounds": [ "fireplace" ] }
+}

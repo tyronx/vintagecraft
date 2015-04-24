@@ -13,6 +13,7 @@ import at.tyron.vintagecraft.Item.ItemFoodVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.ItemSeedVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.Item.ItemToolBismuthBronze;
 import at.tyron.vintagecraft.Item.ItemToolCopper;
@@ -169,7 +170,7 @@ public class ItemsVC {
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
 		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
 		
-		wheatSeeds = new ItemSeeds(BlocksVC.wheatcrops, BlocksVC.farmland);
+		wheatSeeds = new ItemSeedVC();
 		register(wheatSeeds, "wheatseeds");
 	}
 	
@@ -223,11 +224,11 @@ public class ItemsVC {
 			
 			try {
 				Field field = ItemsVC.class.getField(toolnamecode);
-				field.set(ItemsVC.class, theclass.newInstance());
-				ItemToolVC item = (ItemToolVC)field.get(null);
 				
-				item.tooltype = tool;
+				ItemToolVC item = theclass.getDeclaredConstructor(EnumTool.class).newInstance(tool);
 				
+				field.set(ItemsVC.class, item);
+			
 				item.setUnlocalizedName(unlocalizedname);
 				GameRegistry.registerItem(item, unlocalizedname);
 				

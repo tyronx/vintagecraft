@@ -35,7 +35,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(37, 1, 8, 103)),
 
 	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(7, 2, 1, 155)),
-	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(2, 1, 2, 160)),
+	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(5, 1, 2, 160)),
 
 	QUARTZ 				(19, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
 	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(35, 2, 5, 255, 160)),
@@ -43,8 +43,8 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	
 	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
 	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(10, 1, 0, 35)),
-	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(6, 1, 0, 40)),
-	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(5, 1, 0, 35)),
+	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(8, 1, 0, 40)),
+	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyRelativeDepth(12, 1, 0, 50)),
 
 	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(23, 1, 15, 103)),
 
@@ -58,8 +58,8 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		
 	NATIVEGOLD_QUARTZ   ( 6, true, EnumDepositSize.TINY, DepositOccurence.inDeposit(QUARTZ, 1)),
 	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 40)), 
-	NATIVESILVER_QUARTZ (14, true, EnumDepositSize.NONE, DepositOccurence.inDeposit(QUARTZ, 2)), 
-	PERIDOT_OLIVINE     (23, true, EnumDepositSize.NONE, DepositOccurence.inDeposit(OLIVINE, 20)),  
+	NATIVESILVER_QUARTZ (14, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(QUARTZ, 2)), 
+	PERIDOT_OLIVINE     (23, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(OLIVINE, 20)),  
 
 	
 	REDSTONE 			( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(0, 2, 30, 100))

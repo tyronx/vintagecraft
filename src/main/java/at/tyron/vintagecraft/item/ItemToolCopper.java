@@ -14,6 +14,11 @@ import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 
 public class ItemToolCopper extends ItemToolVC {
+	public ItemToolCopper(EnumTool tooltype) {
+		super(tooltype);
+	}
+
+
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {

@@ -3,13 +3,15 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class ItemFireClay extends ItemVC implements IItemSmeltable {
+public class ItemFireClay extends ItemVC implements IItemSmeltable, ISizedItem {
 	boolean bakeable;
 	
 	public ItemFireClay(boolean bakeable) {
@@ -46,6 +48,11 @@ public class ItemFireClay extends ItemVC implements IItemSmeltable {
 		if (getMeltingPoint(itemstack) > 0) {
 			tooltip.add("Baking temperature: " + getMeltingPoint(itemstack) + " deg.");
 		}
+	}
+
+	@Override
+	public EnumItemSize getItemSize() {
+		return EnumItemSize.SMALL;
 	}
 	
 	

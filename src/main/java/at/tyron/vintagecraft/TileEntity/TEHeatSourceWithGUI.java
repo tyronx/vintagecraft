@@ -1,8 +1,10 @@
 package at.tyron.vintagecraft.TileEntity;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -10,6 +12,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
@@ -28,14 +31,21 @@ import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory {
+public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory, IPitchAndVolumProvider {
+	boolean initialized = false;
+	
     private static final int[] slotsTop = new int[] {0};
     private static final int[] slotsBottom = new int[] {2, 1};
     private static final int[] slotsSides = new int[] {1};
@@ -83,14 +93,13 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     
     
     
-    
     public TEHeatSourceWithGUI() {
-    	this.furnace = EnumStrongHeatSource.STOVE;
-    	
-    }
+		this (EnumStrongHeatSource.STOVE);
+	}
     
     public TEHeatSourceWithGUI(EnumStrongHeatSource furnace) {
 		this.furnace = furnace;
+		
 	}
 
     
@@ -209,8 +218,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
 
 
-    public int getInventoryStackLimit()
-    {
+    public int getInventoryStackLimit() {
         return 64;
     }
 
@@ -226,26 +234,32 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
     @Override
     public void update() {
+		if (worldObj.isRemote && !initialized && isBurning()) {
+			VintageCraft.proxy.playLoopingSound("vintagecraft:fireplace", this);
+			initialized = true;
+		}
+		
+
     	if (worldObj.isRemote) return;
     	
     	counter = ++counter % counterMax();
     	int tick = counter / (counterMax()-1);
     	if (tick == 0) return;
 
-    	
+
     	// Burn up fuel
     	if (fuelBurnTime > 0) {
     		fuelBurnTime -= tick;
     		if (fuelBurnTime == 0) {
-    			markDirty();
     			maxFuelBurnTime = 0;
+    			setStoveBurning(false);
     		}
     	}
     	
     	
     	// Furnace is burning: Heat furnace
 		if (isBurning()) {
-   			furnaceTemperature = changeTemperature(furnaceTemperature, maxTemperature, tick); 			
+   			furnaceTemperature = changeTemperature(furnaceTemperature, maxTemperature, tick);
 		}
 		
 		// Ore follows furnace temperature
@@ -261,9 +275,9 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 		// Furnace is not burning: Cool down furnace and ore also turn of fire
 		if (!isBurning()) {
  			furnaceTemperature = changeTemperature(furnaceTemperature, enviromentTemperature(), tick);
- 			
- 			setStoveBurning(false);
  		}
+		
+		
     }
     
     
@@ -420,6 +434,9 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	if (block.isBurning() != burning) {
     		block.setState(burning, worldObj, pos);
     	}
+    	
+    	worldObj.markBlockForUpdate(pos);
+    	markDirty();
     }
     
     
@@ -449,6 +466,11 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
             oreTemperature = enviromentTemperature();
             oreCookingTime = 0;
         }
+    	
+    	
+    	
+    	worldObj.markBlockForUpdate(pos);
+    	markDirty();
     }
 
     public int getItemBurnTime(ItemStack itemstack) {
@@ -593,6 +615,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         
+    	
 
         compound.setShort("furnace", (short)this.furnace.id);
         compound.setShort("furnaceTemperature", (short)this.furnaceTemperature);
@@ -622,4 +645,39 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
             compound.setString("CustomName", this.furnaceCustomName);
         }
     }
+
+	@Override
+	public float getPitch() {
+		return 1f;
+	}
+
+	@Override
+	public float getVolumne() {
+		if (!isBurning()) return 0f;
+		// The fire pit burns louder
+		return (furnace == EnumStrongHeatSource.STOVE) ? 0.13f : 0.3f;
+	}
+
+	@Override
+	public boolean isDonePlaying(IPitchAndVolumProvider self) {
+		return !(worldObj.getTileEntity(pos) instanceof TEHeatSourceWithGUI) || self != worldObj.getTileEntity(pos);
+	}
+	
+	
+	
+	@Override
+	public Packet getDescriptionPacket() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		writeToNBT(nbt);
+		return new S35PacketUpdateTileEntity(pos, 1, nbt);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+		readFromNBT(pkt.getNbtCompound());
+		worldObj.markBlockForUpdate(pos);
+
+
+
+	}
 }

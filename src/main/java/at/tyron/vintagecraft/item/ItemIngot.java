@@ -5,10 +5,12 @@ import java.util.List;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
@@ -29,7 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
+public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem {
 	public static final int maxstacksize = 64;
 	public static final int maxpilesize = 64;
 	
@@ -125,6 +127,12 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider {
 		}
 		
 		return false;
+	}
+
+
+	@Override
+	public EnumItemSize getItemSize() {
+		return EnumItemSize.SMALL;
 	}
 
 }

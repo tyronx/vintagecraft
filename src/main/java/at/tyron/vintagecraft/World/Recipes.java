@@ -141,7 +141,6 @@ public class Recipes {
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Items.sign, 1), new Object[] { "WWW", "WWW", " S ", 'W', planks.block, 'S', Items.stick});
 			
-			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_slab, 1), new Object[] { "   ", "   ", "WWW", 'W', planks.block});
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.trapdoor, 1), new Object[] { "   ", "WWW", "WWW", 'W', planks.block});	
 			
 

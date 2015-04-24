@@ -3,15 +3,17 @@ package at.tyron.vintagecraft.Item;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFromStackPovider {
+public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFromStackPovider, ISizedItem {
 	String internalname;
 	
 	public ItemFoodVC(int amount, boolean isWolfFood) {
@@ -64,6 +66,11 @@ public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFrom
 	@Override
 	public float getSmeltingSpeedModifier(ItemStack raw) {
 		return 0.9f;
+	}
+
+	@Override
+	public EnumItemSize getItemSize() {
+		return EnumItemSize.SMALL;
 	}
 
 	

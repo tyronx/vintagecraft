@@ -6,6 +6,11 @@ import net.minecraft.item.ItemStack;
 
 public class ItemToolTinBronze extends ItemToolVC {
 
+	public ItemToolTinBronze(EnumTool tooltype) {
+		super(tooltype);
+	}
+
+
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {

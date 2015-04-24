@@ -6,6 +6,7 @@ import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Gui.GuiStove;
 import at.tyron.vintagecraft.Gui.GuiVessel;
+import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
@@ -13,6 +14,7 @@ import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ContainerFurnace;
@@ -121,4 +123,6 @@ public class CommonProxy implements IGuiHandler {
 	public void addVariantName(Item item, String... names) {}
 	
 	public void ignoreProperties(Block block, IProperty[] properties) {};
+	
+	public void playLoopingSound(String resourcelocation, IPitchAndVolumProvider pitchandvolumneprovider) {};
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderSnowball;
@@ -28,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.CreativeTabsVC;
+import at.tyron.vintagecraft.LoopingSound;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
@@ -36,6 +39,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.*;
 import at.tyron.vintagecraft.Entity.EntityStone;
+import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -211,6 +215,13 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	public void ignoreProperties(Block block, IProperty[] properties) {
 		BlockModelShapes bms = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes();
 		bms.registerBlockWithStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(properties).build());
+	}
+	
+	
+	public void playLoopingSound(String resourcelocation, IPitchAndVolumProvider pitchandvolumneprovider) {
+		SoundHandler sndh = Minecraft.getMinecraft().getSoundHandler();
+		
+		sndh.playSound(new LoopingSound(new ResourceLocation(resourcelocation), pitchandvolumneprovider));
 	}
 
 	

@@ -44,15 +44,15 @@ public class BlockCropsVC extends BlockCrops {
     }
 
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
-        if (!this.canBlockStay(worldIn, pos, state)) {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
+        if (!this.suiteableGround(worldIn, pos, worldIn.getBlockState(pos.down()))) {
+           if (!worldIn.isRemote) this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
         }
     }
     
-    public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-    	IBlockState ground = worldIn.getBlockState(pos.down());
-        return (worldIn.getLight(pos) >= 8 && worldIn.canSeeSky(pos)) && (ground.getBlock() instanceof BlockFarmlandVC || ground.getBlock() instanceof IBlockSoil);
+    
+    public boolean suiteableGround(World worldIn, BlockPos pos, IBlockState ground) {
+        return worldIn.getLight(pos.up()) >= 10 && (ground.getBlock() instanceof BlockFarmlandVC || ground.getBlock() instanceof IBlockSoil);
     }
 
     
@@ -94,7 +94,7 @@ public class BlockCropsVC extends BlockCrops {
 	
 	void reduceFertility(World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
-		
+    	
 		if (state.getBlock() instanceof BlockFarmlandVC) {
 			TileEntity te = world.getTileEntity(pos);
 	    	
