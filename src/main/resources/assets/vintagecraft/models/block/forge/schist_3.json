@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/forge/forge_3",
+    "textures": {
+        "stone": "vintagecraft:blocks/cobblestone/schist"
+    }
+}

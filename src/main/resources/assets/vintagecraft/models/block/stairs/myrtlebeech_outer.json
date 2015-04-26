@@ -1,0 +1,8 @@
+{
+    "parent": "block/outer_stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/myrtlebeech",
+        "top": "vintagecraft:blocks/planks/myrtlebeech",
+        "side": "vintagecraft:blocks/planks/myrtlebeech"
+    }
+}

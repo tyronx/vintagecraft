@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/coyotewillow",
+        "top": "vintagecraft:blocks/planks/coyotewillow",
+        "side": "vintagecraft:blocks/planks/coyotewillow"
+    }
+}

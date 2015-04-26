@@ -107,6 +107,43 @@ item.ingot.bismuth.name=Bismuth Ingot
 item.ingot.zinc.name=Zinc Ingot
 item.ingot.bismuthbronze.name=Bismuth Bronze Ingot
 
+item.anvil.copper.name=Copper Anvil
+item.anvil.tinbronze.name=Tin Bronze Anvil
+item.anvil.iron.name=Iron Anvil
+item.anvil.steel.name=Steel Anvil
+item.anvil.rhodium.name=Rhodium Anvil
+item.anvil.platinum.name=Platinum Anvil
+item.anvil.iridium.name=Iridium Anvil
+item.anvil.palladium.name=Palladium Anvil
+item.anvil.osmium.name=Osmium Anvil
+item.anvil.silver.name=Silver Anvil
+item.anvil.gold.name=Gold Anvil
+item.anvil.tin.name=Tin Anvil
+item.anvil.uranium.name=Uranium Anvil
+item.anvil.bismuth.name=Bismuth Anvil
+item.anvil.zinc.name=Zinc Anvil
+item.anvil.bismuthbronze.name=Bismuth Bronze Anvil
+
+item.tinbronze_helmet.name=Tinbronze Helmet
+item.tinbronze_chestplate.name=Tinbronze Chestplate
+item.tinbronze_leggings.name=Tinbronze Leggings
+item.tinbronze_boots.name=Tinbronze Boots
+
+item.bismuthbronze_helmet.name=Bismuthbronze Helmet
+item.bismuthbronze_chestplate.name=Bismuthbronze Chestplate
+item.bismuthbronze_leggings.name=Bismuthbronze Leggings
+item.bismuthbronze_boots.name=Bismuthbronze Boots
+
+item.iron_helmet.name=Iron Helmet
+item.iron_chestplate.name=Iron Chestplate
+item.iron_leggings.name=Iron Leggings
+item.iron_boots.name=Iron Boots
+
+item.copper_helmet.name=Copper Helmet
+item.copper_chestplate.name=Copper Chestplate
+item.copper_leggings.name=Copper Leggings
+item.copper_boots.name=Copper Boots
+
 
 
 container.firepit=Fire pit
@@ -386,6 +423,29 @@ quartzglass.coyotewillow.name=Willow Quartzglass
 quartzglass.weepingwillow.name=Willow Quartzglass
 quartzglass.blackwalnut.name=Black Walnut Quartzglass
 
+
+
+stairs.ash.name=Ash Stairs
+stairs.birch.name=Birch Stairs
+stairs.oak.name=Oak Stairs
+stairs.crimsonkingmaple.name=Crimson King Maple Stairs
+stairs.mountaindogwood.name=Mountain Dogwood Stairs
+stairs.scotspine.name=Scots Pine Stairs
+stairs.spruce.name=Spruce Stairs
+stairs.acacia.name=Acacia Stairs
+stairs.kapok.name=Kapok Stairs
+stairs.purpleheartwood.name=Purple Heartwood Stairs
+stairs.coconutpalm.name=Coconut Palm Stairs
+stairs.elephanttree.name=Elephant Tree Stairs
+stairs.myrtlebeech.name=Myrtle Beech Stairs
+stairs.joshua.name=Joshua Tree Stairs
+stairs.pear.name=Pear Stairs
+stairs.africanmahogany.name=African Mahagony Stairs
+stairs.poplar.name=Poplar Stairs
+stairs.larch.name=Larch Stairs
+stairs.weepingwillow.name=Willow Stairs
+stairs.coyotewillow.name=Willow Stairs
+stairs.blackwalnut.name=Black Walnut Stairs
 
 item.fireclay_ball.name=Fire Clay
 item.fireclay_brick_raw.name=Raw Fire Clay Brick

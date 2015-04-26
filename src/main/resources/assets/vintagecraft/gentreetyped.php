@@ -201,6 +201,69 @@ for ($i = 0; $i < ceil(count($blocktypes) / 1); $i++) {
 
 /********** 4. Stairs *************/
 
+$blockclass = "stairs";
+$subtypes = array("normal", "outer", "inner");
+
+$variants = array();
+foreach ($blocktypes as $blocktype) {
+	$blockoutdir = "models/block/{$blockclass}/";
+	$itemoutdir = "models/item/{$blockclass}/";
+	
+	foreach ($subtypes as $subtype) {
+		file_put_contents($blockoutdir . $blocktype."_{$subtype}.json", getBlockModel($subtype, $blockclass, $blocktype));
+	}
+	
+	file_put_contents($itemoutdir . $blocktype.".json", getItemModel($blockclass, $blocktype."_normal"));
+	
+	$variants[] = 
+'        "facing=east,half=bottom,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal" },
+        "facing=west,half=bottom,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "y": 180, "uvlock": true },
+        "facing=south,half=bottom,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "y": 90, "uvlock": true },
+        "facing=north,half=bottom,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "y": 270, "uvlock": true },
+        "facing=east,half=bottom,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer" },
+        "facing=west,half=bottom,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 180, "uvlock": true },
+        "facing=south,half=bottom,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 90, "uvlock": true },
+        "facing=north,half=bottom,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 270, "uvlock": true },
+        "facing=east,half=bottom,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 270, "uvlock": true },
+        "facing=west,half=bottom,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 90, "uvlock": true },
+        "facing=south,half=bottom,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer" },
+        "facing=north,half=bottom,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "y": 180, "uvlock": true },
+        "facing=east,half=bottom,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner" },
+        "facing=west,half=bottom,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 180, "uvlock": true },
+        "facing=south,half=bottom,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 90, "uvlock": true },
+        "facing=north,half=bottom,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 270, "uvlock": true },
+        "facing=east,half=bottom,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 270, "uvlock": true },
+        "facing=west,half=bottom,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 90, "uvlock": true },
+        "facing=south,half=bottom,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner" },
+        "facing=north,half=bottom,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "y": 180, "uvlock": true },
+        "facing=east,half=top,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "x": 180, "uvlock": true },
+        "facing=west,half=top,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "x": 180, "y": 180, "uvlock": true },
+        "facing=south,half=top,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "x": 180, "y": 90, "uvlock": true },
+        "facing=north,half=top,shape=straight,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_normal", "x": 180, "y": 270, "uvlock": true },
+        "facing=east,half=top,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "uvlock": true },
+        "facing=west,half=top,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 180, "uvlock": true },
+        "facing=south,half=top,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 90, "uvlock": true },
+        "facing=north,half=top,shape=outer_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 270, "uvlock": true },
+        "facing=east,half=top,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 90, "uvlock": true },
+        "facing=west,half=top,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 270, "uvlock": true },
+        "facing=south,half=top,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "y": 180, "uvlock": true },
+        "facing=north,half=top,shape=outer_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_outer", "x": 180, "uvlock": true },
+        "facing=east,half=top,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "uvlock": true },
+        "facing=west,half=top,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 180, "uvlock": true },
+        "facing=south,half=top,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 90, "uvlock": true },
+        "facing=north,half=top,shape=inner_right,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 270, "uvlock": true },
+        "facing=east,half=top,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 90, "uvlock": true },
+        "facing=west,half=top,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 270, "uvlock": true },
+        "facing=south,half=top,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "y": 180, "uvlock": true },
+        "facing=north,half=top,shape=inner_left,treetype='.$blocktype.'":  { "model": "vintagecraft:stairs/'.$blocktype.'_inner", "x": 180, "uvlock": true }'
+	;
+}
+
+for ($i = 0; $i < ceil(count($blocktypes) / 2); $i++) {
+	file_put_contents("blockstates/" . $blockclass . (($i > 0) ? ($i+1) : "")  .".json", getBlockStates($variants));
+}
+
+
 
 // modeltypes
 //   cube_column
@@ -219,6 +282,20 @@ function getBlockStates($variants) {
 }
 
 function getBlockModel($modeltype, $blockclass, $blocktype) {
+	if ($blockclass == "stairs") {
+		if ($modeltype == "normal") $modeltype = "";
+		else $modeltype .= '_';
+		
+			return '{
+    "parent": "block/'.$modeltype.'stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/'.$blocktype.'",
+        "top": "vintagecraft:blocks/planks/'.$blocktype.'",
+        "side": "vintagecraft:blocks/planks/'.$blocktype.'"
+    }
+}';
+	}
+	
 	if ($blockclass == "sapling") {
 		return '{
     "parent": "block/cross",

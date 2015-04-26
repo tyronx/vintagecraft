@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/forge/forge_6",
+    "textures": {
+        "stone": "vintagecraft:blocks/cobblestone/kimberlite"
+    }
+}

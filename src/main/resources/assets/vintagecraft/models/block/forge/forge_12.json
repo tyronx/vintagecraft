@@ -1,0 +1,82 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "#stone",
+        "coal": "blocks/coal_block"
+    },
+    "elements": [
+        {
+            "name": "Top wall",
+            "from": [ 1.0, 0.0, 1.0 ], 
+            "to": [ 13.0, 14.0, 3.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 15.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 2.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Left Wall",
+            "from": [ 1.0, 0.0, 3.0 ], 
+            "to": [ 3.0, 14.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "Bottom Wall",
+            "from": [ 3.0, 0.0, 13.0 ], 
+            "to": [ 15.0, 14.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 2.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Right wall",
+            "from": [ 13.0, 0.0, 1.0 ], 
+            "to": [ 15.0, 14.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 14.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 12.0, 14.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 12.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 2.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "CoalBase",
+            "from": [ 3.0, 2.0, 3.0 ], 
+            "to": [ 13.0, 14.0, 13.0 ], 
+            "faces": {
+                "up": { "texture": "#coal", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        },
+        {
+            "name": "StoneFloor",
+            "from": [ 3.0, 0.0, 3.0 ], 
+            "to": [ 13.0, 2.0, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 2.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        }
+    ]
+}

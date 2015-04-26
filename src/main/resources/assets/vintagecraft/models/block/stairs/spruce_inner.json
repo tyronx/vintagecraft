@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/spruce",
+        "top": "vintagecraft:blocks/planks/spruce",
+        "side": "vintagecraft:blocks/planks/spruce"
+    }
+}

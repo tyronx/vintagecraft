@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/maple",
+        "top": "vintagecraft:blocks/planks/maple",
+        "side": "vintagecraft:blocks/planks/maple"
+    }
+}

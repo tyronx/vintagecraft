@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/forge/forge_7",
+    "textures": {
+        "stone": "vintagecraft:blocks/cobblestone/redsandstone"
+    }
+}

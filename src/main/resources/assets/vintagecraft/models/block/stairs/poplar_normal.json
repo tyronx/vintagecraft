@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/poplar",
+        "top": "vintagecraft:blocks/planks/poplar",
+        "side": "vintagecraft:blocks/planks/poplar"
+    }
+}
