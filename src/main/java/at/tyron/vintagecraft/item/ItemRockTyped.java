@@ -15,6 +15,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Utility.BlockForge;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -61,14 +62,14 @@ public class ItemRockTyped extends ItemBlock {
 
 	
 
+	// Workaround for Java being too fail to allow overriding static methods
 	public static BlockClass getBlockClass(Block block) {
 		if (block instanceof BlockRegolith) return BlocksVC.regolith;
 		if (block instanceof BlockSubSoil) return BlocksVC.subsoil;
 		if (block instanceof BlockCobblestone) return BlocksVC.cobblestone;
 		if (block instanceof BlockGravelVC) return BlocksVC.gravel;
 		if (block instanceof BlockSandVC) return BlocksVC.sand;
-		
-		// Workaround for Java being too fail to allow overriding static methods
+		if (block instanceof BlockForge) return BlocksVC.forge;
 		return null;
 	}
 	

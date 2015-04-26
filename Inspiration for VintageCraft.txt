@@ -54,6 +54,17 @@
 - Later version: Visualize liquid iron into molds
 
 
+
+== Blachsmithing system ====
+
+- Creating tools/armor/etc. out of metal requires an anvil.
+- Each item requires certain techniques in a specific order. Making a mistake will result in a "Oddly shaped ingot" which has to be remelted
+- Ingots have to be hot to be workable. Requires a forge which however can be used from the same gui if a forge is nearby
+- 
+
+
+
+
 ==== Rocks =======
 
 - Soft stones (sandstone etc.) should be easier to mine

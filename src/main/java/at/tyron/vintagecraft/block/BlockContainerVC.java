@@ -47,12 +47,13 @@ public abstract class BlockContainerVC extends BlockContainer implements ISubtyp
 	}
 	
 	public BlockContainerVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
-		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
+		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this + " with " + types.length + " types");
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
 		
 		for (int i = 0; i < types.length; i++) {
-			IStateEnum enumstate = types[i]; 
+			IStateEnum enumstate = types[i];
+			
 			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		

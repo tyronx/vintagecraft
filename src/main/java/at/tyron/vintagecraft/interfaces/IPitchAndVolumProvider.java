@@ -9,5 +9,5 @@ public interface IPitchAndVolumProvider {
 	
 	public boolean isDonePlaying(IPitchAndVolumProvider self);
 	
-	BlockPos getPos();
+	public BlockPos getPosition();
 }

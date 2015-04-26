@@ -1,8 +1,10 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumMetal implements IStringSerializable {
+public enum EnumMetal implements IStringSerializable, IStateEnum {
 	
 	COPPER (0, 1084, 2.5f),
 	TIN (1, 232, 1.5f), 
@@ -41,9 +43,9 @@ public enum EnumMetal implements IStringSerializable {
 		this.hardness = hardness;
 	}
 
-	public static EnumMetal byId(int meta) {
+	public static EnumMetal byId(int id) {
 		for (EnumMetal metal : EnumMetal.values()) {
-			if (metal.id == meta) {
+			if (metal.id == id) {
 				return metal;
 			}
 		}
@@ -57,6 +59,26 @@ public enum EnumMetal implements IStringSerializable {
 	
 	public String getCode() {
 		return getName().substring(0, 2);
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	@Override
+	public int getMetaData(Block block) {
+		return id;
+	}
+
+	@Override
+	public String getStateName() {
+		return getName();
+	}
+
+	@Override
+	public void init(Block block, int meta) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 

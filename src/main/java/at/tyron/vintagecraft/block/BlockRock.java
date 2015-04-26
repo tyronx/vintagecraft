@@ -74,7 +74,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
 
 	@Override
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
-		if (isFreeFloating(worldIn, pos)) {
+		if (isFreeFloating(worldIn, pos) && getBlockClass() == BlocksVC.rock) {
 			worldIn.destroyBlock(pos, true);
 		}
 		

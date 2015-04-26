@@ -19,6 +19,7 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -27,12 +28,10 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider {
-	//static Block block = BlocksVC.toolrack;
-			
     public ItemToolRack(Block block) {
     	super(block);
 		setHasSubtypes(true);
-		setCreativeTab(CreativeTabs.tabMaterials);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 
 
@@ -54,7 +53,6 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
 		return "toolrackitem";
-		//return super.getUnlocalizedName(itemstack);
 	}
 	
 	
@@ -80,7 +78,6 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 		ItemStack itemstack = new ItemStack(Item.getItemFromBlock(BlocksVC.toolrack)); // ItemsVC.toolrack);
 		itemstack.setTagCompound(new NBTTagCompound());
 		itemstack.getTagCompound().setInteger("treetype", treetype.getId());
-		//itemstack.setTagCompound(nbt);
 		return itemstack;
 	}
 
@@ -162,8 +159,6 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 
         IBlockState state = world.getBlockState(pos);
         if (state.getBlock() == this.block) {
-        	//setTileEntityNBT(world, pos, stack);
-        	
             ((BlockToolRack)state.getBlock()).initTileEntity(world, pos, side, getTreeType(stack));
             
             this.block.onBlockPlacedBy(world, pos, state, player, stack);

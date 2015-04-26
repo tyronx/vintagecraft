@@ -51,6 +51,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	}
 	
 	
+	
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
     }
@@ -168,5 +169,10 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     public IBlockState getPlant(IBlockAccess world, BlockPos pos) {
         return this.getDefaultState();
     }
+
+	@Override
+	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+		return true;
+	}
 
 }

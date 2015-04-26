@@ -52,15 +52,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockLeavesVC extends BlockVC implements IMultiblock {
+	public PropertyBlockClass TREETYPE;
+	
 	public int multistateAvailableTypes() {
 		return 8;
 	}
 	
-	//public static PropertyBool CHECK_DECAY = PropertyBool.create("checkdecay");
-	public PropertyBlockClass TREETYPE;
-	
-	
-//	int[] surroundings;
     
 	
 	public BlockLeavesVC() {
@@ -102,20 +99,16 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     
     @SideOnly(Side.CLIENT)
     public int getBlockColor() {
-        //return ColorizerFoliage.getFoliageColor(0.5D, 1.0D);
     	return 16777215;
     }
 
     @SideOnly(Side.CLIENT)
     public int getRenderColor(IBlockState state) {
-        //return ColorizerFoliage.getFoliageColorBasic();
     	return 16777215;
     }
 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-       // return BiomeColorHelper.getFoliageColorAtPos(worldIn, pos);
-    	//return VCraftWorld.getGrassColorAtPos(pos);
     	return 16777215;
     }
     
@@ -294,4 +287,5 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 		return BlocksVC.leaves;
 	}
 
+	
 }

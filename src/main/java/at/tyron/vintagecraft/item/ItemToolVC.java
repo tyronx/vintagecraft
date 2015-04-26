@@ -193,7 +193,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		
 		for (int i = 0; i < quantity; i++) {
 			if (nearestblocks.size() <= i) break;
-			if (world.isRemote) world.destroyBlock(nearestblocks.get(i), true);
+			if (!world.isRemote) world.destroyBlock(nearestblocks.get(i), true);
 			destroyed++;
 		}
 		

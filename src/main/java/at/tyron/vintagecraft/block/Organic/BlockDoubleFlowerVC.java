@@ -319,5 +319,9 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 		return BlocksVC.doubleflower;
 	}
     
+	@Override
+	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+		return true;
+	}
 	    
 }

@@ -214,6 +214,10 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 	}
 
     
+	@Override
+	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+		return true;
+	}
     
     
 }

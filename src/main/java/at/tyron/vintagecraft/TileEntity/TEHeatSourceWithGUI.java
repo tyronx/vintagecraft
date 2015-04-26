@@ -36,6 +36,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
@@ -655,9 +656,14 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 	public float getVolumne() {
 		if (!isBurning()) return 0f;
 		// The fire pit burns louder
-		return (furnace == EnumStrongHeatSource.STOVE) ? 0.13f : 0.3f;
+		return (furnace == EnumStrongHeatSource.STOVE) ? 0.2f : 0.4f;
 	}
 
+	@Override
+	public BlockPos getPosition() {
+		return pos;
+	}
+	
 	@Override
 	public boolean isDonePlaying(IPitchAndVolumProvider self) {
 		return !(worldObj.getTileEntity(pos) instanceof TEHeatSourceWithGUI) || self != worldObj.getTileEntity(pos);

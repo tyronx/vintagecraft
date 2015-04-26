@@ -39,12 +39,9 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockToolRack extends BlockContainerVC {
-	//public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-	//public static PropertyEnum TREETYPE = PropertyEnum.create("treetype", EnumTree.class);
-	
-	
 	public BlockToolRack() {
 		super(Material.wood);
+		
 		//this.setCreativeTab(CreativeTabs.tabDecorations);
 		this.setDefaultState(this.blockState.getBaseState()); //.withProperty(FACING, EnumFacing.NORTH));
 	}
@@ -101,8 +98,6 @@ public class BlockToolRack extends BlockContainerVC {
 	
 	// Called when user places a ItemToolRack
 	public void initTileEntity(World world, BlockPos pos, EnumFacing placedontoside, EnumTree tree) {
-		//System.out.println(world.isRemote + " / " + placedontoside.getOpposite());
-		
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TEToolRack) {
 			((TEToolRack) te).facing = placedontoside;
@@ -113,28 +108,26 @@ public class BlockToolRack extends BlockContainerVC {
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-	//	if(!world.isRemote) {
-			TileEntity te = world.getTileEntity(pos);
-			if(te != null && te instanceof TEToolRack) {
-				TEToolRack tet = (TEToolRack) te;
-				EnumFacing facing = tet.facing; // (EnumFacing) world.getBlockState(pos).getValue(FACING);
-				
-				int slot = 0 + (hitY < 0.5 ? 2 : 0);
-				
-				switch (facing) {
-					case NORTH: if (hitX > 0.5) slot++; break;
-					case SOUTH: if (hitX < 0.5) slot++; break;
-					case WEST: if (hitZ > 0.5) slot++; break;
-					case EAST: if (hitZ < 0.5) slot++; break;
-					default: break;
-				}
-				
-				if (handleArea(world, pos, entityplayer, tet, slot, facing)) { 
-					world.markBlockForUpdate(pos);
-					return true;
-				}
+		TileEntity te = world.getTileEntity(pos);
+		if(te != null && te instanceof TEToolRack) {
+			TEToolRack tet = (TEToolRack) te;
+			EnumFacing facing = tet.facing;
+			
+			int slot = 0 + (hitY < 0.5 ? 2 : 0);
+			
+			switch (facing) {
+				case NORTH: if (hitX > 0.5) slot++; break;
+				case SOUTH: if (hitX < 0.5) slot++; break;
+				case WEST: if (hitZ > 0.5) slot++; break;
+				case EAST: if (hitZ < 0.5) slot++; break;
+				default: break;
 			}
-//		}
+			
+			if (handleArea(world, pos, entityplayer, tet, slot, facing)) { 
+				world.markBlockForUpdate(pos);
+				return true;
+			}
+		}
 		return true;
 	}
 

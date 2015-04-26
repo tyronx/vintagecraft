@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.World;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
@@ -18,7 +19,6 @@ import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.Item.ItemToolBismuthBronze;
 import at.tyron.vintagecraft.Item.ItemToolCopper;
 import at.tyron.vintagecraft.Item.ItemToolIron;
-import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemToolStone;
 import at.tyron.vintagecraft.Item.ItemToolTinBronze;
 import at.tyron.vintagecraft.Item.ItemToolVC;
@@ -48,6 +48,13 @@ public class ItemsVC {
 	public static Item fireclay_brick_raw;
 	public static Item fireclay_brick;
 	
+	
+	
+	public static Item ironHelmet;
+	public static Item ironChestplate;
+	public static Item ironLeggings;
+	public static Item ironBoots;
+
 	
 	public static Item ironAxe;
 	public static Item ironPickaxe;
@@ -161,6 +168,7 @@ public class ItemsVC {
 		registerArmor("copper", ItemArmorVC.class);
 		registerArmor("tinbronze", ItemArmorVC.class);
 		registerArmor("bismuthbronze", ItemArmorVC.class);
+		registerArmor("iron", ItemArmorVC.class);
 		
 		
 		porkchopRaw = new ItemFoodVC(3, 0.3f, true).register("porkchopRaw");
@@ -195,7 +203,7 @@ public class ItemsVC {
 				
 				ArmorMaterial armormat = (ArmorMaterial)ItemArmorVC.class.getField(metal.toUpperCase()+"VC").get(null);
 				
-				field.set(ItemsVC.class, theclass.getDeclaredConstructor(ArmorMaterial.class, int.class, int.class).newInstance(armormat, 0, i));
+				field.set(ItemsVC.class, theclass.getDeclaredConstructor(ArmorMaterial.class, String.class, int.class, int.class).newInstance(armormat, metal.toLowerCase(), 0, i));
 				ItemArmorVC item = (ItemArmorVC)field.get(null);
 
 				item.setUnlocalizedName(unlocalizedname);
@@ -267,6 +275,60 @@ public class ItemsVC {
 	}
 	
 
+	
+	
+	
+	
+	
+	
+	public static ItemToolVC[] getTools(String metal) {
+		ArrayList<ItemToolVC> tools = new ArrayList<ItemToolVC>();
+		
+		for (EnumTool tool : EnumTool.values()) {
+			if (metal.equals("stone") && !tool.canBeMadeFromStone) continue;
+			
+			String toolnamecode = metal + ucFirst(tool.getName());
+			
+			try {
+				Field field = ItemsVC.class.getField(toolnamecode);
+				ItemToolVC item = (ItemToolVC) field.get(null);
+				
+				tools.add(item);
+				 
+				
+			} catch (Exception e) {
+				System.out.println(e.toString());
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return tools.toArray(new ItemToolVC[0]);
+	}
+	
+	
+	public static ItemArmorVC[] getArmorPieces(String metal) {
+		ArrayList<ItemArmorVC> armors = new ArrayList<ItemArmorVC>();
+		
+		for (String armortype : ItemArmorVC.armorTypes) {
+			String code = metal + ucFirst(armortype);
+			
+			try {
+				Field field = ItemsVC.class.getField(code);
+				ItemArmorVC item = (ItemArmorVC) field.get(null);
+				
+				armors.add(item);
+				 
+				
+			} catch (Exception e) {
+				System.out.println(e.toString());
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return armors.toArray(new ItemArmorVC[0]);
+	}
 	
 }
 

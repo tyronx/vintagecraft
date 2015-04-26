@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft;
+package at.tyron.vintagecraft.Client;
 
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import net.minecraft.client.audio.ITickableSound;
@@ -11,9 +11,9 @@ public class LoopingSound extends PositionedSound implements ITickableSound {
 	public LoopingSound(ResourceLocation soundResource, IPitchAndVolumProvider pitchandvolumneprovider) {
 		super(soundResource);
 		this.pitchandvolumneprovider = pitchandvolumneprovider;
-		this.xPosF = pitchandvolumneprovider.getPos().getX() + 0.5f;
-		this.yPosF = pitchandvolumneprovider.getPos().getY() + 0.5f;
-		this.zPosF = pitchandvolumneprovider.getPos().getZ() + 0.5f;
+		this.xPosF = pitchandvolumneprovider.getPosition().getX() + 0.5f;
+		this.yPosF = pitchandvolumneprovider.getPosition().getY() + 0.5f;
+		this.zPosF = pitchandvolumneprovider.getPosition().getZ() + 0.5f;
 		
 		repeat = true;
 	}

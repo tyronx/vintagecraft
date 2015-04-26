@@ -30,7 +30,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.CreativeTabsVC;
-import at.tyron.vintagecraft.LoopingSound;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
