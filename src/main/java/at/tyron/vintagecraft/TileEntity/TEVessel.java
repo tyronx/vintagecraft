@@ -198,7 +198,7 @@ public class TEVessel extends NetworkTileEntity implements IInventory {
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return stack.getItem() instanceof ItemOreVC || stack.getItem() instanceof ItemIngot || stack.getItem() instanceof ItemStone;
+		return true;
 	}
 
 	@Override

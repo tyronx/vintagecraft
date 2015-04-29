@@ -1,0 +1,99 @@
+===== Villages ====
+
+
+Import schematic files: https://github.com/tehbeard/LibSchematic
+
+
+- Villagers will buy and sell rare goods, which are often useless for the player.
+  E.g. A fisher village sells pearls, a mountain village will sell gems
+  => Players can establish trade routes between them
+
+- A internal database of village and their type is kept. The further 2 specialized villages are apart the higher they will buy the others goods
+
+
+- List of rare trade goods:
+  - Any area:
+    Jewelery  (sells jewelery, buys gems)
+    Dyes (buys dyes, sells dyed cloth)
+    Porcelain (buys clay, sells porcelain)
+    Flowers (sells seed, buys peat)
+
+  - Beach areas: 
+      Pearls
+
+  - Mountain areas:  
+    - Gems (e.g. Emeralds)
+    - Obsidian (http://en.wikipedia.org/wiki/File:Lipari-Obsidienne_(5).jpg)  - Lava creates perhaps a crappy obsidian? http://en.wikipedia.org/wiki/Obsidian#mediaviewer/File:ObsidianDomeCA.JPG
+    - Salt
+
+  - Plains / Dessert:
+    - Herbs / Spices (e.g. Peppermint, Pepper, Chilli)
+    - Incense
+    - Wine
+
+  - Cold + Forest areas: 
+    - Furs
+
+  - Jungle areas:
+    - Rum, Tobacco
+
+  
+
+
+- Sell stuff you cannot normally get to. E.g. Seed Vendor (sells seeds for flowers that don't or rarely grow in nature)
+
+
+
+- Villager Jobs
+  - Carpenter: Makes your planks look nicer.
+  - Fletcher: Makes stronger arrows
+  - Glassblower: Makes beautiful stained glass from lithos or conquest pack
+  - Gem Cutter: Cuts and Polishes Gems. 95% of Villagers only buy cut/refined gems
+  - Stonemason: Makes beautiful decoration on your smooth stone blocks
+  - Florist: Sells flowers that don't grow naturally
+
+
+- Some Villages are connected via Gravel Roads, Bridges and Tunnels
+
+- Examples: 
+	http://upload.wikimedia.org/wikipedia/commons/1/1c/ScaleRepoductionOfaCucutenivillage.JPG   
+	http://4thgradeky.wikispaces.com/file/view/Late_Prehistoric.jpg/227610102/Late_Prehistoric.jpg
+	http://www.visitljubljana.com/file/361106/kolisce.jpg
+
+
+- Trading makes the village grow
+
+- Dessert Villages: http://minecraftbuildinginc.com/wild-west-building-bundle/
+                    http://www.planetminecraft.com/project/desert-building-pack-1150679/
+
+- Plains Village: http://minecraftbuildinginc.com/edoras-capital-of-rohan/
+                  http://www.planetminecraft.com/project/villager-town-makeover/
+    
+- Plains Farmer Village: http://www.planetminecraft.com/project/farm-house-pack---12-different-houses-with-download/
+- Forest Village: http://minecraftbuildinginc.com/lost-isles-of-galitor-island/
+
+
+
+- Tundra/Taiga Village: http://www.planetminecraft.com/project/small-snow-village/  !!
+                        http://www.planetminecraft.com/project/dwarf-house-pack-2785267/
+
+
+
+
+- Hills Village: http://www.planetminecraft.com/project/the-hobbit-849972/
+
+
+
+http://www.planetminecraft.com/project/better-npc---village/
+http://www.planetminecraft.com/project/medieval-building-bundle-98192/
+Medieval shops: http://www.planetminecraft.com/project/medieval-stores-model-pack/
+http://www.planetminecraft.com/project/minecraft-kingdom-texture-pack-527448/
+
+
+http://www.planetminecraft.com/project/lakeside-village-timelapse-video-download/
+
+
+- Trading post, sells/buys a lot of common items: http://www.planetminecraft.com/project/kjolr---trading-post---fantasy--/
+
+
+

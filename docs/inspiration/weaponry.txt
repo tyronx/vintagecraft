@@ -1,0 +1,4 @@
+==== Weapons ====
+
+- Arrowheads can be made of metal too (not only flint)
+

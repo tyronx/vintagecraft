@@ -41,15 +41,21 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public BlockAnvilVC() {
 		super(Material.iron);
 		setCreativeTab(VintageCraft.craftedBlocksTab);
-		setDefaultState(blockState.getBaseState().withProperty(METALTYPE, EnumMetal.COPPER));
 	}
 	
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return super.getActualState(state, worldIn, pos).withProperty(METALTYPE, getMetal((World)worldIn, pos));
+		return state.withProperty(METALTYPE, getMetal((World)worldIn, pos));
 	}
 	
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
+		playerIn.openGui(VintageCraft.instance, 4, worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
+
 	
 	
 	@Override
@@ -62,7 +68,7 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public IBlockState getStateFromMeta(int meta) {
 		EnumFacing enumfacing = EnumFacing.HORIZONTALS[meta];
 
-		return this.getDefaultState().withProperty(FACING, enumfacing).withProperty(METALTYPE, EnumMetal.IRON);
+		return this.getDefaultState().withProperty(FACING, enumfacing);
 	}
 
 	public int getMetaFromState(IBlockState state) {
@@ -138,6 +144,7 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
     }
 	
 	
+    
 	
 	
 	// Called when user places a ItemToolRack

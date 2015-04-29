@@ -4,11 +4,14 @@ import java.util.HashMap;
 
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Entity.EntityStone;
+import at.tyron.vintagecraft.Gui.GuiAnvil;
 import at.tyron.vintagecraft.Gui.GuiStove;
 import at.tyron.vintagecraft.Gui.GuiVessel;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
+import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
@@ -89,6 +92,9 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 2) {
 			return new ContainerVessel(player.inventory, (TEVessel) world.getTileEntity(new BlockPos(x, y, z)));
 		}
+		if (ID == 4) {
+			return new ContainerAnvil(player.inventory, (TEAnvil) world.getTileEntity(new BlockPos(x, y, z)));
+		}
 		
 		return null;
 	}
@@ -104,7 +110,11 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 2) {
 			return new GuiVessel(player.inventory, (TEVessel) world.getTileEntity(new BlockPos(x, y, z)));
 		}
-		
+
+		if (ID == 4) {
+			return new GuiAnvil(player.inventory, (TEAnvil) world.getTileEntity(new BlockPos(x, y, z)));
+		}
+
 		
 			
 			

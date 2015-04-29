@@ -1,14 +1,19 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.IChatComponent;
 
-public class TEAnvil extends NetworkTileEntity {
+public class TEAnvil extends TENoGUIInventory {
 	public EnumMetal metal;
 
 	public TEAnvil() {
 		metal = EnumMetal.IRON;
+		storage = new ItemStack[3];
 	}
 	
 	
@@ -35,6 +40,27 @@ public class TEAnvil extends NetworkTileEntity {
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		nbttagcompound.setInteger("metal", metal.getId());
 		super.writeToNBT(nbttagcompound);
+	}
+
+
+
+	@Override
+	public int getSizeInventory() {
+		return 3;
+	}
+
+
+
+	@Override
+	public String getName() {
+		return "Anvil";
+	}
+
+
+
+	@Override
+	public IChatComponent getDisplayName() {
+		return new ChatComponentText("Anvil");
 	}
 
 

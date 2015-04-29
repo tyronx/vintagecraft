@@ -1,4 +1,5 @@
 {
     "thud": { "category": "player", "sounds": [ "thud" ] },
-	"fireplace": { "category": "player", "sounds": [ "fireplace" ] }
+	"fireplace": { "category": "player", "sounds": [ "fireplace" ] },
+	"anvil_hit": { "category": "player", "sounds": [ "anvil_hit" ] }
 }

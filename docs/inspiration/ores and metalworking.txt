@@ -1,0 +1,63 @@
+
+== Blachsmithing system ====
+
+- Creating tools/armor/etc. out of metal requires an anvil.
+
+- Each item requires certain techniques in a specific order. Making a mistake will result in a "Oddly shaped ingot" which has to be resmithed into an ingot
+
+- Ingots have to be hot to be workable. Requires a forge which however can be used from the same gui if a forge is nearby
+
+- 
+
+
+
+=== Metal System ====
+
+
+- Each Ore has a description of its quality and stuff
+
+- Ores: Tin, Copper, Iron, Gold, Lapis
+- Alloys: Bronze, Steel
+
+- Rare and Epically Rare Metals exist: http://www.911metallurgist.com/blog/the-worlds-10-most-precious-metals / http://en.wikipedia.org/wiki/Precious_metal#Rough_world_market_price_.28.24.2Fkg.29
+  Rhodium, Platinum, Iridium, Silver, Palladium, Osmium
+
+
+
+- Better fuel = greater heat
+- More fuel = greater heat
+
+- Higher quality metal = requires more heat to melt
+  
+- Fuels: (http://www.earthlyissues.com/images/coal-formation.jpg)
+  Wood/Peat = Food Cooking
+  Charcoal = Melts Copper 
+  Lignite = Melts Bronze
+  Coal = Melts Iron
+  Maybe Anthracite to melt rare metals
+
+
+
+- Smeltings ores: Each ore require a different time to smelt
+
+- Vanilla minecraft furnace 
+  - Named Stove for cooking foods
+  - Also melts copper
+  - Uses 1 fuel at a time
+
+
+- Furnace: 
+  - Smelts most ores, 2 Block High
+  - Top Block to add ores
+  - Bottom Block to add fuel
+  - Uses 3 fuel at a time
+
+
+- Blast Furnace:
+  - Made of rare fire clay (3 block high, 2x2 blocks width/length?)
+  - Uses 5 fuel at a time
+
+
+- Later version: Visualize liquid iron into molds
+
+

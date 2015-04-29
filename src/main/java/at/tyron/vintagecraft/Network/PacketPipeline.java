@@ -131,18 +131,11 @@ public class PacketPipeline extends MessageToMessageCodec<FMLProxyPacket, Abstra
 
 	public void registerPackets ()
 	{
-		//registerPacket(KeyPressPacket.class);
-		//registerPacket(InitClientWorldPacket.class);
 		registerPacket(DataBlockPacket.class);
 		registerPacket(ChunkPutNbt.class);
 		registerPacket(ChunkRemoveNbt.class);
-		
-		/*registerPacket(ItemRenamePacket.class);
-		registerPacket(KnappingUpdatePacket.class);
-		registerPacket(PlayerUpdatePacket.class);
-		registerPacket(CreateMealPacket.class);
-		registerPacket(TestPacket.class);
-		registerPacket(ItemNBTPacket.class);*/
+		registerPacket(SoundEffectToServerPacket.class);
+
 	}
 
 	// Method to call from FMLPostInitializationEvent

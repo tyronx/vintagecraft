@@ -1,0 +1,24 @@
+===== Animals ====
+
+
+o Domesticated animals should no longer spawn.
+
+o Instead only wild animals in their natural habitat (deer, foxes, bears in the forests, rabbits 
+meadows and forests, etc.) spawn
+
+o All wild animals are either dangerous or very shy and escape he player very quickly. Player has to sneak and carefully approach the animal to kill it. Ranged weapons help a lot.
+
+o Animals therefore drop a lot more meat and leather
+
+o Domesticated animals can be acquired through a long and expensive process
+
+
+
+
+
+
+
+
+o Tamed Wolfs warn you off incoming dangers. Examples: Mobs that are targeting you or a new very dangerous mob
+
+o Send tamed wolfs to catch small animals? ^_^

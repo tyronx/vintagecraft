@@ -1,0 +1,191 @@
+==== Rocks =======
+
+- Soft stones (sandstone etc.) should be easier to mine
+
+
+==== Rock Layers ======
+
+- have thickness attribute instead of depthStart
+- each rocklayer generates a green layer for thickness
+- getRockLayerForDepth delivers correct rocklayer for coordinate
+
+- use red layer (= just a blurred version of blue layer) for smooth transitions?!
+
+
+
+===== Soil System ======
+
+- Acidity map:
+  - Base value = Acidity of topmost rock layer
+  - Account for Temperature. Higher temperature => stronger weathering => stronger base value
+  - Account for Rainfall. More rain => more acid
+  - Account for Vegetation. Heavy Vegetation => more acid
+
+
+- Soil thickness map
+  - Account for Elevation. Higher elevation => stronger rain runoff
+  - Account for Age. Greater Age => thicker soil 
+
+
+- Nutrient map (NKP)
+  - Nitrogen: 
+    - Base value = Rainfall. 
+    - Account for Elevation. Higher elevation => stronger rain runoff
+  - 
+
+
+
+
+========= Cave Stuff =====
+
+- Mineshafts like these http://imgur.com/a/idI07
+- Some Mineshafts have Entrances
+  http://imgur.com/JGPGf
+
+
+- Cave features:
+  - River
+  - Pillars
+  - Stalactites & Stalagmites
+  - Slopes
+  - Domes
+  - Steep near the surface
+  - Lake
+  - completely Submerged
+  - Wet stone => make water drip
+  - Spawners
+  - Collapse of domes near surface = below sealevel vegetation
+  
+   
+========= Landforms =============
+
+
+I seriously want all of these Landforms: http://en.wikipedia.org/wiki/List_of_landforms (scroll to bottom)
+
+
+
+======= Biome Stuff ======
+
+
+
+
+
+List of Dimensions:
+
+0 = Normal
+1 = Dangerous and magic (Mushroom biome)
+
+
+List of normal World Biomes:
+- Sea 
+  - Deepsea
+  - Island
+  - Eroded Islands 
+  - Tall Eroded Islands
+
+- Beach
+- Land
+  - Rare subbiomes: 
+    - Volcano?
+    - Large mounain
+    - Lake?
+
+
+   - Heathland              (Rare)
+   - Moorland 
+   - Open Shrubland
+   - Closed Shrubland
+   - 
+   - Temperate Rainforest   (Rare: http://en.wikipedia.org/wiki/Rainforest#mediaviewer/File:Temperate_rainforest_map.svg)
+   - Tropical Rainforest
+
+
+- Rivers
+  http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2213153-streams-real-flowing-rivers
+
+
+- Wind map that creates
+  - Bent trees
+  - Sand dunes http://upload.wikimedia.org/wikipedia/commons/3/34/Rub_al_Khali_002.JPG
+  - Beaches
+  - Erosion http://www.planetminecraft.com/project/island-terraform/
+
+
+
+- Nativity Map that determines where plants are natively growing at = like rock layers with types
+  plants native for:
+    central asia
+    america
+    europe
+    galapagos (rare?)
+    etc.
+  
+
+
+- Awesome Lava stuff and trees and mountains: http://imgur.com/a/sEv5I#0
+
+
+- Less, but sometimes really deep oceans
+
+- Giant Mushroom:
+  - http://i.imgur.com/qxIaS.jpg
+  - http://minecraftbuildinginc.com/pollux-mushroom-world-build/ !
+  - http://i.imgur.com/xkJJvw1.jpg?1
+  - http://storage.koinup.com/090620x163666/163666-6.jpg
+  - http://th01.deviantart.net/fs70/PRE/i/2013/264/3/9/world_of_warcraft_mushroom_mousepad_design_v1_by_g3xter-d6n9o5b.jpg
+  - http://www.blogcdn.com/wow.joystiq.com/media/2009/12/aaa-mushroomkingdom-580.jpg
+  - http://minecraftbuildinginc.com/the-ol-shroom-inn/
+
+
+
+- Make Diamonds in empty caves, that grow on the walls
+  Same for Emerald, Ruby, etc.
+
+  Jewels = Trading item with villagers
+
+  Villagers could trade enchanted epic stuff for rare gems
+
+
+
+- Icicles from Conquest resource pack
+
+
+- Various landscapes: http://youtu.be/a_lAX_xHIQs
+
+- https://i.imgur.com/G9e7Htm.jpg
+- http://imgur.com/a/VnT8r
+
+
+- Dried out lake beds   - http://depositphotos.com/6945059/stock-photo-dry-clay.html?sst=0&sqc=18&sqm=6406&sq=3786i9
+
+- Small Oasis subbiomes in deserts
+
+
+- Seasonal forest: http://img683.imageshack.us/img683/7482/nowwithgrass.png
+
+
+- Kwongan:
+  http://forestphytophthoras.org/sites/default/files/photo_gallery/symptoms-arenaria%20w%20attribute.jpg
+  http://merten.caelum.uberspace.de/wp-content/gallery/jurienbay/web__mg_0695.jpg
+
+- Outback: (top layer = red sandstone subsoil)
+  http://mymiasart.files.wordpress.com/2012/08/15-kununurra-255.jpg
+  http://www.atraxarta.com.au/ATRAXARTA/media/ATRAXARTA/Products/24x18/outback_road.jpg
+  http://australieoutback.files.wordpress.com/2013/03/about-landscapes-outback.jpg
+
+
+- Dessert:
+  http://edstreasure.com/world%20hunt/deserts/desert.html
+  Decoration: http://i.imgur.com/4MSCHWu.png
+
+
+
+- Hills
+  http://www.planetminecraft.com/project/floating-hub-terraform/
+  http://www.planetminecraft.com/project/forgotten-valley-1k-1k-custom-terrain/
+  http://www.planetminecraft.com/project/the-cave-3061678/
+
+
+- http://i.imgur.com/LshGTzq.jpg
+
+
