@@ -284,20 +284,26 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	
 	public boolean suitableItemStackForHeating(ItemStack itemstack) {
 		ItemStack newwithouttemp = itemstack.copy();
-		newwithouttemp.getTagCompound().removeTag("forgetemp");
-		newwithouttemp.getTagCompound().removeTag("lasttempupdate");
-		newwithouttemp.getTagCompound().removeTag("startcoolingat");
+		
+		if (newwithouttemp.getTagCompound() != null) {
+			newwithouttemp.getTagCompound().removeTag("forgetemp");
+			newwithouttemp.getTagCompound().removeTag("lasttempupdate");
+			newwithouttemp.getTagCompound().removeTag("startcoolingat");
+		}
 		
 		ItemStack containedwithouttemp = null;
 		if (storage[0] != null) {
 			containedwithouttemp = storage[0].copy();
-			containedwithouttemp.getTagCompound().removeTag("forgetemp");
-			containedwithouttemp.getTagCompound().removeTag("lasttempupdate");
-			containedwithouttemp.getTagCompound().removeTag("startcoolingat");
+			if (containedwithouttemp.getTagCompound() != null) {
+				containedwithouttemp.getTagCompound().removeTag("forgetemp");
+				containedwithouttemp.getTagCompound().removeTag("lasttempupdate");
+				containedwithouttemp.getTagCompound().removeTag("startcoolingat");
+			}
 		}
 		
 		return
 			itemstack.getItem() instanceof IItemHeatable &&
+			
 			(
 				storage[0] == null ||
 				(containedwithouttemp.getItem() == newwithouttemp.getItem() && 

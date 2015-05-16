@@ -334,6 +334,7 @@ public class BlocksVC {
 		
 		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.values());
 		metalanvil.setHardness(2f).setHarvestLevel("pickaxe", 0);
+		metalanvil.setStepSound(Block.soundTypeAnvil);
 		
 		stoneanvil = new RockClass("stoneanvil", BlockStoneAnvil.class, ItemRockTyped.class, 2.5f, Block.soundTypeStone, "pickaxe", 0); 
 		stoneanvil.init();

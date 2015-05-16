@@ -64,19 +64,18 @@ public class AnvilRecipes {
 			boolean match = true;
 			
 			for (int i = 0; i < input.length; i++) {
-				if (((ISmithable)input[i].getItem()).isSmithingIngredient(input[i], recipe.input[i], recipe)) {
+				if (!((ISmithable)input[i].getItem()).isSmithingIngredient(input[i], recipe.input[i], recipe)) {
 					match = false;
 					break;
 				}
 			}
 			
-			//System.out.println(recipe.output + "match " + match + "   " + recipe.input[0].getItemDamage() + "/" + input[0].getItemDamage());
-
 			int matching = quantityMatches(techniques, recipe.requiredTechniques, recipe.wildcardMatch);
-			match = match && matching > 0;
+			match = match && (matching > 0);
 			
 			if (!match) continue;
 
+			
 			return false;
 		}			
 		
@@ -104,15 +103,16 @@ public class AnvilRecipes {
 				if (!((ISmithable)input[i].getItem()).isSmithingIngredient(input[i], recipe.input[i], recipe)) {
 					match = false;
 					break;
-				}				
-				
+				}
 				matching1++;
 			}
+			
+			 
 			
 			int matching = quantityMatches(techniques, recipe.requiredTechniques, recipe.wildcardMatch);
 			match = match && (matching == recipe.requiredTechniques.length);
 			
-			//System.out.println(matching+" == "+recipe.requiredTechniques.length);
+			//System.out.println(match + "    " +matching+" == "+recipe.requiredTechniques.length);
 			
 			if (!match) continue;
 			

@@ -69,7 +69,18 @@ public abstract class ItemVC extends Item {
 	
 	public ItemStack markOddlyShaped(ItemStack itemstack, boolean flag) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
-		nbt.setBoolean("oddlyshaped", flag);
+		
+		if (flag) {
+			nbt.setBoolean("oddlyshaped", true);
+		} else {
+			nbt.removeTag("oddlyshaped");
+		}
+
+		nbt.removeTag("anviltechniques");
+		nbt.removeTag("lasttempupdate");
+		nbt.removeTag("forgetemp");
+		nbt.removeTag("startcoolingat");
+
 		itemstack.setTagCompound(nbt);
 		return itemstack;
 	}
