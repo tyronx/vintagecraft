@@ -56,6 +56,8 @@ public class RecipePlanks implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
+		if (log == null) log = BlocksVC.log.getFromKey(EnumTree.SPRUCE);
+		
 		ItemStack stack = BlocksVC.planks.getItemStackFor(log.getKey());
 		stack.stackSize = 4;
 		return stack;

@@ -202,4 +202,10 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		return EnumItemSize.SMALL;
 	}
 
+
+	@Override
+	public int smokeLevel(ItemStack stack) {
+		return 80;
+	}
+
 }

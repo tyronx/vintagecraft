@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemsVC {
 	public static Item stone;
@@ -40,33 +41,6 @@ public class ItemsVC {
 	public static HashMap<String, ItemArmorVC> armor = new HashMap<String, ItemArmorVC>();
 	public static HashMap<String, Item> toolheads = new HashMap<String, Item>();
 	
-	
-/*	public static Item ironHelmet;
-	public static Item ironChestplate;
-	public static Item ironLeggings;
-	public static Item ironBoots;
-
-	
-	
-	public static Item bismuthbronzeHelmet;
-	public static Item bismuthbronzeChestplate;
-	public static Item bismuthbronzeLeggings;
-	public static Item bismuthbronzeBoots;
-
-
-
-	public static Item tinbronzeHelmet;
-	public static Item tinbronzeChestplate;
-	public static Item tinbronzeLeggings;
-	public static Item tinbronzeBoots;
-
-	
-	public static Item copperHelmet;
-	public static Item copperChestplate;
-	public static Item copperLeggings;
-	public static Item copperBoots;
-	*/
-
 
 	public static Item straw;
 	public static Item firestarter;
@@ -90,9 +64,21 @@ public class ItemsVC {
 		initItems();
 		initIngots();
 		initTabIcons();
+		initOreDictItems();
 	}
 	
 	
+	private static void initOreDictItems() {
+		for (EnumMetal metal : EnumMetal.values()) {
+			OreDictionary.registerOre("ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));			
+		}
+		
+		for (EnumOreType oretype : EnumOreType.values()) {
+			OreDictionary.registerOre("ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
+		}
+	}
+
+
 	private static void initTabIcons() {
 		VintageCraft.terrainTab.icon = Item.getItemFromBlock(BlocksVC.topsoil);
 		VintageCraft.floraTab.icon = Item.getItemFromBlock(BlocksVC.flower.getBlockStateFor(EnumFlower.CATMINT).getBlock());
@@ -163,33 +149,6 @@ public class ItemsVC {
 	
 	
 	
-	
-	/*static void registerArmor(String metal, Class<? extends ItemArmorVC> theclass) {
-		for (int i = 0; i < ItemArmorVC.armorTypes.length; i++) {
-			String armorPiece = ItemArmorVC.armorTypes[i];
-			String unlocalizedname = metal + "_" + armorPiece;
-			String armornamecode = metal + ucFirst(armorPiece);
-			
-			try {
-				Field field = ItemsVC.class.getField(armornamecode);
-				
-				ArmorMaterial armormat = (ArmorMaterial)ItemArmorVC.class.getField(metal.toUpperCase()+"VC").get(null);
-				
-				field.set(ItemsVC.class, theclass.getDeclaredConstructor(ArmorMaterial.class, String.class, int.class, int.class).newInstance(armormat, metal.toLowerCase(), 0, i));
-				ItemArmorVC item = (ItemArmorVC)field.get(null);
-
-				item.setUnlocalizedName(unlocalizedname);
-				GameRegistry.registerItem(item, unlocalizedname);
-				VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":armor/" + unlocalizedname);
-								
-			} catch (Exception e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
-			}
-			
-		}
-		
-	}*/
 	
 	static void registerAnvilParts() {
 		anvilbase = new ItemAnvilPart(false).register("anvilbase");

@@ -242,6 +242,13 @@ public abstract class BlockClass {
 		return false;
 	}
 
+	public ItemStack getItemStackFor(String statename) {
+		for (IStateEnum state : values.keySet()) {
+			if (state.getStateName().equals(statename)) return values.get(state).getItemStack();
+		}
+		return null;
+	}
+
 	public ItemStack getItemStackFor(IStateEnum enumitem) {
 		return values.get(enumitem).getItemStack();
 	}

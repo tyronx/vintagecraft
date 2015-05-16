@@ -215,9 +215,26 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
             double x = (double)pos.getX() + 0.3D + rand.nextDouble()*0.3;
             double y = (double)pos.getY() + 0.2D + rand.nextDouble()*0.2;
             double z = (double)pos.getZ() + 0.3D + rand.nextDouble()*0.3;
-
-            worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x, y, z, 0.0D, 0.0D, 0.0D, new int[0]);
-            worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D, new int[0]);
+            
+            int smokelevel = 100;
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+        	
+	        if (tileentity instanceof TEHeatSourceWithGUI) {
+	        	smokelevel = ((TEHeatSourceWithGUI)tileentity).smokeLevel;
+	        }
+	        
+	        while (smokelevel > 0) {
+	        	
+	        	if (smokelevel < 100 || worldIn.rand.nextFloat() * 100 < smokelevel) {
+	        		worldIn.spawnParticle(EnumParticleTypes.SMOKE_LARGE, x, y, z, 0.0D, 0.0D, 0.0D, new int[0]);
+	        		if (worldIn.rand.nextBoolean()) {
+	        			worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D, new int[0]);
+	        		}
+	        	}
+	        	
+	        	smokelevel -= 100;
+	        	
+	        }
         }
     }
 

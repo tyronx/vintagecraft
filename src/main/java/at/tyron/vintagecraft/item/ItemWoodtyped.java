@@ -73,7 +73,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 0.25f;
+		return 0.3f;
 	}
 	
 	
@@ -86,6 +86,14 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	@Override
 	public boolean isForgeFuel(ItemStack stack) {
 		return false;
+	}
+
+	@Override
+	public int smokeLevel(ItemStack stack) {
+		BlockClass blockclass = getBlockClass(((ItemBlock)stack.getItem()).block);
+		if (blockclass == BlocksVC.sapling || blockclass == BlocksVC.leaves || blockclass == BlocksVC.leavesbranchy) return 300;
+		
+		return 150;
 	}	
 }
 

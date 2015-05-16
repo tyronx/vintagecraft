@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -68,6 +69,8 @@ public class RecipeSlabs implements IRecipe {
 
 	@Override
 	public ItemStack getRecipeOutput() {
+		if (planks == null) planks = BlocksVC.planks.getFromKey(EnumTree.SPRUCE);
+		
 		ItemStack stack = BlocksVC.singleslab.getItemStackFor(planks.getKey());
 		stack.stackSize = 2;
 		return stack;

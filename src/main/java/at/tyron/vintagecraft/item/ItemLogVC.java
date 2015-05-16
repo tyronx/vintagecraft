@@ -96,5 +96,10 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 	@Override
 	public boolean isForgeFuel(ItemStack stack) {
 		return false;
+	}
+
+	@Override
+	public int smokeLevel(ItemStack stack) {
+		return 300;
 	}	
 }

@@ -133,4 +133,9 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 
         return numGrown > 0;
 	}
+
+	@Override
+	public int smokeLevel(ItemStack stack) {
+		return 250;
+	}
 }

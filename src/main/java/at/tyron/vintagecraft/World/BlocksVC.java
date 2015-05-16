@@ -11,10 +11,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
@@ -64,6 +66,7 @@ import at.tyron.vintagecraft.Item.ItemDoubleFlower;
 import at.tyron.vintagecraft.Item.ItemFarmLand;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;
 import at.tyron.vintagecraft.Item.ItemGrassVC;
+import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemLeaves;
 import at.tyron.vintagecraft.Item.ItemLeavesBranchy;
 import at.tyron.vintagecraft.Item.ItemLogVC;
@@ -88,6 +91,7 @@ import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
@@ -178,8 +182,21 @@ public class BlocksVC {
 		initBlocks();
 		initHardness();
 		initTileEntities();
+		initOreDictBlocks();
 	}
 	
+
+	private static void initOreDictBlocks() {
+		for (EnumTree tree : EnumTree.values()) {
+			OreDictionary.registerOre("treeWood", BlocksVC.log.getItemStackFor(tree));
+			OreDictionary.registerOre("plankWood", BlocksVC.planks.getItemStackFor(tree));			
+			OreDictionary.registerOre("slabWood", BlocksVC.singleslab.getItemStackFor(tree));
+			OreDictionary.registerOre("stairWood", BlocksVC.stairs.getItemStackFor(tree));
+			OreDictionary.registerOre("treeSapling", BlocksVC.sapling.getItemStackFor(tree));
+		}
+	
+	}
+
 
 	public static void initBlocks() {
 		firepit = new BlockFirepit(false);
@@ -206,6 +223,7 @@ public class BlocksVC {
 		
 		
 		toolrack = new BlockToolRack().registerMultiState("toolrack", ItemToolRack.class, EnumTree.values()).setHardness(1.2f); 
+		
 		
 		
 		

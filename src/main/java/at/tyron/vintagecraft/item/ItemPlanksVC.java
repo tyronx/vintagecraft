@@ -37,7 +37,7 @@ public class ItemPlanksVC extends ItemLogVC implements ISubtypeFromStackPovider 
 	
 	@Override
 	public int getBurningHeat(ItemStack stack) {
-		return 900;
+		return 150;
 	}
 
 	@Override

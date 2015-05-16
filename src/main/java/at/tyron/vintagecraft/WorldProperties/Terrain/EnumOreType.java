@@ -78,6 +78,11 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 		return name().toLowerCase();
 	}
 	
+	public String getNameUcFirst() {
+		return name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1);
+	}
+
+	
 	public int getHarvestlevel() {
 		return harvestlevel;
 	}
@@ -136,5 +141,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 		
 		return sorted;
 	}
+
+
 
 }

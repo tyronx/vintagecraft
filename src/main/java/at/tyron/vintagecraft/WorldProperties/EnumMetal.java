@@ -76,6 +76,11 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	public String getName() {
 		return name().toLowerCase();
 	}
+
+	public String getNameUcFirst() {
+		return name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1);
+	}
+
 	
 	public String getCode() {
 		return getName().substring(0, 2);

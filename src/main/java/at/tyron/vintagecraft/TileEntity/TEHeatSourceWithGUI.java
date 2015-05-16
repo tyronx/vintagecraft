@@ -72,7 +72,8 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     public int fuelBurnTime;
     // How much fuel is available
     public int maxFuelBurnTime;
-    
+    // How much smoke the current fuel burns?
+    public int smokeLevel;
     
     int counter;
 
@@ -419,6 +420,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     public void igniteFuel() {
     	maxFuelBurnTime = fuelBurnTime = furnace.getHeatDuration(fuelSlot());
 		maxTemperature = furnace.getProducedHeat(fuelSlot());
+		smokeLevel = ((IItemFuel)fuelSlot().getItem()).smokeLevel(fuelSlot());
 		
 		fuelSlot().stackSize -= furnace.fueluse;
 		
@@ -542,6 +544,8 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
                 return fuelBurnTime;
             case 6:
             	return maxFuelBurnTime;
+            case 7:
+            	return smokeLevel;
             default:
                 return 0;
         }
@@ -570,13 +574,16 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
         case 6:
         	maxFuelBurnTime = value;
         	break;
+        case 7:
+        	smokeLevel = value;
+        	break;
         default:
             break;          
         }
     }
 
     public int getFieldCount() {
-        return 7;
+        return 8;
     }
 
     public void clear() {
@@ -606,7 +613,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
         maxTemperature = compound.getShort("maxTemperature");
         oreCookingTime = compound.getShort("oreCookingTime");
         fuelBurnTime = compound.getShort("fuelBurnTime");
-
+        smokeLevel = compound.getShort("smokeLevel");
         
         if (compound.hasKey("CustomName", 8)) {
             this.furnaceCustomName = compound.getString("CustomName");
@@ -617,13 +624,13 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
         super.writeToNBT(compound);
         
     	
-
         compound.setShort("furnace", (short)this.furnace.id);
         compound.setShort("furnaceTemperature", (short)this.furnaceTemperature);
         compound.setShort("oreTemperature", (short)this.oreTemperature);
         compound.setShort("maxTemperature", (short)this.maxTemperature);
         compound.setShort("oreCookingTime", (short)this.oreCookingTime);
         compound.setShort("fuelBurnTime", (short)this.fuelBurnTime);
+        compound.setShort("smokeLevel", (short)smokeLevel);
         
         
         NBTTagList nbttaglist = new NBTTagList();

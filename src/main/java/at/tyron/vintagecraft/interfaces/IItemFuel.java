@@ -17,4 +17,6 @@ public interface IItemFuel {
 	
 	public boolean isForgeFuel(ItemStack stack);
 	
+	public int smokeLevel(ItemStack stack);
+	
 }
