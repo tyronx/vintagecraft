@@ -1,0 +1,13 @@
+==== Smoke and Gasses ====
+
+- Smoke generated from fires, bloomeries, etc. dissipate only when there is access to sky. Otherwise it only dissipates slowly. 
+
+- Exposure to smoke makes players caugh occassionally
+
+- Long expore to smoke adds nausea effect
+
+
+======== Mobs =========
+
+- The deeper the Monster spawns the more health and make more damage it has
+- Effects, Mob Detail: https://www.youtube.com/watch?v=5kwsoQcgYNE

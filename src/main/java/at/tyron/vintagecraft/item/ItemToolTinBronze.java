@@ -4,9 +4,9 @@ import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
-public class ItemToolTinBronze extends ItemToolVC {
+public class ItemToolTinbronze extends ItemToolVC {
 
-	public ItemToolTinBronze(EnumTool tooltype) {
+	public ItemToolTinbronze(EnumTool tooltype) {
 		super(tooltype);
 	}
 

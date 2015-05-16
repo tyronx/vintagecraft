@@ -11,8 +11,14 @@ import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BlockModelShapes;
+import net.minecraft.client.renderer.BlockRendererDispatcher;
+import net.minecraft.client.resources.model.IBakedModel;
+import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,32 +33,42 @@ import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Item.ItemAnvilVC;
+import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
+import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
+import at.tyron.vintagecraft.TileEntity.TEVessel;
+import at.tyron.vintagecraft.WorldProperties.EnumBloomeryState;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
-	public static PropertyEnum METALTYPE = PropertyEnum.create("metal", EnumMetal.class);
+	public static PropertyEnum METALTYPE = PropertyEnum.create("metal", EnumMetal.class, EnumMetal.anvilValues());
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	
 	
 	public BlockAnvilVC() {
 		super(Material.iron);
 		setCreativeTab(VintageCraft.craftedBlocksTab);
+		
+		setDefaultState(blockState.getBaseState().withProperty(METALTYPE, EnumMetal.COPPER).withProperty(FACING, EnumFacing.NORTH));
 	}
 	
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(METALTYPE, getMetal((World)worldIn, pos));
+		TEAnvil teanvil = (TEAnvil)worldIn.getTileEntity(pos);
+		if(teanvil == null) return super.getActualState(state, worldIn, pos);
+		
+		return super.getActualState(state, worldIn, pos).withProperty(METALTYPE, teanvil.getMetal());
+    	
 	}
 	
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		playerIn.openGui(VintageCraft.instance, 4, worldIn, pos.getX(), pos.getY(), pos.getZ());
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
+    	playerIn.openGui(VintageCraft.instance, 4, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 
@@ -66,28 +82,28 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 
 	
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.HORIZONTALS[meta];
+		EnumFacing enumfacing = EnumFacing.getFront(meta);
+
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
+			enumfacing = EnumFacing.NORTH;
+		}
 
 		return this.getDefaultState().withProperty(FACING, enumfacing);
 	}
 
 	public int getMetaFromState(IBlockState state) {
-		return ((EnumFacing)state.getValue(FACING)).getHorizontalIndex();
+		return ((EnumFacing)state.getValue(FACING)).getIndex();
 	}
 	
 	
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tabs, List list) {
-		for (EnumMetal metal: EnumMetal.values()) {
-			list.add(getItemStackFor(metal));
+		for (Object metal: METALTYPE.getAllowedValues()) {
+			list.add(getItemStackFor((EnumMetal)metal));
 		}
 	}
 	
 	
-	@Override
-	public boolean isOpaqueCube() {
-		return false;
-	}
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
@@ -143,7 +159,11 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
     	return false;
     }
 	
-	
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+
     
 	
 	
@@ -151,7 +171,7 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public void initTileEntity(World world, BlockPos pos, EnumMetal metal) {
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TEAnvil) {
-			((TEAnvil) te).metal = metal;
+			((TEAnvil) te).setMetal(metal);
 			
 		}
 	}
@@ -171,20 +191,29 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public EnumMetal getMetal(World world, BlockPos pos) {
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TEAnvil) {
-			return ((TEAnvil) te).metal == null ? EnumMetal.IRON : ((TEAnvil) te).metal;
+			return ((TEAnvil) te).getMetal() == null ? EnumMetal.IRON : ((TEAnvil) te).getMetal();
 		}
 		
 		return EnumMetal.IRON;
 	}
 
 	
+	
+    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (tileentity instanceof TEAnvil) {
+        	ItemStack itemstack = getItemStackFor(getMetal((World) worldIn, pos));
+        	
+            worldIn.spawnEntityInWorld(new EntityItem(worldIn, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, itemstack));
+        }
+
+        super.breakBlock(worldIn, pos, state);
+    }
+    
 	@Override
 	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-		List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-		
-		ret.add(getItemStackFor(getMetal((World) world, pos)));
-		
-		return ret;
+		return new java.util.ArrayList<ItemStack>();
 	}
 	
 	
@@ -206,15 +235,14 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 
 	@Override
 	public boolean tryPutItemstack(World world, BlockPos pos, EntityPlayer player, EnumFacing side, ItemStack itemstack) {
-		System.out.println(getMetaFromState(world.getBlockState(pos)));
-		
+
 		
 		return false;
 	}
 
     @Override
     protected BlockState createBlockState() {
-    	return new BlockState(this, new IProperty[]{METALTYPE, FACING});
+    	return new BlockState(this, new IProperty[]{FACING, METALTYPE});
     }
 
 }

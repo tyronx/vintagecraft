@@ -28,6 +28,7 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
@@ -42,6 +43,7 @@ import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
+import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -124,29 +126,35 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         
         registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory"); //ItemsVC.toolrack
         registerModelLocation(ItemsVC.stone, "stone", "inventory");
+        registerModelLocation(ItemsVC.stonepot, "stonepotitem", "inventory");
         
     	registerModelLocation(ItemsVC.fireclay_ball, "fireclay_ball", "inventory");
     	registerModelLocation(ItemsVC.fireclay_brick_raw, "fireclay_brick_raw", "inventory");
     	registerModelLocation(ItemsVC.fireclay_brick, "fireclay_brick", "inventory");
     	
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
-    	registerModelLocation(ItemsVC.ingot, "ingot", "inventory");
-    	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");
+    	registerModelLocation(ItemsVC.metalingot, "ingot", "inventory");
+    	registerModelLocation(ItemsVC.metalplate, "metalplate", "inventory");
     	
+    	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");    	
+    	registerModelLocation(ItemsVC.straw, "straw", "inventory");
+    	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
-    	//registerModelLocation(ItemsVC.clayVessel, "clayvessel", "inventory");
-    	//registerModelLocation(ItemsVC.ceramicVessel, "ceramicvessel", "inventory");
     	
-    	registerModelLocation(new Item[]{ItemsVC.ironAxe, ItemsVC.ironHoe, ItemsVC.ironPickaxe, ItemsVC.ironShovel, ItemsVC.ironSword, ItemsVC.ironSaw, ItemsVC.ironShears}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeAxe, ItemsVC.bismuthbronzeHoe, ItemsVC.bismuthbronzePickaxe, ItemsVC.bismuthbronzeShovel, ItemsVC.bismuthbronzeSword, ItemsVC.bismuthbronzeSaw, ItemsVC.bismuthbronzeShears}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.tinbronzeAxe, ItemsVC.tinbronzeHoe, ItemsVC.tinbronzePickaxe, ItemsVC.tinbronzeShovel, ItemsVC.tinbronzeSword, ItemsVC.tinbronzeSaw, ItemsVC.tinbronzeShears}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.copperAxe, ItemsVC.copperHoe, ItemsVC.copperPickaxe, ItemsVC.copperShovel, ItemsVC.copperSword, ItemsVC.copperSaw, ItemsVC.copperShears}, "tool", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.stoneAxe, ItemsVC.stoneHoe, ItemsVC.stonePickaxe, ItemsVC.stoneShovel, ItemsVC.stoneSword}, "tool", "inventory");
+    	registerModelLocation(ItemsVC.tools.values().toArray(new Item[0]), "tool", "inventory");
+    	registerModelLocation(ItemsVC.toolheads.values().toArray(new Item[0]), "toolhead", "inventory");
+    	
+    	registerModelLocation(ItemsVC.anvilbase, "anvilbase", "inventory");
+    	registerModelLocation(ItemsVC.anvilsurface, "anvilsurface", "inventory");
     	
     	
-    	registerModelLocation(new Item[]{ItemsVC.copperHelmet, ItemsVC.copperChestplate, ItemsVC.copperLeggings, ItemsVC.copperBoots}, "armor", "inventory");
+/*    	registerModelLocation(new Item[]{ItemsVC.copperHelmet, ItemsVC.copperChestplate, ItemsVC.copperLeggings, ItemsVC.copperBoots}, "armor", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.tinbronzeHelmet, ItemsVC.tinbronzeChestplate, ItemsVC.tinbronzeLeggings, ItemsVC.tinbronzeBoots}, "armor", "inventory");
     	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeHelmet, ItemsVC.bismuthbronzeChestplate, ItemsVC.bismuthbronzeLeggings, ItemsVC.bismuthbronzeBoots}, "armor", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.ironHelmet, ItemsVC.ironChestplate, ItemsVC.ironLeggings, ItemsVC.ironBoots}, "armor", "inventory");
+  */
+    	
+    	registerModelLocation(ItemsVC.armor.values().toArray(new Item[0]), "armor", "inventory");
     	
     	
     	registerModelLocation(new Item[]{ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
@@ -156,8 +164,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEIngotPile.class, "ingotpile", new TESRIngotPile());
 		ClientRegistry.registerTileEntity(TEToolRack.class, "ToolRack", new TESRToolRack());
 		ClientRegistry.registerTileEntity(TEVessel.class, "ceramicvessel2", new TESRCeramicVessel());
-
+		ClientRegistry.registerTileEntity(TEStonePot.class, "stonepot", new TESRStonePot());
     }
+    
 	
     private void registerModelLocation(final Item[] items, final String name, final String type) {
     	for (Item item : items) {
@@ -167,12 +176,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	private void registerModelLocation(final Item item, final String name, final String type) {
 		RenderItem renderItem = Minecraft.getMinecraft().getRenderItem();
-		//System.out.println("registerModelLocation");
+		//System.out.println("registerModelLocation for " + name);
 		if (renderItem != null) {
 	        renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
 	            @Override
 	            public ModelResourceLocation getModelLocation(ItemStack stack) {
-	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
+	            	///System.out.println(name + "/" + stack.getUnlocalizedName());
 	            	if (item instanceof ISubtypeFromStackPovider && ((ISubtypeFromStackPovider)item).getSubType(stack) != null) {
 	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
 	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);

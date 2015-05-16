@@ -116,21 +116,27 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		}
 		return 0;
 	}
+	
+	
+	@Override
+	public boolean isForgeFuel(ItemStack stack) {
+		return getOreType(stack) == EnumOreType.BITUMINOUSCOAL || getOreType(stack) == EnumOreType.LIGNITE;
+	}	
 
 
 	@Override
 	public ItemStack getSmelted(ItemStack ore) {
 		switch (getOreType(ore)) {
-			case LIMONITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRON);
-			case NATIVEGOLD_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.GOLD);
-			case NATIVECOPPER: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
-			case CASSITERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.TIN);
-			case NATIVESILVER_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.SILVER);
-			case PLATINUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.PLATINUM);
-			case RHODIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.RHODIUM);
-			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRIDIUM);
-			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.ZINC);
-			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.BISMUTH);
+			case LIMONITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRON);
+			case NATIVEGOLD_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.GOLD);
+			case NATIVECOPPER: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.COPPER);
+			case CASSITERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TIN);
+			case NATIVESILVER_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.SILVER);
+			case PLATINUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.PLATINUM);
+			case RHODIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.RHODIUM);
+			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRIDIUM);
+			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.ZINC);
+			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTH);
 			
 			default:
 				break; 

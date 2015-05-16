@@ -14,8 +14,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Client.Model.ModelIngotPile;
 
-public class TESRIngotPile extends TESRBase 
-{
+public class TESRIngotPile extends TESRBase  {
 	private final ModelIngotPile ingotModel = new ModelIngotPile();
 
 	public void renderTileEntityIngotPileAt(TEIngotPile tep, double d, double d1, double d2, float f) {

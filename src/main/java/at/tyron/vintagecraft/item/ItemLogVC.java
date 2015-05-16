@@ -91,5 +91,10 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 		if (block instanceof BlockPlanksVC) return BlocksVC.planks;
 		
 		return BlocksVC.log;
+	}
+
+	@Override
+	public boolean isForgeFuel(ItemStack stack) {
+		return false;
 	}	
 }

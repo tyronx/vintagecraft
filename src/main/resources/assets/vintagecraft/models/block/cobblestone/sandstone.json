@@ -1,6 +1,6 @@
 {
-		"parent": "block/cube_all",
-		"textures": {
-			"all": "vintagecraft:blocks/cobblestone/sandstone"
-		}
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "vintagecraft:blocks/cobblestone/sandstone"
 	}
+}

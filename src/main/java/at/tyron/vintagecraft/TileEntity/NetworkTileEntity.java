@@ -1,8 +1,6 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Network.AbstractPacket;
-import at.tyron.vintagecraft.Network.DataBlockPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -28,13 +26,13 @@ public abstract class NetworkTileEntity extends TileEntity {
 	public void createDataNBT(NBTTagCompound nbt){}
 	public abstract void createInitNBT(NBTTagCompound nbt);
 
-	public DataBlockPacket createDataPacket() {
+	/*public DataBlockPacket createDataPacket() {
 		return this.createDataPacket(createDataNBT());
 	}
 
 	public DataBlockPacket createDataPacket(NBTTagCompound nbt) {
 		return new DataBlockPacket(pos.getX(), pos.getY(), pos.getZ(), nbt);
-	}
+	}*/
 
 	private NBTTagCompound createDataNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -74,7 +72,7 @@ public abstract class NetworkTileEntity extends TileEntity {
 		worldObj.markBlockForUpdate(pos);
 	}
 
-	public void broadcastPacketInRange() {
+	/*public void broadcastPacketInRange() {
 		int dim = worldObj.provider.getDimensionId();
 		if(worldObj.isRemote) {
 			VintageCraft.packetPipeline.sendToServer(this.createDataPacket());
@@ -92,5 +90,5 @@ public abstract class NetworkTileEntity extends TileEntity {
 					new TargetPoint(worldObj.provider.getDimensionId(), pos.getX(), pos.getY(), pos.getZ(), broadcastRange));
 		}
 	}
-
+*/
 }

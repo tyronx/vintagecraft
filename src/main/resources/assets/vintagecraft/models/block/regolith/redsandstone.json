@@ -1,6 +1,6 @@
 {
-		"parent": "block/cube_all",
-		"textures": {
-			"all": "vintagecraft:blocks/regolith/redsandstone"
-		}
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "vintagecraft:blocks/regolith/redsandstone"
 	}
+}

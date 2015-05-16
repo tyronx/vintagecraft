@@ -656,7 +656,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 	public float getVolumne() {
 		if (!isBurning()) return 0f;
 		// The fire pit burns louder
-		return (furnace == EnumStrongHeatSource.STOVE) ? 0.2f : 0.4f;
+		return (furnace == EnumStrongHeatSource.STOVE) ? 0.4f : 0.8f;
 	}
 
 	@Override

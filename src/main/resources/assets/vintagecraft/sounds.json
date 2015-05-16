@@ -1,5 +1,8 @@
 {
     "thud": { "category": "player", "sounds": [ "thud" ] },
 	"fireplace": { "category": "player", "sounds": [ "fireplace" ] },
-	"anvil_hit": { "category": "player", "sounds": [ "anvil_hit" ] }
+	"anvil_hit": { "category": "player", "sounds": [ "anvil_hit" ] },
+	"anvilbreak": { "category": "player", "sounds": [ "anvilbreak" ] },
+	"stonehit": { "category": "player", "sounds": [ "pickaxe_stone_hit1", "pickaxe_stone_hit2", "pickaxe_stone_hit3" ] }
+	
 }

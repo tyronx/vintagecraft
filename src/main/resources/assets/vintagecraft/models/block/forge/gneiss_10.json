@@ -1,6 +1,0 @@
-{
-    "parent": "vintagecraft:block/forge/forge_10",
-    "textures": {
-        "stone": "vintagecraft:blocks/cobblestone/gneiss"
-    }
-}

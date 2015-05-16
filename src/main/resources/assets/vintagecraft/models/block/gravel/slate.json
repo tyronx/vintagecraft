@@ -1,6 +1,6 @@
 {
-		"parent": "block/cube_all",
-		"textures": {
-			"all": "vintagecraft:blocks/gravel/slate"
-		}
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "vintagecraft:blocks/gravel/slate"
 	}
+}

@@ -1,0 +1,86 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "#metal"
+    },
+    "elements": [
+        {
+            "name": "Layer_3",
+            "from": [ 3.0, 0.0, 6.0 ], 
+            "to": [ 12.0, 1.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 0.0, 9.0, 1.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 0.0, 9.0, 4.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 9.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Layer_4",
+            "from": [ 2.0, 1.0, 6.0 ], 
+            "to": [ 12.0, 2.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 8.0, 10.0, 9.0 ] },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 10.0, 10.0, 11.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 0.0, 10.0, 4.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 10.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Layer_5",
+            "from": [ 0.0, 2.0, 6.0 ], 
+            "to": [ 12.0, 3.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 13.0, 12.0, 14.0 ] },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 10.0, 12.0, 11.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 12.0, 12.0, 16.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 12.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "Horn",
+            "from": [ 12.0, 1.0, 7.0 ], 
+            "to": [ 14.0, 3.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 11.0, 2.0, 13.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Horn_tip",
+            "from": [ 14.0, 2.0, 7.0 ], 
+            "to": [ 16.0, 3.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 13.0, 2.0, 14.0 ] },
+                "east": { "texture": "#metal", "uv": [ 12.0, 15.0, 14.0, 16.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 8.0, 2.0, 9.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 14.0, 2.0, 16.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Horn_2pixbelow",
+            "from": [ 12.0, 0.0, 7.0 ], 
+            "to": [ 13.0, 1.0, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "south": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 2.0, 1.0 ] },
+                "up": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 1.0, 2.0 ] }
+            }
+        }
+    ]
+}

@@ -1,15 +1,13 @@
-==== Rocks =======
+===== Drainage Map ======
 
-- Soft stones (sandstone etc.) should be easier to mine
+- Start with everything black. Iterate through each pixel of the heightmap. For each pixel cheack all 4 neighbours. 
+If neighbour elevation is lower, increase lightness of the surrounding area for all pixels with equal or higher 
+elevation, with Linear decrease over distance (= like the photoshop brush)
+
+- If Sedimentary rock below => increase drainage.
 
 
-==== Rock Layers ======
 
-- have thickness attribute instead of depthStart
-- each rocklayer generates a green layer for thickness
-- getRockLayerForDepth delivers correct rocklayer for coordinate
-
-- use red layer (= just a blurred version of blue layer) for smooth transitions?!
 
 
 
@@ -38,6 +36,8 @@
 
 ========= Cave Stuff =====
 
+- More or larger caves in sedimentary rock
+
 - Mineshafts like these http://imgur.com/a/idI07
 - Some Mineshafts have Entrances
   http://imgur.com/JGPGf
@@ -61,6 +61,8 @@
 
 
 I seriously want all of these Landforms: http://en.wikipedia.org/wiki/List_of_landforms (scroll to bottom)
+
+http://imgur.com/a/RuaVB#5
 
 
 

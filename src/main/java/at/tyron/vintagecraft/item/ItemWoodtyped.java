@@ -83,5 +83,9 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	}
 
 
+	@Override
+	public boolean isForgeFuel(ItemStack stack) {
+		return false;
+	}	
 }
 

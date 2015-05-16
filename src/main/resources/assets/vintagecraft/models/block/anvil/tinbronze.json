@@ -1,6 +1,6 @@
 {
     "parent": "vintagecraft:block/anvil/base",
     "textures": {
-        "metal": "vintagecraft:blocks/ingot/tinbronze"
+        "metal": "vintagecraft:blocks/anvil/tinbronze"
     }
 }

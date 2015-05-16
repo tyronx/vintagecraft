@@ -42,8 +42,9 @@ import at.tyron.vintagecraft.Block.Utility.BlockBloomeryChimney;
 import at.tyron.vintagecraft.Block.Utility.BlockCeramicVessel;
 import at.tyron.vintagecraft.Block.Utility.BlockClayVessel;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
-import at.tyron.vintagecraft.Block.Utility.BlockForge;
+import at.tyron.vintagecraft.Block.Utility.BlockStonePot;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.BlockClass.BlockClass;
@@ -70,6 +71,7 @@ import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemRock;
 import at.tyron.vintagecraft.Item.ItemRockTyped;
+import at.tyron.vintagecraft.Item.ItemStonePot;
 import at.tyron.vintagecraft.Item.ItemSubsoil;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
@@ -77,7 +79,7 @@ import at.tyron.vintagecraft.Item.ItemWoodtyped;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
-import at.tyron.vintagecraft.TileEntity.TEForge;
+import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TESapling;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
@@ -87,6 +89,7 @@ import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
@@ -149,7 +152,8 @@ public class BlocksVC {
 	public static SoilRockClass subsoil;
 	public static RockClass sand;
 	public static RockClass gravel;
-	public static RockClass forge;
+	
+	public static RockClass stoneanvil;
 	
 	public static OreClass rawore;
 	
@@ -159,11 +163,13 @@ public class BlocksVC {
 
 	public static Block firepit_lit;
 	public static Block firepit;
-
+	public static Block stonepot;
+	
 	
 	public static TreeClass quartzglass;
 
-	public static Block anvil;
+	public static Block metalanvil;
+	
 
 	
 	
@@ -308,10 +314,19 @@ public class BlocksVC {
 		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
 		
 		
-		anvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.values());
+		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.values());
+		metalanvil.setHardness(2f).setHarvestLevel("pickaxe", 0);
 		
-		forge = new RockClass("forge", BlockForge.class, ItemRockTyped.class, 2.2f, Block.soundTypeStone, "pickaxe", 0);
-		forge.init();
+		stoneanvil = new RockClass("stoneanvil", BlockStoneAnvil.class, ItemRockTyped.class, 2.5f, Block.soundTypeStone, "pickaxe", 0); 
+		stoneanvil.init();
+		
+		stonepot = new BlockStonePot().registerSingleState("stonepot", ItemBlock.class);
+		stonepot.setHardness(2f).setHarvestLevel("pickaxe", 0);
+		
+
+		
+		//forge = new RockClass("forge", BlockStonePot.class, ItemRockTyped.class, 2.2f, Block.soundTypeStone, "pickaxe", 0);
+		//forge.init();
 	}
 	
 	
@@ -324,7 +339,7 @@ public class BlocksVC {
 		GameRegistry.registerTileEntity(TEVessel.class, ModInfo.ModID + ":ceramicvessel2");
 		GameRegistry.registerTileEntity(TEBloomery.class, ModInfo.ModID + ":bloomery");
 		GameRegistry.registerTileEntity(TEAnvil.class, ModInfo.ModID + ":anvilvc");
-		GameRegistry.registerTileEntity(TEForge.class, ModInfo.ModID + ":forge");
+		GameRegistry.registerTileEntity(TEStonePot.class, ModInfo.ModID + ":forge");
 	}
 
 

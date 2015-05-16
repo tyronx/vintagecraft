@@ -38,14 +38,14 @@ public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 	private static EnumTallGrass[] FERTILITY_LOOKUP = new EnumTallGrass[26];
 	
 	
-	private EnumTallGrass (int meta, int minfertility) {
-		this.id = meta;
+	private EnumTallGrass (int id, int minfertility) {
+		this.id = id;
 		this.minfertility = minfertility;
 		this.weight = 100;
 	}
 
-	private EnumTallGrass (int meta, int minfertility, int weight) {
-		this.id = meta;
+	private EnumTallGrass (int id, int minfertility, int weight) {
+		this.id = id;
 		this.minfertility = minfertility;
 		this.weight = weight;
 	}
@@ -71,32 +71,7 @@ public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 		return META_LOOKUP[meta];
 	}
 	
-	/*
-	public static EnumTallGrass fromClimate(int fertility, Random rand) {
-    	EnumTallGrass result = FERTILITY_LOOKUP[fertility / 10];
-    	EnumTallGrass otherresult = result;
-    	
-    	if (result == null) return null;
-    	int dist2Other = 0;
-    	
-    	if (result != VERYLONG_FLOWERING) {
-    		otherresult = fromMeta(result.id + 1);
-    		dist2Other = otherresult.minfertility - fertility;
-    	}
-    	
-    	if (result.id > 0 && dist2Other >= 10) {
-    		otherresult = fromMeta(result.id - 1);
-    		dist2Other = fertility - (result.minfertility - 1); 
-    	}
-    	
-		if (dist2Other < 10) {
-			return rand.nextInt(1 + dist2Other) == 0 ? otherresult : result; 
-		} else {
-			return result;
-		}
-		
-    }
-	*/
+	
 	
 
 	@Override

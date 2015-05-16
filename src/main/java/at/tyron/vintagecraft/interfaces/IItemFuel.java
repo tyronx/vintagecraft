@@ -14,4 +14,7 @@ public interface IItemFuel {
 	public int getBurningHeat(ItemStack stack);
 	
 	public float getBurnDurationMultiplier(ItemStack stack);
+	
+	public boolean isForgeFuel(ItemStack stack);
+	
 }

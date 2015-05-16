@@ -6,9 +6,14 @@ import java.util.HashMap;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.TileEntity.TEAnvil;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockGroup;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 import com.google.common.base.Functions;
 import com.google.common.collect.ImmutableList;
@@ -26,6 +31,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
@@ -160,6 +166,36 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		if (tooltype == EnumTool.HOE) {
 	        return net.minecraftforge.event.ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos) > 0;
 	    }
+		
+		if (tooltype == EnumTool.HAMMER) {
+			
+			IBlockState state = worldIn.getBlockState(pos);
+			
+			
+			boolean unfinishedanvil = BlocksVC.stoneanvil.containsBlock(state.getBlock()) && (Integer) state.getValue(((BlockStoneAnvil)state.getBlock()).STAGE) > 0;
+			
+			if (
+				(BlocksVC.rock.containsBlock(state.getBlock()) || unfinishedanvil) && 
+				worldIn.isAirBlock(pos.up())
+			) {
+
+				if (unfinishedanvil) {
+					int stage = (Integer) state.getValue(((BlockStoneAnvil)state.getBlock()).STAGE) - 1;
+					((BlockStoneAnvil)state.getBlock()).setStage(worldIn, pos, state, stage);
+				} else {
+					IBlockState anvilstate = BlocksVC.stoneanvil.getBlockStateFor(BlocksVC.rock.getBlockClassfromState(state).getKey());
+					worldIn.setBlockState(pos, anvilstate.withProperty(BlockStoneAnvil.STAGE, 2));
+				}
+				
+				if (!worldIn.isRemote) {
+					worldIn.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:stonehit", 1f, 1f);
+				}
+				
+				stack.damageItem(2, playerIn);
+				playerIn.swingItem();
+			}
+			
+		}
 		
 		return false;
     }

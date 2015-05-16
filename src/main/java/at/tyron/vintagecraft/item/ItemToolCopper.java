@@ -25,17 +25,19 @@ public class ItemToolCopper extends ItemToolVC {
 			case AXE: 
 				if (material == Material.wood) return 4f; 
 				break;
+			
 			//case CHISEL:
 			case PICKAXE: 
 				if (material == Material.rock) return 2.5f; 
 				if (material == Material.ground) return 1.5f;
 				if (material == Material.iron) return 0.8f;
-
 				break;
+				
 			case SHOVEL: 
 				if (material == Material.grass || material == Material.ground) return 4f;
 				if (material == Material.sand) return 1.5f;
 				break;
+				
 			case SWORD:
 				if (material == Material.leaves) return 2.5f;
 				break;

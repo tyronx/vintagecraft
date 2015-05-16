@@ -1,0 +1,21 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "#metal"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 1.0, 7.0, 1.0 ], 
+            "to": [ 15.0, 8.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#metal", "uv": [ 0.0, 0.0, 14.0, 1.0 ], "tintindex": 0 },
+                "east": { "texture": "#metal", "uv": [ 0.0, 0.0, 14.0, 1.0 ], "tintindex": 0 },
+                "south": { "texture": "#metal", "uv": [ 0.0, 0.0, 7.0, 1.0 ], "tintindex": 0 },
+                "west": { "texture": "#metal", "uv": [ 0.0, 0.0, 14.0, 1.0 ], "tintindex": 0 },
+                "up": { "texture": "#metal", "uv": [ 0.0, 0.0, 14.0, 14.0 ], "tintindex": 0 },
+                "down": { "texture": "#metal", "uv": [ 0.0, 0.0, 14.0, 14.0 ], "tintindex": 0 }
+            }
+        }
+    ]
+}

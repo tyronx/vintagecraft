@@ -198,6 +198,11 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
   
         
     }
+    
+    
+    public EnumRockGroup getRockGroup() {
+    	return group;
+    }
 
     public float getHardnessMultiplier() {
     	return group.getHardNess();

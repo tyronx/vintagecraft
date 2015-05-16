@@ -82,6 +82,16 @@ public enum EnumTallGrassGroup {
 	}
 	
 	
+	public EnumTallGrass getRandomGrass(Random rand) {
+		int rnd = rand.nextInt(totalweight);
+		
+		for (int i = 0; i < weights.length; i++) {
+			if (rnd < weights[i]) return grasses[i];
+		}
+		return null;
+	}
+	
+	
 	public static float getDensity(float modifiedforestdensity, int rain, int temperature) {
 		float density = modifiedforestdensity * 5;
 		

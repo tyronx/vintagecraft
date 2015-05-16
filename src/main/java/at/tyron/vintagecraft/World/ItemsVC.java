@@ -3,32 +3,15 @@ package at.tyron.vintagecraft.World;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Item.ItemArmorVC;
-import at.tyron.vintagecraft.Item.ItemClayVessel;
-import at.tyron.vintagecraft.Item.ItemFireClay;
-import at.tyron.vintagecraft.Item.ItemFoodVC;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemPeatBrick;
-import at.tyron.vintagecraft.Item.ItemSeedVC;
-import at.tyron.vintagecraft.Item.ItemStone;
-import at.tyron.vintagecraft.Item.ItemToolBismuthBronze;
-import at.tyron.vintagecraft.Item.ItemToolCopper;
-import at.tyron.vintagecraft.Item.ItemToolIron;
-import at.tyron.vintagecraft.Item.ItemToolStone;
-import at.tyron.vintagecraft.Item.ItemToolTinBronze;
-import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.Terrain.*;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -41,37 +24,29 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemsVC {
 	public static Item stone;
+	public static Item stonepot;
+	
 	public static Item ore;
-	public static Item ingot;
+	public static Item metalingot;
+	public static Item metalplate;
+	
 	public static Item peatbrick;
 	public static Item fireclay_ball;
 	public static Item fireclay_brick_raw;
 	public static Item fireclay_brick;
 	
 	
+	public static HashMap<String, ItemToolVC> tools = new HashMap<String, ItemToolVC>();
+	public static HashMap<String, ItemArmorVC> armor = new HashMap<String, ItemArmorVC>();
+	public static HashMap<String, Item> toolheads = new HashMap<String, Item>();
 	
-	public static Item ironHelmet;
+	
+/*	public static Item ironHelmet;
 	public static Item ironChestplate;
 	public static Item ironLeggings;
 	public static Item ironBoots;
 
 	
-	public static Item ironAxe;
-	public static Item ironPickaxe;
-	public static Item ironShovel;
-	public static Item ironSword;
-	public static Item ironHoe;
-	public static Item ironSaw;
-	public static Item ironShears;
-
-	
-	public static Item bismuthbronzeAxe;
-	public static Item bismuthbronzePickaxe;
-	public static Item bismuthbronzeShovel;
-	public static Item bismuthbronzeSword;
-	public static Item bismuthbronzeHoe;
-	public static Item bismuthbronzeSaw;
-	public static Item bismuthbronzeShears;
 	
 	public static Item bismuthbronzeHelmet;
 	public static Item bismuthbronzeChestplate;
@@ -79,13 +54,6 @@ public class ItemsVC {
 	public static Item bismuthbronzeBoots;
 
 
-	public static Item tinbronzeAxe;
-	public static Item tinbronzePickaxe;
-	public static Item tinbronzeShovel;
-	public static Item tinbronzeSword;
-	public static Item tinbronzeHoe;
-	public static Item tinbronzeSaw;
-	public static Item tinbronzeShears;
 
 	public static Item tinbronzeHelmet;
 	public static Item tinbronzeChestplate;
@@ -93,27 +61,15 @@ public class ItemsVC {
 	public static Item tinbronzeBoots;
 
 	
-	public static Item copperAxe;
-	public static Item copperPickaxe;
-	public static Item copperShovel;
-	public static Item copperSword;
-	public static Item copperHoe;
-	public static Item copperSaw;
-	public static Item copperShears;
-
 	public static Item copperHelmet;
 	public static Item copperChestplate;
 	public static Item copperLeggings;
 	public static Item copperBoots;
-	
-	
-	public static Item stoneAxe;
-	public static Item stonePickaxe;
-	public static Item stoneShovel;
-	public static Item stoneSword;
-	public static Item stoneHoe;
-	public static Item stoneShears;
+	*/
 
+
+	public static Item straw;
+	public static Item firestarter;
 	
 	public static Item porkchopRaw;
 	public static Item porkchopCooked;
@@ -124,6 +80,10 @@ public class ItemsVC {
 	public static Item chickenCooked;
 	
 	public static Item wheatSeeds;
+	
+	public static Item anvilbase;
+	public static Item anvilsurface;
+	
 
 	
 	public static void init() {
@@ -138,7 +98,7 @@ public class ItemsVC {
 		VintageCraft.floraTab.icon = Item.getItemFromBlock(BlocksVC.flower.getBlockStateFor(EnumFlower.CATMINT).getBlock());
 		VintageCraft.resourcesTab.icon = ItemsVC.stone;
 		VintageCraft.craftedBlocksTab.icon = Item.getItemFromBlock(BlocksVC.fireclaybricks);
-		VintageCraft.toolsarmorTab.icon = ItemsVC.copperSaw;
+		VintageCraft.toolsarmorTab.icon = tools.get("copper_saw");
 	}
 
 
@@ -159,16 +119,15 @@ public class ItemsVC {
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
 		
-		registerTools("iron", ItemToolIron.class);
-		registerTools("bismuthbronze", ItemToolBismuthBronze.class);
-		registerTools("tinbronze", ItemToolTinBronze.class);
-		registerTools("copper", ItemToolCopper.class);
-		registerTools("stone", ItemToolStone.class);
+		registerAnvilParts();
+		registerTools();
+		registerToolHeads();
+		registerArmor();
 		
-		registerArmor("copper", ItemArmorVC.class);
+		/*registerArmor("copper", ItemArmorVC.class);
 		registerArmor("tinbronze", ItemArmorVC.class);
 		registerArmor("bismuthbronze", ItemArmorVC.class);
-		registerArmor("iron", ItemArmorVC.class);
+		registerArmor("iron", ItemArmorVC.class);*/
 		
 		
 		porkchopRaw = new ItemFoodVC(3, 0.3f, true).register("porkchopRaw");
@@ -180,6 +139,19 @@ public class ItemsVC {
 		
 		wheatSeeds = new ItemSeedVC();
 		register(wheatSeeds, "wheatseeds");
+		
+		straw = new ItemStraw();
+		register(straw, "straw");
+		
+		firestarter = new ItemFireStarter();
+		register(firestarter, "firestarter");
+		
+		stonepot = new ItemStonePot();
+		register(stonepot, "stonepotitem");
+		
+		for (EnumRockType rocktype : EnumRockType.values()) {
+			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stonepotitem/" + rocktype.getStateName());
+		}
 	}
 	
 	public static Item register(Item item, String internalname) {
@@ -192,7 +164,7 @@ public class ItemsVC {
 	
 	
 	
-	static void registerArmor(String metal, Class<? extends ItemArmorVC> theclass) {
+	/*static void registerArmor(String metal, Class<? extends ItemArmorVC> theclass) {
 		for (int i = 0; i < ItemArmorVC.armorTypes.length; i++) {
 			String armorPiece = ItemArmorVC.armorTypes[i];
 			String unlocalizedname = metal + "_" + armorPiece;
@@ -217,39 +189,124 @@ public class ItemsVC {
 			
 		}
 		
+	}*/
+	
+	static void registerAnvilParts() {
+		anvilbase = new ItemAnvilPart(false).register("anvilbase");
+		anvilsurface = new ItemAnvilPart(true).register("anvilsurface");
+	
+		for (EnumMetal metal : EnumMetal.values()) {
+			if (metal.hasAnvil) {
+				VintageCraft.instance.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase());
+				VintageCraft.instance.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase());
+			}
+		}
 	}
 	
 	
 	
-	static void registerTools(String metal, Class<? extends ItemToolVC> theclass) {
+	
+	static void registerArmor() {
+		ArrayList<String> materials = new ArrayList<String>();
 		
-		
-		for (EnumTool tool : EnumTool.values()) {
-			if (metal.equals("stone") && !tool.canBeMadeFromStone) continue;
+		for (int i = 0; i < ItemArmorVC.armorTypes.length; i++) {
+			String armorpiece = ItemArmorVC.armorTypes[i];
 			
-			String unlocalizedname = metal + "_" + tool.getName();
-			String toolnamecode = metal + ucFirst(tool.getName());
-			
-			try {
-				Field field = ItemsVC.class.getField(toolnamecode);
+			for (EnumMetal metal : EnumMetal.values()) {
+				if (!metal.hasArmor) continue;
 				
-				ItemToolVC item = theclass.getDeclaredConstructor(EnumTool.class).newInstance(tool);
+				String ucfirstmaterial = metal.getName().substring(0, 1).toUpperCase() + metal.getName().substring(1);
+				String unlocalizedname = metal.getName() + "_" + armorpiece;
 				
-				field.set(ItemsVC.class, item);
-			
-				item.setUnlocalizedName(unlocalizedname);
-				GameRegistry.registerItem(item, unlocalizedname);
-				
-				VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
-				
-			} catch (Exception e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
+				try {
+					ArmorMaterial armormat = (ArmorMaterial)ItemArmorVC.class.getField(metal.getName().toUpperCase()+"VC").get(null);
+					
+					ItemArmorVC item = ItemArmorVC.class.getDeclaredConstructor(ArmorMaterial.class, String.class, int.class, int.class).newInstance(armormat, metal.getName(), 0, i);
+					item.setUnlocalizedName(unlocalizedname);
+					GameRegistry.registerItem(item, unlocalizedname);
+					
+					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":armor/" + unlocalizedname);
+					
+					armor.put(unlocalizedname, item);
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+					e.printStackTrace();
+				}		
 			}
-			
+		}
+	}
+	
+	static void registerTools() {
+		ArrayList<String> materials = new ArrayList<String>();
+		materials.add("stone");
+		
+		for (EnumMetal metal : EnumMetal.values()) {
+			if (metal.hasTools) materials.add(metal.getName());
 		}
 		
+		for (EnumTool tool : EnumTool.values()) {
+			for (String material : materials) {
+				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
+				
+				String ucfirstmaterial = material.substring(0, 1).toUpperCase() + material.substring(1);
+				String unlocalizedname = material + "_" + tool.getName();
+				
+				try {
+					Class<? extends ItemToolVC> toolclass = (Class<? extends ItemToolVC>) Class.forName("at.tyron.vintagecraft.Item.ItemTool" + ucfirstmaterial);
+					ItemToolVC item = toolclass.getDeclaredConstructor(EnumTool.class).newInstance(tool);
+					item.setUnlocalizedName(unlocalizedname);
+					GameRegistry.registerItem(item, unlocalizedname);
+					
+					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
+					
+					tools.put(unlocalizedname, item);
+					
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+					e.printStackTrace();
+				}		
+			}
+		}
 	}
+	
+	
+	static void registerToolHeads() {
+		ArrayList<String> materials = new ArrayList<String>();
+		materials.add("stone");
+		
+		for (EnumMetal metal : EnumMetal.values()) {
+			if (metal.hasTools) materials.add(metal.getName());
+		}
+		
+		for (EnumTool tool : EnumTool.values()) {
+			for (String material : materials) {
+				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
+				if (!tool.requiresWoodenHandle) continue;
+				
+				String ucfirstmaterial = material.substring(0, 1).toUpperCase() + material.substring(1);
+				String unlocalizedname = material + "_" + tool.getName()+"toolhead";
+				
+				try {
+					Item item = new ItemToolHead(tool, material);
+					item.setUnlocalizedName(unlocalizedname);
+					GameRegistry.registerItem(item, unlocalizedname);
+					
+					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName());
+					
+					toolheads.put(unlocalizedname, item);
+					
+					
+				} catch (Exception e) {
+					System.out.println(e.toString());
+					e.printStackTrace();
+				}		
+			}
+		}
+	}
+	
+	
 	
 	static String ucFirst(String word) {
 		word = word.toLowerCase();
@@ -258,20 +315,15 @@ public class ItemsVC {
 	
 	
 	static void initIngots() {
-		ingot = new ItemIngot().register("ingot");
+		metalingot = new ItemIngot().register("ingot");
+		metalplate = new ItemMetalPlate().register("metalplate");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
-			VintageCraft.instance.proxy.addVariantName(ingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase());
+			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase());
+			if (metal.hasArmor) {
+				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase());
+			}
 		}
-		
-		
-		ItemStack copperIngot = new ItemStack(ingot);
-		ItemIngot.setMetal(copperIngot, EnumMetal.COPPER);
-		
-		ItemStack nativeCopperOre = new ItemStack(ore);
-		ItemOreVC.setOreType(nativeCopperOre, EnumOreType.NATIVECOPPER);
-		
-		GameRegistry.addSmelting(nativeCopperOre, copperIngot, 0);
 	}
 	
 
@@ -285,20 +337,9 @@ public class ItemsVC {
 		ArrayList<ItemToolVC> tools = new ArrayList<ItemToolVC>();
 		
 		for (EnumTool tool : EnumTool.values()) {
-			if (metal.equals("stone") && !tool.canBeMadeFromStone) continue;
-			
-			String toolnamecode = metal + ucFirst(tool.getName());
-			
-			try {
-				Field field = ItemsVC.class.getField(toolnamecode);
-				ItemToolVC item = (ItemToolVC) field.get(null);
-				
+			ItemToolVC item = ItemsVC.tools.get(metal + "_" + tool.getName());
+			if (item != null) {
 				tools.add(item);
-				 
-				
-			} catch (Exception e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
 			}
 			
 		}
@@ -308,7 +349,7 @@ public class ItemsVC {
 	
 	
 	public static ItemArmorVC[] getArmorPieces(String metal) {
-		ArrayList<ItemArmorVC> armors = new ArrayList<ItemArmorVC>();
+	/*	ArrayList<ItemArmorVC> armors = new ArrayList<ItemArmorVC>();
 		
 		for (String armortype : ItemArmorVC.armorTypes) {
 			String code = metal + ucFirst(armortype);
@@ -327,7 +368,9 @@ public class ItemsVC {
 			
 		}
 		
-		return armors.toArray(new ItemArmorVC[0]);
+		return armors.toArray(new ItemArmorVC[0]);*/
+		
+		return armor.values().toArray(new ItemArmorVC[0]);
 	}
 	
 }

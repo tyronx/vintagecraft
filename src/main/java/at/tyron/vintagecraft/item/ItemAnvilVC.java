@@ -43,7 +43,7 @@ public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider
 	
 	
 	public static ItemStack getItemStack(EnumMetal metal) {
-		ItemStack itemstack = new ItemStack(Item.getItemFromBlock(BlocksVC.anvil));
+		ItemStack itemstack = new ItemStack(Item.getItemFromBlock(BlocksVC.metalanvil));
 		itemstack.setTagCompound(new NBTTagCompound());
 		itemstack.getTagCompound().setInteger("metal", metal.getId());
 		return itemstack;

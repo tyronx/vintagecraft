@@ -1,3 +1,10 @@
+=== Underground tweaks ===
+
+- Make diamonds and emeralds spawn in clusters. (rnd pos around a center with 2-3 block radius)
+
+- Add crystal caves, which are somtimes underwater, sometimes drained. Contains smoky quartz crystals, rose quartz crystals, gypsum crystals, etc.
+
+
 
 == Blachsmithing system ====
 
@@ -7,7 +14,9 @@
 
 - Ingots have to be hot to be workable. Requires a forge which however can be used from the same gui if a forge is nearby
 
-- 
+
+- Blacksmithing is a skill, that with increasing profession increases the damage and durability of tools!
+
 
 
 

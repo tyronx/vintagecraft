@@ -6,8 +6,13 @@ import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
-public class ChunkPutNbt extends AbstractPacket {
+public class ChunkPutNbt implements IMessage {
 	NBTTagCompound chunknbt;
 	long index;
 	
@@ -17,47 +22,29 @@ public class ChunkPutNbt extends AbstractPacket {
 		this.chunknbt = chunknbt;
 		this.index = index;
 	}
+
+
+	@Override
+	public void fromBytes(ByteBuf buf) {
+		index = buf.readLong();
+		chunknbt = ByteBufUtils.readTag(buf);
+	}
+
+	@Override
+	public void toBytes(ByteBuf buf) {
+		buf.writeLong(index);
+		ByteBufUtils.writeTag(buf, chunknbt);
+	}
+
+	public static class Handler implements IMessageHandler<ChunkPutNbt, IMessage> {
+
+		@Override
+		public IMessage onMessage(ChunkPutNbt message, MessageContext ctx) {
+			if (ctx.side == Side.CLIENT) {
+				VintageCraft.proxy.putChunkNbt(message.index, message.chunknbt);
+			}
+			return null;
+		}
+	}
 	
-	@Override
-	public void encodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		PacketBuffer pb = new PacketBuffer(buffer);
-		pb.writeLong(index);
-		//pb.writeInt(chunkZ);
-		//pb.writel
-		try {
-			pb.writeNBTTagCompoundToBuffer(chunknbt);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public void decodeInto(ChannelHandlerContext ctx, ByteBuf buffer) {
-		PacketBuffer pb = new PacketBuffer(buffer);
-		//chunkX = pb.readInt();
-		//chunkZ = pb.readInt();
-		index = pb.readLong();
-		try {
-			chunknbt = pb.readNBTTagCompoundFromBuffer();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	public void handleClientSide(EntityPlayer player) {
-		VintageCraft.proxy.putChunkNbt(index, chunknbt);
-
-	}
-
-	@Override
-	public void handleServerSide(EntityPlayer player) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -1,0 +1,6 @@
+{
+	"parent": "vintagecraft:block/stoneanvil/base_1",
+	"textures": {
+		"stone": "vintagecraft:blocks/rock/andesite"
+	}
+}

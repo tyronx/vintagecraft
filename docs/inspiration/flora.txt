@@ -1,3 +1,12 @@
+=== TreeGen Rewrite ===
+
+- Certain Parameters in the Enviroment modify certain parameters of tree growth. 
+  E.g. A thick forest makes trees grow tall and leaves only grow near the top.
+  => We need a Parameter Modification class and 3-5 instances of it that modifies growth parameters based on environment parameters
+
+
+-  Also generate dead trees and fallen over dead trees
+
 
 === Tree types ====
 

@@ -56,6 +56,7 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISize
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		tooltip.add(StatCollector.translateToLocal("rock." + ItemStone.getRockType(itemstack) + ".name"));
+		tooltip.add(StatCollector.translateToLocal("rocktype." + ItemStone.getRockType(itemstack).group.name().toLowerCase() + ".name"));
 	}
 	
 	@Override

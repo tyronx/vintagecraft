@@ -15,6 +15,7 @@ import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerFlatVC;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerVC;
+import at.tyron.vintagecraft.WorldGen.Layer.GenLayerTerrain;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustType;
@@ -52,57 +53,28 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	private Random rand;
 	ChunkPrimer primer;
 
-	
+	// 3D Simplex Noise Rock Generator
 	GenRockLayers genrocklayers;
-	GenLayerVC ageLayer;
-	GenLayerVC noiseFieldModifier;	
 	
-	GenLayerVC rockOffsetNoiseX;
-	GenLayerVC rockOffsetNoiseZ;
+	// Currently almost no use
+	GenLayerVC ageLayer;
 	
 	MapGenCavesVC caveGenerator;
 	MapGenFlora floragenerator;
 
+	// These create deformations in the transitions of rocks, so they are not in a straight line
+	GenLayerVC rockOffsetNoiseX;
+	GenLayerVC rockOffsetNoiseZ;
 	
+	GenLayerTerrain normalTerrainGen;
 	
 	/** The biomes that are used to generate the chunk */
 	private BiomeGenBase[] biomeMap;
 	
-	
-	
-	
-
-	/** NoiseGeneratorOctaves used in generating terrain */
-	private NoiseGeneratorOctaves noiseGen1;
-	private NoiseGeneratorOctaves noiseGen2;
-	private NoiseGeneratorOctaves noiseGen3;
-	private NoiseGeneratorOctaves noiseGen4;
-	public NoiseGeneratorOctaves noiseGen5;
-	public NoiseGeneratorOctaves noiseGen6;
-	
-	
-	/** Holds the overall noise array used in chunk generation */
-	double[] noiseArray;
-
 	int[] seaLevelOffsetMap = new int[256];
 	int[] chunkGroundLevelMap = new int[256]; // Skips floating islands
 	int[] chunkHeightMap = new int[256];
 
-
-
-	/** A double array that hold terrain noise*/
-	double[] noise3;
-	double[] noise1;
-	double[] noise2;
-	double[] noise5;
-	double[] noise6;
-	int noiseFieldModifierArray[];
-
-	
-	/**
-	 * Used to store the 5x5 parabolic field that is used during terrain generation.
-	 */
-	float[] parabolicField;
 
 	
 	
@@ -114,22 +86,17 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
-		this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 4);
-		this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
-		this.noiseGen3 = new NoiseGeneratorOctaves(this.rand, 8);
-		this.noiseGen4 = new NoiseGeneratorOctaves(this.rand, 4);
-		this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 2);
-		this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 1);
 		this.mobSpawnerNoise = new NoiseGeneratorOctaves(this.rand, 8);
 		this.seed = seed;
 		
-		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed);
 		
 		genrocklayers = new GenRockLayers(seed);
 		ageLayer = GenLayerVC.genAgemap(seed);
 		rockOffsetNoiseX = GenLayerVC.genHorizontalRockOffsetMap(seed);
 		rockOffsetNoiseZ = GenLayerVC.genHorizontalRockOffsetMap(seed+500);
 		//heightmapGen = GenLayerVC.genHeightmap(seed);
+		
+		normalTerrainGen = new GenLayerTerrain(seed + 0);
 	}
 	
 	
@@ -150,9 +117,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		biomeMap = worldObj.getWorldChunkManager().loadBlockGeneratorData(biomeMap, chunkX * 16, chunkZ * 16, 16, 16);
 		
 		//if (chunkX % 4 != 0) { // && (chunkX+1) % 4 != 0) {
-		
-			generateTerrainHigh(chunkX, chunkZ, primer);
-			generateTerrainLow(chunkX, chunkZ, primer);
+			normalTerrainGen.generateTerrain(chunkX, chunkZ, primer, worldObj);
 		
 			decorate(chunkX, chunkZ, rand, primer);
 			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
@@ -196,22 +161,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 
 
-
-	// Get spawnable creatures list
-	@Override
-	public List func_177458_a(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
-		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(p_177458_2_);
-		
-		return biomegenbase.getSpawnableList(p_177458_1_);
-	}
-	
-	@Override
-	public void recreateStructures(Chunk p_180514_1_, int p_180514_2_, int p_180514_3_) {
-				
-	}
-	
-	
-	
 	
 	@Override
 	// chunkprovider is an instance of ChunkProviderServer
@@ -247,11 +196,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 			
 		
-		//BlockPos pos = new BlockPos(chunkX, 0, chunkZ);
-		//BiomeVC biome = (BiomeVC) this.worldObj.getBiomeGenForCoords(pos);
-		//biome.decorate(this.worldObj, this.rand, pos);
-
-		
 		BlockPos pos;
 		int xCoord = chunkX * 16;
 		int zCoord = chunkZ * 16;
@@ -280,23 +224,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 	
 	
-	
-	public boolean shouldPopulate(ChunkProviderServer chunkprovider, int chunkX, int chunkZ) {
-		return
-			 chunkprovider.chunkExists(chunkX - 1, chunkZ)
-			 && chunkprovider.chunkExists(chunkX, chunkZ - 1)
-			 && chunkprovider.chunkExists(chunkX + 1, chunkZ)
-			 && chunkprovider.chunkExists(chunkX, chunkZ + 1)
-		;
-	}
-	
-	@Override
-	public boolean func_177460_a(IChunkProvider p_177460_1_, Chunk p_177460_2_, int p_177460_3_, int p_177460_4_) {
-		return false;
-	}
-	
-	
-	
+
 	
 	
 	
@@ -312,6 +240,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		EnumCrustLayer[] crustLayersByDepth = new EnumCrustLayer[255];
 		
 		int age[] = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
+		
+		// These create deformations in the transitions of rocks, so they are not in a straight line
 		int rockoffsetx[] = rockOffsetNoiseX.getInts(chunkX*16, chunkZ*16, 16, 16);
 		int rockoffsetz[] = rockOffsetNoiseZ.getInts(chunkX*16, chunkZ*16, 16, 16);
 		
@@ -407,300 +337,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	public void generateTerrainLow(int chunkX, int chunkZ, ChunkPrimer primer) {
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				for (int y = VCraftWorld.instance.terrainGenHiLevel; y > 0; y--) {
-					if (primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
-						primer.setBlockState(x, y, z, Blocks.stone.getDefaultState());
-					}
-				}
-			}
-		}
-	}
-
-	BiomeGenBase []largerBiomeMap = null;
-	public void generateTerrainHigh(int chunkX, int chunkZ, ChunkPrimer primer) {
-		byte horizontalPart = 4;
-		byte verticalPart = 20;
-		
-		int xSize = horizontalPart + 1;
-		byte ySize = 21;
-		int zSize = horizontalPart + 1;
-		
-		largerBiomeMap = this.worldObj.getWorldChunkManager().getBiomesForGeneration(largerBiomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
-		
-		this.noiseArray = this.initializeNoiseFieldHigh(this.noiseArray, chunkX * horizontalPart, 0, chunkZ * horizontalPart, xSize, ySize, zSize);
-		
-		double yLerp = 0.125D;
-		double xLerp = 0.25D;
-		double zLerp = 0.25D;
-		
-		//int ycoord;
-		
-		for (int x = 0; x < horizontalPart; ++x) {
-			for (int z = 0; z < horizontalPart; ++z) {
-				for (int y = 0; y < verticalPart; ++y) {
-					
-					double lower_lefttop = this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 0];
-					double lower_leftbottom = this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 0];
-					double lower_righttop = this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 0];
-					double lower_rightbottom = this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 0];
-					
-					double dy_lefttop = (this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 1] - lower_lefttop) * yLerp;
-					double dy_leftbottom = (this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 1] - lower_leftbottom) * yLerp;
-					double dy_righttop = (this.noiseArray[((x + 1) * zSize + z + 0) * ySize + y + 1] - lower_righttop) * yLerp;
-					double dy_rightbottom = (this.noiseArray[((x + 1) * zSize + z + 1) * ySize + y + 1] - lower_rightbottom) * yLerp;
-
-					for (int dy = 0; dy < 8; ++dy) {
-						
-						
-						double bottom1Counting = lower_lefttop;
-						double bottom2Counting = lower_leftbottom;
-						
-						double noisetopdx = (lower_righttop - lower_lefttop) * xLerp;
-						double noisedowndx = (lower_rightbottom - lower_leftbottom) * xLerp;
-
-						for (int dx = 0; dx < 4; ++dx) {	
-							
-							double var49 = (bottom2Counting - bottom1Counting) * zLerp;
-							double var47 = bottom1Counting - var49;
-
-							for (int dz = 0; dz < 4; ++dz) {
-								if ((var47 += var49) > 0.0D) {
-									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.stone.getDefaultState());
-								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.instance.seaLevel) {
-									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.water.getDefaultState());
-								} else {
-									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.air.getDefaultState());
-								}
-								
-							}
-							
-							bottom1Counting += noisetopdx;
-							bottom2Counting += noisedowndx;
-						}
-						
-						lower_lefttop += dy_lefttop;
-						lower_leftbottom += dy_leftbottom;
-						lower_righttop += dy_righttop;
-						lower_rightbottom += dy_rightbottom;
-					}
-				}
-			}
-		}
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-	
-	/***
-	 * generates a subset of the level's terrain data. Takes 7 arguments: the [empty] noise array, the position, and the
-	 * size.
-	 */
-	private double[] initializeNoiseFieldHigh(double[] outArray, int xPos, int yPos, int zPos, int xSize, int ySize, int zSize) {
-		int smoothingRadius = 2;
-		
-		noiseFieldModifierArray = noiseFieldModifier.getInts(xPos, zPos, xSize, zSize);
-		
-		if (outArray == null) {
-			outArray = new double[xSize * ySize * zSize];
-		}
-
-		VCraftWorld.instance.terrainGenHiLevel = 67;
-		
-		if (this.parabolicField == null) {
-			this.parabolicField = new float[2*smoothingRadius + 5 * 2 * smoothingRadius + 1];
-			for (int xR = -smoothingRadius; xR <= smoothingRadius; ++xR) {
-				for (int zR = -smoothingRadius; zR <= smoothingRadius; ++zR) {
-					float var10 = 10.0F / MathHelper.sqrt_float(xR * xR + zR * zR + 0.2F);
-					this.parabolicField[xR + smoothingRadius + (zR + smoothingRadius) * 5] = var10;
-				}
-			}
-		}		
-		
-		double horizontalScale = 1000D;
-		double verticalScale = 1000D;
-		
-		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
-		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 800.0D, 800.0D, 0.5D);
-		
-		// Seems to be the lowest octave
-		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
-		
-		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
-
-		// Seems to be a high or highest octave
-		this.noise3 = this.noiseGen3.generateNoiseOctaves(this.noise3, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 60.0D, verticalScale / 120.0D, horizontalScale / 60.0D);
-
-		
-		boolean var43 = false;
-		boolean var42 = false;
-		int posIndex = 0;
-		int counter = 0;
-
-		for (int x = 0; x < xSize; ++x) {
-			for (int z = 0; z < zSize; ++z) {
-				float maxBlendedHeight = 0.0F;
-				float minBlendedHeight = 0.0F;
-				float blendedHeightSum = 0.0F;
-				
-				BiomeVC baseBiome = (BiomeVC)largerBiomeMap[x + smoothingRadius + (z + smoothingRadius) * (xSize + 5)];
-
-				for (int xR = -smoothingRadius; xR <= smoothingRadius; ++xR) {
-					for (int zR = -smoothingRadius; zR <= smoothingRadius; ++zR) {
-						BiomeVC blendBiome = (BiomeVC)largerBiomeMap[x + xR + smoothingRadius + (z + zR + smoothingRadius) * (xSize + 5)];
-						float blendedHeight = this.parabolicField[xR + smoothingRadius + (zR + smoothingRadius) * 5] / 2.0F;
-						//System.out.println(blendedHeight + " / " + blendBiome.minHeight + " > " + baseBiome.minHeight + " max:" + blendBiome.maxHeight);
-						if (blendBiome.minHeight > baseBiome.minHeight) {
-							blendedHeight *= 0.5F;
-						}
-
-						maxBlendedHeight += blendBiome.maxHeight * blendedHeight;
-						minBlendedHeight += blendBiome.minHeight * blendedHeight;
-						blendedHeightSum += blendedHeight;
-					}
-				}
-
-				maxBlendedHeight /= blendedHeightSum;
-				minBlendedHeight /= blendedHeightSum;
-				maxBlendedHeight = maxBlendedHeight * 0.9F + 0.1F;
-				minBlendedHeight = (minBlendedHeight * 4.0F - 1.0F) / 8.0F;
-				
-				
-				
-				/*minBlendedHeight = -5f;
-				maxBlendedHeight = -4.9f;*/
-				
-				// Tall Erroded Islands
-				//minBlendedHeight = -0.8f;
-				//maxBlendedHeight = 1f;xd
-				
-				// Eroded Islands
-				//minBlendedHeight = -0.8f;
-				//maxBlendedHeight = 0.2f;
-				
-				
-				// Island
-				// Used these settings to generate extreme overhangs etc. 
-				/*minBlendedHeight = -0.2f;
-				maxBlendedHeight = 0.5f;*/
-				
-				maxBlendedHeight /= 10;
-				
-				
-				double noise6var = this.noise6[counter] / 8000.0D;
-
-				if (noise6var < 0.0D)
-					noise6var = -noise6var * 0.3D;
-				noise6var = noise6var * 3.0D - 2.0D;
-
-				if (noise6var < 0.0D) {
-					noise6var /= 2.0D;
-					if (noise6var < -1.0D)
-						noise6var = -1.0D;
-					noise6var /= 1.4D;
-					noise6var /= 2.0D;
-				}
-				else
-				{
-					if (noise6var > 1.0D)
-						noise6var = 1.0D;
-					noise6var /= 8.0D;
-				}
-
-				++counter;
-				for (int y = 0; y < ySize; ++y) {
-					double minblendhgvar = minBlendedHeight;
-					double maxblendhgvar = maxBlendedHeight;
-					minblendhgvar += noise6var * 0.2D;
-					minblendhgvar = minblendhgvar * ySize / 16.0D;
-					
-					double adjustedminhg = ySize / 2.0D + minblendhgvar * 4.0D;
-					double result = 0.0D;
-					double theheight = (y - adjustedminhg) * 12.0D / (2.70 + maxblendhgvar);   // * 256.0D / 256.0D
-
-					if (theheight < 0.0D) {
-						theheight *= 4.0D;
-					}
-					
-					/*double noise1var = this.noise1[posIndex] / 512.0D;
-					double noise2var = this.noise2[posIndex] / 512.0D;
-					double noise3var = (this.noise3[posIndex] / 10.0D + 1.0D) / 2.0D;
-					
-					if (noise3var < 0.0D) {
-						result = noise1var;
-					} else if (noise3var > 1.0D) {
-						result = noise2var;
-					} else {
-						result = noise1var + (noise2var - noise1var) * noise3var;
-					}*/
-					
-					result = noise1[posIndex] / 128D 
-							+ (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0.2f, noiseFieldModifierArray[x + z * xSize] / 210f);
-
-					//result = noise1var;
-							
-					result -= theheight;
-					
-					if (y > ySize - 4) {
-						double var40 = (y - (ySize - 4)) / 3.0F;
-						result = result * (1.0D - var40) + -10.0D * var40;
-					}
-
-					outArray[posIndex] = result;
-					++posIndex;
-					
-					
-				}
-			}
-		}
-		return outArray;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	@Override
-	public boolean unloadQueuedChunks()
-	{
-		return true;
-	}
-
 
 	public static List getCreatureSpawnsByChunk(World world, BiomeVC biome, int xcoord, int zcoord) {
 		ArrayList<SpawnListEntry> list = new ArrayList<SpawnListEntry>();
@@ -748,5 +384,47 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		return list;
 	}
+
+	
+	
+	public boolean shouldPopulate(ChunkProviderServer chunkprovider, int chunkX, int chunkZ) {
+		return
+			 chunkprovider.chunkExists(chunkX - 1, chunkZ)
+			 && chunkprovider.chunkExists(chunkX, chunkZ - 1)
+			 && chunkprovider.chunkExists(chunkX + 1, chunkZ)
+			 && chunkprovider.chunkExists(chunkX, chunkZ + 1)
+		;
+	}
+	
+	@Override
+	public boolean func_177460_a(IChunkProvider p_177460_1_, Chunk p_177460_2_, int p_177460_3_, int p_177460_4_) {
+		return false;
+	}
+	
+	
+
+	@Override
+	public boolean unloadQueuedChunks()
+	{
+		return true;
+	}
+
+
+
+
+	// Get spawnable creatures list
+	@Override
+	public List func_177458_a(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
+		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(p_177458_2_);
+		
+		return biomegenbase.getSpawnableList(p_177458_1_);
+	}
+	
+	@Override
+	public void recreateStructures(Chunk p_180514_1_, int p_180514_2_, int p_180514_3_) {
+				
+	}
+	
+	
 	
 }

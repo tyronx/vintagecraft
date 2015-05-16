@@ -12,16 +12,24 @@ public class ModelRendererVC extends ModelRenderer {
 	public ModelRendererVC(ModelBase par1) {
 		super(par1);
 		modelBase = par1;
+		textureHeight = 32f;
+		textureWidth = 32f;
 	}
 	
-	public ModelRendererVC(ModelBase par1ModelBase, int par2, int par3)
-    {
+	public ModelRendererVC(ModelBase par1ModelBase, int texoffsetx, int texoffsety) {
         this(par1ModelBase);
-        this.setTextureOffset(par2, par3);
+        this.setTextureOffset(texoffsetx, texoffsety);
     }
+
+	public ModelRendererVC(ModelBase par1ModelBase, float textureWidth, float textureHeight, int texoffsetx, int texoffsety) {
+        this(par1ModelBase);
+        this.textureHeight = textureHeight;
+        this.textureWidth = textureWidth;
+        this.setTextureOffset(texoffsetx, texoffsety);
+    }
+
 	
-	public ModelRendererVC setTextureOffset(int par1, int par2)
-    {
+	public ModelRendererVC setTextureOffset(int par1, int par2) {
         this.textureOffsetX = par1;
         this.textureOffsetY = par2;
         return this;

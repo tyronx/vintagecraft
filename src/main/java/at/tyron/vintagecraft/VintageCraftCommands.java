@@ -16,7 +16,7 @@ import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeRoot;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeTrunk;
 import at.tyron.vintagecraft.WorldGen.Helper.NatFloat;
-import at.tyron.vintagecraft.WorldGen.LayerTransform.*;
+import at.tyron.vintagecraft.WorldGen.Layer.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;

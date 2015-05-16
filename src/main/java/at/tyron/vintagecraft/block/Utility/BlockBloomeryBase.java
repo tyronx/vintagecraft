@@ -5,6 +5,7 @@ import java.util.List;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.IIgniteable;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -30,7 +31,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBloomeryBase extends BlockContainerVC implements IBlockItemSink {
+public class BlockBloomeryBase extends BlockContainerVC implements IBlockItemSink, IIgniteable {
 	public static PropertyEnum fillheight = PropertyEnum.create("fillheight", EnumBloomeryState.class);
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	
@@ -99,24 +100,7 @@ public class BlockBloomeryBase extends BlockContainerVC implements IBlockItemSin
 	
 	public boolean hasChimney(World world, BlockPos pos) {
 		return world.getBlockState(pos.up()).getBlock() instanceof BlockBloomeryChimney;
-	}
-	
-	
-	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TEBloomery tebloomery = (TEBloomery)world.getTileEntity(pos);
-
-		
-		if (tebloomery != null && entityplayer.getCurrentEquippedItem() == null) {
-			if (side == state.getValue(FACING) && hitY < 0.4f) {
-				return tebloomery.tryIgnite();
-			}
-		}
-		
-		return super.onBlockActivated(world, pos, state, entityplayer, side, hitX, hitY, hitZ);
-	}
-	
+	}	
 	
 	
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
@@ -174,5 +158,16 @@ public class BlockBloomeryBase extends BlockContainerVC implements IBlockItemSin
 		if(tebloomery == null) return false;
 
 		return tebloomery.tryPutItemStack(itemstack);
+	}
+
+
+	@Override
+	public boolean ignite(World world, BlockPos pos, ItemStack firestarter) {
+		TEBloomery tebloomery = (TEBloomery)world.getTileEntity(pos);
+
+		if (tebloomery != null) {
+			return tebloomery.tryIgnite();
+		}
+		return false;
 	}
 }

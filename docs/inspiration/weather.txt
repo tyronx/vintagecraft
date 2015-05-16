@@ -1,0 +1,28 @@
+===== Wind map ======
+
+- Start with simplex noise, wind moves along the lines of same lightness?
+- Wind strength determined by elevation + temperature change?
+
+
+==== Weather Effects and Astronomical Events ====
+
+- Night sky: http://i.imgur.com/yZdI5bw.png
+  Randomly generated each world!!
+
+- Fog. Examples:
+  http://cmicro.github.io/NeatCraft/forge-javadoc/net/minecraftforge/client/event/EntityViewRenderEvent.RenderFogEvent.html#fogMode
+  https://github.com/Deadrik/TFCraft/blob/b3e79e92e938765edf05b26e1cc9b03d8f9aa7b8/src/Common/com/bioxx/tfc/Handlers/Client/FogHandler.java
+
+- Light rain, Heavy rain. 
+  Light will be local not global in a Future version
+
+- Heavy Wind
+
+- Each Precipiation event will have a temperature (-4 to 4) value that is added to the temperature map
+  to e.g. allow sometimes snow in above zero regions.
+
+- Solar Eclipse
+- Occassional Shooting Stars and rare events where loads of shooting stars appear
+- Other planets and Nebulas in the sky
+- Realistic movement of the moon?
+- Meteors

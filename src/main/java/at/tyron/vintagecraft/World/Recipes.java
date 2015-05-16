@@ -17,6 +17,7 @@ import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemStone;
+import at.tyron.vintagecraft.Item.ItemStonePot;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
@@ -52,20 +53,34 @@ public class Recipes {
 		registerToSorter();
 		
 		ItemStack stick = new ItemStack(Items.stick);
-		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.COPPER);
-		ItemStack tinbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.TINBRONZE);
-		ItemStack bismuthbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.BISMUTHBRONZE);
-		ItemStack ironingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), EnumMetal.IRON);
+		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.COPPER);
+		ItemStack tinbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TINBRONZE);
+		ItemStack bismuthbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTHBRONZE);
+		ItemStack ironingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRON);
 		
-		EnumMetal[] metals = new EnumMetal[]{EnumMetal.COPPER, EnumMetal.TINBRONZE, EnumMetal.BISMUTHBRONZE, EnumMetal.IRON};
+		//EnumMetal[] metals = new EnumMetal[]{EnumMetal.COPPER, EnumMetal.TINBRONZE, EnumMetal.BISMUTHBRONZE, EnumMetal.IRON};
 		
 
+		for (EnumTool tool : EnumTool.values()) {
+			if (!tool.requiresWoodenHandle) continue;
+			
+			for (EnumMetal metal : EnumMetal.values()) {
+				if (!metal.hasTools) continue;
+				
+				Item toolitem = ItemsVC.tools.get(metal.getName() + "_" + tool.getName());
+				Item toolheaditem = ItemsVC.toolheads.get(metal.getName() + "_" + tool.getName()+"toolhead");
+				
+				GameRegistry.addShapedRecipe(new ItemStack(toolitem), new Object[]{" T", " S", 'T', toolheaditem, 'S', Items.stick});
+			}
+		}
 		
-		for (EnumMetal metal : metals) {
-			ItemToolVC []tools = ItemsVC.getTools(metal.getName());
-			ItemStack ingot = ItemIngot.setMetal(new ItemStack(ItemsVC.ingot), metal);
+		for (EnumMetal metal : EnumMetal.values()) {
+			if (!metal.hasArmor) continue;
+			
+			//ItemToolVC []tools = ItemsVC.getTools(metal.getName());
+			ItemStack ingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
 
-			for (ItemToolVC tool : tools) {
+			/*for (ItemToolVC tool : tools) {
 				Object []recipe = null;
 				switch(tool.tooltype) {
 					case AXE:     recipe = new Object[] { "SS ", "SW ", " W ", 'S', ingot, 'W', stick}; break;
@@ -80,7 +95,7 @@ public class Recipes {
 				
 				
 				GameRegistry.addShapedRecipe(new ItemStack(tool), recipe);
-			}
+			}*/
 			
 			ItemArmorVC[] armorpieces = ItemsVC.getArmorPieces(metal.getName());
 			
@@ -107,13 +122,14 @@ public class Recipes {
 			ItemStack stone = ItemStone.setRockType(new ItemStack(ItemsVC.stone), rocktype);
 			
 			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SSS", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
-			GameRegistry.addShapedRecipe(BlocksVC.forge.getItemStackFor(rocktype, 2), new Object[] { "S S", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
+			GameRegistry.addShapedRecipe(ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), rocktype), new Object[] { "S S", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
 			
 			
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneAxe), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneHoe), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stonePickaxe), new Object[] { "SSS", " W ", " W ", 'S', stone, 'W',  Items.stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.stoneShovel), new Object[] { " S ", " W ", " W ", 'S', stone, 'W', Items.stick});	
+			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_axe")), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
+			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_hoe")), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
+			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_pickaxe")), new Object[] { "SSS", " W ", " W ", 'S', stone, 'W',  Items.stick});
+			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_shovel")), new Object[] { " S ", " W ", " W ", 'S', stone, 'W', Items.stick});	
+			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_hammer")), new Object[] { "SSS", "SWS", " W ", 'S', stone, 'W', Items.stick});
 		}
 		
 		
@@ -153,11 +169,11 @@ public class Recipes {
 			GameRegistry.addShapedRecipe(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
 			
 			
-			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "SW", "  ", 'S', ItemsVC.copperSaw, 'W', planksstack}));
-			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "  ", "SW", 'S', ItemsVC.copperSaw, 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "SW", "  ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "  ", "SW", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 			
-			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.copperSaw, 'W', planksstack}));
-			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.copperSaw, 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 		}
 		
 		
@@ -181,7 +197,9 @@ public class Recipes {
 
 		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', ironingot});
 		
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.straw, 'W', Items.stick});
 		
+		//GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { Items.stick, ItemsVC.straw});
 		
 		
 		

@@ -2,7 +2,11 @@ package at.tyron.vintagecraft.TileEntity;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.AnvilRecipes;
+import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -19,7 +23,10 @@ public abstract class TENoGUIInventory extends NetworkTileEntity implements IInv
 	protected ItemStack[] storage;
 
 	
-	
+	private void onAnvilInventoryChanged() {
+		
+	}
+
 
 	
 
@@ -75,9 +82,13 @@ public abstract class TENoGUIInventory extends NetworkTileEntity implements IInv
 	@Override
 	public void setInventorySlotContents(int i, ItemStack itemstack)  {
 		storage[i] = itemstack;
-		if(itemstack != null && itemstack.stackSize > getInventoryStackLimit())
+		
+		if(itemstack != null && itemstack.stackSize > getInventoryStackLimit()) {
 			itemstack.stackSize = getInventoryStackLimit();
+		}
+		
 	}
+
 
 	public void updateNeighbours() {
 		if(!worldObj.isAirBlock(pos.up()))

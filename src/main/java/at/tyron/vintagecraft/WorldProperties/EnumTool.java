@@ -1,22 +1,25 @@
 package at.tyron.vintagecraft.WorldProperties;
 
 public enum EnumTool {
-	PICKAXE (0, true),
-	AXE (1, true),
-	SHOVEL (2, true),
-	SWORD (3, false),
+	PICKAXE (0, true, true),
+	AXE (1, true, true),
+	SHOVEL (2, true, true),
+	SWORD (3, false, true),
 	//CHISEL (4),
-	HOE (5, true),
-	SAW (6, false),
-	SHEARS (7, false)
+	HOE (5, true, true),
+	SAW (6, false, true),
+	SHEARS (7, false, false),
+	HAMMER (8, true, true)
 	;
 	
 	public int meta;
 	public boolean canBeMadeFromStone;
+	public boolean requiresWoodenHandle;
 	
-	private EnumTool(int meta, boolean canBeMadeFromStone) {
+	private EnumTool(int meta, boolean canBeMadeFromStone, boolean requiresWoodenHandle) {
 		this.meta = meta;
 		this.canBeMadeFromStone = canBeMadeFromStone;
+		this.requiresWoodenHandle = requiresWoodenHandle;
 	}
 	
 	public static EnumTool fromMeta(int meta) {

@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Client.ClientProxy;
-import at.tyron.vintagecraft.Network.PacketPipeline;
+import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
+import at.tyron.vintagecraft.Network.ChunkPutNbt;
+import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
+import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Recipes;
@@ -19,6 +22,7 @@ import at.tyron.vintagecraft.WorldGen.MapGenFlora;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldTypeVC;
+import at.tyron.vintagecraft.WorldProperties.EnumAnvilRecipe;
 //import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
@@ -96,7 +100,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.server.FMLServerHandler;
 
 @Mod(modid = ModInfo.ModID, version = ModInfo.ModVersion)
@@ -109,8 +115,8 @@ public class VintageCraft {
 	public static CommonProxy proxy;
 	    
     // The packet pipeline
- 	public static final PacketPipeline packetPipeline = new PacketPipeline();
-
+ 	//public static final PacketPipeline packetPipeline = new PacketPipeline();
+ 	public static final SimpleNetworkWrapper packetPipeline = NetworkRegistry.INSTANCE.newSimpleChannel("vintagecraft");
  	
  	
  	public static CreativeTabsVC terrainTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "terrain");
@@ -122,11 +128,17 @@ public class VintageCraft {
  	
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
+    	packetPipeline.registerMessage(AnvilTechniquePacket.Handler.class, AnvilTechniquePacket.class, 0, Side.SERVER);
+    	packetPipeline.registerMessage(ChunkPutNbt.Handler.class, ChunkPutNbt.class, 1, Side.CLIENT);
+    	packetPipeline.registerMessage(ChunkRemoveNbt.Handler.class, ChunkRemoveNbt.class, 2, Side.CLIENT);
+    	packetPipeline.registerMessage(SoundEffectToServerPacket.Handler.class, SoundEffectToServerPacket.class, 3, Side.SERVER);
+    	
     	BlocksVC.init();
     	ItemsVC.init();
     	DynTreeGenerators.initGenerators();
     	
-    	packetPipeline.initalise();
+    	
+    	//packetPipeline.initalise();
     	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
@@ -166,8 +178,7 @@ public class VintageCraft {
 		proxy.init(event);
 		
 		Recipes.addRecipes();
-		
-		
+		EnumAnvilRecipe.registerRecipes();
 
 		
     }

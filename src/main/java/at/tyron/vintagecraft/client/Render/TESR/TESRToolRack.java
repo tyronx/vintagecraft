@@ -28,17 +28,14 @@ public class TESRToolRack extends TESRBase {
 		
 	}
 
-	/**
-	 * Renders the TileEntity for the chest at a position.
-	 */
-	public void renderAt(TEToolRack te, float posX, float posY, float posZ, float f)
-	{
+	public void renderAt(TEToolRack te, float posX, float posY, float posZ, float f) {
 		if (te.getWorld() != null) {
 			EnumFacing facing = te.facing;
 			
 			// Crash prevention  
-			if (facing == null)
+			if (facing == null) {
 				facing = EnumFacing.NORTH;
+			}
 			
 			// Why? O_o
 			if (facing == EnumFacing.EAST || facing == EnumFacing.WEST) facing = facing.getOpposite();

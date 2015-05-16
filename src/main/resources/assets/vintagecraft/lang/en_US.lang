@@ -46,6 +46,25 @@ rock.slate.name=Slate
 
 
 
+item.stonepotitem.gneiss.name=Gneiss Stone Pot
+item.stonepotitem.limestone.name=Limestone Stone Pot
+item.stonepotitem.claystone.name=Claystone Stone Pot
+item.stonepotitem.marble.name=Marble Stone Pot
+item.stonepotitem.granite.name=Granite Stone Pot
+item.stonepotitem.basalt.name=Basalt Stone Pot
+item.stonepotitem.andesite.name=Andesite Stone Pot
+item.stonepotitem.conglomerate.name=Conglomerate Stone Pot
+item.stonepotitem.diorite.name=Diorite Stone Pot
+item.stonepotitem.sandstone.name=Sandstone Stone Pot
+item.stonepotitem.redsandstone.name=Red Sandstone Stone Pot
+item.stonepotitem.quartzite.name=Quartzite Stone Pot
+item.stonepotitem.chert.name=Chert Stone Pot
+item.stonepotitem.gabbro.name=Gabbro Stone Pot
+item.stonepotitem.shale.name=Shale Stone Pot
+item.stonepotitem.schist.name=Green Schist Stone Pot
+item.stonepotitem.kimberlite.name=Kimberlite Stone Pot
+item.stonepotitem.slate.name=Slate Stone Pot
+
 tile.rock.gneiss.name=Gneiss
 tile.rock.limestone.name=Limestone
 tile.rock.claystone.name=Claystone
@@ -107,6 +126,59 @@ item.ingot.bismuth.name=Bismuth Ingot
 item.ingot.zinc.name=Zinc Ingot
 item.ingot.bismuthbronze.name=Bismuth Bronze Ingot
 
+
+item.ingot.copper.oddlyshaped.name=Oddly shaped Copper Ingot
+item.ingot.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Ingot
+item.ingot.iron.oddlyshaped.name=Oddly shaped Iron Ingot
+item.ingot.steel.oddlyshaped.name=Oddly shaped Steel Ingot
+item.ingot.rhodium.oddlyshaped.name=Oddly shaped Rhodium Ingot
+item.ingot.platinum.oddlyshaped.name=Oddly shaped Platinum Ingot
+item.ingot.iridium.oddlyshaped.name=Oddly shaped Iridium Ingot
+item.ingot.palladium.oddlyshaped.name=Oddly shaped Palladium Ingot
+item.ingot.osmium.oddlyshaped.name=Oddly shaped Osmium Ingot
+item.ingot.silver.oddlyshaped.name=Oddly shaped Silver Ingot
+item.ingot.gold.oddlyshaped.name=Oddly shaped Gold Ingot
+item.ingot.tin.oddlyshaped.name=Oddly shaped Tin Ingot
+item.ingot.uranium.oddlyshaped.name=Oddly shaped Uranium Ingot
+item.ingot.bismuth.oddlyshaped.name=Oddly shaped Bismuth Ingot
+item.ingot.zinc.oddlyshaped.name=Oddly shaped Zinc Ingot
+item.ingot.bismuthbronze.oddlyshaped.name=Oddly shaped Bismuth Bronze Ingot
+
+
+item.metalplate.copper.oddlyshaped.name=Oddly shaped Copper Metal Plate
+item.metalplate.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Metal Plate
+item.metalplate.iron.oddlyshaped.name=Oddly shaped Iron Metal Plate
+item.metalplate.steel.oddlyshaped.name=Oddly shaped Steel Metal Plate
+item.metalplate.rhodium.oddlyshaped.name=Oddly shaped Rhodium Metal Plate
+item.metalplate.platinum.oddlyshaped.name=Oddly shaped Platinum Metal Plate
+item.metalplate.iridium.oddlyshaped.name=Oddly shaped Iridium Metal Plate
+item.metalplate.palladium.oddlyshaped.name=Oddly shaped Palladium Metal Plate
+item.metalplate.osmium.oddlyshaped.name=Oddly shaped Osmium Metal Plate
+item.metalplate.silver.oddlyshaped.name=Oddly shaped Silver Metal Plate
+item.metalplate.gold.oddlyshaped.name=Oddly shaped Gold Metal Plate
+item.metalplate.tin.oddlyshaped.name=Oddly shaped Tin Metal Plate
+item.metalplate.uranium.oddlyshaped.name=Oddly shaped Uranium Metal Plate
+item.metalplate.bismuth.oddlyshaped.name=Oddly shaped Bismuth Metal Plate
+item.metalplate.zinc.oddlyshaped.name=Oddly shaped Zinc Metal Plate
+item.metalplate.bismuthbronze.oddlyshaped.name=Oddly shaped Bismuth Bronze Metal Plate
+
+item.metalplate.copper.name=Copper Plate
+item.metalplate.tinbronze.name=Tin Bronze Plate
+item.metalplate.iron.name=Iron Plate
+item.metalplate.steel.name=Steel Plate
+item.metalplate.rhodium.name=Rhodium Plate
+item.metalplate.platinum.name=Platinum Plate
+item.metalplate.iridium.name=Iridium Plate
+item.metalplate.palladium.name=Palladium Plate
+item.metalplate.osmium.name=Osmium Plate
+item.metalplate.silver.name=Silver Plate
+item.metalplate.gold.name=Gold Plate
+item.metalplate.tin.name=Tin Plate
+item.metalplate.uranium.name=Uranium Plate
+item.metalplate.bismuth.name=Bismuth Plate
+item.metalplate.zinc.name=Zinc Plate
+item.metalplate.bismuthbronze.name=Bismuth Bronze Plate
+
 item.anvil.copper.name=Copper Anvil
 item.anvil.tinbronze.name=Tin Bronze Anvil
 item.anvil.iron.name=Iron Anvil
@@ -123,6 +195,43 @@ item.anvil.uranium.name=Uranium Anvil
 item.anvil.bismuth.name=Bismuth Anvil
 item.anvil.zinc.name=Zinc Anvil
 item.anvil.bismuthbronze.name=Bismuth Bronze Anvil
+
+
+item.copperanvilsurface.name=Copper Anvil Surface
+item.tinbronzeanvilsurface.name=Tin Bronze Anvil Surface
+item.ironanvilsurface.name=Iron Anvil Surface
+item.steelanvilsurface.name=Steel Anvil Surface
+item.rhodiumanvilsurface.name=Rhodium Anvil Surface
+item.platinumanvilsurface.name=Platinum Anvil Surface
+item.iridiumanvilsurface.name=Iridium Anvil Surface
+item.palladiumanvilsurface.name=Palladium Anvil Surface
+item.osmiumanvilsurface.name=Osmium Anvil Surface
+item.silveranvilsurface.name=Silver Anvil Surface
+item.goldanvilsurface.name=Gold Anvil Surface
+item.tinanvilsurface.name=Tin Anvil Surface
+item.uraniumanvilsurface.name=Uranium Anvil Surface
+item.bismuthanvilsurface.name=Bismuth Anvil Surface
+item.zincanvilsurface.name=Zinc Anvil Surface
+item.bismuthbronzeanvilsurface.name=Bismuth Bronze Anvil Surface
+
+
+item.copperanvilbase.name=Copper Anvil Base
+item.tinbronzeanvilbase.name=Tin Bronze Anvil Base
+item.ironanvilbase.name=Iron Anvil Base
+item.steelanvilbase.name=Steel Anvil Base
+item.rhodiumanvilbase.name=Rhodium Anvil Base
+item.platinumanvilbase.name=Platinum Anvil Base
+item.iridiumanvilbase.name=Iridium Anvil Base
+item.palladiumanvilbase.name=Palladium Anvil Base
+item.osmiumanvilbase.name=Osmium Anvil Base
+item.silveranvilbase.name=Silver Anvil Base
+item.goldanvilbase.name=Gold Anvil Base
+item.tinanvilbase.name=Tin Anvil Base
+item.uraniumanvilbase.name=Uranium Anvil Base
+item.bismuthanvilbase.name=Bismuth Anvil Base
+item.zincanvilbase.name=Zinc Anvil Base
+item.bismuthbronzeanvilbase.name=Bismuth Bronze Anvil Base
+
 
 item.tinbronze_helmet.name=Tinbronze Helmet
 item.tinbronze_chestplate.name=Tinbronze Chestplate
@@ -168,6 +277,7 @@ item.iron_sword.name=Iron Sword
 item.iron_hoe.name=Iron Hoe
 item.iron_saw.name=Iron Saw
 item.iron_shears.name=Iron Shears
+item.iron_hammer.name=Iron Hammer
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe
 item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
@@ -176,6 +286,8 @@ item.bismuthbronze_sword.name=Bismuth Bronze Sword
 item.bismuthbronze_hoe.name=Bismuth Bronze Hoe
 item.bismuthbronze_saw.name=Bismuth Bronze Saw
 item.bismuthbronze_shears.name=Bismuth Bronze Shears
+item.bismuthbronze_hammer.name=Bismuth Bronze Hammer
+
 
 item.tinbronze_axe.name=Tin Bronze Axe
 item.tinbronze_pickaxe.name=Tin Bronze Pickaxe
@@ -184,7 +296,7 @@ item.tinbronze_sword.name=Tin Bronze Sword
 item.tinbronze_hoe.name=Tin Bronze Hoe
 item.tinbronze_saw.name=Tin Bronze Saw
 item.tinbronze_shears.name=Tin Bronze Shears
-
+item.tinbronze_hammer.name=Tin Bronze Hammer
 
 item.copper_axe.name=Copper Axe
 item.copper_pickaxe.name=Copper Pickaxe
@@ -193,6 +305,7 @@ item.copper_sword.name=Copper Sword
 item.copper_hoe.name=Copper Hoe
 item.copper_saw.name=Copper Saw
 item.copper_shears.name=Copper Shears
+item.copper_hammer.name=Copper Hammer
 
 item.stone_axe.name=Stone Axe
 item.stone_pickaxe.name=Stone Pickaxe
@@ -200,6 +313,51 @@ item.stone_shovel.name=Stone Shovel
 item.stone_sword.name=Stone Sword
 item.stone_hoe.name=Stone Hoe
 item.stone_saw.name=Stone Saw
+item.stone_hammer.name=Stone Hammer
+
+
+item.iron_axetoolhead.name=Iron Axe Toolhead
+item.iron_pickaxetoolhead.name=Iron Pickaxe Toolhead
+item.iron_shoveltoolhead.name=Iron Shovel Toolhead
+item.iron_swordtoolhead.name=Iron Sword Toolhead
+item.iron_hoetoolhead.name=Iron Hoe Toolhead
+item.iron_sawtoolhead.name=Iron Saw Toolhead
+item.iron_hammertoolhead.name=Iron Hammer Toolhead
+
+item.bismuthbronze_axetoolhead.name=Bismuth Bronze Axe Toolhead
+item.bismuthbronze_pickaxetoolhead.name=Bismuth Bronze Pickaxe Toolhead
+item.bismuthbronze_shoveltoolhead.name=Bismuth Bronze Shovel Toolhead
+item.bismuthbronze_swordtoolhead.name=Bismuth Bronze Sword Toolhead
+item.bismuthbronze_hoetoolhead.name=Bismuth Bronze Hoe Toolhead
+item.bismuthbronze_sawtoolhead.name=Bismuth Bronze Saw Toolhead
+item.bismuthbronze_hammertoolhead.name=Bismuth Bronze Hammer Toolhead
+ 
+item.tinbronze_axetoolhead.name=Tin Bronze Axe Toolhead
+item.tinbronze_pickaxetoolhead.name=Tin Bronze Pickaxe Toolhead
+item.tinbronze_shoveltoolhead.name=Tin Bronze Shovel Toolhead
+item.tinbronze_swordtoolhead.name=Tin Bronze Sword Toolhead
+item.tinbronze_hoetoolhead.name=Tin Bronze Hoe Toolhead
+item.tinbronze_sawtoolhead.name=Tin Bronze Saw Toolhead
+item.tinbronze_hammertoolhead.name=Tin Bronze Hammer Toolhead
+ 
+item.copper_axetoolhead.name=Copper Axe Toolhead
+item.copper_pickaxetoolhead.name=Copper Pickaxe Toolhead
+item.copper_shoveltoolhead.name=Copper Shovel Toolhead
+item.copper_swordtoolhead.name=Copper Sword Toolhead
+item.copper_hoetoolhead.name=Copper Hoe Toolhead
+item.copper_sawtoolhead.name=Copper Saw Toolhead
+item.copper_hammertoolhead.name=Copper Bronze Hammer Toolhead
+
+
+item.stone_axetoolhead.name=Stone Axe Toolhead
+item.stone_pickaxetoolhead.name=Stone Pickaxe Toolhead
+item.stone_shoveltoolhead.name=Stone Shovel Toolhead
+item.stone_swordtoolhead.name=Stone Sword Toolhead
+item.stone_hoetoolhead.name=Stone Hoe Toolhead
+item.stone_sawtoolhead.name=Stone Saw Toolhead
+item.stone_hammertoolhead.name=Stone Hammer Toolhead
+
+
 
 tile.planks.name=Planks
 
@@ -467,3 +625,12 @@ itemGroup.toolsandarmor=Tools and Armor
 
 
 farmland.name=Farmland
+
+item.straw.name=Straw
+item.firestarter.name=Firestarter
+
+rocktype.sedimentary.name=Sedimentary Rock
+rocktype.metamorphic.name=Metamorphic Rock
+rocktype.igneous_intrusive.name=Igenous Intrusive Rock
+rocktype.igneous_extrusive.name=Igenous Extrusive Rock
+rocktype.special.name=Igneous Rock
