@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -35,22 +36,13 @@ public class SoundEffectToServerPacket implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		/*x = buf.readDouble();
-		y = buf.readDouble();
-		z = buf.readDouble();*/
-		int len = buf.readInt();
-		sound = buf.readBytes(len).toString();
+		sound = ByteBufUtils.readUTF8String(buf);
 		pitch = buf.readFloat();
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		/*buf.writeDouble(x);
-		buf.writeDouble(y);
-		buf.writeDouble(z);*/
-		buf.writeInt(sound.length());
-		buf.writeBytes(sound.getBytes());
-		
+		ByteBufUtils.writeUTF8String(buf, sound);
 		buf.writeFloat(pitch);
 	}
 
@@ -59,8 +51,6 @@ public class SoundEffectToServerPacket implements IMessage {
 
 		@Override
 		public IMessage onMessage(SoundEffectToServerPacket message, MessageContext ctx) {
-			if (ctx.side == Side.CLIENT) return null;
-			
 			ctx.getServerHandler().playerEntity.worldObj.playSoundToNearExcept(ctx.getServerHandler().playerEntity, message.sound, 1f, message.pitch);
 			return null;
 		}

@@ -23,15 +23,15 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 					temp = lumpyInt3(55);
 					rain = lumpyInt3(130);
 				
-				// 1 in 13 chance for deserty areas
+				// 1 in 20 chance for deserty areas
 				} else if (nextInt(13) == 0) {
 					temp = 200 + lumpyInt3(55);
 					rain = lumpyInt3(55);
 				
 				// Otherwise temp mostly around average of 170
 				} else {
-					temp = lumpyInt3(330);
-					rain = lumpyInt3(330 - (255 - temp));
+					temp = lumpyInt3(300);
+					rain = lumpyInt3(220 - (120 - temp));
 				}
 				   
 				

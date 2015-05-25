@@ -113,7 +113,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 		//if (deposit == EnumMaterialDeposit.NATIVEGOLD_QUARTZ || deposit == EnumMaterialDeposit.NATIVEGOLD_QUARTZ || deposit==EnumMaterialDeposit.SYLVITE_ROCKSALT)
 		//	System.out.println(deposit + " @ " + surface.down(depth));
 		
-		//if (deposit == EnumMaterialDeposit.NATIVECOPPER) System.out.println("overground copper @ " + surface + " + depth " + depth);
+		//if (deposit == EnumMaterialDeposit.SYLVITE_ROCKSALT) System.out.println("sylvite @ " + surface + " + depth " + depth);
 		
 		int width = (rand.nextInt(9) + rand.nextInt(9)) / 2;
 		
@@ -199,7 +199,6 @@ public class WorldGenDeposits implements IWorldGenerator {
 						}
 					}
 				}
-				
 				
 				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos), pos)) {
 					int hgt = deposit.occurence.height;

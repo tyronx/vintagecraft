@@ -3,7 +3,6 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import scala.actors.threadpool.Arrays;
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
@@ -12,6 +11,7 @@ import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
@@ -38,11 +38,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, ISmithable, IItemHeatable {
-	public static final int maxstacksize = 64;
+	public static final int maxstacksize = 16;
 	public static final int maxpilesize = 64;
 	
 	public ItemIngot() {
-        this.setHasSubtypes(true);
+        setHasSubtypes(true);
+        setMaxStackSize(maxstacksize);
         setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
@@ -51,12 +52,40 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	ItemStack stack;
     	for (EnumMetal metal : EnumMetal.values()) {
+    		if (metal == EnumMetal.PALLADIUM || metal == EnumMetal.OSMIUM) continue;
     		stack = new ItemStack(ItemsVC.metalingot);
     		setMetal(stack, metal);
     		subItems.add(stack);
     	}
     }
     
+    
+    
+    
+    @Override
+    public int getColorFromItemStack(ItemStack stack, int renderPass) {
+    	int tmp = getTemperature(stack) / 6;
+    	
+    	if (renderPass == 1) {
+    		int r = Math.min(255, Math.max(0, 128 + (int) (255*tmp/400f)));
+        	int g = Math.max(0,  25 + (int) (255*tmp/800f));
+        	int b = 25;
+        	int a = Math.min(204, (int) (255*tmp/200f));
+
+    		return
+    			a << 24 |
+    			r << 16 |
+    			g << 8  |
+    			b
+    		;
+    		
+    	} else {
+        	int g = Math.max(0, (int) (255*(1 - tmp/250f)));
+        	int b = Math.max(0, (int) (255*(1 - tmp/200f)));
+        	
+    		return 0xffff0000 | (g << 8) | (b);    		
+    	}
+    }
     
 
 	
@@ -139,7 +168,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
 		
-		if (!entityplayer.isSneaking() || !isPlaceable(itemstack)) return false;
+		if (!entityplayer.isSneaking() || !isPlaceable(itemstack) || isOddlyShaped(itemstack)) return false;
 		
 		boolean ingotPileAtPos = world.getBlockState(pos).getBlock() instanceof BlockIngotPile;
 		

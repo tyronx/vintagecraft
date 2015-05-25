@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "particle": "vintagecraft:blocks/sapling/kauri",
+        "cross": "vintagecraft:blocks/sapling/kauri"
+    }
+}

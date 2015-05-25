@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.TileEntity;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import net.minecraft.entity.item.EntityItem;

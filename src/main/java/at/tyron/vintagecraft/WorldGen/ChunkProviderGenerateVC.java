@@ -306,6 +306,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 									Math.abs(age[arrayIndexHeightmap]), 
 									rand
 								);
+								
+								
 								primer.setBlockState(x, y, z, EnumCrustType.ROCK.getBlock(rocktype, null));
 							}
 							

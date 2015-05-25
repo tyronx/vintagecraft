@@ -92,6 +92,7 @@ item.ore.nativesilver_quartz.name=Native Silver
 item.ore.sylvite_rocksalt.name=Sylvite
 item.ore.rocksalt.name=Rock Salt
 item.ore.limonite.name=Limonite
+item.ore.galena.name=Galena
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite
@@ -112,6 +113,7 @@ item.ore.quartzcrystal.name=Clear Quartz
 item.ingot.copper.name=Copper Ingot
 item.ingot.tinbronze.name=Tin Bronze Ingot
 item.ingot.iron.name=Iron Ingot
+item.ingot.lead.name=Lead Ingot
 item.ingot.steel.name=Steel Ingot
 item.ingot.rhodium.name=Rhodium Ingot
 item.ingot.platinum.name=Platinum Ingot
@@ -130,6 +132,7 @@ item.ingot.bismuthbronze.name=Bismuth Bronze Ingot
 item.ingot.copper.oddlyshaped.name=Oddly shaped Copper Ingot
 item.ingot.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Ingot
 item.ingot.iron.oddlyshaped.name=Oddly shaped Iron Ingot
+item.ingot.lead.oddlyshaped.name=Oddly shaped Lead Ingot
 item.ingot.steel.oddlyshaped.name=Oddly shaped Steel Ingot
 item.ingot.rhodium.oddlyshaped.name=Oddly shaped Rhodium Ingot
 item.ingot.platinum.oddlyshaped.name=Oddly shaped Platinum Ingot
@@ -626,7 +629,7 @@ itemGroup.toolsandarmor=Tools and Armor
 
 farmland.name=Farmland
 
-item.straw.name=Straw
+item.drygrass.name=Dry Grass
 item.firestarter.name=Firestarter
 
 rocktype.sedimentary.name=Sedimentary Rock
@@ -634,3 +637,5 @@ rocktype.metamorphic.name=Metamorphic Rock
 rocktype.igneous_intrusive.name=Igenous Intrusive Rock
 rocktype.igneous_extrusive.name=Igenous Extrusive Rock
 rocktype.special.name=Igneous Rock
+
+tile.wheatcrops.name=Wheat

@@ -48,6 +48,8 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	ItemStack stack;
     	for (EnumOreType oretype : EnumOreType.values()) {
+    		if (oretype == EnumOreType.OLIVINE) continue;
+    		
     		stack = new ItemStack(ItemsVC.ore);
     		setOreType(stack, oretype);
     		subItems.add(stack);
@@ -137,6 +139,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRIDIUM);
 			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.ZINC);
 			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTH);
+			case GALENA:  return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.LEAD);
 			
 			default:
 				break; 
@@ -158,6 +161,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case IRIDIUM: return 4;
 			case SPHALERITE: return 4;
 			case BISMUTHINITE: return 4;
+			case GALENA: return 4;
 			default: break;
 		
 		}
@@ -178,6 +182,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case PLATINUM: return EnumMetal.PLATINUM.meltingpoint;
 			case RHODIUM: return EnumMetal.RHODIUM.meltingpoint;
 			case SPHALERITE: return EnumMetal.ZINC.meltingpoint;
+			case GALENA: return EnumMetal.LEAD.meltingpoint;
 			default: break;
 		}
 		return 0;

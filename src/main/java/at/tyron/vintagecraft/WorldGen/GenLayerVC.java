@@ -46,7 +46,7 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genNoiseFieldModifier(long seed) {	
-		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 4, 0.96f, 170, 0);
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 4, 0.96f, 170, -50);
 		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
 		
 		GenLayerVC noisemod = new GenLayerBlurAll(seed, 1, 4, noise);
@@ -149,10 +149,26 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genForest(long seed) {
+		GenLayerSimplexNoise forest = new GenLayerSimplexNoise(seed, 5, 0.5f, 130, -45);
+		GenLayerVC.drawImageGrayScale(512, forest, "Forest 0 Noise");
+		return forest;
+	} 	
+
+	
+	public static GenLayerVC genLowVegetation(long seed) {
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.5f, 100, 0);
+		GenLayerVC.drawImageGrayScale(512, noise, "Low Vegetation 0 Noise");
+		return noise;
+	}
+
+	
+	
+	
+	/*public static GenLayerVC genStars(long seed) {
 		GenLayerVC noise = new GenLayerNoise(1L, 46);
 		GenLayerVC.drawImageGrayScale(512, noise, "Forest 0 Noise");
 		
-		GenLayerVC forest = new GenLayerBlurAll(2L, 2, 8, noise);
+		GenLayerVC forest = new GenLayerBlurAll(2L, 1, 4, noise);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 1 Blur");
 		
 		forest = new GenLayerContrastAndBrightnessSelective(3L, 4f, 0, forest);
@@ -171,8 +187,7 @@ public abstract class GenLayerVC extends GenLayer {
 		forest.initWorldGenSeed(seed);
 		
 		return forest;
-	}
-
+	}*/
 	
 	
 	

@@ -175,6 +175,8 @@ public class BlockTopSoil extends BlockVC implements IBlockSoil {
 		
 		event.setResult(Result.ALLOW);
 		
+		event.entityPlayer.addExhaustion(0.1f);
+		
 		
 		super.hoeUsed(event);
 	}

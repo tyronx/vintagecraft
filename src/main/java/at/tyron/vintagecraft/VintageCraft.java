@@ -16,6 +16,7 @@ import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Recipes;
+import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
 import at.tyron.vintagecraft.WorldGen.MapGenFlora;
@@ -23,6 +24,7 @@ import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldTypeVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilRecipe;
+import at.tyron.vintagecraft.WorldProperties.MobInventoryItems;
 //import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockColored;
@@ -52,8 +54,14 @@ import net.minecraft.enchantment.EnchantmentLootBonus;
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntitySkeleton;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
@@ -71,6 +79,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.client.model.b3d.B3DLoader;
@@ -91,6 +101,7 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -125,6 +136,10 @@ public class VintageCraft {
  	public static CreativeTabsVC craftedBlocksTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "craftedblocks");
  	public static CreativeTabsVC toolsarmorTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "toolsandarmor");
  	
+ 	@EventHandler
+ 	public static void preInit(FMLPreInitializationEvent event) {
+ 		VintageCraftConfig.loadConfig(event);
+ 	}
  	
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
@@ -199,6 +214,115 @@ public class VintageCraft {
 	}
 		
 
+	@SubscribeEvent
+    public void entityJoin(EntityJoinWorldEvent evt) {
+    	if (! (evt.entity.worldObj instanceof WorldServer)) return;
+    	
+    	if (evt.entity instanceof EntityZombie) {
+    		gearUpMob((EntityZombie)evt.entity);
+    	}
+
+    	if (evt.entity instanceof EntitySkeleton) {
+    		gearUpMob((EntitySkeleton)evt.entity); 
+    	}
+
+    }
+
+	
+	@SubscribeEvent
+	public void loadWorld(WorldEvent.Load evt) {
+		setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
+	}
+	
+	
+	@SubscribeEvent
+	public void onServerTick(TickEvent.ServerTickEvent event) {
+		if (FMLCommonHandler.instance().getMinecraftServerInstance() == null || event.phase == TickEvent.Phase.END) return;
+		VintageCraftConfig.worldTime++;
+		
+		WorldServer[] worlds = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers;
+		
+		if (worlds[0] != null && VintageCraftConfig.worldTime % 12000L == 0) {
+			setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
+        	System.out.println(VintageCraftConfig.worldTime + "spawn cap set to " + spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
+        	VintageCraftConfig.saveConfig();
+		}	
+        
+	}
+	
+	
+	public static void setSpawnCap(EnumCreatureType type, int value) {
+		try {
+			Field field = EnumCreatureType.class.getDeclaredFields()[5];
+			field.setAccessible(true);
+			Field modifiers = Field.class.getDeclaredField("modifiers");
+			modifiers.setAccessible(true);
+			modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+			field.set(type, value);
+
+		}
+		catch(Exception e){
+			throw new RuntimeException("couldnt set mob cap");
+		}
+	}
+	
+	
+	public int spawnCapByDay(long days) {
+		if (days < 4 ) return 0;
+		
+		return (int) Math.min(70, (days-3) * 5);
+	}
+	
+	public long daysPassed(World world) {
+		return world.getWorldTime() / 24000;
+	}
+	
+	
+	public void gearUpMob(EntityMob mob) {
+		// Already has armor? Skip!
+		if (mob.getInventory()[2] != null || mob.getInventory()[3] != null || mob.getInventory()[1] != null) return;
+		
+		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
+		
+		// The deeper the mob spawns, the better equipped it is
+		float difficultyModifier = 0.35f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
+		
+		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
+		int healthboost = 0;
+		int numgearitems = 0;
+		
+		for (int i = 0; i < inventory.length; i++) {
+			if (mob instanceof EntitySkeleton && i == 0) continue;
+			
+			mob.setCurrentItemOrArmor(i, inventory[i]);
+			mob.setEquipmentDropChance(i, 0);
+			
+			healthboost += MobInventoryItems.getArmorExtraHealthBoost(inventory[i]);
+			
+			if (inventory[i] != null) numgearitems++;
+		}
+		
+		if (numgearitems >= 4 && mob instanceof EntityZombie) {
+			mob.getEntityAttribute(((EntityZombie)mob).reinforcementChance).applyModifier(new AttributeModifier("Leader zombie bonus", 0.95D, 0));
+			
+			if (healthboost > 5) {
+		//		((EntityZombie)mob).multiplySize(1.1f);
+			}
+			
+		}
+		
+		if (healthboost > 0) {
+			//System.out.println("added health " + healthboost + " / new max h = " + mob.getMaxHealth());
+			mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost / 12f, 1));
+			mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost, 1));
+			mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 1));
+			
+			//System.out.println("now resis: " + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue());
+			mob.setHealth(mob.getMaxHealth());
+		}
+		
+	}
+  
 	
 	
 	@SubscribeEvent

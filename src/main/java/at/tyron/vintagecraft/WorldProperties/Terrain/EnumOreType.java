@@ -14,7 +14,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	LIMONITE 			( 5, 3, 1f),
 	NATIVEGOLD_QUARTZ   ( 6, 2, 1f),
 	
-	REDSTONE 			( 7, 2, 1f),
+	GALENA              ( 7, 0, 0.5f),
 	CASSITERITE 		( 8, 2, 1f),
 	
 	IRIDIUM 			( 9, 4, 1.1f),
@@ -31,7 +31,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	ROCKSALT  			(20, 2, 0.5f), 
 	OLIVINE 			(21, 2, 0.7f),
 	PERIDOT_OLIVINE 	(22, 2, 0.7f),
-	QUARTZCRYSTAL		(23, 3, 1f) 
+	QUARTZCRYSTAL		(23, 3, 1f),
 	
 	;
 	
@@ -64,8 +64,6 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 			case LAPISLAZULI:
 				return rocktype == EnumRockType.LIMESTONE;
 				
-			case REDSTONE:
-				return false;
 			
 			default:
 				return true;

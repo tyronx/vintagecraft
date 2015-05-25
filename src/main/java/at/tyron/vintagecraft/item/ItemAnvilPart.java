@@ -5,9 +5,9 @@ import java.util.Arrays;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 

@@ -53,7 +53,7 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	
 	
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return ItemsVC.straw;
+        return ItemsVC.dryGrass;
     }
     
     @Override

@@ -3,7 +3,6 @@ package at.tyron.vintagecraft.Gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
@@ -15,6 +14,7 @@ import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilRecipe;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;

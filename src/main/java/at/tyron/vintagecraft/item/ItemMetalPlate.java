@@ -13,12 +13,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 
@@ -46,8 +46,6 @@ public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, 
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
     	int tmp = getTemperature(stack) / 6;
     	
-    	//System.out.println(g + "/" + b);
-    	
     	if (renderPass == 1) {
     		int r = Math.min(255, Math.max(0, 128 + (int) (255*tmp/400f)));
         	int g = Math.max(0,  25 + (int) (255*tmp/800f));
@@ -67,10 +65,8 @@ public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, 
         	
     		return 0xffff0000 | (g << 8) | (b);    		
     	}
-    	
-    	
-    	
     }
+    
     
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {

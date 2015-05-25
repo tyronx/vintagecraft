@@ -72,6 +72,28 @@ public class GenLayerTerrain extends GenLayerVC {
 	public int[] getInts(int x, int z, int xSize, int zSize) {
 		return null;
 	}
+	
+	public int[] getHeightmap(World world, int chunkZ, int chunkX, int xSize, int zSize) {
+		xSize = (int) (16 * Math.ceil(xSize / 16f));
+		zSize = (int) (16 * Math.ceil(zSize / 16f));
+		
+		int[] heightmap = new int[xSize * zSize];
+
+		/*for (int c)
+		
+		for (int x = 0; x < 16; x++) {
+			for (int z = 0; z < 16; z++) {
+				for (int y = 256; y > 0; y--) {
+					if (primer.getBlockState(x, y, z).getBlock() != Blocks.air) {
+						heightmap[x + z * 16] = y;
+						break;
+					}
+				}
+			}
+		}*/
+		
+		return heightmap;
+	}
 
 	
 	public void generateTerrain(int chunkX, int chunkZ, ChunkPrimer primer, World world) {
@@ -296,7 +318,7 @@ public class GenLayerTerrain extends GenLayerVC {
 					}*/
 					
 					result = noise1[posIndex] / 128D 
-							+ (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0.2f, noiseFieldModifierArray[x + z * xSize] / 210f);
+							 + (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0.2f, noiseFieldModifierArray[x + z * xSize] / 210f);
 
 					//result = noise1var;
 							

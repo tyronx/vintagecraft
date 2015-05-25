@@ -1,0 +1,8 @@
+{
+    "parent": "block/half_slab",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/kauri",
+        "top": "vintagecraft:blocks/planks/kauri",
+        "side": "vintagecraft:blocks/planks/kauri"
+    }
+}

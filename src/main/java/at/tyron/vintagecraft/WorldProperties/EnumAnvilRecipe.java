@@ -5,13 +5,13 @@ import java.util.HashMap;
 import net.minecraft.entity.item.EntityPainting.EnumArt;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.Item.ItemAnvilPart;
 import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemMetalPlate;
 import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.ItemsVC;
 
 public enum EnumAnvilRecipe {
@@ -199,31 +199,43 @@ public enum EnumAnvilRecipe {
 
 	
 	FIX_INGOT (new EnumAnvilTechnique[] {
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT,
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT,		
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT		
-		}, 1),
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT,		
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT		
+	}, 1),
 			
 	FIX_PLATE (new EnumAnvilTechnique[] {
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT,
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT,		
-			EnumAnvilTechnique.HEAVYHIT,
-			EnumAnvilTechnique.MEDIUMHIT,
-			EnumAnvilTechnique.LIGHTHIT		
-		}, 1),
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT,		
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.LIGHTHIT		
+	}, 1),
 				
-			
-
+		
+	COPPER_WIRE (new EnumAnvilTechnique[] {
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,		
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW, 
+		EnumAnvilTechnique.DRAW
+	}, 1),
+				
 		
 
 
@@ -366,7 +378,17 @@ public enum EnumAnvilRecipe {
 					));
 				}
 			}
-		}		
+		}
+		
+		
+		/***** 4. Copper wire ****/
+		AnvilRecipes.registerRecipe(new AnvilRecipes(
+			new ItemStack(Items.redstone, 16), 
+			ItemIngot.getItemStack(EnumMetal.COPPER, 1), 
+			COPPER_WIRE.steps
+		));
+		
+		
 	}
 	
 

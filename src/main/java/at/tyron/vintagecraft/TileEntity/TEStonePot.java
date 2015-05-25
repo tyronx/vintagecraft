@@ -21,6 +21,7 @@ import net.minecraft.util.IChatComponent;
 
 public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox {
 	public static int burnTimePerCoal = 900; 
+	public static int maxCoalInPot = 5;
 	
 	public EnumRockType rocktype = EnumRockType.GRANITE;
 	public EnumStonePotUtilization utilization;
@@ -164,7 +165,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	
 	public int getFillHeight() {
 		if (utilization == EnumStonePotUtilization.FORGE) {
-			return (int) Math.ceil((burnTime * 1.0) / burnTimePerCoal);
+			return 2 * (int) Math.ceil((burnTime * 1.0) / burnTimePerCoal);
 		}
 		return 0;
 	}
@@ -195,7 +196,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 		if (utilization == null || utilization == EnumStonePotUtilization.FORGE) {
 		
 			if (itemstack.getItem() instanceof IItemFuel && ((IItemFuel)itemstack.getItem()).isForgeFuel(itemstack)) {
-				if (burnTime < burnTimePerCoal * 10) {
+				if (burnTime < burnTimePerCoal * maxCoalInPot) {
 					itemstack.stackSize--;
 					burnTime += burnTimePerCoal;
 					worldObj.markBlockForUpdate(pos);

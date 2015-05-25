@@ -23,6 +23,7 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
 	 * CONGLOMERATE => GNEISS
 	 * SHALE => SLATE
 	 * CHERT => CHERT
+	 * CLAYSTONE => SCHIST
 	 * 
 	 */
 	
@@ -75,6 +76,9 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
     			
     		case GNEISS:
     			return CONGLOMERATE;
+    		
+    		case SCHIST:
+    			return CLAYSTONE;
     			
 			default:
 				return rocktype;

@@ -42,7 +42,7 @@ public class ItemsVC {
 	public static HashMap<String, Item> toolheads = new HashMap<String, Item>();
 	
 
-	public static Item straw;
+	public static Item dryGrass;
 	public static Item firestarter;
 	
 	public static Item porkchopRaw;
@@ -126,8 +126,8 @@ public class ItemsVC {
 		wheatSeeds = new ItemSeedVC();
 		register(wheatSeeds, "wheatseeds");
 		
-		straw = new ItemStraw();
-		register(straw, "straw");
+		dryGrass = new ItemDryGrass();
+		register(dryGrass, "drygrass");
 		
 		firestarter = new ItemFireStarter();
 		register(firestarter, "firestarter");
@@ -241,7 +241,7 @@ public class ItemsVC {
 		
 		for (EnumTool tool : EnumTool.values()) {
 			for (String material : materials) {
-				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
+				if (material.equals("stone")) continue;
 				if (!tool.requiresWoodenHandle) continue;
 				
 				String ucfirstmaterial = material.substring(0, 1).toUpperCase() + material.substring(1);

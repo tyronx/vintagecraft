@@ -1,9 +1,9 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.entity.player.EntityPlayer;

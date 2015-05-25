@@ -71,7 +71,7 @@ public class GenRockLayers {
 		
 		EnumRockType rock = color2Rock.get(value);
 		
-		if (depth + age/10 < 20) {
+		if (depth + age/5 < 40) {
 			return EnumRockType.getSedimentary(rock, age, depth, rand);
 		}
 		

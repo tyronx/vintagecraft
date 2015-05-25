@@ -130,6 +130,8 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISize
 
         if (!worldIn.isRemote) {
             worldIn.spawnEntityInWorld(new EntityStone(stack.splitStack(1), worldIn, playerIn));
+            // Throwing a rock is very Energy intensive
+	        playerIn.addExhaustion(0.2F);
         }
 
         playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);

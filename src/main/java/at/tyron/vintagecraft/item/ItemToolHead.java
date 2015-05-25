@@ -1,5 +1,8 @@
 package at.tyron.vintagecraft.Item;
 
+import java.util.List;
+
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -21,4 +24,10 @@ public class ItemToolHead extends ItemVC implements ISubtypeFromStackPovider {
 		return material + "_" + tooltype.getName();
 	}
 
+	
+	@Override
+	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+		tooltip.add("Combine with a stick to complete the tool");
+	}
+	
 }

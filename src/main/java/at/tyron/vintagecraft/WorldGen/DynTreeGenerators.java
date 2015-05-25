@@ -153,6 +153,40 @@ public class DynTreeGenerators {
 
 
 		
+		EnumTree.KAURI.setGenerators(new DynTreeGen(
+				EnumTree.KAURI, 
+				null,
+				new DynTreeTrunk(
+					1f, 
+					0.04f, 
+					NatFloat.createUniform(0.1f, 0.05f),      // branchstart 
+					NatFloat.createUniform(0.4f, 0f), 	      // branchspacing
+					NatFloat.createUniform(NatFloat.PI + 0.95f, 0.1f),         // verticalangle
+					NatFloat.createUniform(0, NatFloat.PI), // horizontalangle
+					EvolvingNatFloat.createUniform(3f, 0f, EnumTransformFunction.INVERSELINEAR, 0.02f),
+					EvolvingNatFloat.createUniform(0.15f, 0f, EnumTransformFunction.LINEAR, 0.004f),
+					1.01f, 
+					EvolvingNatFloat.createUniform(0.1f, 0f, EnumTransformFunction.QUADRATIC, 0.0005f)
+				),
+				new DynTreeBranch(
+					NatFloat.createUniform(-0.2f, 0.1f),
+					NatFloat.createUniform(0, NatFloat.PI), 
+					NatFloat.createGauss(0.85f, 0f),
+					NatFloat.createGauss(0.2f, 0f),
+					0.05f,
+					EvolvingNatFloat.createIdentical(2f), //.createUniform(0.5f, 0f, Function.LINEAR, 0.5f),
+					-0.01f,
+					0.6f,
+					1f
+				),
+				0.6f,
+				0,
+				EnumTreeGenMode.RANDOMLENGTHBRANCHES
+			), null, null);
+		
+		
+
+		
 		/**** REEEALY COOL TREE FOR SWAMP OR JUNGLE ****
 		 * 
 

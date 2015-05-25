@@ -84,7 +84,7 @@ public class MapGenFlora {
 			//if (i <= 50 + forestDensityDiff/4 && (random.nextInt(255) > density || random.nextInt(forestDensityDiff) > 0)) {
 			
 			
-			if (i < 65 * forestdensity && random.nextFloat() < forestdensity) {
+			if (i < 90 * forestdensity && random.nextFloat() < forestdensity) {
 			
 				Block block = world.getBlockState(blockpos.down()).getBlock();
 				if (!(block instanceof IBlockSoil)) {
@@ -100,7 +100,7 @@ public class MapGenFlora {
 				
 				if (treegen != null) {
 					float size = treegen.tree.getTreeSize(random, Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f));
-					
+					//if (treegen.tree == EnumTree.COYOTEWILLOW) System.out.println("plant tree");
 					if (size > 0.23f) {
 						treegen.growTree(world, blockpos.down(), size, Math.max(0, climate[2] - 190));
 					}

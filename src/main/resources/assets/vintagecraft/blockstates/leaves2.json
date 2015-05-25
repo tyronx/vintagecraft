@@ -21,6 +21,7 @@
 		"treetype=blackwalnut": { "model": "vintagecraft:leaves/blackwalnut" },
 		"treetype=weepingwillow": { "model": "vintagecraft:leaves/weepingwillow" },
 		"treetype=coyotewillow": { "model": "vintagecraft:leaves/coyotewillow" },
-		"treetype=larch": { "model": "vintagecraft:leaves/larch" }
+		"treetype=larch": { "model": "vintagecraft:leaves/larch" },
+		"treetype=kauri": { "model": "vintagecraft:leaves/kauri" }
 	}
 }

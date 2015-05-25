@@ -1,5 +1,16 @@
-===== Villages ====
+===== Villages ===
 
+Generated just like trees, with just 2 changed rules:
+
+- Roads are horizontal branches, growing outwards from a village center. Houses generate like the leaves of a tree
+
+- Active avoidance of intersecting houses and roads with one another
+
+- Occasionally branch off of a road to connect with another road
+
+
+
+===== Villagers ====
 
 Import schematic files: https://github.com/tehbeard/LibSchematic
 

@@ -205,6 +205,8 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
         if (tileentity instanceof TEAnvil) {
         	ItemStack itemstack = getItemStackFor(getMetal((World) worldIn, pos));
         	
+        	((TEAnvil) tileentity).ejectContents();
+        	
             worldIn.spawnEntityInWorld(new EntityItem(worldIn, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, itemstack));
         }
 

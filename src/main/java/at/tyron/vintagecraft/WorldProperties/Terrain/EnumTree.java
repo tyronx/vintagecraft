@@ -27,11 +27,11 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minfo   maxfo
 	ASH					(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,  0.7f,   0,  255),
 	BIRCH				( 0.6f,  0.12f, 100,   3,  12,  95,  220,  10,   100,    0f, 0.65f,   0,  255),		// http://en.wikipedia.org/wiki/Birch
-	OAK					( 1.8f,  0.12f,  75,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
+	OAK					( 1.8f,  0.12f,  95,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
 	CRIMSONKINGMAPLE	( 1.2f,  0.08f,   1,   5,  15,  95,  150,  90,   200,    0f,  0.5f,   0,  250),		// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
 	MOUNTAINDOGWOOD		( 0.7f,  0.08f,  60,  10,  20,  90,  180,  90,   255,    0f,    1f,   0,  150),
 	SCOTSPINE			( 0.8f,  0.12f, 100, -20,  12,  50,  150,  30,   255, 0.55f, 0.85f,   0,  255),		// http://www.treetopics.com/pinus_sylvestris/scots_pine_1220645.png | http://en.wikipedia.org/wiki/Scots_pine
-	SPRUCE				(   1f,  0.12f, 100, -12,  15,  70,  255,  60,   255,    0f, 0.85f,   0,  255),
+	SPRUCE				(   1f,  0.12f, 100, -12,  18,  70,  255,  60,   255,    0f, 0.85f,   0,  255),
 	ACACIA				( 1.1f,  0.09f, 100,  23,  30,  80,  140,  50,   200,    0f,  0.8f,   0,  255),		// http://static.panoramio.com/photos/large/37061566.jpg
 	KAPOK				( 1.6f,  0.01f, 100,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),		// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
 	PURPLEHEARTWOOD 	(   2f,  0.01f,   3,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),
@@ -41,12 +41,12 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	JOSHUA				( 0.9f,  0.08f,  99,  24,  30,  20,   60,  20,   100,     0,  0.6f,   0,  255),
 	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100),		 // http://fc06.deviantart.net/fs40/f/2009/004/e/f/An_old_pear_tree_by_SzekelyCsaba.jpg
 	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200),
-	BLACKWALNUT			( 1.15f, 0.08f, 10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255),
+	BLACKWALNUT			( 1.15f, 0.08f,  10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255),
 	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true),
 	WEEPINGWILLOW		( 0.5f,  0.06f,  96,  -6,  18,  65,  255,   50,  255,    0f,    1f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
 	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250),
 	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true),
-	
+	KAURI				( 1.3f,  0.01f,  99,  20,  24, 120,  180,   90,  200,    0f,  0.8f,   0,  255)
 	
 	
 //	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
@@ -252,6 +252,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 				
 			case KAPOK:
 			case PURPLEHEARTWOOD:
+			case KAURI:
 				if (rand.nextInt(500) == 1) return 1.3f + rand.nextFloat()*0.6f - heightreduction/2;
 				return 0.2f + rand.nextFloat() - heightreduction;
 				

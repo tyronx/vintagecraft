@@ -124,11 +124,6 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
      	}
         
         switch (oretype) {
-        	case REDSTONE:
-        		itemstack = new ItemStack(Items.redstone, 2 + worldIn.rand.nextInt(2));
-        		ret.add(itemstack);
-        		break;
-        	
         		
         	case OLIVINE:
         		itemstack = new ItemStack(ItemsVC.stone, 1);
@@ -217,4 +212,13 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 
      	return oretype.harvestlevel;
 	}
+	
+	
+	@Override
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
+		player.addExhaustion(0.025F); // Make player hungry three times as much
+		
+		super.harvestBlock(worldIn, player, pos, state, te);
+	}
+
 }

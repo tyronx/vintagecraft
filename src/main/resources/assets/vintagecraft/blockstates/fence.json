@@ -351,6 +351,22 @@
         "east=true,north=false,south=true,treetype=larch,west=true": { "model": "vintagecraft:fence/larch_nse", "y": 90, "uvlock": true },
         "east=false,north=true,south=true,treetype=larch,west=true": { "model": "vintagecraft:fence/larch_nse", "y": 180, "uvlock": true },
         "east=true,north=true,south=false,treetype=larch,west=true": { "model": "vintagecraft:fence/larch_nse", "y": 270, "uvlock": true },
-        "east=true,north=true,south=true,treetype=larch,west=true": { "model": "vintagecraft:fence/larch_nsew", "uvlock": true }
+        "east=true,north=true,south=true,treetype=larch,west=true": { "model": "vintagecraft:fence/larch_nsew", "uvlock": true },
+        "east=false,north=false,south=false,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_post" },
+        "east=false,north=true,south=false,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_n", "uvlock": true },
+        "east=true,north=false,south=false,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_n", "y": 90, "uvlock": true },
+        "east=false,north=false,south=true,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_n", "y": 180, "uvlock": true },
+        "east=false,north=false,south=false,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_n", "y": 270, "uvlock": true },
+        "east=true,north=true,south=false,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_ne", "uvlock": true },
+        "east=true,north=false,south=true,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_ne", "y": 90, "uvlock": true },
+        "east=false,north=false,south=true,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_ne", "y": 180, "uvlock": true },
+        "east=false,north=true,south=false,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_ne", "y": 270, "uvlock": true },
+        "east=false,north=true,south=true,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_ns", "uvlock": true },
+        "east=true,north=false,south=false,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_ns", "y": 90, "uvlock": true },
+        "east=true,north=true,south=true,treetype=kauri,west=false": { "model": "vintagecraft:fence/kauri_nse", "uvlock": true },
+        "east=true,north=false,south=true,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_nse", "y": 90, "uvlock": true },
+        "east=false,north=true,south=true,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_nse", "y": 180, "uvlock": true },
+        "east=true,north=true,south=false,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_nse", "y": 270, "uvlock": true },
+        "east=true,north=true,south=true,treetype=kauri,west=true": { "model": "vintagecraft:fence/kauri_nsew", "uvlock": true }
 	}
 }

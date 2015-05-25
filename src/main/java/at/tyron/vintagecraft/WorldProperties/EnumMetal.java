@@ -28,7 +28,9 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	ZINC 			(13, 0, 419, 2.5f), 
 	BISMUTH 		(14, 0, 271, 2.2f),
 	
-	BISMUTHBRONZE	(15, 2, 1031, 2.1f, true, true, true)
+	BISMUTHBRONZE	(15, 2, 1031, 2.1f, true, true, true),
+	
+	LEAD            (16, 0, 327, 1.5f)
 	;
 	
 	

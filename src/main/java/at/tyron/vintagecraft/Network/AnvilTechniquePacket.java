@@ -1,8 +1,9 @@
 package at.tyron.vintagecraft.Network;
 
-import at.tyron.vintagecraft.AnvilRecipes;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
+import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -71,11 +72,15 @@ public class AnvilTechniquePacket implements IMessage {
     	        
     	        smithable.applyAnvilTechnique(itemstack, message.technique);
     	        
+    	        // Smithing is very Energy intensive
+    	        player.addExhaustion(0.2F); 
+    	        
     	        ItemStack hammer = container.getSlot(3).getStack();
     	        
     	        
     	        if (hammer != null) {
     	        	hammer.damageItem(1, player);
+
     	        	if (hammer.stackSize == 0) {
     	        		container.getSlot(3).putStack(null);
     	        		player.worldObj.playSoundEffect(player.posX, player.posY, player.posZ, "random.break", 1f, 1f);

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Interfaces;
 
-import at.tyron.vintagecraft.AnvilRecipes;
+import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import net.minecraft.item.ItemStack;
 

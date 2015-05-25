@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "vintagecraft:blocks/planks/kauri",
+        "top": "vintagecraft:blocks/planks/kauri",
+        "side": "vintagecraft:blocks/planks/kauri"
+    }
+}

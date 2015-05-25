@@ -22,9 +22,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
@@ -251,6 +253,14 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	
 	public int getHarvetLevel(IBlockState state) {
 		return 1;
+	}
+	
+	
+	@Override
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
+		player.addExhaustion(0.025F); // Make player hungry twice as much
+		
+		super.harvestBlock(worldIn, player, pos, state, te);
 	}
     
 }

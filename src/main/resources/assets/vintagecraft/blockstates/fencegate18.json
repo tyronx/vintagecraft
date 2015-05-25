@@ -351,6 +351,22 @@
         "facing=south,in_wall=true,open=true,treetype=larch": { "model": "vintagecraft:fencegate/larch_open" },
         "facing=west,in_wall=true,open=true,treetype=larch":  { "model": "vintagecraft:fencegate/larch_open", "y": 90, "uvlock": true },
         "facing=north,in_wall=true,open=true,treetype=larch": { "model": "vintagecraft:fencegate/larch_open", "y": 180, "uvlock": true },
-        "facing=east,in_wall=true,open=true,treetype=larch":  { "model": "vintagecraft:fencegate/larch_open", "y": 270, "uvlock": true }
+        "facing=east,in_wall=true,open=true,treetype=larch":  { "model": "vintagecraft:fencegate/larch_open", "y": 270, "uvlock": true },
+        "facing=south,in_wall=false,open=false,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_closed" },
+        "facing=west,in_wall=false,open=false,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_closed", "y": 90, "uvlock": true },
+        "facing=north,in_wall=false,open=false,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_closed", "y": 180, "uvlock": true },
+        "facing=east,in_wall=false,open=false,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_closed", "y": 270, "uvlock": true },
+        "facing=south,in_wall=false,open=true,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_open" },
+        "facing=west,in_wall=false,open=true,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_open", "y": 90, "uvlock": true },
+        "facing=north,in_wall=false,open=true,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_open", "y": 180, "uvlock": true },
+        "facing=east,in_wall=false,open=true,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_open", "y": 270, "uvlock": true },
+        "facing=south,in_wall=true,open=false,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_closed" },
+        "facing=west,in_wall=true,open=false,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_closed", "y": 90, "uvlock": true },
+        "facing=north,in_wall=true,open=false,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_closed", "y": 180, "uvlock": true },
+        "facing=east,in_wall=true,open=false,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_closed", "y": 270, "uvlock": true },
+        "facing=south,in_wall=true,open=true,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_open" },
+        "facing=west,in_wall=true,open=true,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_open", "y": 90, "uvlock": true },
+        "facing=north,in_wall=true,open=true,treetype=kauri": { "model": "vintagecraft:fencegate/kauri_open", "y": 180, "uvlock": true },
+        "facing=east,in_wall=true,open=true,treetype=kauri":  { "model": "vintagecraft:fencegate/kauri_open", "y": 270, "uvlock": true }
 	}
 }

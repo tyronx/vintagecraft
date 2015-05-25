@@ -16,6 +16,8 @@ public class DepositOccurence {
 	public int untilyheight = 255;  // For type = ANY_UNTIL_Y_HEIGHT
 	public float belowSealLevelRatio = 0f; // For type = MIXEDDEPTHS
 	
+	public EnumMaterialDeposit indeposit = null;
+	
 	
 	private DepositOccurence(EnumDepositOccurenceType type, int weight, int height, int mindepth, int maxdepth) {
 		this(type, weight, height, mindepth, maxdepth, 255);
@@ -46,7 +48,9 @@ public class DepositOccurence {
 
 	
 	public static DepositOccurence inDeposit(EnumMaterialDeposit deposit, int weight) {
-		return new DepositOccurence(EnumDepositOccurenceType.INDEPOSIT, weight, 1, 0, 255);	
+		DepositOccurence occurrence = new DepositOccurence(EnumDepositOccurenceType.INDEPOSIT, weight, 1, 0, 255);
+		occurrence.indeposit = deposit;
+		return occurrence;
 	}
 	
 	

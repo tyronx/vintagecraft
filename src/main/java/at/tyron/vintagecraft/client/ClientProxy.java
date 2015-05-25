@@ -137,7 +137,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.metalplate, "metalplate", "inventory");
     	
     	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");    	
-    	registerModelLocation(ItemsVC.straw, "straw", "inventory");
+    	registerModelLocation(ItemsVC.dryGrass, "drygrass", "inventory");
     	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
     	

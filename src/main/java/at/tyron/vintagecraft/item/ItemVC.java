@@ -123,7 +123,7 @@ public abstract class ItemVC extends Item {
 		
 		if (nbt.getInteger("forgetemp") > 0 && worldIn.getWorldTime() > nbt.getLong("startcoolingat")) {
 			int timeSinceLastUpdate = (int) (worldIn.getWorldTime() - nbt.getLong("lasttempupdate"));
-			int newtemp = Math.max(0, nbt.getInteger("forgetemp") - 2 * timeSinceLastUpdate);
+			int newtemp = Math.max(0, nbt.getInteger("forgetemp") - 3 * timeSinceLastUpdate);
 			
 			nbt.setInteger("forgetemp", newtemp);
 			

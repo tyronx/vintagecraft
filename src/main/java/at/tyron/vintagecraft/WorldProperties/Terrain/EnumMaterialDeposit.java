@@ -34,11 +34,11 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(50, 1, 10, 50, 0.5f)), 
 	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(37, 1, 8, 103)),
 
-	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(7, 2, 1, 155)),
+	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(12, 2, 1, 155)),
 	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(5, 1, 2, 160)),
 
 	QUARTZ 				(19, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
-	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(35, 2, 5, 255, 160)),
+	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(45, 2, 5, 255, 170)),
 	OLIVINE 			(21, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 	
 	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
@@ -57,12 +57,14 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	EMERALD 			(17, true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(60, 1, 100, 140)),
 		
 	NATIVEGOLD_QUARTZ   ( 6, true, EnumDepositSize.TINY, DepositOccurence.inDeposit(QUARTZ, 1)),
-	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 40)), 
+	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 35)), 
 	NATIVESILVER_QUARTZ (14, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(QUARTZ, 2)), 
 	PERIDOT_OLIVINE     (23, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(OLIVINE, 20)),  
 
 	
-	REDSTONE 			( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(0, 2, 30, 100))
+	GALENA 				( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(15, 1, 30, 100))
+	
+	
 	;
 
 	
@@ -84,15 +86,17 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		this.occurence = occurence;
 		
 		if (this.occurence.type == EnumDepositOccurenceType.INDEPOSIT) {
+			
+			
 			int idx = 0;
-			if (subdeposits == null) {
-				subdeposits = new EnumMaterialDeposit[1];
+			if (this.occurence.indeposit.subdeposits == null) {
+				this.occurence.indeposit.subdeposits = new EnumMaterialDeposit[1];
 			} else {
-				subdeposits = (EnumMaterialDeposit[]) Arrays.copyOf(subdeposits, subdeposits.length + 1);
-				idx = subdeposits.length - 1;
+				this.occurence.indeposit.subdeposits = (EnumMaterialDeposit[]) Arrays.copyOf(this.occurence.indeposit.subdeposits, this.occurence.indeposit.subdeposits.length + 1);
+				idx = this.occurence.indeposit.subdeposits.length - 1;
 			}
 			
-			subdeposits[idx] = this;
+			this.occurence.indeposit.subdeposits[idx] = this;
 		}
 	}
 	

@@ -4,7 +4,7 @@
 
 $blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
 $blockclassavailabletypes = array("log" => 16, "leaves" => 8, "leavesbranchy" => 8, "planks" => 16, "sapling" => 16);
-$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahogany", "blackwalnut", "weepingwillow", "coyotewillow", "larch");
+$blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahogany", "blackwalnut", "weepingwillow", "coyotewillow", "larch", "kauri");
 
 
 /***************** Quartzglass *************/

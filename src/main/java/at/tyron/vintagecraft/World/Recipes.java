@@ -14,6 +14,7 @@ import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemLogVC;
+import at.tyron.vintagecraft.Item.ItemMetalPlate;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemStone;
@@ -195,9 +196,9 @@ public class Recipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlocksVC.clayVessel)), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', ironingot});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', ItemMetalPlate.getItemStack(EnumMetal.IRON, 1)});
 		
-		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.straw, 'W', Items.stick});
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.dryGrass, 'W', Items.stick});
 		
 		//GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { Items.stick, ItemsVC.straw});
 		

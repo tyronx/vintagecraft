@@ -129,7 +129,7 @@ public class NatFloat {
 	
 	
 	
-	enum Distribution {
+	public enum Distribution {
 		UNIFORM,
 		GAUSSIAN,
 		INVERSEGAUSSIAN,

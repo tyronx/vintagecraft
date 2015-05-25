@@ -7,6 +7,8 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
@@ -17,10 +19,13 @@ import at.tyron.vintagecraft.WorldGen.Helper.DynTreeRoot;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeTrunk;
 import at.tyron.vintagecraft.WorldGen.Helper.NatFloat;
 import at.tyron.vintagecraft.WorldGen.Layer.*;
+import at.tyron.vintagecraft.WorldGen.Village.DynVillageGenerators;
+import at.tyron.vintagecraft.WorldGen.Village.EnumVillage;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.state.IBlockState;
@@ -33,6 +38,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class VintageCraftCommands extends CommandBase {
@@ -60,6 +66,15 @@ public class VintageCraftCommands extends CommandBase {
 		}
 	}
 	
+	void createPlane(World world, BlockPos center, int wdt, IBlockState state) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				world.setBlockState(center.add(x, -1, z), state);
+			}
+		}
+	}
+	
+	
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
 		World world = sender.getEntityWorld();
@@ -74,6 +89,16 @@ public class VintageCraftCommands extends CommandBase {
 			int hgt = 80;
 			
 			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
+		}
+
+		if (args[0].equals("plane")) {
+			int wdt = 30;
+			int hgt = 30;
+			
+			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
+			
+			wdt = 80;
+			createPlane(sender.getEntityWorld(), sender.getPosition(), 80, BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, EnumOrganicLayer.NORMALGRASS));
 		}
 		
 		if (args[0].equals("gen")) {
@@ -94,6 +119,19 @@ public class VintageCraftCommands extends CommandBase {
 			int hgt = 80;
 			
 			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);	
+		}
+		
+		
+		
+		if (args[0].equals("genvillage")) {
+			DynVillageGenerators.initGenerators();
+			
+			float size = 1f;
+			if (args.length >= 2) {
+				size = (float)parseDouble(args[1]);
+			}
+			
+			EnumVillage.DEFAULT.getGenerator().generate(sender.getEntityWorld(), sender.getPosition(), size);
 		}
 		
 		
@@ -125,7 +163,19 @@ public class VintageCraftCommands extends CommandBase {
 		
 		
 		
-		
+		if (args[0].equals("genheightmap")) {
+			/*GenLayerVC.shouldDraw = true;
+			
+			long seed = sender.getEntityWorld().rand.nextInt(50000);
+			GenLayerTerrain normalTerrainGen = new GenLayerTerrain(seed + 0);
+			
+			ChunkPrimer primer = new ChunkPrimer();
+			normalTerrainGen.generateTerrain(0, 0, primer, sender.getEntityWorld());
+
+			GenLayerVC.drawImageGrayScale(256, genlayer, name);
+			
+			GenLayerVC.shouldDraw = false;*/
+		}
 		
 		if (args[0].equals("genlayer")) {
 			if (args.length == 1) {
@@ -189,8 +239,8 @@ public class VintageCraftCommands extends CommandBase {
 			EnumFlowerGroup flora = EnumFlowerGroup.getRandomFlowerForClimate(climate[2], climate[0], forest, sender.getEntityWorld().rand);
 			System.out.println("chosen flower " + flora);
 			
-			//EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
-			//System.out.println("chosen tree " + tree);
+			EnumTree tree = EnumTree.getRandomTreeForClimate(climate[2], climate[0], forest, sender.getPosition().getY(), sender.getEntityWorld().rand);
+			System.out.println("chosen tree " + tree);
 			/*if (flora != null) {
 				sender.getEntityWorld().setBlockState(sender.getPosition(), flora.variants[0].getBlockState());
 			}*/

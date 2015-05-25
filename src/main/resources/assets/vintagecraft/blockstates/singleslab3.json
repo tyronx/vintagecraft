@@ -43,6 +43,8 @@
         "half=bottom,treetype=coyotewillow": { "model": "vintagecraft:singleslab/coyotewillow_lower" },
         "half=top,treetype=coyotewillow":  { "model": "vintagecraft:singleslab/coyotewillow_upper" },
         "half=bottom,treetype=larch": { "model": "vintagecraft:singleslab/larch_lower" },
-        "half=top,treetype=larch":  { "model": "vintagecraft:singleslab/larch_upper" }
+        "half=top,treetype=larch":  { "model": "vintagecraft:singleslab/larch_upper" },
+        "half=bottom,treetype=kauri": { "model": "vintagecraft:singleslab/kauri_lower" },
+        "half=top,treetype=kauri":  { "model": "vintagecraft:singleslab/kauri_upper" }
 	}
 }

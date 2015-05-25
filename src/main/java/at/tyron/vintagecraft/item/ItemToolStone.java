@@ -46,6 +46,9 @@ public class ItemToolStone extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
+		if (tooltype == EnumTool.HAMMER) {
+			return 22;
+		}
 		return 45;
 	}
 

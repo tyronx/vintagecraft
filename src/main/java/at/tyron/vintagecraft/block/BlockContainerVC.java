@@ -10,6 +10,7 @@ import net.minecraft.block.BlockContainer;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -95,5 +96,13 @@ public abstract class BlockContainerVC extends BlockContainer implements ISubtyp
     public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
     	return true;
     }
+
+	@Override
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
+		player.addExhaustion(0.025F); // Make player hungry twice as much
+		
+		super.harvestBlock(worldIn, player, pos, state, te);
+	}
     
+
 }

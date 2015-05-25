@@ -43,6 +43,8 @@
 		"eastwest=false,treetype=coyotewillow": { "model": "vintagecraft:quartzglass/coyotewillow" },
 		"eastwest=true,treetype=coyotewillow": { "model": "vintagecraft:quartzglass/coyotewillow", "y":90 },
 		"eastwest=false,treetype=larch": { "model": "vintagecraft:quartzglass/larch" },
-		"eastwest=true,treetype=larch": { "model": "vintagecraft:quartzglass/larch", "y":90 }
+		"eastwest=true,treetype=larch": { "model": "vintagecraft:quartzglass/larch", "y":90 },
+		"eastwest=false,treetype=kauri": { "model": "vintagecraft:quartzglass/kauri" },
+		"eastwest=true,treetype=kauri": { "model": "vintagecraft:quartzglass/kauri", "y":90 }
 	}
 }
