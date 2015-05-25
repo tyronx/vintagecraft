@@ -1,24 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>forge-1.8-11.14.1.1336-src-vintagecraft</name>
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
+	<name>forge-1.8-11.14.1.1412-src-vintagecraft</name>
+	<comment/>
+	<projects/>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>.link0</name>
-			<type>2</type>
-			<location>C:/Users/tyron/.gradle/caches/minecraft/net/minecraftforge/forge/1.8-11.14.1.1336/start</location>
-		</link>
-	</linkedResources>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments/>
+		</buildCommand>
+	</buildSpec>
+	<linkedResources/>
 </projectDescription>

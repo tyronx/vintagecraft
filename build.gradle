@@ -17,13 +17,12 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.8-0.6.53"
+version = "1.8-0.7.54"
 group= "at.tyron.vintagecraft" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "vintagecraft"
 
-
 minecraft {
-    version = "1.8-11.14.1.1336"
+    version = "1.8-11.14.1.1412"
     runDir = "eclipse"
     
     // the mappings can be changed at any time, and must be in the following format.
