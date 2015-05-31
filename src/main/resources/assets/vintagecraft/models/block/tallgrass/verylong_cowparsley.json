@@ -1,0 +1,9 @@
+{
+    "parent": "vintagecraft:block/tallgrass/tallgrass_with_overlay",
+    "textures": {
+        "particle": "vintagecraft:blocks/tallgrass/verylong",
+        "cross": "vintagecraft:blocks/tallgrass/verylong",
+        "colored": "vintagecraft:blocks/tallgrass/cowparsley_stem",
+		"fixcolor": "vintagecraft:blocks/tallgrass/cowparsley_petals"
+    }
+}

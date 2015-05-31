@@ -6,7 +6,7 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 
 import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -52,7 +52,7 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 		return (EnumRockType) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 	
-	public static BlockClass getBlockClass(Block block) {
+	public static BaseBlockClass getBlockClass(Block block) {
 		return BlocksVC.rock;
 	}
 

@@ -95,7 +95,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
 	        
 	        ret.add(itemstack);
 	        
-	        if (rocktype == EnumRockType.LIMESTONE && rand.nextInt(8) == 0) {
+	        if ((rocktype == EnumRockType.LIMESTONE || rocktype == EnumRockType.CHALK) && rand.nextInt(9) == 0) {
 	        	ret.add(new ItemStack(Items.flint, 1));
 	        }
 	        
@@ -163,7 +163,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
 	}
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.rock;
 	}
 	

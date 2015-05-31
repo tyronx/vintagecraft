@@ -124,7 +124,8 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     }
     
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos) && worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+    	
+        return super.canPlaceBlockAt(worldIn, pos) && canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
     }
 
     protected boolean canPlaceBlockOn(Block ground) {

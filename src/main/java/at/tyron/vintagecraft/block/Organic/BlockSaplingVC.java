@@ -5,7 +5,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
@@ -124,7 +124,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 	}
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.sapling;
 	}
 	

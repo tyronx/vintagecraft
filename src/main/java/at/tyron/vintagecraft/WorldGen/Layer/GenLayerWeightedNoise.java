@@ -53,7 +53,7 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 							genlayersuppliers[i].getColor();				// Type of deposit 
 						
 						
-						if (genlayersuppliers[i].getSize() > 1) {
+						if (genlayersuppliers[i].getSize() == 9) {
 							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
 							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
 							
@@ -65,6 +65,29 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
 							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
 						}
+
+						
+						if (genlayersuppliers[i].getSize() == 16) {
+							cache[Math.max(0, x + z * sizeX - 3)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+
+							cache[Math.max(0, x + (z - 3) * sizeX - 3)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 3) * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 3) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 3) * sizeX)] = cache[x + z * sizeX];
+
+							cache[Math.max(0, x + (z - 2) * sizeX - 3)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+							
+							cache[Math.max(0, x + (z - 1) * sizeX - 3)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+						}
+
 						
 						break;
 					}

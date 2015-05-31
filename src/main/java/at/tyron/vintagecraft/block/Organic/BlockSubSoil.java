@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.SoilRockClassEntry;
@@ -53,7 +53,7 @@ public class BlockSubSoil extends BlockRock implements IBlockSoil {
 
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.subsoil;
 	}
 

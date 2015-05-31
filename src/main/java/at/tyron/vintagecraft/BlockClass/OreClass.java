@@ -18,7 +18,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
-public class OreClass extends BlockClass {
+public class OreClass extends BaseBlockClass {
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
@@ -37,7 +37,7 @@ public class OreClass extends BlockClass {
 		int i = 0;
 		for (EnumRockType rocktype : EnumRockType.values()) {
 			for (EnumOreType oretype : EnumOreType.valuesSorted()) {
-				if (oretype.isParentMaterial(rocktype)) {
+				if (oretype.isParentMaterial(rocktype) && oretype.spawnsInRock) {
 					EnumStateImplementation key = new EnumStateImplementation(i++, 0, oretype.getName() + "-" + rocktype.getName());
 				
 					values.put(key, new OreClassEntry(key, rocktype, oretype));

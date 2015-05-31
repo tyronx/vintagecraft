@@ -8,7 +8,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit.EnumBuildStage;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
@@ -84,7 +84,7 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 	}
 	
 	
-	public static BlockClass getBlockClass(Block block) {
+	public static BaseBlockClass getBlockClass(Block block) {
 		// Workaround for Java being too fail to allow overriding static methods
 		if (block instanceof BlockLeavesBranchy) return BlocksVC.leavesbranchy;
 		if (block instanceof BlockLeavesVC) return BlocksVC.leaves;

@@ -13,7 +13,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockWoodenSlabVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
@@ -48,7 +48,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 		return (EnumTree) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 
-	public static BlockClass getBlockClass(Block block) {
+	public static BaseBlockClass getBlockClass(Block block) {
 		if (block instanceof BlockQuartzGlass) return BlocksVC.quartzglass;
 		if (block instanceof BlockStairsVC) return BlocksVC.stairs;
 		if (block instanceof BlockSingleWoodenSlab) return BlocksVC.singleslab;
@@ -90,7 +90,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 	@Override
 	public int smokeLevel(ItemStack stack) {
-		BlockClass blockclass = getBlockClass(((ItemBlock)stack.getItem()).block);
+		BaseBlockClass blockclass = getBlockClass(((ItemBlock)stack.getItem()).block);
 		if (blockclass == BlocksVC.sapling || blockclass == BlocksVC.leaves || blockclass == BlocksVC.leavesbranchy) return 300;
 		
 		return 150;

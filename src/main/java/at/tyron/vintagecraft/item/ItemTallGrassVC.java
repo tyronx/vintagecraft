@@ -10,11 +10,11 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
 
-public class ItemGrassVC extends ItemBlock {
+public class ItemTallGrassVC extends ItemBlock {
 
 	
 	
-	public ItemGrassVC(Block block) {
+	public ItemTallGrassVC(Block block) {
 		super(block);
         this.setHasSubtypes(true);
 	}

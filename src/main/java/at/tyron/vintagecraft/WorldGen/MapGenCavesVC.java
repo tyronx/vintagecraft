@@ -23,183 +23,136 @@ import net.minecraft.world.gen.MapGenCaves;
 
 public class MapGenCavesVC extends MapGenBase {
 	// All copied from Vanilla minecraft with minor adjustments
-	// I wish someone could figure out what this actually does :/
 	
-	//this.func_180703_a(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
-    protected void digCave(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
-        this.digCave(randNum, chunkX, chunkZ, primer, xcoord, ycoord, zcoord, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
+    protected void digCave(long seed, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
+        this.digTunnel(seed, chunkX, chunkZ, primer, xcoord, ycoord, zcoord, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);
     }
 
-    protected void digCave(long randNum, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord, float p_180702_12_, float coordangle, float angle1, int counter, int maxiterations, double p_180702_17_)
-    {
+    protected void digTunnel(long seed, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord, float horizontalsize, float coordangle, float speedangle, int counter, int maxiterations, double verticalsize) {
         double xchunkmiddle = (double)(chunkX * 16 + 8);
         double zchunkmiddle = (double)(chunkZ * 16 + 8);
         float f3 = 0.0F;
         float f4 = 0.0F;
-        Random random = new Random(randNum);
+        Random random = new Random(seed);
 
-        if (maxiterations <= 0)
-        {
-            int j1 = this.range * 16 - 16;
+        if (maxiterations <= 0) {
+            int j1 = range * 16 - 16;
             maxiterations = j1 - random.nextInt(j1 / 4);
         }
 
         boolean flag2 = false;
 
-        if (counter == -1)
-        {
+        if (counter == -1) {
             counter = maxiterations / 2;
             flag2 = true;
         }
 
         int k1 = random.nextInt(maxiterations / 2) + maxiterations / 4;
 
-        for (boolean rnd = random.nextInt(6) == 0; counter < maxiterations; ++counter)
-        {
-            double d6 = 1.5D + (double)(MathHelper.sin((float)counter * (float)Math.PI / (float)maxiterations) * p_180702_12_ * 1.0F);
-            double d7 = d6 * p_180702_17_;
-            float f5 = MathHelper.cos(angle1);
-            float f6 = MathHelper.sin(angle1);
-            xcoord += (double)(MathHelper.cos(coordangle) * f5);
-            ycoord += (double)f6;
-            zcoord += (double)(MathHelper.sin(coordangle) * f5);
+        for (boolean rnd = random.nextInt(6) == 0; counter < maxiterations; ++counter) {
+            double horizontalradius = 1.5D + (double)(MathHelper.sin((float)counter * (float)Math.PI / (float)maxiterations) * horizontalsize * 1.0F);
+            double verticalradius = horizontalradius * verticalsize;
+            float advancex = MathHelper.cos(speedangle);
+            float advancey = MathHelper.sin(speedangle);
+            xcoord += (double)(MathHelper.cos(coordangle) * advancex);
+            ycoord += (double)advancey;
+            zcoord += (double)(MathHelper.sin(coordangle) * advancex);
 
-            if (rnd)
-            {
-                angle1 *= 0.92F;
-            }
-            else
-            {
-                angle1 *= 0.7F;
+            if (rnd) {
+                speedangle *= 0.92F;
+            } else {
+                speedangle *= 0.7F;
             }
 
-            angle1 += f4 * 0.1F;
+            speedangle += f4 * 0.1F;
             coordangle += f3 * 0.1F;
             f4 *= 0.9F;
             f3 *= 0.75F;
             f4 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 2.0F;
             f3 += (random.nextFloat() - random.nextFloat()) * random.nextFloat() * 4.0F;
 
-            if (!flag2 && counter == k1 && p_180702_12_ > 1.0F && maxiterations > 0)
-            {
-                this.digCave(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle - ((float)Math.PI / 2F), angle1 / 3.0F, counter, maxiterations, 1.0D);
-                this.digCave(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle + ((float)Math.PI / 2F), angle1 / 3.0F, counter, maxiterations, 1.0D);
+            if (!flag2 && counter == k1 && horizontalsize > 1.0F && maxiterations > 0) {
+                this.digTunnel(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle - ((float)Math.PI / 2F), speedangle / 3.0F, counter, maxiterations, 1.0D);
+                this.digTunnel(random.nextLong(), chunkX, chunkZ, primer, xcoord, ycoord, zcoord, random.nextFloat() * 0.5F + 0.5F, coordangle + ((float)Math.PI / 2F), speedangle / 3.0F, counter, maxiterations, 1.0D);
                 return;
             }
 
-            if (flag2 || random.nextInt(4) != 0)
-            {
-                double dx = xcoord - xchunkmiddle;
-                double dz = zcoord - zchunkmiddle;
+            if (flag2 || random.nextInt(4) != 0) {
+                double xdisttomiddle = xcoord - xchunkmiddle;
+                double zdisttomiddle = zcoord - zchunkmiddle;
                 double iterationsleft = (double)(maxiterations - counter);
-                double d11 = (double)(p_180702_12_ + 2.0F + 16.0F);
+                double d11 = (double)(horizontalsize + 2.0F + 16.0F);
 
-                if (dx * dx + dz * dz - iterationsleft * iterationsleft > d11 * d11)
-                {
+                if (xdisttomiddle * xdisttomiddle + zdisttomiddle * zdisttomiddle - iterationsleft * iterationsleft > d11 * d11) {
                     return;
                 }
 
-                if (xcoord >= xchunkmiddle - 16.0D - d6 * 2.0D && zcoord >= zchunkmiddle - 16.0D - d6 * 2.0D && xcoord <= xchunkmiddle + 16.0D + d6 * 2.0D && zcoord <= zchunkmiddle + 16.0D + d6 * 2.0D)
-                {
-                    int k3 = MathHelper.floor_double(xcoord - d6) - chunkX * 16 - 1;
-                    int l1 = MathHelper.floor_double(xcoord + d6) - chunkX * 16 + 1;
-                    int l3 = MathHelper.floor_double(ycoord - d7) - 1;
-                    int i2 = MathHelper.floor_double(ycoord + d7) + 1;
-                    int i4 = MathHelper.floor_double(zcoord - d6) - chunkZ * 16 - 1;
-                    int j2 = MathHelper.floor_double(zcoord + d6) - chunkZ * 16 + 1;
+                if (xcoord >= xchunkmiddle - 16.0D - horizontalradius * 2.0D && zcoord >= zchunkmiddle - 16.0D - horizontalradius * 2.0D && xcoord <= xchunkmiddle + 16.0D + horizontalradius * 2.0D && zcoord <= zchunkmiddle + 16.0D + horizontalradius * 2.0D) {
+                    int minx = MathHelper.floor_double(xcoord - horizontalradius) - chunkX * 16 - 1;
+                    int maxx = MathHelper.floor_double(xcoord + horizontalradius) - chunkX * 16 + 1;
+                    int miny = MathHelper.floor_double(ycoord - verticalradius) - 1;
+                    int maxy = MathHelper.floor_double(ycoord + verticalradius) + 1;
+                    int minz = MathHelper.floor_double(zcoord - horizontalradius) - chunkZ * 16 - 1;
+                    int maxz = MathHelper.floor_double(zcoord + horizontalradius) - chunkZ * 16 + 1;
+                    
+                    minx = Math.max(0, minx);
+                    maxx = Math.min(16, maxx);
+                    
+                    miny = Math.max(1, miny);
+                    maxy = Math.min(248, maxy);
 
-                    if (k3 < 0)
-                    {
-                        k3 = 0;
-                    }
+                    minz = Math.max(0, minz);
+                    maxz = Math.min(16, maxz);
 
-                    if (l1 > 16)
-                    {
-                        l1 = 16;
-                    }
 
-                    if (l3 < 1)
-                    {
-                        l3 = 1;
-                    }
+                    boolean stopcave = false;
+                    int dx;
 
-                    if (i2 > 248)
-                    {
-                        i2 = 248;
-                    }
+                    for (dx = minx; !stopcave && dx < maxx; ++dx) {
+                        for (int dz = minz; !stopcave && dz < maxz; ++dz) {
+                            for (int dy = maxy + 1; !stopcave && dy >= miny - 1; --dy) {
+                                if (dy >= 0 && dy < 256) {
+                                    IBlockState iblockstate = primer.getBlockState(dx, dy, dz);
 
-                    if (i4 < 0)
-                    {
-                        i4 = 0;
-                    }
-
-                    if (j2 > 16)
-                    {
-                        j2 = 16;
-                    }
-
-                    boolean flag3 = false;
-                    int k2;
-
-                    for (k2 = k3; !flag3 && k2 < l1; ++k2)
-                    {
-                        for (int l2 = i4; !flag3 && l2 < j2; ++l2)
-                        {
-                            for (int i3 = i2 + 1; !flag3 && i3 >= l3 - 1; --i3)
-                            {
-                                if (i3 >= 0 && i3 < 256)
-                                {
-                                    IBlockState iblockstate = primer.getBlockState(k2, i3, l2);
-
-                                    if (isOceanBlock(primer, k2, i3, l2, chunkX, chunkZ))
-                                    {
-                                        flag3 = true;
+                                    if (isOceanBlock(primer, dx, dy, dz, chunkX, chunkZ)) {
+                                        stopcave = true;
                                     }
 
-                                    if (i3 != l3 - 1 && k2 != k3 && k2 != l1 - 1 && l2 != i4 && l2 != j2 - 1)
-                                    {
-                                        i3 = l3;
+                                    if (dy != miny - 1 && dx != minx && dx != maxx - 1 && dz != minz && dz != maxz - 1) {
+                                        dy = miny;
                                     }
                                 }
                             }
                         }
                     }
 
-                    if (!flag3)
-                    {
-                        for (k2 = k3; k2 < l1; ++k2)
-                        {
-                            double d14 = ((double)(k2 + chunkX * 16) + 0.5D - xcoord) / d6;
+                    if (!stopcave) {
+                        for (dx = minx; dx < maxx; ++dx) {
+                            double xdist = ((double)(dx + chunkX * 16) + 0.5D - xcoord) / horizontalradius;
 
-                            for (int j4 = i4; j4 < j2; ++j4)
-                            {
-                                double d12 = ((double)(j4 + chunkZ * 16) + 0.5D - zcoord) / d6;
-                                boolean flag1 = false;
+                            for (int dz = minz; dz < maxz; ++dz) {
+                                double zdist = ((double)(dz + chunkZ * 16) + 0.5D - zcoord) / horizontalradius;
+                                boolean foundtop = false;
 
-                                if (d14 * d14 + d12 * d12 < 1.0D)
-                                {
-                                    for (int j3 = i2; j3 > l3; --j3)
-                                    {
-                                        double d13 = ((double)(j3 - 1) + 0.5D - ycoord) / d7;
+                                if (xdist * xdist + zdist * zdist < 1.0D) {
+                                    for (int dy = maxy; dy > miny; --dy) {
+                                        double ydist = ((double)(dy - 1) + 0.5D - ycoord) / verticalradius;
 
-                                        if (d13 > -0.7D && d14 * d14 + d13 * d13 + d12 * d12 < 1.0D)
-                                        {
-                                            IBlockState iblockstate1 = primer.getBlockState(k2, j3, j4);
-                                            IBlockState iblockstate2 = (IBlockState)Objects.firstNonNull(primer.getBlockState(k2, j3 + 1, j4), Blocks.air.getDefaultState());
+                                        if (ydist > -0.7D && xdist * xdist + ydist * ydist + zdist * zdist < 1.0D) {
+                                            IBlockState iblockstate1 = primer.getBlockState(dx, dy, dz);
+                                            IBlockState iblockstate2 = (IBlockState)Objects.firstNonNull(primer.getBlockState(dx, dy + 1, dz), Blocks.air.getDefaultState());
 
-                                            if (isTopBlock(primer, k2, j3, j4, chunkX, chunkZ))
-                                            {
-                                                flag1 = true;
+                                            if (isTopBlock(primer, dx, dy, dz, chunkX, chunkZ)) {
+                                                foundtop = true;
                                             }
-                                            digBlock(primer, k2, j3, j4, chunkX, chunkZ, flag1, iblockstate1, iblockstate2);
+                                            digBlock(primer, dx, dy, dz, chunkX, chunkZ, foundtop, iblockstate1, iblockstate2);
                                         }
                                     }
                                 }
                             }
                         }
 
-                        if (flag2)
-                        {
+                        if (flag2) {
                             break;
                         }
                     }
@@ -221,47 +174,40 @@ public class MapGenCavesVC extends MapGenBase {
     }
 	
     
-    // Generate function
-    protected void func_180701_a(World worldIn, int dx, int dz, int chunkX, int chunkZ, ChunkPrimer primer)
-    {
-        int i1 = this.rand.nextInt(this.rand.nextInt(this.rand.nextInt(15) + 1) + 1);
+    // Generate function, called by MapGenBase
+    protected void func_180701_a(World worldIn, int dx, int dz, int chunkX, int chunkZ, ChunkPrimer primer) {
+        int quantityCaves = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
 
-        if (this.rand.nextInt(7) != 0)
-        {
-            i1 = 0;
+        if (rand.nextInt(7) != 0) {
+            quantityCaves = 0;
         }
 
-        for (int j1 = 0; j1 < i1; ++j1)
-        {
-            double xCoord = (double)(dx * 16 + this.rand.nextInt(16));
-            double yCoord = (double)this.rand.nextInt(this.rand.nextInt(220) + 8);
-            double zCoord = (double)(dz * 16 + this.rand.nextInt(16));
-            int k1 = 1;
+        for (int i = 0; i < quantityCaves; ++i) {
+            double xCoord = (double)(dx * 16 + rand.nextInt(16));
+            double yCoord = (double)rand.nextInt(rand.nextInt(220) + 8);
+            double zCoord = (double)(dz * 16 + rand.nextInt(16));
+            int quantitySubCaves = 1;
 
-            if (this.rand.nextInt(4) == 0)
-            {
-                this.digCave(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);
-                k1 += this.rand.nextInt(4);
+            if (rand.nextInt(4) == 0) {
+                digCave(rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord);                
+                quantitySubCaves += rand.nextInt(4);
             }
 
-            for (int l1 = 0; l1 < k1; ++l1)
-            {
-                float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
-                float f1 = (this.rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
-                float f2 = this.rand.nextFloat() * 2.0F + this.rand.nextFloat();
+            for (int l1 = 0; l1 < quantitySubCaves; ++l1) {
+                float f = rand.nextFloat() * (float)Math.PI * 2.0F;
+                float f1 = (rand.nextFloat() - 0.5F) * 2.0F / 8.0F;
+                float horizontalSize = rand.nextFloat() * 2.0F + rand.nextFloat();
 
-                if (this.rand.nextInt(10) == 0)
-                {
-                    f2 *= this.rand.nextFloat() * this.rand.nextFloat() * 3.0F + 1.0F;
+                if (rand.nextInt(10) == 0) {
+                    horizontalSize *= rand.nextFloat() * rand.nextFloat() * 3.0F + 1.0F;
                 }
 
-                this.digCave(this.rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord, f2, f, f1, 0, 0, 1.0D);
+                digTunnel(rand.nextLong(), chunkX, chunkZ, primer, xCoord, yCoord, zCoord, horizontalSize, f, f1, 0, 0, 1.0D);
             }
         }
     }
 
-    protected boolean isOceanBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ)
-    {
+    protected boolean isOceanBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ) {
         net.minecraft.block.Block block = data.getBlockState(x, y, z).getBlock();
         return block== Blocks.flowing_water || block == Blocks.water;
     }
@@ -275,12 +221,13 @@ public class MapGenCavesVC extends MapGenBase {
 
     //Determine if the block at the specified location is the top block for the biome, we take into account
     //Vanilla bugs to make sure that we generate the map the same way vanilla does.
-    private boolean isTopBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ)
-    {
+    private boolean isTopBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ) {
         net.minecraft.world.biome.BiomeGenBase biome = worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
         IBlockState state = data.getBlockState(x, y, z);
         return (isExceptionBiome(biome) ? state.getBlock() == Blocks.grass : state.getBlock() == biome.topBlock);
     }
+    
+    
 
     /**
      * Digs out the current block, default implementation removes stone, filler, and top block
@@ -298,19 +245,11 @@ public class MapGenCavesVC extends MapGenBase {
      * @param foundTop True if we've encountered the biome's top block. Ideally if we've broken the surface.
      */
     protected void digBlock(ChunkPrimer data, int x, int y, int z, int chunkX, int chunkZ, boolean foundTop, IBlockState state, IBlockState up) {
-       // net.minecraft.world.biome.BiomeGenBase biome = worldObj.getBiomeGenForCoords(new BlockPos(x + chunkX * 16, 0, z + chunkZ * 16));
-       /* IBlockState top = biome.topBlock;
-        IBlockState filler = biome.fillerBlock;*/
-
         if (this.caveableBlock(state, up)) {
-            if (y < 40) {
+            if (y < 12) {
                 data.setBlockState(x, y, z, Blocks.lava.getDefaultState());
             } else {
                 data.setBlockState(x, y, z, Blocks.air.getDefaultState());
-
-               /* if (foundTop && data.getBlockState(x, y - 1, z).getBlock() == filler.getBlock()) {
-                    data.setBlockState(x, y - 1, z, top.getBlock().getDefaultState());
-                }*/
             }
         }
     }

@@ -9,7 +9,7 @@ import com.google.common.collect.Lists;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
@@ -315,7 +315,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 	}
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.doubleflower;
 	}
     

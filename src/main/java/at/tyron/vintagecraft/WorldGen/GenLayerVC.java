@@ -58,6 +58,8 @@ public abstract class GenLayerVC extends GenLayer {
 	
 	public static GenLayerVC genAgemap(long seed) {
 		GenLayerSimplexNoiseUnclamped noise = new GenLayerSimplexNoiseUnclamped(seed, 1, 1f, 90, 0);
+		noise.resolution = 1024;
+		
 		GenLayerVC.drawImageGrayScale(512, noise, "Age 0 Noise");
 
 		return noise;
@@ -120,7 +122,7 @@ public abstract class GenLayerVC extends GenLayer {
 		ArrayList<EnumMaterialDeposit> largedeposits = new ArrayList<EnumMaterialDeposit>();
 		
 		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.size == EnumDepositSize.LARGE || deposit.size == EnumDepositSize.SMALLANDLARGE || deposit.size == EnumDepositSize.NONE || deposit.size == EnumDepositSize.HUGE) {
+			if (deposit.size == EnumDepositSize.GIGANTIC || deposit.size == EnumDepositSize.LARGE || deposit.size == EnumDepositSize.SMALLANDLARGE || deposit.size == EnumDepositSize.NONE || deposit.size == EnumDepositSize.HUGE) {
 				largedeposits.add(deposit);
 			}
 		}

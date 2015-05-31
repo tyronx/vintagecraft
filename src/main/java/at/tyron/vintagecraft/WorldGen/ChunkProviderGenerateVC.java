@@ -80,9 +80,10 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	public ChunkProviderGenerateVC(World worldIn, long seed, boolean mapfeaturesenabled, String customgenjson) {
 		super(worldIn, seed, mapfeaturesenabled, customgenjson);
+		ageLayer = GenLayerVC.genAgemap(seed);
 		
 		caveGenerator = new MapGenCavesVC();
-		floragenerator = new MapGenFlora(seed);
+		floragenerator = new MapGenFlora(seed, ageLayer);
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
@@ -91,7 +92,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		
 		genrocklayers = new GenRockLayers(seed);
-		ageLayer = GenLayerVC.genAgemap(seed);
+		
 		rockOffsetNoiseX = GenLayerVC.genHorizontalRockOffsetMap(seed);
 		rockOffsetNoiseZ = GenLayerVC.genHorizontalRockOffsetMap(seed+500);
 		//heightmapGen = GenLayerVC.genHeightmap(seed);

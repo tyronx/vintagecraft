@@ -6,9 +6,11 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.ISizedItem;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 
-public class ItemDryGrass extends ItemVC implements IItemFuel {
+public class ItemDryGrass extends ItemVC implements IItemFuel, ISizedItem {
 
 	public ItemDryGrass() {
 		setCreativeTab(VintageCraft.resourcesTab);
@@ -43,5 +45,10 @@ public class ItemDryGrass extends ItemVC implements IItemFuel {
 	@Override
 	public int smokeLevel(ItemStack stack) {
 		return 900;
+	}
+
+	@Override
+	public EnumItemSize getItemSize() {
+		return EnumItemSize.SMALL;
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -49,7 +50,8 @@ import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
+import at.tyron.vintagecraft.BlockClass.CoatingClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
@@ -65,7 +67,8 @@ import at.tyron.vintagecraft.Item.ItemClayVessel;
 import at.tyron.vintagecraft.Item.ItemDoubleFlower;
 import at.tyron.vintagecraft.Item.ItemFarmLand;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;
-import at.tyron.vintagecraft.Item.ItemGrassVC;
+import at.tyron.vintagecraft.Item.ItemStone;
+import at.tyron.vintagecraft.Item.ItemTallGrassVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemLeaves;
 import at.tyron.vintagecraft.Item.ItemLeavesBranchy;
@@ -74,6 +77,7 @@ import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemRock;
 import at.tyron.vintagecraft.Item.ItemRockTyped;
+import at.tyron.vintagecraft.Item.ItemSaltpeterBlock;
 import at.tyron.vintagecraft.Item.ItemStonePot;
 import at.tyron.vintagecraft.Item.ItemSubsoil;
 import at.tyron.vintagecraft.Item.ItemToolRack;
@@ -131,8 +135,10 @@ public class BlocksVC {
 	public static BlockVC rawclay;
 	public static BlockVC rawfireclay;
 	public static BlockVC peat;
-	public static BlockVC lignite;
-	public static BlockVC coal;
+	public static CoatingClass saltpeter;
+	//public static BlockVC lignite;
+	//public static BlockVC coal;
+	
 	
 	
 	public static FlowerClass flower;
@@ -182,17 +188,22 @@ public class BlocksVC {
 		initBlocks();
 		initHardness();
 		initTileEntities();
+		
+		// Really messes with vanilla recipes, e.g. creates a vanilla iron sword with stick+2 copper ingots
+		// Don't want to repair this right now
 		initOreDictBlocks();
 	}
 	
 
 	private static void initOreDictBlocks() {
 		for (EnumTree tree : EnumTree.values()) {
-			OreDictionary.registerOre("treeWood", BlocksVC.log.getItemStackFor(tree));
-			OreDictionary.registerOre("plankWood", BlocksVC.planks.getItemStackFor(tree));			
-			OreDictionary.registerOre("slabWood", BlocksVC.singleslab.getItemStackFor(tree));
-			OreDictionary.registerOre("stairWood", BlocksVC.stairs.getItemStackFor(tree));
-			OreDictionary.registerOre("treeSapling", BlocksVC.sapling.getItemStackFor(tree));
+			if (tree.isBush) continue;
+			
+			OreDictionary.registerOre("vcraft-treeWood-any", BlocksVC.log.getItemStackFor(tree));
+			OreDictionary.registerOre("vcraft-plankWood-any", BlocksVC.planks.getItemStackFor(tree));			
+			OreDictionary.registerOre("vcraft-slabWood-any", BlocksVC.singleslab.getItemStackFor(tree));
+			OreDictionary.registerOre("vcraft-stairWood-any", BlocksVC.stairs.getItemStackFor(tree));
+			OreDictionary.registerOre("vcraft-treeSapling-any", BlocksVC.sapling.getItemStackFor(tree));
 		}
 	
 	}
@@ -245,7 +256,7 @@ public class BlocksVC {
 		
 		topsoil = new BlockTopSoil().setHardness(2F).registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertilityForTopsoil()).setStepSound(Block.soundTypeGrass);
 	
-		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
+		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemTallGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 		
 		flower = new FlowerClass();
 		flower.init(false);
@@ -293,6 +304,9 @@ public class BlocksVC {
 		rawore = new OreClass();
 		rawore.init();
 		
+		saltpeter = new CoatingClass("saltpeter", BlockSaltpeter.class, ItemSaltpeterBlock.class, 0.8f, Block.soundTypeSand, "shovel", 0);
+		saltpeter.init();
+		
 		
 		peat = new BlockPeat().setHardness(2F).registerMultiState("peat", ItemBlock.class, EnumOrganicLayer.values()).setStepSound(Block.soundTypeGrass);
 		rawclay = new BlockRawClay().setHardness(2F).registerSingleState("rawclay", ItemBlock.class).setStepSound(Block.soundTypeGrass);
@@ -332,7 +346,7 @@ public class BlocksVC {
 		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
 		
 		
-		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.values());
+		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.anvilValues());
 		metalanvil.setHardness(2f).setHarvestLevel("pickaxe", 0);
 		metalanvil.setStepSound(Block.soundTypeAnvil);
 		

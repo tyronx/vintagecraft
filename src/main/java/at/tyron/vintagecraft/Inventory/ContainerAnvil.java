@@ -71,8 +71,21 @@ public class ContainerAnvil extends Container {
 
 	@Override
 	public ItemStack slotClick(int slotId, int clickedButton, int mode, EntityPlayer playerIn) {
+		if (slotId >= 0 && slotId < 4 && mode == 0) {
+			ItemStack heldItemStack = playerIn.inventory.getItemStack();
+			ItemStack anvilItemStack = ((Slot)this.inventorySlots.get(slotId)).getStack();
+			
+			if (heldItemStack != null && anvilItemStack != null && anvilItemStack.getItem() instanceof IItemHeatable) {
+				IItemHeatable heatable = (IItemHeatable)anvilItemStack.getItem();
+				if (heatable.tryStackWith(playerIn.worldObj, anvilItemStack, heldItemStack)) {
+					if (heldItemStack.stackSize == 0) playerIn.inventory.setItemStack(null);
+					return null;
+				}
+				
+			}
+		}
+		
 		ItemStack stack = super.slotClick(slotId, clickedButton, mode, playerIn);
-		//checkCraftable();
 		return stack;
 	}
 	
@@ -99,6 +112,7 @@ public class ContainerAnvil extends Container {
 						Slot playerSlot = (Slot)this.inventorySlots.get(i);
 						if (playerSlot != null && playerSlot.getHasStack() && playerSlot.getStack().getItem() instanceof IItemHeatable) {
 							IItemHeatable heatable = (IItemHeatable)clickedStack.getItem();
+							
 							if (heatable.tryStackWith(player.worldObj, playerSlot.getStack(), clickedStack)) {
 								if (clickedStack.stackSize == 0) {
 									clickedSlot.putStack((ItemStack)null);

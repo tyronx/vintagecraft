@@ -42,11 +42,11 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100),		 // http://fc06.deviantart.net/fs40/f/2009/004/e/f/An_old_pear_tree_by_SzekelyCsaba.jpg
 	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200),
 	BLACKWALNUT			( 1.15f, 0.08f,  10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255),
-	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true),
+	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true, false),
 	WEEPINGWILLOW		( 0.5f,  0.06f,  96,  -6,  18,  65,  255,   50,  255,    0f,    1f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
-	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250),
-	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true),
-	KAURI				( 1.3f,  0.01f,  99,  20,  24, 120,  180,   90,  200,    0f,  0.8f,   0,  255)
+	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250, false, true),
+	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true, false),
+	KAURI				( 1.3f,  0.01f,  99,  20,  24, 120,  255,   90,  200,    0f,  0.8f,   0,  255)
 	
 	
 //	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
@@ -79,6 +79,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	int minforest;
 	int maxforest;
 	boolean competitive;
+	public boolean isBush;
 	
 	// Height of 0f == sealevel
 	// Height of 1f == 255
@@ -104,10 +105,11 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	}
 	
 	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest) {
-		this(growthspeed, saplingdropchance, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minfertility, maxforest, false);
+		this(growthspeed, saplingdropchance, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minfertility, maxforest, false, false);
 	}
 	
-	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, boolean competitive) {
+	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, boolean competitive, boolean nologs) {
+		this.isBush = nologs;
 		this.competitive = competitive;
 		this.saplingdropchance = saplingdropchance;
 		this.growthspeed = growthspeed;
@@ -247,7 +249,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 			case SPRUCE:
 			case ELEPHANTTREE:
 			case POPLAR:
-				if (heightreduction < 0.15f && rand.nextInt(220) == 0) return 1.3f + rand.nextFloat() * 0.3f;
+				if (heightreduction < 0.15f && rand.nextInt(220) == 0) return 1.2f + rand.nextFloat() * 0.55f;
 				break;
 				
 			case KAPOK:

@@ -34,10 +34,13 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class MapGenFlora {
 	GenLayerVC forestGen;
+	GenLayerVC ageLayer;
 	
-	public MapGenFlora(long seed) {
+	public MapGenFlora(long seed, GenLayerVC ageLayer) {
 		forestGen = GenLayerVC.genForest(seed);
+		this.ageLayer = ageLayer;
 	}
+	
 	
 	
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator, IChunkProvider chunkProvider) {
@@ -45,10 +48,12 @@ public class MapGenFlora {
 		chunkZ *= 16;
 	
 		int[] forestLayer = forestGen.getInts(chunkX, chunkZ, 16, 16);
+		int[] age = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
+		
 		VCraftWorld.instance.setChunkNBT(chunkX/16, chunkZ/16, "forest", forestLayer);
 		
 		/**** 1. Flowers and Wheat ****/
-		if (random.nextInt(15) == 0) {
+		if (random.nextInt(12) == 0) {
 			placeFlowers(world, chunkX, chunkZ, forestLayer, random);
 		}
 
@@ -80,34 +85,45 @@ public class MapGenFlora {
 			
 			
 			//int forestDensityDiff = Math.max(1, climate[1] - 180);
-			
 			//if (i <= 50 + forestDensityDiff/4 && (random.nextInt(255) > density || random.nextInt(forestDensityDiff) > 0)) {
 			
+			// Large age value = young forest
+			int bushdensity = Math.min(30, Math.max(2, (30 * Math.abs(age[x + z*16])) / 128));
 			
-			if (i < 90 * forestdensity && random.nextFloat() < forestdensity) {
+			if (i < bushdensity && random.nextFloat() < forestdensity) {
+				placeTree(world, blockpos, random, climate, forestLayer[x+z*16], (random.nextFloat() / 2 + 0.5f) * 0.65f);
+			}
 			
-				Block block = world.getBlockState(blockpos.down()).getBlock();
-				if (!(block instanceof IBlockSoil)) {
-					continue;
-				}
-				
-				int steepness = Math.max(
-					Math.abs(world.getHorizon(blockpos.east(2)).getY() - world.getHorizon(blockpos.west(2)).getY()),
-					Math.abs(world.getHorizon(blockpos.north(2)).getY() - world.getHorizon(blockpos.south(2)).getY())
-				);
-				
-				DynTreeGen treegen = EnumTree.getRandomTreeGenForClimate(climate[2], climate[0], 255 - forestLayer[x+z*16], climate[1], steepness, blockpos.getY(), random);				
-				
-				if (treegen != null) {
-					float size = treegen.tree.getTreeSize(random, Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f));
-					//if (treegen.tree == EnumTree.COYOTEWILLOW) System.out.println("plant tree");
-					if (size > 0.23f) {
-						treegen.growTree(world, blockpos.down(), size, Math.max(0, climate[2] - 190));
-					}
-				}
+			if (i > 50 && i < 50 + 90 * forestdensity && random.nextFloat() < forestdensity) {
+				placeTree(world, blockpos, random, climate, forestLayer[x+z*16], 1f);
 			}
 		}
 
+	}
+	
+	
+	void placeTree(World world, BlockPos blockpos, Random random, int[] climate, int forest, float sizemultiplier) {
+		Block block = world.getBlockState(blockpos.down()).getBlock();
+		
+		if (!(block instanceof IBlockSoil)) {
+			return;
+		}
+		
+		int steepness = Math.max(
+			Math.abs(world.getHorizon(blockpos.east(2)).getY() - world.getHorizon(blockpos.west(2)).getY()),
+			Math.abs(world.getHorizon(blockpos.north(2)).getY() - world.getHorizon(blockpos.south(2)).getY())
+		);
+		
+		DynTreeGen treegen = EnumTree.getRandomTreeGenForClimate(climate[2], climate[0], 255 - forest, climate[1], steepness, blockpos.getY(), random);				
+		
+		if (treegen != null) {
+			float size = treegen.tree.getTreeSize(random, Math.max(0, 5 * (blockpos.getY() * 1f / treegen.tree.maxy) - 4f));
+			if (!treegen.tree.isBush) size *= sizemultiplier;
+
+			if (size > 0.23f) {
+				treegen.growTree(world, blockpos.down(), size, Math.max(0, climate[2] - 190));
+			}
+		}		
 	}
 	
 	
@@ -132,10 +148,10 @@ public class MapGenFlora {
 			if (flora == null) continue;
 			chance /= 4;
 			
-			int quantity = (random.nextInt(25) + random.nextInt(25) + random.nextInt(25)) / 3;
+			int quantity = flora.getRandomQuantity(random);
 			
 			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(17)+random.nextInt(17))/2 - 6, 0, zCoord + z + (random.nextInt(17)+random.nextInt(17))/2 - 6));
+				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(19)+random.nextInt(19))/2 - 6, 0, zCoord + z + (random.nextInt(19)+random.nextInt(19))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				BlockClassEntry[] variants = BlocksVC.flower.values(flora);

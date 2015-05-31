@@ -297,15 +297,25 @@ public class DynTreeGen {
 				int quantity = (int)numBranching.nextFloat(recursion);
 				
 				//if (quantity > 0) baseWidth *= widthBranchLossBase;
+				float prevHorAngle = 0f;
+				float horAngle;
+				float minHorangleDist = Math.min(NatFloat.PI / 10, branchHorizontalAngle.variance / 5); 
+				int tries = 20;
 				
 				for (int i = 0; i < quantity; i++) {
 					baseWidth *= widthBranchLossBase;
+					
+					horAngle = branchHorizontalAngle.nextFloat();
+					while (i > 0 && Math.abs(horAngle - prevHorAngle) < minHorangleDist && tries-- > 0) {
+						horAngle = branchHorizontalAngle.nextFloat();
+					}
+					
 					
 					growBranch(
 						recursion+1, 
 						pos, dx + trunkOffsetX, dy, dz + trunkOffsetZ, 
 						branches.angleVert.copyWithOffset(branchVerticalAngle.nextFloat()),
-						branches.angleHori.copyWithOffset(branchHorizontalAngle.nextFloat()),
+						branches.angleHori.copyWithOffset(prevHorAngle = horAngle),
 						baseWidth * branchWidthMultiplier * (mode == EnumTreeGenMode.RANDOMLENGTHBRANCHES ? 1F : (0.5f + rand.nextFloat()*0.5f)), 
 						branches.widthloss, 
 						branches.numBranching,
@@ -327,7 +337,11 @@ public class DynTreeGen {
 
 	
 	public void setTree(EnumTree tree) {
-		log = BlocksVC.log.getBlockStateFor(tree);
+		if(tree.isBush) {
+			log = Blocks.tnt.getDefaultState();
+		} else {
+			log = BlocksVC.log.getBlockStateFor(tree);
+		}
 		leavesbranchy = BlocksVC.leavesbranchy.getBlockStateFor(tree);
 		leaves = BlocksVC.leaves.getBlockStateFor(tree);
 	}

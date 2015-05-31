@@ -2,7 +2,7 @@
 
 $blocktype = "rawore";
 $rocktypes = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert", "chalk", "kimberlite", "slate");
-$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "rhodium", "nativesilver_quartz", "sphalerite", "bismuthinite", "iridium", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena");
+$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "rhodium", "nativesilver_quartz", "sphalerite", "bismuthinite", "iridium", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena", "sulfur");
 
 
 $variants = array();

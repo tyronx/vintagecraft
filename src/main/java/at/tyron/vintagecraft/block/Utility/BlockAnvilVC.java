@@ -98,8 +98,8 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tabs, List list) {
-		for (Object metal: METALTYPE.getAllowedValues()) {
-			list.add(getItemStackFor((EnumMetal)metal));
+		for (EnumMetal metal : EnumMetal.anvilValues()) {
+			list.add(getItemStackFor(metal));
 		}
 	}
 	

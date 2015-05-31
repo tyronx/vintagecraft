@@ -22,6 +22,10 @@ public class ItemToolCopper extends ItemToolVC {
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {
+			case SAW:
+				if (material == Material.wood) return 3.8f; 
+				break;
+			
 			case AXE: 
 				if (material == Material.wood) return 4f; 
 				break;

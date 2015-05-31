@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -56,7 +56,7 @@ public class BlockLeavesBranchy extends BlockLeavesVC {
 
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.leavesbranchy;
 	}
 	

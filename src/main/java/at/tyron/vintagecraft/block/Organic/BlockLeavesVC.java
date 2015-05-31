@@ -10,7 +10,7 @@ import com.google.common.collect.Lists;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC.EnumBlockHalf;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
@@ -283,7 +283,7 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.leaves;
 	}
 

@@ -27,7 +27,12 @@
 
 		"flowertype=purpletulip": { "model": "vintagecraft:flower/purpletulip" },
 		"flowertype=purpletulip2": { "model": "vintagecraft:flower/purpletulip2" },
-		"flowertype=purpletulip3": { "model": "vintagecraft:flower/purpletulip3" }
-
+		"flowertype=purpletulip3": { "model": "vintagecraft:flower/purpletulip3" },
+		
+		"flowertype=cowparsley": { "model": "vintagecraft:flower/cowparsley" },
+		"flowertype=cowparsley2": { "model": "vintagecraft:flower/cowparsley2" },
+		
+		"flowertype=horsetail": { "model": "vintagecraft:flower/horsetail" }
+		
 	}
 }

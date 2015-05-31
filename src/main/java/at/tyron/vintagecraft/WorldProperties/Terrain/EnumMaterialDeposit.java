@@ -1,9 +1,9 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import scala.actors.threadpool.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.block.material.Material;
@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.World;
 import at.tyron.vintagecraft.Block.*;
 import at.tyron.vintagecraft.Block.Organic.BlockPeat;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
@@ -30,12 +31,12 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	
 	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
 
-	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(50, 2, 1, 165)),
+	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 165)),
 	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(50, 1, 10, 50, 0.5f)), 
 	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(37, 1, 8, 103)),
 
-	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(12, 2, 1, 155)),
-	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(5, 1, 2, 160)),
+	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(11, 2, 1, 155)),
+	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(8, 2, 2, 160)),
 
 	QUARTZ 				(19, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
 	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(45, 2, 5, 255, 170)),
@@ -62,8 +63,9 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	PERIDOT_OLIVINE     (23, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(OLIVINE, 20)),  
 
 	
-	GALENA 				( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(15, 1, 30, 100))
-	
+	GALENA 				( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(15, 1, 30, 100)),
+	SULFUR 				(24, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(10, 1, 20, 108)),
+	SALTPETER			(25, true, EnumDepositSize.HUGE, DepositOccurence.anyBelowSealevel(50, 15, 5, 200))
 	
 	;
 
@@ -133,6 +135,10 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 								
 			case PERIDOT_OLIVINE:
 				return state.getBlock() instanceof BlockOreVC && BlockOreVC.getOreType(state) == EnumOreType.OLIVINE;
+
+	
+			case SALTPETER:
+				return state.getBlock() == Blocks.air;
 				
 			default:
 				return EnumOreType.byId(this.id).isParentMaterial(rocktype);
@@ -142,22 +148,37 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	}
 
 	
-	public IBlockState getBlockStateForDepth(int depth, IBlockState parentmaterial) {
+	public IBlockState getBlockStateForPos(IBlockState parentmaterial, World world, BlockPos pos) {
 		IBlockState state;
 		
 		switch (this) {
 			case PEAT: 
-				state = BlocksVC.peat.getDefaultState(); //.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NormalGrass);
+				state = BlocksVC.peat.getDefaultState(); 
+				
+				if (!(parentmaterial.getBlock() instanceof BlockTopSoil)) {
+					state = state.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NOGRASS);
+				}
 			break;
 			
 			case CLAY: 
 				state = BlocksVC.rawclay.getDefaultState();
+
+				if (!(parentmaterial.getBlock() instanceof BlockTopSoil)) {
+					state = state.withProperty(BlockPeat.organicLayer, EnumOrganicLayer.NOGRASS);
+				}
 				break;
 			
 			case FIRECLAY: 
 				state = BlocksVC.rawfireclay.getDefaultState(); 
 				break;
 			
+			case SALTPETER:
+				// Will be null when no solid sides found 
+				state = BlocksVC.saltpeter.getFullyCoatingBlockAtPos(world, pos);
+				if(state == null) state = Blocks.air.getDefaultState();
+				break;
+			
+				
 			case SYLVITE_ROCKSALT:
 			case NATIVEGOLD_QUARTZ:
 			case NATIVESILVER_QUARTZ:
@@ -277,7 +298,8 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	@Override
 	public int getSize() {
-		if (size == EnumDepositSize.HUGE) return 4;
+		if (size == EnumDepositSize.GIGANTIC) return 16;
+		if (size == EnumDepositSize.HUGE) return 9;
 		return 1;
 	}	
 

@@ -120,10 +120,10 @@ import net.minecraftforge.fml.server.FMLServerHandler;
 public class VintageCraft {
 	@Instance("vintagecraft")
 	public static VintageCraft instance;
-
 	
 	@SidedProxy(clientSide = ModInfo.CLIENT_PROXY_CLASS, serverSide = ModInfo.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
+	
 	    
     // The packet pipeline
  	//public static final PacketPipeline packetPipeline = new PacketPipeline();
@@ -229,25 +229,44 @@ public class VintageCraft {
     }
 
 	
+	public VCraftWorldSavedData getOrCreateWorldData(World world) {
+		VCraftWorldSavedData worlddata;
+		
+		worlddata = (VCraftWorldSavedData) world.getPerWorldStorage().loadData(VCraftWorldSavedData.class, "vcraft");
+		
+		if (worlddata == null) {
+			worlddata = new VCraftWorldSavedData("vcraft");
+			world.getPerWorldStorage().setData("vcraft", worlddata);
+		}
+		return worlddata;
+	}
+	
 	@SubscribeEvent
 	public void loadWorld(WorldEvent.Load evt) {
-		setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
+		long worldtime = getOrCreateWorldData(evt.world).getWorldTime();
+		
+		setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
 	}
 	
 	
 	@SubscribeEvent
-	public void onServerTick(TickEvent.ServerTickEvent event) {
-		if (FMLCommonHandler.instance().getMinecraftServerInstance() == null || event.phase == TickEvent.Phase.END) return;
-		VintageCraftConfig.worldTime++;
+	public void onServerTick(TickEvent.WorldTickEvent event) {
+		if (
+			FMLCommonHandler.instance().getMinecraftServerInstance() == null || 
+			event.phase == TickEvent.Phase.END || 
+			event.world.provider.getDimensionId() != 0
+		) return;
 		
-		WorldServer[] worlds = FMLCommonHandler.instance().getMinecraftServerInstance().worldServers;
 		
-		if (worlds[0] != null && VintageCraftConfig.worldTime % 12000L == 0) {
-			setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
-        	System.out.println(VintageCraftConfig.worldTime + "spawn cap set to " + spawnCapByDay(VintageCraftConfig.worldTime / 24000L));
+		
+		long worldtime = getOrCreateWorldData(event.world).getWorldTime();
+		getOrCreateWorldData(event.world).setWorldTime(worldtime + 1);
+		
+		
+		if (worldtime % 6000L == 0) {
+			setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(worldtime / 24000L, event.world.getDifficulty()));
         	VintageCraftConfig.saveConfig();
-		}	
-        
+		}
 	}
 	
 	
@@ -267,10 +286,20 @@ public class VintageCraft {
 	}
 	
 	
-	public int spawnCapByDay(long days) {
-		if (days < 4 ) return 0;
+	public int spawnCapByDay(long days, EnumDifficulty difficulty) {
+		int cap = 0;
+		switch (difficulty) {
+			case EASY: cap = VintageCraftConfig.easyMobCap; break;
+			case NORMAL: cap = VintageCraftConfig.mediumMobCap; break;
+			case HARD: cap = VintageCraftConfig.hardMobCap; break;
+			default: cap = 0; break;
+		}
 		
-		return (int) Math.min(70, (days-3) * 5);
+		if (VintageCraftConfig.mobFreeDays == 0) return cap;
+		if (VintageCraftConfig.mobFreeDays > days) return 0;
+		
+		//System.out.println(days + " / " + VintageCraftConfig.mobFreeDays);
+		return (int) Math.min(cap, (days - VintageCraftConfig.mobFreeDays + 1) * 15);
 	}
 	
 	public long daysPassed(World world) {
@@ -284,8 +313,8 @@ public class VintageCraft {
 		
 		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
 		
-		// The deeper the mob spawns, the better equipped it is
-		float difficultyModifier = 0.35f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
+		// The deeper the mob spawns, the better equipment it receives
+		float difficultyModifier = 0.45f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
 		
 		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
 		int healthboost = 0;
@@ -313,12 +342,31 @@ public class VintageCraft {
 		
 		if (healthboost > 0) {
 			//System.out.println("added health " + healthboost + " / new max h = " + mob.getMaxHealth());
-			mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost / 12f, 1));
-			mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost, 1));
-			mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 1));
+			
+			/*System.out.println("boosting mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
+					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
+			);*/
+
+			
+			mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(
+				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 12f, 1)
+			);
+			mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(
+				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 0)
+			);
+			mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(
+				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 1)
+			);
+			
+			//mob.experienceValue += healthboost;
 			
 			//System.out.println("now resis: " + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue());
 			mob.setHealth(mob.getMaxHealth());
+			
+			/*System.out.println("boosted mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
+					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
+			);*/
+			
 		}
 		
 	}

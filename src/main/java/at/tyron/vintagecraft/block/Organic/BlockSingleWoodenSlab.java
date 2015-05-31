@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
@@ -19,6 +19,8 @@ public class BlockSingleWoodenSlab extends BlockWoodenSlabVC {
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumTree tree : EnumTree.values()) {
+    		if (tree.isBush) continue;
+    		
     		list.add(BlocksVC.singleslab.getItemStackFor(tree));
     	}
     }
@@ -34,7 +36,7 @@ public class BlockSingleWoodenSlab extends BlockWoodenSlabVC {
 	}
 	
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.singleslab;
 	}
 

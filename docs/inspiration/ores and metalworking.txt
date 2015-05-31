@@ -1,3 +1,12 @@
+=== Mining ====
+
+"For instance, power grades of black powder, unsuitable for use in firearms but adequate for blasting rock in quarrying operations, is called blasting powder rather than gunpowder with standard proportions of 70% nitrate, 14% charcoal, and 16% sulfur"
+
+^ Recipe for blasting powder to create Dynamite that should assist players significantly in mining operations
+
+Requires production facilities to create charcoal.
+
+
 === Underground tweaks ===
 
 - Make diamonds and emeralds spawn in clusters. (rnd pos around a center with 2-3 block radius)

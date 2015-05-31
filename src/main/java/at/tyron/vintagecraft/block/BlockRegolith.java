@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -58,7 +58,7 @@ public class BlockRegolith extends BlockRock {
     
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.regolith;
 	}
 }

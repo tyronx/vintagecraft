@@ -14,6 +14,10 @@ public class ItemToolTinbronze extends ItemToolVC {
 	@Override
 	public float getEfficiencyOnMaterial(ItemStack itemstack, Material material) {
 		switch (tooltype) {
+			case SAW: 
+				if (material == Material.wood) return 4.4f; 
+				break;
+			
 			case AXE: 
 				if (material == Material.wood) return 4.5f; 
 				break;

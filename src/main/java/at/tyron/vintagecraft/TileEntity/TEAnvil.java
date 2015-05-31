@@ -28,14 +28,16 @@ public class TEAnvil extends TENoGUIInventory {
 		this.uses = uses;
 	}
 	
-	public void onAnvilUse(EntityPlayer entityplayer) {
+	public boolean onAnvilUse(EntityPlayer entityplayer) {
 		if (uses > 0) uses--;
 		if (uses == 0) {
 			worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:anvilbreak", 1f, 1f);
 			ejectContents();
 			worldObj.destroyBlock(pos, true);
 			entityplayer.closeScreen();
+			return false;
 		}
+		return true;
 	}
 	
 	

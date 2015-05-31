@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;

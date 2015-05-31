@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -49,7 +49,7 @@ public class ItemFlowerVC extends ItemBlockVC {
 	}
 	
 	
-	static BlockClass getBlockClass(ItemStack itemstack) {
+	static BaseBlockClass getBlockClass(ItemStack itemstack) {
 		ItemBlock itemblock = (ItemBlock)itemstack.getItem();
 		
 		if (itemblock.block instanceof BlockDoubleFlowerVC) {

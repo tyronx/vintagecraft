@@ -29,7 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
@@ -173,7 +173,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.rawore;
 	}
 

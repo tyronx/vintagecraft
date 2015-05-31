@@ -133,7 +133,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				pos = surface.add(dx, -depth, dz);
 				
 				if (pos.getY() > 0 && dx * dx + dz * dz <= width * width && deposit.isParentMaterial(world.getBlockState(pos), pos)) {
-					world.setBlockState(pos, deposit.getBlockStateForDepth(depth, world.getBlockState(pos)), 2);
+					world.setBlockState(pos, deposit.getBlockStateForPos(world.getBlockState(pos), world, pos), 2);
 				}
 				
 				if (rand.nextInt(8) == 0) depth+=rand.nextInt(2) * 2 - 1;
@@ -200,16 +200,13 @@ public class WorldGenDeposits implements IWorldGenerator {
 					}
 				}
 				
-				if (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos), pos)) {
-					int hgt = deposit.occurence.height;
-					
-					while (hgt-- > 0) {
-						if (pos.getY() < 1) continue;
-						world.setBlockState(pos, deposit.getBlockStateForDepth(depositDepth, parentmaterial), 2);
-						//if (deposit == EnumMaterialDeposit.FIRECLAY) System.out.println("fireclay @ " + pos);
-						pos = pos.down();
-						depositDepth--;
-					}
+				int hgt = deposit.occurence.height;
+				while (deposit.isParentMaterial(parentmaterial = world.getBlockState(pos), pos) && hgt-- > 0) {
+					if (pos.getY() < 1) continue;
+					world.setBlockState(pos, deposit.getBlockStateForPos(parentmaterial, world, pos), 2);
+					//if (deposit == EnumMaterialDeposit.SALTPETER) System.out.println("saltpeter @ " + pos);
+					pos = pos.down();
+					depositDepth--;
 				}
 				
 

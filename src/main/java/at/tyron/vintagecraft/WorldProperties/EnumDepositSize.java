@@ -7,6 +7,7 @@ public enum EnumDepositSize {
 	SMALL,
 	LARGE,
 	HUGE,
+	GIGANTIC,
 	SMALLANDLARGE
 	;
 }

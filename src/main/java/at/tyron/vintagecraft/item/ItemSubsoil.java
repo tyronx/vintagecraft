@@ -12,7 +12,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.SoilRockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
@@ -43,7 +43,7 @@ public class ItemSubsoil extends ItemBlockVC {
 	
 	
 	// Workaround for Java being too fail to allow overriding static methods
-	public static BlockClass getBlockClass(Block block) {
+	public static BaseBlockClass getBlockClass(Block block) {
 		if (block instanceof BlockSubSoil) return BlocksVC.subsoil;
 		
 		return null; 

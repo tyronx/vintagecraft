@@ -5,7 +5,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
@@ -64,8 +64,8 @@ public class BlockStoneAnvil extends BlockContainerVC implements IMultiblock {
         	TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof TEAnvil) {
 				
-				int multiplier = 1;
-				if (rocktype.getRockGroup() == EnumRockGroup.METAMORPHIC) multiplier = 2;
+				int multiplier = 2;
+				if (rocktype.getRockGroup() == EnumRockGroup.METAMORPHIC) multiplier = 3;
 				if (rocktype.getRockGroup() == EnumRockGroup.IGNEOUS_EXTRUSIVE || rocktype.getRockGroup() == EnumRockGroup.IGNEOUS_INTRUSIVE) { 
 					multiplier = 5;
 				}
@@ -179,7 +179,7 @@ public class BlockStoneAnvil extends BlockContainerVC implements IMultiblock {
 	}
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.stoneanvil;
 	}
 	

@@ -64,18 +64,28 @@ public class ItemsVC {
 		initItems();
 		initIngots();
 		initTabIcons();
+
+		// Really messes with vanilla recipes, e.g. creates a vanilla iron sword with stick+2 copper ingots
+		// Don't want to repair this right now
 		initOreDictItems();
 	}
 	
 	
 	private static void initOreDictItems() {
 		for (EnumMetal metal : EnumMetal.values()) {
-			OreDictionary.registerOre("ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));			
+			OreDictionary.registerOre("vcraft-ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));			
 		}
 		
 		for (EnumOreType oretype : EnumOreType.values()) {
-			OreDictionary.registerOre("ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
+			OreDictionary.registerOre("vcraft-ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
 		}
+		
+		for (EnumRockType rocktype : EnumRockType.values()) {
+			OreDictionary.registerOre("vcraft-stone" + rocktype.getNameUcFirst(), ItemStone.getItemStackFor(rocktype, 1));
+			OreDictionary.registerOre("vcraft-stone-any", ItemStone.getItemStackFor(rocktype, 1));
+		}
+		
+		
 	}
 
 
@@ -110,10 +120,6 @@ public class ItemsVC {
 		registerToolHeads();
 		registerArmor();
 		
-		/*registerArmor("copper", ItemArmorVC.class);
-		registerArmor("tinbronze", ItemArmorVC.class);
-		registerArmor("bismuthbronze", ItemArmorVC.class);
-		registerArmor("iron", ItemArmorVC.class);*/
 		
 		
 		porkchopRaw = new ItemFoodVC(3, 0.3f, true).register("porkchopRaw");

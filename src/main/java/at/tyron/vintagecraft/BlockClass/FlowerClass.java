@@ -17,7 +17,7 @@ import at.tyron.vintagecraft.Item.ItemFlowerVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 
-public class FlowerClass extends BlockClass {
+public class FlowerClass extends BaseBlockClass {
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }

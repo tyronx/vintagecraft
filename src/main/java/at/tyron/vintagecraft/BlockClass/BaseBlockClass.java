@@ -35,7 +35,7 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
  * 
  */
 
-public abstract class BlockClass {
+public abstract class BaseBlockClass {
 	boolean debug = VintageCraftConfig.debugBlockRegistration;
 	
 	LinkedHashMap<IStateEnum, BlockClassEntry> values = new LinkedHashMap<IStateEnum, BlockClassEntry>();

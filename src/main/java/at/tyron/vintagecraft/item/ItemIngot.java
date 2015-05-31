@@ -5,6 +5,7 @@ import java.util.List;
 import scala.actors.threadpool.Arrays;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockSaltpeter;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
@@ -19,6 +20,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
@@ -166,6 +168,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+	
 		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
 		
 		if (!entityplayer.isSneaking() || !isPlaceable(itemstack) || isOddlyShaped(itemstack)) return false;
@@ -220,24 +223,12 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	// so that these may stack together 
 	@Override
 	public boolean canStackWith(World world, ItemStack self, ItemStack remote) {
-		/*if (self != null && remote != null) {
-			System.out.println(
-				
-				(self.getItem() == remote.getItem()) + " && " +
-				(getMetal(self) == getMetal(remote)) + " && " +
-				Math.abs(self.getTagCompound().getInteger("forgetemp") - remote.getTagCompound().getInteger("forgetemp"))
-			);
-		}*/
-		
-		
 		return 
 			self != null &&
 			remote != null &&
 			self.getItem() == remote.getItem() &&
 			getMetal(self) == getMetal(remote) &&
 			isOddlyShaped(self) == isOddlyShaped(remote) &&
-/*			world.getWorldTime() < self.getTagCompound().getLong("startcoolingat") &&
-			world.getWorldTime() < remote.getTagCompound().getLong("startcoolingat") &&*/
 			(Math.abs(self.getTagCompound().getInteger("forgetemp") - remote.getTagCompound().getInteger("forgetemp")) < 800)
 		;
 	}

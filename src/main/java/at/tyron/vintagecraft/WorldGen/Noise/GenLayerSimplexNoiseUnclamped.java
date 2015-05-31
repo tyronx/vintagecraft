@@ -6,6 +6,8 @@ import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 public class GenLayerSimplexNoiseUnclamped extends GenLayerVC {
 	int amplitude;
 	int offset;
+	public float resolution = 512;
+	
 	SimplexNoise noisegen;
 	public double yCoord = 0;
 	
@@ -24,7 +26,7 @@ public class GenLayerSimplexNoiseUnclamped extends GenLayerVC {
 
 		for (int z = 0; z < sizeZ; ++z) {
 			for (int x = 0; x < sizeX; ++x) {
-				cache[x + z * sizeX] = offset + (int)(amplitude * (1f + noisegen.getNoise((xCoord + x) / 512.0, yCoord, (zCoord + z) / 512.0)));
+				cache[x + z * sizeX] = offset + (int)(amplitude * (1f + noisegen.getNoise((xCoord + x) / resolution, yCoord, (zCoord + z) / resolution)));
 			}
 		}
 

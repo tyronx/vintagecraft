@@ -13,6 +13,8 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -48,8 +50,19 @@ public class EntityStone extends EntityThrowable {
 			EntityLivingBase thrower = this.getThrower();
 			Entity entity = movingpos.entityHit; 
 			
-			if (worldObj.rand.nextFloat() < 0.35f) {
-				if (entity instanceof EntityLivingBase) {
+			
+			if (entity instanceof EntityLivingBase) {
+				float knockoutchance = 0.35f;
+				
+				if (entity instanceof EntityLiving) {
+					ItemStack helmet = ((EntityLiving)entity).getCurrentArmor(3);
+					if (helmet != null && helmet.getItem() instanceof ItemArmor) {
+						int dmgReduction = ((ItemArmor)helmet.getItem()).getArmorMaterial().getDamageReductionAmount(0);
+						knockoutchance /= Math.max(1, 2 * dmgReduction);
+					}
+				}
+				
+				if (worldObj.rand.nextFloat() < knockoutchance) {
 					EntityLivingBase entityliving = (EntityLivingBase)entity;
 					entityliving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(), 125, 3));
 					playSound("random.successful_hit", 0.3f, 1f);

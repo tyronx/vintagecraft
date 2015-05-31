@@ -70,10 +70,9 @@ public class AnvilTechniquePacket implements IMessage {
     	        	return null;
     	        }
     	        
-    	        smithable.applyAnvilTechnique(itemstack, message.technique);
     	        
     	        // Smithing is very Energy intensive
-    	        player.addExhaustion(0.2F); 
+    	        player.addExhaustion(0.3F); 
     	        
     	        ItemStack hammer = container.getSlot(3).getStack();
     	        
@@ -88,8 +87,11 @@ public class AnvilTechniquePacket implements IMessage {
     	        }
     	        
     	        
-    	        container.teanvil.onAnvilUse(player);
-    	        container.checkCraftable();
+    	        
+    	        if (container.teanvil.onAnvilUse(player)) {
+    	        	smithable.applyAnvilTechnique(itemstack, message.technique);
+    	        	container.checkCraftable();	
+    	        }
     		}
 			
 			return null;

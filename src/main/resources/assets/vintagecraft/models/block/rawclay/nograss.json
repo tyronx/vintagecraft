@@ -1,6 +1,7 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "vintagecraft:blocks/rawclay"
+        "all": "vintagecraft:blocks/rawclay",
+        "particle": "vintagecraft:blocks/rawclay"
     }
 }

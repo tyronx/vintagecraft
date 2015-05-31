@@ -14,7 +14,7 @@ subsoil.name=Subsoil
 regolith.name=Regolith
 cobblestone.name=Cobblestone
 
-nograss.name=No Gras
+nograss.name=No Grass
 verysparsegrass.name=Very Sparse Grass
 sparsegrass.name=Sparse Grass
 normalgrass.name=Normal Grass
@@ -25,6 +25,7 @@ tile.peat.name=Peat
 tile.subsoil.name=Subsoil
 tile.uppermantle.name=Upper Mantle
 
+rock.chalk.name=Chalk
 rock.gneiss.name=Gneiss
 rock.limestone.name=Limestone
 rock.claystone.name=Claystone
@@ -45,7 +46,7 @@ rock.kimberlite.name=Kimberlite
 rock.slate.name=Slate
 
 
-
+item.stonepotitem.chalk.name=Chalk Stone Pot
 item.stonepotitem.gneiss.name=Gneiss Stone Pot
 item.stonepotitem.limestone.name=Limestone Stone Pot
 item.stonepotitem.claystone.name=Claystone Stone Pot
@@ -65,6 +66,7 @@ item.stonepotitem.schist.name=Green Schist Stone Pot
 item.stonepotitem.kimberlite.name=Kimberlite Stone Pot
 item.stonepotitem.slate.name=Slate Stone Pot
 
+tile.rock.chalk.name=Chalk
 tile.rock.gneiss.name=Gneiss
 tile.rock.limestone.name=Limestone
 tile.rock.claystone.name=Claystone
@@ -87,12 +89,14 @@ item.stone.name=Stone
 stone.name=Stone
 item.peatbrick.name=Peat Brick
 
+item.ore.peridot_olivine.name=Raw Peridot
 item.ore.nativegold_quartz.name=Native Gold
 item.ore.nativesilver_quartz.name=Native Silver
 item.ore.sylvite_rocksalt.name=Sylvite
 item.ore.rocksalt.name=Rock Salt
 item.ore.limonite.name=Limonite
 item.ore.galena.name=Galena
+item.ore.saltpeter.name=Saltpeter
 item.ore.nativecopper.name=Native Copper
 item.ore.bituminouscoal.name=Bituminous Coal
 item.ore.lignite.name=Lignite

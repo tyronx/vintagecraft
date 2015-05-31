@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.World;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
@@ -30,7 +31,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemHoe;
+import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -38,6 +44,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Recipes {
 	static  List recipes = CraftingManager.getInstance().getRecipeList();
@@ -50,16 +57,19 @@ public class Recipes {
 	}
 	
 	
+	
+	
+	
+	
 	public static void addRecipes() {
 		registerToSorter();
+	
 		
 		ItemStack stick = new ItemStack(Items.stick);
 		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.COPPER);
 		ItemStack tinbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TINBRONZE);
 		ItemStack bismuthbronzeingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTHBRONZE);
 		ItemStack ironingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRON);
-		
-		//EnumMetal[] metals = new EnumMetal[]{EnumMetal.COPPER, EnumMetal.TINBRONZE, EnumMetal.BISMUTHBRONZE, EnumMetal.IRON};
 		
 
 		for (EnumTool tool : EnumTool.values()) {
@@ -78,31 +88,12 @@ public class Recipes {
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (!metal.hasArmor) continue;
 			
-			//ItemToolVC []tools = ItemsVC.getTools(metal.getName());
 			ItemStack ingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
 
-			/*for (ItemToolVC tool : tools) {
-				Object []recipe = null;
-				switch(tool.tooltype) {
-					case AXE:     recipe = new Object[] { "SS ", "SW ", " W ", 'S', ingot, 'W', stick}; break;
-					case HOE:     recipe = new Object[] { "SS ", " W ", " W ", 'S', ingot, 'W',  stick}; break;
-					case PICKAXE: recipe = new Object[] { "SSS", " W ", " W ", 'S', ingot, 'W', stick}; break;
-					case SAW:     recipe = new Object[] { "S  ", "WS ", " WS", 'S', ingot, 'W', stick}; break;
-					case SHEARS:  recipe = new Object[] { "  M", "MM ", " M ", 'M', ingot}; break;
-					case SHOVEL:  recipe = new Object[] { " S ", " W ", " W ", 'S', ingot, 'W', stick}; break;
-					case SWORD:   recipe = new Object[] { " S ", " S ", " W ", 'S', ingot, 'W', stick}; break;
-					default: break;
-				}
-				
-				
-				GameRegistry.addShapedRecipe(new ItemStack(tool), recipe);
-			}*/
-			
 			ItemArmorVC[] armorpieces = ItemsVC.getArmorPieces(metal.getName());
 			
 			for (ItemArmorVC armorpiece : armorpieces) {
 				Object []recipe = null;
-				//System.out.println(armorpiece + " / " + armorpiece.armorType);
 				/** Stores the armor type: 0 is helmet, 1 is plate, 2 is legs and 3 is boots */
 				switch(armorpiece.armorType) {
 					case 0: recipe = new Object[] { "III", "I I", "   ", 'I', ingot}; break;
@@ -124,47 +115,46 @@ public class Recipes {
 			
 			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SSS", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
 			GameRegistry.addShapedRecipe(ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), rocktype), new Object[] { "S S", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
-			
-			
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_axe")), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_hoe")), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_pickaxe")), new Object[] { "SSS", " W ", " W ", 'S', stone, 'W',  Items.stick});
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_shovel")), new Object[] { " S ", " W ", " W ", 'S', stone, 'W', Items.stick});	
-			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_hammer")), new Object[] { "SSS", "SWS", " W ", 'S', stone, 'W', Items.stick});
 		}
+
 		
 		
-		for (BlockClassEntry log : BlocksVC.log.values()) {
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemsVC.tools.get("stone_axe")), new Object[] { "SS ", "SW ", " W ", 'S', "vcraft-stone-any", 'W', stick}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemsVC.tools.get("stone_hoe")), new Object[] { "SS ", " W ", " W ", 'S', "vcraft-stone-any", 'W',  Items.stick}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemsVC.tools.get("stone_pickaxe")), new Object[] { "SSS", " W ", " W ", 'S', "vcraft-stone-any", 'W',  Items.stick}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemsVC.tools.get("stone_shovel")), new Object[] { " S ", " W ", " W ", 'S', "vcraft-stone-any", 'W', Items.stick}));	
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(ItemsVC.tools.get("stone_hammer")), new Object[] { "SSS", "SWS", " W ", 'S', "vcraft-stone-any", 'W', Items.stick}));
+
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.crafting_table), new Object[] { "LL", "LL", 'L', "vcraft-treeWood-any"}));
+		
+		
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.wooden_button), new Object[] {"#", '#', "vcraft-plankWood-any"}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.wooden_hoe, 1), new Object[] { "WW ", " S ", " S ", 'W', "vcraft-plankWood-any", 'S', Items.stick}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.jukebox, 1), new Object[] { "WWW", "WDW", "WWW", 'W', "vcraft-plankWood-any", 'D', Items.diamond}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1), new Object[] { "WW", 'W', "vcraft-plankWood-any"}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.sign, 1), new Object[] { "WWW", "WWW", " S ", 'W', "vcraft-plankWood-any", 'S', Items.stick}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.trapdoor, 1), new Object[] { "   ", "WWW", "WWW", 'W', "vcraft-plankWood-any"}));	
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.bed, 1), new Object[] { "   ", "WWW", "PPP", 'W', Blocks.wool, 'P', "vcraft-plankWood-any"}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.oak_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', "vcraft-plankWood-any"}));
+		
+		
+/*		for (BlockClassEntry log : BlocksVC.log.values()) {
 			ItemStack logstack = new ItemStack(log.block);
 			ItemLogVC.withTreeType(logstack, log);
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.crafting_table), new Object[] { "LL", "LL", 'L', logstack});
 		}
-		
+	*/	
 		for (BlockClassEntry planks : BlocksVC.planks.values()) {
 			ItemStack planksstack = new ItemStack(planks.block);
 			ItemPlanksVC.withTreeType(planksstack, planks);
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.chest), new Object[] { "LLL", "LCL", "LLL", 'L', planksstack, 'C', copperingot});
 			GameRegistry.addShapedRecipe(new ItemStack(Items.boat, 1), new Object[] { "   ", "W W", "WWW", 'W', planks.block});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_button), new Object[] {"#", '#', planks.block});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Items.wooden_hoe, 1), new Object[] { "WW ", " S ", " S ", 'W', planks.block, 'S', Items.stick});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Blocks.jukebox, 1), new Object[] { "WWW", "WDW", "WWW", 'W', planks.block, 'D', Items.diamond});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1), new Object[] { "WW", 'W', planks.block});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Items.sign, 1), new Object[] { "WWW", "WWW", " S ", 'W', planks.block, 'S', Items.stick});
-			
-			GameRegistry.addShapedRecipe(new ItemStack(Blocks.trapdoor, 1), new Object[] { "   ", "WWW", "WWW", 'W', planks.block});	
-			
 
 			GameRegistry.addShapedRecipe(BlocksVC.fence.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'W', planksstack, 'S', Items.stick});
 			GameRegistry.addShapedRecipe(BlocksVC.fencegate.getItemStackFor(planks.getKey()), new Object[] { "   ", "WSW", "WSW", 'S', planksstack, 'W', Items.stick});
 			
-			GameRegistry.addShapedRecipe(new ItemStack(Items.bed, 1), new Object[] { "   ", "WWW", "PPP", 'W', Blocks.wool, 'P', planksstack});
 			
 			ItemStack quartzcrystal = ItemOreVC.getItemStackFor(EnumOreType.QUARTZCRYSTAL, 1);
 			GameRegistry.addShapedRecipe(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
@@ -178,10 +168,10 @@ public class Recipes {
 		}
 		
 		
-		GameRegistry.addShapedRecipe(new ItemStack(Items.oak_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.OAK)});
-		GameRegistry.addShapedRecipe(new ItemStack(Items.spruce_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.SPRUCE)});
+		
+		/*GameRegistry.addShapedRecipe(new ItemStack(Items.spruce_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.SPRUCE)});
 		GameRegistry.addShapedRecipe(new ItemStack(Items.birch_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.BIRCH)});
-		GameRegistry.addShapedRecipe(new ItemStack(Items.acacia_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA)});
+		GameRegistry.addShapedRecipe(new ItemStack(Items.acacia_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA)});*/
 		
 
 		
@@ -200,17 +190,7 @@ public class Recipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.dryGrass, 'W', Items.stick});
 		
-		//GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { Items.stick, ItemsVC.straw});
-		
-		
-		
 		recipes.add(new RecipePlanks());
-
-		
-		/*RecipeSorter.register("vintagecraft:slabs", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
-		recipes.add(new RecipeSlabs());*/
-		
-		
 		recipes.add(new RecipeToolRack());
 		
 		

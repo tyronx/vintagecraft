@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.BlocksVC;
 
@@ -27,7 +27,7 @@ public class BlockDoubleWoodenSlab extends BlockWoodenSlabVC {
 	}
 	
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.doubleslab;
 	}
 

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Item;
 
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 
@@ -11,7 +11,7 @@ public class ItemLeavesBranchy extends ItemLeaves {
 	}
 
 	
-	public static BlockClass getBlockClass() {
+	public static BaseBlockClass getBlockClass() {
 		return BlocksVC.leavesbranchy;
 	}
 

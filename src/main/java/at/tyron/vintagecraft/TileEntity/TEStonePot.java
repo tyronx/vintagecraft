@@ -69,6 +69,13 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	}
 	
 	
+	
+	public boolean canRenderBreaking() {
+		return true;
+	}
+	
+	
+	
 	public void changeHeatableTemperature() {
 		if (getHeatableItemStack() != null) {
 			NBTTagCompound nbt = getHeatableItemStack().getTagCompound();

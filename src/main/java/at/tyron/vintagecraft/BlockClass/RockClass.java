@@ -19,7 +19,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IStringSerializable;
 
 
-public class RockClass extends BlockClass {
+public class RockClass extends BaseBlockClass {
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }

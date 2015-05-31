@@ -217,7 +217,7 @@ public class GenLayerTerrain extends GenLayerVC {
 			}
 		}		
 		
-		double horizontalScale = 1000D;
+		double horizontalScale = 600D;
 		double verticalScale = 1000D;
 		
 		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);

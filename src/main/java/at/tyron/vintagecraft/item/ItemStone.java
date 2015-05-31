@@ -167,6 +167,11 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISize
 		return EnumItemSize.SMALL;
 	}
 
+	
+	public static ItemStack getItemStackFor(EnumRockType rocktype, int i) {
+		return setRockType(new ItemStack(ItemsVC.stone, i), rocktype);
+	}
+
     
 
 }

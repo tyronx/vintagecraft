@@ -32,18 +32,28 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	OLIVINE 			(21, 2, 0.7f),
 	PERIDOT_OLIVINE 	(22, 2, 0.7f),
 	QUARTZCRYSTAL		(23, 3, 1f),
-	
+	SULFUR				(24, 0, 0.5f),
+	SALTPETER			(25, 0, 0.2F, false)
 	;
 	
 	int id;
 	public int harvestlevel;
 	public float hardnessmultiplier;
+	public boolean spawnsInRock = true;
 	
 	private EnumOreType(int id, int harvestlevel, float hardnessmultiplier) {
 		this.id = id;
 		this.harvestlevel = harvestlevel;
 		this.hardnessmultiplier = hardnessmultiplier;
 	}
+	
+	
+	private EnumOreType(int id, int harvestlevel, float hardnessmultiplier, boolean spawnsInRock) {
+		this(id, harvestlevel, hardnessmultiplier);
+		this.spawnsInRock = spawnsInRock;
+	}
+
+	
 	
 	
 	public boolean isParentMaterial(EnumRockType rocktype) {
@@ -64,7 +74,6 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 			case LAPISLAZULI:
 				return rocktype == EnumRockType.LIMESTONE;
 				
-			
 			default:
 				return true;
 		}

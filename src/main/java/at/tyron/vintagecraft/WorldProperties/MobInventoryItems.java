@@ -95,6 +95,19 @@ public class MobInventoryItems {
 				inventory[2] = getArmorItem(2, metal);
 		}
 		
+		/*if (armortype == 2) {
+			System.out.println("boosting mob with full gear of metal " + metal);
+		}
+		if (armortype == 1) {
+			System.out.println("boosting mob with almost full gear of metal " + metal);
+		}
+		if (armortype == 0) {
+			System.out.println("boosting mob with half gear of metal " + metal);
+		}
+		if (armortype == -1) {
+			System.out.println("no armor for mob");
+		}*/
+		
 		
 		return inventory;
 		
@@ -124,23 +137,26 @@ public class MobInventoryItems {
 	public static int getArmorExtraHealthBoost(ItemStack stack) {
 		if (stack != null && stack.getItem() instanceof ItemArmor) {
 			ArmorMaterial armmat = ((ItemArmor)stack.getItem()).getArmorMaterial();
-			String name = armmat.getName();
+			String name = armmat.name().toLowerCase();
 			
 			if (name.equals("leather")) {
 				return 2;
 			}
-			if (name.equals("copper")) {
+			if (name.equals("coppervc")) {
 				return 3; 
 			}
-			if (name.equals("tinbronze")) {
+			if (name.equals("tinbronzevc")) {
 				return 4;
 			}
-			if (name.equals("bismuthbronze")) {
+			if (name.equals("bismuthbronzevc")) {
 				return 4;
 			}
-			if (name.equals("iron")) {
+			if (name.equals("ironvc")) {
 				return 5;
 			}
+			
+			//System.out.println("armor material " + name + " not found");
+			
 		}
 		return 0;
 	}

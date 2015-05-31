@@ -18,7 +18,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IStringSerializable;
 
 
-public class TreeClass extends BlockClass {
+public class TreeClass extends BaseBlockClass {
 	String getBlockClassName() { return name; }
 	Class<? extends Block> getBlockClass() { return blockclass; }
 	Class<? extends ItemBlock> getItemClass() { return itemclass; }
@@ -40,8 +40,12 @@ public class TreeClass extends BlockClass {
 	
 	
 	public TreeClass init() {
-		for (Enum item : EnumTree.values()) {
-			values.put((IStateEnum) item, new BlockClassEntry((IStateEnum)item));
+		for (EnumTree tree : EnumTree.values()) {
+			if (tree.isBush && !name.equals("leaves") && !name.equals("leavesbranchy")) {
+				continue;
+			}
+			
+			values.put(tree, new BlockClassEntry(tree));
 		}
 		
 		initBlocks(getBlockClassName(), getBlockClass(), getItemClass(), getHardness(), getStepSound(), getHarvestTool(), getHarvestLevel());

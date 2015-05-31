@@ -52,6 +52,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 		this.hardness = hardness;
 		this.hasTools = false;
 		this.hasArmor = false;
+		this.hasAnvil = false;
 	}
 
 	

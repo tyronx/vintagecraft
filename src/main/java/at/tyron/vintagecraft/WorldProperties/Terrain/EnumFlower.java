@@ -45,6 +45,11 @@ public enum EnumFlower implements IStringSerializable, IStateEnum {
 	PURPLETULIP		 (23),
 	PURPLETULIP2	 (24),
 	PURPLETULIP3	 (25),
+	
+	COWPARSLEY		 (26),
+	COWPARSLEY2		 (27),
+	
+	HORSETAIL		 (28)
 	;
 	
 /*	int meta;
@@ -67,18 +72,7 @@ public enum EnumFlower implements IStringSerializable, IStateEnum {
 	}
 	
 	
-	/*public void init(BlockVC block, int meta) {
-		this.block = (BlockFlowerVC)block;
-		this.meta = meta;
-	}*/
-	
-	/*public IBlockState getBlockState() {
-		if (doubleHigh) {
-			return ((BlockDoubleFlowerVC)block).getDefaultState().withProperty(block.FLOWERTYPE, this).withProperty(BlockDoubleFlowerVC.HALF, BlockDoubleFlowerVC.EnumBlockHalf.LOWER);
-		}
-		
-		return block.getDefaultState().withProperty(block.FLOWERTYPE, this);
-	}*/
+
 	
 	public static EnumFlower[] values(boolean doublehigh) {
 		ArrayList<EnumFlower> flowers = new ArrayList<EnumFlower>();
@@ -96,14 +90,7 @@ public enum EnumFlower implements IStringSerializable, IStateEnum {
 	
 	
 	
-/*	public static EnumFlower fromMeta(Block block, int meta) {
-		for (EnumFlower flower : EnumFlower.values()) {
-			if (block == flower.block && meta == flower.meta) return flower;
-		}
-		return null;
-	}
-	*/
-	
+
 	
 
 	@Override

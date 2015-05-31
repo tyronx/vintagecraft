@@ -12,19 +12,24 @@ public enum EnumFlowerGroup {
 	
 	CATMINT 	     ( 5, 20,   0,  80, 100, 220, 90, new EnumFlower[]{EnumFlower.CATMINT}),
 	CALENDULA        ( 3, 18,   0,  50, 100, 220, 90, new EnumFlower[]{EnumFlower.CALENDULA}),
-	CORNFLOWER       ( 3, 18,   0,  50, 100, 220, 90, new EnumFlower[]{EnumFlower.CORNFLOWER, EnumFlower.CORNFLOWER2}),
+	CORNFLOWER       ( 3, 18,   0,  50, 100, 220, 90, new EnumFlower[]{EnumFlower.CORNFLOWER, EnumFlower.CORNFLOWER2}, 45),
 	
 	LILYOFTHEVALLEY  ( -10, 10, 60, 255, 80, 190, 90, new EnumFlower[]{EnumFlower.LILYOFTHEVALLEY, EnumFlower.LILYOFTHEVALLEY2, EnumFlower.LILYOFTHEVALLEY3}),
 	
-	CLOVER			 ( -10, 14, 60, 255, 90, 190, 100, new EnumFlower[]{EnumFlower.CLOVER}),
+	CLOVER			 ( -10, 14, 60, 255, 90, 190, 100, new EnumFlower[]{EnumFlower.CLOVER}, 50),
 	
     GOLDENROD        (15, 28,   0,  10, 120, 190, 0, new EnumFlower[]{EnumFlower.GOLDENROD, EnumFlower.GOLDENROD2, EnumFlower.GOLDENROD3}),
     
-    FORGETMENOT		 ( 5, 15, 0, 200, 100, 190, 0, new EnumFlower[]{EnumFlower.FORGETMENOT, EnumFlower.FORGETMENOT2, EnumFlower.FORGETMENOT3, EnumFlower.FORGETMENOT4, EnumFlower.FORGETMENOT5}),
+    FORGETMENOT		 ( 5, 15,   0, 200, 100, 190, 0, new EnumFlower[]{EnumFlower.FORGETMENOT, EnumFlower.FORGETMENOT2, EnumFlower.FORGETMENOT3, EnumFlower.FORGETMENOT4, EnumFlower.FORGETMENOT5}),
     
-    NARCISSUS		 (-8, 14, 1, 200, 100, 190, 90, new EnumFlower[]{EnumFlower.NARCISSUS, EnumFlower.NARCISSUS2, EnumFlower.NARCISSUS3}),
+    NARCISSUS		 (-8, 14,   1, 200, 100, 190, 90, new EnumFlower[]{EnumFlower.NARCISSUS, EnumFlower.NARCISSUS2, EnumFlower.NARCISSUS3}),
     
-	PURPLETULIP		 ( 3, 20, 1, 200, 100, 190, 0, new EnumFlower[]{EnumFlower.PURPLETULIP, EnumFlower.PURPLETULIP2, EnumFlower.PURPLETULIP3}),
+	PURPLETULIP		 ( 3, 20,   1, 200, 100, 190, 0, new EnumFlower[]{EnumFlower.PURPLETULIP, EnumFlower.PURPLETULIP2, EnumFlower.PURPLETULIP3}),
+	
+	COWPARSLEY       ( 3, 18,   0,  80, 100, 200, 95, new EnumFlower[]{EnumFlower.COWPARSLEY, EnumFlower.COWPARSLEY2}, 75),
+	
+	HORSETAIL        (-5, 19,  50, 255, 115, 255, 98, new EnumFlower[]{EnumFlower.HORSETAIL}, 85),
+	
 	;
 	
 
@@ -36,9 +41,14 @@ public enum EnumFlowerGroup {
 	int minrain;
 	int maxrain;
 	int weight;
+	int maxQuantity;
 	public EnumFlower[] variants;
-		
+	
 	private EnumFlowerGroup(int mintemp, int maxtemp, int minforest, int maxforest, int minrain, int maxrain, int weight, EnumFlower []variants) {
+		this(mintemp, maxtemp, minforest, maxforest, minrain, maxrain, weight, variants, 25);
+	}
+	
+	private EnumFlowerGroup(int mintemp, int maxtemp, int minforest, int maxforest, int minrain, int maxrain, int weight, EnumFlower []variants, int quantity) {
 		this.mintemp = mintemp;
 		this.maxtemp = maxtemp;
 		this.minforest = minforest;
@@ -47,7 +57,9 @@ public enum EnumFlowerGroup {
 		this.maxrain = maxrain;
 		this.weight = weight;
 		this.variants = variants;
+		this.maxQuantity = quantity;
 	}
+	
 	
 	
 
@@ -118,7 +130,9 @@ public enum EnumFlowerGroup {
 	
 	
 	
-	
+	public int getRandomQuantity(Random random) {
+		return (random.nextInt(maxQuantity) + random.nextInt(maxQuantity) + random.nextInt(maxQuantity)) / 3;
+	}
 	
 	
 	

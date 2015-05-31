@@ -34,6 +34,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -82,6 +83,16 @@ public class VintageCraftCommands extends CommandBase {
 		if (args.length == 0) {
 			sender.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
 			return;
+		}
+		
+		
+		if (args[0].equals("mobcap")) {
+			VCraftWorldSavedData worlddata = VintageCraft.instance.getOrCreateWorldData(sender.getEntityWorld());
+			
+			
+			sender.addChatMessage(new ChatComponentText(
+				EnumCreatureType.MONSTER.getMaxNumberOfCreature() + " max mobs / " + (Math.floor(worlddata.getWorldTime() / 2400F) / 10f) + " days passed"
+			));
 		}
 		
 		if (args[0].equals("clear")) {

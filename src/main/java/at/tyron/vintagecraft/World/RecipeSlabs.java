@@ -71,9 +71,7 @@ public class RecipeSlabs implements IRecipe {
 	public ItemStack getRecipeOutput() {
 		if (planks == null) planks = BlocksVC.planks.getFromKey(EnumTree.SPRUCE);
 		
-		ItemStack stack = BlocksVC.singleslab.getItemStackFor(planks.getKey());
-		stack.stackSize = 2;
-		return stack;
+		return BlocksVC.singleslab.getItemStackFor(planks.getKey(), 2);
 	}
 
 	@Override

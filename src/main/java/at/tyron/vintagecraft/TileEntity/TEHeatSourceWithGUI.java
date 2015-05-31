@@ -249,7 +249,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	if (tick == 0) return;
 
 
-    	// Burn up fuel
+    	// Use up fuel
     	if (fuelBurnTime > 0) {
     		fuelBurnTime -= tick;
     		if (fuelBurnTime == 0) {
@@ -389,7 +389,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     			// Require enough fuel
     			&& fuelSlot().stackSize >= furnace.fueluse
     			// Require empty output slot or stackable smelted
-    			&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + smeltedItem().stackSize < smeltedSlot().getMaxStackSize()))
+    			&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + 1 < smeltedSlot().getMaxStackSize()))
     	;
     }
 

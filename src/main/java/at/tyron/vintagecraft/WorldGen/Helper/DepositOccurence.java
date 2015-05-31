@@ -72,6 +72,11 @@ public class DepositOccurence {
 		occ.belowSealLevelRatio = belowsealevelratio;
 		return occ;
 	}
+	
+	
+	public static DepositOccurence onCaveWalls(int weight, int mindepth, int maxdepth, int untilyheight) {
+		return new DepositOccurence(EnumDepositOccurenceType.CAVEWALLS, weight, 20, mindepth, maxdepth);
+	}
 
 	
 

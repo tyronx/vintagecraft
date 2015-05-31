@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Item.ItemLogVC;
@@ -37,6 +37,8 @@ public class BlockPlanksVC extends BlockLogVC {
     @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
     	for (EnumTree tree : EnumTree.values()) {
+    		if (tree.isBush) continue;
+    		
     		list.add(BlocksVC.planks.getItemStackFor(tree));
     	}
     }
@@ -53,7 +55,7 @@ public class BlockPlanksVC extends BlockLogVC {
 	
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.planks;
 	}
 

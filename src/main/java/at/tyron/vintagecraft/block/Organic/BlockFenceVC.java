@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
@@ -62,7 +62,7 @@ public class BlockFenceVC extends BlockFence implements IMultiblock {
 	}
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.fence;
 	}
 

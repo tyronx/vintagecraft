@@ -25,7 +25,9 @@ public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 	
 	VERYLONG_FORGETMENOT 	(9, 160, 1),
 	VERYLONG_FORGETMENOT2 	(10, 160, 1), 
-	VERYLONG_FORGETMENOT3 	(11, 160, 1)
+	VERYLONG_FORGETMENOT3 	(11, 160, 1),
+	
+//	VERYLONG_COWPARSLEY 	(12, 160, 2),
 	
 	;
 	

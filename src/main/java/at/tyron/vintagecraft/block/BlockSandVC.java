@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.Block;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.BlockClass.BlockClass;
+import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
@@ -125,7 +125,7 @@ public class BlockSandVC extends BlockRock implements IBlockSoil {
 	
 
 	@Override
-	public BlockClass getBlockClass() {
+	public BaseBlockClass getBlockClass() {
 		return BlocksVC.sand;
 	}
 

@@ -43,6 +43,9 @@ public class BlockClassEntry<E> implements IStateEnum, IStringSerializable, Comp
 	}
 
 	
+	
+	
+	
 	public IBlockState getBlockState() {
 		return block.getDefaultState().withProperty(((IMultiblock)block).getTypeProperty(), this);
 	}

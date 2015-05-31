@@ -238,4 +238,9 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	public String getNameUcFirst() {
+		return name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1);
+	}
+
 }
