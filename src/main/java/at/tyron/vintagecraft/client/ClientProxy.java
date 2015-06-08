@@ -147,13 +147,6 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.anvilbase, "anvilbase", "inventory");
     	registerModelLocation(ItemsVC.anvilsurface, "anvilsurface", "inventory");
     	
-    	
-/*    	registerModelLocation(new Item[]{ItemsVC.copperHelmet, ItemsVC.copperChestplate, ItemsVC.copperLeggings, ItemsVC.copperBoots}, "armor", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.tinbronzeHelmet, ItemsVC.tinbronzeChestplate, ItemsVC.tinbronzeLeggings, ItemsVC.tinbronzeBoots}, "armor", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.bismuthbronzeHelmet, ItemsVC.bismuthbronzeChestplate, ItemsVC.bismuthbronzeLeggings, ItemsVC.bismuthbronzeBoots}, "armor", "inventory");
-    	registerModelLocation(new Item[]{ItemsVC.ironHelmet, ItemsVC.ironChestplate, ItemsVC.ironLeggings, ItemsVC.ironBoots}, "armor", "inventory");
-  */
-    	
     	registerModelLocation(ItemsVC.armor.values().toArray(new Item[0]), "armor", "inventory");
     	
     	

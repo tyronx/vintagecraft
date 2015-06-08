@@ -63,7 +63,7 @@ public class ItemsVC {
 	public static void init() {
 		initItems();
 		initIngots();
-		initTabIcons();
+		
 
 		// Really messes with vanilla recipes, e.g. creates a vanilla iron sword with stick+2 copper ingots
 		// Don't want to repair this right now
@@ -89,7 +89,7 @@ public class ItemsVC {
 	}
 
 
-	private static void initTabIcons() {
+	public static void initTabIcons() {
 		VintageCraft.terrainTab.icon = Item.getItemFromBlock(BlocksVC.topsoil);
 		VintageCraft.floraTab.icon = Item.getItemFromBlock(BlocksVC.flower.getBlockStateFor(EnumFlower.CATMINT).getBlock());
 		VintageCraft.resourcesTab.icon = ItemsVC.stone;

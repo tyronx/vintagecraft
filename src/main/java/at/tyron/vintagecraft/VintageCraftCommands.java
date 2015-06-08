@@ -219,7 +219,10 @@ public class VintageCraftCommands extends CommandBase {
 				GenLayerVC.genHeightmap(seed);
 			}
 			if (args[1].equals("noisemod")) {
-				GenLayerVC.genNoiseFieldModifier(seed);
+				GenLayerVC.genNoiseFieldModifier(seed, -70);
+			}
+			if (args[1].equals("noisemod2")) {
+				GenLayerVC.genNoiseFieldModifier(seed, 0);
 			}
 			if (args[1].equals("rockoffset")) {
 				GenLayerVC.genHorizontalRockOffsetMap(seed);

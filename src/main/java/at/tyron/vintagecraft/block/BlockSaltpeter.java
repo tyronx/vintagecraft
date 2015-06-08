@@ -51,19 +51,12 @@ public class BlockSaltpeter extends BlockCoating {
     }
 
     
+    // Remove registration of multiple variants, as there is not items for these
     @Override
 	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
 		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
 		GameRegistry.registerBlock(this, itemclass, blockclassname);
 		setUnlocalizedName(blockclassname);
-		
-		/*VintageCraft.instance.proxy.registerItemBlockTexture(
-			this, 
-			"ore_overlay", 
-			"saltpeter", 
-			0
-		);*/
-		
 		return this;
 	}
 

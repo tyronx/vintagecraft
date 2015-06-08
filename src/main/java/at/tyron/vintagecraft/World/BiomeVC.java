@@ -12,11 +12,11 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	
 	public static BiomeVC[] biomeList = new BiomeVC[256];
 	
-	public static final BiomeVC Fjords = new BiomeVC(0).setBiomeName("Fjords").setMinMaxHeight(-0.9F, 0.00001F).setBiomeColor(0x000000).setWeight(5);
-	public static final BiomeVC Flat = new BiomeVC(1).setBiomeName("Flat").setBiomeColor(0x666666);
-	public static final BiomeVC Lake = new BiomeVC(2).setBiomeName("Lake").setMinMaxHeight(-0.5F, 0.001F).setBiomeColor(0x333333);
-	public static final BiomeVC HighHills = (new BiomeVC(3)).setBiomeName("High Hills").setMinMaxHeight(0.8F, 1.6F).setBiomeColor(0xaaaaaa);
-	public static final BiomeVC Mountains = (new BiomeVC(4)).setBiomeName("Mountains").setMinMaxHeight(0.8F, 1.6F).setBiomeColor(0xcccccc);
+	public static final BiomeVC Fjords = new BiomeVC(0).setBiomeName("Rolling Hills").setMinMaxHeight(0F, 0.2F).setBiomeColor(0x000000).setWeight(5);
+	public static final BiomeVC Flat = new BiomeVC(1).setBiomeName("Flat").setMinMaxHeight(-0.3F, -0.1F).setBiomeColor(0x666666);
+	public static final BiomeVC Lake = new BiomeVC(2).setBiomeName("Lake").setMinMaxHeight(-1F, -0.5F).setBiomeColor(0x333333).setWeight(10);
+	public static final BiomeVC HighHills = (new BiomeVC(3)).setBiomeName("High Hills").setMinMaxHeight(0.7F, 1.5F).setBiomeColor(0xaaaaaa);
+	public static final BiomeVC Mountains = (new BiomeVC(4)).setBiomeName("Mountains").setMinMaxHeight(1.8F, 2.5F).setBiomeColor(0xcccccc);
 	
 	
 	
@@ -61,9 +61,9 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 	 * Sets the minimum and maximum height of this biome. Seems to go from -2.0 to 2.0.
 	 */
 	//@Override
-	public BiomeVC setMinMaxHeight(float par1, float par2) {
-		this.minHeight = par1;
-		this.maxHeight = par2;
+	public BiomeVC setMinMaxHeight(float minheight, float maxheight) {
+		this.minHeight = minheight - 0.2f;
+		this.maxHeight = maxheight - 0.2f;
 		
 		/*this.minHeight = par1-2.7F;
 		this.maxHeight = par2-2.7F;*/

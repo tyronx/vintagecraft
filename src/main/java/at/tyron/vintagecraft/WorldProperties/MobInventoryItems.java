@@ -14,9 +14,9 @@ public class MobInventoryItems {
 	static float[] weaponChance = new float[]{0.3f, 0.6f, 0.9f};  
 	
 	static float[][] armorTypeChances = new float[][]{
-	/* chest+leggings */		new float[]{0.04f, 0.1f, 0.1f},
-	/* chest+leggings+boots */  new float[]{0.02f, 0.2f, 0.2f},
-	/* all armor items */		new float[]{0.01f, 0.15f, 0.3f}
+	/* chest+leggings */		new float[]{0.1f, 0.1f, 0.2f},
+	/* chest+leggings+boots */  new float[]{0.1f, 0.2f, 0.3f},
+	/* all armor items */		new float[]{0.1f, 0.2f, 0.4f}
 	};
 	
 	
@@ -64,7 +64,11 @@ public class MobInventoryItems {
 			if (metal == null) {
 				inventory[0] = new ItemStack(ItemsVC.tools.get("stone_axe"));
 			} else {
-				inventory[0] = new ItemStack(ItemsVC.tools.get(metal.getName() + "_sword"));
+				if (rand.nextInt(4) == 0) {
+					inventory[0] = new ItemStack(ItemsVC.tools.get(metal.getName() + "_axe"));
+				} else {
+					inventory[0] = new ItemStack(ItemsVC.tools.get(metal.getName() + "_sword"));					
+				}
 			}
 		}
 		

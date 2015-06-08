@@ -1,0 +1,6 @@
+{
+	"parent": "vintagecraft:block/crops/wheat",
+	"textures": {
+		"crop": "vintagecraft:blocks/crops/wheat-stage5"
+	}
+}

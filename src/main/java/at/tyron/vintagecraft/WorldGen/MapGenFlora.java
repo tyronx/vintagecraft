@@ -94,7 +94,7 @@ public class MapGenFlora {
 				placeTree(world, blockpos, random, climate, forestLayer[x+z*16], (random.nextFloat() / 2 + 0.5f) * 0.65f);
 			}
 			
-			if (i > 50 && i < 50 + 90 * forestdensity && random.nextFloat() < forestdensity) {
+			if (i > 50 && i < 50 + 80 * forestdensity && random.nextFloat() < forestdensity) {
 				placeTree(world, blockpos, random, climate, forestLayer[x+z*16], 1f);
 			}
 		}

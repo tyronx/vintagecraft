@@ -16,7 +16,12 @@ public class WorldTypeVC extends WorldType {
 	}
 
 	public WorldTypeVC(int i, String par2Str) {
-		super(i, par2Str);
+		super(par2Str);
+		int oldid = worldTypeId;
+		
+		this.worldTypeId = i;
+		worldTypes[oldid] = null;
+		worldTypes[i] = this;
 	}
 	
 	

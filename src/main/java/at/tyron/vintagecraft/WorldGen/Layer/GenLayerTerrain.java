@@ -16,6 +16,7 @@ public class GenLayerTerrain extends GenLayerVC {
 	
 	// This creates flat lands 
 	GenLayerVC noiseFieldModifier;	
+	//GenLayerVC noiseFieldModifier2;
 	
 
 	
@@ -26,9 +27,11 @@ public class GenLayerTerrain extends GenLayerVC {
 	double[] noise3;
 	double[] noise1;
 	double[] noise2;
-	double[] noise5;
+	//double[] noise5;
 	double[] noise6;
+	
 	int noiseFieldModifierArray[];
+	int noiseFieldModifierArray2[];
 
 	
 	/**
@@ -42,7 +45,7 @@ public class GenLayerTerrain extends GenLayerVC {
 	private NoiseGeneratorOctaves noiseGen2;
 	private NoiseGeneratorOctaves noiseGen3;
 	private NoiseGeneratorOctaves noiseGen4;
-	public NoiseGeneratorOctaves noiseGen5;
+	//public NoiseGeneratorOctaves noiseGen5;
 	public NoiseGeneratorOctaves noiseGen6;
 	
 	
@@ -57,14 +60,15 @@ public class GenLayerTerrain extends GenLayerVC {
 	public GenLayerTerrain(long seed) {
 		super(seed);
 		this.rand = new Random(seed);
-		this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 4);
+		this.noiseGen1 = new NoiseGeneratorOctaves(this.rand, 2);
 		this.noiseGen2 = new NoiseGeneratorOctaves(this.rand, 16);
 		this.noiseGen3 = new NoiseGeneratorOctaves(this.rand, 8);
 		this.noiseGen4 = new NoiseGeneratorOctaves(this.rand, 4);
-		this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 2);
+		//this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 2);
 		this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 1);
 
-		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed);
+		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed, -70);
+		//this.noiseFieldModifier2 = GenLayerVC.genNoiseFieldModifier(seed + 50, 0);
 
 	}
 
@@ -121,7 +125,7 @@ public class GenLayerTerrain extends GenLayerVC {
 		byte verticalPart = 20;
 		
 		int xSize = horizontalPart + 1;
-		byte ySize = 21;
+		int ySize = verticalPart + 1;
 		int zSize = horizontalPart + 1;
 		
 		largerBiomeMap = world.getWorldChunkManager().getBiomesForGeneration(largerBiomeMap, chunkX * 4 - 2, chunkZ * 4 - 2, xSize + 5, zSize + 5);
@@ -132,11 +136,12 @@ public class GenLayerTerrain extends GenLayerVC {
 		double xLerp = 0.25D;
 		double zLerp = 0.25D;
 		
-		//int ycoord;
-		
+	
 		for (int x = 0; x < horizontalPart; ++x) {
 			for (int z = 0; z < horizontalPart; ++z) {
 				for (int y = 0; y < verticalPart; ++y) {
+					
+					// Interpolation of 2x2x2 into 4x8x4 
 					
 					double lower_lefttop = this.noiseArray[((x + 0) * zSize + z + 0) * ySize + y + 0];
 					double lower_leftbottom = this.noiseArray[((x + 0) * zSize + z + 1) * ySize + y + 0];
@@ -151,18 +156,19 @@ public class GenLayerTerrain extends GenLayerVC {
 					for (int dy = 0; dy < 8; ++dy) {
 						
 						
-						double bottom1Counting = lower_lefttop;
-						double bottom2Counting = lower_leftbottom;
+						double topCounting = lower_lefttop;
+						double bottomCounting = lower_leftbottom;
 						
 						double noisetopdx = (lower_righttop - lower_lefttop) * xLerp;
 						double noisedowndx = (lower_rightbottom - lower_leftbottom) * xLerp;
 
-						for (int dx = 0; dx < 4; ++dx) {	
+						for (int dx = 0; dx < 4; ++dx) {
 							
-							double var49 = (bottom2Counting - bottom1Counting) * zLerp;
-							double var47 = bottom1Counting - var49;
+							double var49 = (bottomCounting - topCounting) * zLerp;
+							double var47 = topCounting - var49;
 
 							for (int dz = 0; dz < 4; ++dz) {
+								
 								if ((var47 += var49) > 0.0D) {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.stone.getDefaultState());
 								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.instance.seaLevel) {
@@ -173,8 +179,8 @@ public class GenLayerTerrain extends GenLayerVC {
 								
 							}
 							
-							bottom1Counting += noisetopdx;
-							bottom2Counting += noisedowndx;
+							topCounting += noisetopdx;
+							bottomCounting += noisedowndx;
 						}
 						
 						lower_lefttop += dy_lefttop;
@@ -200,12 +206,11 @@ public class GenLayerTerrain extends GenLayerVC {
 		int smoothingRadius = 2;
 		
 		noiseFieldModifierArray = noiseFieldModifier.getInts(xPos, zPos, xSize, zSize);
+		//noiseFieldModifierArray2 = noiseFieldModifier2.getInts(xPos, zPos, xSize, zSize);
 		
 		if (outArray == null) {
 			outArray = new double[xSize * ySize * zSize];
 		}
-
-		VCraftWorld.instance.terrainGenHiLevel = 67;
 		
 		if (this.parabolicField == null) {
 			this.parabolicField = new float[2*smoothingRadius + 5 * 2 * smoothingRadius + 1];
@@ -217,14 +222,14 @@ public class GenLayerTerrain extends GenLayerVC {
 			}
 		}		
 		
-		double horizontalScale = 600D;
+		double horizontalScale = 1300D;
 		double verticalScale = 1000D;
 		
-		this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
+		//this.noise5 = this.noiseGen5.generateNoiseOctaves(this.noise5, xPos, zPos, xSize, zSize, 1.121D, 1.121D, 0.5D);
 		this.noise6 = this.noiseGen6.generateNoiseOctaves(this.noise6, xPos, zPos, xSize, zSize, 800.0D, 800.0D, 0.5D);
 		
 		// Seems to be the lowest octave
-		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
+		this.noise1 = this.noiseGen1.generateNoiseOctaves(this.noise1, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale / 8000D, verticalScale / 10D, horizontalScale / 8000D);
 		
 		this.noise2 = this.noiseGen2.generateNoiseOctaves(this.noise2, xPos, yPos, zPos, xSize, ySize, zSize, horizontalScale, verticalScale, horizontalScale);
 
@@ -317,9 +322,9 @@ public class GenLayerTerrain extends GenLayerVC {
 						result = noise1var + (noise2var - noise1var) * noise3var;
 					}*/
 					
-					result = noise1[posIndex] / 128D 
-							 + (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0.2f, noiseFieldModifierArray[x + z * xSize] / 210f);
-
+					result = 2D * noise1[posIndex] 
+							  + (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0f, noiseFieldModifierArray[x + z * xSize] / 255f);
+;
 					//result = noise1var;
 							
 					result -= theheight;

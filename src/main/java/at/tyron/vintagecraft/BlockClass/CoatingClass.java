@@ -36,6 +36,7 @@ public class CoatingClass extends BaseBlockClass {
 		
 		String name;
 		
+		// Generates every possible combination of covering 1-6 sides 
 		for (int i = 1; i < 64; i++) {
 			name =
 				((i & 1) > 0 ? "d" : "") +
@@ -45,8 +46,6 @@ public class CoatingClass extends BaseBlockClass {
 				((i & 16) > 0 ? "w" : "") +
 				((i & 32) > 0 ? "e" : "")
 			;
-			
-			//System.out.println(name);
 			
 			EnumStateImplementation key = new EnumStateImplementation(i, 0, name);
 			values.put(key, new BlockClassEntry(key));

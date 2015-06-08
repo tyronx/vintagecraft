@@ -48,7 +48,7 @@ public class VCraftWorld {
 	
 	
 	public static int seaLevel = 128;
-	public int terrainGenHiLevel = 73;
+	public int terrainGenHiLevel = 67;
  	
 	public static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
 	

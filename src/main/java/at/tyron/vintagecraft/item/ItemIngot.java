@@ -18,6 +18,7 @@ import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -168,7 +169,15 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-	
+		/*IBlockState blockstate = BlocksVC.crops.getBlockStateFor(EnumCrop.TOMATOES, world.rand.nextInt(13));
+		if (blockstate == null) { 
+			System.out.println("blockstate is null!");
+			return false;
+		}
+		if (!world.isRemote)
+			world.setBlockState(pos.up(), blockstate);
+		if (true) return false;
+		*/
 		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
 		
 		if (!entityplayer.isSneaking() || !isPlaceable(itemstack) || isOddlyShaped(itemstack)) return false;

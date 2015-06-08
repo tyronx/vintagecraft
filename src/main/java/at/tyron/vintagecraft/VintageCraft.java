@@ -150,7 +150,7 @@ public class VintageCraft {
     	
     	BlocksVC.init();
     	ItemsVC.init();
-    	DynTreeGenerators.initGenerators();
+    	
     	
     	
     	//packetPipeline.initalise();
@@ -192,8 +192,6 @@ public class VintageCraft {
 		
 		proxy.init(event);
 		
-		Recipes.addRecipes();
-		EnumAnvilRecipe.registerRecipes();
 
 		
     }
@@ -202,7 +200,15 @@ public class VintageCraft {
 	
     	
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) { proxy.postInit(event); }
+	public void postInit(FMLPostInitializationEvent event) { 
+		proxy.postInit(event);
+		
+		ItemsVC.initTabIcons();
+		DynTreeGenerators.initGenerators();
+		
+		Recipes.addRecipes();
+		EnumAnvilRecipe.registerRecipes();
+	}
 	
 	
 	@EventHandler

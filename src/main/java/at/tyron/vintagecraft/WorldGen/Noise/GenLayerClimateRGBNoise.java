@@ -19,7 +19,7 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 				
 	
 				// 1 in 15 chance for really cold areas
-				if (nextInt(15) == 0) {
+				if (nextInt(17) == 0) {
 					temp = lumpyInt3(55);
 					rain = lumpyInt3(130);
 				
@@ -30,7 +30,7 @@ public class GenLayerClimateRGBNoise extends GenLayerVC {
 				
 				// Otherwise temp mostly around average of 170
 				} else {
-					temp = lumpyInt3(300);
+					temp = lumpyInt3(310);
 					rain = lumpyInt3(220 - (120 - temp));
 				}
 				   

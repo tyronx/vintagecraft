@@ -41,7 +41,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMultiblock {
-	public PropertyBlockClass TREETYPE; // = PropertyInteger.create("log", 0, 1); 
+	public PropertyBlockClass TREETYPE;
 	
 	public BlockLogVC() {
 		super(Material.wood);
@@ -87,6 +87,7 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
     	return getBlockClass().getMetaFromState(state);
     }
       
+    @Override
     public IBlockState getStateFromMeta(int meta) {
     	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
     }

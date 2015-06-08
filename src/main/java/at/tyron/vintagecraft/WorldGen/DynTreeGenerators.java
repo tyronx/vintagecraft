@@ -463,7 +463,7 @@ public class DynTreeGenerators {
 					NatFloat.createGauss(0.01f, 0f), 
 					0.1f
 				),
-				1.5f,
+				1.8f,
 				1
 			), null, null);
 

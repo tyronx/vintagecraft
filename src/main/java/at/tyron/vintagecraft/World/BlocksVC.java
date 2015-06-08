@@ -52,6 +52,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.CoatingClass;
+import at.tyron.vintagecraft.BlockClass.CropClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
 import at.tyron.vintagecraft.BlockClass.OreClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
@@ -179,6 +180,8 @@ public class BlocksVC {
 	public static TreeClass quartzglass;
 
 	public static Block metalanvil;
+
+	public static CropClass crops;
 	
 
 	
@@ -196,7 +199,11 @@ public class BlocksVC {
 	
 
 	private static void initOreDictBlocks() {
-		for (EnumTree tree : EnumTree.values()) {
+		// throws a NPE for some reason, and only outside dev-env
+		// java.lang.NullPointerException: Initializing game
+		// at net.minecraft.item.ItemStack.func_77952_i(ItemStack.java:230)
+		
+		/*for (EnumTree tree : EnumTree.values()) {
 			if (tree.isBush) continue;
 			
 			OreDictionary.registerOre("vcraft-treeWood-any", BlocksVC.log.getItemStackFor(tree));
@@ -204,7 +211,7 @@ public class BlocksVC {
 			OreDictionary.registerOre("vcraft-slabWood-any", BlocksVC.singleslab.getItemStackFor(tree));
 			OreDictionary.registerOre("vcraft-stairWood-any", BlocksVC.stairs.getItemStackFor(tree));
 			OreDictionary.registerOre("vcraft-treeSapling-any", BlocksVC.sapling.getItemStackFor(tree));
-		}
+		}*/
 	
 	}
 
@@ -339,6 +346,10 @@ public class BlocksVC {
 
 		wheatcrops = new BlockCropsVC().setHardness(0.2f);
 		register(wheatcrops, "wheatcrops", ItemBlock.class);
+		
+		
+		crops = new CropClass();
+		crops.init();
 		
 		vine = new BlockVineVC().setHardness(0.2f).setStepSound(Block.soundTypeGrass);
 		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");

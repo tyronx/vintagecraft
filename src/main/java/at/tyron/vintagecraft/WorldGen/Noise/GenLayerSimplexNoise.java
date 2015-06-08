@@ -11,6 +11,15 @@ public class GenLayerSimplexNoise extends GenLayerVC {
 	
 	
 	public double scale = 512.0;
+
+	public GenLayerSimplexNoise(long seed, int octaves, float persistence, int amplitude, int offset, double scale) {
+		super(seed);
+		this.amplitude = amplitude;
+		this.offset = offset;
+		noisegen = new SimplexNoise(octaves, persistence, seed);
+		this.scale = scale;
+	}
+	
 	
 	public GenLayerSimplexNoise(long seed, int octaves, float persistence, int amplitude, int offset) {
 		super(seed);

@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurAll;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurSelective;
+import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedCombine;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedSubstractAll;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedSubstractSelective;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerContrastAndBrightnessAll;
@@ -45,11 +46,11 @@ public abstract class GenLayerVC extends GenLayer {
 		return noise;
 	}
 	
-	public static GenLayerVC genNoiseFieldModifier(long seed) {	
-		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 4, 0.96f, 170, -50);
+	public static GenLayerVC genNoiseFieldModifier(long seed, int offset) {	
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.96f, 165, offset, 2048D);
 		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
 		
-		GenLayerVC noisemod = new GenLayerBlurAll(seed, 1, 4, noise);
+		GenLayerVC noisemod = new GenLayerBlurAll(seed, 2, 6, noise);
 		GenLayerVC.drawImageGrayScale(512, noisemod, "NoiseFieldModifier 1 Blur");
 		
 		return noisemod;
@@ -151,8 +152,9 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genForest(long seed) {
-		GenLayerSimplexNoise forest = new GenLayerSimplexNoise(seed, 5, 0.5f, 130, -45);
+		GenLayerSimplexNoise forest = new GenLayerSimplexNoise(seed, 6, 0.6f, 120, -25, 256D);
 		GenLayerVC.drawImageGrayScale(512, forest, "Forest 0 Noise");
+		
 		return forest;
 	} 	
 
@@ -199,8 +201,8 @@ public abstract class GenLayerVC extends GenLayer {
 		drawImageBiome(512, noise, "Erosion 1 noise");
 		
 		
-		GenLayerVC erosion = GenLayerZoom.magnify(seed, noise, 6);
-		drawImageBiome(512, erosion, "Erosion 2 6x magnify");
+		GenLayerVC erosion = GenLayerZoom.magnify(seed, noise, 8);
+		drawImageBiome(512, erosion, "Erosion 2 8x magnify");
 		
 		erosion.initWorldGenSeed(seed);
 		

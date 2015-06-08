@@ -1,5 +1,9 @@
 {
-    "parent": "block/clay",
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "vintagecraft:blocks/rawclay"
+    },
+
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -249,7 +249,8 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 			case SPRUCE:
 			case ELEPHANTTREE:
 			case POPLAR:
-				if (heightreduction < 0.15f && rand.nextInt(220) == 0) return 1.2f + rand.nextFloat() * 0.55f;
+			case OAK:
+				if (heightreduction < 0.15f && rand.nextInt(220) == 0) return 1.2f + rand.nextFloat() * 0.5f;
 				break;
 				
 			case KAPOK:
