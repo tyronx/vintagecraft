@@ -79,11 +79,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 	}
 	
 	public static ItemStack setOreType(ItemStack itemstack, EnumOreType oretype) {
-		NBTTagCompound nbt = itemstack.getTagCompound(); 
-		if (nbt == null) {
-			itemstack.setTagCompound(nbt = new NBTTagCompound());
-		}	
-		
+		NBTTagCompound nbt = getOrCreateNBT(itemstack); 
 		nbt.setInteger("oretype", oretype.getId());
 		itemstack.setTagCompound(nbt);
 		return itemstack;
@@ -92,7 +88,12 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return getOreType(stack).getName();
+		EnumOreType oretype = getOreType(stack);
+		if (oretype == null) {
+			System.out.println("Error: Trying to get type of invalid ore item. NBT Tags: " + getOrCreateNBT(stack));
+			return "unknown";
+		}
+		return oretype.getName();
 	}
 
 

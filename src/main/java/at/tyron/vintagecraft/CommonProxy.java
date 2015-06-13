@@ -3,6 +3,7 @@ package at.tyron.vintagecraft;
 import java.util.HashMap;
 
 import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Gui.GuiAnvil;
 import at.tyron.vintagecraft.Gui.GuiForge;
@@ -66,11 +67,10 @@ public class CommonProxy implements IGuiHandler {
 
 
 	public void init(FMLInitializationEvent event) {
-		int entityId = EntityRegistry.findGlobalUniqueEntityId();
-		 
-		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", entityId, VintageCraft.instance, 64, 1, true);  
-		EntityList.addMapping(EntityStone.class, "stonethrown", entityId);
+		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", 3, VintageCraft.instance, 64, 1, true);  
+		EntityList.addMapping(EntityStone.class, "stonethrown", 3);
 		
+		EntityRegistry.registerModEntity(EntityMobHorse.class, "mobhorse", 4, VintageCraft.instance, 64, 1, true);
 	}
 
 

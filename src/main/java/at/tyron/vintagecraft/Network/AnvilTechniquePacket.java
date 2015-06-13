@@ -72,7 +72,7 @@ public class AnvilTechniquePacket implements IMessage {
     	        
     	        
     	        // Smithing is very Energy intensive
-    	        player.addExhaustion(0.3F); 
+    	        player.addExhaustion(3F); 
     	        
     	        ItemStack hammer = container.getSlot(3).getStack();
     	        

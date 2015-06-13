@@ -26,9 +26,26 @@ public class MobInventoryItems {
 		/* Bronze */ new float[] { 0.05f, 0.25f, 0.3f },
 		/* Copper */ new float[] { 0.2f,  0.15f, 0.2f }
 	};
-	
-	
+		
 	static EnumMetal[] tiers = new EnumMetal[]{EnumMetal.IRON, EnumMetal.TINBRONZE, EnumMetal.COPPER};
+	
+	
+	static float[] horseArmorTypeChances =  /* Iron */ new float[] { 0f, 0.5f, 0.85f };
+
+	
+	
+	public static ItemStack getDifficultyBasedHorseArmor(EnumDifficulty difficulty, Random rand) {
+		if (difficulty == EnumDifficulty.PEACEFUL) return null;
+		
+		int difficultyIndex = difficulty.ordinal() - 1;
+		
+		if (rand.nextFloat() < horseArmorTypeChances[difficultyIndex]) {
+			return new ItemStack(Items.iron_horse_armor);
+		}
+		
+		return null;
+		
+	}
 	
 	/*
 	 * stone axe

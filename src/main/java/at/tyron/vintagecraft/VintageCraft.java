@@ -222,16 +222,7 @@ public class VintageCraft {
 
 	@SubscribeEvent
     public void entityJoin(EntityJoinWorldEvent evt) {
-    	if (! (evt.entity.worldObj instanceof WorldServer)) return;
-    	
-    	if (evt.entity instanceof EntityZombie) {
-    		gearUpMob((EntityZombie)evt.entity);
-    	}
-
-    	if (evt.entity instanceof EntitySkeleton) {
-    		gearUpMob((EntitySkeleton)evt.entity); 
-    	}
-
+    	VintageCraftMobTweaker.entityJoin(evt);
     }
 
 	
@@ -251,7 +242,7 @@ public class VintageCraft {
 	public void loadWorld(WorldEvent.Load evt) {
 		long worldtime = getOrCreateWorldData(evt.world).getWorldTime();
 		
-		setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
+		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
 	}
 	
 	
@@ -270,163 +261,22 @@ public class VintageCraft {
 		
 		
 		if (worldtime % 6000L == 0) {
-			setSpawnCap(EnumCreatureType.MONSTER, spawnCapByDay(worldtime / 24000L, event.world.getDifficulty()));
+			VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, event.world.getDifficulty()));
         	VintageCraftConfig.saveConfig();
 		}
 	}
 	
 	
-	public static void setSpawnCap(EnumCreatureType type, int value) {
-		try {
-			Field field = EnumCreatureType.class.getDeclaredFields()[5];
-			field.setAccessible(true);
-			Field modifiers = Field.class.getDeclaredField("modifiers");
-			modifiers.setAccessible(true);
-			modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-			field.set(type, value);
 
-		}
-		catch(Exception e){
-			throw new RuntimeException("couldnt set mob cap");
-		}
-	}
-	
-	
-	public int spawnCapByDay(long days, EnumDifficulty difficulty) {
-		int cap = 0;
-		switch (difficulty) {
-			case EASY: cap = VintageCraftConfig.easyMobCap; break;
-			case NORMAL: cap = VintageCraftConfig.mediumMobCap; break;
-			case HARD: cap = VintageCraftConfig.hardMobCap; break;
-			default: cap = 0; break;
-		}
-		
-		if (VintageCraftConfig.mobFreeDays == 0) return cap;
-		if (VintageCraftConfig.mobFreeDays > days) return 0;
-		
-		//System.out.println(days + " / " + VintageCraftConfig.mobFreeDays);
-		return (int) Math.min(cap, (days - VintageCraftConfig.mobFreeDays + 1) * 15);
-	}
-	
 	public long daysPassed(World world) {
 		return world.getWorldTime() / 24000;
 	}
 	
 	
-	public void gearUpMob(EntityMob mob) {
-		// Already has armor? Skip!
-		if (mob.getInventory()[2] != null || mob.getInventory()[3] != null || mob.getInventory()[1] != null) return;
-		
-		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
-		
-		// The deeper the mob spawns, the better equipment it receives
-		float difficultyModifier = 0.45f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
-		
-		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
-		int healthboost = 0;
-		int numgearitems = 0;
-		
-		for (int i = 0; i < inventory.length; i++) {
-			if (mob instanceof EntitySkeleton && i == 0) continue;
-			
-			mob.setCurrentItemOrArmor(i, inventory[i]);
-			mob.setEquipmentDropChance(i, 0);
-			
-			healthboost += MobInventoryItems.getArmorExtraHealthBoost(inventory[i]);
-			
-			if (inventory[i] != null) numgearitems++;
-		}
-		
-		if (numgearitems >= 4 && mob instanceof EntityZombie) {
-			mob.getEntityAttribute(((EntityZombie)mob).reinforcementChance).applyModifier(new AttributeModifier("Leader zombie bonus", 0.95D, 0));
-			
-			if (healthboost > 5) {
-		//		((EntityZombie)mob).multiplySize(1.1f);
-			}
-			
-		}
-		
-		if (healthboost > 0) {
-			//System.out.println("added health " + healthboost + " / new max h = " + mob.getMaxHealth());
-			
-			/*System.out.println("boosting mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
-					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
-			);*/
-
-			
-			mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(
-				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 12f, 1)
-			);
-			mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(
-				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 0)
-			);
-			mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).applyModifier(
-				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 1)
-			);
-			
-			//mob.experienceValue += healthboost;
-			
-			//System.out.println("now resis: " + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue());
-			mob.setHealth(mob.getMaxHealth());
-			
-			/*System.out.println("boosted mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
-					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
-			);*/
-			
-		}
-		
-	}
-  
-	
-	
 	@SubscribeEvent
 	public void onEvent(LivingDropsEvent event) {
-		float growth = 1f;
-		float dropquantity;
-		Random rand = null;
-		
-		if (event.entity instanceof EntityAgeable) {
-			int age = ((EntityAgeable)event.entity).getGrowingAge();
-			if (age < 0) {
-				growth = (1 - age / 24000f);
-			}
-			rand = event.entityLiving.getRNG();
-		}
-		
-		if (event.entity instanceof EntitySheep) {
-			event.drops.clear();
-			event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, new ItemStack(Blocks.wool)));
-		}
-		
-	    if (event.entity instanceof EntityPig) {
-	        event.drops.clear();
-	        
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.porkchopRaw, getDropQuantity(3, growth, rand) + rand.nextInt(2));
-	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
-	    }
-	    
-	    if (event.entity instanceof EntityCow) {
-	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.beefRaw, getDropQuantity(5, growth, rand) + rand.nextInt(2));
-	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
-	        
-	        itemStackToDrop = new ItemStack(Items.leather, getDropQuantity(2, growth, rand) + rand.nextInt(2));
-	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
-	    }
-	    
-	    if (event.entity instanceof EntityChicken) {
-	        event.drops.clear();
-	        ItemStack itemStackToDrop = new ItemStack(ItemsVC.chickenRaw, getDropQuantity(1, growth, rand));
-	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
-	        
-	        itemStackToDrop = new ItemStack(Items.feather, getDropQuantity(3, growth, rand));
-	        event.drops.add(new EntityItem(event.entity.worldObj, event.entity.posX, event.entity.posY, event.entity.posZ, itemStackToDrop));
-	    }
+		VintageCraftMobTweaker.tweakDrops(event);
 	}
 	
 	
-	int getDropQuantity(int max, float factor, Random rand) {
-		int q = (int) (max * factor);
-		return q + (rand.nextFloat() < max*factor - q ? 1 : 0);
-	}
 }

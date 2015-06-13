@@ -216,7 +216,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	
 	@Override
 	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
-		player.addExhaustion(0.025F); // Make player hungry three times as much
+		player.addExhaustion(0.025F); // Make player hungry five times as much
 		
 		super.harvestBlock(worldIn, player, pos, state, te);
 	}

@@ -258,7 +258,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	
 	@Override
 	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te) {
-		player.addExhaustion(0.025F); // Make player hungry twice as much
+		player.addExhaustion(0.075F); // Make player hungry four times as much
 		
 		super.harvestBlock(worldIn, player, pos, state, te);
 	}

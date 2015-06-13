@@ -28,6 +28,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
@@ -35,9 +36,13 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
@@ -56,6 +61,47 @@ public class VintageCraftCommands extends CommandBase {
 
 	
 	// /vcraft genlayer forest
+	
+	void replaceBlocks(BlockPos center, ICommandSender sender, int wdt, int hgt, boolean ignoremeta) {
+		ItemStack searchstack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[0];
+		ItemStack replacestack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[1];
+
+		if (!(searchstack.getItem() instanceof ItemBlock)) {
+			sender.addChatMessage(new ChatComponentText("Search item is not a block"));
+			return;
+		}
+
+		
+		if (!(replacestack.getItem() instanceof ItemBlock)) {
+			sender.addChatMessage(new ChatComponentText("Replace item is not a block"));
+			return;
+		}
+		
+		Block searchblock = ((ItemBlock)searchstack.getItem()).block;
+		Block replaceblock = ((ItemBlock)replacestack.getItem()).block;
+		IBlockState replaceblockstate = replaceblock.getStateFromMeta(replacestack.getItemDamage());
+		
+		int replaced = 0;
+		
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = 0; y < hgt; y++) {
+					IBlockState blockstate = sender.getEntityWorld().getBlockState(center.add(x, y, z));
+						
+					
+					if (blockstate.getBlock() == searchblock && 
+						(ignoremeta || blockstate.getBlock().getMetaFromState(blockstate) == searchstack.getItemDamage())) { 
+					
+						sender.getEntityWorld().setBlockState(center.add(x, y, z), replaceblockstate);
+						replaced++;
+					}
+				}
+			}
+		}
+		
+		sender.addChatMessage(new ChatComponentText("Replaced " + replaced + " blocks"));
+		
+	}
 	
 	void clearArea(World world, BlockPos center, int wdt, int hgt) {
 		for (int x = -wdt/2; x < wdt; x++) {
@@ -102,6 +148,21 @@ public class VintageCraftCommands extends CommandBase {
 			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
 		}
 
+		if (args[0].equals("replace")) {
+			int wdt = 35;
+			int hgt = 35;
+			
+			replaceBlocks(sender.getPosition(), sender, wdt, hgt, false);
+		}
+		if (args[0].equals("replaceignoremeta")) {
+			int wdt = 35;
+			int hgt = 35;
+			
+			replaceBlocks(sender.getPosition(), sender, wdt, hgt, true);
+		}
+
+		
+		
 		if (args[0].equals("plane")) {
 			int wdt = 30;
 			int hgt = 30;

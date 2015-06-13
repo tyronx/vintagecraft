@@ -1,0 +1,68 @@
+Assuming a scenario where Vintagecraft uses 0% of the Vanilla Minecraft Redstone Mechanics
+
+How would a purely Vintagecraft Version of Redstone would look like?
+=============================================================================
+
+
+Principal Rule #1: Conservation of energy. Energy is neither created nor destroyed. It can only be transformed from one to another.
+
+
+
+Tier 1 Automation: Mechanical Power like a mix of BetterThanWolves (http://sargunster.com/btw/index.php?title=Mechanical_Power) and RotaryCraft.
+We'll use the same values as Rotarycraft, as in Power = Torque * Speed 
+
+
+
+Mechanical Power via Rotating Axles
+=====================================
+
+	- Generation via: Wind Mill, Water Wheel and Steam Engines
+	- Transmission via: Gear boxes, Axles, Flywheel
+	- Power Conversion (Torque <=> Speed): Gear boxes
+	- End uses: Bellows, Grindstone, Item Conveyor belt, Pulley
+
+
+	Basic Gears are made by crafting Cage gears: http://en.wikipedia.org/wiki/Gear#Cage_gear
+
+	Gear box Type 1:
+	- Let's you transmit mechanical power through corners (http://www.odts.de/southptr/gears/gear_assy.gif)
+	
+	Gear box Type 2:
+	- Transform Torque into speed and vice versa
+	
+	Gear box Type 3:
+	- 1 Gear coming out of the block. Allows the moving of "toothed bar" blocks -> 	
+
+
+	(future) Gear box Type 4: Worm Gear
+
+
+	Clutch:
+	- Enable/Disable the transimission of mechanical power
+
+	Wind Mill, Water Wheel:
+	- Constructed via attaching a 1x1 Blade-Base to an axle. Extend to any size by attaching blade parts (including diagonally). Each blade parts adds torque to the base. Non symmetrical Blades reduce the efficiency of the windmill/waterwheel by 70% max .
+
+
+
+Controlling Mechanical Power via vertical Movement of axles
+======================================
+
+  - Certain device allow the movement of axles by quarter a block to enable/disable different thigs
+  - E.g. pulling a lever moves an axle by quarter a block to enable/disable a clutch!
+
+
+
+
+
+Technical Realization
+=====================
+
+- Interfaces for Tileentities: IMechanicalPower, IMechanicalPowerSources, IMechanicalPowerSink
+- All Mechanical Devices are organized into mechanical networks.
+- Placing a mechanical device searches adjacent blocks for mechanical networks. If none found, it creates a new one.
+
+
+
+
+
