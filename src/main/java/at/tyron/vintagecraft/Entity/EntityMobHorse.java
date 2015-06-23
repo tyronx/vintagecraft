@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Entity;
 
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
@@ -15,14 +16,50 @@ import net.minecraft.entity.ai.EntityAIRunAroundLikeCrazy;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityMobHorse extends EntityHorse {
+	boolean riderReadyForDespawn;
+	
+    protected boolean canDespawn() {
+        return riddenByEntity == null;
+    }
+    
+    @Override
+    protected void despawnEntity() {
+    	super.despawnEntity();
+    	
+    	// Despawn immediately if the rider is gone, and before being gone it was ready for despawn 
+    	if (riddenByEntity != null && riddenByEntity instanceof EntityLiving) {
+    		riderReadyForDespawn = ((EntityLiving)riddenByEntity).getAge() > 600;
+    	}
+    	if (riderReadyForDespawn && riddenByEntity == null && entityAge > 600) {
+    		setDead();
+    	}
+    }
+    
+    
+    public void onLivingUpdate() {
+        if (this.worldObj.isDaytime() && !this.worldObj.isRemote && !this.isChild()) {
+            float f = this.getBrightness(1.0F);
+            BlockPos blockpos = new BlockPos(this.posX, (double)Math.round(this.posY), this.posZ);
 
+            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.worldObj.canSeeSky(blockpos)) {
+            	this.setFire(8);
+            }
+        }
+
+        super.onLivingUpdate();
+    }
+
+    
 	public EntityMobHorse(World worldIn) {
 		super(worldIn);
 
@@ -30,8 +67,8 @@ public class EntityMobHorse extends EntityHorse {
 		targetTasks.taskEntries.clear();
 		
 		tasks.addTask(0, new EntityAISwimming(this));
-		tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 2D, false));
-		tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 2D));
+		tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.8D, false));
+		tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1.8D));
 		tasks.addTask(6, new EntityAIWander(this, 1.4D));
 		tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		tasks.addTask(8, new EntityAILookIdle(this));

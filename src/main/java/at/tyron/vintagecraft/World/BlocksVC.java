@@ -7,6 +7,8 @@ import java.util.Arrays;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.BlockAnvil;
+import net.minecraft.block.BlockContainer;
+import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -22,6 +24,9 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.*;
+import at.tyron.vintagecraft.Block.Mechanics.BlockAngledGearBox;
+import at.tyron.vintagecraft.Block.Mechanics.BlockAxle;
+import at.tyron.vintagecraft.Block.Mechanics.BlockWindMillRotor;
 import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
@@ -34,6 +39,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockPeat;
 import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
+import at.tyron.vintagecraft.Block.Organic.BlockSpiderEgg;
 import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
@@ -84,6 +90,7 @@ import at.tyron.vintagecraft.Item.ItemSubsoil;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
+import at.tyron.vintagecraft.Item.Mechanics.ItemMechanical;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -94,6 +101,10 @@ import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
+import at.tyron.vintagecraft.TileEntity.TileEntityForestSpiderSpawner;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
@@ -184,8 +195,11 @@ public class BlocksVC {
 	public static CropClass crops;
 	
 
+	public static BlockContainerVC axle;
+	public static BlockContainerVC angledgearbox;
+	public static BlockContainerVC windmillrotor;
 	
-	
+	public static BlockContainer spiderEgg;
 	
 	public static void init() {
 		initBlocks();
@@ -368,22 +382,21 @@ public class BlocksVC {
 		stonepot.setHardness(2f).setHarvestLevel("pickaxe", 0);
 		
 
-		
+		axle = new BlockAxle().registerSingleState("axle", ItemMechanical.class);
+		angledgearbox = new BlockAngledGearBox().registerSingleState("angledgearbox", ItemMechanical.class);
+		windmillrotor = new BlockWindMillRotor().registerSingleState("windmillrotor", ItemMechanical.class);
 		//forge = new RockClass("forge", BlockStonePot.class, ItemRockTyped.class, 2.2f, Block.soundTypeStone, "pickaxe", 0);
 		//forge.init();
+		
+		spiderEgg = new BlockSpiderEgg();
+		spiderEgg.setHardness(2f);
+		register(spiderEgg, "spideregg", ItemBlock.class);
+		
 	}
 	
 	
 	public static void initTileEntities() {
-		GameRegistry.registerTileEntity(TEHeatSourceWithGUI.class, ModInfo.ModID + ":stove");
-		GameRegistry.registerTileEntity(TEFarmland.class, ModInfo.ModID + ":farmlandte");
-		GameRegistry.registerTileEntity(TESapling.class, ModInfo.ModID + ":saplingte");
-		GameRegistry.registerTileEntity(TEIngotPile.class, ModInfo.ModID + ":ingotpile");
-		GameRegistry.registerTileEntity(TEToolRack.class, ModInfo.ModID + ":toolrack");
-		GameRegistry.registerTileEntity(TEVessel.class, ModInfo.ModID + ":ceramicvessel2");
-		GameRegistry.registerTileEntity(TEBloomery.class, ModInfo.ModID + ":bloomery");
-		GameRegistry.registerTileEntity(TEAnvil.class, ModInfo.ModID + ":anvilvc");
-		GameRegistry.registerTileEntity(TEStonePot.class, ModInfo.ModID + ":forge");
+
 	}
 
 

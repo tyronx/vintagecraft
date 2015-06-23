@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderSnowball;
+import net.minecraft.client.renderer.entity.RenderSpider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -38,8 +39,10 @@ import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Client.Render.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.*;
+import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
@@ -49,6 +52,9 @@ import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -68,13 +74,15 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 		
 	@Override
-	public void registerRenderInformation() {
+	public void registerTileEntities() {
+		super.registerTileEntities();
 		
 		IReloadableResourceManager IRRM = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
 		IRRM.registerReloadListener(this);
 		
 		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
-		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));		
+		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(Minecraft.getMinecraft().getRenderManager()));
 	}
 
 	@Override
@@ -106,7 +114,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 			
 			tabs[5] = CreativeTabs.tabAllSearch;
 			tabs[11] = CreativeTabs.tabInventory;
-			i = 6;
+			i = 7;
 			
 			for (CreativeTabs tab : CreativeTabs.creativeTabArray) {
 				if (!(tab instanceof CreativeTabsVC) && !tab.getTabLabel().equals("search") && !tab.getTabLabel().equals("inventory")) {
@@ -163,6 +171,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEToolRack.class, "ToolRack", new TESRToolRack());
 		ClientRegistry.registerTileEntity(TEVessel.class, "ceramicvessel2", new TESRCeramicVessel());
 		ClientRegistry.registerTileEntity(TEStonePot.class, "stonepot", new TESRStonePot());
+		ClientRegistry.registerTileEntity(TEAxle.class, "axle", new TESRAxle());
+		ClientRegistry.registerTileEntity(TEAngledGearBox.class, "angledgearbox", new TESRAngledGearBox());
+		ClientRegistry.registerTileEntity(TEWindmillRotor.class, "windmillrotor", new TESRWindmillRotor());
     }
     
 	

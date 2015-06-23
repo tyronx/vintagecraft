@@ -57,7 +57,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.LIGHTHIT,
 		EnumAnvilTechnique.LIGHTHIT
-	}, 2, EnumTool.SHEARS),
+	}, 4, EnumTool.SHEARS),
 	
 	SHOVEL (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.HEAVYHIT,
@@ -222,7 +222,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.LIGHTHIT		
 	}, 1),
 				
-		
+	/*	
 	COPPER_WIRE (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.HEAVYHIT,
 		EnumAnvilTechnique.MEDIUMHIT,
@@ -235,7 +235,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.DRAW, 
 		EnumAnvilTechnique.DRAW
 	}, 1),
-				
+		*/		
 		
 
 
@@ -276,6 +276,9 @@ public enum EnumAnvilRecipe {
 		this.armorpiece = armorpiece;
 		this.plates = plates;
 	}
+	
+	
+	
 
 	
 	public static void registerRecipes() {
@@ -382,13 +385,45 @@ public enum EnumAnvilRecipe {
 		
 		
 		/***** 4. Copper wire ****/
-		AnvilRecipes.registerRecipe(new AnvilRecipes(
+/*		AnvilRecipes.registerRecipe(new AnvilRecipes(
 			new ItemStack(Items.redstone, 16), 
 			ItemIngot.getItemStack(EnumMetal.COPPER, 1), 
 			COPPER_WIRE.steps
 		));
+	*/	
 		
+	}
+
+	
+	
+	public ItemStack getOutputForDisplay() {
+		EnumMetal metal = EnumMetal.IRON;
 		
+		switch (this) {
+			case ANVIL: return ItemAnvilVC.getItemStack(metal);
+			case ANVIL_BASE: return ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilbase), metal);
+			case ANVIL_SURFACE: return ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilsurface), metal);
+			case AXE: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_axe"));
+			case PICKAXE: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_pickaxe"));
+			case HAMMER: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_hammer"));
+			case HOE: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_hoe"));
+			case SAW: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_saw"));
+			case SHOVEL: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_shovel"));
+			case SWORD: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_sword"));
+			case SHEARS: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_" + "shears"));
+			
+			case PLATE: return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			case HELMET: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_helmet"));
+			case CHESTPLATE: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_chestplate"));
+			case LEGGINGS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_leggings"));
+			case BOOTS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_boots"));
+//			case COPPER_WIRE: return new ItemStack(Items.redstone);
+			case FIX_INGOT: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
+			case FIX_PLATE: return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			default:
+		}
+		
+		return null;
 	}
 	
 

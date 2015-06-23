@@ -11,6 +11,7 @@ import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldGen.Feature.GenFeatureSpiderNest;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
@@ -98,6 +99,29 @@ public class MapGenFlora {
 				placeTree(world, blockpos, random, climate, forestLayer[x+z*16], 1f);
 			}
 		}
+		
+		
+		
+		/*** 3. Spider Nests ***/
+		BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + 8, 0, chunkZ + 8));
+		int middleIndex = 8 + 8 * 16;
+		int climate[] = VCraftWorld.instance.getClimate(blockpos);
+		float forestdensity = EnumTree.getForestDensity(forestLayer[middleIndex], climate[2], climate[0]);
+		
+		boolean suitableArea =
+			forestdensity > 0.7 && 
+			climate[0] >= 5 && 
+			climate[0] < 20 && 
+			climate[2] > 95 &&
+			blockpos.getY() < 183
+		;
+		
+		//System.out.println(age[middleIndex] + " && " +  forestdensity + " && " + climate[0] + " && " + climate[2] + " && " + blockpos.getY()  + "  = " + suitableArea );
+			
+		if (suitableArea && random.nextFloat() < 0.03f)  {
+			GenFeatureSpiderNest.generate(random, world, blockpos.add(5 - random.nextInt(11), 0, 5 - random.nextInt(11)));
+		}
+		
 
 	}
 	

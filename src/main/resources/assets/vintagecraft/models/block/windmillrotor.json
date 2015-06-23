@@ -1,0 +1,61 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "0": "vintagecraft:blocks/planks/oak",
+		"particle": "vintagecraft:blocks/planks/oak"
+    },
+    "elements": [
+        {
+            "name": "hori",
+            "from": [ 0.0, 7.0, 5.5 ], 
+            "to": [ 12.0, 10.0, 11.5 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 2.0, 14.0, 4.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 3.0, 4.0, 5.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 1.0, 14.0, 3.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 4.0, 4.0, 6.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 12.0, 14.0, 16.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 2.0, 14.0, 6.0 ] }
+            }
+        },
+        {
+            "name": "verti",
+            "from": [ 0.0, 5.5, 7.0 ], 
+            "to": [ 12.0, 11.5, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 1.0, 14.0, 5.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 2.0, 14.0, 6.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 4.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 6.0, 14.0, 8.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 11.0, 4.0 ] }
+            }
+        },
+        {
+            "name": "blade",
+            "from": [ 7.0, 7.5, 0.0 ], 
+            "to": [ 9.0, 9.5, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "blade2",
+            "from": [ 7.0, 0.0, 7.5 ], 
+            "to": [ 9.0, 16.0, 9.5 ], 
+            "faces": {
+                "north": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
+                "east": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
+                "south": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
+                "west": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 16.0 ] },
+                "up": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#0", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        }
+    ]
+}

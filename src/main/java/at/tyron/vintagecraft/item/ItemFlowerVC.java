@@ -28,10 +28,10 @@ public class ItemFlowerVC extends ItemBlockVC {
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		if (getFlowerType(stack) == null) {
-			return super.getUnlocalizedName() + ".unknown";
+			return "flower.unknown";
 		}
 		
-		return super.getUnlocalizedName() + "." + getFlowerType(stack).getName();
+		return "flower." + getFlowerType(stack).getName();
 	}
 	
 

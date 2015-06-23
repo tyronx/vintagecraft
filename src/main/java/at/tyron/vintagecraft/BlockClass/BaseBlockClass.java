@@ -250,6 +250,9 @@ public abstract class BaseBlockClass {
 	}
 
 	public ItemStack getItemStackFor(IStateEnum enumitem) {
+		if (values.get(enumitem) == null) { 
+			return null;
+		}
 		return values.get(enumitem).getItemStack();
 	}
 	public ItemStack getItemStackFor(IStateEnum enumitem, int quantity) {

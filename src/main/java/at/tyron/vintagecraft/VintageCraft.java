@@ -12,11 +12,13 @@ import at.tyron.vintagecraft.Client.ClientProxy;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
 import at.tyron.vintagecraft.Network.ChunkPutNbt;
 import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
+import at.tyron.vintagecraft.Network.MechanicalNetworkNBT;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Recipes;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.World.WindGen;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
 import at.tyron.vintagecraft.WorldGen.MapGenFlora;
@@ -135,6 +137,7 @@ public class VintageCraft {
  	public static CreativeTabsVC resourcesTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "resources");
  	public static CreativeTabsVC craftedBlocksTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "craftedblocks");
  	public static CreativeTabsVC toolsarmorTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "toolsandarmor");
+ 	public static CreativeTabsVC mechanicsTab = new CreativeTabsVC(CreativeTabsVC.getNextID(), "mechanics");
  	
  	@EventHandler
  	public static void preInit(FMLPreInitializationEvent event) {
@@ -147,6 +150,7 @@ public class VintageCraft {
     	packetPipeline.registerMessage(ChunkPutNbt.Handler.class, ChunkPutNbt.class, 1, Side.CLIENT);
     	packetPipeline.registerMessage(ChunkRemoveNbt.Handler.class, ChunkRemoveNbt.class, 2, Side.CLIENT);
     	packetPipeline.registerMessage(SoundEffectToServerPacket.Handler.class, SoundEffectToServerPacket.class, 3, Side.SERVER);
+    	packetPipeline.registerMessage(MechanicalNetworkNBT.ClientHandler.class, MechanicalNetworkNBT.class, 4, Side.CLIENT);
     	
     	BlocksVC.init();
     	ItemsVC.init();
@@ -158,7 +162,7 @@ public class VintageCraft {
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
     	
-    	proxy.registerRenderInformation();
+    	proxy.registerTileEntities();
     	
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
     	
@@ -243,6 +247,13 @@ public class VintageCraft {
 		long worldtime = getOrCreateWorldData(evt.world).getWorldTime();
 		
 		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
+		
+		WindGen.registerWorld(evt.world);
+	}
+	
+	@SubscribeEvent
+	public void unloadWorld(WorldEvent.Unload evt) {
+		WindGen.unregisterWorld(evt.world);
 	}
 	
 	
@@ -267,16 +278,21 @@ public class VintageCraft {
 	}
 	
 	
-
-	public long daysPassed(World world) {
-		return world.getWorldTime() / 24000;
+	
+	public long getWorldTime(World world) {
+		return getOrCreateWorldData(world).getWorldTime();
 	}
+	public long daysPassed(World worldObj) {
+		return getWorldTime(worldObj) / 24000;
+	}
+
 	
 	
 	@SubscribeEvent
 	public void onEvent(LivingDropsEvent event) {
 		VintageCraftMobTweaker.tweakDrops(event);
 	}
+
 	
 	
 }

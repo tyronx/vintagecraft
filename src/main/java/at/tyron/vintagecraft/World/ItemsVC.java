@@ -13,6 +13,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.Terrain.*;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
@@ -95,6 +96,7 @@ public class ItemsVC {
 		VintageCraft.resourcesTab.icon = ItemsVC.stone;
 		VintageCraft.craftedBlocksTab.icon = Item.getItemFromBlock(BlocksVC.fireclaybricks);
 		VintageCraft.toolsarmorTab.icon = tools.get("copper_saw");
+		VintageCraft.mechanicsTab.icon = Item.getItemFromBlock(BlocksVC.axle);
 	}
 
 

@@ -108,7 +108,7 @@ item.ore.emerald.name=Raw Emerald
 item.ore.diamond.name=Raw Diamond
 item.ore.olivine.name=Olivine Crystal
 item.ore.lapislazuli.name=Lapis Lazuli
-item.ore.rhodium.name=Rhodium Ore
+item.ore.ilmenite.name=Ilmenite
 item.ore.platinum.name=Platinum Ore
 item.ore.iridium.name=Iridium Ore
 item.ore.quartz.name=Milky Quartz
@@ -119,7 +119,7 @@ item.ingot.tinbronze.name=Tin Bronze Ingot
 item.ingot.iron.name=Iron Ingot
 item.ingot.lead.name=Lead Ingot
 item.ingot.steel.name=Steel Ingot
-item.ingot.rhodium.name=Rhodium Ingot
+item.ingot.titanium.name=Titanium Ingot
 item.ingot.platinum.name=Platinum Ingot
 item.ingot.iridium.name=Iridium Ingot
 item.ingot.palladium.name=Palladium Ingot
@@ -138,7 +138,7 @@ item.ingot.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Ingot
 item.ingot.iron.oddlyshaped.name=Oddly shaped Iron Ingot
 item.ingot.lead.oddlyshaped.name=Oddly shaped Lead Ingot
 item.ingot.steel.oddlyshaped.name=Oddly shaped Steel Ingot
-item.ingot.rhodium.oddlyshaped.name=Oddly shaped Rhodium Ingot
+item.ingot.titanium.oddlyshaped.name=Oddly shaped Titanium Ingot
 item.ingot.platinum.oddlyshaped.name=Oddly shaped Platinum Ingot
 item.ingot.iridium.oddlyshaped.name=Oddly shaped Iridium Ingot
 item.ingot.palladium.oddlyshaped.name=Oddly shaped Palladium Ingot
@@ -156,7 +156,7 @@ item.metalplate.copper.oddlyshaped.name=Oddly shaped Copper Metal Plate
 item.metalplate.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Metal Plate
 item.metalplate.iron.oddlyshaped.name=Oddly shaped Iron Metal Plate
 item.metalplate.steel.oddlyshaped.name=Oddly shaped Steel Metal Plate
-item.metalplate.rhodium.oddlyshaped.name=Oddly shaped Rhodium Metal Plate
+item.metalplate.titanium.oddlyshaped.name=Oddly shaped Titanium Metal Plate
 item.metalplate.platinum.oddlyshaped.name=Oddly shaped Platinum Metal Plate
 item.metalplate.iridium.oddlyshaped.name=Oddly shaped Iridium Metal Plate
 item.metalplate.palladium.oddlyshaped.name=Oddly shaped Palladium Metal Plate
@@ -173,7 +173,7 @@ item.metalplate.copper.name=Copper Plate
 item.metalplate.tinbronze.name=Tin Bronze Plate
 item.metalplate.iron.name=Iron Plate
 item.metalplate.steel.name=Steel Plate
-item.metalplate.rhodium.name=Rhodium Plate
+item.metalplate.titanium.name=Titanium Plate
 item.metalplate.platinum.name=Platinum Plate
 item.metalplate.iridium.name=Iridium Plate
 item.metalplate.palladium.name=Palladium Plate
@@ -190,7 +190,7 @@ item.anvil.copper.name=Copper Anvil
 item.anvil.tinbronze.name=Tin Bronze Anvil
 item.anvil.iron.name=Iron Anvil
 item.anvil.steel.name=Steel Anvil
-item.anvil.rhodium.name=Rhodium Anvil
+item.anvil.titanium.name=Titanium Anvil
 item.anvil.platinum.name=Platinum Anvil
 item.anvil.iridium.name=Iridium Anvil
 item.anvil.palladium.name=Palladium Anvil
@@ -208,7 +208,7 @@ item.copperanvilsurface.name=Copper Anvil Surface
 item.tinbronzeanvilsurface.name=Tin Bronze Anvil Surface
 item.ironanvilsurface.name=Iron Anvil Surface
 item.steelanvilsurface.name=Steel Anvil Surface
-item.rhodiumanvilsurface.name=Rhodium Anvil Surface
+item.titaniumvilsurface.name=Titanium Anvil Surface
 item.platinumanvilsurface.name=Platinum Anvil Surface
 item.iridiumanvilsurface.name=Iridium Anvil Surface
 item.palladiumanvilsurface.name=Palladium Anvil Surface
@@ -226,7 +226,7 @@ item.copperanvilbase.name=Copper Anvil Base
 item.tinbronzeanvilbase.name=Tin Bronze Anvil Base
 item.ironanvilbase.name=Iron Anvil Base
 item.steelanvilbase.name=Steel Anvil Base
-item.rhodiumanvilbase.name=Rhodium Anvil Base
+item.titaniumanvilbase.name=Titanium Anvil Base
 item.platinumanvilbase.name=Platinum Anvil Base
 item.iridiumanvilbase.name=Iridium Anvil Base
 item.palladiumanvilbase.name=Palladium Anvil Base
@@ -266,9 +266,41 @@ container.firepit=Fire pit
 container.stove=Stove
 tile.stove.name=Stove
 
-tile.flower.orangebutterflymilkweed.name=Orange Butterfly Milkweed
-tile.flower.purplebutterflymilkweed.name=Purple Butterfly Milkweed
+tile.flower.orangemilkweed.name=Orange Milkweed
+tile.flower.orangemilkweed2.name=Orange Milkweed
+tile.flower.purplemilkweed.name=Purple Milkweed
+tile.flower.purplemilkweed2.name=Purple Milkweed
 tile.flower.catmint.name=Catmint
+tile.flower.calendula.name=Calendula
+tile.flower.cornflower.name=Cornflower
+tile.flower.cornflower2.name=Cornflower
+tile.flower.lilyofthevalley.name=Lily of the Valley
+tile.flower.lilyofthevalley2.name=Lily of the Valley
+tile.flower.lilyofthevalley3.name=Lily of the Valley
+tile.flower.clover.name=Clover
+tile.flower.goldenrod.name=Goldenrod
+tile.flower.goldenrod2.name=Goldenrod
+tile.flower.goldenrod3.name=Goldenrod
+
+tile.flower.forgetmenot.name=Forget-me-not 
+tile.flower.forgetmenot2.name=Forget-me-not
+tile.flower.forgetmenot3.name=Forget-me-not
+tile.flower.forgetmenot4.name=Forget-me-not
+tile.flower.forgetmenot5.name=Forget-me-not
+
+tile.flower.narcissus.name=Narcissus
+tile.flower.narcissus2.name=Narcissus
+tile.flower.narcissus3.name=Narcissus
+
+tile.flower.purpletulip.name=Purple Tulip
+tile.flower.purpletulip2.name=Purple Tulip
+tile.flower.purpletulip3.name=Purple Tulip
+
+tile.flower.cowparsley.name=Cow Parsley
+tile.flower.cowparsley2.name=Cow Parsley
+
+tile.flower.horsetail.name=Horsetail
+
 
 tile.ceramicvessel.name=Ceramic Vessel
 tile.clayvessel.name=Clay Vessel
@@ -629,7 +661,7 @@ itemGroup.flora=Flora
 itemGroup.resources=Resources
 itemGroup.craftedblocks=Crafted blocks
 itemGroup.toolsandarmor=Tools and Armor
-
+itemGroup.mechanics=Mechanical Power
 
 farmland.name=Farmland
 
@@ -643,3 +675,9 @@ rocktype.igneous_extrusive.name=Igenous Extrusive Rock
 rocktype.special.name=Igneous Rock
 
 tile.wheatcrops.name=Wheat
+
+tile.axle.name=Axle
+tile.angledgearbox.name=Angled Gears
+tile.windmillrotor.name=Windmill Rotor
+
+tile.spideregg.name=Spider Egg

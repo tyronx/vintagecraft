@@ -19,7 +19,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	
 	IRIDIUM 			( 9, 4, 1.1f),
 	PLATINUM 			(10, 5, 1.3f),
-	RHODIUM 			(11, 4, 1.2f),
+	ILMENITE 			(11, 5, 1.2f),
 	SPHALERITE 			(12, 2, 0.8f),
 	SYLVITE_ROCKSALT 	(13, 2, 0.6f),
 	NATIVESILVER_QUARTZ (14, 2, 1f),

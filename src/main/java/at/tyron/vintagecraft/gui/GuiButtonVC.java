@@ -35,4 +35,16 @@ public class GuiButtonVC {
 	public boolean insideButton(int x, int y) {
 		return x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + height;
 	}
+	
+	public void clickSound() {
+		screen.mc.theWorld.playSound(
+			screen.mc.thePlayer.posX,
+			screen.mc.thePlayer.posY, 
+			screen.mc.thePlayer.posZ, 
+			"gui.button.press", 
+			1f, 
+			1f, 
+			false
+		);
+	}
 }

@@ -136,7 +136,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case CASSITERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TIN);
 			case NATIVESILVER_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.SILVER);
 			case PLATINUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.PLATINUM);
-			case RHODIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.RHODIUM);
+			case ILMENITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TITANIUM);
 			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRIDIUM);
 			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.ZINC);
 			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTH);
@@ -158,7 +158,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case CASSITERITE: return 8;				// "even a rich cassiterite ore only has 5% tin" @ http://en.wikipedia.org/wiki/Smelting
 			case NATIVESILVER_QUARTZ: return 4;
 			case PLATINUM: return 4;
-			case RHODIUM: return 4;
+			case ILMENITE: return 4;
 			case IRIDIUM: return 4;
 			case SPHALERITE: return 4;
 			case BISMUTHINITE: return 4;
@@ -181,7 +181,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case BISMUTHINITE: return EnumMetal.BISMUTH.meltingpoint;
 			case IRIDIUM: return EnumMetal.IRIDIUM.meltingpoint;
 			case PLATINUM: return EnumMetal.PLATINUM.meltingpoint;
-			case RHODIUM: return EnumMetal.RHODIUM.meltingpoint;
+			case ILMENITE: return EnumMetal.TITANIUM.meltingpoint;
 			case SPHALERITE: return EnumMetal.ZINC.meltingpoint;
 			case GALENA: return EnumMetal.LEAD.meltingpoint;
 			default: break;

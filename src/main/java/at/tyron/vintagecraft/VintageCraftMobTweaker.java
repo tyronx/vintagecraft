@@ -213,7 +213,30 @@ public class VintageCraftMobTweaker {
 					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
 			);*/
 			
+			tryGearUpMobWithHorse(mob, numgearitems);
 		}
+		
+
+		
+	}
+	
+	
+	static void tryGearUpMobWithHorse(EntityMob mob, int numgearitems) {
+		// Only for skeles and zombies
+		if (!(mob instanceof EntityZombie) && !(mob instanceof EntitySkeleton)) return;
+		// Only for armored mobs
+		if (numgearitems < 2) return;
+		// Spawn only after 35 ingame days
+		long daysPassed = VintageCraft.instance.daysPassed(mob.worldObj);
+		
+		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
+
+		// after 20,15,10 days  => 50% the amount of horses
+		// increase by 10% every 10,15,20 days
+		// until a max of 120% horses
+		int dayModifier = (difficulty.ordinal()+1) * 5;   // returns 10,15,20
+		float modifier = Math.min(1.2f, (daysPassed > dayModifier ? 0.5f : 0f) + 0.1f * ((daysPassed - dayModifier) / dayModifier));
+		 
 		
 		float horseSpawnchance = 0f;
 		switch (difficulty) {
@@ -223,29 +246,26 @@ public class VintageCraftMobTweaker {
 			case HARD: horseSpawnchance = 0.45f; break;
 		}
 		
-		if ((mob instanceof EntityZombie || mob instanceof EntitySkeleton) && numgearitems >= 2 && mob.worldObj.rand.nextFloat() < horseSpawnchance) {
-			BlockPos pos = mob.getPosition();
-			World world = mob.worldObj;
-			
-			boolean spawnableGround =  
-				world.getBlockState(pos.east()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.west()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.north()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.south()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.up().east()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.up().west()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.up().north()).getBlock().isPassable(world, pos) &&
-				world.getBlockState(pos.up().south()).getBlock().isPassable(world, pos) &&
-				pos.getY() >= VCraftWorld.seaLevel
-			;
-			
-			if(spawnableGround) gearUpMobWithHorse(mob);
-		}
+		if (mob.worldObj.rand.nextFloat() > modifier * horseSpawnchance) return;
 		
-	}
-	
-	
-	static void gearUpMobWithHorse(EntityMob mob) {
+		BlockPos pos = mob.getPosition();
+		World world = mob.worldObj;
+		
+		boolean spawnableGround =  
+			world.getBlockState(pos.east()).getBlock().isPassable(world, pos.east()) &&
+			world.getBlockState(pos.west()).getBlock().isPassable(world, pos.west()) &&
+			world.getBlockState(pos.north()).getBlock().isPassable(world, pos.north()) &&
+			world.getBlockState(pos.south()).getBlock().isPassable(world, pos.south()) &&
+			world.getBlockState(pos.up().east()).getBlock().isPassable(world, pos.up().east()) &&
+			world.getBlockState(pos.up().west()).getBlock().isPassable(world, pos.up().west()) &&
+			world.getBlockState(pos.up().north()).getBlock().isPassable(world, pos.up().north()) &&
+			world.getBlockState(pos.up().south()).getBlock().isPassable(world, pos.up().south()) &&
+			pos.getY() >= VCraftWorld.seaLevel &&
+			world.canBlockSeeSky(pos)
+		;
+		if(!spawnableGround) return;
+		
+		
 		
 		EntityMobHorse horse = new EntityMobHorse(mob.worldObj);
 

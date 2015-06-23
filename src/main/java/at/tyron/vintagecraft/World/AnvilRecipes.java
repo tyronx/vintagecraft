@@ -17,6 +17,10 @@ public class AnvilRecipes {
 	public boolean wildcardMatch = false;
 
 	
+	public static ArrayList<AnvilRecipes> getAnvilRecipes() {
+		return recipes;
+	}
+	
 	public AnvilRecipes(ItemStack output, ItemStack input1, EnumAnvilTechnique []techniques) {
 		this(output, input1, techniques, false);
 	}
@@ -171,5 +175,9 @@ public class AnvilRecipes {
 		return matching;
 	}
 	
+	
+	public ItemStack getOutput() {
+		return output;
+	}
 
 }

@@ -17,7 +17,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	
 	PALLADIUM 		(5, 5, 1555, 4.8f),
 	PLATINUM 		(6, 6, 1770, 4.3f),
-	RHODIUM 		(7, 5, 1965, 6.5f),
+	TITANIUM 		(7, 5, 1668, 6f),
 	IRIDIUM 		(8, 5, 2450, 6.5f),
 	OSMIUM 			(9, 7, 3025, 7f),
 	
@@ -126,6 +126,8 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	// The lower limit of the hot working temperature is determined by its recrystallization temperature. As a guideline, the lower limit of the hot working temperature of a material is 60% its melting temperature (on an absolute temperature scale).
 	// http://en.wikipedia.org/wiki/Hot_working
 	public int getMinWorkableTemperature() {
+		if (this == TITANIUM) return (int) (meltingpoint * 0.9f);
+		
 		return (int) (meltingpoint * 0.6f);
 	}
 	

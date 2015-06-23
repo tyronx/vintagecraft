@@ -74,6 +74,7 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 			return true;
 		}
 		
+		
         IBlockState iblockstate = world.getBlockState(centerpos);
         Block block = iblockstate.getBlock();
         

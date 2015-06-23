@@ -49,7 +49,6 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	
 	@Override
     public void update() {
-		//System.out.println(storage[0]);
 		
 		if (utilization == EnumStonePotUtilization.FORGE) {
 			if (burning) {

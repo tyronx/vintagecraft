@@ -20,6 +20,7 @@ public class ModelIngot extends ModelBox {
     private TexturedQuad[] quadList;
 	
 	public ModelIngot(ModelRenderer renderer, int textureOffsetX, int textureOffsetY) {
+		//                                               x1  y1  z1   wdt hgt detph scalechange 
 		super(renderer, textureOffsetX, textureOffsetY, 0.5F, 0, 0.5F, 15, 4, 7, 0);
 		
 		float originX = .5f;

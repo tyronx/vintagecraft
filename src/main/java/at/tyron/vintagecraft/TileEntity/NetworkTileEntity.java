@@ -17,15 +17,21 @@ public abstract class NetworkTileEntity extends TileEntity {
 	public EntityPlayer entityplayer;
 	protected int broadcastRange = 256;
 	
-	/**
-	 * Create an initialization packet to be sent when the block loads.
-	 * @param nbt
-	 */
-	public abstract void handleInitPacket(NBTTagCompound nbt);
-	public void handleDataPacket(NBTTagCompound nbt){}
-	public void createDataNBT(NBTTagCompound nbt){}
-	public abstract void createInitNBT(NBTTagCompound nbt);
-
+	public void handleDataPacket(NBTTagCompound nbt) {
+		readFromNBT(nbt);
+	}
+	public void createDataNBT(NBTTagCompound nbt) {
+		writeToNBT(nbt);
+	}	
+	public void createInitNBT(NBTTagCompound nbt) {
+		writeToNBT(nbt);
+	}
+	
+	public void handleInitPacket(NBTTagCompound nbt) {
+		readFromNBT(nbt);
+	}
+	
+	
 	/*public DataBlockPacket createDataPacket() {
 		return this.createDataPacket(createDataNBT());
 	}

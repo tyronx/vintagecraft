@@ -1,56 +1,66 @@
 package at.tyron.vintagecraft.Block.Mechanics;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IMechanicalNetworkDevice;
+import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
+import at.tyron.vintagecraft.TileEntity.TEAnvil;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 
-public class BlockAxle extends BlockContainerVC implements IMechanicalNetworkDevice {
+public class BlockAxle extends BlockMechanicalVC {
 	
-	protected BlockAxle(Material materialIn) {
-		super(materialIn);
-		// TODO Auto-generated constructor stub
+	public BlockAxle() {
+		super(Material.wood);
+		//setCreativeTab(VintageCraft.mechanicsTab);
 	}
 
-	@Override
-	public String getSubType(ItemStack stack) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		// TODO Auto-generated method stub
-		return null;
+		return new TEAxle();
 	}
 
+
+	
 	@Override
-	public boolean canAcceptPowerAt(EnumFacing facing) {
-		// TODO Auto-generated method stub
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
+		//System.out.println("refresh");
+		TEAxle te = (TEAxle)worldIn.getTileEntity(pos);
+		if (te != null) {
+			//te.refreshModel = true;
+			//te.orientation = side;
+			System.out.println("network: " + te.getNetwork(te.orientation));
+		}
+		
 		return false;
+		
 	}
+	
+	
 
-	@Override
-	public boolean canSupplyPowerAt(EnumFacing facing) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
+	
 	@Override
-	public MechanicalNetwork getNetwork(EnumFacing facing) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BlockPos getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+		
+		TEAxle te = (TEAxle)worldIn.getTileEntity(pos);
+		if (te != null) {
+			te.recheckNeighbours();
+		}
 	}
 
 }
