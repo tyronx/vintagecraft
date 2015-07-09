@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -54,7 +55,7 @@ public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider
 	
 	@Override
 	public String getUnlocalizedName(ItemStack itemstack) {
-		return "item.anvil." + getMetal(itemstack).getName().toLowerCase();
+		return "item.anvil." + getMetal(itemstack).getName().toLowerCase(Locale.ROOT);
 	}
 	
 
@@ -78,6 +79,6 @@ public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return getMetal(stack).getName().toLowerCase();
+		return getMetal(stack).getName().toLowerCase(Locale.ROOT);
 	}
 }

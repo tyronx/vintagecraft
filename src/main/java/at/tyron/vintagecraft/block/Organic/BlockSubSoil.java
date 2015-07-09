@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Block.Organic;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockRock;
@@ -113,8 +114,8 @@ public class BlockSubSoil extends BlockRock implements IBlockSoil {
     	}
     	
      	String[] type = ((SoilRockClassEntry)state.getValue(ROCKTYPE)).getName().split("-");
-     	EnumOrganicLayer organiclayer = EnumOrganicLayer.valueOf(type[0].toUpperCase());
-     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
+     	EnumOrganicLayer organiclayer = EnumOrganicLayer.valueOf(type[0].toUpperCase(Locale.ROOT));
+     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
 
 		return organiclayer;
 	}
@@ -126,7 +127,7 @@ public class BlockSubSoil extends BlockRock implements IBlockSoil {
     	if (!BlocksVC.subsoil.containsBlock(state.getBlock())) return;
     	
      	String[] type = ((SoilRockClassEntry)state.getValue(ROCKTYPE)).getName().split("-");
-     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
+     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
      	
 		world.setBlockState(pos, BlocksVC.subsoil.getBlockStateFor(layer.getStateName() + "-" + rocktype.getStateName()));
 	}

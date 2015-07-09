@@ -91,6 +91,7 @@ import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanical;
+import at.tyron.vintagecraft.Item.Mechanics.ItemWindmillRotor;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEBloomery;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -384,7 +385,7 @@ public class BlocksVC {
 
 		axle = new BlockAxle().registerSingleState("axle", ItemMechanical.class);
 		angledgearbox = new BlockAngledGearBox().registerSingleState("angledgearbox", ItemMechanical.class);
-		windmillrotor = new BlockWindMillRotor().registerSingleState("windmillrotor", ItemMechanical.class);
+		windmillrotor = new BlockWindMillRotor().registerSingleState("windmillrotor", ItemWindmillRotor.class);
 		//forge = new RockClass("forge", BlockStonePot.class, ItemRockTyped.class, 2.2f, Block.soundTypeStone, "pickaxe", 0);
 		//forge.init();
 		

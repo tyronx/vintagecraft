@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.BlockClass;
 
+import java.util.Locale;
+
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -90,7 +92,7 @@ public class CoatingClass extends BaseBlockClass {
 		
 		for (EnumFacing facing : EnumFacing.values()) {
 			if (world.isSideSolid(pos.offset(facing), facing.getOpposite())) {
-				facings += facing.getName().substring(0, 1).toLowerCase();
+				facings += facing.getName().substring(0, 1).toLowerCase(Locale.ROOT);
 			}
 		}
 		

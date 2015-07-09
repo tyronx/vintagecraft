@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import org.lwjgl.opengl.GL11;
 
@@ -266,7 +267,7 @@ public class GuiAnvil extends GuiContainer {
 				j++;
 			}
 			
-			String name = recipe.name().substring(0, 1) + recipe.name().toLowerCase().substring(1).replace('_', ' ');
+			String name = recipe.name().substring(0, 1) + recipe.name().toLowerCase(Locale.ROOT).substring(1).replace('_', ' ');
 			if (recipe.ingots > 0) {
 				name += "\n" + recipe.ingots + " Ingots";
 			}
@@ -383,7 +384,7 @@ public class GuiAnvil extends GuiContainer {
     
 	String getRecipeText(EnumAnvilRecipe recipe) {
 		String name;
-		name = recipe.name().substring(0, 1) + recipe.name().toLowerCase().substring(1).replace('_', ' ');
+		name = recipe.name().substring(0, 1) + recipe.name().toLowerCase(Locale.ROOT).substring(1).replace('_', ' ');
 		if (recipe.ingots > 0) {
 			name += "\n" + recipe.ingots + " Ingots";
 		}

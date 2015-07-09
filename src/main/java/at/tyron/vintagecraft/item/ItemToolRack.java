@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
@@ -47,7 +48,7 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add(StatCollector.translateToLocal("tile.planks." + getTreeType(itemstack).getStateName().toLowerCase() + ".name"));
+		tooltip.add(StatCollector.translateToLocal("tile.planks." + getTreeType(itemstack).getStateName().toLowerCase(Locale.ROOT) + ".name"));
 	}
 	
 	@Override
@@ -86,7 +87,7 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return getTreeType(stack).name().toLowerCase();
+		return getTreeType(stack).name().toLowerCase(Locale.ROOT);
 	}
 	
 	

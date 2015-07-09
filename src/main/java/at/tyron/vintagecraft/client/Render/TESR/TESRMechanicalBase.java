@@ -24,25 +24,9 @@ public abstract class TESRMechanicalBase extends TESRBase {
 			modelcagegear.initComponents();
 		}
 		
-		/*
-    NORTH(2, 3, 2, "north", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.Z, new Vec3i(0, 0, -1)),
-    SOUTH(3, 2, 0, "south", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.Z, new Vec3i(0, 0, 1)),
-    WEST(4, 5, 1, "west", EnumFacing.AxisDirection.NEGATIVE, EnumFacing.Axis.X, new Vec3i(-1, 0, 0)),
-    EAST(5, 4, 3, "east", EnumFacing.AxisDirection.POSITIVE, EnumFacing.Axis.X, new Vec3i(1, 0, 0));
-    /
-     // Get the index of this horizontal facing (0-3). The order is S-W-N-E
-     
-    public int getHorizontalIndex()
-    {
-        return this.horizontalIndex;
-    }
-
-		 */
-		
-		
 		EnumFacing facing = EnumFacing.NORTH;
-		if (te.gearOrientations[0] != null) {
-			facing = te.gearOrientations[0];
+		if (te.orientation != null) {
+			facing = te.orientation;
 		}
 	
 		// 0 = S, 1 = W, 2 = N, 3 = E
@@ -52,14 +36,14 @@ public abstract class TESRMechanicalBase extends TESRBase {
 		
 		float pegGearxAxis = (pegGearFacing == 3 || pegGearFacing == 1) ? 1f : 0;
 		float pegGearzAxis = (pegGearFacing == 2 || pegGearFacing == 0) ? 1f : 0;
-		int pegDir = (pegGearFacing == 1 || pegGearFacing == 2) ? -1 : 1;
+		//int pegDir = (pegGearFacing == 1 || pegGearFacing == 2) ? -1 : 1;
 		
 		float pegGearFacingAngle = -pegGearFacing * 90f;
 		
 		GL11.glPushMatrix();
 		
 			GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(pegDir * angle, pegGearxAxis, 0f, pegGearzAxis);
+			GL11.glRotatef(te.getAngle(), pegGearxAxis, 0f, pegGearzAxis);
 			GL11.glRotatef(pegGearFacingAngle, 0f, 1f, 0f);
 			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);
 			renderPegGear();
@@ -71,20 +55,22 @@ public abstract class TESRMechanicalBase extends TESRBase {
 		
 		// Cage Gear
 		//System.out.println(te.gearOrientations[1]);
-		if (te.gearOrientations[1] == null) return;
+		if (te.cagegearOrientation == null) return;
 		
-		int cageGearFacing = (te.gearOrientations[1].getHorizontalIndex() + 2) % 4;
+		int cageGearFacing = (te.cagegearOrientation.getHorizontalIndex() + 2) % 4;
 		float cageGearxAxis = (cageGearFacing == 3 || cageGearFacing == 1) ? 1f : 0;
 		float cageGearzAxis = (cageGearFacing == 2 || cageGearFacing == 0) ? 1f : 0;
 
-		int cageDir = (cageGearFacing == 3 || cageGearFacing == 2) ? -1 : 1;
+		int cageDir = (te.clockwise && te.cagegearOrientation == EnumFacing.NORTH) ? -1 : 1;
 		float cageGearFacingAngle = -cageGearFacing * 90f;
+		
+		//System.out.println(te.clockwise);
 		
 		
 		GL11.glPushMatrix();
 		
 			GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(cageDir * angle - 18, cageGearxAxis, 0f, cageGearzAxis);
+			GL11.glRotatef(cageDir * te.getAngle() - 18, cageGearxAxis, 0f, cageGearzAxis);
 			GL11.glRotatef(cageGearFacingAngle, 0f, 1f, 0f);
 			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);
 			

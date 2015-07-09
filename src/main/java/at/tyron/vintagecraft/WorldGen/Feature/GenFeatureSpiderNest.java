@@ -4,6 +4,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
+import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,7 +28,7 @@ public class GenFeatureSpiderNest {
 	
 	public static BlockPos toSurface(World world, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
-		while (block instanceof BlockLeavesVC || block instanceof BlockTallGrass || block == Blocks.air) {
+		while (block instanceof BlockVineVC || block instanceof BlockLeavesVC || block instanceof BlockTallGrass || block == Blocks.air ) {
 			pos = pos.down();
 			block = world.getBlockState(pos).getBlock();
 			if (pos.getY() == 0) return null;
@@ -41,7 +42,7 @@ public class GenFeatureSpiderNest {
 		int quantityCobWebs = 20 + (random.nextInt(80) + random.nextInt(80))/2;
 		int quantityEggs = Math.max(1, (random.nextInt(4) + random.nextInt(4))/2);
 		
-		int radius = 8 + (random.nextInt(30) + random.nextInt(30))/2;
+		int radius = 15 + (random.nextInt(40) + random.nextInt(40))/2;
 		
 		center = toSurface(world, center);
 		if (center == null || world.getBlockState(center.down()).getBlock().getMaterial() == Material.water) return;
@@ -50,9 +51,9 @@ public class GenFeatureSpiderNest {
 		BlockPos pos;
 		while (quantityCobWebs > 0 && tries-- > 0) {
 			pos = center.add(
-				2*(random.nextInt(radius) + random.nextInt(radius)) - radius, 
+				(random.nextInt(radius) + random.nextInt(radius)) - radius, 
 				0, 
-				2*(random.nextInt(radius) + random.nextInt(radius)) - radius
+				(random.nextInt(radius) + random.nextInt(radius)) - radius
 			);
 
 			pos = toSurface(world, pos);
@@ -83,7 +84,7 @@ public class GenFeatureSpiderNest {
 		while (quantityEggs > 0 && tries-- > 0) {
 			pos = center.add(random.nextInt(radius) - radius/2, 0, random.nextInt(radius) - radius/2);
 			pos = toSurface(world, pos);
-			if (pos == null || !world.isAirBlock(pos)) continue;
+			if (pos == null || !world.isAirBlock(pos) || world.getBlockState(pos.down()).getBlock().getMaterial() == Material.water) continue;
 
 			
 			quantityCobWebs = 25 + random.nextInt(20) + random.nextInt(20);

@@ -28,9 +28,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.CreativeTabsVC;
@@ -39,6 +42,7 @@ import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Client.Render.RenderCloudsVC;
 import at.tyron.vintagecraft.Client.Render.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.*;
@@ -87,16 +91,18 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {
-		VCraftWorld.loadGrassColors(resourceManager);
+		VCraftWorld.loadTextures(resourceManager);
 	}
+	
 	
 	
 	
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		MinecraftForge.EVENT_BUS.register(this);
 		
+		MinecraftForge.EVENT_BUS.register(this);
+		FMLCommonHandler.instance().bus().register(this);
 		
 		
 		if (VintageCraftConfig.rearrangeCreativeTabs) {

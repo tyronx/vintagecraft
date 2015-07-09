@@ -86,8 +86,6 @@ public class CommonProxy implements IGuiHandler {
 
 	public void init(FMLInitializationEvent event) {
 		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", 3, VintageCraft.instance, 64, 1, true);  
-		EntityList.addMapping(EntityStone.class, "stonethrown", 3);
-		
 		EntityRegistry.registerModEntity(EntityMobHorse.class, "mobhorse", 4, VintageCraft.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityForestSpider.class, "VCForestSpider", 5, VintageCraft.instance, 64, 1, true);
 	}

@@ -49,7 +49,7 @@ public class MapGenFlora {
 		chunkZ *= 16;
 	
 		int[] forestLayer = forestGen.getInts(chunkX, chunkZ, 16, 16);
-		int[] age = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
+		int[] age = ageLayer.getInts(chunkX - 1, chunkZ - 1, 18, 18);
 		
 		VCraftWorld.instance.setChunkNBT(chunkX/16, chunkZ/16, "forest", forestLayer);
 		
@@ -103,13 +103,14 @@ public class MapGenFlora {
 		
 		
 		/*** 3. Spider Nests ***/
-		BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + 8, 0, chunkZ + 8));
-		int middleIndex = 8 + 8 * 16;
+		BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + 12 - random.nextInt(9), 0, chunkZ + 12 - random.nextInt(9)));
+		
+		int middleIndex = (blockpos.getX() - chunkX) + (blockpos.getZ() - chunkZ) * 16;
 		int climate[] = VCraftWorld.instance.getClimate(blockpos);
 		float forestdensity = EnumTree.getForestDensity(forestLayer[middleIndex], climate[2], climate[0]);
 		
 		boolean suitableArea =
-			forestdensity > 0.7 && 
+			forestdensity > 0.8 && 
 			climate[0] >= 5 && 
 			climate[0] < 20 && 
 			climate[2] > 95 &&
@@ -119,7 +120,8 @@ public class MapGenFlora {
 		//System.out.println(age[middleIndex] + " && " +  forestdensity + " && " + climate[0] + " && " + climate[2] + " && " + blockpos.getY()  + "  = " + suitableArea );
 			
 		if (suitableArea && random.nextFloat() < 0.03f)  {
-			GenFeatureSpiderNest.generate(random, world, blockpos.add(5 - random.nextInt(11), 0, 5 - random.nextInt(11)));
+			//System.out.println("can spawn @ " + blockpos + " because forestdens="+forestdensity+" / forest= " + forestLayer[middleIndex]);
+			GenFeatureSpiderNest.generate(random, world, blockpos);
 		}
 		
 

@@ -24,7 +24,7 @@ public class BlockAngledGearBox extends BlockMechanicalVC {
 
 	public BlockAngledGearBox() {
 		super(Material.wood);
-		//setCreativeTab(VintageCraft.mechanicsTab);
+	//	setCreativeTab(VintageCraft.mechanicsTab);
 	}
 
 
@@ -38,14 +38,11 @@ public class BlockAngledGearBox extends BlockMechanicalVC {
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-		//System.out.println("refresh");
 		TEAngledGearBox te = (TEAngledGearBox)worldIn.getTileEntity(pos);
 		if (te != null) {
-			//te.refreshModel = true;
-			System.out.println("network: " + te.getNetwork(te.orientation));
-			//te.input = side;
-			//te.angle+=5;
+			//System.out.println("network: " + te.getNetwork(te.orientation));
 			
+			System.out.println(te.orientation + " / " + (te.clockwise ? "clockwise" : "counter-clockwise"));
 		}
 		
 		return false;

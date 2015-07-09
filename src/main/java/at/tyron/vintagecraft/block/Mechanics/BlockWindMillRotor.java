@@ -16,10 +16,9 @@ import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 
 public class BlockWindMillRotor extends BlockMechanicalVC {
 
-
 	public BlockWindMillRotor() {
 		super(Material.wood);
-//		setCreativeTab(VintageCraft.mechanicsTab);
+	//	setCreativeTab(VintageCraft.mechanicsTab);
 	}
 
 
@@ -42,9 +41,9 @@ public class BlockWindMillRotor extends BlockMechanicalVC {
 		//System.out.println("refresh");
 		TEWindmillRotor te = (TEWindmillRotor)worldIn.getTileEntity(pos);
 		if (te != null) {
-			//te.refreshModel = true;
-			System.out.println("network: " + te.getNetwork(te.orientation));
-			//te.orientation = side;
+			//System.out.println("network: " + te.getNetwork(te.getOrientation()));
+			
+			System.out.println(te.getOrientation() + " / " + (te.clockwise ? "clockwise" : "counter-clockwise"));
 		}
 		
 		return false;

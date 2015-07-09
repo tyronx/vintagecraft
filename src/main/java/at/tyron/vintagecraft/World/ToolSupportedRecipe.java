@@ -125,7 +125,7 @@ public class ToolSupportedRecipe implements IRecipe {
                     	tool = ((ItemToolVC)itemstack.getItem()).tooltype;
                     }
                     
-                    if (tool != null && itemstack1.getItem() instanceof ItemToolVC && ((ItemToolVC)itemstack.getItem()).tooltype == tool) {
+                    if (tool != null && itemstack1.getItem() instanceof ItemToolVC && ((ItemToolVC)itemstack1.getItem()).tooltype == tool) {
                     	
                     } else {
 

@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -282,7 +283,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 	
 	
@@ -291,7 +292,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
     	String[] names = new String[values().length];
     	
     	for (int i = 0; i < values().length; i++) {
-    		names[i] = values()[i].name().toLowerCase();
+    		names[i] = values()[i].name().toLowerCase(Locale.ROOT);
     	}
     	return names;
     }

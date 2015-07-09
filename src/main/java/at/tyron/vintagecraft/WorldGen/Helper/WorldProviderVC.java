@@ -1,12 +1,17 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
+import at.tyron.vintagecraft.Client.Render.RenderCloudsVC;
+import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraftforge.client.IRenderHandler;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldProviderVC extends WorldProvider {
 	@Override
@@ -22,6 +27,26 @@ public class WorldProviderVC extends WorldProvider {
 	public float getCloudHeight() {
 		return 256.0F;
 	}
+	
+	@SideOnly(Side.CLIENT)
+	IRenderHandler skyRenderer;
+	
+    @SideOnly(Side.CLIENT)
+    public net.minecraftforge.client.IRenderHandler getSkyRenderer() {
+    	if (skyRenderer == null) skyRenderer  = new RenderSkyVC();
+        return this.skyRenderer;
+    }
+
+	@SideOnly(Side.CLIENT)
+	IRenderHandler cloudRenderer;
+
+	@SideOnly(Side.CLIENT)
+    public IRenderHandler getCloudRenderer() {
+    	if (cloudRenderer == null) cloudRenderer = new RenderCloudsVC();
+    	return cloudRenderer;
+    }
+    
+	
 	
 	
 	@Override

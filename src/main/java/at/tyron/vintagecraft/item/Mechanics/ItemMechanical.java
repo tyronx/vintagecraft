@@ -15,7 +15,8 @@ import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
 
 public class ItemMechanical extends ItemBlockVC {
-
+	boolean placeWithOppositeOrientation = false;
+	
 	public ItemMechanical(Block block) {
 		super(block);
 	}
@@ -31,6 +32,8 @@ public class ItemMechanical extends ItemBlockVC {
             int i = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
             EnumFacing facing = EnumFacing.getHorizontal(i);
             
+            if (placeWithOppositeOrientation) facing = facing.getOpposite();
+            
             TileEntity te = world.getTileEntity(pos);
             if (te instanceof IMechanicalPowerDevice) {
             	((IMechanicalPowerDevice)te).onDevicePlaced(world, pos, facing);
@@ -40,4 +43,7 @@ public class ItemMechanical extends ItemBlockVC {
 
         return true;
     }
+    
+    
+   
 }

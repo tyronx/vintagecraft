@@ -68,6 +68,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -79,6 +80,7 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.DifficultyInstance;
@@ -201,6 +203,9 @@ public class VintageCraft {
     }
     
     
+
+    
+    
 	
     	
 	@EventHandler
@@ -236,7 +241,7 @@ public class VintageCraft {
 		worlddata = (VCraftWorldSavedData) world.getPerWorldStorage().loadData(VCraftWorldSavedData.class, "vcraft");
 		
 		if (worlddata == null) {
-			worlddata = new VCraftWorldSavedData("vcraft");
+			worlddata = new VCraftWorldSavedData("vcraft", world.rand);
 			world.getPerWorldStorage().setData("vcraft", worlddata);
 		}
 		return worlddata;
@@ -275,13 +280,39 @@ public class VintageCraft {
 			VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, event.world.getDifficulty()));
         	VintageCraftConfig.saveConfig();
 		}
+		
+		
+		int moonphase = event.world.provider.getMoonPhase(worldtime);
+		boolean cannotSleeptonight =
+			moonphase == 0 ||
+			(event.world.getDifficulty() == EnumDifficulty.HARD && (moonphase == 7 || moonphase == 1))
+		;
+		
+		
+		if (cannotSleeptonight) {
+			 for (Object obj : event.world.playerEntities) {
+				 EntityPlayer player = (EntityPlayer)obj;		 
+				 if (player.isPlayerSleeping() && player.sleepTimer > 80) {
+					player.wakeUpPlayer(true, true, true);
+					player.addChatMessage(new ChatComponentText("You tried to fall sleep, but something is keeping you awake tonight."));
+				 }
+				 
+			 }			
+		}
+		
 	}
+	
 	
 	
 	
 	public long getWorldTime(World world) {
 		return getOrCreateWorldData(world).getWorldTime();
 	}
+	
+	public int getNightSkyType(World world) {
+		return getOrCreateWorldData(world).getNightSkyType();
+	}
+	
 	public long daysPassed(World worldObj) {
 		return getWorldTime(worldObj) / 24000;
 	}

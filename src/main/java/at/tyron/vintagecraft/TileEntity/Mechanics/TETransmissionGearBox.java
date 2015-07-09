@@ -117,13 +117,6 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 
 
 
-	@Override
-	public float getMaxSpeed(MechanicalNetwork network) {
-		if (getEnergyConsumingNetwork() == network) {
-			return getEnergyProducingNetwork().getMaxSpeed();
-		}
-		return getEnergyConsumingNetwork().getMaxSpeed();
-	}
 
 
 	@Override
@@ -178,9 +171,10 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 
 	@Override
 	public EnumFacing getOutputSideForNetworkPropagation() {
-		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 

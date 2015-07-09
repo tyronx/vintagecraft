@@ -25,10 +25,6 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 
 
 	
-	// 1 for clockwise
-	// 0 for no torque
-	// -1 for counter-clockwise
-	public abstract int getTorqueDirection(MechanicalNetwork network);
 
 	
 }

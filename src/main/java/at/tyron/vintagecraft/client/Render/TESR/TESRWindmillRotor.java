@@ -9,6 +9,7 @@ import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
 public class TESRWindmillRotor extends TESRBase {
@@ -19,7 +20,7 @@ public class TESRWindmillRotor extends TESRBase {
 		if (te.getWorld() == null) return;
 		if (te.refreshModel) {
 			te.refreshModel = false;
-			System.out.println("refreshed " + te.orientation);
+			System.out.println("refreshed " + te.getOrientation());
 			rotor.initComponents();
 		}
 		
@@ -32,8 +33,12 @@ public class TESRWindmillRotor extends TESRBase {
 		
 		//te.angle = te.angle % 360f;
 		
-		int facing = (te.orientation.getHorizontalIndex() + 2) % 4;
+		// 0 = S, 1 = W, 2 = N, 3 = E
+		// =>
+		// 0 = S, 3 = W, 2 = N, 1 = E
+		int facing = te.getOrientation().getHorizontalIndex();
 		float facingAngle = -facing * 90f;
+
 
 		float xAxis = (facing == 3 || facing == 1) ? 1f : 0;
 		float zAxis = (facing == 2 || facing == 0) ? 1f : 0;

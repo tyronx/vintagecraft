@@ -11,20 +11,20 @@ import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.WindGen;
 
 public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
-	public EnumFacing orientation = EnumFacing.NORTH;
-	float maxSpeed = 50;
-	int availableTorque = 20;
+	EnumFacing orientation = EnumFacing.NORTH;
+	float windmillSize = 1f;
 	public boolean refreshModel;
 	
+	
+	public EnumFacing getOrientation() {
+		return orientation;
+	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
 		orientation = EnumFacing.values()[compound.getInteger("orientation")];
-		
-		maxSpeed = compound.getFloat("maxSpeed");
-		availableTorque = compound.getInteger("availableTorque");
 	}
 	
 	
@@ -33,40 +33,70 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		super.writeToNBT(compound);
 		
 		compound.setInteger("orientation", orientation.ordinal());
-		compound.setFloat("maxSpeed", maxSpeed);
-		compound.setInteger("availableTorque", availableTorque);
 	}
 
 	
 	@Override
 	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
-		this.orientation = facing.getOpposite();
+		this.orientation = facing;
 		super.onDevicePlaced(world, pos, facing);
 	}
 
 	@Override
 	public boolean hasConnectorAt(EnumFacing facing) {
-		return facing == orientation;
+		return facing == orientation.getOpposite();
 	}
 
-	@Override
-	public float getMaxSpeed(MechanicalNetwork network) {
-		WindGen widngen = WindGen.getWindGenForWorld(worldObj);
-		double wind = widngen == null ? 0 : WindGen.getWindGenForWorld(worldObj).getWindAt(pos);
+	// Winmill Requires a mininum amount of wind to rotate, so this method returns 0 for low wind
+	float getWindRotatingPower() {
+		WindGen windgen = WindGen.getWindGenForWorld(worldObj);
+		float wind = (float) (windgen == null ? 0 : windgen.getWindAt(pos));
 		
-		return (float) Math.max(0, wind * wind - 0.04f) * 48;
+		//return (wind * wind - 0.05f) * 48 * Math.signum(wind);
+		return 10f;
 	}
+	
+	
+	// Should return:
+	// torque according to the wind speed. High wind = large torque   | may be negative it the mill turns the other direction
+	// 0 torque if network speed is higher than getWindRotatingPower() or turns the other direction
 
 	@Override
 	public float getTorque(MechanicalNetwork network) {
-		if (network.getSpeed() > maxSpeed) return 0;
-		return availableTorque;
+		float rotatingpower = getWindRotatingPower();
+		//System.out.println("rot power = " + rotatingpower);
+		int dir1 = (int)Math.signum(rotatingpower);
+		int dir2 = (int)Math.signum(network.getSpeed());
+		
+		if (dir1 != dir2 && dir1 != 0 && dir2 != 0) {
+			return 0;
+		}
+		
+		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * windmillSize))  return 0;
+		
+		//System.out.println("foobar " + network.getSpeed() + " / " + (rotatingpower * windmillSize));
+		
+		return rotatingpower * windmillSize;
 	}
 
+	
+	// If the network runs at higher speed or the other direction than what the rotor creates, it will act as a resistor.
 	@Override
 	public float getResistance(MechanicalNetwork network) {
-		// If the network runs at higher speed than what the rotor creates, it will act as a resistor.
-		return Math.max(0, 2 * (network.getSpeed() - maxSpeed));
+		float rotatingpower = getWindRotatingPower();
+		
+		int dir1 = (int)Math.signum(rotatingpower);
+		int dir2 = (int)Math.signum(network.getSpeed());
+		
+		if (dir1 != dir2 && dir1 != 0 && dir2 != 0) {
+			return Math.abs(rotatingpower * windmillSize);
+		}
+		
+		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * windmillSize)) {
+			return Math.abs(network.getSpeed()) - Math.abs(rotatingpower * windmillSize);
+		}
+		
+		return 0;
 	}
 
 	@Override
@@ -102,13 +132,6 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	}
 
 
-	@Override
-	public int getTorqueDirection(MechanicalNetwork network) {
-		float speed = getMaxSpeed(network);
-		if (speed > 0) return 1;
-		if (speed < 0) return -1;
-		return 0;
-	}
 
 
 

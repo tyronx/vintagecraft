@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.Block.BlockVC;
@@ -80,7 +81,7 @@ public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {
 
 	@Override
     public String getName() {
-        return name().toLowerCase();
+        return name().toLowerCase(Locale.ROOT);
     }
 
 	@Override

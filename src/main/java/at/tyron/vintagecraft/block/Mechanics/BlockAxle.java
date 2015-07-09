@@ -24,7 +24,7 @@ public class BlockAxle extends BlockMechanicalVC {
 	
 	public BlockAxle() {
 		super(Material.wood);
-		//setCreativeTab(VintageCraft.mechanicsTab);
+//		setCreativeTab(VintageCraft.mechanicsTab);
 	}
 
 
@@ -42,7 +42,8 @@ public class BlockAxle extends BlockMechanicalVC {
 		if (te != null) {
 			//te.refreshModel = true;
 			//te.orientation = side;
-			System.out.println("network: " + te.getNetwork(te.orientation));
+			//System.out.println("network: " + te.getNetwork(te.orientation));
+			System.out.println(te.orientation + " / " + (te.clockwise ? "clockwise" : "counter-clockwise"));
 		}
 		
 		return false;

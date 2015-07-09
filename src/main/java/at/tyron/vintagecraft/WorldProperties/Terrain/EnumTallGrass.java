@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
+import java.util.Locale;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -55,7 +56,7 @@ public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 	
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	@Override

@@ -51,7 +51,6 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public BlockAnvilVC() {
 		super(Material.iron);
 		setCreativeTab(VintageCraft.craftedBlocksTab);
-		
 		setDefaultState(blockState.getBaseState().withProperty(METALTYPE, EnumMetal.COPPER).withProperty(FACING, EnumFacing.NORTH));
 	}
 	
@@ -62,7 +61,6 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 		if(teanvil == null) return super.getActualState(state, worldIn, pos);
 		
 		return super.getActualState(state, worldIn, pos).withProperty(METALTYPE, teanvil.getMetal());
-    	
 	}
 	
 	

@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import java.util.Locale;
+
 public enum EnumTool {
 	PICKAXE (0, true, true),
 	AXE (1, true, true),
@@ -30,6 +32,6 @@ public enum EnumTool {
 	}
 	
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 }

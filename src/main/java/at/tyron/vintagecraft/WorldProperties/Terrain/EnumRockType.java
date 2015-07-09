@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockRock;
@@ -240,7 +241,7 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
 	}
 
 	public String getNameUcFirst() {
-		return name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1);
+		return name().toUpperCase(Locale.ROOT).substring(0, 1) + name().toLowerCase(Locale.ROOT).substring(1);
 	}
 
 }

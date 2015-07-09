@@ -52,7 +52,12 @@ public class TEIngotPile extends TENoGUIInventory {
 	public boolean tryTransferIngot(ItemStack stack) {
 		TEIngotPile pile = getTopmostIngotPile();
 		
-		if (stack.getItem() != pile.storage[0].getItem() || ItemIngot.getMetal(stack) != getMetal()) return false;
+		if (stack.getItem() != pile.storage[0].getItem() || 
+			ItemIngot.getMetal(stack) != getMetal() ||
+			!((ItemIngot)stack.getItem()).isPlaceable(stack)
+		) {
+			return false;
+		}
 		
 		if (pile.storage[0].stackSize < ItemIngot.maxpilesize) {
 			pile.storage[0].stackSize++;

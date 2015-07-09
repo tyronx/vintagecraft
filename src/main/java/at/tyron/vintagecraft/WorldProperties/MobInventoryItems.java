@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties;
 
+import java.util.Locale;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Item.ItemArmorVC;
@@ -158,7 +159,7 @@ public class MobInventoryItems {
 	public static int getArmorExtraHealthBoost(ItemStack stack) {
 		if (stack != null && stack.getItem() instanceof ItemArmor) {
 			ArmorMaterial armmat = ((ItemArmor)stack.getItem()).getArmorMaterial();
-			String name = armmat.name().toLowerCase();
+			String name = armmat.name().toLowerCase(Locale.ROOT);
 			
 			if (name.equals("leather")) {
 				return 2;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
@@ -276,7 +277,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 
 	@Override
 	public String getStateName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	@Override
@@ -302,7 +303,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 	
 	

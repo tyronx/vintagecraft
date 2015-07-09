@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.Client.Render.TESR;
 
+import java.util.Locale;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.renderer.Tessellator;
@@ -41,7 +43,7 @@ public class TESRToolRack extends TESRBase {
 			if (facing == EnumFacing.EAST || facing == EnumFacing.WEST) facing = facing.getOpposite();
 			
 			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + te.woodtype.getStateName().toLowerCase() + ".png")); 
+			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + te.woodtype.getStateName().toLowerCase(Locale.ROOT) + ".png")); 
 			GL11.glPushMatrix();
 			GL11.glTranslatef(posX + 0.5f, posY, posZ + 0.5f);
 			GL11.glRotatef((float) (facing.getHorizontalIndex() * 90), 0f, 1f, 0f);

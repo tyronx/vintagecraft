@@ -66,24 +66,6 @@ item.stonepotitem.schist.name=Green Schist Stone Pot
 item.stonepotitem.kimberlite.name=Kimberlite Stone Pot
 item.stonepotitem.slate.name=Slate Stone Pot
 
-tile.rock.chalk.name=Chalk
-tile.rock.gneiss.name=Gneiss
-tile.rock.limestone.name=Limestone
-tile.rock.claystone.name=Claystone
-tile.rock.marble.name=Marble
-tile.rock.granite.name=Granite
-tile.rock.basalt.name=Basalt
-tile.rock.andesite.name=Andesite
-tile.rock.conglomerate.name=Conglomerate
-tile.rock.diorite.name=Diorite
-tile.rock.sandstone.name=Sandstone
-tile.rock.redsandstone.name=Red Sandstone
-tile.rock.quartzite.name=Quartzite
-tile.rock.chert.name=Chert
-tile.rock.gabbro.name=Gabbro
-tile.rock.shale.name=Shale
-tile.rock.schist.name=Green Schist
-tile.rock.slate.name=Slate
 
 item.stone.name=Stone
 stone.name=Stone
@@ -113,6 +95,7 @@ item.ore.platinum.name=Platinum Ore
 item.ore.iridium.name=Iridium Ore
 item.ore.quartz.name=Milky Quartz
 item.ore.quartzcrystal.name=Clear Quartz
+item.ore.sulfur.name=Sulfur
 
 item.ingot.copper.name=Copper Ingot
 item.ingot.tinbronze.name=Tin Bronze Ingot
@@ -461,7 +444,8 @@ tile.planks.poplar.name=Poplar Planks
 tile.planks.larch.name=Larch Planks
 tile.planks.coyotewillow.name=Willow Planks
 tile.planks.weepingwillow.name=Willow Planks
-tile.planks.blackwalnut.name=Black Walnut Planks
+tile.planks.blackwalnut.name=Black Walnut Plank
+tile.planks.kauri.name=Kauri Planks
 
 
 sapling.ash.name=Ash Sapling
@@ -485,7 +469,7 @@ sapling.larch.name=Larch Sapling
 sapling.coyotewillow.name=Coyote Willow Sapling
 sapling.weepingwillow.name=Weeping Willow Sapling
 sapling.blackwalnut.name=Black Walnut Sapling
-
+sapling.kauri.name=Kauri Sapling
 
 leaves.ash.name=Ash Leaves
 leaves.birch.name=Birch Leaves
@@ -508,6 +492,7 @@ leaves.larch.name=Larch Leaves
 leaves.coyotewillow.name=Coyote Willow Leaves
 leaves.weepingwillow.name=Weeping Willow Leaves
 leaves.blackwalnut.name=Black Walnut Leaves
+leaves.kauri.name=Kauri Leaves
 
 fence.ash.name=Ash Fence
 fence.birch.name=Birch Fence
@@ -530,6 +515,7 @@ fence.larch.name=Larch Fence
 fence.weepingwillow.name=Willow Fence
 fence.coyotewillow.name=Willow Fence
 fence.blackwalnut.name=Black Walnut Fence
+fence.kauri.name=Black Kauri Fence
 
 fencegate.ash.name=Ash Fence Gate
 fencegate.birch.name=Birch Fence Gate
@@ -552,6 +538,7 @@ fencegate.larch.name=Larch Fence Gate
 fencegate.weepingwillow.name=Willow Fence Gate
 fencegate.coyotewillow.name=Willow Fence Gate
 fencegate.blackwalnut.name=Black Walnut Fence Gate
+fencegate.kauri.name=Kauri Fence Gate
 
 singleslab.ash.name=Ash Slab
 singleslab.birch.name=Birch Slab
@@ -574,6 +561,7 @@ singleslab.larch.name=Larch Slab
 singleslab.coyotewillow.name=Willow Slab
 singleslab.weepingwillow.name=Willow Slab
 singleslab.blackwalnut.name=Black Walnut Slab
+singleslab.kauri.name=Kauri Slab
 
 leavesbranchy.ash.name=Ash Leaves with Branches
 leavesbranchy.birch.name=Birch Leaves with Branches
@@ -596,6 +584,7 @@ leavesbranchy.larch.name=Larch Leaves with Branches
 leavesbranchy.weepingwillow.name=Weeping Willow Leaves with Branches
 leavesbranchy.coyotewillow.name=Coyote Willow Leaves with Branches
 leavesbranchy.blackwalnut.name=Black Walnut Leaves with Branches
+leavesbranchy.kauri.name=Kauri Leaves with Branches
 
 
 quartzglass.ash.name=Ash Quartzglass
@@ -619,7 +608,7 @@ quartzglass.larch.name=Larch Quartzglass
 quartzglass.coyotewillow.name=Willow Quartzglass
 quartzglass.weepingwillow.name=Willow Quartzglass
 quartzglass.blackwalnut.name=Black Walnut Quartzglass
-
+quartzglass.kauri.name=Kauri Quartzglass
 
 
 stairs.ash.name=Ash Stairs
@@ -643,6 +632,7 @@ stairs.larch.name=Larch Stairs
 stairs.weepingwillow.name=Willow Stairs
 stairs.coyotewillow.name=Willow Stairs
 stairs.blackwalnut.name=Black Walnut Stairs
+stairs.kauri.name=Kauri Stairs
 
 item.fireclay_ball.name=Fire Clay
 item.fireclay_brick_raw.name=Raw Fire Clay Brick

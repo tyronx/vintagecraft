@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Client.Model.ModelAxle;
@@ -30,19 +31,18 @@ public class TESRAxle extends TESRBase {
 		float xAxis = (facing == 3 || facing == 1) ? 1f : 0;
 		float zAxis = (facing == 2 || facing == 0) ? 1f : 0;
 		
-		int cageDir = (facing == 3 || facing == 2) ? 1 : -1;
-		int pegDir = (facing == 1 || facing == 2) ? -1 : 1;
-		
 		float facingAngle = -facing * 90f;
 		
 		float angle = te.getAngle();
+		
+		
 		
 		GL11.glPushMatrix();
 		
 		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/oak.png"));
 		
 			GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(pegDir * angle, xAxis, 0f, zAxis);
+			GL11.glRotatef(angle, xAxis, 0f, zAxis);
 			GL11.glRotatef(facingAngle, 0f, 1f, 0f);
 			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);
 			axle.renderAxle();

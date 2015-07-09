@@ -180,7 +180,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 		*/
 		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
 		
-		if (!entityplayer.isSneaking() || !isPlaceable(itemstack) || isOddlyShaped(itemstack)) return false;
+		if (!entityplayer.isSneaking() || !isPlaceable(itemstack)) return false;
 		
 		boolean ingotPileAtPos = world.getBlockState(pos).getBlock() instanceof BlockIngotPile;
 		

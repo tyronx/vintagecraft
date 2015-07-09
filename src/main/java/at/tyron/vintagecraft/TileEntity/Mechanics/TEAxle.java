@@ -28,9 +28,7 @@ public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanical
 	
 	@Override
 	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
-		orientation = facing;
 		super.onDevicePlaced(world, pos, facing);
-		
 		
 		recheckNeighbours();
 	}
@@ -60,10 +58,15 @@ public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanical
 		boolean oldLeft = connectedLeft;
 		boolean oldRight = connectedRight;
 		
-		connectedLeft = isConnectedAt(orientation);
-		connectedRight = isConnectedAt(orientation.getOpposite());
+		IMechanicalPowerDevice leftdevice = getConnectibleNeighbourDevice(orientation);
+		IMechanicalPowerDevice rightdevice = getConnectibleNeighbourDevice(orientation.getOpposite());
 		
-		if (oldLeft != connectedLeft || oldRight != connectedRight) worldObj.markBlockForUpdate(pos);
+		connectedLeft = leftdevice instanceof TEAxle;
+		connectedRight = rightdevice instanceof TEAxle;
+		
+		if (oldLeft != connectedLeft || oldRight != connectedRight) {
+			worldObj.markBlockForUpdate(pos);
+		}
 	}
 
 

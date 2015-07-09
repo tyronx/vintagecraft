@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
+import java.util.Hashtable;
+
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
@@ -12,20 +14,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 
-// This should be a power relay
-
 public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IMechanicalPowerNetworkRelay {
-	public EnumFacing[] gearOrientations = new EnumFacing[2];
-	public boolean[] direction = new boolean[2];
+	// orientation = peg gear orientation
 	
-	
+	public EnumFacing cagegearOrientation;
 	public boolean refreshModel;
 	
-	public boolean clockWiseOut;
 
 	public TEAngledGearBox() {
-		gearOrientations[0] = null;
-		gearOrientations[1] = null;
+		cagegearOrientation = null;
 	}
 	
 	@Override
@@ -35,7 +32,7 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 		super.onDevicePlaced(world, pos, facing);
 	}
 	
-	public void setDirection(EnumFacing facing, boolean clockwise) {
+	/*public void setDirection(EnumFacing facing, boolean clockwise) {
 		if (facing == gearOrientations[0]) {
 			direction[0] = clockwise;
 			direction[1] = !clockwise;
@@ -43,7 +40,7 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 			direction[1] = clockwise;
 			direction[0] = !clockwise;			
 		}
-	}
+	}*/
 
 	
 	
@@ -51,28 +48,15 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
-		
-		int ori0 = compound.getInteger("gearOrientation0");
-		int ori1 = compound.getInteger("gearOrientation1");
-		
-		if (ori0 >= 0) {
-			gearOrientations[0] = EnumFacing.values()[ori0]; 
-		} else {
-			gearOrientations[0] = null;
-		}
-		if (ori1 >= 0) {
-			gearOrientations[1] = EnumFacing.values()[ori1];
-		} else {
-			gearOrientations[1] = null;
-		}
+		int num = compound.getInteger("cagegearOrientation");
+		cagegearOrientation = num == -1 ? null : EnumFacing.values()[num];
 	}
 	
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		
-		compound.setInteger("gearOrientation0", gearOrientations[0] == null ? -1 : gearOrientations[0].ordinal());
-		compound.setInteger("gearOrientation1", gearOrientations[1] == null ? -1 : gearOrientations[1].ordinal());
+		compound.setInteger("cagegearOrientation", cagegearOrientation == null ? -1 : cagegearOrientation.ordinal());
 	}
 
 
@@ -87,19 +71,19 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 			IMechanicalPowerDevice neighbourdevice = getConnectibleNeighbourDevice(facing);
 			if (neighbourdevice == null) continue;
 			
-			if (gearOrientations[0] == null) {
-				gearOrientations[0] = facing;
+			if (orientation == null) {
+				orientation = facing;
 				
 				continue;
 			}
 			
-			if (gearOrientations[1] == null && gearOrientations[0] != facing) {
-				gearOrientations[1] = facing;
+			if (cagegearOrientation == null && orientation != facing) {
+				cagegearOrientation = facing;
 				continue;
 			}
 		}
 		
-		if (gearOrientations[0] == null) {
+		if (orientation == null) {
 			worldObj.destroyBlock(getPos(), true);
 		}
 		
@@ -109,21 +93,21 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 	
 	
 	public boolean verifyIO(boolean dropIfUnconnected) {
-		IMechanicalPowerDevice first = getConnectibleNeighbourDevice(gearOrientations[0]);
-		IMechanicalPowerDevice second = getConnectibleNeighbourDevice(gearOrientations[1]);
+		IMechanicalPowerDevice first = getConnectibleNeighbourDevice(orientation);
+		IMechanicalPowerDevice second = getConnectibleNeighbourDevice(cagegearOrientation);
 		
 		if (second == null) {
-			gearOrientations[1] = null;
+			cagegearOrientation = null;
 		}
 		if (first == null) {
-			gearOrientations[0] = gearOrientations[1];
-			gearOrientations[1] = null;
+			orientation = cagegearOrientation;
+			cagegearOrientation = null;
 		}
 		
 		
 		
 		
-		if (gearOrientations[0] == null && dropIfUnconnected) {
+		if (orientation == null && dropIfUnconnected) {
 			worldObj.destroyBlock(getPos(), true);
 			return false;
 		}
@@ -141,20 +125,18 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 		
 		return 
 			// Currently no inputs => all sides are ok
-			(gearOrientations[0] == null && gearOrientations[1] == null) ||
+			(orientation == null && cagegearOrientation == null) ||
 			// One input is set => adjacent side is ok 
-			(gearOrientations[1] == null && gearOrientations[0] != facing && gearOrientations[0].getOpposite() != facing) ||
+			(cagegearOrientation == null && orientation != facing && orientation.getOpposite() != facing) ||
 			// Or existing ones
-			gearOrientations[0] == facing || gearOrientations[1] == facing
+			orientation == facing || cagegearOrientation == facing
 		;
 	}
 
 
-	@Override
-	public boolean isConnectedAt(EnumFacing facing) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
+
+	
 
 
 	

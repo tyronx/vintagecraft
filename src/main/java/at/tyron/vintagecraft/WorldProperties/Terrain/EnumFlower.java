@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
@@ -95,7 +96,7 @@ public enum EnumFlower implements IStringSerializable, IStateEnum {
 
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 
 	@Override

@@ -11,10 +11,13 @@ public abstract interface IMechanicalPowerDevice {
 	
 	public void trySetNetwork(MechanicalNetwork network, EnumFacing facing);
 	public MechanicalNetwork getNetwork(EnumFacing facing);
-	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing fromFacing);
-
 	
+	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing fromFacing);
+	public void propagateDirectionToNeightbours(int propagationId, EnumFacing fromFacing, boolean clockwise);
+
 	public boolean isClockWiseDirection(EnumFacing facing);
+	public void setClockWiseDirection(MechanicalNetwork network, boolean clockwise);
+
 
 	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing);
 	public void onDeviceRemoved(World world, BlockPos pos);

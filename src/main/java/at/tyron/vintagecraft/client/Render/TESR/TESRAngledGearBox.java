@@ -13,7 +13,7 @@ public class TESRAngledGearBox extends TESRMechanicalBase {
 		if (te.getWorld() == null) return;
 		
 		//te.angle += te.getNetworkSpeed(null) / 5f;
-		
+		//System.out.println(te.getAngle());
 		renderAngledGearBox(te, te.getAngle(), posX, posY, posZ);		
 	}
 	

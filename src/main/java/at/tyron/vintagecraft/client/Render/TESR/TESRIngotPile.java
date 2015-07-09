@@ -1,6 +1,8 @@
 package at.tyron.vintagecraft.Client.Render.TESR;
 
 
+import java.util.Locale;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +23,7 @@ public class TESRIngotPile extends TESRBase  {
 		Block block = tep.getBlockType();
 		
 		if (tep.getWorld() != null && tep.getStackInSlot(0) != null && block == BlocksVC.ingotPile) {
-			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/ingot/" + tep.getMetal().getName().toLowerCase() + ".png")); //texture
+			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/ingot/" + tep.getMetal().getName().toLowerCase(Locale.ROOT) + ".png")); //texture
 
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float)d + 0.0F, (float)d1 + 0F, (float)d2 + 0.0F);

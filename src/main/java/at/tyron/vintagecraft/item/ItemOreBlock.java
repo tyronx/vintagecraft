@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import java.util.List;
+import java.util.Locale;
 
 import at.tyron.vintagecraft.BlockClass.OreClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -30,10 +31,10 @@ public class ItemOreBlock extends ItemBlock {
 		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getBlockClassfromMeta(((ItemBlock)stack.getItem()).block, stack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
-     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
-     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
+     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
+     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
      	
-		return "item.ore." + oretype.getName().toLowerCase();
+		return "item.ore." + oretype.getName().toLowerCase(Locale.ROOT);
 	}
 
 	@Override
@@ -41,8 +42,8 @@ public class ItemOreBlock extends ItemBlock {
 		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getBlockClassfromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
-     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase());
-     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase());
+     	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
+     	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
 
 		tooltip.add(StatCollector.translateToLocal("tile.rock."+rocktype.getName()+".name"));
 	}

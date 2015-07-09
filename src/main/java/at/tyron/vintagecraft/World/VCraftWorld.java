@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.World;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
@@ -51,11 +52,18 @@ public class VCraftWorld {
 	public int terrainGenHiLevel = 67;
  	
 	public static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
+	public static final ResourceLocation cloudResourceLocation = new ResourceLocation("minecraft:textures/environment/clouds.png");
 	
 	
 	public ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
 	private boolean printingProfiling = false;
+	
 	private static int[] grassBuffer = new int[65536];
+	
+	private static boolean[] cloudBuffer = new boolean[65536];
+	private static int cloudTextureWidth;
+	private static int cloudTextureHeight;
+	
 	private long seed;
 	private HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
 	
@@ -358,12 +366,32 @@ public class VCraftWorld {
     
 	
 	@SideOnly(Side.CLIENT)
-	public static void loadGrassColors(IResourceManager resourceManager) {
+	public static void loadTextures(IResourceManager resourceManager) {
 		try {
 			grassBuffer = TextureUtil.readImageData(resourceManager, grassColormap);
+			
+			
+			BufferedImage bufferedimage = TextureUtil.readBufferedImage(resourceManager.getResource(cloudResourceLocation).getInputStream());
+	        cloudTextureWidth = bufferedimage.getWidth();
+	        cloudTextureHeight = bufferedimage.getHeight();
+	        
+	        int[] cloudBuffer = new int[cloudTextureWidth * cloudTextureHeight];
+	        bufferedimage.getRGB(0, 0, cloudTextureWidth, cloudTextureHeight, cloudBuffer, 0, cloudTextureWidth);
+	        
+	        for (int i = 0; i < cloudBuffer.length; i++) {
+	        	VCraftWorld.cloudBuffer[i] = (cloudBuffer[i] >> 24) > 0;
+	        }
+	        
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// This part of an unfinished feature to optimze cloud rendering (render cloud boxes only where opacity is not 0)
+	@SideOnly(Side.CLIENT)
+	public boolean isCloudAt(int x, int y) {
+		return cloudBuffer[x + cloudTextureWidth * y];
 	}
 	
     @SideOnly(Side.CLIENT)

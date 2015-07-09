@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
@@ -164,8 +165,8 @@ public class ItemsVC {
 	
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (metal.hasAnvil) {
-				VintageCraft.instance.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase());
-				VintageCraft.instance.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase());
+				VintageCraft.instance.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase(Locale.ROOT));
+				VintageCraft.instance.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase(Locale.ROOT));
 			}
 		}
 	}
@@ -182,11 +183,11 @@ public class ItemsVC {
 			for (EnumMetal metal : EnumMetal.values()) {
 				if (!metal.hasArmor) continue;
 				
-				String ucfirstmaterial = metal.getName().substring(0, 1).toUpperCase() + metal.getName().substring(1);
+				String ucfirstmaterial = metal.getName().substring(0, 1).toUpperCase(Locale.ROOT) + metal.getName().substring(1);
 				String unlocalizedname = metal.getName() + "_" + armorpiece;
 				
 				try {
-					ArmorMaterial armormat = (ArmorMaterial)ItemArmorVC.class.getField(metal.getName().toUpperCase()+"VC").get(null);
+					ArmorMaterial armormat = (ArmorMaterial)ItemArmorVC.class.getField(metal.getName().toUpperCase(Locale.ROOT)+"VC").get(null);
 					
 					ItemArmorVC item = ItemArmorVC.class.getDeclaredConstructor(ArmorMaterial.class, String.class, int.class, int.class).newInstance(armormat, metal.getName(), 0, i);
 					item.setUnlocalizedName(unlocalizedname);
@@ -216,7 +217,7 @@ public class ItemsVC {
 			for (String material : materials) {
 				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
 				
-				String ucfirstmaterial = material.substring(0, 1).toUpperCase() + material.substring(1);
+				String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
 				String unlocalizedname = material + "_" + tool.getName();
 				
 				try {
@@ -252,7 +253,7 @@ public class ItemsVC {
 				if (material.equals("stone")) continue;
 				if (!tool.requiresWoodenHandle) continue;
 				
-				String ucfirstmaterial = material.substring(0, 1).toUpperCase() + material.substring(1);
+				String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
 				String unlocalizedname = material + "_" + tool.getName()+"toolhead";
 				
 				try {
@@ -276,8 +277,8 @@ public class ItemsVC {
 	
 	
 	static String ucFirst(String word) {
-		word = word.toLowerCase();
-		return Character.toString(word.charAt(0)).toUpperCase()+word.substring(1);
+		word = word.toLowerCase(Locale.ROOT);
+		return Character.toString(word.charAt(0)).toUpperCase(Locale.ROOT)+word.substring(1);
 	}
 	
 	
@@ -286,9 +287,9 @@ public class ItemsVC {
 		metalplate = new ItemMetalPlate().register("metalplate");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
-			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase());
+			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
 			if (metal.hasArmor) {
-				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase());
+				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase(Locale.ROOT));
 			}
 		}
 	}

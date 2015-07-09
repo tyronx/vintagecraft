@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Block;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -80,7 +81,7 @@ public class BlockSaltpeter extends BlockCoating {
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
     	String facings = ((BlockClassEntry)worldIn.getBlockState(pos).getValue(FACINGS)).getKey().getStateName();
     	
-    	return facings.indexOf(side.getName().substring(1).toLowerCase()) != -1;
+    	return facings.indexOf(side.getName().substring(1).toLowerCase(Locale.ROOT)) != -1;
     }
 	
     

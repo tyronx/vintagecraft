@@ -10,6 +10,7 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
 import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
@@ -50,16 +51,8 @@ public class Recipes {
 	static  List recipes = CraftingManager.getInstance().getRecipeList();
 	
 	static void registerToSorter() {
-		RecipeSorter.register("vintagecraft:slabs", RecipeSlabs.class, Category.SHAPELESS, "after:minecraft:shapeless");
-		RecipeSorter.register("vintagecraft:planks", RecipePlanks.class, Category.SHAPELESS, "after:minecraft:shapeless");
-		RecipeSorter.register("vintagecraft:toolrack", RecipeToolRack.class, Category.SHAPELESS, "after:minecraft:shapeless");
 		RecipeSorter.register("vintagecraft:toolsupportedrecipe", ToolSupportedRecipe.class, Category.SHAPED, "after:minecraft:shaped");
 	}
-	
-	
-	
-	
-	
 	
 	public static void addRecipes() {
 		registerToSorter();
@@ -156,6 +149,10 @@ public class Recipes {
 			ItemStack planksstack = new ItemStack(planks.block);
 			ItemPlanksVC.withTreeType(planksstack, planks);
 			
+			ItemStack slabstack = BlocksVC.singleslab.getItemStackFor(planks.getKey());
+			ItemStack logstack = BlocksVC.log.getItemStackFor(planks.getKey());
+			
+			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.chest), new Object[] { "LLL", "LCL", "LLL", 'L', planksstack, 'C', copperingot});
 			GameRegistry.addShapedRecipe(new ItemStack(Items.boat, 1), new Object[] { "   ", "W W", "WWW", 'W', planks.block});
 
@@ -166,12 +163,23 @@ public class Recipes {
 			ItemStack quartzcrystal = ItemOreVC.getItemStackFor(EnumOreType.QUARTZCRYSTAL, 1);
 			GameRegistry.addShapedRecipe(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
 			
-			
-			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "SW", "  ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
-			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey()), new Object[] { "  ", "SW", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+
+			ItemStack fourplanks = planksstack.copy();
+			fourplanks.stackSize = 4;
+			recipes.add(new ToolSupportedRecipe(fourplanks, new Object[] { "S ", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', logstack}));
+			recipes.add(new ToolSupportedRecipe(fourplanks, new Object[] { "W ", "S ", 'S', ItemsVC.tools.get("copper_saw"), 'W', logstack}));
+
+			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey(), 2), new Object[] { "SW", "  ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			recipes.add(new ToolSupportedRecipe(BlocksVC.singleslab.getItemStackFor(planks.getKey(), 2), new Object[] { "  ", "SW", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 			
 			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 			recipes.add(new ToolSupportedRecipe(BlocksVC.stairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
+			
+			ItemStack toolrack = ((BlockToolRack)BlocksVC.toolrack).getItemStackFor(planks.getKey());
+			recipes.add(new ToolSupportedRecipe(toolrack, new Object[] { "  ", "WS", 'S', ItemsVC.tools.get("copper_saw"), 'W', slabstack}));
+			recipes.add(new ToolSupportedRecipe(toolrack, new Object[] { "  ", "SW", 'S', ItemsVC.tools.get("copper_saw"), 'W', slabstack}));
 			
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_button), new Object[] {"#", '#', planksstack});
@@ -208,8 +216,6 @@ public class Recipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.dryGrass, 'W', Items.stick});
 		
-		recipes.add(new RecipePlanks());
-		recipes.add(new RecipeToolRack());
 		
 		
 		ItemStack lignite = new ItemStack(ItemsVC.ore);

@@ -76,6 +76,7 @@ Import schematic files: https://github.com/tehbeard/LibSchematic
 
 - Dessert Villages: http://minecraftbuildinginc.com/wild-west-building-bundle/
                     http://www.planetminecraft.com/project/desert-building-pack-1150679/
+                    http://i.imgur.com/Atiihx2.png
 
 - Plains Village: http://minecraftbuildinginc.com/edoras-capital-of-rohan/
                   http://www.planetminecraft.com/project/villager-town-makeover/

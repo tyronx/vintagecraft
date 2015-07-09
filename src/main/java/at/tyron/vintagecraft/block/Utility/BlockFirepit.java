@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Block.Utility;
 
+import java.util.Locale;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
@@ -274,7 +275,7 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 
 		@Override
 		public String getName() {
-			return name().toLowerCase();
+			return name().toLowerCase(Locale.ROOT);
 		}
 		
 		public EnumBuildStage getNextStage() {
@@ -299,7 +300,7 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 
 		@Override
 		public String getStateName() {
-			return name().toLowerCase();
+			return name().toLowerCase(Locale.ROOT);
 		}
 
 		@Override

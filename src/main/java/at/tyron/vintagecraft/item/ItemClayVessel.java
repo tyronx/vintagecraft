@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -163,7 +164,7 @@ public class ItemClayVessel extends ItemBlockVC implements IItemSmeltable {
 			EnumAlloy alloy = EnumAlloy.getSuitableAlloy(stacks);
 			
 			if (alloy != null) {
-				tooltip.add("Will create " + alloy.toMetal.getName().toLowerCase() + " if melted");
+				tooltip.add("Will create " + alloy.toMetal.getName().toLowerCase(Locale.ROOT) + " if melted");
 				tooltip.add("Melting Point: " + alloy.meltingpoint + " deg.");
 			}
 			

@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
+import java.util.Locale;
+
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 import at.tyron.vintagecraft.Block.BlockVC;
@@ -37,11 +39,11 @@ public enum EnumFertility implements IStateEnum, IStringSerializable {
 	
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 	@Override
 	public String getStateName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 	
 	

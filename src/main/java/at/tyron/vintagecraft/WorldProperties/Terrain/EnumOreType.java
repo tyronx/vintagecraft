@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
+import java.util.Locale;
+
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
@@ -82,11 +84,11 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	
 	@Override
 	public String getName() {
-		return name().toLowerCase();
+		return name().toLowerCase(Locale.ROOT);
 	}
 	
 	public String getNameUcFirst() {
-		return name().toUpperCase().substring(0, 1) + name().toLowerCase().substring(1);
+		return name().toUpperCase(Locale.ROOT).substring(0, 1) + name().toLowerCase(Locale.ROOT).substring(1);
 	}
 
 	

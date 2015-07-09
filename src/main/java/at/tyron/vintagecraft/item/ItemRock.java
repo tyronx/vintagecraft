@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
@@ -40,9 +41,9 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 		ItemRock item = (ItemRock) itemstack.getItem();
 		
 		if (BlocksVC.rock.containsBlock(item.getBlock())) {
-			return getUnlocalizedName() + "." + getRockType(itemstack).getUnlocalizedName();
+			return "rock." + getRockType(itemstack).getUnlocalizedName();
 		} else {
-			return getUnlocalizedName();
+			return "rock";
 		}
 	}
 	
@@ -65,7 +66,7 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 		if (getBlockClass(item.getBlock()).containsBlock(item.getBlock())) {
 			EnumRockType rocktype = getRockType(itemstack);
 			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + rocktype.getUnlocalizedName() + ".name"));
-			tooltip.add(StatCollector.translateToLocal("rocktype." + rocktype.group.name().toLowerCase() + ".name"));
+			tooltip.add(StatCollector.translateToLocal("rocktype." + rocktype.group.name().toLowerCase(Locale.ROOT) + ".name"));
 		}
 	}
 	

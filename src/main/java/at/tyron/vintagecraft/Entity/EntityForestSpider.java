@@ -3,6 +3,8 @@ package at.tyron.vintagecraft.Entity;
 import java.util.Iterator;
 import java.util.List;
 
+import at.tyron.vintagecraft.Entity.AI.EntityAIGoBackHome;
+
 import com.google.common.base.Predicate;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -10,7 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
-import net.minecraft.entity.ai.EntityAIGoBackHome;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;

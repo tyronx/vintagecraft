@@ -2,6 +2,7 @@ package at.tyron.vintagecraft;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import com.google.gson.Gson;
@@ -213,7 +214,7 @@ public class VintageCraftCommands extends CommandBase {
 			EnumTree tree = EnumTree.SCOTSPINE;
 			
 			if (args.length >= 2) {
-				tree = tree.valueOf(args[1].toUpperCase());
+				tree = tree.valueOf(args[1].toUpperCase(Locale.ROOT));
 			}
 			
 			if (args.length >= 3) {
@@ -307,7 +308,7 @@ public class VintageCraftCommands extends CommandBase {
 				", Rainfall " + climate[2] + 
 				", Fertility " + climate[1] + 
 				", Forest " + forest + 
-				", mod forest " + EnumTree.getForestDensity(forest, climate[2], climate[0]) + 
+				", mod forest " + EnumTree.getForestDensity(255-forest, climate[2], climate[0]) + 
 				", descaled temp " + VCraftWorld.instance.deScaleTemperature(climate[0])
 			));
 			
@@ -323,7 +324,7 @@ public class VintageCraftCommands extends CommandBase {
 		}
 		
 		if (args[0].equals("reloadgrass")) {
-			VCraftWorld.instance.loadGrassColors(Minecraft.getMinecraft().getResourceManager());
+			VCraftWorld.instance.loadTextures(Minecraft.getMinecraft().getResourceManager());
 			sender.addChatMessage(new ChatComponentText("reloaded."));
 		}
 		
