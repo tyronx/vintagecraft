@@ -28,7 +28,7 @@ public class ItemOreBlock extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getBlockClassfromMeta(((ItemBlock)stack.getItem()).block, stack.getItemDamage());
+		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)stack.getItem()).block, stack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
@@ -39,7 +39,7 @@ public class ItemOreBlock extends ItemBlock {
 
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getBlockClassfromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
+		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));

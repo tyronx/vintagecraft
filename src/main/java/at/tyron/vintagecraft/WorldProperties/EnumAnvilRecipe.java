@@ -12,6 +12,7 @@ import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemMetalPlate;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.World.AnvilRecipes;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 
 public enum EnumAnvilRecipe {
@@ -301,7 +302,7 @@ public enum EnumAnvilRecipe {
 		ItemStack output;
 		for (EnumMetal metal : EnumMetal.values()) {
 			ItemStack metalingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
-			ItemStack metalplate = ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			ItemStack metalplate = BlocksVC.metalplate.getItemStackFor(metal);
 	
 			/**** 1. Tool recipes ****/
 			if (metal.hasTools) {
@@ -352,7 +353,7 @@ public enum EnumAnvilRecipe {
 			metalplate.stackSize = 1;
 			AnvilRecipes.registerRecipe(new AnvilRecipes(
 				metalplate.copy(), 
-				((ItemMetalPlate)ItemsVC.metalplate).markOddlyShaped(metalplate.copy(), true), 
+				((ItemMetalPlate)metalplate.getItem()).markOddlyShaped(metalplate.copy(), true), 
 				FIX_PLATE.steps,
 				true
 			));
@@ -412,14 +413,14 @@ public enum EnumAnvilRecipe {
 			case SWORD: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_sword"));
 			case SHEARS: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_" + "shears"));
 			
-			case PLATE: return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			case PLATE: return BlocksVC.metalplate.getItemStackFor(metal); //ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
 			case HELMET: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_helmet"));
 			case CHESTPLATE: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_chestplate"));
 			case LEGGINGS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_leggings"));
 			case BOOTS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_boots"));
 //			case COPPER_WIRE: return new ItemStack(Items.redstone);
 			case FIX_INGOT: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
-			case FIX_PLATE: return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			case FIX_PLATE: return BlocksVC.metalplate.getItemStackFor(metal); //return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
 			default:
 		}
 		

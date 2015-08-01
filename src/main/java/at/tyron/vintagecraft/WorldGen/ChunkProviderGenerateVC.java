@@ -151,7 +151,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
 				primer.setBlockState(x, 128, z, EnumCrustType.TOPSOIL.getBlock(EnumRockType.GRANITE, VCraftWorld.instance.getClimate(new BlockPos(chunkX*16 + x, 128, chunkZ*16+z))));
-				primer.setBlockState(x, 127, z, BlocksVC.rock.getFromKey(EnumRockType.GRANITE).getBlockState());
+				primer.setBlockState(x, 127, z, BlocksVC.rock.getEntryFromKey(EnumRockType.GRANITE).getBlockState());
 			}
 		}
 		
@@ -295,7 +295,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 
 						
 						if (y < Math.abs(age[arrayIndexChunk]) / 10) {
-							primer.setBlockState(x, y, z, BlocksVC.rock.getFromKey(EnumRockType.KIMBERLITE).getBlockState());
+							primer.setBlockState(x, y, z, BlocksVC.rock.getEntryFromKey(EnumRockType.KIMBERLITE).getBlockState());
 						} else {
 							if (toplayers.length > depth) {
 								primer.setBlockState(x, y, z, toplayers[depth]);

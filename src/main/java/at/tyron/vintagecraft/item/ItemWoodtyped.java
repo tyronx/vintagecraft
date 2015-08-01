@@ -45,7 +45,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		Block block = ((ItemBlock)itemstack.getItem()).block;
-		return (EnumTree) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
+		return (EnumTree) getBlockClass(block).getEntryFromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 
 	public static BaseBlockClass getBlockClass(Block block) {

@@ -1,5 +1,8 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
+import com.sun.javafx.css.Combinator;
+
+import at.tyron.vintagecraft.Block.Mechanics.BlockMechanicalVC;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
@@ -12,7 +15,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanicalPowerNetworkRelay {
-	
+	// To which block side the axle is attached to
+	public EnumFacing attachment;
 	
 	public boolean refreshModel;
 	//public int angle = 0;
@@ -27,8 +31,24 @@ public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanical
 	
 	
 	@Override
-	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
-		super.onDevicePlaced(world, pos, facing);
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside) {
+		if (!((BlockMechanicalVC)getBlockType()).suitableGround(world, pos)) {
+			facing = EnumFacing.UP;
+		}
+		
+		super.onDevicePlaced(world, pos, facing, ontoside);
+		
+		
+		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) {
+			for (int i = 0; i <= 3; i++) {
+				if (world.isSideSolid(pos.offset(EnumFacing.getHorizontal(i)), EnumFacing.getHorizontal(i).getOpposite())) {
+					attachment = EnumFacing.getHorizontal(i);
+					break;
+				}
+			}
+		} else {
+			attachment = EnumFacing.DOWN;
+		}
 		
 		recheckNeighbours();
 	}
@@ -40,6 +60,8 @@ public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanical
 
 		connectedLeft = compound.getBoolean("connectedLeft");
 		connectedRight = compound.getBoolean("connectedRight");
+		
+		attachment = EnumFacing.values()[compound.getInteger("attachment")];
 	}
 	
 	
@@ -50,8 +72,20 @@ public class TEAxle extends TEMechanicalNetworkDeviceBase implements IMechanical
 		
 		compound.setBoolean("connectedLeft", connectedLeft);
 		compound.setBoolean("connectedRight", connectedRight);
+		
+		if (attachment != null) {
+			compound.setInteger("attachment", attachment.getIndex());
+		}
 	}
 
+
+	
+	
+	
+	@Override
+	public boolean isConnectedAt(EnumFacing facing) {
+		return (facing == orientation || facing.getOpposite() == orientation) && super.isConnectedAt(facing); 
+	}
 
 
 	public void recheckNeighbours() {

@@ -29,7 +29,7 @@ public class WindGen {
 	
 	private WindGen(long seed, World world) {
 		int octaves = 6;
-		float persistence = 0.5f;
+		float persistence = 0.7f;
 		
 		windGen = new SimplexNoise(octaves, persistence, seed);
 		

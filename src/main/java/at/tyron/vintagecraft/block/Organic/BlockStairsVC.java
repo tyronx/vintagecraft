@@ -88,7 +88,7 @@ public class BlockStairsVC extends BlockStairs implements IMultiblock {
 		IBlockState iblockstate = this.getDefaultState().withProperty(HALF, halftop ? BlockStairs.EnumHalf.TOP : BlockStairs.EnumHalf.BOTTOM);
         iblockstate = iblockstate.withProperty(FACING, EnumFacing.getFront(5 - ((meta >> 1) & 3)));
         
-		return getBlockClass().getBlockClassfromMeta(this, meta & 1).getBlockState(iblockstate);
+		return getBlockClass().getEntryFromMeta(this, meta & 1).getBlockState(iblockstate);
 	}
 
 	

@@ -45,7 +45,7 @@ public class MechanicalNetwork {
 	public static MechanicalNetwork createAndRegisterNetwork(IMechanicalPowerNetworkNode originatorNode) {
 		MechanicalNetwork network = createAndRegisterNetwork();
 		network.register(originatorNode);
-		FMLCommonHandler.instance().bus().register(network);
+		
 
 		return network;
 	}
@@ -54,6 +54,7 @@ public class MechanicalNetwork {
 	public static MechanicalNetwork getOrCreateNetwork(int networkid) {
 		MechanicalNetwork network = getNetworkById(networkid);
 		if (network == null) {
+			//System.out.println("from get instantiated new network with id " + networkid);
 			network = new MechanicalNetwork(networkid);
 			networksById.put(networkid, network);
 		}
@@ -62,7 +63,7 @@ public class MechanicalNetwork {
 
 	public static MechanicalNetwork createAndRegisterNetwork() {
 		int networkId = findUniqueId();
-		//System.out.println("id = " + networkId);
+		//System.out.println("from create instantiated new network with id " + networkId);
 		MechanicalNetwork network = new MechanicalNetwork(networkId);
 		
 		networksById.put(networkId, network);
@@ -71,8 +72,13 @@ public class MechanicalNetwork {
 	}
 
 	
+	public static void unloadNetworks() {
+		for (int networkid : networksById.keySet()) {
+			discardNetwork(getNetworkById(networkid));
+		}
+	}
+	
 	public static void discardNetwork(MechanicalNetwork network) {
-		System.out.println("discard network");
 		networksById.remove(network.networkId);
 		FMLCommonHandler.instance().bus().unregister(network);
 	}
@@ -82,7 +88,7 @@ public class MechanicalNetwork {
 		totalAvailableTorque = nbt.getFloat("totalAvailableTorque");
 		totalResistance = nbt.getFloat("totalResistance");
 		speed = nbt.getFloat("speed");
-		clockwise = nbt.getBoolean("clockwise");
+		direction = nbt.getInteger("direction");
 	}
 	
 	
@@ -91,18 +97,17 @@ public class MechanicalNetwork {
 		nbt.setFloat("totalAvailableTorque", totalAvailableTorque);
 		nbt.setFloat("totalResistance", totalResistance);
 		nbt.setFloat("speed", speed);
-		nbt.setBoolean("clockwise", clockwise);
+		nbt.setInteger("direction", direction);
 	}
 
 	
-	// Currently unused
-	// we recreate the network each time
 	public static void loadNetworksFromTaglist(NBTTagList networks) {
 		networksById.clear();
 		
+		if (networks == null) return;
+		
 		for (int i = 0; i < networks.tagCount(); i++) {
 			NBTTagCompound nbt = networks.getCompoundTagAt(i);
-			
 			MechanicalNetwork network = new MechanicalNetwork(nbt.getInteger("networkId"));
 			
 			networksById.put(network.networkId, network);
@@ -136,7 +141,7 @@ public class MechanicalNetwork {
 	float speed;
 	
 	public final int networkId;
-	boolean clockwise;
+	int direction;
 	
 	
 	// Only for rendering the rotation
@@ -147,19 +152,15 @@ public class MechanicalNetwork {
 	
 	// Only for rendering the rotation
 	@SideOnly(Side.CLIENT)
-	public void updateAngle(float speed) {
-		angle += (clockwise ? 1 : -1) * speed / 5f;
+	public void updateAngle(float speed) {	
+		angle -= speed / 10f;
 		angle = angle % 360f;
-		
-
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public float getAngle() {
-		//System.out.println(angle);
 		return angle;
 	}
-
 
 	
 	
@@ -170,6 +171,7 @@ public class MechanicalNetwork {
 		totalAvailableTorque = 0;
 		totalResistance = 0;
 		this.networkId = networkId;
+		FMLCommonHandler.instance().bus().register(this);
 	}
 	
 	public float getSpeed() {
@@ -192,28 +194,32 @@ public class MechanicalNetwork {
 	}
 
 	public void register(IMechanicalPowerDevice device) {
-		if (device instanceof IMechanicalPowerNetworkNode) {
+		
+		if (device instanceof IMechanicalPowerNetworkNode && !powerNodes.contains(device)) {
 			powerNodes.add((IMechanicalPowerNetworkNode)device);	
 		}
-		if (device instanceof IMechanicalPowerNetworkRelay) {
+		if (device instanceof IMechanicalPowerNetworkRelay && !powerRelays.contains(device)) {
 			powerRelays.add((IMechanicalPowerNetworkRelay)device);	
 		}
 	}
 	
 	public void unregister(IMechanicalPowerDevice device) {
 		if (device instanceof IMechanicalPowerNetworkNode) {
-			powerNodes.remove((IMechanicalPowerNetworkNode)device);	
+			powerNodes.remove((IMechanicalPowerNetworkNode)device);
 		}
 		if (device instanceof IMechanicalPowerNetworkRelay) {
 			powerRelays.remove((IMechanicalPowerNetworkRelay)device);	
 		}
+		
+		rebuildNetwork();
 	}
 
 	
 	
 	@SubscribeEvent
 	public void onClientTick(TickEvent.ClientTickEvent event) {
-	if (Minecraft.getMinecraft().theWorld != null && clientWorldTime != Minecraft.getMinecraft().theWorld.getWorldTime()) {
+
+		if (Minecraft.getMinecraft().theWorld != null && clientWorldTime != Minecraft.getMinecraft().theWorld.getWorldTime()) {
 			updateAngle(speed);
 			clientWorldTime = Minecraft.getMinecraft().theWorld.getWorldTime();
 		}
@@ -221,7 +227,7 @@ public class MechanicalNetwork {
 	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.WorldTickEvent event) {
-		//System.out.println("Tick");
+		
 		if (
 			FMLCommonHandler.instance().getMinecraftServerInstance() == null || 
 			event.phase == TickEvent.Phase.END || 
@@ -284,7 +290,10 @@ public class MechanicalNetwork {
 			speedChange = 0;
 		}
 		
-		//System.out.println("unusedTorque: " + unusedTorque + " / speedChange: " + speedChange);
+		/*if (networkId == 6) {
+			System.out.println("unusedTorque: " + unusedTorque + " / speedChange: " + speedChange);
+		}*/
+		
 		float step = 1f;
 		
 		switch (speedChange) {
@@ -309,28 +318,27 @@ public class MechanicalNetwork {
 		
 		/* 4. Set direction, also did the direction change? Propagate it through the network */
 		
-		boolean oldclockwise = clockwise;
-		if (speed != 0) {
-			clockwise = speed > 0;
-		}
+		int olddirection = direction;
+		direction = (int)Math.signum(speed);
 		
-		if (oldclockwise != clockwise) {
+		if (olddirection != direction) {
+			
 			for (IMechanicalPowerNetworkNode powerNode : powerNodes) {
-				if (powerNode.getTorque(this) > 0 == clockwise) {
-					System.out.println("sent out direction change propagation");
+				// FIXME: This assumes there is only 1 power producer per network
+				if (powerNode.getTorque(this) > 0) {
 					powerNode.propagateDirectionToNeightbours(
 						getUniquePropagationId(), 
 						powerNode.getOutputSideForNetworkPropagation(), 
-						clockwise
+						direction > 0
 					);
 					break;
 				}
 			}
 		}
-				
-	
 		
-		//System.out.println("speed: " + speed + " / availtorque: " + totalAvailableTorque + " / availresis: " + totalResistance);
+		if (networkId == 6) {
+		//	System.out.println(powerNodes.size() + " nodes, speed: " + speed + " / availtorque: " + Math.abs(totalAvailableTorque) + " / availresis: " + totalResistance);
+		}
 	}
 
 	
@@ -338,19 +346,45 @@ public class MechanicalNetwork {
 
 	
 	public void rebuildNetwork() {
-		if (powerNodes.size() == 0) return;
+		//System.out.println("rebuilding network");
 		
+		for (IMechanicalPowerDevice device : powerRelays) {
+			if (device != null) {
+				device.clearNetwork();
+			}
+		}
+		
+		if (powerNodes.size() == 0) return;
 		IMechanicalPowerNetworkNode node = powerNodes.get(0);
+		
+		for (IMechanicalPowerNetworkNode powernode : powerNodes) {
+			if (powernode != null && node != powernode) {
+				powernode.clearNetwork();
+			}
+		}
 		
 		if (node == null) return;
 		
-		MechanicalNetwork network = createAndRegisterNetwork(node);
+		powerNodes.clear();
+		powerRelays.clear();
 		
 		node.propagateNetworkToNeighbours(
 			getUniquePropagationId(), 
-			network, 
+			this, 
 			node.getOutputSideForNetworkPropagation()
 		);
+		
+		
+		
+		System.out.println("total networks in game: " + networksById.size());
+	}
+
+	public boolean isClockWise() {
+		return direction > 0;
+	}
+	
+	public int getDirection() {
+		return direction;
 	}
 	
 	

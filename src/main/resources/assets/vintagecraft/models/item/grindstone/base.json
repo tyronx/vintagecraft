@@ -1,0 +1,63 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "stone": "vintagecraft:blocks/rock/basalt"
+    },
+    "elements": [
+        {
+            "name": "Cube",
+            "from": [ 3.0, 3.0, 3.0 ], 
+            "to": [ 13.0, 6.9, 13.0 ], 
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 3.0, 3.0, 3.0 ], 
+            "to": [ 13.0, 7.1, 13.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": -22.5 },
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.1 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.1 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.1 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.1 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 3.0, 3.0, 3.0 ], 
+            "to": [ 13.0, 7.0, 13.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 22.5 },
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.0 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.0 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.0 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 4.0 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        },
+        {
+            "name": "Cube",
+            "from": [ 3.0, 3.0, 3.0 ], 
+            "to": [ 13.0, 6.9, 13.0 ], 
+            "rotation": { "origin": [ 8.0, 8.0, 8.0 ], "axis": "y", "angle": 45.0 },
+            "faces": {
+                "north": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "east": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "south": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "west": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 3.9 ] },
+                "up": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] },
+                "down": { "texture": "#stone", "uv": [ 0.0, 0.0, 10.0, 10.0 ] }
+            }
+        }
+    ]
+}

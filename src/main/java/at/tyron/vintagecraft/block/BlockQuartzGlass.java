@@ -99,7 +99,7 @@ public class BlockQuartzGlass extends BlockLogVC {
     }
       
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta & 7).getBlockState().withProperty(eastwest, (meta & 8) > 0);
+    	return getBlockClass().getEntryFromMeta(this, meta & 7).getBlockState().withProperty(eastwest, (meta & 8) > 0);
     }
 
 	@Override

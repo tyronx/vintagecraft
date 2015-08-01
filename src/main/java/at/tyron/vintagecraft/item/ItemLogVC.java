@@ -57,7 +57,7 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		Block block = ((ItemBlock)itemstack.getItem()).block;
-		return (EnumTree) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
+		return (EnumTree) getBlockClass(block).getEntryFromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 
 	@Override
@@ -73,14 +73,21 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 		return 800;
 	}
 
+	
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
-		return 2f;
+		EnumTree treetype = getTreeType(stack);
+		return 1f + Math.min(2f, treetype.jankahardness / 750f);
 	}
+	
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
+		EnumTree treetype = getTreeType(itemstack);
+		if (treetype.jankahardness > 0) {
+			tooltip.add("Janka Hardness: " + treetype.jankahardness + " lbf");
+		}
 	}
 	
 	

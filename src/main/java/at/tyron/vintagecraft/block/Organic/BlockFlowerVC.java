@@ -96,7 +96,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     }
 
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
 
@@ -193,7 +193,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 	@Override
 	public String getSubType(ItemStack stack) {
 		ItemBlock itemblock = (ItemBlock)stack.getItem();
-		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
+		return getBlockClass().getEntryFromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
 	}
 	
 	

@@ -89,7 +89,7 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
       
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
     
@@ -113,7 +113,7 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 	@Override
 	public String getSubType(ItemStack stack) {
 		ItemBlock itemblock = (ItemBlock)stack.getItem();
-		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
+		return getBlockClass().getEntryFromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();
 	}
 	
 	

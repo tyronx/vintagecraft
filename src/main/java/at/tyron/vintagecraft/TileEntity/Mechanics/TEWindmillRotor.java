@@ -4,56 +4,102 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRMechanicalBase;
+import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.WindGen;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+
+
 
 public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
-	EnumFacing orientation = EnumFacing.NORTH;
-	float windmillSize = 1f;
+	// The tower mill was more powerful than the water mill, able to generate roughly 20 to 30 horsepower.
+	// https://en.wikipedia.org/wiki/Tower_mill#Application
+	// 20 hp = 15 KW
+	float maxSpeedMultiplier = 1f;
+	
+	
 	public boolean refreshModel;
 	
+	int bladeSize;  // 0..4
 	
-	public EnumFacing getOrientation() {
-		return orientation;
+	
+	@SideOnly(Side.CLIENT)
+	public float getAngle() {
+		MechanicalNetwork network = getNetwork(null);
+		if (network == null) return 0;
+		
+		/*if (orientation == EnumFacing.WEST || orientation == EnumFacing.SOUTH || orientation == EnumFacing.NORTH) {
+			return 360 - network.getAngle();
+		}*/
+		return network.getAngle();
+	}
+
+	
+	public boolean tryAddBlades() {
+		if (bladeSize < 4) {
+			bladeSize++;
+			return true;
+		}
+		return false;
+	}
+	
+	public int getBladeSize() {
+		return bladeSize;
 	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		
-		orientation = EnumFacing.values()[compound.getInteger("orientation")];
+		bladeSize = compound.getInteger("bladeSize");
 	}
 	
 	
 	@Override
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		
-		compound.setInteger("orientation", orientation.ordinal());
+		compound.setInteger("bladeSize", bladeSize);
 	}
 
 	
 	@Override
-	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside) {
 		this.orientation = facing;
-		super.onDevicePlaced(world, pos, facing);
+		connectToNeighbour();
+		super.onDevicePlaced(world, pos, facing, ontoside);
 	}
 
+	// Connector is at the backside of the rotor
 	@Override
 	public boolean hasConnectorAt(EnumFacing facing) {
 		return facing == orientation.getOpposite();
 	}
+	
+	// Connector is at the backside of the rotor
+	@Override
+	public boolean isConnectedAt(EnumFacing facing) {
+		return facing == orientation.getOpposite() && super.isConnectedAt(facing); 
+	}
+
 
 	// Winmill Requires a mininum amount of wind to rotate, so this method returns 0 for low wind
-	float getWindRotatingPower() {
+	// Our wind mill is angled on both sides, resulting in it turning only 1 direction
+	public float getWindRotatingPower() {
+		if (bladeSize == 0) return 0;
+		
 		WindGen windgen = WindGen.getWindGenForWorld(worldObj);
 		float wind = (float) (windgen == null ? 0 : windgen.getWindAt(pos));
 		
-		//return (wind * wind - 0.05f) * 48 * Math.signum(wind);
-		return 10f;
+		
+		//return -10f;
+		//return Math.max(0, (wind * wind - 0.05f) * 48);
+		return 30f;
 	}
 	
 	
@@ -63,6 +109,8 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 
 	@Override
 	public float getTorque(MechanicalNetwork network) {
+		if (bladeSize == 0) return 0;
+		
 		float rotatingpower = getWindRotatingPower();
 		//System.out.println("rot power = " + rotatingpower);
 		int dir1 = (int)Math.signum(rotatingpower);
@@ -72,11 +120,11 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 			return 0;
 		}
 		
-		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * windmillSize))  return 0;
+		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * maxSpeedMultiplier))  return 0;
 		
 		//System.out.println("foobar " + network.getSpeed() + " / " + (rotatingpower * windmillSize));
 		
-		return rotatingpower * windmillSize;
+		return rotatingpower * maxSpeedMultiplier / (5 - bladeSize);
 	}
 
 	
@@ -89,11 +137,11 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		int dir2 = (int)Math.signum(network.getSpeed());
 		
 		if (dir1 != dir2 && dir1 != 0 && dir2 != 0) {
-			return Math.abs(rotatingpower * windmillSize);
+			return Math.abs(rotatingpower * maxSpeedMultiplier);
 		}
 		
-		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * windmillSize)) {
-			return Math.abs(network.getSpeed()) - Math.abs(rotatingpower * windmillSize);
+		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * maxSpeedMultiplier)) {
+			return Math.abs(network.getSpeed()) - Math.abs(rotatingpower * maxSpeedMultiplier);
 		}
 		
 		return 0;
@@ -108,30 +156,28 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	@Override
 	public void update() {
 		
-		//System.out.println("update " + worldObj.isRemote);
-		
-		/*if (!worldObj.isRemote) {
-			double wind = WindGen.getWindGenForWorld(worldObj).getWindAt(pos);
-			maxSpeed = (float) Math.max(0, wind * wind - 0.04f) * 48;
-			clockwise = wind > 0;
-			
-			if (cnt++ % 30 == 0) {
-				//System.out.println("send update to client " + wind + " / " + maxSpeed + " / " + clockwise);
-				worldObj.markBlockForUpdate(pos);
+		if (network != null && worldObj != null && !worldObj.isRemote) {
+			if (worldObj.rand.nextFloat() < Math.min(0.03f, network.getSpeed() / 1000f)) {
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1.2f, 1f);
+			//	System.out.println("play sound 2 " + network.getSpeed()); 
 			}
-			
-		}*/
-		
-		
-		if (network == null && !worldObj.isRemote) {
-			System.out.println("will create");
-			createMechanicalNetwork();
-			//System.out.println("created network " + worldObj.isRemote);
 		}
-		
 	}
 
 
+	
+	public void connectToNeighbour() {
+		if (getConnectibleNeighbourDevice(orientation.getOpposite()) != null) return;
+		
+		for (EnumFacing facing : EnumFacing.values()) {
+			IMechanicalPowerDevice neighbourdevice = getConnectibleNeighbourDevice(facing.getOpposite());
+			if (neighbourdevice == null) continue;			
+			orientation = facing;
+			worldObj.markBlockForUpdate(pos);
+			break;
+		}
+	}
+	
 
 
 

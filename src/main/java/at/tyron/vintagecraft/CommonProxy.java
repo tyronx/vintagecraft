@@ -11,6 +11,7 @@ import at.tyron.vintagecraft.Gui.GuiForge;
 import at.tyron.vintagecraft.Gui.GuiStove;
 import at.tyron.vintagecraft.Gui.GuiVessel;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Inventory.ContainerForge;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
@@ -28,6 +29,8 @@ import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.TileEntity.TileEntityForestSpiderSpawner;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEBellows;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -80,6 +83,8 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerTileEntity(TEAngledGearBox.class, ModInfo.ModID + ":angledgearbox");
 		GameRegistry.registerTileEntity(TEAxle.class, ModInfo.ModID + ":axle");
 		GameRegistry.registerTileEntity(TEWindmillRotor.class, ModInfo.ModID + ":windmillrotor");
+		GameRegistry.registerTileEntity(TEGrindStone.class, ModInfo.ModID + ":grindstone");
+		GameRegistry.registerTileEntity(TEBellows.class, ModInfo.ModID + ":bellows");
 	}
 	
 	
@@ -156,6 +161,8 @@ public class CommonProxy implements IGuiHandler {
 	public void registerItemBlockTextureVanilla(Block block, String blockclassname) {}
 	
 	public void addVariantName(Item item, String... names) {}
+	
+	public void addVariantNamesFromEnum(Item item, IStateEnum names) {}
 	
 	public void ignoreProperties(Block block, IProperty[] properties) {};
 	

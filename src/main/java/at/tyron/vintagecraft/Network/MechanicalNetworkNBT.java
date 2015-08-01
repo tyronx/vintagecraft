@@ -42,7 +42,7 @@ public class MechanicalNetworkNBT implements IMessage {
 
 		@Override
 		public IMessage onMessage(MechanicalNetworkNBT message, MessageContext ctx) {
-		//	System.out.println("got package");
+			//System.out.println("got package");
 			MechanicalNetwork network = MechanicalNetwork.getOrCreateNetwork(message.networkId);
 			network.readFromNBT(message.nbt);
 			return null;

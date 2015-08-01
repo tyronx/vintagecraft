@@ -16,6 +16,7 @@ import at.tyron.vintagecraft.Network.MechanicalNetworkNBT;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.Recipes;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.World.WindGen;
@@ -117,6 +118,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.server.FMLServerHandler;
 
@@ -241,7 +243,7 @@ public class VintageCraft {
 		worlddata = (VCraftWorldSavedData) world.getPerWorldStorage().loadData(VCraftWorldSavedData.class, "vcraft");
 		
 		if (worlddata == null) {
-			worlddata = new VCraftWorldSavedData("vcraft", world.rand);
+			worlddata = new VCraftWorldSavedData("vcraft");
 			world.getPerWorldStorage().setData("vcraft", worlddata);
 		}
 		return worlddata;
@@ -249,16 +251,20 @@ public class VintageCraft {
 	
 	@SubscribeEvent
 	public void loadWorld(WorldEvent.Load evt) {
-		long worldtime = getOrCreateWorldData(evt.world).getWorldTime();
+		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world); 
+		long worldtime = worlddata.getWorldTime();
 		
 		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
 		
 		WindGen.registerWorld(evt.world);
+		
+		//MechanicalNetwork.loadNetworksFromTaglist(worlddata.getNetworks());
 	}
 	
 	@SubscribeEvent
 	public void unloadWorld(WorldEvent.Unload evt) {
 		WindGen.unregisterWorld(evt.world);
+		MechanicalNetwork.unloadNetworks();
 	}
 	
 	
@@ -292,14 +298,19 @@ public class VintageCraft {
 		if (cannotSleeptonight) {
 			 for (Object obj : event.world.playerEntities) {
 				 EntityPlayer player = (EntityPlayer)obj;		 
-				 if (player.isPlayerSleeping() && player.sleepTimer > 80) {
+				 if (player.isPlayerSleeping() && getSleepTimer(player) > 80) {
 					player.wakeUpPlayer(true, true, true);
 					player.addChatMessage(new ChatComponentText("You tried to fall sleep, but something is keeping you awake tonight."));
-				 }
-				 
+				 }	 
 			 }			
 		}
 		
+	}
+	
+	
+	public int getSleepTimer(EntityPlayer player) {
+		int timer = ReflectionHelper.getPrivateValue(EntityPlayer.class, player, 20);
+		return timer;
 	}
 	
 	
@@ -310,7 +321,7 @@ public class VintageCraft {
 	}
 	
 	public int getNightSkyType(World world) {
-		return getOrCreateWorldData(world).getNightSkyType();
+		return getOrCreateWorldData(world).getNightSkyType(world);
 	}
 	
 	public long daysPassed(World worldObj) {

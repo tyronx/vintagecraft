@@ -183,7 +183,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 					int stage = (Integer) state.getValue(((BlockStoneAnvil)state.getBlock()).STAGE) - 1;
 					((BlockStoneAnvil)state.getBlock()).setStage(worldIn, pos, state, stage);
 				} else {
-					IBlockState anvilstate = BlocksVC.stoneanvil.getBlockStateFor(BlocksVC.rock.getBlockClassfromState(state).getKey());
+					IBlockState anvilstate = BlocksVC.stoneanvil.getBlockStateFor(BlocksVC.rock.getEntryFromState(state).getKey());
 					worldIn.setBlockState(pos, anvilstate.withProperty(BlockStoneAnvil.STAGE, 2));
 				}
 				

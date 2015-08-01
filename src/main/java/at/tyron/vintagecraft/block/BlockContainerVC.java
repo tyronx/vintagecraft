@@ -35,7 +35,8 @@ public abstract class BlockContainerVC extends BlockContainer implements ISubtyp
 			GameRegistry.registerBlock(this, name);
 		} else {
 			GameRegistry.registerBlock(this, itemclass, name);
-			VintageCraft.instance.proxy.registerItemBlockTexture(this, name);
+			// Do not register item for tileentities
+			//VintageCraft.instance.proxy.registerItemBlockTexture(this, name);
 		}
 		
 		setUnlocalizedName(name);

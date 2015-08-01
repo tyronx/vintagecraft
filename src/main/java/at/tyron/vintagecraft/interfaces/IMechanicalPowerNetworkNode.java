@@ -9,6 +9,6 @@ public interface IMechanicalPowerNetworkNode extends IMechanicalPowerDevice {
 	public float getTorque(MechanicalNetwork network);
 	public float getResistance(MechanicalNetwork network);
 	
-	public EnumFacing getOutputSideForNetworkPropagation();
-	
+	// Should return local facing
+	public EnumFacing getOutputSideForNetworkPropagation();	
 }

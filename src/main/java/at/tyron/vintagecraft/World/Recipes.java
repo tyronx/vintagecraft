@@ -107,7 +107,7 @@ public class Recipes {
 			ItemStack stone = ItemStone.setRockType(new ItemStack(ItemsVC.stone), rocktype);
 			
 			GameRegistry.addShapedRecipe(BlocksVC.cobblestone.getItemStackFor(rocktype, 2), new Object[] { "SSS", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
-			GameRegistry.addShapedRecipe(ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), rocktype), new Object[] { "S S", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
+			GameRegistry.addShapedRecipe(ItemStonePot.setRockType(new ItemStack(BlocksVC.stonepot), rocktype), new Object[] { "S S", "SCS", "SSS", 'C', Items.clay_ball, 'S', stone});
 			
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_axe")), new Object[] { "SS ", "SW ", " W ", 'S', stone, 'W', stick});
 			GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.tools.get("stone_hoe")), new Object[] { "SS ", " W ", " W ", 'S', stone, 'W',  Items.stick});
@@ -200,6 +200,7 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Items.acacia_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA)});*/
 		
 
+		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.sail, 1), new Object[] { "SSS", "CCC", "SSS", 'C', Blocks.carpet, 'S', Items.stick});
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.fireclay_brick_raw, 1), new Object[] { "CC", "CC", 'C', ItemsVC.fireclay_ball});
 		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.fireclaybricks, 1), new Object[] { "CCC", "CCC", "CCC", 'C', ItemsVC.fireclay_brick});
@@ -212,7 +213,7 @@ public class Recipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlocksVC.clayVessel)), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', ItemMetalPlate.getItemStack(EnumMetal.IRON, 1)});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON)});  //ItemMetalPlate.getItemStack(EnumMetal.IRON, 1)
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.dryGrass, 'W', Items.stick});
 		

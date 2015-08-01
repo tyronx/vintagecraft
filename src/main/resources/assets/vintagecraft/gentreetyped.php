@@ -2,7 +2,11 @@
 // This script generates all json files tree type dependent blocks
 // toolracks, logs, leaves, leaves, branchyleaves, planks, fence, fencegates, slabs, stairs, quartzglass
 
+// Block+Item
 $blockclasses = array("log", "leaves", "leavesbranchy", "planks", "sapling");
+// Item only
+$itemclasses = array("toolrack", "axle", "angledgearbox", "windmillrotor", "bellows");
+
 $blockclassavailabletypes = array("log" => 16, "leaves" => 8, "leavesbranchy" => 8, "planks" => 16, "sapling" => 16);
 $blocktypes = array("ash", "birch", "oak", "maple", "mountaindogwood", "scotspine", "spruce", "acacia", "kapok", "coconutpalm", "purpleheartwood", "crimsonkingmaple", "elephanttree", "myrtlebeech", "pear", "joshua", "poplar", "africanmahogany", "blackwalnut", "weepingwillow", "coyotewillow", "larch", "kauri");
 
@@ -24,26 +28,36 @@ for ($i = 0; $i < ceil(count($blocktypes) / 8); $i++) {
 }
 
 
-/********** 0. Toolracks *************/
-foreach ($blocktypes as $blocktype) {
-	file_put_contents("models/item/toolrack/{$blocktype}.json", '{
-    "parent": "builtin/generated",
-    "textures": {
-        "layer0": "vintagecraft:items/toolrack/'.$blocktype.'"
-    },
-    "display": {
-        "thirdperson": {
-            "rotation": [ -90, 0, 0 ],
-            "translation": [ 0, 1, -3 ],
-            "scale": [ 0.55, 0.55, 0.55 ]
-        },
-        "firstperson": {
-            "rotation": [ 0, -135, 25 ],
-            "translation": [ 0, 4, 2 ],
-            "scale": [ 1.7, 1.7, 1.7 ]
-        }
-    }
-}');
+/********** items only *************/
+foreach ($itemclasses as $itemclass) {
+	foreach ($blocktypes as $blocktype) {
+		$texture = "blocks/planks";
+		if ($itemclass == "toolrack") {
+			$texture = "items/toolrack";
+			file_put_contents("models/item/{$itemclass}/{$blocktype}.json", '{
+			"parent": "builtin/generated",
+			"textures": {
+				"layer0": "vintagecraft:'.$texture.'/'.$blocktype.'"
+			},
+			"display": {
+				"thirdperson": {
+					"rotation": [ -90, 0, 0 ],
+					"translation": [ 0, 1, -3 ],
+					"scale": [ 0.55, 0.55, 0.55 ]
+				},
+				"firstperson": {
+					"rotation": [ 0, -135, 25 ],
+					"translation": [ 0, 4, 2 ],
+					"scale": [ 1.7, 1.7, 1.7 ]
+				}
+			}
+		}');
+		} else {
+		
+			$itemjson = getItemModel($itemclass, $blocktype);
+			file_put_contents("models/item/{$itemclass}/{$blocktype}.json", $itemjson);
+		}
+	}
 }
 
 /********** 1. Logs, Leaves, Branches, Planks *************/
@@ -278,7 +292,6 @@ function getBlockStates($variants) {
 	. '
 	}
 }';
-
 }
 
 function getBlockModel($modeltype, $blockclass, $blocktype) {
@@ -436,6 +449,43 @@ function getItemModel($blockclass, $blocktype) {
 }';
 	}
 
+
+	if ($blockclass == "axle" || $blockclass == "angledgearbox" || $blockclass ==  "windmillrotor") {
+		return '{
+	"parent": "vintagecraft:block/'.$blockclass.'",
+    "textures": {
+        "0": "vintagecraft:blocks/planks/'.$blocktype.'",
+        "particle": "vintagecraft:blocks/planks/'.$blocktype.'"
+    },
+	"display": {
+		"thirdperson": {
+			"rotation": [ 10, -45, 170 ],
+			"translation": [ 0, 1.5, -2.75 ],
+			"scale": [ 0.75, 0.75, 0.75 ]
+		}
+	}
+}';
+		
+	}
+	
+	if ($blockclass == "bellows") {
+		return '{
+	"parent": "vintagecraft:item/bellows/base",
+    "textures": {
+        "0": "vintagecraft:blocks/planks/'.$blocktype.'",
+        "particle": "vintagecraft:blocks/planks/'.$blocktype.'"
+    },
+	"display": {
+		"thirdperson": {
+			"rotation": [ 10, -45, 170 ],
+			"translation": [ 0, 1.5, -2.75 ],
+			"scale": [ 0.5, 0.5, 0.5 ]
+		}
+	}
+}';
+		
+		
+	}
 	
 	return '{
 	"parent": "vintagecraft:block/'.$blockclass.'/'.$blocktype.'",

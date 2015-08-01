@@ -37,7 +37,7 @@ public class ItemFlowerVC extends ItemBlockVC {
 
 	
 	public static EnumFlower getFlowerType(ItemStack itemstack) {
-		return (EnumFlower) getBlockClass(itemstack).getFromItemStack(itemstack).getKey();
+		return (EnumFlower) getBlockClass(itemstack).getEntryFromItemStack(itemstack).getKey();
 	}
 
 	

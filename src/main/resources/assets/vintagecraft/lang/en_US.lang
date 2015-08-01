@@ -46,25 +46,25 @@ rock.kimberlite.name=Kimberlite
 rock.slate.name=Slate
 
 
-item.stonepotitem.chalk.name=Chalk Stone Pot
-item.stonepotitem.gneiss.name=Gneiss Stone Pot
-item.stonepotitem.limestone.name=Limestone Stone Pot
-item.stonepotitem.claystone.name=Claystone Stone Pot
-item.stonepotitem.marble.name=Marble Stone Pot
-item.stonepotitem.granite.name=Granite Stone Pot
-item.stonepotitem.basalt.name=Basalt Stone Pot
-item.stonepotitem.andesite.name=Andesite Stone Pot
-item.stonepotitem.conglomerate.name=Conglomerate Stone Pot
-item.stonepotitem.diorite.name=Diorite Stone Pot
-item.stonepotitem.sandstone.name=Sandstone Stone Pot
-item.stonepotitem.redsandstone.name=Red Sandstone Stone Pot
-item.stonepotitem.quartzite.name=Quartzite Stone Pot
-item.stonepotitem.chert.name=Chert Stone Pot
-item.stonepotitem.gabbro.name=Gabbro Stone Pot
-item.stonepotitem.shale.name=Shale Stone Pot
-item.stonepotitem.schist.name=Green Schist Stone Pot
-item.stonepotitem.kimberlite.name=Kimberlite Stone Pot
-item.stonepotitem.slate.name=Slate Stone Pot
+item.stonepot.chalk.name=Chalk Stone Pot
+item.stonepot.gneiss.name=Gneiss Stone Pot
+item.stonepot.limestone.name=Limestone Stone Pot
+item.stonepot.claystone.name=Claystone Stone Pot
+item.stonepot.marble.name=Marble Stone Pot
+item.stonepot.granite.name=Granite Stone Pot
+item.stonepot.basalt.name=Basalt Stone Pot
+item.stonepot.andesite.name=Andesite Stone Pot
+item.stonepot.conglomerate.name=Conglomerate Stone Pot
+item.stonepot.diorite.name=Diorite Stone Pot
+item.stonepot.sandstone.name=Sandstone Stone Pot
+item.stonepot.redsandstone.name=Red Sandstone Stone Pot
+item.stonepot.quartzite.name=Quartzite Stone Pot
+item.stonepot.chert.name=Chert Stone Pot
+item.stonepot.gabbro.name=Gabbro Stone Pot
+item.stonepot.shale.name=Shale Stone Pot
+item.stonepot.schist.name=Green Schist Stone Pot
+item.stonepot.kimberlite.name=Kimberlite Stone Pot
+item.stonepot.slate.name=Slate Stone Pot
 
 
 item.stone.name=Stone
@@ -422,7 +422,7 @@ tile.log.larch.name=Larch Log
 tile.log.weepingwillow.name=Weeping Willow Log
 tile.log.coyotewillow.name=Coyote Willow Log
 tile.log.blackwalnut.name=Black Walnut Log
-
+tile.log.kauri.name=Kauri Log
 
 tile.planks.ash.name=Ash Planks
 tile.planks.birch.name=Birch Planks
@@ -671,3 +671,7 @@ tile.angledgearbox.name=Angled Gears
 tile.windmillrotor.name=Windmill Rotor
 
 tile.spideregg.name=Spider Egg
+
+item.sail.name=Sail
+tile.bellows.name=Bellows
+tile.grindstone.name=Grindstone

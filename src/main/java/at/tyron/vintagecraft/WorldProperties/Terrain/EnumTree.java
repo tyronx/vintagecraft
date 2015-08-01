@@ -16,6 +16,9 @@ import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 
 
+// Massive List of woods
+// http://www.wood-database.com/
+
 //http://www.hoovedesigns.com/woods.html
 //http://www.piecesofwood.com/woods.html
 
@@ -23,31 +26,31 @@ import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 
 
 public enum EnumTree implements IStateEnum, IStringSerializable {
-	// growthspeed, saplingdroprate weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest
+	// growthspeed, saplingdroprate weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minforest, maxforest, janka hardness (pounds force, approximate where no info is avail) 
 	
-	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minfo   maxfo
-	ASH					(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,  0.7f,   0,  255),
-	BIRCH				( 0.6f,  0.12f, 100,   3,  12,  95,  220,  10,   100,    0f, 0.65f,   0,  255),		// http://en.wikipedia.org/wiki/Birch
-	OAK					( 1.8f,  0.12f,  95,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
-	CRIMSONKINGMAPLE	( 1.2f,  0.08f,   1,   5,  15,  95,  150,  90,   200,    0f,  0.5f,   0,  250),		// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
-	MOUNTAINDOGWOOD		( 0.7f,  0.08f,  60,  10,  20,  90,  180,  90,   255,    0f,    1f,   0,  150),
-	SCOTSPINE			( 0.8f,  0.12f, 100, -20,  12,  50,  150,  30,   255, 0.55f, 0.85f,   0,  255),		// http://www.treetopics.com/pinus_sylvestris/scots_pine_1220645.png | http://en.wikipedia.org/wiki/Scots_pine
-	SPRUCE				(   1f,  0.12f, 100, -12,  18,  70,  255,  60,   255,    0f, 0.85f,   0,  255),
-	ACACIA				( 1.1f,  0.09f, 100,  23,  30,  80,  140,  50,   200,    0f,  0.8f,   0,  255),		// http://static.panoramio.com/photos/large/37061566.jpg
-	KAPOK				( 1.6f,  0.01f, 100,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),		// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
-	PURPLEHEARTWOOD 	(   2f,  0.01f,   3,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255),
-	COCONUTPALM			(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,    0f,   0,  255),
-	ELEPHANTTREE		( 1.3f,  0.08f,  99,  22,  30,  30,   75,  20,   100,     0, 0.75f,   0,  255),
-	MYRTLEBEECH			(1.15f,  0.08f, 100,  15,  22, 190,  255, 130,   255,    0f,  0.8f,   0,  255), 	 // http://api.ning.com/files/MqhG5otblM36rGP5RG6jXZBh7Zo3GaqEoLpCbeE6R2iWuRYcGYXPrC3070Xuqd7SUBMFB0OxF9gl8Py3gCQZ2483-NhiYqbl/NothofagusCunninghammii.jpg
-	JOSHUA				( 0.9f,  0.08f,  99,  24,  30,  20,   60,  20,   100,     0,  0.6f,   0,  255),
-	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100),		 // http://fc06.deviantart.net/fs40/f/2009/004/e/f/An_old_pear_tree_by_SzekelyCsaba.jpg
-	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200),
-	BLACKWALNUT			( 1.15f, 0.08f,  10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255),
-	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, true, false),
-	WEEPINGWILLOW		( 0.5f,  0.06f,  96,  -6,  18,  65,  255,   50,  255,    0f,    1f,   0,  250),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
-	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250, false, true),
-	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, true, false),
-	KAURI				( 1.3f,  0.01f,  99,  20,  24, 120,  255,   90,  200,    0f,  0.8f,   0,  255)
+	//		  	   growthspeed   sapd  weig mint maxt minr  maxr  minf  maxf   minh   maxh minfo   maxfo hardness (pounds)
+	ASH					(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,  0.7f,   0,  255, 1320),
+	BIRCH				( 0.6f,  0.12f, 100,   3,  12,  95,  220,  10,   100,    0f, 0.65f,   0,  255, 960),		// http://en.wikipedia.org/wiki/Birch
+	OAK					( 1.8f,  0.12f,  95,   2,  22,  95,  170,  90,   255,    0f, 0.65f,   0,  150, 1360), 	// http://cdn1.arkive.org/media/4A/4A8E82BD-D487-4C74-805B-7C29A318029F/Presentation.Large/Sessile-oak-tree-in-winter.jpg
+	CRIMSONKINGMAPLE	( 1.2f,  0.08f,   1,   5,  15,  95,  150,  90,   200,    0f,  0.5f,   0,  250, 950),		// http://m3.i.pbase.com/u37/10kzoomfz/large/24239783.tree.jpg
+	MOUNTAINDOGWOOD		( 0.7f,  0.08f,  60,  10,  20,  90,  180,  90,   255,    0f,    1f,   0,  150, 2150),
+	SCOTSPINE			( 0.8f,  0.12f, 100, -20,  12,  50,  150,  30,   255, 0.55f, 0.85f,   0,  255, 540),		// http://www.treetopics.com/pinus_sylvestris/scots_pine_1220645.png | http://en.wikipedia.org/wiki/Scots_pine
+	SPRUCE				(   1f,  0.12f, 100, -12,  18,  70,  255,  60,   255,    0f, 0.85f,   0,  255, 490),
+	ACACIA				( 1.1f,  0.09f, 100,  23,  30,  80,  140,  50,   200,    0f,  0.8f,   0,  255, 1170),		// http://static.panoramio.com/photos/large/37061566.jpg
+	KAPOK				( 1.6f,  0.01f, 100,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255, 281),		// http://www.rainforest-alliance.org/sites/default/files/uploads/4/kapok-tree-inset2.jpg
+	PURPLEHEARTWOOD 	(   2f,  0.01f,   3,  24,  30, 185,  255, 160,   255,     0,  0.9f, 100,  255, 2890),
+	COCONUTPALM			(   1f,  0.08f,   0,   0,   0,   0,    0,   0,     0,    0f,    0f,   0,  255, 1),
+	ELEPHANTTREE		( 1.3f,  0.08f,  99,  22,  30,  30,   75,  20,   100,     0, 0.75f,   0,  255, 0),
+	MYRTLEBEECH			(1.15f,  0.08f, 100,  15,  22, 190,  255, 130,   255,    0f,  0.8f,   0,  255, 784), 	 // http://api.ning.com/files/MqhG5otblM36rGP5RG6jXZBh7Zo3GaqEoLpCbeE6R2iWuRYcGYXPrC3070Xuqd7SUBMFB0OxF9gl8Py3gCQZ2483-NhiYqbl/NothofagusCunninghammii.jpg
+	JOSHUA				( 0.9f,  0.08f,  99,  24,  30,  20,   60,  20,   100,     0,  0.6f,   0,  255, 0),
+	PEAR				( 1.2f,  0.08f,  70,   6,  20, 100,  180,  100,  200,    0f,  0.8f,   0,  100, 1220),		 // http://fc06.deviantart.net/fs40/f/2009/004/e/f/An_old_pear_tree_by_SzekelyCsaba.jpg
+	AFRICANMAHOGANY		( 1.2f,  0.08f,  96,  23,  30, 145,  220,  100,  230,    0f,  0.8f,   0,  200, 840),
+	BLACKWALNUT			( 1.15f, 0.08f,  10,  15,  22, 170,  255,  130,  255,    0f,   0.5f,   0,  255, 1010),
+	POPLAR				( 0.6f,  0.08f,  85,   3,  20, 115,  255,  100,  255,    0f, 0.95f,   0,  255, 430, true, false),
+	WEEPINGWILLOW		( 0.5f,  0.06f,  96,  -6,  18,  65,  255,   50,  255,    0f,    1f,   0,  250, 568),		// https://c1.staticflickr.com/9/8467/8371823596_2c2e65240e.jpg
+	COYOTEWILLOW		( 0.5f,  0.06f, 100, -12,  19,  60,  255,   50,  255,    0f, 1.05f,   0,  250, 0, false, true),
+	LARCH				( 0.8f,  0.06f,  99, -23,  10,  48,  150,   30,  180,    0f,  0.6f,   0,  255, 745, true, false),
+	KAURI				( 1.3f,  0.01f,  99,  20,  24, 120,  255,   90,  200,    0f,  0.8f,   0,  255, 660)
 	
 	
 //	COCOATREE				(100, 0,  0,  0,    0, 0,   0, 0f, 0f),			// http://images.fineartamerica.com/images-medium-large/cacao-tree-granger.jpg
@@ -79,6 +82,8 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 	int maxfertility;
 	int minforest;
 	int maxforest;
+	public int jankahardness;
+	
 	boolean competitive;
 	public boolean isBush;
 	
@@ -105,11 +110,11 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 		return defaultGenerator;
 	}
 	
-	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest) {
-		this(growthspeed, saplingdropchance, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minfertility, maxforest, false, false);
+	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, int jankahardness) {
+		this(growthspeed, saplingdropchance, weight, mintemp, maxtemp, minrain, maxrain, minfertility, maxfertility, minheight, maxheight, minfertility, maxforest, jankahardness, false, false);
 	}
 	
-	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, boolean competitive, boolean nologs) {
+	EnumTree(float growthspeed, float saplingdropchance, int weight, int mintemp, int maxtemp, int minrain, int maxrain, int minfertility, int maxfertility, float minheight, float maxheight, int minforest, int maxforest, int jankahardness, boolean competitive, boolean nologs) {
 		this.isBush = nologs;
 		this.competitive = competitive;
 		this.saplingdropchance = saplingdropchance;
@@ -121,6 +126,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 		this.maxrain = maxrain;
 		this.minforest = minforest;
 		this.maxforest = maxforest;
+		this.jankahardness = jankahardness;
 		this.minfertility = minfertility;
 		this.maxfertility = maxfertility;
 		this.maxheight = maxheight;

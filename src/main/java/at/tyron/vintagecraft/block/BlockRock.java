@@ -132,7 +132,7 @@ public class BlockRock extends BlockVC implements IMultiblock {
     }
       
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
     

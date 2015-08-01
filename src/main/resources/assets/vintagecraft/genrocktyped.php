@@ -1,6 +1,10 @@
 <?php
 
+// Block+Item
 $blockclasses = array("rock", "subsoil", "regolith", "gravel", "sand", "cobblestone", "stoneanvil");
+// Item only
+$itemclasses = array("stonepot", "grindstone", "grindstonebase");
+
 $blocktypes = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert", "chalk", "kimberlite", "slate");
 $organiclayers = array("nograss", "verysparsegrass", "sparsegrass", "normalgrass");
 $anvilstages = array(0, 1, 2);
@@ -43,15 +47,13 @@ foreach ($blockclasses as $blockclass) {
 
 
 
-/****** Stone pot *******/
-$blockclass = "stonepotitem";
-
-foreach ($blocktypes as $blocktype) {
-	$itemoutdir = "models/item/{$blockclass}/";
-	
-	file_put_contents($itemoutdir . $blocktype.".json", getItemModel($blockclass, $blocktype));
+foreach ($itemclasses as $itemclass) {
+	foreach ($blocktypes as $blocktype) {
+		$itemoutdir = "models/item/{$itemclass}/";
+		
+		file_put_contents($itemoutdir . $blocktype.".json", getItemModel($itemclass, $blocktype));
+	}
 }
-
 
 
 
@@ -112,8 +114,8 @@ function getBlockModel($modeltype, $blockclass, $blocktype, $param = null) {
 
 
 function getItemModel($blockclass, $blocktype, $organiclayer = null) {
-	if ($blockclass == "stonepotitem") {
-	return '{
+	if ($blockclass == "stonepot") {
+		return '{
     "parent": "vintagecraft:item/'.$blockclass.'/base",
     "textures": {
         "stone": "vintagecraft:blocks/cobblestone/'.$blocktype.'"
@@ -126,8 +128,26 @@ function getItemModel($blockclass, $blocktype, $organiclayer = null) {
         }
     }
 }
-';		
+';
 	}
+
+	if ($blockclass == "grindstone" || $blockclass == "grindstonebase") {
+		return '{
+    "parent": "vintagecraft:item/'.$blockclass.'/base",
+    "textures": {
+        "stone": "vintagecraft:blocks/rock/'.$blocktype.'"
+    },
+    "display": {
+        "thirdperson": {
+            "rotation": [ 10, -45, 170 ],
+            "translation": [ 0, 1.5, -2.75 ],
+            "scale": [ 0.75, 0.75, 0.75 ]
+        }
+    }
+}
+';
+	}
+	
 	if ($organiclayer) {
 	return '{
 "parent": "vintagecraft:block/'.$blockclass.'/'.$organiclayer.'-'.$blocktype.'",

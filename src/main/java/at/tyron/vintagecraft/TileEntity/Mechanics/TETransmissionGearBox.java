@@ -31,6 +31,7 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 		super.readFromNBT(compound);
 		
 		network2 = MechanicalNetwork.getNetworkById(compound.getInteger("networkId2"));
+		if (network2 != null) network2.register(this);
 		
 		int ori0 = compound.getInteger("gearOrientation0");
 		int ori1 = compound.getInteger("gearOrientation1");

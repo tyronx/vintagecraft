@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,27 +20,30 @@ import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.AnvilRecipes;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 
-public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, ISmithable, IItemHeatable {
+public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, ISmithable, IItemHeatable {
 
-	public ItemMetalPlate() {
+	public ItemMetalPlate(Block block) {
+		super(block);
         this.setHasSubtypes(true);
         setCreativeTab(VintageCraft.resourcesTab);
 	}
 	
-    @SideOnly(Side.CLIENT)
+    /*@SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	ItemStack stack;
     	for (EnumMetal metal : EnumMetal.values()) {
     		if (!metal.hasArmor) continue;
     		
-    		stack = new ItemStack(ItemsVC.metalplate);
-    		setMetal(stack, metal);
+    		stack = BlocksVC.metalplate.getItemStackFor(metal); //new ItemStack(ItemsVC.metalplate);
+    		//setMetal(stack, metal);
     		subItems.add(stack);
     	}
-    }
+    }*/
     
     
     @Override
@@ -106,7 +110,7 @@ public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, 
 	
 	
 	
-	public static ItemStack setMetal(ItemStack itemstack, EnumMetal metal) {
+	/*public static ItemStack setMetal(ItemStack itemstack, EnumMetal metal) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		nbt.setInteger("metal", metal.id);
 		itemstack.setTagCompound(nbt);
@@ -115,7 +119,7 @@ public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, 
 
 	public static ItemStack getItemStack(EnumMetal metal, int quantity) {
 		return setMetal(new ItemStack(ItemsVC.metalplate, quantity), metal);
-	}
+	}*/
 	
 	
 	@Override
@@ -190,4 +194,6 @@ public class ItemMetalPlate extends ItemVC implements ISubtypeFromStackPovider, 
 			getTemperature(itemstack) >= getMetal(itemstack).getMinWorkableTemperature();
 	}
 
+	
+	
 }

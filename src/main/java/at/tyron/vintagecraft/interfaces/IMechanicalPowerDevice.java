@@ -6,25 +6,27 @@ import net.minecraft.world.World;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 
 public abstract interface IMechanicalPowerDevice {
-	public boolean hasConnectorAt(EnumFacing facing);
-	public boolean isConnectedAt(EnumFacing facing);
+	public boolean hasConnectorAt(EnumFacing localFacing);
+	public boolean isConnectedAt(EnumFacing localFacing);
 	
-	public void trySetNetwork(MechanicalNetwork network, EnumFacing facing);
-	public MechanicalNetwork getNetwork(EnumFacing facing);
+	public void trySetNetwork(MechanicalNetwork network, EnumFacing localFacing);
+	public MechanicalNetwork getNetwork(EnumFacing localFacing);
 	
-	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing fromFacing);
-	public void propagateDirectionToNeightbours(int propagationId, EnumFacing fromFacing, boolean clockwise);
+	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing);
+	public void propagateDirectionToNeightbours(int propagationId, EnumFacing remoteFacing, boolean clockwise);
 
-	public boolean isClockWiseDirection(EnumFacing facing);
+	public boolean isClockWiseDirection(EnumFacing localFacing);
 	public void setClockWiseDirection(MechanicalNetwork network, boolean clockwise);
 
 
-	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing);
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside);
 	public void onDeviceRemoved(World world, BlockPos pos);
 	
 	
 	
 	public boolean exists();
 	public BlockPos getPosition();
+	public void clearNetwork();
+	
 	
 }

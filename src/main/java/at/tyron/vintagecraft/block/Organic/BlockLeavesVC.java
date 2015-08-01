@@ -253,7 +253,7 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
     
 
@@ -266,7 +266,7 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 	@Override
 	public String getSubType(ItemStack stack) {
 		ItemBlock itemblock = (ItemBlock)stack.getItem();
-		return getBlockClass().getBlockClassfromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();	
+		return getBlockClass().getEntryFromMeta((BlockVC) itemblock.block, stack.getItemDamage()).getName();	
 	}
 
 

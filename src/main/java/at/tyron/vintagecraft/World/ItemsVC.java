@@ -27,11 +27,11 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemsVC {
 	public static Item stone;
-	public static Item stonepot;
+	//public static Item stonepot;
 	
 	public static Item ore;
 	public static Item metalingot;
-	public static Item metalplate;
+	//public static Item metalplate;
 	
 	public static Item peatbrick;
 	public static Item fireclay_ball;
@@ -59,6 +59,8 @@ public class ItemsVC {
 	
 	public static Item anvilbase;
 	public static Item anvilsurface;
+	
+	public static Item sail;
 	
 
 	
@@ -141,12 +143,15 @@ public class ItemsVC {
 		firestarter = new ItemFireStarter();
 		register(firestarter, "firestarter");
 		
-		stonepot = new ItemStonePot();
-		register(stonepot, "stonepotitem");
+		/*stonepot = new ItemStonePot();
+		register(stonepot, "stonepot");
 		
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stonepotitem/" + rocktype.getStateName());
-		}
+			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stonepot/" + rocktype.getStateName());
+		}*/
+		
+		sail = new ItemSail();
+		register(sail, "sail");
 	}
 	
 	public static Item register(Item item, String internalname) {
@@ -284,13 +289,13 @@ public class ItemsVC {
 	
 	static void initIngots() {
 		metalingot = new ItemIngot().register("ingot");
-		metalplate = new ItemMetalPlate().register("metalplate");
+		//metalplate = new ItemMetalPlate().register("metalplate");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
 			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
-			if (metal.hasArmor) {
-				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase(Locale.ROOT));
-			}
+//			if (metal.hasArmor) {
+//				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase(Locale.ROOT));
+//			}
 		}
 	}
 	

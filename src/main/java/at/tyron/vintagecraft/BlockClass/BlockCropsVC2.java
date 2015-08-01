@@ -58,7 +58,7 @@ public class BlockCropsVC2 extends BlockVC implements ISubtypeFromStackPovider, 
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+		return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
 	}
 	
 	

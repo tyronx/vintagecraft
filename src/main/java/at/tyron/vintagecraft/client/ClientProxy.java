@@ -50,6 +50,7 @@ import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
@@ -58,12 +59,16 @@ import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEBellows;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -74,7 +79,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
-	public static ModelResourceLocation oremodelLocation = new ModelResourceLocation(ModInfo.ModID + ":" + BlocksVC.raworeName, null);
+	//public static ModelResourceLocation oremodelLocation = new ModelResourceLocation(ModInfo.ModID + ":" + BlocksVC.raworeName, null);
 	
 		
 	@Override
@@ -143,9 +148,29 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
-        registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory"); //ItemsVC.toolrack
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory");
+        
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.axle), "vintagecraft:axle/", EnumTree.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.axle), "axle", "inventory");
+        
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.angledgearbox), "vintagecraft:angledgearbox/", EnumTree.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.angledgearbox), "angledgearbox", "inventory");
+        
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.windmillrotor), "vintagecraft:windmillrotor/", EnumTree.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.windmillrotor), "windmillrotor", "inventory");
+
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.bellows), "vintagecraft:bellows/", EnumTree.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.bellows), "bellows", "inventory");
+
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.grindstone), "vintagecraft:grindstone/", EnumRockType.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.grindstone), "grindstone", "inventory");
+
+        //addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.metalplate), "vintagecraft:metalplate/", EnumMetal.values());
+        //registerModelLocation(ItemsVC.metalplate, "metalplate", "inventory");
+        
         registerModelLocation(ItemsVC.stone, "stone", "inventory");
-        registerModelLocation(ItemsVC.stonepot, "stonepotitem", "inventory");
+        //registerModelLocation(ItemsVC.stonepot, "stonepot", "inventory");
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.stonepot), "stonepot", "inventory");
         
     	registerModelLocation(ItemsVC.fireclay_ball, "fireclay_ball", "inventory");
     	registerModelLocation(ItemsVC.fireclay_brick_raw, "fireclay_brick_raw", "inventory");
@@ -153,11 +178,12 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
     	registerModelLocation(ItemsVC.ore, "ore", "inventory");
     	registerModelLocation(ItemsVC.metalingot, "ingot", "inventory");
-    	registerModelLocation(ItemsVC.metalplate, "metalplate", "inventory");
+    	
     	
     	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");    	
     	registerModelLocation(ItemsVC.dryGrass, "drygrass", "inventory");
     	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");
+    	registerModelLocation(ItemsVC.sail, "sail", "inventory");
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
     	
     	registerModelLocation(ItemsVC.tools.values().toArray(new Item[0]), "tool", "inventory");
@@ -180,6 +206,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEAxle.class, "axle", new TESRAxle());
 		ClientRegistry.registerTileEntity(TEAngledGearBox.class, "angledgearbox", new TESRAngledGearBox());
 		ClientRegistry.registerTileEntity(TEWindmillRotor.class, "windmillrotor", new TESRWindmillRotor());
+		ClientRegistry.registerTileEntity(TEGrindStone.class, "grindstone", new TESRGrindstone());
+		ClientRegistry.registerTileEntity(TEBellows.class, "bellows", new TESRBellows());
     }
     
 	
@@ -196,7 +224,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	        renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
 	            @Override
 	            public ModelResourceLocation getModelLocation(ItemStack stack) {
-	            	///System.out.println(name + "/" + stack.getUnlocalizedName());
+	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
 	            	if (item instanceof ISubtypeFromStackPovider && ((ISubtypeFromStackPovider)item).getSubType(stack) != null) {
 	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
 	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);
@@ -233,6 +261,13 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	public void addVariantName(Item item, String... names) {
 		ModelBakery.addVariantName(item, names);
 	}
+	
+	public void addVariantNamesFromEnum(Item item, String prefix, IStateEnum[] names) {
+		for (IStateEnum state : names) {
+			ModelBakery.addVariantName(item, prefix + state.getStateName());
+		}
+	}
+	
 	
 	
 	public void ignoreProperties(Block block, IProperty[] properties) {

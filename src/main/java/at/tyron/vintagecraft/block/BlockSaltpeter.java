@@ -52,7 +52,7 @@ public class BlockSaltpeter extends BlockCoating {
     }
 
     
-    // Remove registration of multiple variants, as there is not items for these
+    // Remove registration of multiple variants, as there is no items for these
     @Override
 	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
 		if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
@@ -60,33 +60,6 @@ public class BlockSaltpeter extends BlockCoating {
 		setUnlocalizedName(blockclassname);
 		return this;
 	}
-
-    
-    @Override
-    public boolean isOpaqueCube() {
-    	return false;
-    }
-    
-    @Override
-    public boolean isVisuallyOpaque() {
-    	return false;
-    }
-	
-    @Override
-    public boolean isFullCube() {
-    	return false;
-    }
-    
-    @Override
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-    	String facings = ((BlockClassEntry)worldIn.getBlockState(pos).getValue(FACINGS)).getKey().getStateName();
-    	
-    	return facings.indexOf(side.getName().substring(1).toLowerCase(Locale.ROOT)) != -1;
-    }
-	
-    
-    
- 
 
     
     @Override

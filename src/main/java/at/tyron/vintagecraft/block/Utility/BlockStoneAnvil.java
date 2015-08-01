@@ -59,7 +59,7 @@ public class BlockStoneAnvil extends BlockContainerVC implements IMultiblock {
         keepInventory = false;
         
         if (stage == 0) {
-        	EnumRockType rocktype = (EnumRockType)BlocksVC.stoneanvil.getBlockClassfromMeta(state.getBlock(), getMetaFromState(state) & 3) .getKey();
+        	EnumRockType rocktype = (EnumRockType)BlocksVC.stoneanvil.getEntryFromMeta(state.getBlock(), getMetaFromState(state) & 3) .getKey();
         	
         	TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof TEAnvil) {
@@ -135,7 +135,7 @@ public class BlockStoneAnvil extends BlockContainerVC implements IMultiblock {
     }
      
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta & 3).getBlockState().withProperty(STAGE, meta >> 2);
+    	return getBlockClass().getEntryFromMeta(this, meta & 3).getBlockState().withProperty(STAGE, meta >> 2);
     }
 
 

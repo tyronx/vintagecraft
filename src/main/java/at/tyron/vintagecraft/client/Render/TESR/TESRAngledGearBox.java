@@ -6,14 +6,11 @@ import net.minecraft.tileentity.TileEntity;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
 
-public class TESRAngledGearBox extends TESRMechanicalBase {
+public class TESRAngledGearBox extends TESRMechanicalBase  {
 
 	
 	public void renderAt(TEAngledGearBox te, float posX, float posY, float posZ, float f) {
-		if (te.getWorld() == null) return;
-		
-		//te.angle += te.getNetworkSpeed(null) / 5f;
-		//System.out.println(te.getAngle());
+		if (te.getWorld() == null || te.texture == null) return;
 		renderAngledGearBox(te, te.getAngle(), posX, posY, posZ);		
 	}
 	

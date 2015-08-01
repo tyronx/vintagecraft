@@ -1,8 +1,10 @@
 {
     "thud": { "category": "player", "sounds": [ "thud" ] },
 	"fireplace": { "category": "player", "sounds": [ "fireplace" ] },
+	"stone_grind": { "category": "player", "sounds": [ "stone_grind" ] },
 	"anvil_hit": { "category": "player", "sounds": [ "anvil_hit" ] },
 	"anvilbreak": { "category": "player", "sounds": [ "anvilbreak" ] },
-	"stonehit": { "category": "player", "sounds": [ "pickaxe_stone_hit1", "pickaxe_stone_hit2", "pickaxe_stone_hit3" ] }
-	
+	"stonehit": { "category": "player", "sounds": [ "pickaxe_stone_hit1", "pickaxe_stone_hit2", "pickaxe_stone_hit3" ] },
+	"woodcreak": { "category": "player", "sounds": [ "woodcreak_1", "woodcreak_2", "woodcreak_3", "woodcreak_4" ] },
+	"woodcreak_long": { "category": "player", "sounds": [ "woodcreak_long1", "woodcreak_long2", "woodcreak_long3" ] }
 }

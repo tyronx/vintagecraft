@@ -3,32 +3,70 @@ package at.tyron.vintagecraft.TileEntity.Mechanics;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
+import javax.management.RuntimeErrorException;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity implements IMechanicalPowerDevice  {
+	public boolean markedForRemoval = false;
+	
 	public MechanicalNetwork network;
 	int propagationId;
 	
+	/* Wether the device turns clockwise as seen from clockwiseFromFacing (standing 3 blocks away from this facing and looking towards the block */
 	public boolean clockwise;
+	public EnumFacing directionFromFacing;
+	
 	public EnumFacing orientation;
 	
+	private EnumTree treeType;
+	public ResourceLocation texture;
+	
+	public void setTreeType(EnumTree treeType) {
+		if (treeType == null) treeType = EnumTree.OAK;
+		
+		this.treeType = treeType;
+		texture = new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + treeType.getName() + ".png");
+	}
+	public EnumTree getTreeType() {
+		return treeType;
+	}
+	public EnumFacing getOrientation() {
+		return orientation;
+	}
+	
+
+	
+	@SideOnly(Side.CLIENT)
+	float lastAngle = 0f;
 	
 	@SideOnly(Side.CLIENT)
 	public float getAngle() {
 		MechanicalNetwork network = getNetwork(null); 
-		if (network == null) return 0;
-		return network.getAngle();
+		if (network == null) {
+			return lastAngle;
+		}
+		
+		if (directionFromFacing != orientation) {
+			return (lastAngle = 360 - network.getAngle());
+		}
+		
+		return (lastAngle = network.getAngle());
 	}
 
 	@Override
@@ -36,10 +74,24 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		super.readFromNBT(compound);
 		
 		network = MechanicalNetwork.getNetworkById(compound.getInteger("networkId"));
+		if (network != null) {
+			network.register(this);
+			System.out.println("registering myself");
+		}
+		
 		clockwise = compound.getBoolean("clockwise");
 		
 		int num = compound.getInteger("orientation");
 		orientation = num == -1 ? null : EnumFacing.values()[num];
+		
+		num = compound.getInteger("clockwiseFromFacing");
+		directionFromFacing = num == -1 ? null : EnumFacing.values()[num];
+
+		
+		int treetypeid = compound.getInteger("treetype");
+		if (treetypeid != -1) {
+			setTreeType(EnumTree.byId(treetypeid));
+		}
 	}
 	
 	@Override
@@ -48,12 +100,24 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		
 		compound.setInteger("networkId", network == null ? 0 : network.networkId);
 		compound.setInteger("orientation", orientation == null ? -1 : orientation.ordinal());
+		compound.setInteger("clockwiseFromFacing", directionFromFacing == null ? -1 : directionFromFacing.ordinal());
 		compound.setBoolean("clockwise", clockwise);
+		
+		if (treeType != null) {
+			compound.setInteger("treetype", treeType.getId());
+		} else {
+			compound.setInteger("treetype", -1);
+		}
 	}
 
 
+	public void setDirectionFromFacing(EnumFacing facing) {
+		this.directionFromFacing = facing;
+	}
+	
 	@Override
 	public MechanicalNetwork getNetwork(EnumFacing facing) {
+		//System.out.println(network);
 		if (network == null || MechanicalNetwork.getNetworkById(network.networkId) == null) {
 			network = null;
 		}
@@ -77,57 +141,76 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		if (hasConnectorAt(localFacing)) {
 			this.network = network;
 			
-			clockwise = getConnectibleNeighbourDevice(localFacing).isClockWiseDirection(localFacing.getOpposite());
+			IMechanicalPowerDevice device = getNeighbourDevice(localFacing, true);
+			if (device != null) {
+				if (network.getDirection() != 0) {
+					clockwise = device.isClockWiseDirection(localFacing.getOpposite());
+					setDirectionFromFacing(localFacing.getOpposite());
+				}
+			} else {
+				throw new RuntimeException("Eh, a network coming from " + localFacing + ", but there is no device, instead " + worldObj.getBlockState(pos.offset(localFacing)) + "?!");
+			}
 			
 			network.register(this);
 			
 			worldObj.markBlockForUpdate(pos);
+		} else {
+			directionFromFacing = null;
+			this.network = null;
 		}
 	}
 
 	
-	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside) {
 		orientation = facing;
 		handleMechanicalRelayPlacement();
 	}
 
 	public void onDeviceRemoved(World world, BlockPos pos) {
+		markedForRemoval = true;
 		handleMechanicRelayRemoval();
-		
 	}
 
 	
 	
-	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing fromFacing) {
+	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing) {
 		// Already propagated
-		if (this.network == network) return;
+		if (this.propagationId == propagationId) return;
+		this.propagationId = propagationId;
+
+		trySetNetwork(network, remoteFacing.getOpposite());
+		network.register(this);
 		
-		trySetNetwork(network, fromFacing.getOpposite());
+		//if (true) throw new RuntimeException("safg");
+		//System.out.println(pos);
 		
-		System.out.println("connected to network " + network + ", propagate to neighbours");
-		
-		sendNetworkToNeighbours(propagationId, network, fromFacing);
+		sendNetworkToNeighbours(propagationId, network, remoteFacing);
 	}
 	
 	
 	@Override
 	public void propagateDirectionToNeightbours(int propagationId, EnumFacing remoteFacing, boolean clockwise) {
+		// Already propagated
+		if (this.propagationId == propagationId) return;
+		this.propagationId = propagationId;
+		
 		this.clockwise = clockwise;
-		//if (orientation == fromFacing.getOpposite()) this.clockwise = !clockwise;
 		
 		worldObj.markBlockForUpdate(pos);
 		
-		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getConnectibleNeighbourDevices();
-		
+		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);
+				
 		for (EnumFacing localFacing : connectibleNeighbours.keySet()) {
+			//System.out.println(remoteFacing.getOpposite() +"!= "+localFacing);			
 			if (remoteFacing.getOpposite() != localFacing) {
-				connectibleNeighbours.get(localFacing).propagateDirectionToNeightbours(propagationId, localFacing, clockwise);
+				boolean remoteClockwise = isClockWiseDirection(localFacing);
+				connectibleNeighbours.get(localFacing).propagateDirectionToNeightbours(propagationId, localFacing, remoteClockwise);
 			}
 		}	
 	}
 	
 	public void sendNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing) {
-		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getConnectibleNeighbourDevices();
+		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);
 		
 		for (EnumFacing localFacing : connectibleNeighbours.keySet()) {
 			if (remoteFacing.getOpposite() != localFacing) {
@@ -140,26 +223,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	public void handleMechanicRelayRemoval() {
 		if (network == null) return;
-		
 		network.unregister(this);
-		
-		Hashtable<EnumFacing, MechanicalNetwork> networks = new Hashtable<EnumFacing, MechanicalNetwork>();
-		
-		for (EnumFacing facing : EnumFacing.values()) {
-			IMechanicalPowerDevice neib = getConnectibleNeighbourDevice(facing);
-			if (neib == null) continue;
-			MechanicalNetwork network = neib.getNetwork(facing.getOpposite());
-			if (network != null && !networks.contains(network)) {
-				networks.put(facing, network);
-			}
-		}
-		
-		if (networks.size() >= 2) {
-			for (MechanicalNetwork network : networks.values()) {
-				network.rebuildNetwork();
-			}
-		}
-		
 	}
 	
 	public void handleMechanicalRelayPlacement() {
@@ -167,7 +231,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		ArrayList<EnumFacing> nullnetworks = new ArrayList<EnumFacing>();
 		
 		for (EnumFacing facing : EnumFacing.values()) {
-			IMechanicalPowerDevice neib = getConnectibleNeighbourDevice(facing);
+			IMechanicalPowerDevice neib = getNeighbourDevice(facing, true);
 			
 			if (neib == null) continue;
 			
@@ -182,6 +246,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 			}
 		}
 		
+		//System.out.println(worldObj.isRemote + " found " + networks.size() + " networks ");
 		
 		if (networks.size() == 1) {
 			EnumFacing facing = networks.keySet().toArray(new EnumFacing[0])[0];
@@ -191,7 +256,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 			
 			
 			for (EnumFacing nullnetworkfacing : nullnetworks) {
-				getConnectibleNeighbourDevice(nullnetworkfacing).propagateNetworkToNeighbours(
+				getNeighbourDevice(nullnetworkfacing, true).propagateNetworkToNeighbours(
 					MechanicalNetwork.getUniquePropagationId(), 
 					network, 
 					nullnetworkfacing
@@ -206,10 +271,12 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	}
 	
 	
-	public Hashtable<EnumFacing, IMechanicalPowerDevice> getConnectibleNeighbourDevices() {
+	// connected = true   => get connected devices
+	// connected = false  => get connectible devices (= devices that could potentially connect to our own device)
+	public Hashtable<EnumFacing, IMechanicalPowerDevice> getNeighbourDevices(boolean connected) {
 		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = new Hashtable<EnumFacing, IMechanicalPowerDevice>();
 		for (EnumFacing facing : EnumFacing.values()) {
-			IMechanicalPowerDevice neib = getConnectibleNeighbourDevice(facing);
+			IMechanicalPowerDevice neib = getNeighbourDevice(facing, connected);
 			if (neib == null) continue;
 			connectibleNeighbours.put(facing, neib);
 		}
@@ -218,19 +285,29 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	
 	public IMechanicalPowerDevice getConnectibleNeighbourDevice(EnumFacing facing) {
-		return getConnectibleNeighbourDevice(worldObj, getPos(), facing);
+		return getNeighbourDevice(facing, false);
+	}
+	
+	public IMechanicalPowerDevice getNeighbourDevice(EnumFacing facing, boolean connected) {
+		return getNeighbourDevice(worldObj, getPos(), facing, connected);
 	}
 
 	
-	public static IMechanicalPowerDevice getConnectibleNeighbourDevice(World worldObj, BlockPos pos, EnumFacing facing) {
+	public static IMechanicalPowerDevice getNeighbourDevice(World worldObj, BlockPos pos, EnumFacing facing, boolean connected) {
 		if (facing == null) return null;
 		
 		TileEntity te = worldObj.getTileEntity(pos.offset(facing));
 		
 		if (te instanceof IMechanicalPowerDevice) {
 			IMechanicalPowerDevice mechdevice = (IMechanicalPowerDevice)te;
+			if (!mechdevice.exists()) return null;
+					
+//			System.out.println(pos + " / " + pos.offset(facing) + "  " +  facing + " of me is a " + mechdevice.getClass());
 			
-			if (mechdevice.hasConnectorAt(facing.getOpposite())) {
+			if (!connected && mechdevice.hasConnectorAt(facing.getOpposite())) {
+				return mechdevice;
+			}
+			if (connected && mechdevice.isConnectedAt(facing.getOpposite())) {
 				return mechdevice;
 			}
 		}
@@ -241,14 +318,15 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	public static boolean hasConnectibleDevice(World worldObj, BlockPos pos) {
 		for (EnumFacing facing : EnumFacing.values()) {
-			if (getConnectibleNeighbourDevice(worldObj, pos, facing) != null) return true;
+			if (getNeighbourDevice(worldObj, pos, facing, false) != null) return true;
 		}
 		return false;
 	}
 
+	// Default behavior: Device is connected to all neighbour devices
 	@Override
 	public boolean isConnectedAt(EnumFacing facing) {
-		IMechanicalPowerDevice device = getConnectibleNeighbourDevice(facing);
+		IMechanicalPowerDevice device = getNeighbourDevice(facing, false);
 
 		return device != null && (device instanceof IMechanicalPowerDevice); 
 	}
@@ -261,7 +339,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	@Override
 	public boolean exists() {
-		return worldObj.getTileEntity(pos) == this;
+		return worldObj.getTileEntity(pos) == this && !markedForRemoval;
 	}
 
 	
@@ -269,4 +347,10 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	public void setClockWiseDirection(MechanicalNetwork network, boolean clockwise) {
 		this.clockwise = clockwise;	
 	}
+
+	public void clearNetwork() {
+		this.network = null;
+		worldObj.markBlockForUpdate(pos);
+	}
+	
 }

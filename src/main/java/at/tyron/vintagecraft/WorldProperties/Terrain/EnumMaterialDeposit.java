@@ -112,7 +112,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 		
 		EnumRockType rocktype = null;
 		if (isrock) {
-			rocktype = (EnumRockType) BlocksVC.rock.getBlockClassfromState(state).getKey();
+			rocktype = (EnumRockType) BlocksVC.rock.getEntryFromState(state).getKey();
 		}
 		
 		switch (this) {
@@ -187,7 +187,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 				state = BlocksVC.rawore.getBlockStateFor(this.getName() + "-" + BlockOreVC.getRockType(parentmaterial).getName());
 				break;
 			default:
-				EnumRockType rocktype = (EnumRockType) BlocksVC.rock.getBlockClassfromState(parentmaterial).getKey();
+				EnumRockType rocktype = (EnumRockType) BlocksVC.rock.getEntryFromState(parentmaterial).getKey();
 				state = BlocksVC.rawore.getBlockStateFor(this.getName() + "-" + rocktype.getName());
 				break;
 		}

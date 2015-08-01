@@ -50,7 +50,7 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 	
 	public static EnumRockType getRockType(ItemStack itemstack) {
 		Block block = ((ItemBlock)itemstack.getItem()).block;
-		return (EnumRockType) getBlockClass(block).getBlockClassfromMeta(block, itemstack.getItemDamage()).getKey();
+		return (EnumRockType) getBlockClass(block).getEntryFromMeta(block, itemstack.getItemDamage()).getKey();
 	}
 	
 	public static BaseBlockClass getBlockClass(Block block) {

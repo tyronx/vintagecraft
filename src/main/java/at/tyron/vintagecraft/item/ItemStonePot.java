@@ -22,22 +22,22 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemStonePot extends ItemVC implements ISubtypeFromStackPovider {
-	Block block;
+public class ItemStonePot extends ItemBlockVC implements ISubtypeFromStackPovider {
+	//Block block;
 	
-	public ItemStonePot() {
-		this.block = BlocksVC.stonepot;
-		setCreativeTab(VintageCraft.craftedBlocksTab);
+	public ItemStonePot(Block block) {
+		//this.block = BlocksVC.stonepot;
+		super(block);
 	}
 	
-	@Override
+	/*@Override
 	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
 		for (EnumRockType rocktype : EnumRockType.values()) {
 			subItems.add(ItemStonePot.setRockType(new ItemStack(itemIn), rocktype));
 		}
 
 		super.getSubItems(itemIn, tab, subItems);
-	}
+	}*/
 	
 	
 	@Override
@@ -96,7 +96,7 @@ public class ItemStonePot extends ItemVC implements ISubtypeFromStackPovider {
      * @param pos The block being right-clicked
      * @param side The side being right-clicked
      */
-    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+   /* public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
@@ -139,5 +139,5 @@ public class ItemStonePot extends ItemVC implements ISubtypeFromStackPovider {
         {
             return false;
         }
-    }
+    }*/
 }

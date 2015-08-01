@@ -156,6 +156,8 @@ public class VintageCraftMobTweaker {
 		float difficultyModifier = 0.45f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
 		
 		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
+		if (inventory == null) return;
+		
 		int healthboost = 0;
 		int numgearitems = 0;
 		

@@ -204,13 +204,11 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
         }
     }
 
-    public String getName()
-    {
+    public String getName() {
         return this.hasCustomName() ? this.furnaceCustomName : (furnace == EnumStrongHeatSource.STOVE ? "container.stove" : "container.firepit");
     }
 
-    public boolean hasCustomName()
-    {
+    public boolean hasCustomName() {
         return this.furnaceCustomName != null && this.furnaceCustomName.length() > 0;
     }
 

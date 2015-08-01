@@ -158,11 +158,11 @@ public abstract class BaseBlockClass {
 	}
 	
 	
-	public BlockClassEntry getBlockClassfromState(IBlockState state) {
-		return getBlockClassfromMeta(state.getBlock(), state.getBlock().getMetaFromState(state));
+	public BlockClassEntry getEntryFromState(IBlockState state) {
+		return getEntryFromMeta(state.getBlock(), state.getBlock().getMetaFromState(state));
 	}
 	
-	public BlockClassEntry getBlockClassfromMeta(Block block, int meta) {
+	public BlockClassEntry getEntryFromMeta(Block block, int meta) {
 		for (BlockClassEntry enumitem: values()) {
 			if (enumitem.metadata == meta && enumitem.block == block) return enumitem;
 		}
@@ -174,13 +174,13 @@ public abstract class BaseBlockClass {
 		throw new RuntimeException("BlockClassEntry not found for block " + block + " / meta " + meta);
 	}
 	
-	public BlockClassEntry getFromKey(IStateEnum key) {
+	public BlockClassEntry getEntryFromKey(IStateEnum key) {
 		return values.get(key);
 	}
 	
-	public BlockClassEntry getFromItemStack(ItemStack itemstack) {
+	public BlockClassEntry getEntryFromItemStack(ItemStack itemstack) {
 		if (itemstack.getItem() instanceof ItemBlock) {
-			return getBlockClassfromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
+			return getEntryFromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 		}
 		return null;
 	}

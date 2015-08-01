@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Block;
 
 import java.util.List;
+import java.util.Locale;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -48,17 +49,6 @@ public abstract class BlockCoating extends BlockVC implements IMultiblock {
 	
 
 	
-	@Override
-	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
-		return true;
-	}
-
-	
-	
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-		return null;
-	}
 	
 	@Override
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
@@ -74,7 +64,7 @@ public abstract class BlockCoating extends BlockVC implements IMultiblock {
 	
 	
 	public AxisAlignedBB getSelectedBoundingBox2(IBlockAccess worldIn, BlockPos pos) {
-		String facings = BlocksVC.saltpeter.getBlockClassfromState(worldIn.getBlockState(pos)).getKey().getStateName();
+		String facings = getBlockClass().getEntryFromState(worldIn.getBlockState(pos)).getKey().getStateName();
 		
 		if (facings.length() == 1) {
 			char facing = facings.charAt(0);
@@ -108,7 +98,7 @@ public abstract class BlockCoating extends BlockVC implements IMultiblock {
     }
       
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
     
@@ -145,5 +135,39 @@ public abstract class BlockCoating extends BlockVC implements IMultiblock {
 	public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
 		return false;
 	}
+	
+	@Override
+	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
+		return true;
+	}
+	
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+		return null;
+	}
 
+    @Override
+    public boolean isOpaqueCube() {
+    	return false;
+    }
+    
+    @Override
+    public boolean isVisuallyOpaque() {
+    	return false;
+    }
+	
+    @Override
+    public boolean isFullCube() {
+    	return false;
+    }
+    
+
+    @Override
+    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+    	String facings = ((BlockClassEntry)worldIn.getBlockState(pos).getValue(FACINGS)).getKey().getStateName();
+    	
+    	return facings.indexOf(side.getName().substring(1).toLowerCase(Locale.ROOT)) != -1;
+    }
+	
+    
 }

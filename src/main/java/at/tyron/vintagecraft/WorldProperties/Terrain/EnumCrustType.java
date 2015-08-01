@@ -36,7 +36,7 @@ public enum EnumCrustType {
 				return BlocksVC.subsoil.getBlockStateFor("nograss-" + rocktype.getName());
 				
 			case REGOLITH:
-				return BlocksVC.regolith.getFromKey(rocktype).getBlockState();
+				return BlocksVC.regolith.getEntryFromKey(rocktype).getBlockState();
 				
 			case SNOW:
 				return Blocks.snow.getDefaultState();
@@ -48,13 +48,13 @@ public enum EnumCrustType {
 				return Blocks.packed_ice.getDefaultState();
 						
 			case SAND:
-				return BlocksVC.sand.getFromKey(rocktype).getBlockState();
+				return BlocksVC.sand.getEntryFromKey(rocktype).getBlockState();
 				
 			case GRAVEL:
-				return BlocksVC.gravel.getFromKey(rocktype).getBlockState();
+				return BlocksVC.gravel.getEntryFromKey(rocktype).getBlockState();
 				
 			case ROCK:
-				BlockClassEntry rock = BlocksVC.rock.getFromKey(rocktype);
+				BlockClassEntry rock = BlocksVC.rock.getEntryFromKey(rocktype);
 				if (rock != null) return rock.getBlockState();
 				break;
 		}

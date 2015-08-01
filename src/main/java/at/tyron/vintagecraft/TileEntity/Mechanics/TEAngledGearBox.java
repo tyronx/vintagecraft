@@ -7,42 +7,57 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IMechanicalPowerNetworkRelay {
+public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {
 	// orientation = peg gear orientation
+	// clockwise = facing of 
 	
 	public EnumFacing cagegearOrientation;
 	public boolean refreshModel;
 	
+	
+	@Override
+	public void setDirectionFromFacing(EnumFacing facing) {
+		super.setDirectionFromFacing(facing);
+		connectToNeighbours();
+		if (facing == cagegearOrientation.getOpposite()) {
+			// Flip gears
+			EnumFacing tmp = orientation;
+			orientation = cagegearOrientation;
+			cagegearOrientation = tmp;
+		} else {
+			
+		}
+	}
 
 	public TEAngledGearBox() {
 		cagegearOrientation = null;
 	}
 	
-	@Override
-	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing) {
-		connectToNeighbours();
-		
-		super.onDevicePlaced(world, pos, facing);
-	}
 	
-	/*public void setDirection(EnumFacing facing, boolean clockwise) {
-		if (facing == gearOrientations[0]) {
-			direction[0] = clockwise;
-			direction[1] = !clockwise;
-		} else {
-			direction[1] = clockwise;
-			direction[0] = !clockwise;			
-		}
-	}*/
+	@Override
+	public boolean isClockWiseDirection(EnumFacing localFacing) {
+		return clockwise;
+	}
 
 	
+	@Override
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside) {
+		orientation = null;
+		connectToNeighbours();
+		handleMechanicalRelayPlacement();		
+	}
+
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -71,9 +86,9 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 			IMechanicalPowerDevice neighbourdevice = getConnectibleNeighbourDevice(facing);
 			if (neighbourdevice == null) continue;
 			
+			
 			if (orientation == null) {
 				orientation = facing;
-				
 				continue;
 			}
 			
@@ -82,7 +97,7 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 				continue;
 			}
 		}
-		
+
 		if (orientation == null) {
 			worldObj.destroyBlock(getPos(), true);
 		}
@@ -131,6 +146,16 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IM
 			// Or existing ones
 			orientation == facing || cagegearOrientation == facing
 		;
+	}
+
+	@Override
+	public void update() {
+		if (network != null && worldObj != null && !worldObj.isRemote) {
+			if (worldObj.rand.nextFloat() < Math.min(0.01f, network.getSpeed() / 2000f)) {
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 0.8f, 1f);
+				//System.out.println("play sound "  + network.getSpeed()); 
+			}
+		}
 	}
 
 

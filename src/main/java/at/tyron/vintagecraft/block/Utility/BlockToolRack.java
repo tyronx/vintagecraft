@@ -41,9 +41,7 @@ import net.minecraft.world.World;
 public class BlockToolRack extends BlockContainerVC {
 	public BlockToolRack() {
 		super(Material.wood);
-		
-		//this.setCreativeTab(CreativeTabs.tabDecorations);
-		this.setDefaultState(this.blockState.getBaseState()); //.withProperty(FACING, EnumFacing.NORTH));
+		this.setDefaultState(this.blockState.getBaseState());
 	}
 	
 	@Override
@@ -54,10 +52,6 @@ public class BlockToolRack extends BlockContainerVC {
 	}
 
 	
-	/*@Override
-	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		return state.withProperty(TREETYPE, getTreeType(worldIn, pos));
-	}*/
 	
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {

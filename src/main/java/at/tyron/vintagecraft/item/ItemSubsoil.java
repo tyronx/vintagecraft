@@ -55,7 +55,7 @@ public class ItemSubsoil extends ItemBlockVC {
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		// Soo many type casts -.-
 		// Totally should be programmed using generic types
-		SoilRockClassEntry entry = (SoilRockClassEntry)getBlockClass(((ItemBlock)itemstack.getItem()).block).getFromItemStack(itemstack);
+		SoilRockClassEntry entry = (SoilRockClassEntry)getBlockClass(((ItemBlock)itemstack.getItem()).block).getEntryFromItemStack(itemstack);
 		
 		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + entry.rocktype.getUnlocalizedName() + ".name"));
 		tooltip.add(StatCollector.translateToLocal(entry.organiclayer.getStateName() + ".name"));

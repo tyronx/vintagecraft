@@ -1,88 +1,99 @@
 package at.tyron.vintagecraft.Client.Render.TESR;
 
+import java.nio.FloatBuffer;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumFacing.Axis;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3i;
 
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
+import at.tyron.vintagecraft.Matrix4f;
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.Quaternion;
+import at.tyron.vintagecraft.Client.Model.ModelAxle;
 import at.tyron.vintagecraft.Client.Model.ModelGearComponents;
 import at.tyron.vintagecraft.Client.Model.ModelStonePot;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
 
 public abstract class TESRMechanicalBase extends TESRBase {
-
 	ModelGearComponents modelcagegear = new ModelGearComponents();
+	
+	
+	
+	void setupRotationsAndPos(EnumFacing base, EnumFacing desired, float angle, float posX, float posY, float posZ) {
+		if (desired == null) {
+			desired = EnumFacing.NORTH;
+		}
+		
+		float[] angles = getAnglesBetween(base, desired);
+		GL11.glTranslatef(posX + 0.5f, posY + 0.5f, posZ + 0.5f);
+		
+		Quaternion q = new Quaternion(); // Identity
+		q.eulerToQuat(angles[1], angles[0], 0);
+		Matrix4f mat = new Matrix4f();
+		q.createMatrix(mat);
 
+		FloatBuffer buf = BufferUtils.createFloatBuffer(16).put(mat.matrix);
+		buf.rewind();
+		
+		
+		GL11.glMultMatrix(buf);		
+		GL11.glRotatef(angle, 0f, 0f, 1f);
+		GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
+	}
+	
+
+	float[] getAnglesBetween(EnumFacing base, EnumFacing desired) {
+		if (base == EnumFacing.UP || base == EnumFacing.DOWN) throw new RuntimeException("Not coded for vertical base");
+		
+		return new float[]{
+			// Horizontal angle
+			desired.getAxis().isVertical() ? 0 : 90f * (base.getHorizontalIndex() - desired.getHorizontalIndex()), 
+			// Vertical angle
+			desired.getAxis().isHorizontal() ? 0 : 90f * (desired == EnumFacing.UP ? 1 : -1) 
+		};
+	}
+	
+	float[] axis2GLFloats(EnumFacing facing) {
+		float[] floats = new float[]{
+			(facing.getAxis() == Axis.X ? 1f : 0f),
+			(facing.getAxis() == Axis.Y ? 1f : 0f),
+			(facing.getAxis() == Axis.Z ? 1f : 0f)
+		};
+		
+		return floats;
+	}
+	
 	
 	public void renderAngledGearBox(TEAngledGearBox te, float angle, float posX, float posY, float posZ) {
 		if (te.refreshModel) {
 			te.refreshModel = false;
-			//System.out.println("refreshed ");
 			modelcagegear.initComponents();
 		}
 		
-		EnumFacing facing = EnumFacing.NORTH;
-		if (te.orientation != null) {
-			facing = te.orientation;
-		}
-	
-		// 0 = S, 1 = W, 2 = N, 3 = E
-		// =>
-		// 2 = S, 3 = W, 0 = N, 1 = E
-		int pegGearFacing = (facing.getHorizontalIndex() + 2) % 4;
 		
-		float pegGearxAxis = (pegGearFacing == 3 || pegGearFacing == 1) ? 1f : 0;
-		float pegGearzAxis = (pegGearFacing == 2 || pegGearFacing == 0) ? 1f : 0;
-		//int pegDir = (pegGearFacing == 1 || pegGearFacing == 2) ? -1 : 1;
-		
-		float pegGearFacingAngle = -pegGearFacing * 90f;
-		
+		// Peg Gear
 		GL11.glPushMatrix();
-		
-			GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(te.getAngle(), pegGearxAxis, 0f, pegGearzAxis);
-			GL11.glRotatef(pegGearFacingAngle, 0f, 1f, 0f);
-			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);
-			renderPegGear();
-			
+			setupRotationsAndPos(EnumFacing.NORTH, te.orientation, te.getAngle(), posX, posY, posZ);
+			renderPegGear(te.texture);
 		GL11.glPopMatrix();
-		
-
-		
 		
 		// Cage Gear
-		//System.out.println(te.gearOrientations[1]);
-		if (te.cagegearOrientation == null) return;
-		
-		int cageGearFacing = (te.cagegearOrientation.getHorizontalIndex() + 2) % 4;
-		float cageGearxAxis = (cageGearFacing == 3 || cageGearFacing == 1) ? 1f : 0;
-		float cageGearzAxis = (cageGearFacing == 2 || cageGearFacing == 0) ? 1f : 0;
-
-		int cageDir = (te.clockwise && te.cagegearOrientation == EnumFacing.NORTH) ? -1 : 1;
-		float cageGearFacingAngle = -cageGearFacing * 90f;
-		
-		//System.out.println(te.clockwise);
-		
-		
-		GL11.glPushMatrix();
-		
-			GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(cageDir * te.getAngle() - 18, cageGearxAxis, 0f, cageGearzAxis);
-			GL11.glRotatef(cageGearFacingAngle, 0f, 1f, 0f);
-			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);
-			
-			renderCageGear();
-		
-		GL11.glPopMatrix();
-
+		if (te.cagegearOrientation != null) {
+			GL11.glPushMatrix();
+				setupRotationsAndPos(EnumFacing.NORTH, te.cagegearOrientation, 360 - te.getAngle(), posX, posY, posZ);
+				renderCageGear(te.texture);
+			GL11.glPopMatrix();
+		}
 	}
 	
 	
-	public void renderCageGear() {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/oak.png"));
+	public void renderCageGear(ResourceLocation texture) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		
 		GL11.glPushMatrix();
 			
@@ -90,7 +101,7 @@ public abstract class TESRMechanicalBase extends TESRBase {
 			modelcagegear.renderPegs();
 			
 			GL11.glPushMatrix();			
-				GL11.glTranslatef(0.5f, -0.225f, 0.005f);
+				GL11.glTranslatef(0.5f, -0.225f, 0.001f);
 				GL11.glRotatef(45, 0, 0, 0.5f);
 				modelcagegear.renderBase();
 				modelcagegear.renderPegs();
@@ -105,8 +116,8 @@ public abstract class TESRMechanicalBase extends TESRBase {
 	}
 
 	
-	public void renderPegGear() {
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/oak.png"));
+	public void renderPegGear(ResourceLocation texture) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(texture);
 		
 		GL11.glPushMatrix();			
 			modelcagegear.renderBase();

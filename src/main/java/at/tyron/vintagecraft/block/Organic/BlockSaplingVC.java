@@ -165,7 +165,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		IBlockState state = getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+		IBlockState state = getBlockClass().getEntryFromMeta(this, meta).getBlockState();
 		return state;
 	}
 
@@ -319,7 +319,10 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
         if(te instanceof TESapling) {
         	boolean ok = ((TESapling)te).tryPutItemStack(itemstack);
         	
-        	if (ok) ItemDye.spawnBonemealParticles(world, pos, 10);
+        	if (ok) {
+        		ItemDye.spawnBonemealParticles(world, pos, 10);
+        		world.markBlockForUpdate(pos);
+        	}
         	return ok; 
         }
         return false;
@@ -327,7 +330,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return BlocksVC.sapling.getFromItemStack(stack).getStateName();
+		return BlocksVC.sapling.getEntryFromItemStack(stack).getStateName();
 	}
 	
 	

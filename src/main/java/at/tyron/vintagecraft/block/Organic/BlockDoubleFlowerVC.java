@@ -210,7 +210,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     public IBlockState getStateFromMeta(int meta) {
     	EnumBlockHalf half = (meta & 1) > 0 ? EnumBlockHalf.UPPER : EnumBlockHalf.LOWER;
     	
-    	return BlocksVC.doubleflower.getBlockClassfromMeta(this, meta & 7).getBlockState().withProperty(HALF, half);
+    	return BlocksVC.doubleflower.getEntryFromMeta(this, meta & 7).getBlockState().withProperty(HALF, half);
     }
 
 

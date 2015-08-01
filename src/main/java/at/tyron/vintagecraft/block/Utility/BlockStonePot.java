@@ -53,7 +53,14 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 	
 	public BlockStonePot() {
 		super(Material.rock);
-		//setCreativeTab(VintageCraft.craftedBlocksTab);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+	}
+	
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (EnumRockType rocktype : EnumRockType.values()) {
+			list.add(ItemStonePot.setRockType(new ItemStack(itemIn), rocktype));
+		}
 	}
 
 
@@ -118,7 +125,8 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 
         if (tileentity instanceof TEStonePot) {
             InventoryHelper.dropInventoryItems(worldIn, pos, (TEStonePot)tileentity);
-            spawnAsEntity(worldIn, pos, ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), ((TEStonePot)tileentity).rocktype));
+            //spawnAsEntity(worldIn, pos, ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), ((TEStonePot)tileentity).rocktype));
+            spawnAsEntity(worldIn, pos, ItemStonePot.setRockType(new ItemStack(BlocksVC.stonepot), ((TEStonePot)tileentity).rocktype));
         }
 
         super.breakBlock(worldIn, pos, state);

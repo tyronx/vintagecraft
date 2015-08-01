@@ -87,7 +87,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     
     
     public IBlockState getStateFromMeta(int meta) {
-    	return getBlockClass().getBlockClassfromMeta(this, meta).getBlockState();
+    	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
 
@@ -97,13 +97,13 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
  
     
     public static EnumOreType getOreType(IBlockState state) {
-    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getBlockClassfromState(state).block).getTypeProperty())).getName().split("-");
+    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
     	return EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
     }
 
     
     public static EnumRockType getRockType(IBlockState state) {
-    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getBlockClassfromState(state).block).getTypeProperty())).getName().split("-");
+    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
     	return EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
     }
 
