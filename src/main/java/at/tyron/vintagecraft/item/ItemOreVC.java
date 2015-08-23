@@ -6,6 +6,8 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
+import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
@@ -20,6 +22,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockLever.EnumOrientation;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -37,6 +40,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable, ISizedItem {
+
+	public static int maxpilesize = 64;
 
 	public ItemOreVC() {
         this.setHasSubtypes(true);
@@ -105,12 +110,18 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		if (getOreType(stack) == EnumOreType.BITUMINOUSCOAL) {
 			return 1200;
 		}
+		if (getOreType(stack) == EnumOreType.COKE) {
+			return 1300;
+		}
 		return 0;
 	}
 
 
 	@Override
 	public float getBurnDurationMultiplier(ItemStack stack) {
+		if (getOreType(stack) == EnumOreType.COKE) {
+			return 1.8f;
+		}
 		if (getOreType(stack) == EnumOreType.LIGNITE) {
 			return 2.2f;
 		}
@@ -122,8 +133,14 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 	
 	
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
-		return getOreType(stack) == EnumOreType.BITUMINOUSCOAL || getOreType(stack) == EnumOreType.LIGNITE;
+	public boolean isMetalWorkingFuel(ItemStack stack) {
+		EnumOreType oretype = getOreType(stack); 
+		return
+			oretype == EnumOreType.LIGNITE ||
+			oretype == EnumOreType.BITUMINOUSCOAL ||
+			oretype == EnumOreType.COKE
+		;
+		
 	}	
 
 
@@ -211,7 +228,50 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 
 	@Override
 	public int smokeLevel(ItemStack stack) {
+		if (getOreType(stack) == EnumOreType.COKE) return 20;
 		return 80;
 	}
+	
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		EnumOreType oretype = getOreType(stack);
+		
+		if (oretype == EnumOreType.LIGNITE) {
+			return getItemStackFor(EnumOreType.COKE, stack.stackSize / 3);
+		}
+		if (oretype == EnumOreType.BITUMINOUSCOAL) {
+			return getItemStackFor(EnumOreType.COKE, stack.stackSize / 2);
+		}
+		return null;
+	}
 
+
+	public boolean isPlaceable(ItemStack stack) {
+		EnumOreType oretype = getOreType(stack);
+		
+		return oretype == EnumOreType.LIGNITE || oretype == EnumOreType.BITUMINOUSCOAL || oretype == EnumOreType.COKE;
+	}
+
+
+	
+
+	
+	@Override
+	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
+		
+		if (!entityplayer.isSneaking() || !isPlaceable(itemstack)) return false;
+		
+		boolean orePileAtPos = world.getBlockState(pos).getBlock() instanceof BlockOrePile;
+		
+		if (!orePileAtPos) {
+			return BlockOrePile.tryCreatePile(itemstack, world, pos.offset(side));
+		} else {
+			BlocksVC.orepile.onBlockActivated(world, pos, world.getBlockState(pos), entityplayer, side, hitX, hitY, hitZ);
+		}
+		
+		return false;
+	}
+
+	
 }

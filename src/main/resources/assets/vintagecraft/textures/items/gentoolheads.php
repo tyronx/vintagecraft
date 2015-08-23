@@ -1,7 +1,7 @@
 <?php
 
 $tooltypes = array("axe", "hoe", "pickaxe", "saw", "shovel", "sword", "hammer");
-$materials = array("stone", "copper", "tinbronze", "bismuthbronze", "iron");
+$materials = array("stone", "copper", "tinbronze", "bismuthbronze", "iron", "steel");
 
 foreach ($tooltypes as $tooltype) {
 	$mask = imagecreatefrompng('toolhead/layer_'.$tooltype.'.png');

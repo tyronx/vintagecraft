@@ -1,4 +1,6 @@
 {
+    "air_suck": { "category": "player", "sounds": [ "air_suck" ] },
+	"air_blow": { "category": "player", "sounds": [ "air_blow" ] },
     "thud": { "category": "player", "sounds": [ "thud" ] },
 	"fireplace": { "category": "player", "sounds": [ "fireplace" ] },
 	"stone_grind": { "category": "player", "sounds": [ "stone_grind" ] },
@@ -6,5 +8,16 @@
 	"anvilbreak": { "category": "player", "sounds": [ "anvilbreak" ] },
 	"stonehit": { "category": "player", "sounds": [ "pickaxe_stone_hit1", "pickaxe_stone_hit2", "pickaxe_stone_hit3" ] },
 	"woodcreak": { "category": "player", "sounds": [ "woodcreak_1", "woodcreak_2", "woodcreak_3", "woodcreak_4" ] },
-	"woodcreak_long": { "category": "player", "sounds": [ "woodcreak_long1", "woodcreak_long2", "woodcreak_long3" ] }
+	"woodcreak_long": { "category": "player", "sounds": [ "woodcreak_long1", "woodcreak_long2", "woodcreak_long3" ] },
+	"moltenmetal": { "category": "player", "sounds": [ "moltenmetal" ] },
+	"ironstovedoor_close": { "category": "player", "sounds": [ "ironstovedoor_close" ] },
+	"ironstovedoor_open": { "category": "player", "sounds": [ "ironstovedoor_open" ] },
+	
+	"handdrill": { "category": "player", "sounds": [ "handdrill" ] },
+	"woodchop": { "category": "player", "sounds": [ "woodchop" ] },
+	"woodhammer": { "category": "player", "sounds": [ "woodhammer" ] },
+	"woodplane": { "category": "player", "sounds": [ "woodplane" ] },
+	"woodsaw": { "category": "player", "sounds": [ "woodsaw" ] },
+	"woodchisel": { "category": "player", "sounds": [ "woodchisel" ] },
+	"woodcrack": { "category": "player", "sounds": [ "woodcrack" ] }
 }

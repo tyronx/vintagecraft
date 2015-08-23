@@ -3,13 +3,13 @@ package at.tyron.vintagecraft.Gui;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Inventory.ContainerForge;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilRecipe;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;

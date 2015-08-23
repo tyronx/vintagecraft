@@ -27,11 +27,9 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemsVC {
 	public static Item stone;
-	//public static Item stonepot;
 	
 	public static Item ore;
 	public static Item metalingot;
-	//public static Item metalplate;
 	
 	public static Item peatbrick;
 	public static Item fireclay_ball;
@@ -45,6 +43,10 @@ public class ItemsVC {
 	
 
 	public static Item dryGrass;
+	public static Item flaxFibers;
+	public static Item flaxTwine;
+	public static Item linenCloth;
+	public static Item stitchedleather;
 	public static Item firestarter;
 	
 	public static Item porkchopRaw;
@@ -55,12 +57,15 @@ public class ItemsVC {
 	public static Item chickenRaw;
 	public static Item chickenCooked;
 	
-	public static Item wheatSeeds;
+	public static Item seeds;
 	
 	public static Item anvilbase;
 	public static Item anvilsurface;
+	public static Item ironTuyere;
 	
 	public static Item sail;
+
+	//public static Item coke;
 	
 
 	
@@ -134,25 +139,39 @@ public class ItemsVC {
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
 		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
 		
-		wheatSeeds = new ItemSeedVC();
-		register(wheatSeeds, "wheatseeds");
+		seeds = new ItemSeedVC();
+		register(seeds, "seeds");
+		for (EnumCrop croptype : EnumCrop.values()) {
+			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":seeds/" + croptype.getStateName());
+		}
 		
 		dryGrass = new ItemDryGrass();
 		register(dryGrass, "drygrass");
 		
+		flaxFibers = new ItemCrafted();
+		register(flaxFibers, "flaxfibers");
+		flaxTwine = new ItemCrafted();
+		register(flaxTwine, "flaxtwine");
+		linenCloth = new ItemCrafted();
+		register(linenCloth, "linencloth");
+
+		stitchedleather = new ItemCrafted();
+		register(stitchedleather, "stitchedleather");
+		
+		
+		ironTuyere = new ItemCrafted();
+		register(ironTuyere, "irontuyere");
+		
 		firestarter = new ItemFireStarter();
 		register(firestarter, "firestarter");
 		
-		/*stonepot = new ItemStonePot();
-		register(stonepot, "stonepot");
-		
-		for (EnumRockType rocktype : EnumRockType.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stonepot/" + rocktype.getStateName());
-		}*/
-		
 		sail = new ItemSail();
 		register(sail, "sail");
+		
+//		coke = new ItemCoke();
+//		register(coke, "coke");
 	}
+	
 	
 	public static Item register(Item item, String internalname) {
 		item.setUnlocalizedName(internalname);
@@ -221,6 +240,7 @@ public class ItemsVC {
 		for (EnumTool tool : EnumTool.values()) {
 			for (String material : materials) {
 				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
+				if (!tool.canBeMadeOf(material)) continue;
 				
 				String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
 				String unlocalizedname = material + "_" + tool.getName();
@@ -254,9 +274,12 @@ public class ItemsVC {
 		}
 		
 		for (EnumTool tool : EnumTool.values()) {
+			
 			for (String material : materials) {
 				if (material.equals("stone")) continue;
+				if (!tool.canBeMadeOf(material)) continue;
 				if (!tool.requiresWoodenHandle) continue;
+				
 				
 				String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
 				String unlocalizedname = material + "_" + tool.getName()+"toolhead";
@@ -289,13 +312,9 @@ public class ItemsVC {
 	
 	static void initIngots() {
 		metalingot = new ItemIngot().register("ingot");
-		//metalplate = new ItemMetalPlate().register("metalplate");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
 			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
-//			if (metal.hasArmor) {
-//				VintageCraft.instance.proxy.addVariantName(metalplate, ModInfo.ModID + ":metalplate/" + metal.name().toLowerCase(Locale.ROOT));
-//			}
 		}
 	}
 	
@@ -322,27 +341,6 @@ public class ItemsVC {
 	
 	
 	public static ItemArmorVC[] getArmorPieces(String metal) {
-	/*	ArrayList<ItemArmorVC> armors = new ArrayList<ItemArmorVC>();
-		
-		for (String armortype : ItemArmorVC.armorTypes) {
-			String code = metal + ucFirst(armortype);
-			
-			try {
-				Field field = ItemsVC.class.getField(code);
-				ItemArmorVC item = (ItemArmorVC) field.get(null);
-				
-				armors.add(item);
-				 
-				
-			} catch (Exception e) {
-				System.out.println(e.toString());
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return armors.toArray(new ItemArmorVC[0]);*/
-		
 		return armor.values().toArray(new ItemArmorVC[0]);
 	}
 	

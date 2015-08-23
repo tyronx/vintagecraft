@@ -17,9 +17,12 @@ public class TEFarmland extends NetworkTileEntity {
 		this.fertility = fertility;
 	}
 
-	public void consumeFertility() {
-		fertility--;
-		if (worldObj.rand.nextBoolean()) fertility--;
+	public void consumeFertility(int quantity) {
+		if (quantity > 1) {
+			fertility -= quantity/2 + worldObj.rand.nextInt(quantity/2 + 1);
+		} else {
+			fertility--;
+		}
 		worldObj.markBlockForUpdate(pos);
 	}
 

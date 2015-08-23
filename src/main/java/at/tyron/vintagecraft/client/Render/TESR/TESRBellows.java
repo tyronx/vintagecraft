@@ -14,6 +14,9 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 
 public class TESRBellows extends TESRMechanicalBase {
+	ResourceLocation leatherTex = new ResourceLocation(ModInfo.ModID, "textures/blocks/leather.png");
+	ResourceLocation ironTex = new ResourceLocation(ModInfo.ModID, "textures/blocks/ingot/iron.png");
+	
 	ModelBellows modelbellows = new ModelBellows();
 	
 	public void renderAt(TEBellows te, float posX, float posY, float posZ, float f) {
@@ -58,11 +61,18 @@ public class TESRBellows extends TESRMechanicalBase {
 			GL11.glPopMatrix();
 			
 			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/leather.png"));
+			Minecraft.getMinecraft().getTextureManager().bindTexture(leatherTex);
 			GL11.glPushMatrix();
-				GL11.glScalef(1f, 1f - squeeze, 1f);
+				GL11.glScalef(1f, 1f - squeeze * 1.26f, 1f);
 				modelbellows.leather.render(0.0625F / 2f);
 			GL11.glPopMatrix();
+			
+			Minecraft.getMinecraft().getTextureManager().bindTexture(ironTex);
+			GL11.glPushMatrix();
+				GL11.glTranslatef(0f, 0f, -1f);
+				modelbellows.ironTipAndTuyere.render(0.0625F / 2f);
+			GL11.glPopMatrix();
+			
 		GL11.glPopMatrix();
 		
 	}

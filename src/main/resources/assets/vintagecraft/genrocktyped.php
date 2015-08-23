@@ -31,8 +31,8 @@ foreach ($blockclasses as $blockclass) {
 			foreach ($anvilstages as $anvilstage) {
 				$variants[] = "\t\t" . '"rocktype='.$blocktype.',stage='.$anvilstage.'": { "model": "vintagecraft:'.$blockclass.'/'.$blocktype.'-'.$anvilstage.'" }';
 				file_put_contents($blockoutdir . $blocktype."-".$anvilstage.".json", getBlockModel($modeltype, $blockclass, $blocktype, $anvilstage));
-				file_put_contents($itemoutdir . $blocktype."-".$anvilstage.".json", getItemModel($blockclass, $blocktype));
 			}
+			file_put_contents($itemoutdir . $blocktype . ".json", getItemModel($blockclass, $blocktype . "-2"));
 		} else {
 			file_put_contents($blockoutdir . $blocktype.".json", getBlockModel($modeltype, $blockclass, $blocktype));
 			file_put_contents($itemoutdir . $blocktype.".json", getItemModel($blockclass, $blocktype));

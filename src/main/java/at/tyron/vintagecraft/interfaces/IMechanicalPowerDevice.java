@@ -9,14 +9,14 @@ public abstract interface IMechanicalPowerDevice {
 	public boolean hasConnectorAt(EnumFacing localFacing);
 	public boolean isConnectedAt(EnumFacing localFacing);
 	
-	public void trySetNetwork(MechanicalNetwork network, EnumFacing localFacing);
+	public void trySetNetwork(int networkId, EnumFacing localFacing);
 	public MechanicalNetwork getNetwork(EnumFacing localFacing);
 	
-	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing);
+	public void propagateNetworkToNeighbours(int propagationId, int  networkId, EnumFacing remoteFacing);
 	public void propagateDirectionToNeightbours(int propagationId, EnumFacing remoteFacing, boolean clockwise);
 
 	public boolean isClockWiseDirection(EnumFacing localFacing);
-	public void setClockWiseDirection(MechanicalNetwork network, boolean clockwise);
+	public void setClockWiseDirection(int networkId, boolean clockwise);
 
 
 	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside);

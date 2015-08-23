@@ -1,6 +1,9 @@
 package at.tyron.vintagecraft.Client;
 
 import java.io.IOException;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -25,6 +28,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -34,16 +38,20 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.CommonProxy;
 import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.RenderCloudsVC;
 import at.tyron.vintagecraft.Client.Render.RenderForestSpider;
+import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
+import at.tyron.vintagecraft.Client.Render.ShootingStar;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.*;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
@@ -55,6 +63,7 @@ import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.*;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
+import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
@@ -64,6 +73,7 @@ import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
@@ -79,9 +89,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.passive.EntityHorse;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
-	//public static ModelResourceLocation oremodelLocation = new ModelResourceLocation(ModInfo.ModID + ":" + BlocksVC.raworeName, null);
 	
-		
 	@Override
 	public void registerTileEntities() {
 		super.registerTileEntities();
@@ -148,13 +156,18 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.tallmetalmolds), "tallmetalmolds", "inventory");
+        
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.stonepot), "vintagecraft:stonepot/", EnumRockType.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.stonepot), "stonepot", "inventory");
+
         registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory");
         
         addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.axle), "vintagecraft:axle/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.axle), "axle", "inventory");
         
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.angledgearbox), "vintagecraft:angledgearbox/", EnumTree.values());
-        registerModelLocation(Item.getItemFromBlock(BlocksVC.angledgearbox), "angledgearbox", "inventory");
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.angledgears), "vintagecraft:angledgearbox/", EnumTree.values());
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.angledgears), "angledgearbox", "inventory");
         
         addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.windmillrotor), "vintagecraft:windmillrotor/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.windmillrotor), "windmillrotor", "inventory");
@@ -164,13 +177,18 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 
         addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.grindstone), "vintagecraft:grindstone/", EnumRockType.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.grindstone), "grindstone", "inventory");
-
-        //addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.metalplate), "vintagecraft:metalplate/", EnumMetal.values());
-        //registerModelLocation(ItemsVC.metalplate, "metalplate", "inventory");
         
+        for (EnumTree treetype : EnumTree.values()) {
+        	if (treetype.jankahardness > 800) {
+        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.carpenterTable), "vintagecraft:carpentertable/" + treetype.getName());
+        	}
+        }
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.carpenterTable), "carpentertable", "inventory");
+        
+        
+
         registerModelLocation(ItemsVC.stone, "stone", "inventory");
-        //registerModelLocation(ItemsVC.stonepot, "stonepot", "inventory");
-        registerModelLocation(Item.getItemFromBlock(BlocksVC.stonepot), "stonepot", "inventory");
+        registerModelLocation(ItemsVC.seeds, "seeds", "inventory");
         
     	registerModelLocation(ItemsVC.fireclay_ball, "fireclay_ball", "inventory");
     	registerModelLocation(ItemsVC.fireclay_brick_raw, "fireclay_brick_raw", "inventory");
@@ -180,9 +198,14 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.metalingot, "ingot", "inventory");
     	
     	
-    	registerModelLocation(ItemsVC.wheatSeeds, "wheatseeds", "inventory");    	
+    	registerModelLocation(ItemsVC.seeds, "seeds", "inventory");    	
     	registerModelLocation(ItemsVC.dryGrass, "drygrass", "inventory");
+    	registerModelLocation(ItemsVC.flaxFibers, "flaxfibers", "inventory");
+    	registerModelLocation(ItemsVC.linenCloth, "linencloth", "inventory");
     	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");
+    	registerModelLocation(ItemsVC.ironTuyere, "irontuyere", "inventory");
+    	registerModelLocation(ItemsVC.flaxTwine, "flaxtwine", "inventory");
+    	registerModelLocation(ItemsVC.stitchedleather, "stitchedleather", "inventory");
     	registerModelLocation(ItemsVC.sail, "sail", "inventory");
     	registerModelLocation(ItemsVC.peatbrick, "peatbrick", "inventory");
     	
@@ -200,7 +223,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
     	
 		ClientRegistry.registerTileEntity(TEIngotPile.class, "ingotpile", new TESRIngotPile());
-		ClientRegistry.registerTileEntity(TEToolRack.class, "ToolRack", new TESRToolRack());
+		ClientRegistry.registerTileEntity(TEToolRack.class, "toolrack", new TESRToolRack());
 		ClientRegistry.registerTileEntity(TEVessel.class, "ceramicvessel2", new TESRCeramicVessel());
 		ClientRegistry.registerTileEntity(TEStonePot.class, "stonepot", new TESRStonePot());
 		ClientRegistry.registerTileEntity(TEAxle.class, "axle", new TESRAxle());
@@ -208,6 +231,41 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEWindmillRotor.class, "windmillrotor", new TESRWindmillRotor());
 		ClientRegistry.registerTileEntity(TEGrindStone.class, "grindstone", new TESRGrindstone());
 		ClientRegistry.registerTileEntity(TEBellows.class, "bellows", new TESRBellows());
+		ClientRegistry.registerTileEntity(TETallMetalMold.class, "tallmetalmold", new TESRTallMetalMold());
+    }
+    
+    
+    
+    @SubscribeEvent
+    public void onClientTicket(ClientTickEvent evt) {
+    	
+    	if (evt.phase == TickEvent.Phase.END && Minecraft.getMinecraft().theWorld != null) {
+    		Random rnd = Minecraft.getMinecraft().theWorld.rand;
+    		float chance = 0.004f;
+    		if (VintageCraft.proxy.meteorShowerDuration > 0) {
+    			VintageCraft.proxy.meteorShowerDuration--;
+    			chance = 0.11f;
+    		}
+    		
+    		
+    		if (rnd.nextFloat() < chance && RenderSkyVC.shootingStars.size() < 35) {
+    			RenderSkyVC.shootingStars.add(new ShootingStar(
+    				rnd.nextFloat()*300 - 150,
+    				rnd.nextFloat()*300 - 150,
+    				rnd.nextFloat()
+    			));
+    		}
+    		
+    		for (Iterator<ShootingStar> iterator = RenderSkyVC.shootingStars.iterator(); iterator.hasNext();) {
+    			ShootingStar star = iterator.next();
+    			star.tick();
+    			if (star.isDead()) {
+    		        // Remove the current element from the iterator and the list.
+    		        iterator.remove();
+    		    }
+    		}
+    		
+    	}
     }
     
 	
@@ -282,5 +340,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		sndh.playSound(new LoopingSound(new ResourceLocation(resourcelocation), pitchandvolumneprovider));
 	}
 
+	public World getClientWorld() {
+		return Minecraft.getMinecraft().theWorld;
+	}
 	
 }

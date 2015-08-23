@@ -28,8 +28,8 @@ public class WindGen {
 	}
 	
 	private WindGen(long seed, World world) {
-		int octaves = 6;
-		float persistence = 0.7f;
+		int octaves = 4;
+		float persistence = 0.8f;
 		
 		windGen = new SimplexNoise(octaves, persistence, seed);
 		
@@ -38,9 +38,11 @@ public class WindGen {
 	
 	
 	public double getWindAt(BlockPos pos) {
+		//windGen = new SimplexNoise(4, 0.8, world.getSeed());
+		
 		return windGen.getNoise(
 			pos.getX() / 2048f, 
-			VintageCraft.instance.getWorldTime(world) / 2048f, 
+			VintageCraft.instance.getWorldTime(world) / 8192f, 
 			pos.getZ() / 2048f
 		);
 	}

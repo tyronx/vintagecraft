@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/quartzite",
+"parent": "vintagecraft:block/stoneanvil/quartzite-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -20,33 +20,25 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemStonePot extends ItemBlockVC implements ISubtypeFromStackPovider {
-	//Block block;
-	
 	public ItemStonePot(Block block) {
-		//this.block = BlocksVC.stonepot;
 		super(block);
+		setHasSubtypes(true);
+		setMaxStackSize(1);
 	}
-	
-	/*@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
-		for (EnumRockType rocktype : EnumRockType.values()) {
-			subItems.add(ItemStonePot.setRockType(new ItemStack(itemIn), rocktype));
-		}
-
-		super.getSubItems(itemIn, tab, subItems);
-	}*/
 	
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return super.getUnlocalizedName(stack) + "." + getRockType(stack).getName();
+		return super.getUnlocalizedName(stack);
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+		tooltip.add(StatCollector.translateToLocal("rock." + ItemStone.getRockType(stack) + ".name"));
 		super.addInformation(stack, playerIn, tooltip, advanced);
 	}
 	
@@ -87,57 +79,4 @@ public class ItemStonePot extends ItemBlockVC implements ISubtypeFromStackPovide
 	public String getSubType(ItemStack stack) {
 		return getRockType(stack).getName();
 	}
-
-
-	
-    /**
-     * Called when a Block is right-clicked with this Item
-     *  
-     * @param pos The block being right-clicked
-     * @param side The side being right-clicked
-     */
-   /* public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
-    {
-        IBlockState iblockstate = worldIn.getBlockState(pos);
-        Block block = iblockstate.getBlock();
-
-        if (block == Blocks.snow_layer && ((Integer)iblockstate.getValue(BlockSnow.LAYERS)).intValue() < 1)
-        {
-            side = EnumFacing.UP;
-        }
-        else if (!block.isReplaceable(worldIn, pos))
-        {
-            pos = pos.offset(side);
-        }
-
-        if (stack.stackSize == 0)
-        {
-            return false;
-        }
-        else if (!playerIn.canPlayerEdit(pos, side, stack))
-        {
-            return false;
-        }
-        else if (pos.getY() == 255 && this.block.getMaterial().isSolid())
-        {
-            return false;
-        }
-        else if (worldIn.canBlockBePlaced(this.block, pos, false, side, (Entity)null, stack))
-        {
-            int i = this.getMetadata(stack.getMetadata());
-            IBlockState iblockstate1 = this.block.onBlockPlaced(worldIn, pos, side, hitX, hitY, hitZ, i, playerIn);
-
-            if (placeBlockAt(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ, iblockstate1))
-            {
-                worldIn.playSoundEffect((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), this.block.stepSound.getPlaceSound(), (this.block.stepSound.getVolume() + 1.0F) / 2.0F, this.block.stepSound.getFrequency() * 0.8F);
-                --stack.stackSize;
-            }
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }*/
 }

@@ -61,6 +61,7 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 			//System.out.println("network: " + te.getNetwork(te.getOrientation()));
 			te.refreshModel = true;
 			if (te.getNetwork(side) != null) {
+	//			if (!worldIn.isRemote) te.getNetwork(null).sendNetworkToClient(worldIn);
 				boolean networkClockWise = te.getNetwork(null).isClockWise();
 				System.out.println(mcside + " " + "N"+te.getNetwork(side).networkId + ": " + te.getOrientation() + " / " + (networkClockWise ? "clockwise" : "counter-clockwise")  + " " + (te.clockwise ? "clockwise" : "counter-clockwise") + " from " + te.directionFromFacing);
 //				System.out.println(te.getNetwork(null));

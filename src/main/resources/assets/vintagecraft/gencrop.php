@@ -1,10 +1,10 @@
 <?php
 
 $blocktype = "crop";
-$croptypes = array("peas", "wheat", "tomatoes");
+$croptypes = array("peas", "wheat", "tomatoes", "flax");
 
-$cropshapes = array("doubletallcross", "wheat", "doubletallcross");
-$growthstages = array(9, 8, 13);
+$cropshapes = array("doubletallcross", "wheat", "doubletallcross", "wheat");
+$growthstages = array(9, 8, 13, 5);
 
 $variants = array();
 $i = 0;
@@ -20,6 +20,8 @@ foreach ($croptypes as $idx => $croptype) {
 	
 		file_put_contents("models/block/{$filename}.json", getBlockModel($croptype, $cropshapes[$idx], $stage));
 	}
+	
+	file_put_contents("models/item/seeds/{$croptype}.json", getSeedItemModel($croptype));
 	
 }
 
@@ -82,5 +84,26 @@ function getItemModel($croptype, $laststage) {
 }';
 }
 
+
+function getSeedItemModel($croptype) {
+	return '{
+    "parent": "builtin/generated",
+    "textures": {
+        "layer0": "vintagecraft:items/seeds/'.$croptype.'"
+    },
+    "display": {
+        "thirdperson": {
+            "rotation": [ -90, 0, 0 ],
+            "translation": [ 0, 1, -3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "firstperson": {
+            "rotation": [ 0, -135, 25 ],
+            "translation": [ 0, 4, 2 ],
+            "scale": [ 1.7, 1.7, 1.7 ]
+        }
+    }
+}';
+}
 
 

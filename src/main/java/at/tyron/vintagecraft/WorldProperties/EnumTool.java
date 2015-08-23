@@ -11,7 +11,8 @@ public enum EnumTool {
 	HOE (5, true, true),
 	SAW (6, false, true),
 	SHEARS (7, false, false),
-	HAMMER (8, true, true)
+	HAMMER (8, true, true),
+	CARPENTERSTOOLSET (9, false, false)
 	;
 	
 	public int meta;
@@ -33,5 +34,13 @@ public enum EnumTool {
 	
 	public String getName() {
 		return name().toLowerCase(Locale.ROOT);
+	}
+	
+	
+	public boolean canBeMadeOf(String material) {
+		if (this == CARPENTERSTOOLSET) {
+			return material.equals("iron") || material.equals("steel") || material.equals("tinbronze") || material.equals("bismuthbronze"); 
+		}
+		return true;
 	}
 }

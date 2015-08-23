@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_3",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/olivine"
+		}
+}

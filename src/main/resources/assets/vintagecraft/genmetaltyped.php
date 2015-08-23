@@ -1,29 +1,46 @@
 <?php
 
-$metals = array("stone", "copper", "tinbronze", "bismuthbronze", "iron");
+$metals = array("copper", "tin", "tinbronze", "iron", "steel", "palladium", "platinum", "titanium", "iridium", "osmium", "silver", "gold", "uranium", "zinc", "bismuth", "bismuthbronze", "lead");
 $pieces = array("helmet", "chestplate", "leggings", "boots");
 
 $outdir = "models/item/armor/";
 
 $variants = array();
+$numstates = 0;
 
 foreach ($metals as $metal) {
 	foreach ($pieces as $piece) {
 		file_put_contents($outdir . $metal . "_" . $piece . ".json", getItemModel("armor", $metal.'_'.$piece));
 	}
 	
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-d": { "model": "vintagecraft:metalplate/'.$metal.'" }';
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-u": { "model": "vintagecraft:metalplate/'.$metal.'", "x":180 }';
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-n": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90 }';
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-s": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90, "y":180 }';
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-w": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90, "y":270 }';
-	$variants[] = "\t\t" . '"metalandfacing='.$metal.'-e: { "model": "vintagecraft:metalplate/'.$metal.'", "x": 90, "y":90 }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-d": { "model": "vintagecraft:metalplate/'.$metal.'" }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-u": { "model": "vintagecraft:metalplate/'.$metal.'", "x":180 }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-n": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90, "y": 180 }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-s": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90 }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-w": { "model": "vintagecraft:metalplate/'.$metal.'", "x":90, "y":90 }';
+	$variants[] = "\t\t" . '"cutout=false,metalandfacing='.$metal.'-e": { "model": "vintagecraft:metalplate/'.$metal.'", "x": 90, "y":270 }';
+
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-d": { "model": "vintagecraft:metalplate/'.$metal.'-cutout" }';
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-u": { "model": "vintagecraft:metalplate/'.$metal.'-cutout", "x":180 }';
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-n": { "model": "vintagecraft:metalplate/'.$metal.'-cutout", "x":90, "y": 180 }';
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-s": { "model": "vintagecraft:metalplate/'.$metal.'-cutout", "x":90 }';
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-w": { "model": "vintagecraft:metalplate/'.$metal.'-cutout", "x":90, "y":90 }';
+	$variants[] = "\t\t" . '"cutout=true,metalandfacing='.$metal.'-e": { "model": "vintagecraft:metalplate/'.$metal.'-cutout", "x": 90, "y":270 }';
+
+	$numstates+=6;
 	
 	file_put_contents("models/block/metalplate/{$metal}.json", getBlockModel("metalplate", $metal));
+	file_put_contents("models/block/metalplate/{$metal}-cutout.json", getBlockModel("metalplate-cutout", $metal));
+	
 	file_put_contents("models/item/metalplate/{$metal}.json", getItemModel("metalplate", $metal));
 }
 
-file_put_contents("blockstates/metalplate.json", getBlockStates($variants));
+for ($i = 0; $i < ceil($numstates / 16)+1; $i++) {
+	file_put_contents("blockstates/metalplate" . (($i > 0) ? ($i+1) : "")  .".json", getBlockStates($variants));
+}
+
+
+
 
 
 function getBlockStates($variants) {
@@ -36,8 +53,13 @@ function getBlockStates($variants) {
 }
 
 function getBlockModel($blockclass, $blocktype) {
+	$base = 'base';
+	if ($blockclass == 'metalplate-cutout') {
+		$base = 'base-cutout';
+	}
+	
 	return '{
-    "parent": "vintagecraft:block/metalplate/base",
+    "parent": "vintagecraft:block/metalplate/'.$base.'",
     "textures": {
         "metal": "vintagecraft:blocks/ingot/'.$blocktype.'"
     }
@@ -72,7 +94,11 @@ function getItemModel($blockclass, $blocktype) {
 			"rotation": [ 10, -45, 170 ],
 			"translation": [ 0, 1.5, -2.75 ],
 			"scale": [ 0.75, 0.75, 0.75 ]
-		}
+        },
+        "gui": {
+            "translation": [ 0, 4, 0 ],
+            "scale": [ 1.1, 1.1, 1.1 ]
+        }		
 	}
 }';
 }

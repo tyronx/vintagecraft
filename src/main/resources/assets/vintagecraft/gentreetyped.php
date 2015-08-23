@@ -28,6 +28,26 @@ for ($i = 0; $i < ceil(count($blocktypes) / 8); $i++) {
 }
 
 
+
+/***************** Carpentertable *************/
+$variants = array();
+foreach ($blocktypes as $blocktype) {
+	file_put_contents("models/block/carpentertable/{$blocktype}.json", carpentertableModel($blocktype));
+	
+	$variants[] = "\t\t" . '"facing=north,treetype='.$blocktype.'": { "model": "vintagecraft:carpentertable/'.$blocktype.'" }';
+	$variants[] = "\t\t" . '"facing=east,treetype='.$blocktype.'": { "model": "vintagecraft:carpentertable/'.$blocktype.'", "y":90 }';
+	$variants[] = "\t\t" . '"facing=south,treetype='.$blocktype.'": { "model": "vintagecraft:carpentertable/'.$blocktype.'", "y":180 }';
+	$variants[] = "\t\t" . '"facing=west,treetype='.$blocktype.'": { "model": "vintagecraft:carpentertable/'.$blocktype.'", "y":270 }';
+	
+	$itemjson = getItemModel("carpentertable", $blocktype);
+	file_put_contents("models/item/carpentertable/{$blocktype}.json", $itemjson);
+}
+
+file_put_contents("blockstates/carpentertable.json", getBlockStates($variants));
+
+
+
+
 /********** items only *************/
 foreach ($itemclasses as $itemclass) {
 	foreach ($blocktypes as $blocktype) {
@@ -496,6 +516,15 @@ function getItemModel($blockclass, $blocktype) {
 			"scale": [ 0.375, 0.375, 0.375 ]
 		}
 	}
+}';
+}
+
+function carpentertableModel($blocktype) {
+	return '{
+    "parent": "vintagecraft:block/carpentertable/base",
+    "textures": {
+        "treetype": "vintagecraft:blocks/planks/'.$blocktype.'"
+    }
 }';
 }
 

@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/conglomerate",
+"parent": "vintagecraft:block/stoneanvil/conglomerate-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

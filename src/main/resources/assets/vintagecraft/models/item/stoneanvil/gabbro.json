@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/gabbro",
+"parent": "vintagecraft:block/stoneanvil/gabbro-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

@@ -14,7 +14,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	TINBRONZE	 	(2, 2, 950, 4f, true, true, true),
 	
 	IRON 			(3, 3, 1482, 5f, true, true, true),
-	STEEL 			(4, 4, 1510, 7f),
+	STEEL 			(4, 4, 1510, 7f, true, true, true),
 	
 	PALLADIUM 		(5, 5, 1555, 4.8f),
 	PLATINUM 		(6, 6, 1770, 4.3f),
@@ -131,6 +131,43 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 		
 		return (int) (meltingpoint * 0.6f);
 	}
+	
+	
+	
+	// According to https://en.wikipedia.org/wiki/Incandescence
+	public static int[] getIncandescenceColor(int temperature) {
+		if (temperature < 520) return new int[]{0,0,0,0};
+		
+		return new int[]{
+			Math.max(0, Math.min(255, ((temperature - 500) * 255) / 400)), 
+			Math.max(0, Math.min(255, ((temperature - 900) * 255) / 200)), 
+			Math.max(0, Math.min(255, ((temperature - 1100) * 255) / 200)), 
+			Math.max(0, Math.min(96, (temperature - 525) / 2))
+		};
+	}
+	
+	public static float[] getIncandescenceColorAsColor4f(int temperature) {
+		if (temperature < 500) return new float[]{0f,0f,0f,0f};
+		
+		return new float[]{
+			Math.max(0f, Math.min(1, (temperature - 500) / 400f)), 
+			Math.max(0f, Math.min(1, (temperature - 900) / 200f)), 
+			Math.max(0f, Math.min(1, (temperature - 1100)/ 200f)), 
+			Math.max(0f, Math.min(0.38f, (temperature - 525) / 2f))
+		};
+	}
+	
+	public static int getIncandescenceColorAsInt(int temperature) {
+		int[] colors = getIncandescenceColor(temperature);
+		
+		return 
+			(colors[3] << 24) |
+			(colors[0] << 16) |
+			(colors[1] << 8) |
+			(colors[2])
+		;
+	}
+	
 	
 	
 }

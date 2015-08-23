@@ -47,28 +47,7 @@ public abstract class TESRMechanicalBase extends TESRBase {
 	}
 	
 
-	float[] getAnglesBetween(EnumFacing base, EnumFacing desired) {
-		if (base == EnumFacing.UP || base == EnumFacing.DOWN) throw new RuntimeException("Not coded for vertical base");
-		
-		return new float[]{
-			// Horizontal angle
-			desired.getAxis().isVertical() ? 0 : 90f * (base.getHorizontalIndex() - desired.getHorizontalIndex()), 
-			// Vertical angle
-			desired.getAxis().isHorizontal() ? 0 : 90f * (desired == EnumFacing.UP ? 1 : -1) 
-		};
-	}
-	
-	float[] axis2GLFloats(EnumFacing facing) {
-		float[] floats = new float[]{
-			(facing.getAxis() == Axis.X ? 1f : 0f),
-			(facing.getAxis() == Axis.Y ? 1f : 0f),
-			(facing.getAxis() == Axis.Z ? 1f : 0f)
-		};
-		
-		return floats;
-	}
-	
-	
+
 	public void renderAngledGearBox(TEAngledGearBox te, float angle, float posX, float posY, float posZ) {
 		if (te.refreshModel) {
 			te.refreshModel = false;
@@ -85,7 +64,7 @@ public abstract class TESRMechanicalBase extends TESRBase {
 		// Cage Gear
 		if (te.cagegearOrientation != null) {
 			GL11.glPushMatrix();
-				setupRotationsAndPos(EnumFacing.NORTH, te.cagegearOrientation, 360 - te.getAngle(), posX, posY, posZ);
+				setupRotationsAndPos(EnumFacing.NORTH, te.cagegearOrientation, 360 - te.getAngle() - 18, posX, posY, posZ);
 				renderCageGear(te.texture);
 			GL11.glPopMatrix();
 		}

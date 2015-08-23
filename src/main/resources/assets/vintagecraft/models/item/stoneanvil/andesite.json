@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/andesite",
+"parent": "vintagecraft:block/stoneanvil/andesite-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

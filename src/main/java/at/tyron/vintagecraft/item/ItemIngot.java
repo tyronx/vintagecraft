@@ -7,15 +7,17 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockSaltpeter;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
-import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
@@ -40,7 +42,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, ISmithable, IItemHeatable {
+public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, IItemSmithable, IItemHeatable {
 	public static final int maxstacksize = 16;
 	public static final int maxpilesize = 64;
 	
@@ -111,7 +113,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 			tooltip.add("Temperature: " + forgetemp + " deg." + workable);
 		}
 		
-		if (getAppliedAnvilTechniques(itemstack).length > 0) {
+		if (getAppliedTechniques(itemstack).length > 0) {
 			tooltip.add("Has been worked");
 		}
 		
@@ -182,7 +184,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 		
 		if (!entityplayer.isSneaking() || !isPlaceable(itemstack)) return false;
 		
-		boolean ingotPileAtPos = world.getBlockState(pos).getBlock() instanceof BlockIngotPile;
+		boolean ingotPileAtPos = world.getBlockState(pos).getBlock() instanceof BlockIngotPile && !(world.getBlockState(pos).getBlock() instanceof BlockOrePile);
 		
 		if (!ingotPileAtPos) {
 			return BlockIngotPile.tryCreatePile(itemstack, world, pos.offset(side));
@@ -210,7 +212,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 
 
 	@Override
-	public boolean isSmithingIngredient(ItemStack itemstack, ItemStack comparison, AnvilRecipes forrecipe) {
+	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
 		return 
 			itemstack != null && comparison != null &&
 			itemstack.getItem() == comparison.getItem() &&

@@ -38,7 +38,7 @@ public class ItemDryGrass extends ItemVC implements IItemFuel, ISizedItem {
 	}
 
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
+	public boolean isMetalWorkingFuel(ItemStack stack) {
 		return false;
 	}
 
@@ -51,4 +51,10 @@ public class ItemDryGrass extends ItemVC implements IItemFuel, ISizedItem {
 	public EnumItemSize getItemSize() {
 		return EnumItemSize.SMALL;
 	}
+	
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		return null;
+	}
+
 }

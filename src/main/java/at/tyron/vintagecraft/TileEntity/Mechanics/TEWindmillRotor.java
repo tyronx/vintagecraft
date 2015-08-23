@@ -38,6 +38,7 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		/*if (orientation == EnumFacing.WEST || orientation == EnumFacing.SOUTH || orientation == EnumFacing.NORTH) {
 			return 360 - network.getAngle();
 		}*/
+		
 		return network.getAngle();
 	}
 
@@ -45,6 +46,7 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	public boolean tryAddBlades() {
 		if (bladeSize < 4) {
 			bladeSize++;
+			worldObj.markBlockForUpdate(pos);
 			return true;
 		}
 		return false;
@@ -95,11 +97,11 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		
 		WindGen windgen = WindGen.getWindGenForWorld(worldObj);
 		float wind = (float) (windgen == null ? 0 : windgen.getWindAt(pos));
-		
-		
+		//System.out.println(wind);
 		//return -10f;
-		//return Math.max(0, (wind * wind - 0.05f) * 48);
-		return 30f;
+		
+		if (Math.abs(wind) < 0.1) return 0;
+		return Math.abs(wind) * 70;
 	}
 	
 	
@@ -110,7 +112,8 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	@Override
 	public float getTorque(MechanicalNetwork network) {
 		if (bladeSize == 0) return 0;
-		
+//		if (worldObj.isRemote)
+//		 new Exception().printStackTrace();
 		float rotatingpower = getWindRotatingPower();
 		//System.out.println("rot power = " + rotatingpower);
 		int dir1 = (int)Math.signum(rotatingpower);
@@ -156,10 +159,9 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	@Override
 	public void update() {
 		
-		if (network != null && worldObj != null && !worldObj.isRemote) {
-			if (worldObj.rand.nextFloat() < Math.min(0.03f, network.getSpeed() / 1000f)) {
-				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1.2f, 1f);
-			//	System.out.println("play sound 2 " + network.getSpeed()); 
+		if (getNetwork(null) != null && worldObj != null && !worldObj.isRemote) {
+			if (worldObj.rand.nextFloat() < Math.min(0.03f, getNetwork(null).getSpeed() / 1000f)) {
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1.4f, 1f);
 			}
 		}
 	}

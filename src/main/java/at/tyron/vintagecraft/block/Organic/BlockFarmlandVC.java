@@ -109,14 +109,14 @@ public class BlockFarmlandVC extends BlockContainerVC {
     }
     
     
-    public void reduceFertility(World worldIn, BlockPos pos) {
+   /* public void reduceFertility(World worldIn, BlockPos pos) {
     	TileEntity te = worldIn.getTileEntity(pos);
     	
         if(te instanceof TEFarmland) {
         	TEFarmland teFarmland = (TEFarmland) te;
-        	teFarmland.consumeFertility();
+        	teFarmland.consumeFertility(5);
         }
-    }
+    }*/
     
     
     public EnumFertility getFertility(IBlockAccess worldIn, BlockPos pos) {
@@ -176,4 +176,25 @@ public class BlockFarmlandVC extends BlockContainerVC {
 		return fertility.getStateName();
 	}
 
+	
+	@Override
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		return true;
+	}
+	@Override
+	public boolean isSideSolid(IBlockAccess world, BlockPos pos, EnumFacing side) {
+		return false;
+	}
+	@Override
+	public boolean isFullBlock() {
+		return false;
+	}
+	@Override
+	public boolean isFullCube() {
+		return false;
+	}
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
 }

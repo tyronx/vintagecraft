@@ -1,14 +1,21 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
+import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
 	public boolean refreshModel = false;
+	public boolean connectedToFurnace = false;
 	
 	@Override
 	public boolean hasConnectorAt(EnumFacing facing) {
@@ -46,6 +53,16 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 		super.onDevicePlaced(world, pos, facing, ontoside);
 	}
 
+	
+	public void connectToFurnace() {
+		IBlockState state = worldObj.getBlockState(pos.offset(orientation, 2));
+		
+		connectedToFurnace =
+			state.getBlock() instanceof BlockFurnaceSection &&
+			((EnumFacing)state.getValue(BlockFurnaceSection.FACING)) == orientation.getOpposite()
+		;
+	}
+	
 	public void connectToNeighbour() {
 		if (getConnectibleNeighbourDevice(orientation.getOpposite()) != null) return;
 		
@@ -56,19 +73,65 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 			worldObj.markBlockForUpdate(pos);
 			break;
 		}
+		
+		connectToFurnace();
 	}
 
 	
-	long cnt = 0;
+	float lastSqueeze;
+	int lastDirection = 0;
+	
 	@Override
 	public void update() {
 		
-		if (network != null && worldObj != null && worldObj.isRemote) {
-			//if (worldObj.rand.nextFloat() < Math.min(0.03f, network.getSpeed() / 1000f)) {
-			//	worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1.2f, 1f);
-			//	System.out.println("play sound 2 " + network.getSpeed()); 
-			//}
+		if (worldObj != null && getNetwork(orientation) != null && getNetwork(orientation).getSpeed() > 1f) {
+			float angle = getAngle();
+			float squeeze = MathHelper.sin((float) ((angle+90) / 180 * Math.PI)) / 6 + 0.166f;	
+			int direction = (squeeze - lastSqueeze) > 0 ? 1 : -1;
+			float pitch = getNetwork(orientation).getSpeed() / 30f;
+			
+			if (direction != lastDirection && Math.abs(squeeze - lastSqueeze) > 0.000001f) {
+				//System.out.println(direction + " / " + lastDirection);
+				if (worldObj.isRemote) {
+					if (direction > 0) {
+						((WorldClient)worldObj).playSoundAtPos(pos, "vintagecraft:air_blow", pitch/4, pitch, false);
+					} else {
+						((WorldClient)worldObj).playSoundAtPos(pos, "vintagecraft:air_suck", pitch/16, pitch/2, false);
+					}
+				}
+				
+				
+				if (direction > 0) {
+					
+					connectToFurnace();
+					if (connectedToFurnace) {
+						IBlockState state = worldObj.getBlockState(pos.offset(orientation, 2).down());
+						if (state.getBlock() instanceof BlockFurnaceSection) {
+							TEFurnaceSection tefs = (TEFurnaceSection) worldObj.getTileEntity(pos.offset(orientation, 2).down());
+							//System.out.println("send blow");
+							tefs.receiveAirBlowFromBellows();
+						}
+					}
+				}
+				
+					
+				lastDirection = direction;
+			}
+			
+			lastSqueeze = squeeze;
 		}
+		
+		
+		if (getNetwork(orientation) != null && worldObj != null && !worldObj.isRemote && getNetwork(orientation).getSpeed() > 1f) {
+			
+		}
+	}
+	
+
+	
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {
+		return super.getRenderBoundingBox().expand(5f, 5f, 5f);
 	}
 
 }

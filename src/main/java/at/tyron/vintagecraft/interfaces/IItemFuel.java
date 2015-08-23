@@ -15,8 +15,16 @@ public interface IItemFuel {
 	
 	public float getBurnDurationMultiplier(ItemStack stack);
 	
-	public boolean isForgeFuel(ItemStack stack);
+	public boolean isMetalWorkingFuel(ItemStack stack);
 	
 	public int smokeLevel(ItemStack stack);
+	
+	
+	// Ratios:
+	// 1x Charcoal = 8 logs 
+	// 1x Peat coke = 7 peat
+	// 1x Lignite coke = 5 lignite
+	// 1x Bituminous coal coke = 3 bituminous coal 
+	public ItemStack getCokedOutput(ItemStack stack);
 	
 }

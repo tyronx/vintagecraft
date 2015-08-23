@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/carpentertable/base",
+    "textures": {
+        "treetype": "vintagecraft:blocks/planks/purpleheartwood"
+    }
+}

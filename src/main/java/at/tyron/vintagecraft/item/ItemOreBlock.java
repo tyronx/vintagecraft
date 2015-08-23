@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 import java.util.Locale;
 
-import at.tyron.vintagecraft.BlockClass.OreClassEntry;
+import at.tyron.vintagecraft.BlockClass.OreInRockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
@@ -28,7 +28,7 @@ public class ItemOreBlock extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)stack.getItem()).block, stack.getItemDamage());
+		OreInRockClassEntry entry = (OreInRockClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)stack.getItem()).block, stack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
@@ -39,7 +39,7 @@ public class ItemOreBlock extends ItemBlock {
 
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		OreClassEntry entry = (OreClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
+		OreInRockClassEntry entry = (OreInRockClassEntry) BlocksVC.rawore.getEntryFromMeta(((ItemBlock)itemstack.getItem()).block, itemstack.getItemDamage());
 		
      	String[] type = entry.getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));

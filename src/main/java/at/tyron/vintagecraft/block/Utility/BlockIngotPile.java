@@ -2,6 +2,7 @@ package at.tyron.vintagecraft.Block.Utility;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
@@ -33,7 +34,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockIngotPile extends BlockContainer implements IBlockItemSink {
+public class BlockIngotPile extends BlockContainerVC implements IBlockItemSink {
 	PropertyBool sideways = PropertyBool.create("sideways");
 	
 	private Random random = new Random();
@@ -44,8 +45,7 @@ public class BlockIngotPile extends BlockContainer implements IBlockItemSink {
 
 	
 	@Override
-	public TileEntity createNewTileEntity(World world, int meta)
-	{
+	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TEIngotPile();
 	}
 	
@@ -243,4 +243,11 @@ public class BlockIngotPile extends BlockContainer implements IBlockItemSink {
     public boolean isFullCube() {
     	return false;
     }
+
+
+	@Override
+	public String getSubType(ItemStack stack) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

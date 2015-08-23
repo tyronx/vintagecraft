@@ -5,7 +5,8 @@ import java.util.Arrays;
 import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -46,8 +47,6 @@ public abstract class ItemVC extends Item {
         if (state.getBlock() instanceof IBlockItemSink) {
     		if (((IBlockItemSink)state.getBlock()).tryPutItemstack(world, pos, entityplayer, side, itemstack)) {
     			return true;
-    		} else {
-    			return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
     		}
     	}
     	
@@ -91,7 +90,7 @@ public abstract class ItemVC extends Item {
 		return nbt.getBoolean("oddlyshaped");
 	}
 	
-	public ItemStack applyAnvilTechnique(ItemStack itemstack, EnumAnvilTechnique technique) {
+	public ItemStack applyTechnique(ItemStack itemstack, EnumWorkableTechnique technique) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		int[] techniqueIds = nbt.getIntArray("anviltechniques");
 		int[] newtechniqueIds = Arrays.copyOf(techniqueIds, techniqueIds.length + 1);
@@ -105,7 +104,7 @@ public abstract class ItemVC extends Item {
 		return itemstack;
 	}
 	
-	public EnumAnvilTechnique[] getAppliedAnvilTechniques(ItemStack itemstack) {
+	public EnumAnvilTechnique[] getAppliedTechniques(ItemStack itemstack) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		
 		int[] techniqueIds = nbt.getIntArray("anviltechniques");

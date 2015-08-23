@@ -29,6 +29,11 @@
 		"croptypeandstage=tomatoes-stage9": { "model": "vintagecraft:crops/tomatoes-stage9"},
 		"croptypeandstage=tomatoes-stage10": { "model": "vintagecraft:crops/tomatoes-stage10"},
 		"croptypeandstage=tomatoes-stage11": { "model": "vintagecraft:crops/tomatoes-stage11"},
-		"croptypeandstage=tomatoes-stage12": { "model": "vintagecraft:crops/tomatoes-stage12"}
+		"croptypeandstage=tomatoes-stage12": { "model": "vintagecraft:crops/tomatoes-stage12"},
+		"croptypeandstage=flax-stage0": { "model": "vintagecraft:crops/flax-stage0"},
+		"croptypeandstage=flax-stage1": { "model": "vintagecraft:crops/flax-stage1"},
+		"croptypeandstage=flax-stage2": { "model": "vintagecraft:crops/flax-stage2"},
+		"croptypeandstage=flax-stage3": { "model": "vintagecraft:crops/flax-stage3"},
+		"croptypeandstage=flax-stage4": { "model": "vintagecraft:crops/flax-stage4"}
 	}
 }

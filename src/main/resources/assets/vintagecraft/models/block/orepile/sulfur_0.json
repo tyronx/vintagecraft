@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_0",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/sulfur"
+		}
+}

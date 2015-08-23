@@ -15,8 +15,10 @@ import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPlanks;
@@ -101,12 +103,19 @@ public class ItemLogVC extends ItemBlockVC implements ISubtypeFromStackPovider, 
 	}
 
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
+	public boolean isMetalWorkingFuel(ItemStack stack) {
 		return false;
 	}
 
 	@Override
 	public int smokeLevel(ItemStack stack) {
 		return 300;
-	}	
+	}
+	
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		return ItemOreVC.getItemStackFor(EnumOreType.COKE, stack.stackSize / 8);
+	}
+
 }
+

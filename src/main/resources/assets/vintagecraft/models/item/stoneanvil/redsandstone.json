@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/redsandstone",
+"parent": "vintagecraft:block/stoneanvil/redsandstone-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

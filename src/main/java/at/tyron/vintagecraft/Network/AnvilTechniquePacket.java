@@ -1,10 +1,10 @@
 package at.tyron.vintagecraft.Network;
 
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Item.ItemToolVC;
-import at.tyron.vintagecraft.World.AnvilRecipes;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,12 +59,12 @@ public class AnvilTechniquePacket implements IMessage {
     			ContainerAnvil container = (ContainerAnvil) player.openContainer;
     			
     			ItemStack itemstack = container.getSlot(0).getStack();
-    			if (itemstack == null || !(itemstack.getItem() instanceof ISmithable)) {
+    			if (itemstack == null || !(itemstack.getItem() instanceof IItemSmithable)) {
     				container.detectAndSendChanges();
     				return null;
     			}
     			
-    	        ISmithable smithable = (ISmithable)itemstack.getItem();	        
+    	        IItemSmithable smithable = (IItemSmithable)itemstack.getItem();	        
     	        if (!smithable.workableOn(message.anviltier, itemstack, container.getSlot(1).getStack())) {
     	        	container.detectAndSendChanges();
     	        	return null;
@@ -89,7 +89,7 @@ public class AnvilTechniquePacket implements IMessage {
     	        
     	        
     	        if (container.teanvil.onAnvilUse(player)) {
-    	        	smithable.applyAnvilTechnique(itemstack, message.technique);
+    	        	smithable.applyTechnique(itemstack, message.technique);
     	        	container.checkCraftable();	
     	        }
     		}

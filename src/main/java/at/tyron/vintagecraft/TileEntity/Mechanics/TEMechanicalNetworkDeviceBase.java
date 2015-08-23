@@ -19,20 +19,22 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity implements IMechanicalPowerDevice  {
 	public boolean markedForRemoval = false;
 	
-	public MechanicalNetwork network;
+	int networkId;  // The network we're connected at [orientation] 
+	public EnumFacing orientation;
+	
 	int propagationId;
 	
 	/* Wether the device turns clockwise as seen from clockwiseFromFacing (standing 3 blocks away from this facing and looking towards the block */
 	public boolean clockwise;
 	public EnumFacing directionFromFacing;
 	
-	public EnumFacing orientation;
 	
 	private EnumTree treeType;
 	public ResourceLocation texture;
@@ -52,10 +54,10 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 
 	
-	@SideOnly(Side.CLIENT)
+	//@SideOnly(Side.CLIENT)
 	float lastAngle = 0f;
 	
-	@SideOnly(Side.CLIENT)
+	//@SideOnly(Side.CLIENT)
 	public float getAngle() {
 		MechanicalNetwork network = getNetwork(null); 
 		if (network == null) {
@@ -69,15 +71,33 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		return (lastAngle = network.getAngle());
 	}
 
+	
+	@Override
+	public void validate() {
+		super.validate();
+		//loadNetwork();
+		
+		//System.out.println("registered device during validate");
+		
+	}
+	
+/*	public void loadNetwork() {
+		MechnicalNetworkManager manager = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj);
+		if (manager != null) {
+			network = manager.getNetworkById(this.networkId);
+			if (network != null) {
+				System.out.println("registered device during validate");
+				network.register(this);
+			}
+		}
+	}*/
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
-		network = MechanicalNetwork.getNetworkById(compound.getInteger("networkId"));
-		if (network != null) {
-			network.register(this);
-			System.out.println("registering myself");
-		}
+		this.networkId = compound.getInteger("networkId");
+		//if (worldObj != null) loadNetwork();	
 		
 		clockwise = compound.getBoolean("clockwise");
 		
@@ -98,7 +118,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	public void writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		
-		compound.setInteger("networkId", network == null ? 0 : network.networkId);
+		compound.setInteger("networkId", networkId);
 		compound.setInteger("orientation", orientation == null ? -1 : orientation.ordinal());
 		compound.setInteger("clockwiseFromFacing", directionFromFacing == null ? -1 : directionFromFacing.ordinal());
 		compound.setBoolean("clockwise", clockwise);
@@ -117,11 +137,17 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	@Override
 	public MechanicalNetwork getNetwork(EnumFacing facing) {
-		//System.out.println(network);
-		if (network == null || MechanicalNetwork.getNetworkById(network.networkId) == null) {
-			network = null;
+		if (worldObj == null || MechnicalNetworkManager.getNetworkManagerForWorld(worldObj) == null) return null;
+		
+		return MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getNetworkById(networkId);
+	}
+	
+	public MechanicalNetwork[] getNetworks() {
+		MechanicalNetwork network = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getNetworkById(networkId);
+		if (network == null) {
+			return new MechanicalNetwork[0];
 		}
-		return network;
+		return new MechanicalNetwork[]{network};
 	}
 
 	public float getNetworkSpeed(EnumFacing facing) {
@@ -137,13 +163,13 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	}
 
 	@Override
-	public void trySetNetwork(MechanicalNetwork network, EnumFacing localFacing) {
+	public void trySetNetwork(int networkId, EnumFacing localFacing) {
 		if (hasConnectorAt(localFacing)) {
-			this.network = network;
+			this.networkId = networkId;
 			
 			IMechanicalPowerDevice device = getNeighbourDevice(localFacing, true);
 			if (device != null) {
-				if (network.getDirection() != 0) {
+				if (getNetwork(localFacing).getDirection() != 0) {
 					clockwise = device.isClockWiseDirection(localFacing.getOpposite());
 					setDirectionFromFacing(localFacing.getOpposite());
 				}
@@ -151,12 +177,13 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 				throw new RuntimeException("Eh, a network coming from " + localFacing + ", but there is no device, instead " + worldObj.getBlockState(pos.offset(localFacing)) + "?!");
 			}
 			
-			network.register(this);
+			getNetwork(localFacing).register(this);
 			
 			worldObj.markBlockForUpdate(pos);
 		} else {
 			directionFromFacing = null;
-			this.network = null;
+			//this.network = null;
+			this.networkId = 0;
 		}
 	}
 
@@ -173,18 +200,18 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 
 	
 	
-	public void propagateNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing) {
+	public void propagateNetworkToNeighbours(int propagationId, int networkId, EnumFacing remoteFacing) {
 		// Already propagated
 		if (this.propagationId == propagationId) return;
 		this.propagationId = propagationId;
 
-		trySetNetwork(network, remoteFacing.getOpposite());
-		network.register(this);
+		trySetNetwork(networkId, remoteFacing.getOpposite());
+		getNetwork(remoteFacing.getOpposite()).register(this);
 		
 		//if (true) throw new RuntimeException("safg");
-		//System.out.println(pos);
+		System.out.println(pos);
 		
-		sendNetworkToNeighbours(propagationId, network, remoteFacing);
+		sendNetworkToNeighbours(propagationId, networkId, remoteFacing);
 	}
 	
 	
@@ -209,12 +236,12 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		}	
 	}
 	
-	public void sendNetworkToNeighbours(int propagationId, MechanicalNetwork network, EnumFacing remoteFacing) {
+	public void sendNetworkToNeighbours(int propagationId, int networkId, EnumFacing remoteFacing) {
 		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);
 		
 		for (EnumFacing localFacing : connectibleNeighbours.keySet()) {
 			if (remoteFacing.getOpposite() != localFacing) {
-				connectibleNeighbours.get(localFacing).propagateNetworkToNeighbours(propagationId, network, localFacing);
+				connectibleNeighbours.get(localFacing).propagateNetworkToNeighbours(propagationId, networkId, localFacing);
 			}
 		}		
 	}
@@ -222,8 +249,10 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	
 	public void handleMechanicRelayRemoval() {
-		if (network == null) return;
-		network.unregister(this);
+		if (networkId == 0) return;
+		for (MechanicalNetwork network : getNetworks()) {
+			network.unregister(this);
+		}
 	}
 	
 	public void handleMechanicalRelayPlacement() {
@@ -251,14 +280,14 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		if (networks.size() == 1) {
 			EnumFacing facing = networks.keySet().toArray(new EnumFacing[0])[0];
 			
-			trySetNetwork(networks.get(facing), facing);
+			trySetNetwork(networks.get(facing).networkId, facing);
 			
 			
 			
 			for (EnumFacing nullnetworkfacing : nullnetworks) {
 				getNeighbourDevice(nullnetworkfacing, true).propagateNetworkToNeighbours(
-					MechanicalNetwork.getUniquePropagationId(), 
-					network, 
+					MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getUniquePropagationId(), 
+					networkId, 
 					nullnetworkfacing
 				);
 			}
@@ -344,12 +373,12 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 
 	
 	@Override
-	public void setClockWiseDirection(MechanicalNetwork network, boolean clockwise) {
+	public void setClockWiseDirection(int networkId, boolean clockwise) {
 		this.clockwise = clockwise;	
 	}
 
 	public void clearNetwork() {
-		this.network = null;
+		this.networkId = 0;
 		worldObj.markBlockForUpdate(pos);
 	}
 	

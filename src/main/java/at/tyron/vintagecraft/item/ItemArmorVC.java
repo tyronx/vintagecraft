@@ -15,6 +15,7 @@ public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider {
 	public static ArmorMaterial TINBRONZEVC = EnumHelper.addArmorMaterial("TINBRONZEVC", "tinbronze", 4, new int[]{3, 4, 3, 3}, 0);
 	public static ArmorMaterial BISMUTHBRONZEVC = EnumHelper.addArmorMaterial("BISMUTHBRONZEVC", "bismuthbronze", 5, new int[]{2, 4, 3, 2}, 0);
 	public static ArmorMaterial IRONVC = EnumHelper.addArmorMaterial("IRONVC", "iron", 5, new int[]{4, 5, 4, 4}, 0);
+	public static ArmorMaterial STEELVC = EnumHelper.addArmorMaterial("STEELVC", "steel", 5, new int[]{5, 6, 5, 5}, 0);
 	
 	
 	public ItemArmorVC(ArmorMaterial material, String name, int renderIndex, int armorType) {
@@ -23,10 +24,11 @@ public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider {
 		
 		int durability = 50;
 		
-		if (name.equals("copper")) durability = 100;
-		if (name.equals("tinbronze")) durability = 200;
-		if (name.equals("bismuthbronze")) durability = 230; 
-		if (name.equals("iron")) durability = 400; 
+		if (name.equals("copper")) durability = 80;
+		if (name.equals("tinbronze")) durability = 160;
+		if (name.equals("bismuthbronze")) durability = 184; 
+		if (name.equals("iron")) durability = 320; 
+		if (name.equals("steel")) durability = 512;
 		
 		
 		this.setMaxDamage(durability);

@@ -10,23 +10,27 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Client.ClientProxy;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
-import at.tyron.vintagecraft.Network.ChunkPutNbt;
-import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
-import at.tyron.vintagecraft.Network.MechanicalNetworkNBT;
+import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
+import at.tyron.vintagecraft.Network.ChunkPutNbtPacket;
+import at.tyron.vintagecraft.Network.ChunkRemoveNbtPacket;
+import at.tyron.vintagecraft.Network.MechanicalNetworkNBTPacket;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
+import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
+import at.tyron.vintagecraft.Network.WorldDataPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
-import at.tyron.vintagecraft.World.Recipes;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.World.WindGen;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumCarpentryRecipes;
+import at.tyron.vintagecraft.World.Crafting.Recipes;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.WorldGenDeposits;
 import at.tyron.vintagecraft.WorldGen.MapGenFlora;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldProviderVC;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldTypeVC;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilRecipe;
 import at.tyron.vintagecraft.WorldProperties.MobInventoryItems;
 //import at.tyron.vintagecraft.client.Model.BlockOreVCModel;
 import net.minecraft.block.Block;
@@ -70,6 +74,7 @@ import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -95,6 +100,8 @@ import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
@@ -151,10 +158,14 @@ public class VintageCraft {
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
     	packetPipeline.registerMessage(AnvilTechniquePacket.Handler.class, AnvilTechniquePacket.class, 0, Side.SERVER);
-    	packetPipeline.registerMessage(ChunkPutNbt.Handler.class, ChunkPutNbt.class, 1, Side.CLIENT);
-    	packetPipeline.registerMessage(ChunkRemoveNbt.Handler.class, ChunkRemoveNbt.class, 2, Side.CLIENT);
+    	packetPipeline.registerMessage(ChunkPutNbtPacket.Handler.class, ChunkPutNbtPacket.class, 1, Side.CLIENT);
+    	packetPipeline.registerMessage(ChunkRemoveNbtPacket.Handler.class, ChunkRemoveNbtPacket.class, 2, Side.CLIENT);
     	packetPipeline.registerMessage(SoundEffectToServerPacket.Handler.class, SoundEffectToServerPacket.class, 3, Side.SERVER);
-    	packetPipeline.registerMessage(MechanicalNetworkNBT.ClientHandler.class, MechanicalNetworkNBT.class, 4, Side.CLIENT);
+    	packetPipeline.registerMessage(MechanicalNetworkNBTPacket.ClientHandler.class, MechanicalNetworkNBTPacket.class, 4, Side.CLIENT);
+    	packetPipeline.registerMessage(StartMeteorShowerPacket.ClientHandler.class, StartMeteorShowerPacket.class, 5, Side.CLIENT);
+    	packetPipeline.registerMessage(WorldDataPacket.ClientHandler.class, WorldDataPacket.class, 6, Side.CLIENT);
+    	packetPipeline.registerMessage(CarpentryTechniquePacket.Handler.class, CarpentryTechniquePacket.class, 7, Side.SERVER);
+    	
     	
     	BlocksVC.init();
     	ItemsVC.init();
@@ -219,6 +230,7 @@ public class VintageCraft {
 		
 		Recipes.addRecipes();
 		EnumAnvilRecipe.registerRecipes();
+		EnumCarpentryRecipes.registerRecipes();
 	}
 	
 	
@@ -233,9 +245,19 @@ public class VintageCraft {
 
 	@SubscribeEvent
     public void entityJoin(EntityJoinWorldEvent evt) {
-    	VintageCraftMobTweaker.entityJoin(evt);
+		if (!evt.world.isRemote && evt.entity instanceof EntityPlayerMP) {
+			
+			packetPipeline.sendTo(new WorldDataPacket(evt.world.getSeed()), (EntityPlayerMP)evt.entity);
+		}
     }
 
+	
+	@SubscribeEvent
+	public void entitySpawn(SpecialSpawn evt) {
+		if (evt.world.isRemote) return;
+    	VintageCraftMobTweaker.entityJoin(evt);
+    	
+	}
 	
 	public VCraftWorldSavedData getOrCreateWorldData(World world) {
 		VCraftWorldSavedData worlddata;
@@ -246,25 +268,26 @@ public class VintageCraft {
 			worlddata = new VCraftWorldSavedData("vcraft");
 			world.getPerWorldStorage().setData("vcraft", worlddata);
 		}
+		
 		return worlddata;
 	}
 	
 	@SubscribeEvent
 	public void loadWorld(WorldEvent.Load evt) {
-		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world); 
+		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world);
+		worlddata.setWorld(evt.world);
 		long worldtime = worlddata.getWorldTime();
 		
 		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
 		
 		WindGen.registerWorld(evt.world);
-		
-		//MechanicalNetwork.loadNetworksFromTaglist(worlddata.getNetworks());
 	}
 	
 	@SubscribeEvent
 	public void unloadWorld(WorldEvent.Unload evt) {
 		WindGen.unregisterWorld(evt.world);
-		MechanicalNetwork.unloadNetworks();
+		System.out.println("unload networks");
+		//MechanicalNetwork.unloadNetworks();
 	}
 	
 	
@@ -288,7 +311,7 @@ public class VintageCraft {
 		}
 		
 		
-		int moonphase = event.world.provider.getMoonPhase(worldtime);
+		int moonphase = event.world.provider.getMoonPhase(event.world.getWorldTime());
 		boolean cannotSleeptonight =
 			moonphase == 0 ||
 			(event.world.getDifficulty() == EnumDifficulty.HARD && (moonphase == 7 || moonphase == 1))
@@ -304,6 +327,16 @@ public class VintageCraft {
 				 }	 
 			 }			
 		}
+
+		
+		
+		long day = worldtime / 24000L;
+		if (day > 0 && day % 20 == 0 && worldtime % 24000L == 14000) {
+			packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
+			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText("Something strange is happening in the night sky"));
+		}
+		
+
 		
 	}
 	
@@ -320,9 +353,9 @@ public class VintageCraft {
 		return getOrCreateWorldData(world).getWorldTime();
 	}
 	
-	public int getNightSkyType(World world) {
+	/*public int getNightSkyType(World world) {
 		return getOrCreateWorldData(world).getNightSkyType(world);
-	}
+	}*/
 	
 	public long daysPassed(World worldObj) {
 		return getWorldTime(worldObj) / 24000;

@@ -32,8 +32,8 @@ import at.tyron.vintagecraft.Block.BlockSandVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Interfaces.ClimateGenWorldChunkManager;
-import at.tyron.vintagecraft.Network.ChunkPutNbt;
-import at.tyron.vintagecraft.Network.ChunkRemoveNbt;
+import at.tyron.vintagecraft.Network.ChunkPutNbtPacket;
+import at.tyron.vintagecraft.Network.ChunkRemoveNbtPacket;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerVC;
 import at.tyron.vintagecraft.WorldGen.Noise.PseudoNumberGen;
@@ -254,13 +254,13 @@ public class VCraftWorld {
     @SubscribeEvent
     public void onChunkWatch(ChunkWatchEvent.Watch event) {
     	long index = ChunkPos2Index(event.chunk.chunkXPos, event.chunk.chunkZPos);
-    	VintageCraft.packetPipeline.sendTo(new ChunkPutNbt(index, VintageCraft.proxy.getChunkNbt(index)), event.player);
+    	VintageCraft.packetPipeline.sendTo(new ChunkPutNbtPacket(index, VintageCraft.proxy.getChunkNbt(index)), event.player);
     }
     
     @SubscribeEvent
     public void onChunkUnWatch(ChunkWatchEvent.UnWatch event) {
     	long index = ChunkPos2Index(event.chunk.chunkXPos, event.chunk.chunkZPos);
-    	VintageCraft.packetPipeline.sendTo(new ChunkRemoveNbt(index), event.player);
+    	VintageCraft.packetPipeline.sendTo(new ChunkRemoveNbtPacket(index), event.player);
     }
     
     

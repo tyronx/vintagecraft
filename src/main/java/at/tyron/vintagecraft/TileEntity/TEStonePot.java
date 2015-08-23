@@ -23,7 +23,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public static int burnTimePerCoal = 900; 
 	public static int maxCoalInPot = 5;
 	
-	public EnumRockType rocktype = EnumRockType.GRANITE;
+	public EnumRockType rocktype;
 	public EnumStonePotUtilization utilization;
 	
 
@@ -34,6 +34,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	
 	public TEStonePot() {
 		storage = new ItemStack[getSizeInventory()];
+		rocktype = EnumRockType.GRANITE;
 	}
 	
 	public boolean tryIgnite() {
@@ -80,7 +81,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 			NBTTagCompound nbt = getHeatableItemStack().getTagCompound();
 			if (nbt == null) nbt = new NBTTagCompound();
 			
-			int change = 6;
+			int change = 4;
 			if (burnTime > 0 && burnTime < burnTimePerCoal) change = 1;
 			if (!burning) change = -4;
 
@@ -92,11 +93,10 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 				Math.max(0, nbt.getInteger("forgetemp") + change)
 			);
 			
+			// Forge can only max reach 1100 degrees
+			forgetemp = Math.min(forgetemp, 11000);
 			
-/*			if (getHeatableItemStack().getItem() instanceof ItemMetalPlate) {
-				System.out.println(forgetemp / 10);
-			}
-	*/		
+			
 			nbt.setInteger("forgetemp", forgetemp);
 			
 			if (forgetemp <= 0) {
@@ -128,6 +128,8 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		burnTime = nbttagcompound.getInteger("burntime");
 		burning = nbttagcompound.getBoolean("burning");
+		rocktype = EnumRockType.byId(nbttagcompound.getInteger("rocktype"));
+		
 		
 		int util = nbttagcompound.getInteger("utilization");
 		if (util != -1) {
@@ -142,6 +144,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		nbttagcompound.setInteger("burntime", burnTime);
 		nbttagcompound.setBoolean("burning", burning);
+		nbttagcompound.setInteger("rocktype", rocktype.id);
 		
 		nbttagcompound.setInteger("utilization", utilization == null ? -1 : utilization.ordinal());
 		
@@ -201,7 +204,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public boolean tryPutItemStack(ItemStack itemstack) {
 		if (utilization == null || utilization == EnumStonePotUtilization.FORGE) {
 		
-			if (itemstack.getItem() instanceof IItemFuel && ((IItemFuel)itemstack.getItem()).isForgeFuel(itemstack)) {
+			if (itemstack.getItem() instanceof IItemFuel && ((IItemFuel)itemstack.getItem()).isMetalWorkingFuel(itemstack)) {
 				if (burnTime < burnTimePerCoal * maxCoalInPot) {
 					itemstack.stackSize--;
 					burnTime += burnTimePerCoal;

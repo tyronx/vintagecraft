@@ -3,7 +3,6 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
 import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
@@ -14,6 +13,7 @@ import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Feature.GenFeatureSpiderNest;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
 import at.tyron.vintagecraft.WorldProperties.*;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrassGroup;
@@ -199,22 +199,45 @@ public class MapGenFlora {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int climate[] = VCraftWorld.instance.getClimate(pos = new BlockPos(xCoord + x, 0, zCoord + z));
-			if (climate[1] < 120 ) return;
+			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z)));
+			if (climate[1] >= 120 ) {
 			
-			int quantity = random.nextInt(10) + 2;
+				int quantity = random.nextInt(10) + 2;
+				
+				while (quantity-- > 0) {
+					pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+					Block block = world.getBlockState(pos.down()).getBlock();
+					
+					if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
+						world.setBlockState(pos, BlocksVC.crops.getBlockStateFor(EnumCrop.WHEAT, random.nextInt(4)), 2);
+					}
+				}
+			}
+		}
+		
+		if (random.nextInt(12) == 0) {
+			int x = random.nextInt(16);
+			int z = random.nextInt(16);
+			
+			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z)));
+			
+			int quantity = random.nextInt(6) + 3;
 			
 			while (quantity-- > 0) {
 				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
-					world.setBlockState(pos, BlocksVC.wheatcrops.getDefaultState().withProperty(BlockCropsVC.AGE, random.nextInt(4)), 2);
+			
+					world.setBlockState(pos, BlocksVC.crops.getBlockStateFor(EnumCrop.FLAX, random.nextInt(4)), 2);
 				}
 			}
 		}
 
 	}
+	
+	
+	
 	
 	
 	void placeGrass(World world, BlockPos pos, Random random, int fertility, int temperature) {

@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/basalt",
+"parent": "vintagecraft:block/stoneanvil/basalt-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

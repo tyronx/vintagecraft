@@ -7,7 +7,8 @@ import net.minecraft.client.model.ModelBox;
 public class ModelBellows extends ModelBase {
 	public ModelRendererVC woodCover;
 	public ModelRendererVC leather;
-	public ModelRendererVC ironTip;
+	
+	public ModelRendererVC ironTipAndTuyere;
 	
 	public ModelRendererVC gearBase;
 	public ModelRendererVC gearPegs;
@@ -21,7 +22,7 @@ public class ModelBellows extends ModelBase {
 		
 		woodCover = new ModelRendererVC(this);
 		leather = new ModelRendererVC(this);
-		ironTip = new ModelRendererVC(this);
+		ironTipAndTuyere = new ModelRendererVC(this);
 		gearBase = new ModelRendererVC(this);
 		gearPegs = new ModelRendererVC(this);
 		
@@ -35,13 +36,13 @@ public class ModelBellows extends ModelBase {
 		leather.cubeList.add(new ModelBox(leather, 0, 0, 2f, 20f, 2f, 28, 2, 28, 0));
 		
 		
-		//      								    x1  y1  z1   wdt hgt detph scalechange
+		//      								             x1  y1  z1   wdt hgt detph scalechange
 		gearBase.cubeList.add(new ModelBox(gearBase, 0, 0,  5F, 5f, 0F,    22, 22, 2, 0));
 		gearPegs.cubeList.add(new ModelBox(gearPegs, 0, 0,  9F + 0.5f, 9f + 0.5f, 1F, 2, 2, 4, 0));
-		/*gearPegs.cubeList.add(new ModelBox(gearPegs, 0, 0,  4F + 21.5f, 4f + 0.5f, 1F, 2, 2, 8, 0));
-		gearPegs.cubeList.add(new ModelBox(gearPegs, 0, 0,  4F + 0.5f, 4f + 21.5f, 1F, 2, 2, 8, 0));
-		gearPegs.cubeList.add(new ModelBox(gearPegs, 0, 0,  4F + 21.5f, 4f + 21.5f, 1F, 2, 2, 8, 0));*/		
+
 		
+		ironTipAndTuyere.cubeList.add(new ModelBox(ironTipAndTuyere, 16, 0, 13f, 1, 0, 6, 6, 58, 0));
+		ironTipAndTuyere.cubeList.add(new ModelBox(ironTipAndTuyere, 0, 0, 12f, 0, 0, 8, 8, 6, 0));
 		
 	}
 		

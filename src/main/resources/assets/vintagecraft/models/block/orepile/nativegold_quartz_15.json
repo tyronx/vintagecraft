@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_15",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/nativegold_quartz"
+		}
+}

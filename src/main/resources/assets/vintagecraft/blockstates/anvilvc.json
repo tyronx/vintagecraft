@@ -19,6 +19,10 @@
         "facing=north,metal=bismuthbronze": { "model": "vintagecraft:anvil/bismuthbronze" },
         "facing=south,metal=bismuthbronze": { "model": "vintagecraft:anvil/bismuthbronze", "y": 180 },
         "facing=west,metal=bismuthbronze": { "model": "vintagecraft:anvil/bismuthbronze", "y": 270 },
-        "facing=east,metal=bismuthbronze": { "model": "vintagecraft:anvil/bismuthbronze", "y": 90 }
+        "facing=east,metal=bismuthbronze": { "model": "vintagecraft:anvil/bismuthbronze", "y": 90 },
+        "facing=north,metal=steel": { "model": "vintagecraft:anvil/steel" },
+        "facing=south,metal=steel": { "model": "vintagecraft:anvil/steel", "y": 180 },
+        "facing=west,metal=steel": { "model": "vintagecraft:anvil/steel", "y": 270 },
+        "facing=east,metal=steel": { "model": "vintagecraft:anvil/steel", "y": 90 }
 	}
 }

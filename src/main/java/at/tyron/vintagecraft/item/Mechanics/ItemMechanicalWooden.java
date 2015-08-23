@@ -105,7 +105,7 @@ public class ItemMechanicalWooden extends ItemBlockVC implements IItemFuel, ISub
 	}	
     
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
+	public boolean isMetalWorkingFuel(ItemStack stack) {
 		return false;
 	}
 
@@ -113,5 +113,11 @@ public class ItemMechanicalWooden extends ItemBlockVC implements IItemFuel, ISub
 	public String getSubType(ItemStack stack) {
 		return getTreeType(stack).getName();
 	}
+	
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		return null;
+	}
+
    
 }

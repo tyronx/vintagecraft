@@ -35,6 +35,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.World.ItemsVC;
@@ -43,7 +44,7 @@ import at.tyron.vintagecraft.WorldProperties.MobInventoryItems;
 
 public class VintageCraftMobTweaker {
 	// Called from Vintagecraft.java
-    public static void entityJoin(EntityJoinWorldEvent evt) {
+    public static void entityJoin(LivingSpawnEvent evt) {
     	if (! (evt.entity.worldObj instanceof WorldServer)) return;
     	
     	if (evt.entity instanceof EntityZombie) {
@@ -233,12 +234,15 @@ public class VintageCraftMobTweaker {
 		
 		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
 
+		//System.out.println("try horsing up " + mob.getClass());
+		//new Exception().printStackTrace(System.out);
+		
 		// after 20,15,10 days  => 50% the amount of horses
 		// increase by 10% every 10,15,20 days
-		// until a max of 120% horses
+		// until a max of 110% horses
 		int dayModifier = (difficulty.ordinal()+1) * 5;   // returns 10,15,20
 		float modifier = Math.min(1.2f, (daysPassed > dayModifier ? 0.5f : 0f) + 0.1f * ((daysPassed - dayModifier) / dayModifier));
-		 
+		
 		
 		float horseSpawnchance = 0f;
 		switch (difficulty) {

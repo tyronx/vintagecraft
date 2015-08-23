@@ -2,11 +2,11 @@ package at.tyron.vintagecraft.TileEntity;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -60,7 +60,7 @@ public abstract class TENoGUIInventory extends NetworkTileEntity implements IInv
 		float f2 = rand.nextFloat() * 0.8F + 0.1F;
 
 		for (int i = 0; i < getSizeInventory(); i++) {
-			if(storage[i]!= null) {
+			if(storage[i] != null && storage[i].stackSize > 0) {
 				entityitem = new EntityItem(worldObj, pos.getX() + f, pos.getY() + f1, pos.getZ() + f2, storage[i]);
 				entityitem.motionX = (float)rand.nextGaussian() * f3;
 				entityitem.motionY = (float)rand.nextGaussian() * f3 + 0.2F;

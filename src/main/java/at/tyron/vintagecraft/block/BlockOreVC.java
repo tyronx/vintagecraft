@@ -32,7 +32,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.BlockClass.OreClassEntry;
+import at.tyron.vintagecraft.BlockClass.OreInRockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemOreVC;
@@ -97,13 +97,13 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
  
     
     public static EnumOreType getOreType(IBlockState state) {
-    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
+    	String[] type = ((OreInRockClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
     	return EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
     }
 
     
     public static EnumRockType getRockType(IBlockState state) {
-    	String[] type = ((OreClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
+    	String[] type = ((OreInRockClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
     	return EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
     }
 
@@ -114,7 +114,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     	
     	World worldIn = (World)world;
     	
-     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	String[] type = ((OreInRockClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
      	
@@ -145,7 +145,9 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
 	        	ItemOreVC.setOreType(itemstack, oretype);
 	        	
-	        	if (oretype == EnumOreType.BITUMINOUSCOAL) itemstack.stackSize *= 2;
+	        	if (oretype == EnumOreType.BITUMINOUSCOAL || oretype == EnumOreType.SYLVITE_ROCKSALT || oretype == EnumOreType.LIMONITE) {
+	        		itemstack.stackSize++;
+	        	}
 	        	
 	        	ret.add(itemstack);
 	        	break;
@@ -186,7 +188,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	
 	
     public int getHarvestLevel(IBlockState state) {
-     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	String[] type = ((OreInRockClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
      	
         return oretype.getHarvestlevel();
@@ -197,7 +199,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     public float getBlockHardnessMultiplier(IBlockState state) {
     	if (!BlocksVC.rawore.containsBlock(state.getBlock())) return 1f;
     	
-     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	String[] type = ((OreInRockClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
      	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
      	
@@ -208,7 +210,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	public int getHarvetLevel(IBlockState state) {
     	if (!BlocksVC.rawore.containsBlock(state.getBlock())) return 1;
     	
-     	String[] type = ((OreClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
+     	String[] type = ((OreInRockClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
 
      	return oretype.harvestlevel;

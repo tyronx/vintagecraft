@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/claystone",
+"parent": "vintagecraft:block/stoneanvil/claystone-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

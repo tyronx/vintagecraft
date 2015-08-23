@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
 public class EntityMobHorse extends EntityHorse {
@@ -54,6 +55,10 @@ public class EntityMobHorse extends EntityHorse {
             if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.worldObj.canSeeSky(blockpos)) {
             	this.setFire(8);
             }
+        }
+        
+        if(worldObj.getDifficulty() == EnumDifficulty.PEACEFUL) {
+        	isDead = true;
         }
 
         super.onLivingUpdate();

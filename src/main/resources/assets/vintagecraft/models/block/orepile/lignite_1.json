@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_1",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/lignite"
+		}
+}

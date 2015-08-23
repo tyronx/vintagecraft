@@ -11,7 +11,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
-import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
+import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockWoodenSlabVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
@@ -50,7 +50,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 	public static BaseBlockClass getBlockClass(Block block) {
 		if (block instanceof BlockQuartzGlass) return BlocksVC.quartzglass;
-		if (block instanceof BlockStairsVC) return BlocksVC.stairs;
+		if (block instanceof BlockWoodenStairsVC) return BlocksVC.plankstairs;
 		if (block instanceof BlockSingleWoodenSlab) return BlocksVC.singleslab;
 		if (block instanceof BlockDoubleWoodenSlab) return BlocksVC.doubleslab;
 		if (block instanceof BlockFenceGateVC) return BlocksVC.fencegate;
@@ -84,7 +84,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 
 
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
+	public boolean isMetalWorkingFuel(ItemStack stack) {
 		return false;
 	}
 
@@ -94,6 +94,11 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 		if (blockclass == BlocksVC.sapling || blockclass == BlocksVC.leaves || blockclass == BlocksVC.leavesbranchy) return 300;
 		
 		return 150;
+	}
+
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		return null;
 	}	
 }
 

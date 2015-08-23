@@ -2,6 +2,8 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
@@ -34,6 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -45,6 +48,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		this.tooltype = tooltype;
 		setCreativeTab(VintageCraft.toolsarmorTab);
 		maxStackSize = 1;
+		//System.out.println("set max damage for " + tooltype);
 		setMaxDamage(getMaxUses());
 	}
 	
@@ -124,6 +128,12 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 			return block.getHarvetLevel(state) <= getHarvestLevel();
 		}
 		return true;
+	}
+
+	
+	@Override
+	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+		tooltip.add("Condition: " + Math.round(100 - 100f*itemstack.getItemDamage() / getMaxUses()) + "%");
 	}
 
 	 

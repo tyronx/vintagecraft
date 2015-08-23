@@ -39,7 +39,7 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 	@SideOnly(Side.CLIENT)
     public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
     	for (EnumTree treetype : EnumTree.values()) {
-    		subItems.add(getItemStack(treetype));
+    		subItems.add(withTreeType(treetype));
     	}
     }
 
@@ -75,7 +75,7 @@ public class ItemToolRack extends ItemBlock implements ISubtypeFromStackPovider 
 	
 
 	
-	public static ItemStack getItemStack(EnumTree treetype) {
+	public static ItemStack withTreeType(EnumTree treetype) {
 		ItemStack itemstack = new ItemStack(Item.getItemFromBlock(BlocksVC.toolrack)); // ItemsVC.toolrack);
 		itemstack.setTagCompound(new NBTTagCompound());
 		itemstack.getTagCompound().setInteger("treetype", treetype.getId());

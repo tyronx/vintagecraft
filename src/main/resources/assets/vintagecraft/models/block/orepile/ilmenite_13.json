@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_13",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/ilmenite"
+		}
+}

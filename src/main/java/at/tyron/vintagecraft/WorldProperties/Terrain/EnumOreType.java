@@ -35,7 +35,11 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	PERIDOT_OLIVINE 	(22, 2, 0.7f),
 	QUARTZCRYSTAL		(23, 3, 1f),
 	SULFUR				(24, 0, 0.5f),
-	SALTPETER			(25, 0, 0.2F, false)
+	SALTPETER			(25, 0, 0.2F, false),
+	
+	// These don't reaally belong here
+	COKE				(26, 0, 0.5f),
+	//CHARCOAL			(27, 0, 0.5f)
 	;
 	
 	int id;
@@ -62,6 +66,10 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 		if (rocktype == null) return false;
 		
 		switch (this) {
+		//	case CHARCOAL:
+			case COKE:
+				return false;
+			
 			case OLIVINE:
 			case PERIDOT_OLIVINE:
 				return rocktype == EnumRockType.BASALT;

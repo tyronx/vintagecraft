@@ -36,10 +36,10 @@ import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
-import at.tyron.vintagecraft.TileEntity.TEBloomery;
+import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
-import at.tyron.vintagecraft.WorldProperties.EnumBloomeryState;
+import at.tyron.vintagecraft.WorldProperties.EnumFurnaceState;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
@@ -165,7 +165,6 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
     
 	
 	
-	// Called when user places a ItemToolRack
 	public void initTileEntity(World world, BlockPos pos, EnumMetal metal) {
 		TileEntity te = world.getTileEntity(pos);
 		if(te != null && te instanceof TEAnvil) {

@@ -154,7 +154,7 @@ public class BlockToolRack extends BlockContainerVC {
 				TEToolRack rack = (TEToolRack) te;
 				
 				rack.ejectContents();
-				spawnAsEntity(world, pos, ItemToolRack.getItemStack(rack.woodtype));
+				spawnAsEntity(world, pos, ItemToolRack.withTreeType(rack.woodtype));
 			}
 		}
 		return world.setBlockToAir(pos);
@@ -258,7 +258,7 @@ public class BlockToolRack extends BlockContainerVC {
 
 	
 	public ItemStack getItemStackFor(IStateEnum key) {
-		return ItemToolRack.getItemStack((EnumTree)key);
+		return ItemToolRack.withTreeType((EnumTree)key);
 	}
 
 	@Override

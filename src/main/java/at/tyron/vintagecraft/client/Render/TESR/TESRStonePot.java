@@ -22,6 +22,7 @@ import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -33,6 +34,7 @@ import org.lwjgl.opengl.GL11;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Block.Utility.BlockClayVessel;
 import at.tyron.vintagecraft.Client.Model.ModelStonePot;
+import at.tyron.vintagecraft.Client.Render.Model.ModelRendererVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
@@ -41,6 +43,8 @@ import at.tyron.vintagecraft.WorldProperties.EnumStonePotUtilization;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class TESRStonePot extends TESRBase {
+	ResourceLocation whiteTex = new ResourceLocation(ModInfo.ModID, "textures/blocks/white.png");
+	
 	ModelStonePot modelstonepot = new ModelStonePot();
 
 
@@ -61,7 +65,7 @@ public class TESRStonePot extends TESRBase {
 		if (tileentity.utilization == EnumStonePotUtilization.FORGE) {
 			renderFillmaterial(tileentity.getFillHeight(), tileentity.burning);
 			
-			renderHeatableItemStack(tileentity, tileentity.getHeatableItemStack());
+			renderContents(tileentity, tileentity.getHeatableItemStack());
 		}
 	}
 	
@@ -95,79 +99,173 @@ public class TESRStonePot extends TESRBase {
 	
 	
 	
-	private void renderHeatableItemStack(TEStonePot tileentity, ItemStack heatableItemStack) {
+	private void renderContents(TEStonePot tileentity, ItemStack heatableItemStack) {
 		if (heatableItemStack == null) return;
 		
-		int ingotTemp = heatableItemStack.getTagCompound().getInteger("forgetemp");
+		int ingotTemp = heatableItemStack.getTagCompound().getInteger("forgetemp") / 10;
 		
 		GL11.glPushMatrix();
 		GL11.glTranslatef(0f, tileentity.getFillHeight() / 16f - 0.15f, 0f);
 		
+		int light = tileentity.getWorld().getCombinedLight(tileentity.getPos().up(), 0); 
+		int i1 = Math.min(240, light % 65536 + Math.max(0, (ingotTemp - 525)/2));
+		int k1 = light / 65536;
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, i1 / 1.0F, k1 / 1.0F);
+
+		float[]colors = EnumMetal.getIncandescenceColorAsColor4f(ingotTemp);
+		
 		if (heatableItemStack.getItem() instanceof ItemIngot) {
-			renderIngots(
+			renderHotIngots(
 				tileentity,
 				tileentity.getIngotMetal(), 
 				tileentity.getHeatableQuantity(), 
-				ingotTemp / 60
+				ingotTemp / 6,
+				colors
 			);
 		} else {
-			EntityItem customitem = new EntityItem(tileentity.getWorld());
-			customitem.hoverStart = 0f;
-			
-			float blockScale = 1F;
-			float left = 0.2f;
-			float right = 0.7f;
-			
-			
-			GL11.glTranslatef(0.5f, 0.3f, 0.5f);
-			GL11.glScalef(blockScale, blockScale, blockScale);
-			
-			int light = tileentity.getWorld().getCombinedLight(tileentity.getPos().up(), 0); 
-			int i1 = Math.min(240, light % 65536 + ingotTemp);
-			int k1 = light / 65536;
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, i1 / 1.0F, k1 / 1.0F);
-			
-			for (int i = 0; i < heatableItemStack.stackSize; i++) {
-				Minecraft.getMinecraft().getRenderItem().renderItemModelForEntity(heatableItemStack, Minecraft.getMinecraft().thePlayer, TransformType.GUI);
-				
-				GL11.glTranslatef((i > 1 ? -1f : 1f) * ((i % 2 > 0) ? 0 : 0.03125f), 0.03125f, (i > 1 ? -1f : 1f) * (((i+1) % 2 > 0) ? 0 : 0.03125f));
-			}
-			
-			//renderItemStack(heatableItemStack, Minecraft.getMinecraft().thePlayer, TransformType.GUI);
-			
-			//TileEntityItemStackRenderer.instance.renderByItem(heatableItemStack);
-			
-			//customitem.setEntityItemStack(heatableItemStack);
-			//Minecraft.getMinecraft().getItemRenderer().renderItem(Minecraft.getMinecraft().thePlayer, customitem.getEntityItem(), TransformType.GUI);
-			
-			
-			/*GL11.glEnable(GL11.GL_BLEND);
-			GL11.glScalef(0.7f, 0.7f, 0.7f);
-			//Minecraft.getMinecraft().getRenderItem().renderItemModelForEntity(heatableItemStack, Minecraft.getMinecraft().thePlayer, TransformType.GUI);
-			renderItemStack(heatableItemStack, Minecraft.getMinecraft().thePlayer, TransformType.GUI);
-			GL11.glDisable(GL11.GL_BLEND);
-			*/
-			
-			
-			OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (light % 65536) / 1.0F, k1 / 1.0F);
-			
+			renderHotItemstack(
+				heatableItemStack, 
+				ingotTemp,
+				colors
+			);
 			
 		}
 
+		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (light % 65536) / 1.0F, k1 / 1.0F);
 		GL11.glPopMatrix();
 	}
 	
 	
 	
 	
-	void renderItemStack(ItemStack itemstack, EntityPlayer player, ItemCameraTransforms.TransformType cameraTransformType) {
+	void renderHotItemstack(ItemStack itemstack, int ingotTemp, float[] colors) {
+		float blockScale = 0.5F;
+		float left = 0.2f;
+		float right = 0.7f;
+		
+		
+		GL11.glTranslatef(0.5f, 0.5f, 0.5f);
+		GL11.glScalef(blockScale, blockScale, blockScale);
+		
+		Tessellator tessellator = Tessellator.getInstance();
+        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+		
+        int color = EnumMetal.getIncandescenceColorAsInt(ingotTemp);
+
+		for (int i = 0; i < itemstack.stackSize; i++) {
+			GL11.glTranslatef(
+				(i > 1 ? -1f : 1f) * ((i % 2 > 0) ? 0 : 0.03125f), 
+				0.03125f, 
+				(i > 1 ? -1f : 1f) * (((i+1) % 2 > 0) ? 0 : 0.03125f)
+			);
+			
+			GL11.glPushMatrix();
+				renderItemStack(itemstack, Minecraft.getMinecraft().thePlayer, TransformType.GUI, TextureMap.locationBlocksTexture, 0xffffffff);
+			GL11.glPopMatrix();
+			
+			GL11.glPushMatrix();
+		        GlStateManager.disableLighting();
+		        GlStateManager.disableCull();
+		        GlStateManager.enableBlend();
+		        GlStateManager.depthMask(false);
+		        GlStateManager.disableTexture2D();
+		        GlStateManager.tryBlendFuncSeparate(770, 1, 1, 0);
+		        
+				renderItemStack(itemstack, Minecraft.getMinecraft().thePlayer, TransformType.GUI, whiteTex, color);
+				
+		        GlStateManager.enableLighting();
+		        GlStateManager.enableTexture2D();
+		        GlStateManager.depthMask(true);
+		        GlStateManager.disableBlend();
+		        GlStateManager.enableCull();
+				GL11.glPopMatrix();
+				
+				GL11.glPushMatrix();
+    
+		        // Cheap glow effect
+		        GlStateManager.enableBlend();
+				//GL11.glColor4f(0.5F + ingotTemp / 400f, 0.1F + ingotTemp / 800f, 0.1F, Math.min(0.8f, ingotTemp / 200F));
+		        GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
+				GL11.glScalef(1.1f, 1.1f, 1.1f);
+				GL11.glTranslatef(0f, 0.05f, 0f);
+				renderItemStack(itemstack, Minecraft.getMinecraft().thePlayer, TransformType.GUI, whiteTex, color);
+		        GlStateManager.disableBlend();
+				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
+		        
+		        
+		    GL11.glPopMatrix();
+
+		}	
+	}
+	
+	
+	void renderHotIngots(TEStonePot tileentity, EnumMetal metal, int ingotQuantity, int ingotTemp, float[] colors) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/ingot/" + metal.getName() + ".png"));
+		modelstonepot.renderIngots(ingotQuantity);
+		
+        GlStateManager.disableLighting();
+        GlStateManager.disableCull();
+        GlStateManager.enableBlend();
+        GlStateManager.depthMask(false);
+        GlStateManager.disableTexture2D();
+        GlStateManager.tryBlendFuncSeparate(770, 1, 1, 0);
+        
+		GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
+		GL11.glScalef(1.01f, 1.01f, 1.01f);
+		GL11.glTranslatef(-0.005f, 0, -0.005f);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(whiteTex);
+		modelstonepot.renderIngots(ingotQuantity);
+		
+        GlStateManager.enableLighting();
+        GlStateManager.enableTexture2D();
+        GlStateManager.depthMask(true);
+        GlStateManager.disableBlend();
+        GlStateManager.enableCull();
+        
+        // Cheap glow effect
+        GlStateManager.enableBlend();
+		//GL11.glColor4f(0.5F + ingotTemp / 400f, 0.1F + ingotTemp / 800f, 0.1F, Math.min(0.8f, ingotTemp / 200F));
+        GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
+		GL11.glScalef(1.1f, 1.1f, 1.1f);
+		modelstonepot.renderIngotsGlow(ingotQuantity);
+        GlStateManager.disableBlend();
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
+	}
+	
+	
+	
+	
+	
+	@Override
+	public void renderTileEntityAt(TileEntity tileentity, double posX, double posY, double posZ, float par8, int p_180535_9_) {
+		renderAtPos((TEStonePot)tileentity, (float)posX, (float)posY, (float)posZ, par8);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	void renderItemStack(ItemStack itemstack, EntityPlayer player, ItemCameraTransforms.TransformType cameraTransformType, ResourceLocation texture, int color) {
 		ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
 		IBakedModel ibakedmodel = mesher.getItemModel(itemstack);
 		
 		TextureManager textureManager = Minecraft.getMinecraft().renderEngine;
 		
-        textureManager.bindTexture(TextureMap.locationBlocksTexture);
-        textureManager.getTexture(TextureMap.locationBlocksTexture).setBlurMipmap(false, false);
+        textureManager.bindTexture(texture);
+        //textureManager.getTexture(texture).setBlurMipmap(false, false);
         
         
         GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
@@ -181,16 +279,16 @@ public class TESRStonePot extends TESRBase {
         
         for (int k = 0; k < j; ++k) {
             EnumFacing enumfacing = aenumfacing[k];
-            renderQuads(worldrenderer, ibakedmodel.getFaceQuads(enumfacing), itemstack, 1);
+            renderQuads(worldrenderer, ibakedmodel.getFaceQuads(enumfacing), itemstack, 1, color);
         }
 
-        renderQuads(worldrenderer, ibakedmodel.getGeneralQuads(), itemstack, 1);
+        renderQuads(worldrenderer, ibakedmodel.getGeneralQuads(), itemstack, 1, color);
         tessellator.draw();
         
         
 
-        textureManager.bindTexture(TextureMap.locationBlocksTexture);
-        textureManager.getTexture(TextureMap.locationBlocksTexture).restoreLastBlurMipmap();
+        //textureManager.bindTexture(texture);
+        //textureManager.getTexture(texture).restoreLastBlurMipmap();
 	}
 	
 	
@@ -205,67 +303,32 @@ public class TESRStonePot extends TESRBase {
     private void renderQuad(WorldRenderer renderer, BakedQuad quad, int color) {
         renderer.addVertexData(quad.getVertexData());
         
-        if(quad instanceof net.minecraftforge.client.model.IColoredBakedQuad) {
+        /*if(quad instanceof net.minecraftforge.client.model.IColoredBakedQuad) {
             net.minecraftforge.client.ForgeHooksClient.putQuadColor(renderer, quad, color);
         } else {
         	renderer.putColor4(color);
-        }
+        }*/
+        
+        renderer.putColor4(color);
         
         this.putQuadNormal(renderer, quad);
     }
     
     
 
-	private void renderQuads(WorldRenderer renderer, List quads, ItemStack stack, int renderpass) {
+	private void renderQuads(WorldRenderer renderer, List quads, ItemStack stack, int renderpass, int color) {
 		BakedQuad bakedquad;
 		
-		GL11.glEnable(GL11.GL_BLEND);
-		
-		int color = stack.getItem().getColorFromItemStack(stack, renderpass);
+/*		int color = 0x44ffffff; //stack.getItem().getColorFromItemStack(stack, renderpass);
 		if (EntityRenderer.anaglyphEnable) {
 			color = TextureUtil.anaglyphColor(color);
 		}
-
+*/
 		for (Iterator iterator = quads.iterator(); iterator.hasNext(); this.renderQuad(renderer, bakedquad, color)) {
 			bakedquad = (BakedQuad)iterator.next();
 		}
 	}
 
-
-
-	
-	// ingotTemp currently between 0 and 240  (240 = bright red)
-	void renderIngots(TEStonePot tileentity, EnumMetal metal, int ingotQuantity, int ingotTemp) {
-		//System.out.println(metal);
-		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModInfo.ModID, "textures/blocks/ingot/" + metal.getName() + ".png"));
-		
-		int light = tileentity.getWorld().getCombinedLight(tileentity.getPos().up(), 0); 
-		int i1 = Math.min(240, light % 65536 + ingotTemp);
-		int k1 = light / 65536;
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, i1 / 1.0F, k1 / 1.0F);
-
-		
-		// Ingots with temperature coloring
-		GL11.glColor4f(1f, 1f - ingotTemp / 250f, 1f - ingotTemp / 200f, 1f);
-		modelstonepot.renderIngots(ingotQuantity);
-		
-		
-		// Cheap glow effect 
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glColor4f(0.5F + ingotTemp / 400f, 0.1F + ingotTemp / 800f, 0.1F, Math.min(0.8f, ingotTemp / 200F));
-		GL11.glScalef(1.1f, 1.1f, 1.1f);
-		modelstonepot.renderIngotsGlow(ingotQuantity);
-		GL11.glDisable(GL11.GL_BLEND);		
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1F);
-		OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (light % 65536) / 1.0F, k1 / 1.0F);
-		
-	}
-	
-	
-	@Override
-	public void renderTileEntityAt(TileEntity tileentity, double posX, double posY, double posZ, float par8, int p_180535_9_) {
-		renderAtPos((TEStonePot)tileentity, (float)posX, (float)posY, (float)posZ, par8);
-	}
 	
 }
 

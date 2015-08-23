@@ -50,7 +50,11 @@ function getItemJSON($metal, $parent = null) {
 			"rotation": [ 10, -45, 170 ],
 			"translation": [ 0, 1.5, -2.75 ],
 			"scale": [ 0.75, 0.75, 0.75 ]
-		}
+		},
+        "gui": {
+            "scale": [ 1.2, 1.2, 1.2 ],
+			"translation": [ 0, 1, 0 ]
+        }
 	}
 }';
 
@@ -66,7 +70,11 @@ function getItemJSON($metal, $parent = null) {
 			"rotation": [ 10, -45, 170 ],
 			"translation": [ 0, 1.5, -2.75 ],
 			"scale": [ 0.75, 0.75, 0.75 ]
-		}
+		},
+        "gui": {
+            "scale": [ 1.3, 1.3, 1.3 ],
+			"translation": [ 0, 2, 0 ]
+        }
 	}
 }';
 

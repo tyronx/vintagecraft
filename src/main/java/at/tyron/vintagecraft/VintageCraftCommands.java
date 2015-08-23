@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
@@ -41,6 +42,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
@@ -132,6 +134,23 @@ public class VintageCraftCommands extends CommandBase {
 			return;
 		}
 		
+		
+		if (args[0].equals("meteorshower")) {
+			VintageCraft.instance.packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
+			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText("Something strange is happening in the night sky"));
+		}
+		
+		if (args[0].equals("moonphase")) {
+			int moonphase = sender.getEntityWorld().provider.getMoonPhase(sender.getEntityWorld().getWorldTime());
+			
+			sender.addChatMessage(new ChatComponentText("" + moonphase));
+		}
+
+		if (args[0].equals("time")) {
+			VCraftWorldSavedData worlddata = VintageCraft.instance.getOrCreateWorldData(sender.getEntityWorld());
+			sender.addChatMessage(new ChatComponentText((Math.floor(worlddata.getWorldTime() / 2400F) / 10f) + " days passed"));
+		}
+
 		
 		if (args[0].equals("mobcap")) {
 			VCraftWorldSavedData worlddata = VintageCraft.instance.getOrCreateWorldData(sender.getEntityWorld());

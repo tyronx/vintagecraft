@@ -9,9 +9,9 @@ $json = '{
 foreach ($states as $state) {
 	foreach ($angles as $name => $angle) {
 		if (!empty($angle)) {
-			$json .= '        "facing='.$name.', fillheight='.$state.'": { "model": "vintagecraft:bloomery/'. str_replace("_", "-", $state) .'", "y": '.$angle.' },' . "\r\n";
+			$json .= '        "facing='.$name.', fillheight='.$state.'": { "model": "vintagecraft:furnace/'. str_replace("_", "-", $state) .'", "y": '.$angle.' },' . "\r\n";
 		} else {
-			$json .= '        "facing='.$name.', fillheight='.$state.'": { "model": "vintagecraft:bloomery/'. str_replace("_", "-", $state) .'" },' . "\r\n";
+			$json .= '        "facing='.$name.', fillheight='.$state.'": { "model": "vintagecraft:furnace/'. str_replace("_", "-", $state) .'" },' . "\r\n";
 		}
 	}
 }
@@ -21,4 +21,4 @@ $json .= '
 	}
 }';
 
-file_put_contents("blockstates/bloomery.json", $json);
+file_put_contents("blockstates/furnacesection.json", $json);

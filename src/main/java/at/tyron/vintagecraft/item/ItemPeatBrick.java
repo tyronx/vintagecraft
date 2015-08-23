@@ -24,9 +24,9 @@ import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrassGroup;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.*;
+import at.tyron.vintagecraft.WorldProperties.Terrain.*;
 
 public class ItemPeatBrick extends ItemVC implements IItemFuel {
 
@@ -52,7 +52,7 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 	
 	
 	@Override
-	public boolean isForgeFuel(ItemStack stack) {
+	public boolean isMetalWorkingFuel(ItemStack stack) {
 		return false;
 	}	
 	
@@ -138,5 +138,10 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 	@Override
 	public int smokeLevel(ItemStack stack) {
 		return 250;
+	}
+
+	@Override
+	public ItemStack getCokedOutput(ItemStack stack) {
+		return ItemOreVC.getItemStackFor(EnumOreType.COKE, stack.stackSize / 7);
 	}
 }

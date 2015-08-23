@@ -10,7 +10,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
-import at.tyron.vintagecraft.Block.Organic.BlockStairsVC;
+import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.SoilRockClassEntry;

@@ -30,7 +30,7 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IU
 	public void setDirectionFromFacing(EnumFacing facing) {
 		super.setDirectionFromFacing(facing);
 		connectToNeighbours();
-		if (facing == cagegearOrientation.getOpposite()) {
+		if (cagegearOrientation != null && facing == cagegearOrientation.getOpposite()) {
 			// Flip gears
 			EnumFacing tmp = orientation;
 			orientation = cagegearOrientation;
@@ -150,9 +150,9 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IU
 
 	@Override
 	public void update() {
-		if (network != null && worldObj != null && !worldObj.isRemote) {
-			if (worldObj.rand.nextFloat() < Math.min(0.01f, network.getSpeed() / 2000f)) {
-				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 0.8f, 1f);
+		if (getNetwork(orientation) != null && worldObj != null && !worldObj.isRemote) {
+			if (worldObj.rand.nextFloat() < Math.min(0.01f, getNetwork(orientation).getSpeed() / 2000f)) {
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1f, 1f);
 				//System.out.println("play sound "  + network.getSpeed()); 
 			}
 		}

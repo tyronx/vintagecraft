@@ -35,7 +35,7 @@ import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemStonePot;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
-import at.tyron.vintagecraft.TileEntity.TEBloomery;
+import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -45,12 +45,6 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, IIgniteable {
-	//public PropertyBlockClass ROCKTYPE;
-	//public static PropertyInteger filllevel = PropertyInteger.create("filllevel", 0, 12);
-	
-	//protected BlockClassEntry[] subtypes;
-	
-	
 	public BlockStonePot() {
 		super(Material.rock);
 		setCreativeTab(VintageCraft.craftedBlocksTab);
@@ -62,14 +56,6 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 			list.add(ItemStonePot.setRockType(new ItemStack(itemIn), rocktype));
 		}
 	}
-
-
-	
-	/*@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumFacing side, float hitX, float hitY, float hitZ) {
-    	playerIn.openGui(VintageCraft.instance, 5, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
-	}*/
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
@@ -169,10 +155,6 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 	
 	
 
-	/*@Override
-	public int getRenderType() {
-		return 3;
-	}*/
 
 	@Override
 	public boolean isOpaqueCube() {

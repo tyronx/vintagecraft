@@ -5,33 +5,84 @@ import java.util.Locale;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockCoating;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.BlockClass.MetalPlatingClassEntry;
+import at.tyron.vintagecraft.BlockClass.OreInRockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
+import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public class BlockMetalPlate extends BlockVC implements IMultiblock {
 	public PropertyBlockClass METALANDFACINGS;
+	public PropertyBool CUTOUT;
 	
 	public BlockMetalPlate() {
 		super(Material.iron);
-		setCreativeTab(VintageCraft.terrainTab);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+	}
+	
+	@Override
+	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		EnumFacing facing = EnumFacing.UP;
+		String side = getSides(state);
+		
+		for (EnumFacing face : EnumFacing.values()) {
+			if (face.name().toLowerCase(Locale.ROOT).charAt(0) == side.charAt(0)) {
+				facing = face;
+				break;
+			}
+		}
+		
+		IBlockState attachedstate = worldIn.getBlockState(pos.offset(facing)); 
+		if (
+			attachedstate.getBlock() instanceof BlockFurnaceSection &&
+			(EnumFacing)attachedstate.getValue(BlockFurnaceSection.FACING) == facing.getOpposite()
+		) {
+			return super.getActualState(state, worldIn, pos).withProperty(CUTOUT, true);
+		}
+		return super.getActualState(state, worldIn, pos);
+	}
+	   
+	@Override
+	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
+		for (BlockClassEntry entry : subtypes) {
+			MetalPlatingClassEntry metalentry = (MetalPlatingClassEntry)entry;
+			if (metalentry.side.equals("d")) {
+				list.add(entry.getItemStack());
+			}
+		}
 	}
 
+		
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
+		CUTOUT = PropertyBool.create("cutout");
 		this.subtypes = subtypes;
 		setTypeProperty(property);
 		
@@ -40,14 +91,10 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState(), getTypeProperty()));
 	}
 
+		
 
 	
-	public BlockClassEntry getFacings(IBlockState state) {
-		return (BlockClassEntry)state.getValue(getTypeProperty());
-	}
-	
 
-	
 	
 	@Override
     public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
@@ -63,7 +110,9 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 	
 	
 	public AxisAlignedBB getSelectedBoundingBox2(IBlockAccess worldIn, BlockPos pos) {
-		String facings = getBlockClass().getEntryFromState(worldIn.getBlockState(pos)).getKey().getStateName();
+		if (worldIn.isAirBlock(pos) || !(worldIn.getBlockState(pos).getBlock() instanceof BlockMetalPlate)) return null;
+		String facings = getSides(worldIn.getBlockState(pos));
+		
 		
 		if (facings.length() == 1) {
 			char facing = facings.charAt(0);
@@ -85,7 +134,7 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
     @Override
     protected BlockState createBlockState() {
     	if (getTypeProperty() != null) {
-    		return new BlockState(this, new IProperty[] {getTypeProperty()});
+    		return new BlockState(this, new IProperty[] {getTypeProperty(), CUTOUT});
     	}
     	return new BlockState(this, new IProperty[0]);
     }
@@ -100,20 +149,37 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
     	return getBlockClass().getEntryFromMeta(this, meta).getBlockState();
     }
 
-    
-
+ 
 	
-	
-
-	
-	@Override
-	public void getSubBlocks(Item itemIn, CreativeTabs tab, List list) {
-		for (BlockClassEntry entry : subtypes) {
-			list.add(entry.getItemStack());
-		}
-		super.getSubBlocks(itemIn, tab, list);
+	public String getSides(IBlockState state) {
+		return ((BlockClassEntry)state.getValue(METALANDFACINGS)).getKey().getStateName().split("-")[1];
 	}
+	
+    public static EnumMetal getMetal(IBlockState state) {
+    	String[] type = ((MetalPlatingClassEntry)state.getValue(((IMultiblock)BlocksVC.metalplate.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
+    	return EnumMetal.valueOf(type[0].toUpperCase(Locale.ROOT));
+    }
+    
+    public static EnumFacing getFacing(IBlockState state) {
+    	String side = ((BlockMetalPlate)state.getBlock()).getSides(state);
+    	for (EnumFacing facing : EnumFacing.values()) {
+    		if (facing.getName().charAt(0) == side.charAt(0)) return facing;
+    	}
+    	return null;
+    }
 
+    
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	java.util.List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+     	EnumMetal metal = getMetal(state);
+     	ret.add(BlocksVC.metalplate.getItemStackFor(metal));
+        return ret;
+    }
+
+
+	
+	
 	@Override
 	public int multistateAvailableTypes() {
 		return 16;
@@ -142,7 +208,7 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 	
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-		return null;
+		return getSelectedBoundingBox2(worldIn, pos);
 	}
 
     @Override
@@ -163,7 +229,7 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 
     @Override
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-    	String facings = ((BlockClassEntry)worldIn.getBlockState(pos).getValue(METALANDFACINGS)).getKey().getStateName().split("-")[1];
+    	String facings = getSides(worldIn.getBlockState(pos));
     	
     	return facings.indexOf(side.getName().substring(1).toLowerCase(Locale.ROOT)) != -1;
     }
@@ -171,4 +237,24 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 	public BaseBlockClass getBlockClass() {
 		return BlocksVC.metalplate;
 	}
+	
+	
+	// Remove registration of multiple item variants
+    @Override
+	public BlockVC registerMultiState(String blockclassname, Class<? extends ItemBlock> itemclass, IStateEnum []types, String folderprefix) {
+		//if (VintageCraftConfig.debugBlockRegistration) System.out.println("register block " + this);
+		GameRegistry.registerBlock(this, itemclass, blockclassname);
+		setUnlocalizedName(blockclassname);
+		
+		for (IStateEnum type : types) {
+			String[] metalandfacing = type.getStateName().split("-");
+			if (metalandfacing[1].equals("d")) {
+				VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, metalandfacing[0].toLowerCase(Locale.ROOT), type.getMetaData(this));
+			}
+		}
+		
+		return this;
+	}
+
+    
 }

@@ -16,6 +16,10 @@ public class SimplexNoise {
         this.seed = seed;
         this.quantityOctaves = quantityOctaves;
 
+        initStuff();
+    }
+    
+    public void initStuff() {
         octaves = new SimplexNoiseOctave[quantityOctaves];
         frequencys = new double[quantityOctaves];
         amplitudes = new double[quantityOctaves];
@@ -24,7 +28,7 @@ public class SimplexNoise {
             octaves[i] = new SimplexNoiseOctave(seed + i);
             frequencys[i] = Math.pow(2, i);
             amplitudes[i] = Math.pow(persistence, i);
-        }
+        }    	
     }
 
 

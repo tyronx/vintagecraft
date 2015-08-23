@@ -5,13 +5,15 @@ import java.util.Arrays;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.World.AnvilRecipes;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 
-public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, ISmithable {
+public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, IItemSmithable {
 	boolean upper;
 	
 
@@ -41,7 +43,7 @@ public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, I
 	}
 
 	@Override
-	public ItemStack applyAnvilTechnique(ItemStack itemstack, EnumAnvilTechnique technique) {
+	public ItemStack applyTechnique(ItemStack itemstack, EnumWorkableTechnique technique) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		int[] techniqueIds = nbt.getIntArray("anviltechniques");
 		int[] newtechniqueIds = Arrays.copyOf(techniqueIds, techniqueIds.length + 1);
@@ -56,7 +58,7 @@ public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, I
 	}
 
 	@Override
-	public EnumAnvilTechnique[] getAppliedAnvilTechniques(ItemStack itemstack) {
+	public EnumAnvilTechnique[] getAppliedTechniques(ItemStack itemstack) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		
 		int[] techniqueIds = nbt.getIntArray("anviltechniques");
@@ -83,7 +85,7 @@ public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, I
 
 
 	@Override
-	public boolean isSmithingIngredient(ItemStack itemstack, ItemStack comparison, AnvilRecipes forrecipe) {
+	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
 		return 
 			itemstack != null && comparison != null &&
 			itemstack.getItem() == comparison.getItem() &&

@@ -45,28 +45,7 @@ rock.schist.name=Green Schist
 rock.kimberlite.name=Kimberlite
 rock.slate.name=Slate
 
-
-item.stonepot.chalk.name=Chalk Stone Pot
-item.stonepot.gneiss.name=Gneiss Stone Pot
-item.stonepot.limestone.name=Limestone Stone Pot
-item.stonepot.claystone.name=Claystone Stone Pot
-item.stonepot.marble.name=Marble Stone Pot
-item.stonepot.granite.name=Granite Stone Pot
-item.stonepot.basalt.name=Basalt Stone Pot
-item.stonepot.andesite.name=Andesite Stone Pot
-item.stonepot.conglomerate.name=Conglomerate Stone Pot
-item.stonepot.diorite.name=Diorite Stone Pot
-item.stonepot.sandstone.name=Sandstone Stone Pot
-item.stonepot.redsandstone.name=Red Sandstone Stone Pot
-item.stonepot.quartzite.name=Quartzite Stone Pot
-item.stonepot.chert.name=Chert Stone Pot
-item.stonepot.gabbro.name=Gabbro Stone Pot
-item.stonepot.shale.name=Shale Stone Pot
-item.stonepot.schist.name=Green Schist Stone Pot
-item.stonepot.kimberlite.name=Kimberlite Stone Pot
-item.stonepot.slate.name=Slate Stone Pot
-
-
+tile.stonepot.name=Stone Pot
 item.stone.name=Stone
 stone.name=Stone
 item.peatbrick.name=Peat Brick
@@ -96,6 +75,7 @@ item.ore.iridium.name=Iridium Ore
 item.ore.quartz.name=Milky Quartz
 item.ore.quartzcrystal.name=Clear Quartz
 item.ore.sulfur.name=Sulfur
+item.ore.coke.name=Coke
 
 item.ingot.copper.name=Copper Ingot
 item.ingot.tinbronze.name=Tin Bronze Ingot
@@ -223,6 +203,12 @@ item.zincanvilbase.name=Zinc Anvil Base
 item.bismuthbronzeanvilbase.name=Bismuth Bronze Anvil Base
 
 
+
+item.copper_helmet.name=Copper Helmet
+item.copper_chestplate.name=Copper Chestplate
+item.copper_leggings.name=Copper Leggings
+item.copper_boots.name=Copper Boots
+
 item.tinbronze_helmet.name=Tinbronze Helmet
 item.tinbronze_chestplate.name=Tinbronze Chestplate
 item.tinbronze_leggings.name=Tinbronze Leggings
@@ -238,10 +224,11 @@ item.iron_chestplate.name=Iron Chestplate
 item.iron_leggings.name=Iron Leggings
 item.iron_boots.name=Iron Boots
 
-item.copper_helmet.name=Copper Helmet
-item.copper_chestplate.name=Copper Chestplate
-item.copper_leggings.name=Copper Leggings
-item.copper_boots.name=Copper Boots
+item.steel_helmet.name=Steel Helmet
+item.steel_chestplate.name=Steel Chestplate
+item.steel_leggings.name=Steel Leggings
+item.steel_boots.name=Steel Boots
+
 
 
 
@@ -292,6 +279,17 @@ tile.ceramicvessel2.name=Ceramic Vessel
 tile.clayvessel2.name=Clay Vessel
 
 
+item.steel_axe.name=Steel Axe
+item.steel_pickaxe.name=Steel Pickaxe
+item.steel_shovel.name=Steel Shovel
+item.steel_sword.name=Steel Sword
+item.steel_hoe.name=Steel Hoe
+item.steel_saw.name=Steel Saw
+item.steel_shears.name=Steel Shears
+item.steel_hammer.name=Steel Hammer
+item.steel_carpenterstoolset.name=Steel Carpenters Toolset
+
+
 item.iron_axe.name=Iron Axe
 item.iron_pickaxe.name=Iron Pickaxe
 item.iron_shovel.name=Iron Shovel
@@ -300,6 +298,7 @@ item.iron_hoe.name=Iron Hoe
 item.iron_saw.name=Iron Saw
 item.iron_shears.name=Iron Shears
 item.iron_hammer.name=Iron Hammer
+item.iron_carpenterstoolset.name=Iron Carpenters Toolset
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe
 item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
@@ -309,7 +308,7 @@ item.bismuthbronze_hoe.name=Bismuth Bronze Hoe
 item.bismuthbronze_saw.name=Bismuth Bronze Saw
 item.bismuthbronze_shears.name=Bismuth Bronze Shears
 item.bismuthbronze_hammer.name=Bismuth Bronze Hammer
-
+item.bismuthbronze_carpenterstoolset.name=Bismuth Bronze Carpenters Toolset
 
 item.tinbronze_axe.name=Tin Bronze Axe
 item.tinbronze_pickaxe.name=Tin Bronze Pickaxe
@@ -319,6 +318,7 @@ item.tinbronze_hoe.name=Tin Bronze Hoe
 item.tinbronze_saw.name=Tin Bronze Saw
 item.tinbronze_shears.name=Tin Bronze Shears
 item.tinbronze_hammer.name=Tin Bronze Hammer
+item.tinbronze_carpenterstoolset.name=Tin Bronze Carpenters Toolset
 
 item.copper_axe.name=Copper Axe
 item.copper_pickaxe.name=Copper Pickaxe
@@ -399,7 +399,10 @@ tile.tallgrass.verylong_flowering.name=Very long flowering Tallgrass
 
 tile.cobblestone.name=Cobblestone
 tile.rawclay.name=Raw clay
-item.wheatseeds.name=Wheat Seeds
+item.seeds.wheat.name=Wheat
+item.seeds.peas.name=Peas
+item.seeds.tomatoes.name=Tomato Seeds
+item.seeds.flax.name=Flax Seeds
 
 tile.log.ash.name=Ash Log
 tile.log.birch.name=Birch Log
@@ -643,8 +646,9 @@ tile.fireclaybricks.name=Fire Clay Bricks
 toolrack.name=Tool Rack
 toolrackitem.name=Tool Rack
 
-tile.bloomerybase.name=Bloomery Base
-tile.bloomerychimney.name=Bloomery Chimney
+tile.furnacesection.name=Firebrick Furnace Section
+tile.furnacechimney.name=Firebrick Furnace Chimney
+tile.tallmetalmolds.name=Firebrick Metal Molds
 
 itemGroup.terrain=Terrain
 itemGroup.flora=Flora
@@ -675,3 +679,59 @@ tile.spideregg.name=Spider Egg
 item.sail.name=Sail
 tile.bellows.name=Bellows
 tile.grindstone.name=Grindstone
+
+recipe.carpentertoolset.name=Carpenters Toolset
+recipe.pickaxe.name=Pickaxe
+recipe.axe.name=Axe
+recipe.sword.name=Sword
+recipe.shears.name=Shears
+recipe.shovel.name=Shovel
+recipe.hoe.name=Hoe
+recipe.saw.name=Saw
+recipe.hammer.name=Hammer
+recipe.anvil_base.name=Anvil base
+recipe.anvil_surface.name=Anvil surface
+recipe.anvil.name=Anvil
+recipe.plate.name=Metal Plate
+recipe.helmet.name=Helmet
+recipe.chestplate.name=Chestplate
+recipe.leggings.name=Leggings
+recipe.boots.name=Boots
+recipe.cokeovendoor.name=Iron C.O.K.
+recipe.fix_ingot.name=Repair ingot
+recipe.fix_plate.name=Repair plate
+recipe.bellows.name=Bellows
+recipe.angledgears.name=Angled Gears
+recipe.windmillrotor.name=Windmill rotor
+recipe.toolrack.name=Tool Rack
+recipe.axle.name=Axle
+recipe.carpenterstoolset.name=Carpenters Toolset
+recipe.sail.name=Windmill Sails
+
+recipeingredients.1ingots.name=1 Ingot
+recipeingredients.2ingots.name=2 Ingots
+recipeingredients.3ingots.name=3 Ingots
+recipeingredients.4ingots.name=4 Ingots
+recipeingredients.8ingots.name=8 Ingots
+recipeingredients.10ingots.name=10 Ingots
+recipeingredients.1plates.name=1 Plate
+recipeingredients.2plates.name=2 Plates
+recipeingredients.3plates.name=3 Plates
+recipeingredients.4plates.name=4 Plates
+recipeingredients.2ironplates.name=2 Iron Plates
+recipeingredients.anvilbaseplussurface.name=Base + Surface
+recipeingredients.5ingotstier2plus.name=5 Ingots (Tier 2-5)
+recipeingredients.1planks.name=1 Planks
+recipeingredients.2planks.name=2 Planks
+recipeingredients.4planks.name=4 Planks
+recipeingredients.6planks.name=6 Planks
+recipeingredients.2planksand4leather.name=2 Planks, 4 Stitched Leather
+recipeingredients.2planksand3linen.name=2 Planks, 3 Linen Cloth
+
+tile.carpentertable.name=Carpenters Table
+tile.cokeovendoor.name=Coke Oven Door
+
+item.stitchedleather.name=Stitched Leather
+item.flaxfibers.name=Flax Fibers
+item.flaxtwine.name=Flax Twine
+item.linencloth.name=Linen Cloth

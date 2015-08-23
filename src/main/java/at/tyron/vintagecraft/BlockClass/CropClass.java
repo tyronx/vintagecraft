@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.BlockClass;
 
 import at.tyron.vintagecraft.Block.BlockOreVC;
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
+import at.tyron.vintagecraft.Block.Organic.BlockCropsVC2;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Item.ItemOreBlock;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;

@@ -1,0 +1,127 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "particle": "#treetype",
+        "1": "vintagecraft:blocks/planks/kapok",
+        "2": "vintagecraft:blocks/ingot/iron"
+    },
+    "elements": [
+        {
+            "name": "Leg1",
+            "from": [ 1.0, 0.0, 13.0 ], 
+            "to": [ 3.0, 13.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg2",
+            "from": [ 13.0, 0.0, 13.0 ], 
+            "to": [ 15.0, 13.0, 15.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg3",
+            "from": [ 1.0, 0.0, 1.0 ], 
+            "to": [ 3.0, 13.0, 3.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Leg4",
+            "from": [ 13.0, 0.0, 1.0 ], 
+            "to": [ 15.0, 13.0, 3.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 13.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 2.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Table",
+            "from": [ 0.0, 12.0, 0.0 ], 
+            "to": [ 16.0, 14.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 2.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 16.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 16.0 ] }
+            }
+        },
+        {
+            "name": "Undertable",
+            "from": [ 0.0, 4.0, 2.0 ], 
+            "to": [ 16.0, 5.0, 14.0 ], 
+            "faces": {
+                "north": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 1.0 ] },
+                "east": { "texture": "#treetype", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "south": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 1.0 ] },
+                "west": { "texture": "#treetype", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "up": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 12.0 ] },
+                "down": { "texture": "#treetype", "uv": [ 0.0, 0.0, 16.0, 12.0 ] }
+            }
+        },
+        {
+            "name": "Pressblock",
+            "from": [ 0.0, 12.0, 16.0 ], 
+            "to": [ 5.0, 14.0, 18.0 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 5.0, 2.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 5.0, 2.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 5.0, 2.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, 5.0, 2.0 ] }
+            }
+        },
+        {
+            "name": "Handle",
+            "from": [ 2.0, 8.0, 18.0 ], 
+            "to": [ 3.0, 15.0, 19.0 ], 
+            "faces": {
+                "north": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 7.0 ] },
+                "east": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 7.0 ] },
+                "south": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 7.0 ] },
+                "west": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 7.0 ] },
+                "up": { "texture": "#1", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "down": { "texture": "#1", "uv": [ 0.0, 0.0, -1.0, -5.0 ] }
+            }
+        },
+        {
+            "name": "Ironpart",
+            "from": [ 1.9, 12.5, 18.0 ], 
+            "to": [ 3.0999999999999996, 13.7, 19.2 ], 
+            "faces": {
+                "north": { "texture": "#2", "uv": [ 0.0, 0.0, 1.2, 1.2 ] },
+                "east": { "texture": "#2", "uv": [ 0.0, 0.0, 1.2, 1.2 ] },
+                "south": { "texture": "#2", "uv": [ 0.0, 0.0, 1.2, 1.2 ] },
+                "west": { "texture": "#2", "uv": [ 0.0, 0.0, 1.2, 1.2 ] },
+                "up": { "texture": "#2", "uv": [ 0.0, 0.0, 1.2, 1.2 ] },
+                "down": { "texture": "#2", "uv": [ 0.0, 0.0, -1.0, -5.0 ] }
+            }
+        }
+    ]
+}

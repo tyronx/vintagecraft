@@ -4,7 +4,10 @@ import java.util.Arrays;
 
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
+import at.tyron.vintagecraft.World.Crafting.*;
+import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,7 +71,7 @@ public class ItemBlockVC extends ItemBlock {
 			nbt.removeTag("oddlyshaped");
 		}
 
-		nbt.removeTag("anviltechniques");
+		nbt.removeTag("techniques");
 		nbt.removeTag("lasttempupdate");
 		nbt.removeTag("forgetemp");
 		nbt.removeTag("startcoolingat");
@@ -83,27 +86,32 @@ public class ItemBlockVC extends ItemBlock {
 		return nbt.getBoolean("oddlyshaped");
 	}
 	
-	public ItemStack applyAnvilTechnique(ItemStack itemstack, EnumAnvilTechnique technique) {
+	public ItemStack applyTechnique(ItemStack itemstack, EnumWorkableTechnique technique) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
-		int[] techniqueIds = nbt.getIntArray("anviltechniques");
+		int[] techniqueIds = nbt.getIntArray("techniques");
 		int[] newtechniqueIds = Arrays.copyOf(techniqueIds, techniqueIds.length + 1);
 		
 		newtechniqueIds[newtechniqueIds.length - 1] = technique.getId();
 		
-		nbt.setIntArray("anviltechniques", newtechniqueIds);
+		nbt.setIntArray("techniques", newtechniqueIds);
 		
 		itemstack.setTagCompound(nbt);
 		
 		return itemstack;
 	}
 	
-	public EnumAnvilTechnique[] getAppliedAnvilTechniques(ItemStack itemstack) {
+	public EnumWorkableTechnique[] getAppliedTechniques(ItemStack itemstack) {
 		NBTTagCompound nbt = getOrCreateNBT(itemstack);
 		
-		int[] techniqueIds = nbt.getIntArray("anviltechniques");
-		EnumAnvilTechnique []techniques = new EnumAnvilTechnique[techniqueIds.length];
+		int[] techniqueIds = nbt.getIntArray("techniques");
+		EnumWorkableTechnique []techniques = new EnumWorkableTechnique[techniqueIds.length];
 		for (int i = 0; i < techniqueIds.length; i++) {
-			techniques[i] = EnumAnvilTechnique.fromId(techniqueIds[i]);
+			if (itemstack.getItem() instanceof IItemWoodWorkable) {
+				techniques[i] = EnumWoodWorkingTechnique.fromId(techniqueIds[i]);
+			}
+			if (itemstack.getItem() instanceof IItemSmithable) {
+				techniques[i] = EnumAnvilTechnique.fromId(techniqueIds[i]);
+			}
 			//System.out.println("converted " + techniqueIds[i] + " => " + techniques[i]);
 		}
 		

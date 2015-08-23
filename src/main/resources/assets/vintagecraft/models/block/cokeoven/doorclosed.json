@@ -1,0 +1,127 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "textures": {
+        "iron": "vintagecraft:blocks/ingot/iron",
+        "darkiron": "vintagecraft:blocks/ingot/iron_darkened",
+        "particle": "vintagecraft:blocks/ingot/iron"
+    },
+    "elements": [
+        {
+            "name": "Doorbase",
+            "from": [ 2.0, 2.0, 16.0 ], 
+            "to": [ 14.0, 13.0, 17.0 ], 
+            "faces": {
+                "north": { "texture": "#iron", "uv": [ 0.0, 0.0, 12.0, 10.0 ] },
+                "east": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 10.0 ] },
+                "south": { "texture": "#iron", "uv": [ 0.0, 0.0, 12.0, 10.0 ] },
+                "west": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 10.0 ] },
+                "up": { "texture": "#iron", "uv": [ 0.0, 0.0, 12.0, 1.0 ] },
+                "down": { "texture": "#iron", "uv": [ 0.0, 0.0, 12.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Doortop",
+            "from": [ 4.0, 13.0, 16.0 ], 
+            "to": [ 12.0, 14.0, 17.0 ], 
+            "faces": {
+                "north": { "texture": "#iron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "east": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "south": { "texture": "#iron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "west": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+                "up": { "texture": "#iron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "down": { "texture": "#iron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Frameleft",
+            "from": [ 0.0, 0.0, 15.0 ], 
+            "to": [ 3.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 16.0 ] },
+                "east": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
+                "south": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 16.0 ] },
+                "west": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
+                "up": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "down": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Frameright",
+            "from": [ 13.0, 0.0, 15.0 ], 
+            "to": [ 16.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 16.0 ] },
+                "east": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
+                "south": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 16.0 ] },
+                "west": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 16.0 ] },
+                "up": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 1.0 ] },
+                "down": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 4.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Framebottom",
+            "from": [ 3.0, 0.0, 15.0 ], 
+            "to": [ 13.0, 3.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 3.0 ] },
+                "east": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 3.0 ] },
+                "south": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 3.0 ] },
+                "west": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 3.0 ] },
+                "up": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "down": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Frametop",
+            "from": [ 3.0, 13.0, 15.0 ], 
+            "to": [ 13.0, 16.0, 16.0 ], 
+            "faces": {
+                "north": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 3.0 ] },
+                "east": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 3.0 ] },
+                "south": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 3.0 ] },
+                "west": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 1.0, 3.0 ] },
+                "up": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] },
+                "down": { "texture": "#darkiron", "uv": [ 0.0, 0.0, 8.0, 1.0 ] }
+            }
+        },
+        {
+            "name": "Hingebottom",
+            "from": [ 1.0, 4.0, 16.0 ], 
+            "to": [ 5.0, 6.0, 17.5 ], 
+            "faces": {
+                "north": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "east": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },
+                "south": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "west": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },
+                "up": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 1.5 ] },
+                "down": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 1.5 ] }
+            }
+        },
+        {
+            "name": "Hingetop",
+            "from": [ 1.0, 8.5, 16.0 ], 
+            "to": [ 5.0, 10.5, 17.5 ], 
+            "faces": {
+                "north": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "east": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },
+                "south": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 2.0 ] },
+                "west": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },
+                "up": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 1.5 ] },
+                "down": { "texture": "#iron", "uv": [ 0.0, 0.0, 4.0, 1.5 ] }
+            }
+        },
+        {
+            "name": "Handle",
+            "from": [ 12.0, 6.0, 16.0 ], 
+            "to": [ 13.0, 8.0, 18.0 ], 
+            "faces": {
+                "north": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "east": { "texture": "#iron", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "south": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "west": { "texture": "#iron", "uv": [ 0.0, 0.0, 2.0, 2.0 ] },
+                "up": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 2.0 ] },
+                "down": { "texture": "#iron", "uv": [ 0.0, 0.0, 1.0, 2.0 ] }
+            }
+        }
+    ]
+}

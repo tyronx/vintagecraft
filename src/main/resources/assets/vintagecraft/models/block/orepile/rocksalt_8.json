@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_8",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/rocksalt"
+		}
+}

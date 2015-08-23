@@ -1,5 +1,5 @@
 {
-"parent": "vintagecraft:block/stoneanvil/gneiss",
+"parent": "vintagecraft:block/stoneanvil/gneiss-2",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

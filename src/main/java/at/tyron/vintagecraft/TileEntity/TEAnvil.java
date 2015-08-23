@@ -1,11 +1,14 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
-import at.tyron.vintagecraft.World.AnvilRecipes;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeManager;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
+import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -45,16 +48,6 @@ public class TEAnvil extends TENoGUIInventory {
 		return metal;
 	} 
 	
-	@Override
-	public void createInitNBT(NBTTagCompound nbt) {
-		writeToNBT(nbt);
-	}
-	
-	@Override
-	public void handleInitPacket(NBTTagCompound nbt) {
-		readFromNBT(nbt);
-	}
-	
 	
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
@@ -78,14 +71,10 @@ public class TEAnvil extends TENoGUIInventory {
 		return 4;
 	}
 
-
-
 	@Override
 	public String getName() {
 		return "Anvil";
 	}
-
-
 
 	@Override
 	public IChatComponent getDisplayName() {
@@ -95,21 +84,19 @@ public class TEAnvil extends TENoGUIInventory {
 
 
 	public void checkCraftable(ContainerAnvil containeranvil) {
-		//System.out.println("check craftable");
-		
 		ItemStack itemstack = containeranvil.getSlot(0).getStack();
-		if (itemstack == null || !(itemstack.getItem() instanceof ISmithable)) return;
+		if (itemstack == null || !(itemstack.getItem() instanceof IItemSmithable)) return;
 		
 		
 		if (itemstack.getItem() instanceof IItemHeatable) {
 			((IItemHeatable)itemstack.getItem()).updateTemperature(itemstack, worldObj);
 		}
 		
-        ISmithable smithable = (ISmithable)itemstack.getItem();	        
+        IItemSmithable smithable = (IItemSmithable)itemstack.getItem();	        
         if (!smithable.workableOn(metal != null ? metal.tier : 0, itemstack, containeranvil.getSlot(1).getStack())) return;
 
         
-        EnumAnvilTechnique []techniques = smithable.getAppliedAnvilTechniques(itemstack);
+        EnumWorkableTechnique []techniques = smithable.getAppliedTechniques(itemstack);
         if (techniques.length == 0) return;
         
         
@@ -121,16 +108,14 @@ public class TEAnvil extends TENoGUIInventory {
         	input = new ItemStack[]{itemstack};
         }
         
-		if (AnvilRecipes.isInvalidRecipe(techniques, input)) {
-			//System.out.println("is oddly shaped");
+		if (WorkableRecipeManager.smithing.isInvalidRecipe(techniques, input)) {
 			smithable.markOddlyShaped(itemstack, true);
 			containeranvil.getSlot(2).putStack(itemstack);
 			containeranvil.getSlot(0).putStack(null);
 		} else {
-			AnvilRecipes recipe = AnvilRecipes.getMatchingRecipe(techniques, input);
+			WorkableRecipeBase recipe = WorkableRecipeManager.smithing.getMatchingRecipe(techniques, input);
 
 			if (recipe != null) {
-				//System.out.println("created item  " + recipe.output);
 				containeranvil.getSlot(2).putStack(recipe.output.copy());
 				containeranvil.getSlot(1).putStack(null);
 				containeranvil.getSlot(0).putStack(null);

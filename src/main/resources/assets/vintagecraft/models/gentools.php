@@ -1,13 +1,14 @@
 <?php
 
-$metals = array("stone", "copper", "tinbronze", "bismuthbronze", "iron");
-$tooltypes = array("axe", "shovel", "pickaxe", "shears", "sword", "saw", "hoe", "hammer");
+$metals = array("stone", "copper", "tinbronze", "bismuthbronze", "iron", "steel");
+$tooltypes = array("axe", "shovel", "pickaxe", "shears", "sword", "saw", "hoe", "hammer", "carpenterstoolset");
 
 
 $outdir = "item/tool/";
 
 foreach ($metals as $metal) {
 	foreach ($tooltypes as $tooltype) {
+		if ($tooltype == "carpenterstoolset" && !in_array($metal, array("tinbronze", "bismuthbronze", "iron", "steel"))) continue;
 		
 		file_put_contents($outdir . $metal . "_" . $tooltype . ".json", '{
     "parent": "builtin/generated",
@@ -44,6 +45,9 @@ foreach ($metals as $metal) {
             "rotation": [ 0, -135, 25 ],
             "translation": [ 0, 4, 2 ],
             "scale": [ 1.7, 1.7, 1.7 ]
+        },
+        "gui": {
+			"translation": [ -1, -1, 0 ]
         }
     }
 }');

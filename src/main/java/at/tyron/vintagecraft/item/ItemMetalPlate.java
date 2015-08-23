@@ -1,50 +1,44 @@
 package at.tyron.vintagecraft.Item;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.BlockClass.MetalPlatingClassEntry;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
-import at.tyron.vintagecraft.World.AnvilRecipes;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
+import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 
-public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, ISmithable, IItemHeatable {
+public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, IItemSmithable, IItemHeatable {
 
 	public ItemMetalPlate(Block block) {
 		super(block);
         this.setHasSubtypes(true);
-        setCreativeTab(VintageCraft.resourcesTab);
+        setMaxStackSize(16);
 	}
 	
-    /*@SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems) {
-    	ItemStack stack;
-    	for (EnumMetal metal : EnumMetal.values()) {
-    		if (!metal.hasArmor) continue;
-    		
-    		stack = BlocksVC.metalplate.getItemStackFor(metal); //new ItemStack(ItemsVC.metalplate);
-    		//setMetal(stack, metal);
-    		subItems.add(stack);
-    	}
-    }*/
-    
     
     @Override
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
@@ -82,7 +76,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 			tooltip.add("Temperature: " + forgetemp + " deg." + workable);
 		}
 		
-		if (getAppliedAnvilTechniques(itemstack).length > 0) {
+		if (getAppliedTechniques(itemstack).length > 0) {
 			tooltip.add("Has been worked");
 		}
 				
@@ -93,33 +87,19 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
 		if (getMetal(stack) == null) {
-			return super.getUnlocalizedName() + ".unknown";
+			return "item.metalplate.unknown";
 		}
-		return super.getUnlocalizedName() + "." + getMetal(stack).getName() + (isOddlyShaped(stack) ? ".oddlyshaped" : "");
+		return "item.metalplate." + getMetal(stack).getName() + (isOddlyShaped(stack) ? ".oddlyshaped" : "");
 	}
 	
 	
 	
 	public static EnumMetal getMetal(ItemStack itemstack) {
-		if (itemstack.getTagCompound() != null) {
-			return EnumMetal.byId(itemstack.getTagCompound().getInteger("metal"));
-		}
-		return null;
+		MetalPlatingClassEntry entry = (MetalPlatingClassEntry) BlocksVC.metalplate.getEntryFromItemStack(itemstack);
+		if (entry == null) return null;
+		return entry.metal;
 	}
 
-	
-	
-	
-	/*public static ItemStack setMetal(ItemStack itemstack, EnumMetal metal) {
-		NBTTagCompound nbt = getOrCreateNBT(itemstack);
-		nbt.setInteger("metal", metal.id);
-		itemstack.setTagCompound(nbt);
-		return itemstack;
-	}
-
-	public static ItemStack getItemStack(EnumMetal metal, int quantity) {
-		return setMetal(new ItemStack(ItemsVC.metalplate, quantity), metal);
-	}*/
 	
 	
 	@Override
@@ -130,7 +110,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 
 	
 	@Override
-	public boolean isSmithingIngredient(ItemStack itemstack, ItemStack comparison, AnvilRecipes forrecipe) {
+	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
 		return 
 			itemstack != null && comparison != null &&
 			itemstack.getItem() == comparison.getItem() &&
@@ -195,5 +175,28 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 	}
 
 	
+
 	
+	@Override
+	public boolean placeBlockAt(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, IBlockState newState) {
+		if (world.isSideSolid(pos.offset(side.getOpposite()), side)) {
+			String statename = getMetal(stack).getStateName().toLowerCase(Locale.ROOT) + "-" + side.getOpposite().getName().charAt(0);
+			
+			IBlockState state = BlocksVC.metalplate.getBlockStateFor(statename);
+//			System.out.println(statename);
+			
+			if (state == null) return false;
+			
+	        if (!world.setBlockState(pos, state, 3)) return false;
+	
+	        state = world.getBlockState(pos);
+	        if (state.getBlock() == this.block) {
+	            this.block.onBlockPlacedBy(world, pos, state, player, stack);
+	        }
+	
+	        return true;
+		}
+		
+		return false;
+    }
 }

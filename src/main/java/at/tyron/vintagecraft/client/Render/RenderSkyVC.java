@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Client.Render;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 import org.lwjgl.opengl.GL11;
@@ -30,7 +31,10 @@ import net.minecraftforge.client.IRenderHandler;
 public class RenderSkyVC extends IRenderHandler {
     private static final ResourceLocation locationMoonPhasesPng = new ResourceLocation("textures/environment/moon_phases.png");
     private static final ResourceLocation locationSunPng = new ResourceLocation("textures/environment/sun.png");
+    public static final ResourceLocation shootingStarPng = new ResourceLocation("vintagecraft:textures/environment/shootingstar.png");
 
+    public static volatile ArrayList<ShootingStar> shootingStars = new ArrayList<ShootingStar>();
+    
     private static final ResourceLocation[] nightSkies = new ResourceLocation[]{
     	new ResourceLocation("vintagecraft:textures/environment/sky1.png"),
     	new ResourceLocation("vintagecraft:textures/environment/sky2.png"),
@@ -324,14 +328,28 @@ public class RenderSkyVC extends IRenderHandler {
 			
 
 			if (nightSkyopacity > 0.01f) {
-				GlStateManager.rotate((worldtime / 133f) % 360f, 0.5f, 0.5f, 0f);
-				GlStateManager.color(1.0F, 1.0F, 1.0F, nightSkyopacity);
-			
-				renderSkyImage(nightSkies[VintageCraft.instance.getNightSkyType(world)]);
+				GlStateManager.pushMatrix();
+					GlStateManager.rotate((worldtime / 133f) % 360f, 0.5f, 0.5f, 0f);
+					GlStateManager.color(1.0F, 1.0F, 1.0F, nightSkyopacity);
+				
+					renderSkyImage(nightSkies[VintageCraft.instance.proxy.getNightSkyType()]);
+				GlStateManager.popMatrix();
 			}
 		
-		GlStateManager.disableBlend();
-
+		
+        GlStateManager.enableAlpha();
+		
+        if (nightSkyopacity > 0.01f) {
+			GlStateManager.pushMatrix();
+				GL11.glDisable(GL11.GL_TEXTURE_2D);
+				GlStateManager.color(1.0F, 1.0F, 1.0F, nightSkyopacity);
+				for (ShootingStar shootingstar : shootingStars) {
+					shootingstar.render();
+				}
+				GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GlStateManager.popMatrix();
+        }		
+		
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.disableBlend();
@@ -505,10 +523,8 @@ public class RenderSkyVC extends IRenderHandler {
     	//Icosahedron.drawIcosahedron(1, radius);
     	
     	float textureScale = 2f;
-    	
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        
         worldrenderer.startDrawingQuads();
         
         double stack = ((2*Math.PI) / stacks);
@@ -526,6 +542,13 @@ public class RenderSkyVC extends IRenderHandler {
                 double t1 = textureScale * (phi + slice) / (2 * Math.PI);
                 double s0 = textureScale * theta / (2 * Math.PI);
                 double s1 = textureScale * (theta + stack) / (2 * Math.PI);
+                
+                /*if (Math.abs(theta - Math.PI) < 0.5 || Math.abs(phi - Math.PI) < 0.5) {
+                	t0 = t0/2;
+                	t1 = t1/2;
+                	s0 = s0/2;
+                	s1 = s1/2;
+                }*/
                 
                 worldrenderer.addVertexWithUV(p1.xCoord, p1.yCoord, p1.zCoord, t0, s0);   // bottom left
                 worldrenderer.addVertexWithUV(p2.xCoord, p2.yCoord, p2.zCoord, t1, s0);   // top left

@@ -52,19 +52,19 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 
     
 	private boolean isTurning() {
-		return network != null && network.getSpeed() > 0;
+		return networkId != 0 && getNetwork(orientation).getSpeed() > 0;
 	}
 
 	@Override
 	public float getPitch() {
-		return Math.max(0.2f, network.getSpeed());
+		return Math.max(0.2f, getNetwork(orientation).getSpeed());
 	}
 
 	@Override
 	public float getVolumne() {
-		if (network.getSpeed() < 0.01f) return 0;
+		if (getNetwork(orientation).getSpeed() < 0.01f) return 0;
 		
-		return 0.5f + network.getSpeed() / 100f;
+		return 0.5f + getNetwork(orientation).getSpeed() / 100f;
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
-import at.tyron.vintagecraft.BlockClass.OreClassEntry;
+import at.tyron.vintagecraft.BlockClass.OreInRockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
 import at.tyron.vintagecraft.BlockClass.SoilRockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;

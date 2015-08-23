@@ -5,6 +5,7 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -19,6 +20,7 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 	public int angle = 0;
 	
 	public MechanicalNetwork network2;
+	private int networkId2;
 
 	public TETransmissionGearBox() {
 		gearOrientations[0] = null;
@@ -27,11 +29,20 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 	
 	
 	@Override
+	public void validate() {
+		super.validate();
+		network2 = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getNetworkById(this.networkId2);
+		if (network2 != null) {
+			network2.register(this);
+		}
+	}
+
+	
+	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
-		network2 = MechanicalNetwork.getNetworkById(compound.getInteger("networkId2"));
-		if (network2 != null) network2.register(this);
+		this.networkId2 = compound.getInteger("networkId2");
 		
 		int ori0 = compound.getInteger("gearOrientation0");
 		int ori1 = compound.getInteger("gearOrientation1");
@@ -142,17 +153,17 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 	
 	
 	MechanicalNetwork getEnergyProducingNetwork() {
-		if (network.getSpeed() > network2.getSpeed()) {
-			return network;
+		if (getNetwork(networkOrientations[0]).getSpeed() > getNetwork(networkOrientations[1]).getSpeed()) {
+			return getNetwork(networkOrientations[0]);
 		}
-		return network2;
+		return getNetwork(networkOrientations[1]);
 	}
 
 	MechanicalNetwork getEnergyConsumingNetwork() {
-		if (network.getSpeed() > network2.getSpeed()) {
-			return network2;
+		if (getNetwork(networkOrientations[0]).getSpeed() > getNetwork(networkOrientations[1]).getSpeed()) {
+			return getNetwork(networkOrientations[1]);
 		}
-		return network;
+		return getNetwork(networkOrientations[0]);
 	}
 
 
