@@ -124,7 +124,7 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 
 			if (entity.getCanSpawnHere()) {
 				this.spawnIfPossible(entity);
-				worldObj.playAuxSFX(2004, blockpos, 0);
+			//	worldObj.playAuxSFX(2004, blockpos, 0);
 				spawned = true;
 			}
 			

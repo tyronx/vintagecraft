@@ -48,7 +48,7 @@ public class BlockCropsVC2 extends BlockVC implements ISubtypeFromStackPovider, 
 	
 	public BlockCropsVC2() {
 		super(Material.plants);
-		setCreativeTab(VintageCraft.floraTab);
+		//setCreativeTab(VintageCraft.floraTab);
 		setTickRandomly(true);
 	}
 	

@@ -73,7 +73,7 @@ public class ItemCarpenterTable extends ItemBlockVC implements ISubtypeFromStack
 
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add(StatCollector.translateToLocal("tile.planks" + getTreeType(itemstack).getName() + ".name"));
+		tooltip.add(StatCollector.translateToLocal("tile.planks." + getTreeType(itemstack).getName() + ".name"));
 	}
 	
 }

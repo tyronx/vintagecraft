@@ -24,6 +24,7 @@ import at.tyron.vintagecraft.Block.Mechanics.BlockMechanicalVC;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Item.ItemCarpenterTable;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
+import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
@@ -50,13 +51,26 @@ public class BlockCarpenterTable extends BlockContainerVC {
 	
 	@Override
 	public IBlockState getActualState(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
-		TECarpenterTable te = (TECarpenterTable) worldIn.getTileEntity(pos);
-		if (te != null) {
-			return state.withProperty(TREETYPE, te.getTreeType()).withProperty(FACING, te.getOrientation());
-		}
-		return state;
+		return state.withProperty(TREETYPE, getTreeType(worldIn, pos)).withProperty(FACING, getOrientation(worldIn, pos));
 	}
 
+	
+	public EnumTree getTreeType(IBlockAccess worldIn, BlockPos pos) {
+		TECarpenterTable te = (TECarpenterTable) worldIn.getTileEntity(pos);
+		if (te != null) {
+			return te.treeType;
+		}
+		return null;
+	}
+	
+	public EnumFacing getOrientation(IBlockAccess worldIn, BlockPos pos) {
+		TECarpenterTable te = (TECarpenterTable) worldIn.getTileEntity(pos);
+		if (te != null) {
+			return te.getOrientation();
+		}
+		return null;
+	}
+	
 	
 	@Override
 	protected BlockState createBlockState() {
@@ -118,5 +132,21 @@ public class BlockCarpenterTable extends BlockContainerVC {
 		return true;
 	}
 	
+	
+	
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		ItemStack stack = ((ItemCarpenterTable)Item.getItemFromBlock(this)).withTreeType(getTreeType(worldIn, pos));
+		
+		spawnAsEntity(worldIn, pos, stack);
+
+		super.breakBlock(worldIn, pos, state);
+	}
+	
+	@Override
+	public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		return new java.util.ArrayList<ItemStack>();
+	}
 	
 }
