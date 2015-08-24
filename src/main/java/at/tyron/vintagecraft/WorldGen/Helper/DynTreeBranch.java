@@ -1,9 +1,5 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
-import net.minecraft.block.state.IBlockState;
-import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
-
 public class DynTreeBranch {
 	public NatFloat branchVerticalAngle;
 	public NatFloat branchHorizontalAngle;

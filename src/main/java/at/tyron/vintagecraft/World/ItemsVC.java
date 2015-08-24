@@ -1,27 +1,34 @@
 package at.tyron.vintagecraft.World;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Item.*;
+import at.tyron.vintagecraft.Item.ItemAnvilPart;
+import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.ItemCrafted;
+import at.tyron.vintagecraft.Item.ItemDryGrass;
+import at.tyron.vintagecraft.Item.ItemFireClay;
+import at.tyron.vintagecraft.Item.ItemFireStarter;
+import at.tyron.vintagecraft.Item.ItemFoodVC;
+import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.ItemSail;
+import at.tyron.vintagecraft.Item.ItemSeedVC;
+import at.tyron.vintagecraft.Item.ItemStone;
+import at.tyron.vintagecraft.Item.ItemToolHead;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.WorldProperties.Terrain.*;
-import net.minecraft.block.Block;
-import net.minecraft.init.Items;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
-import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 

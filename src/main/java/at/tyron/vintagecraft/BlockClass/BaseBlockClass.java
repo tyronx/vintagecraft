@@ -5,28 +5,16 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
 
-import javax.management.RuntimeErrorException;
-
-import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
-
+import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.VintageCraftConfig;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Interfaces.IMultiblock;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 
 /* This class acts as an abstraction layer to blocks and their meta data 

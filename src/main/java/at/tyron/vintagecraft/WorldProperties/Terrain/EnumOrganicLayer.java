@@ -1,18 +1,10 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
-import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumOrganicLayer implements IStringSerializable, IStateEnum {

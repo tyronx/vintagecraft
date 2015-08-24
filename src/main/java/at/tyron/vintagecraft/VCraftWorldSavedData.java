@@ -1,15 +1,12 @@
 package at.tyron.vintagecraft;
 
-import java.util.Hashtable;
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldSavedData;
-import net.minecraftforge.common.util.Constants;
 
 public class VCraftWorldSavedData extends WorldSavedData {
 	long worldTime;

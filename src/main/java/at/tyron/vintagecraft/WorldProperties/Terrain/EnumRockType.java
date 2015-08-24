@@ -1,20 +1,13 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.BlockSandVC;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.BlockClass.RockClass;
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
-import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSupplier {

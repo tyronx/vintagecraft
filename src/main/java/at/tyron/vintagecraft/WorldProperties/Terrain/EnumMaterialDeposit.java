@@ -1,31 +1,27 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockGrass;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockState;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.world.World;
-import at.tyron.vintagecraft.Block.*;
+import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Block.BlockRegolith;
+import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.Block.Organic.BlockPeat;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
-import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
-import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.DepositOccurence;
 import at.tyron.vintagecraft.WorldProperties.EnumDepositOccurenceType;
 import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.world.World;
 
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
 	// int id, hasOre, adjdepth, color, weight, height, minDepth, maxDepth, relativeDepth, deposittype

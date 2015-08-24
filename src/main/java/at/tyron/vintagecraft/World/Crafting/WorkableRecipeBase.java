@@ -1,13 +1,8 @@
 package at.tyron.vintagecraft.World.Crafting;
 
-import java.util.ArrayList;
-
+import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
-import net.minecraft.util.StringTranslate;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.IItemWorkable;
-import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 
 public abstract class WorkableRecipeBase {
 	

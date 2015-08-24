@@ -3,19 +3,16 @@ package at.tyron.vintagecraft.World.Crafting;
 import java.util.HashMap;
 import java.util.Locale;
 
-import net.minecraft.entity.item.EntityPainting.EnumArt;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import at.tyron.vintagecraft.Item.ItemAnvilPart;
 import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemMetalPlate;
-import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import net.minecraft.item.ItemStack;
 
 
 // This here is just a helper class that makes it easier to write down and register 

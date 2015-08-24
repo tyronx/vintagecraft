@@ -1,21 +1,12 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
-import java.util.Hashtable;
-
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
-import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
-import at.tyron.vintagecraft.World.MechanicalNetwork;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {

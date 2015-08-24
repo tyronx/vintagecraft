@@ -2,11 +2,10 @@ package at.tyron.vintagecraft.World;
 
 import java.util.HashMap;
 
+import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.WorldGen.Noise.SimplexNoise;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.WorldGen.Noise.Noisy;
-import at.tyron.vintagecraft.WorldGen.Noise.SimplexNoise;
 
 public class WindGen {
 	private static HashMap<World, WindGen> windgens = new HashMap<World, WindGen>();

@@ -4,9 +4,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-import at.tyron.vintagecraft.WorldGen.Helper.EvolvingNatFloat;
-import at.tyron.vintagecraft.WorldGen.Helper.NatFloat.Distribution;
-import at.tyron.vintagecraft.WorldProperties.EnumTransformFunction;
 import net.minecraft.util.MathHelper;
 
 /* The same as NatFloat but this number wanders based on the given sequence */

@@ -1,48 +1,30 @@
 package at.tyron.vintagecraft.World.Crafting;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
-import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
-import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.BlockClass.TreeClass;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemCarpenterTable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemLogVC;
-import at.tyron.vintagecraft.Item.ItemMetalPlate;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemSeedVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.Item.ItemStonePot;
-import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
@@ -50,7 +32,6 @@ import net.minecraft.item.crafting.ShapelessRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class Recipes {
 	static  List recipes = CraftingManager.getInstance().getRecipeList();

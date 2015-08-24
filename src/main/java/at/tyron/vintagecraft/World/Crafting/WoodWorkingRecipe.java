@@ -1,9 +1,7 @@
 package at.tyron.vintagecraft.World.Crafting;
 
-import java.util.ArrayList;
-
-import net.minecraft.item.ItemStack;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
+import net.minecraft.item.ItemStack;
 
 public class WoodWorkingRecipe extends WorkableRecipeBase {
 	public WoodWorkingRecipe(ItemStack output, ItemStack input, EnumWorkableTechnique[] techniques) {

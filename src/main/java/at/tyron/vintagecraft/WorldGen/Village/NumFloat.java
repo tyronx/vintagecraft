@@ -2,8 +2,6 @@ package at.tyron.vintagecraft.WorldGen.Village;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.WorldGen.Helper.NatFloat;
-
 public class NumFloat {
 	long seed;
 	static Random random = new Random();

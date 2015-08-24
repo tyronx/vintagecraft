@@ -2,12 +2,6 @@ package at.tyron.vintagecraft.World.Crafting;
 
 import java.util.Locale;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemStack;
-import at.tyron.vintagecraft.Item.ItemAnvilPart;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemMetalPlate;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
@@ -15,8 +9,8 @@ import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWoodenOppositePlacemen
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
-
-import com.ibm.icu.impl.duration.impl.DataRecord.EUnitVariant;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public enum EnumCarpentryRecipes {
 

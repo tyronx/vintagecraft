@@ -1,11 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.Noise;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 
 /*

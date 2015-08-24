@@ -1,11 +1,8 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import javax.swing.plaf.metal.MetalToolBarUI;
-
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.EnumFacing;
 
 public class TETallMetalMold extends NetworkTileEntity implements IUpdatePlayerListBox {

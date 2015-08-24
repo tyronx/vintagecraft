@@ -2,8 +2,6 @@ package at.tyron.vintagecraft.WorldGen.Helper;
 
 import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
-
 public class DynTreeParams {
 
 	

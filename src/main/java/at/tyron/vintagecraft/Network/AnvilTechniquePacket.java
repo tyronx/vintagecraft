@@ -2,16 +2,10 @@ package at.tyron.vintagecraft.Network;
 
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
-import at.tyron.vintagecraft.Item.ItemToolVC;
-import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandlerContext;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;

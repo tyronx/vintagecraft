@@ -1,7 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.Layer;
 
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
-import net.minecraft.world.gen.layer.GenLayer;
 
 public class GenLayerFuzzyZoom extends GenLayerVC {
 	public GenLayerFuzzyZoom(long par1, GenLayerVC par3GenLayer)

@@ -1,10 +1,6 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.BlockOreVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.property.IExtendedBlockState;
 
 public class TEFarmland extends NetworkTileEntity {
 	private int fertility;

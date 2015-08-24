@@ -1,12 +1,10 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.Locale;
-import java.util.Random;
 
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 	VERYSHORT 				(0, 30),
