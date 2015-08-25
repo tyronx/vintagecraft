@@ -11,24 +11,17 @@ import javax.imageio.ImageIO;
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurAll;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurSelective;
-import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedCombine;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedSubstractAll;
-import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedSubstractSelective;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerContrastAndBrightnessAll;
-import at.tyron.vintagecraft.WorldGen.Layer.GenLayerContrastAndBrightnessSelective;
-import at.tyron.vintagecraft.WorldGen.Layer.GenLayerExactZoom;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerWeightedNoise;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerZoom;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerAddNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerClimateRGBNoise;
-import at.tyron.vintagecraft.WorldGen.Noise.GenLayerNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoiseUnclamped;
-import at.tyron.vintagecraft.WorldProperties.*;
+import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.world.gen.layer.GenLayer;
-import net.minecraftforge.fml.common.asm.transformers.DeobfuscationTransformer;
 
 public abstract class GenLayerVC extends GenLayer {
 

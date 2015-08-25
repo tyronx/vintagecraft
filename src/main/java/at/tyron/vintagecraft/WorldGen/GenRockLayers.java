@@ -1,11 +1,9 @@
 package at.tyron.vintagecraft.WorldGen;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
-import at.tyron.vintagecraft.WorldGen.Noise.GenLayerNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.SimplexNoise;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -80,7 +78,7 @@ public class GenRockLayers {
 	
 	
 	
-	  // Implementing Fisher–Yates shuffle
+	  // Implementing Fisherï¿½Yates shuffle
 	  static void shuffleArray(long seed, int[] ar) {
 	    Random rnd = new Random(seed);
 	    for (int i = ar.length - 1; i > 0; i--) {

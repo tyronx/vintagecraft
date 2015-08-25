@@ -2,9 +2,6 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
@@ -12,26 +9,16 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Feature.GenFeatureSpiderNest;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
-import at.tyron.vintagecraft.WorldProperties.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrassGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockVine;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBigTree;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraftforge.event.terraingen.TerrainGen;
-import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class MapGenFlora {
 	GenLayerVC forestGen;

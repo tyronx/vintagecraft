@@ -1,7 +1,5 @@
 package at.tyron.vintagecraft.WorldGen.Village;
 
-import at.tyron.vintagecraft.WorldGen.Village.DynVillageGen.Param.Component;
-
 public class DynVillageGenerators {
 /*
 		centerBranchingQuantity (Component.CENTER),

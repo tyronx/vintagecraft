@@ -3,9 +3,8 @@ package at.tyron.vintagecraft.World;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import com.sun.java_cup.internal.runtime.virtual_parse_stack;
-
-import net.minecraft.client.Minecraft;
+import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
@@ -14,9 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Client.ClientProxy;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 
 public class MechnicalNetworkManager {
 	

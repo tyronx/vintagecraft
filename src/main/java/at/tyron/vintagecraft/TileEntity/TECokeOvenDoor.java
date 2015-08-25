@@ -2,22 +2,12 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Block.Utility.BlockCokeOvenDoor;
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceChimney;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.EnumFurnaceType;
-import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.IChatComponent;
 
 public class TECokeOvenDoor extends NetworkTileEntity {
 	public TECokeOvenDoor() {

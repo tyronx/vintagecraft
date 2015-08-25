@@ -3,12 +3,8 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumFlower implements IStringSerializable, IStateEnum {

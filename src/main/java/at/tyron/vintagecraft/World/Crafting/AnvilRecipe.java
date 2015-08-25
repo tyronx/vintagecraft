@@ -1,12 +1,7 @@
 package at.tyron.vintagecraft.World.Crafting;
 
-import java.util.ArrayList;
-
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
+import net.minecraft.item.ItemStack;
 
 public class AnvilRecipe extends WorkableRecipeBase {
 	public AnvilRecipe(ItemStack output, ItemStack input, EnumWorkableTechnique[] steps) {

@@ -7,13 +7,10 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Interfaces.ClimateGenWorldChunkManager;
 import at.tyron.vintagecraft.World.BiomeVC;
-
-
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
-import net.minecraft.world.biome.BiomeCache;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraft.world.gen.layer.IntCache;

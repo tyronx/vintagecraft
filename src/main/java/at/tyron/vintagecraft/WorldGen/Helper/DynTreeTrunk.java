@@ -1,12 +1,6 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
-import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldGen.Helper.*;
 import at.tyron.vintagecraft.WorldProperties.EnumTransformFunction;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
-import net.minecraft.block.state.IBlockState;
 
 public class DynTreeTrunk {
 	/*public float avgHeight;*/

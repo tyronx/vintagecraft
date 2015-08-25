@@ -1,6 +1,5 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
-import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiCreateWorld;

@@ -2,10 +2,9 @@ package at.tyron.vintagecraft.World.Crafting;
 
 import java.util.ArrayList;
 
-import net.minecraft.item.ItemStack;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.IItemWorkable;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
+import net.minecraft.item.ItemStack;
 
 public class WorkableRecipeManager {
 	public static WorkableRecipeManager smithing = new WorkableRecipeManager();

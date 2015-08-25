@@ -1,17 +1,9 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
-import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Inventory.ContainerCarpenterTable;
-import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
-import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
-import at.tyron.vintagecraft.World.Crafting.EnumWoodWorkingTechnique;
-import at.tyron.vintagecraft.World.Crafting.WoodWorkingRecipe;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeManager;
-import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.entity.player.EntityPlayer;

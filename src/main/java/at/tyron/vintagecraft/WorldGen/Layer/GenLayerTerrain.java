@@ -2,15 +2,15 @@ package at.tyron.vintagecraft.WorldGen.Layer;
 
 import java.util.Random;
 
+import at.tyron.vintagecraft.World.BiomeVC;
+import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
-import at.tyron.vintagecraft.World.BiomeVC;
-import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 
 public class GenLayerTerrain extends GenLayerVC {
 	

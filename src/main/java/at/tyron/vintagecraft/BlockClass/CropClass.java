@@ -1,12 +1,8 @@
 package at.tyron.vintagecraft.BlockClass;
 
-import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.Organic.BlockCropsVC2;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Item.ItemOreBlock;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.state.IBlockState;

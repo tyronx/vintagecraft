@@ -3,17 +3,13 @@ package at.tyron.vintagecraft.Inventory;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
-import at.tyron.vintagecraft.TileEntity.TEVessel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
 public class ContainerAnvil extends Container {
 	public InventoryPlayer playerInventory;

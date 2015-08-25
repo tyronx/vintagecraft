@@ -1,27 +1,15 @@
 package at.tyron.vintagecraft.TileEntity;
 
 
-import java.util.Random;
-
-import net.minecraft.block.state.IBlockState;
+import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
+import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.World.ItemsVC;
-import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 
 
 public class TEIngotPile extends TENoGUIInventory {
