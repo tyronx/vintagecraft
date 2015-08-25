@@ -61,7 +61,8 @@ public abstract class BlockMechanicalVC extends BlockContainerVC {
 		
 		if (stack.getItem() instanceof ItemMechanicalWooden && te instanceof TEMechanicalNetworkDeviceBase) {
 			stack = ((ItemMechanicalWooden)stack.getItem()).withTreeType(((TEMechanicalNetworkDeviceBase)te).getTreeType());
-		}		
+		}
+		
 		spawnAsEntity(worldIn, pos, stack);
 
 		super.breakBlock(worldIn, pos, state);

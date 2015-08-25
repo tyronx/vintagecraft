@@ -57,7 +57,7 @@ public class MechanicalNetwork {
 	public void updateAngle(float speed) {	
 		angle -= speed / 10f;
 		angle = angle % 360f;
-		
+	
 		serverSideAngle -= speed / 10f;
 		serverSideAngle = serverSideAngle % 360f;
 	}
@@ -121,6 +121,8 @@ public class MechanicalNetwork {
 	// Tick Events are called by the Network Managers
 	
 	public void clientTick(ClientTickEvent event) {
+		if (speed < 0.001) return;
+		
 		updateAngle(speed);
 		
 		// Each tick, add 5% of server<->client angle difference

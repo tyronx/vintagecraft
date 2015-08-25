@@ -637,11 +637,11 @@ stairs.coyotewillow.name=Willow Stairs
 stairs.blackwalnut.name=Black Walnut Stairs
 stairs.kauri.name=Kauri Stairs
 
-item.fireclay_ball.name=Fire Clay
-item.fireclay_brick_raw.name=Raw Fire Clay Brick
-item.fireclay_brick.name=Fire Clay Brick
-tile.rawfireclay.name=Raw Fire Clay
-tile.fireclaybricks.name=Fire Clay Bricks
+item.fireclay_ball.name=Fireclay
+item.fireclay_brick_raw.name=Raw Fireclay Brick
+item.fireclay_brick.name=Burned Fireclay Brick
+tile.rawfireclay.name=Raw Fireclay
+tile.fireclaybricks.name=Burned Fireclay Bricks
 
 toolrack.name=Tool Rack
 toolrackitem.name=Tool Rack
@@ -735,3 +735,5 @@ item.stitchedleather.name=Stitched Leather
 item.flaxfibers.name=Flax Fibers
 item.flaxtwine.name=Flax Twine
 item.linencloth.name=Linen Cloth
+
+tile.fireclaystairs.name=Burned Fireclay stairs

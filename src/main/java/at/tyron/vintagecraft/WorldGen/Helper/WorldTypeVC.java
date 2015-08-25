@@ -2,6 +2,8 @@ package at.tyron.vintagecraft.WorldGen.Helper;
 
 import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiCreateWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.WorldChunkManager;
@@ -37,6 +39,13 @@ public class WorldTypeVC extends WorldType {
 	@Override
 	public int getMinimumSpawnHeight(World world) {
 		return VCraftWorld.seaLevel;
+	}
+	
+	
+	@Override
+	public void onCustomizeButton(Minecraft mc, GuiCreateWorld guiCreateWorld) {
+		// TODO Auto-generated method stub
+		super.onCustomizeButton(mc, guiCreateWorld);
 	}
 	
 	

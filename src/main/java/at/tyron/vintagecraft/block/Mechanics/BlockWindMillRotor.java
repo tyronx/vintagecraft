@@ -112,6 +112,19 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 	}
 	
 	
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntity te = (TileEntity)worldIn.getTileEntity(pos);
+		if (te instanceof TEWindmillRotor) {
+			int bladesize = ((TEWindmillRotor)te).getBladeSize();
+			if (bladesize > 0) {
+				ItemStack sails = new ItemStack(ItemsVC.sail, bladesize * 4);
+				spawnAsEntity(worldIn, pos, sails);
+			}
+		}
+		
+		super.breakBlock(worldIn, pos, state);
+	}
 
 	
 }

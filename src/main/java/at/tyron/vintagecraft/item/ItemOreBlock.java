@@ -45,6 +45,6 @@ public class ItemOreBlock extends ItemBlock {
      	EnumOreType oretype = EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
      	EnumRockType rocktype = EnumRockType.valueOf(type[1].toUpperCase(Locale.ROOT));
 
-		tooltip.add(StatCollector.translateToLocal("tile.rock."+rocktype.getName()+".name"));
+		tooltip.add(StatCollector.translateToLocal("rock."+rocktype.getName()+".name"));
 	}
 }
