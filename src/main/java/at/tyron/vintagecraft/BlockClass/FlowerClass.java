@@ -1,21 +1,16 @@
 package at.tyron.vintagecraft.BlockClass;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import scala.reflect.internal.Trees.Super;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.Block.SoundType;
-import net.minecraft.item.ItemBlock;
-import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
 import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Item.ItemFlowerVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
+import net.minecraft.block.Block;
+import net.minecraft.block.Block.SoundType;
+import net.minecraft.item.ItemBlock;
 
 public class FlowerClass extends BaseBlockClass {
 	String getBlockClassName() { return name; }

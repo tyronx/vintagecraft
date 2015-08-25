@@ -2,7 +2,6 @@ package at.tyron.vintagecraft.WorldGen.Layer;
 
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerNoise;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 
 public class GenLayerWeightedNoise extends GenLayerNoise {
 	IGenLayerSupplier[] genlayersuppliers;

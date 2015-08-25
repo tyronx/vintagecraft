@@ -1,8 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

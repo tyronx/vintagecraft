@@ -1,9 +1,7 @@
 package at.tyron.vintagecraft;
 
 import java.io.File;
-import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,18 +13,11 @@ import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import at.tyron.vintagecraft.WorldGen.Helper.BlockStateSerializer;
-import at.tyron.vintagecraft.WorldGen.Helper.DynTreeBranch;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
-import at.tyron.vintagecraft.WorldGen.Helper.DynTreeRoot;
-import at.tyron.vintagecraft.WorldGen.Helper.DynTreeTrunk;
-import at.tyron.vintagecraft.WorldGen.Helper.NatFloat;
-import at.tyron.vintagecraft.WorldGen.Layer.*;
 import at.tyron.vintagecraft.WorldGen.Village.DynVillageGenerators;
 import at.tyron.vintagecraft.WorldGen.Village.EnumVillage;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
@@ -35,7 +26,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,9 +35,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class VintageCraftCommands extends CommandBase {

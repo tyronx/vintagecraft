@@ -3,18 +3,14 @@ package at.tyron.vintagecraft.TileEntity;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
-import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
-import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeManager;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IChatComponent;
 
 public class TEAnvil extends TENoGUIInventory {

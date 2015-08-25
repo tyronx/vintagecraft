@@ -3,8 +3,6 @@ package at.tyron.vintagecraft.WorldGen.Layer;
 import java.awt.image.Kernel;
 
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraft.world.gen.layer.IntCache;
 
 public class GenLayerBlurSelective extends GenLayerVC {

@@ -1,9 +1,5 @@
 package at.tyron.vintagecraft.WorldGen.Helper;
 
-import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
-import net.minecraft.block.state.IBlockState;
-
 public class DynTreeRoot {
 	
 	public NatFloat rootEnd;	// 0f = floor, 1f = top of the tree

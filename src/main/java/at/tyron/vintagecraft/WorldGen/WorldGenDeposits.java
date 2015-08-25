@@ -1,28 +1,17 @@
 package at.tyron.vintagecraft.WorldGen;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import at.tyron.vintagecraft.VintageCraftConfig;
-import at.tyron.vintagecraft.Block.BlockOreVC;
-import at.tyron.vintagecraft.Block.BlockRock;
-//import at.tyron.vintagecraft.TileEntity.TEOre;
-import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
-import at.tyron.vintagecraft.WorldGen.Helper.DepositOccurence;
 import at.tyron.vintagecraft.WorldProperties.EnumDepositOccurenceType;
 import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.asm.transformers.DeobfuscationTransformer;
 
 public class WorldGenDeposits implements IWorldGenerator {
 

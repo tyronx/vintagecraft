@@ -2,11 +2,7 @@ package at.tyron.vintagecraft.TileEntity;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.World.Crafting.AnvilRecipe;
-import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -14,8 +10,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

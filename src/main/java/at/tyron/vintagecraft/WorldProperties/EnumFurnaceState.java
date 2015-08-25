@@ -2,7 +2,6 @@ package at.tyron.vintagecraft.WorldProperties;
 
 import java.util.Locale;
 
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
 
 public enum EnumFurnaceState implements IStringSerializable {

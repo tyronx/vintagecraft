@@ -2,10 +2,7 @@ package at.tyron.vintagecraft.WorldGen.Village;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.BlockPos;

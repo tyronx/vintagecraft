@@ -2,8 +2,6 @@ package at.tyron.vintagecraft.WorldGen.Noise;
 
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.gen.NoiseGeneratorOctaves;
 
 public class GenLayerAddPerlin extends GenLayerVC {
 	/*PerlinNoise noisegen;

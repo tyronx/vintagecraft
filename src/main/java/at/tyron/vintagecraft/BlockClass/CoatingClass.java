@@ -3,8 +3,6 @@ package at.tyron.vintagecraft.BlockClass;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
 import net.minecraft.block.state.IBlockState;

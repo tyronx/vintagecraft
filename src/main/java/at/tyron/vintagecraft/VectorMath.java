@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft;
 
-import static java.lang.Math.*;
+import static java.lang.Math.sqrt;
 
 
 /** Class for handling vector maths.

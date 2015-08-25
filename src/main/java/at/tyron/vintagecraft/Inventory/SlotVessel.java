@@ -1,10 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemStone;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

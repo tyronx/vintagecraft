@@ -1,7 +1,5 @@
 package at.tyron.vintagecraft.WorldGen.Noise;
 
-import java.util.Random;
-
 public class SimplexNoise {
 	SimplexNoiseOctave[] octaves;
     double[] frequencys;

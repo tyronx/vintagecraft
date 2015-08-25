@@ -2,10 +2,9 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.Locale;
 
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public enum EnumFertility implements IStateEnum, IStringSerializable {
 	VERYLOW (3, 1, 0.00002f, false),

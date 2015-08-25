@@ -2,8 +2,6 @@ package at.tyron.vintagecraft.BlockClass;
 
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class MetalPlatingClassEntry<E> extends BlockClassEntry<E> {
 	public String side;

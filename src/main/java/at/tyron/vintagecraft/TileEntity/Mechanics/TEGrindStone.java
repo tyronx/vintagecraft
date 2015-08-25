@@ -2,10 +2,8 @@ package at.tyron.vintagecraft.TileEntity.Mechanics;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
-import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.EnumFacing;

@@ -3,25 +3,18 @@ package at.tyron.vintagecraft.TileEntity.Mechanics;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.management.RuntimeErrorException;
-
+import at.tyron.vintagecraft.ModInfo;
+import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
+import at.tyron.vintagecraft.World.MechanicalNetwork;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
-import at.tyron.vintagecraft.TileEntity.NetworkTileEntity;
-import at.tyron.vintagecraft.World.MechanicalNetwork;
-import at.tyron.vintagecraft.World.MechnicalNetworkManager;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 
 public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity implements IMechanicalPowerDevice  {
 	public boolean markedForRemoval = false;

@@ -1,13 +1,10 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Block.Utility.BlockCokeOvenDoor;
-import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
 import at.tyron.vintagecraft.Interfaces.IIgniteable;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;

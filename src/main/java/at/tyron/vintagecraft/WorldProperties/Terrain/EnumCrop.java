@@ -2,11 +2,11 @@ package at.tyron.vintagecraft.WorldProperties.Terrain;
 
 import java.util.Locale;
 
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
-public enum EnumCrop implements IStateEnum, IStringSerializable {
+public enum EnumCrop implements IStateEnum, IStringSerializable{
 
 	PEAS     (0, 9, 2, 0),
 	WHEAT    (1, 8, 4, 0),
@@ -35,7 +35,14 @@ public enum EnumCrop implements IStateEnum, IStringSerializable {
 
 	@Override
 	public int getMetaData(Block block) {
+		
 		return 0;
+	}
+
+	@Override
+	public void init(Block block, int meta) {
+		
+		
 	}
 
 	@Override
@@ -43,9 +50,7 @@ public enum EnumCrop implements IStateEnum, IStringSerializable {
 		return name().toLowerCase(Locale.ROOT);
 	}
 
-	@Override
-	public void init(Block block, int meta) {
-	}
+	
 
 	@Override
 	public int getId() {
@@ -58,6 +63,10 @@ public enum EnumCrop implements IStateEnum, IStringSerializable {
 		}
 		return null;
 	}
+
+
+
+
 	
 	
 	

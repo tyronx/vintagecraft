@@ -1,9 +1,5 @@
 package at.tyron.vintagecraft.Inventory;
 
-import javax.management.RuntimeErrorException;
-
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,13 +7,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotFurnaceOutput;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 
 public class ContainerVessel extends Container {
 	public InventoryPlayer playerInventory;

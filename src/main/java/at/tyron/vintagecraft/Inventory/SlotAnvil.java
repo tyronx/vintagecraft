@@ -1,6 +1,5 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

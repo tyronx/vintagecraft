@@ -1,12 +1,7 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
-import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 
 public enum EnumCrustLayer {

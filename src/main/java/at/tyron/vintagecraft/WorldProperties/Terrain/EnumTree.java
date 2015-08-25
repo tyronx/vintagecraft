@@ -8,12 +8,11 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
 
-import net.minecraft.block.Block;
-import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
+import net.minecraft.block.Block;
+import net.minecraft.util.IStringSerializable;
 
 
 // Massive List of woods

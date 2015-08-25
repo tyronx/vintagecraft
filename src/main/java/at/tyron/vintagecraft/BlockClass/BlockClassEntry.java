@@ -1,14 +1,13 @@
 package at.tyron.vintagecraft.BlockClass;
 
+import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
-import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Interfaces.IMultiblock;
-import at.tyron.vintagecraft.Interfaces.IStateEnum;
 
 public class BlockClassEntry<E> implements IStateEnum, IStringSerializable, Comparable<E> {
 	IStateEnum key;

@@ -4,7 +4,6 @@ import at.tyron.vintagecraft.Client.Render.RenderCloudsVC;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.chunk.IChunkProvider;
