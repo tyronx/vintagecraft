@@ -68,7 +68,6 @@ public class Recipes {
 				
 				
 				Item dmdtoolitem = ItemsVC.tools.get(metal.getName() + "_" + tool.getName() + "_dmd");
-				//System.out.println(dmdtoolitem.getUnlocalizedName());
 				
 				addShapedRecipe(new ItemStack(dmdtoolitem), new Object[]{" T", " S", 'T', ItemToolHead.getDiamondEncrustedVarianOf(new ItemStack(toolheaditem)), 'S', Items.stick});
 				addShapedRecipe(new ItemStack(toolitem), new Object[]{" T", " S", 'T', new ItemStack(toolheaditem), 'S', Items.stick});
@@ -134,11 +133,7 @@ public class Recipes {
 			
 			recipes.add(new ToolSupportedRecipe(BlocksVC.plankstairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 			recipes.add(new ToolSupportedRecipe(BlocksVC.plankstairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
-			
-			///ItemStack toolrack = ((BlockToolRack)BlocksVC.toolrack).getItemStackFor(planks.getKey());
-			//recipes.add(new ToolSupportedRecipe(toolrack, new Object[] { "  ", "WS", 'S', ItemsVC.tools.get("copper_saw"), 'W', slabstack}));
-			//recipes.add(new ToolSupportedRecipe(toolrack, new Object[] { "  ", "SW", 'S', ItemsVC.tools.get("copper_saw"), 'W', slabstack}));
-			
+				
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_button), new Object[] {"#", '#', planksstack});
 			GameRegistry.addShapedRecipe(new ItemStack(Items.wooden_hoe, 1), new Object[] { "WW ", " S ", " S ", 'W', planksstack, 'S', Items.stick});
