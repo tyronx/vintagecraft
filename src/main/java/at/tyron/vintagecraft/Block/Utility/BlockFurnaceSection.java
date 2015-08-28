@@ -5,7 +5,7 @@ import java.util.List;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnaceState;
@@ -26,7 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnaceSection extends BlockContainerVC implements IBlockItemSink, IIgniteable {
+public class BlockFurnaceSection extends BlockContainerVC implements IBlockItemSink, IBlockIgniteable {
 	public static PropertyEnum fillheight = PropertyEnum.create("fillheight", EnumFurnaceState.class);
 	public static PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	

@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Block.Utility.BlockCokeOvenDoor;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
@@ -207,8 +207,8 @@ public class TEOrePile extends TENoGUIInventory implements IUpdatePlayerListBox 
 			if (worldObj.rand.nextFloat() < 0.3f && getMaxBurntime() - burnTime > 60) {
 				BlockPos rndpos = pos.add(worldObj.rand.nextInt(3) - 1, worldObj.rand.nextInt(3) - 1, worldObj.rand.nextInt(3) - 1);
 				IBlockState state = worldObj.getBlockState(rndpos);
-				if (!rndpos.equals(pos) && state.getBlock() instanceof IIgniteable) {
-					((IIgniteable)state.getBlock()).ignite(worldObj, rndpos, null);
+				if (!rndpos.equals(pos) && state.getBlock() instanceof IBlockIgniteable) {
+					((IBlockIgniteable)state.getBlock()).ignite(worldObj, rndpos, null);
 				}
 			}
 			

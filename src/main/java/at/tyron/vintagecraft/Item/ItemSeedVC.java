@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC2;
+import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -51,7 +51,7 @@ public class ItemSeedVC extends ItemVC implements ISizedItem, ISubtypeFromStackP
         
         IBlockState cropstate = BlocksVC.crops.getBlockStateFor(getCropType(stack), 0);
         
-        if (((BlockCropsVC2)cropstate.getBlock()).suitableGround(worldIn, pos, state) && state.getBlock() instanceof BlockFarmlandVC) {
+        if (((BlockCropsVC)cropstate.getBlock()).suitableGround(worldIn, pos, state) && state.getBlock() instanceof BlockFarmlandVC) {
             worldIn.setBlockState(pos.up(), cropstate);
             --stack.stackSize;
             return true;

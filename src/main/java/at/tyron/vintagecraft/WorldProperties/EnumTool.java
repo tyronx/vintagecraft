@@ -3,26 +3,28 @@ package at.tyron.vintagecraft.WorldProperties;
 import java.util.Locale;
 
 public enum EnumTool {
-	PICKAXE (0, true, true),
-	AXE (1, true, true),
-	SHOVEL (2, true, true),
-	SWORD (3, false, true),
+	PICKAXE (0, true, true, true),
+	AXE (1, true, true, true),
+	SHOVEL (2, true, true, true),
+	SWORD (3, false, true, true),
 	//CHISEL (4),
-	HOE (5, true, true),
-	SAW (6, false, true),
-	SHEARS (7, false, false),
-	HAMMER (8, true, true),
-	CARPENTERSTOOLSET (9, false, false)
+	HOE (5, true, true, true),
+	SAW (6, false, true, true),
+	SHEARS (7, false, false, true),
+	HAMMER (8, true, true, true),
+	CARPENTERSTOOLSET (9, false, false, true)
 	;
 	
 	public int meta;
 	public boolean canBeMadeFromStone;
 	public boolean requiresWoodenHandle;
+	public boolean isUpgradable;
 	
-	private EnumTool(int meta, boolean canBeMadeFromStone, boolean requiresWoodenHandle) {
+	private EnumTool(int meta, boolean canBeMadeFromStone, boolean requiresWoodenHandle, boolean isUpgradable) {
 		this.meta = meta;
 		this.canBeMadeFromStone = canBeMadeFromStone;
 		this.requiresWoodenHandle = requiresWoodenHandle;
+		this.isUpgradable = isUpgradable;
 	}
 	
 	public static EnumTool fromMeta(int meta) {

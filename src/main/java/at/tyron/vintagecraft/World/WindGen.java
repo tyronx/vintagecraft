@@ -41,7 +41,7 @@ public class WindGen {
 		
 		return windGen.getNoise(
 			pos.getX() / 2048f, 
-			VintageCraft.instance.getWorldTime(world) / 8192f, 
+			world.getTotalWorldTime() / 8192f, 
 			pos.getZ() / 2048f
 		);
 	}

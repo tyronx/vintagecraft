@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public class ItemToolBismuthbronze extends ItemToolTinbronze {
 
-	public ItemToolBismuthbronze(EnumTool tooltype) {
-		super(tooltype);
+	public ItemToolBismuthbronze(EnumTool tooltype, boolean diamondencrusted) {
+		super(tooltype, diamondencrusted);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class ItemToolBismuthbronze extends ItemToolTinbronze {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return "bismuthbronze_" + tooltype.getName();
+		return "bismuthbronze_" + tooltype.getName() + getVariant(stack);
 	}
 
 }

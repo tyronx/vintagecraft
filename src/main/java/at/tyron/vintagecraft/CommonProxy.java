@@ -3,14 +3,14 @@ package at.tyron.vintagecraft;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+import at.tyron.vintagecraft.Client.Gui.GuiAnvil;
+import at.tyron.vintagecraft.Client.Gui.GuiCarpenterTable;
+import at.tyron.vintagecraft.Client.Gui.GuiForge;
+import at.tyron.vintagecraft.Client.Gui.GuiStove;
+import at.tyron.vintagecraft.Client.Gui.GuiVessel;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
-import at.tyron.vintagecraft.Gui.GuiAnvil;
-import at.tyron.vintagecraft.Gui.GuiCarpenterTable;
-import at.tyron.vintagecraft.Gui.GuiForge;
-import at.tyron.vintagecraft.Gui.GuiStove;
-import at.tyron.vintagecraft.Gui.GuiVessel;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
@@ -19,6 +19,7 @@ import at.tyron.vintagecraft.Inventory.ContainerForge;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
+import at.tyron.vintagecraft.TileEntity.TEBlastPowderSack;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import at.tyron.vintagecraft.TileEntity.TECokeOvenDoor;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -41,6 +42,7 @@ import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -103,6 +105,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerTileEntity(TEOrePile.class, ModInfo.ModID + ":orepile");
 		
 		GameRegistry.registerTileEntity(TECarpenterTable.class, ModInfo.ModID + ":carpentertable");
+		GameRegistry.registerTileEntity(TEBlastPowderSack.class, ModInfo.ModID + ":blastpowdersack");
 	}
 	
 	
@@ -194,5 +197,8 @@ public class CommonProxy implements IGuiHandler {
 	
 	public World getClientWorld() {
 		return null;
+	}
+
+	public void generateGundPowderSpark(World world, BlockPos pos, float offsetX, float offsetY, float offsetZ) {
 	}
 }

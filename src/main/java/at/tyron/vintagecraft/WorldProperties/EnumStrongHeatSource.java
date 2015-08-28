@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 public enum EnumStrongHeatSource {
 	FIREPIT 	 ("Fire pit", 	   1, 1,    1f,  0.7f, true),
 	STOVE		 ("Stove", 		   2, 1, 1.05f,  1.0f, true),
-	BLOOMERY 	 ("Bloomery", 	   3, 1, 1.25f,  1.0f, false),
-	BLASTFURNACE ("Blast Furnace", 4, 2,  1.4f,  1.0f, false), 
+	BLOOMERY 	 ("Bloomery", 	   3, 1, 1.25f,  1.2f, false),
+	BLASTFURNACE ("Blast Furnace", 4, 2,  1.4f,  1.4f, false), 
 	
 	;
 	

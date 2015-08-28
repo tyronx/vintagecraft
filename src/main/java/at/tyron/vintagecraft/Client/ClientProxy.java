@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.Random;
 
 import at.tyron.vintagecraft.CommonProxy;
-import at.tyron.vintagecraft.CreativeTabsVC;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
+import at.tyron.vintagecraft.Client.Render.RenderFog;
 import at.tyron.vintagecraft.Client.Render.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Client.Render.ShootingStar;
@@ -23,6 +23,7 @@ import at.tyron.vintagecraft.Client.Render.TESR.TESRTallMetalMold;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRToolRack;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWindmillRotor;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
+import at.tyron.vintagecraft.Entity.EntityGunpowderSparkFX;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
@@ -49,6 +50,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.model.ModelHorse;
+import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -60,8 +62,10 @@ import net.minecraft.client.resources.IResourceManagerReloadListener;
 import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,6 +79,29 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 
 public class ClientProxy extends CommonProxy implements IResourceManagerReloadListener {
+	@Override
+	public void generateGundPowderSpark(World world, BlockPos pos, float offsetX, float offsetY, float offsetZ) {
+		double motionX = 0.08 + world.rand.nextGaussian() * 0.05D;
+	    double motionY = 0.1 + world.rand.nextGaussian() * 0.1D;
+	    double motionZ = 0.05 + world.rand.nextGaussian() * 0.05D;
+	    
+		EntityFX particle = new EntityGunpowderSparkFX(
+			world, 
+			pos.getX() + offsetX, 
+			pos.getY() + offsetY, 
+			pos.getZ() + offsetZ, 
+			motionX, 
+			motionY, 
+			motionZ
+		);
+		
+		particle.motionX = motionX;
+		particle.motionY = motionY;
+		particle.motionZ = motionZ;
+		
+		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+		
+	}
 	
 	@Override
 	public void registerTileEntities() {
@@ -82,7 +109,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		
 		IReloadableResourceManager IRRM = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
 		IRRM.registerReloadListener(this);
-		
+		 
 		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));		
 		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(Minecraft.getMinecraft().getRenderManager()));
@@ -102,7 +129,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		FMLCommonHandler.instance().bus().register(this);
-		
+		MinecraftForge.EVENT_BUS.register(new RenderFog());
 		
 		if (VintageCraftConfig.rearrangeCreativeTabs) {
 			int i = 0;
@@ -143,6 +170,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         super.postInit(event);
         
         registerModelLocation(Item.getItemFromBlock(BlocksVC.tallmetalmolds), "tallmetalmolds", "inventory");
+        
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.blastpowdersack), "blastpowdersack", "inventory");
         
         addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.stonepot), "vintagecraft:stonepot/", EnumRockType.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.stonepot), "stonepot", "inventory");
@@ -186,6 +215,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
     	registerModelLocation(ItemsVC.seeds, "seeds", "inventory");    	
     	registerModelLocation(ItemsVC.dryGrass, "drygrass", "inventory");
+    	registerModelLocation(ItemsVC.blastingPowder, "blastingpowder", "inventory");
     	registerModelLocation(ItemsVC.flaxFibers, "flaxfibers", "inventory");
     	registerModelLocation(ItemsVC.linenCloth, "linencloth", "inventory");
     	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");

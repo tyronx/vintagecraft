@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Block.Utility;
 
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.TileEntity.TEOrePile;
@@ -27,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockOrePile extends BlockIngotPile implements IIgniteable {
+public class BlockOrePile extends BlockIngotPile implements IBlockIgniteable {
 	public static PropertyInteger HEIGHT = PropertyInteger.create("height", 0, 15);
 	public static PropertyEnum ORETYPE = PropertyEnum.create("oretype", EnumOreType.class);
 	public static PropertyBool BURNING = PropertyBool.create("burning");

@@ -13,6 +13,7 @@ import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
@@ -32,9 +33,22 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 public class VintageCraftMobTweaker {
 	// Called from Vintagecraft.java
-    public static void entityJoin(LivingSpawnEvent evt) {
+    public static void entitySpawn(LivingSpawnEvent evt) {
     	if (! (evt.entity.worldObj instanceof WorldServer)) return;
     	
+    	if (evt.entity instanceof EntityZombie && ((EntityZombie)evt.entity).isChild()) {
+    		evt.setCanceled(true);
+    		return;
+    	}
+    	
+    	if (evt.entity instanceof EntityMob) {
+    		int spawncap = VintageCraftMobTweaker.spawnCapByDay(evt.world.getTotalWorldTime() / 24000L, evt.world.getDifficulty());
+    		if (spawncap == 0) {
+    			evt.setCanceled(true);
+    			return;
+    		}
+    	}
+
     	if (evt.entity instanceof EntityZombie) {
     		gearUpMob((EntityZombie)evt.entity);
     	}
@@ -42,6 +56,7 @@ public class VintageCraftMobTweaker {
     	if (evt.entity instanceof EntitySkeleton) {
     		gearUpMob((EntitySkeleton)evt.entity); 
     	}
+    	
 
     }
 
@@ -58,6 +73,10 @@ public class VintageCraftMobTweaker {
 				growth = (1 - age / 24000f);
 			}
 			rand = event.entityLiving.getRNG();
+		}
+		
+		if (event.entity instanceof EntityCreeper || event.entity instanceof EntityZombie) {
+			event.drops.clear();
 		}
 		
 		if (event.entity instanceof EntitySheep) {
@@ -218,7 +237,7 @@ public class VintageCraftMobTweaker {
 		// Only for armored mobs
 		if (numgearitems < 2) return;
 		// Spawn only after 35 ingame days
-		long daysPassed = VintageCraft.instance.daysPassed(mob.worldObj);
+		long daysPassed = mob.worldObj.getTotalWorldTime() / 24000L;
 		
 		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
 

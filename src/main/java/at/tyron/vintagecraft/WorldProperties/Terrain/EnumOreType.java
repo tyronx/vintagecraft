@@ -34,7 +34,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	OLIVINE 			(21, 2, 0.7f),
 	PERIDOT_OLIVINE 	(22, 2, 0.7f),
 	QUARTZCRYSTAL		(23, 3, 1f),
-	SULFUR				(24, 0, 0.5f),
+	SULFUR				(24, 2, 0.5f),
 	SALTPETER			(25, 0, 0.2F, false),
 	
 	// These don't reaally belong here

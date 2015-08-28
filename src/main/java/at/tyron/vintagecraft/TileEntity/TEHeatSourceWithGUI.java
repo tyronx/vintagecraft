@@ -430,7 +430,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     		oreSlot() != null 
     		&& oreItemSmelted() != null
     		&& oreSlot().stackSize >= oreItemSmeltedRatio()
-    		&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + smeltedItem().stackSize < smeltedSlot().getMaxStackSize()))
+    		&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + oreItemSmelted().stackSize < smeltedSlot().getMaxStackSize()))
     	) {
     		
             ItemStack itemstack = oreItemSmelted();

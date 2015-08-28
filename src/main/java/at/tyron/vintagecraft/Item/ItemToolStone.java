@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
 public class ItemToolStone extends ItemToolVC {
-	public ItemToolStone(EnumTool tooltype) {
-		super(tooltype);
+	public ItemToolStone(EnumTool tooltype, boolean diamondencrusted) {
+		super(tooltype, false);
 	}
 
 

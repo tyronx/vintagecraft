@@ -737,3 +737,6 @@ item.flaxtwine.name=Flax Twine
 item.linencloth.name=Linen Cloth
 
 tile.fireclaystairs.name=Burned Fireclay stairs
+tile.blastpowdersack.name=Sack of Blast Powder
+item.blastingpowder.name=Blast Powder
+blastpowdersackinfo.name=Weak against rock, but an excellent choice for mining ores. Only 5% of ores from the explosion.

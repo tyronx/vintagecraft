@@ -36,6 +36,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
 import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
+import at.tyron.vintagecraft.Block.Utility.BlockBlastPowderSack;
 import at.tyron.vintagecraft.Block.Utility.BlockAnvilVC;
 import at.tyron.vintagecraft.Block.Utility.BlockCarpenterTable;
 import at.tyron.vintagecraft.Block.Utility.BlockCeramicVessel;
@@ -164,6 +165,8 @@ public class BlocksVC {
 	public static BlockContainerVC windmillrotor;
 	
 	public static BlockContainerVC carpenterTable;
+	
+	public static BlockContainerVC blastpowdersack;
 	
 	
 
@@ -315,6 +318,8 @@ public class BlocksVC {
 		tallmetalmolds = new BlockTallMetalMolds().registerSingleState("tallmetalmolds", ItemTallMetalMold.class);
 		
 		carpenterTable = new BlockCarpenterTable().registerSingleState("carpentertable", ItemCarpenterTable.class);
+		
+		blastpowdersack = new BlockBlastPowderSack().registerSingleState("blastpowdersack", ItemBlock.class);
 	}
 	
 
@@ -368,6 +373,8 @@ public class BlocksVC {
 		grindstone.setStepSound(Block.soundTypeStone);
 		
 		carpenterTable.setStepSound(Block.soundTypeWood).setHardness(1.5f).setHarvestLevel("axe", 0);
+		
+		blastpowdersack.setHardness(0.2f);
 	}	
 	
 

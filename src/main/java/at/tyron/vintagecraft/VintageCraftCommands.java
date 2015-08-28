@@ -10,6 +10,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.World.VCraftWorldSavedData;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import at.tyron.vintagecraft.WorldGen.Helper.BlockStateSerializer;
@@ -37,6 +38,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;
 
 public class VintageCraftCommands extends CommandBase {
 
@@ -122,6 +124,25 @@ public class VintageCraftCommands extends CommandBase {
 			return;
 		}
 		
+		// Don't use this in SMP Worlds, it will probably crash
+		if (args[0].equals("fog")) {
+			int start = 2;
+			int end = 5;
+			float density = 0.3f;
+
+			if (args.length >= 2) {
+				start = parseInt(args[1]);
+			}
+			
+			if (args.length >= 3) {
+				end = parseInt(args[2]);
+			}
+			
+			at.tyron.vintagecraft.Client.Render.RenderFog.customFogRange = start != -1;
+			at.tyron.vintagecraft.Client.Render.RenderFog.fogStart = start;
+			at.tyron.vintagecraft.Client.Render.RenderFog.fogEnd = end;
+			
+		}
 		
 		if (args[0].equals("meteorshower")) {
 			VintageCraft.instance.packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
@@ -135,17 +156,13 @@ public class VintageCraftCommands extends CommandBase {
 		}
 
 		if (args[0].equals("time")) {
-			VCraftWorldSavedData worlddata = VintageCraft.instance.getOrCreateWorldData(sender.getEntityWorld());
-			sender.addChatMessage(new ChatComponentText((Math.floor(worlddata.getWorldTime() / 2400F) / 10f) + " days passed"));
+			sender.addChatMessage(new ChatComponentText((Math.floor(sender.getEntityWorld().getTotalWorldTime() / 2400F) / 10f) + " days passed"));
 		}
 
 		
 		if (args[0].equals("mobcap")) {
-			VCraftWorldSavedData worlddata = VintageCraft.instance.getOrCreateWorldData(sender.getEntityWorld());
-			
-			
 			sender.addChatMessage(new ChatComponentText(
-				EnumCreatureType.MONSTER.getMaxNumberOfCreature() + " max mobs / " + (Math.floor(worlddata.getWorldTime() / 2400F) / 10f) + " days passed"
+				EnumCreatureType.MONSTER.getMaxNumberOfCreature() + " max mobs / " + (Math.floor(sender.getEntityWorld().getTotalWorldTime()  / 2400F) / 10f) + " days passed"
 			));
 		}
 		

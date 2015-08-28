@@ -6,16 +6,19 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable, ISizedItem {
+public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItemFuel, IItemSmeltable, ISizedItem, IItemSmithable {
 
 	public static int maxpilesize = 64;
 
@@ -144,7 +147,9 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.ZINC);
 			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTH);
 			case GALENA:  return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.LEAD);
-			
+			case QUARTZ:
+			case QUARTZCRYSTAL:
+				return new ItemStack(Blocks.glass);
 			default:
 				break; 
 		}
@@ -166,6 +171,11 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case SPHALERITE: return 4;
 			case BISMUTHINITE: return 4;
 			case GALENA: return 4;
+			case QUARTZ:
+				return 4;
+			case QUARTZCRYSTAL:
+				return 2;
+
 			default: break;
 		
 		}
@@ -187,6 +197,9 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case ILMENITE: return EnumMetal.TITANIUM.meltingpoint;
 			case SPHALERITE: return EnumMetal.ZINC.meltingpoint;
 			case GALENA: return EnumMetal.LEAD.meltingpoint;
+			case QUARTZ:
+			case QUARTZCRYSTAL:
+				return 1350;
 			default: break;
 		}
 		return 0;
@@ -257,6 +270,18 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		}
 		
 		return false;
+	}
+
+
+	@Override
+	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
+		return getOreType(itemstack) == EnumOreType.DIAMOND;
+	}
+
+
+	@Override
+	public boolean workableOn(int anviltier, ItemStack itemstack, ItemStack itemstackoptional) {
+		return getOreType(itemstack) == EnumOreType.DIAMOND;
 	}
 
 	

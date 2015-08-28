@@ -30,9 +30,6 @@ public class TESRTallMetalMold extends TESRBase {
 		
 		
 		GL11.glPushMatrix();
-			//RenderHelper.disableStandardItemLighting();
-			//
-			
 			GL11.glTranslated(posX, posY, posZ);
 			GL11.glTranslated(+0.5f, +0.5f, +0.5f);
 			if (te.orientation != null) {

@@ -13,6 +13,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -248,5 +249,15 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 		
 		super.harvestBlock(worldIn, player, pos, state, te);
 	}
-    
+
+	
+	@Override
+	public float getExplosionResistance(Entity exploder) {
+		return this.blockResistance / 3.0F;
+	}
+	
+	// Explosison yield much more drops
+	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
+		super.dropBlockAsItemWithChance(worldIn, pos, state, Math.max(0.95f, 1f), fortune);
+	}
 }

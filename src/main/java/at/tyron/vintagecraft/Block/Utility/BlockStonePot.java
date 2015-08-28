@@ -6,7 +6,7 @@ import java.util.Random;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.Item.ItemStonePot;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -30,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, IIgniteable {
+public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, IBlockIgniteable {
 	public BlockStonePot() {
 		super(Material.rock);
 		setCreativeTab(VintageCraft.craftedBlocksTab);

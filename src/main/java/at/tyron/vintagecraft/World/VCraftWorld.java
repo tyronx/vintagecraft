@@ -42,7 +42,9 @@ public class VCraftWorld {
 	
 	public static int seaLevel = 128;
 	public int terrainGenHiLevel = 67;
- 	
+ 	public static float airHumidity;
+	
+	
 	public static final ResourceLocation grassColormap = new ResourceLocation("vintagecraft:textures/colormap/grass.png");
 	public static final ResourceLocation cloudResourceLocation = new ResourceLocation("minecraft:textures/environment/clouds.png");
 	

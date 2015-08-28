@@ -5,7 +5,7 @@ import java.util.Random;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnaceType;
@@ -21,7 +21,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IIgniteable {
+public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IBlockIgniteable {
 
 	public BlockFurnaceChimney() {
 		super(Material.rock);
@@ -112,7 +112,7 @@ public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IIgn
 		
 		if (bottomSection != null) {
 			IBlockState state = world.getBlockState(bottomSection);
-			return ((IIgniteable)state.getBlock()).ignite(world, bottomSection, firestarter);
+			return ((IBlockIgniteable)state.getBlock()).ignite(world, bottomSection, firestarter);
 		}
 		
 		return false;	

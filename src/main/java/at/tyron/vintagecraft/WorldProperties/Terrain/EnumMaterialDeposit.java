@@ -29,7 +29,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
 
 	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 145)),
-	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(60, 1, 10, 60, 0.6f)), 
+	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(60, 1, 10, 60, 0.5f)), 
 	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(40, 2, 8, 103)),
 
 	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(11, 2, 1, 155)),
@@ -61,7 +61,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	
 	GALENA 				( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(15, 1, 30, 100)),
-	SULFUR 				(24, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(10, 1, 20, 108)),
+	SULFUR 				(24, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(10, 1, 0, 60, 0.5f)),
 	SALTPETER			(25, true, EnumDepositSize.HUGE, DepositOccurence.anyBelowSealevel(50, 15, 10, 200))
 	
 	;

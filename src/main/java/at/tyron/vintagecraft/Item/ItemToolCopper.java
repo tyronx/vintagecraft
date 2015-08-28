@@ -5,8 +5,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemStack;
 
 public class ItemToolCopper extends ItemToolVC {
-	public ItemToolCopper(EnumTool tooltype) {
-		super(tooltype);
+	public ItemToolCopper(EnumTool tooltype, boolean diamondencrusted) {
+		super(tooltype, diamondencrusted);
 	}
 
 
@@ -70,7 +70,7 @@ public class ItemToolCopper extends ItemToolVC {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return "copper_" + tooltype.getName();
+		return "copper_" + tooltype.getName() + getVariant(stack);
 	}
 
 

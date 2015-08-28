@@ -19,6 +19,7 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -171,6 +172,9 @@ public class BlockRock extends BlockVC implements IMultiblock {
 	}
     
     
+    public float getExplosionResistance(Entity exploder) {
+        return this.blockResistance * 1.5f;
+    }
 
     
 }

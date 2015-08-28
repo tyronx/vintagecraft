@@ -16,33 +16,17 @@ public class TESRWindmillRotor extends TESRMechanicalBase {
 	public void renderAt(TEWindmillRotor te, float posX, float posY, float posZ, float f) {
 		
 		if (te.getWorld() == null || te.texture == null) return;
-		//if (te.getBladeSize() == 4) System.out.println(te.getNetwork(null).getAngle());
+		
 		if (te.refreshModel) {
 			te.refreshModel = false;
 			rotor.initComponents();
 		}
 		
-		
-		// 0 = S, 1 = W, 2 = N, 3 = E
-		// =>
-		// 0 = S, 3 = W, 2 = N, 1 = E
-		/*int facing = te.getOrientation().getHorizontalIndex();
-		float facingAngle = -facing * 90f;
-
-
-		float xAxis = (facing == 3 || facing == 1) ? 1f : 0;
-		float zAxis = (facing == 2 || facing == 0) ? 1f : 0;*/
-		
+				
 		GL11.glPushMatrix();
 			setupRotationsAndPos(EnumFacing.SOUTH, te.getOrientation(), te.getAngle(), posX, posY, posZ);
 		
-		
 			Minecraft.getMinecraft().getTextureManager().bindTexture(te.texture);
-		
-			/*GL11.glTranslatef(posX + 0.5f, posY + 0.49f, posZ + 0.5f);
-			GL11.glRotatef(te.getAngle(), xAxis, 0f, zAxis);
-			GL11.glRotatef(facingAngle, 0f, 1f, 0f);
-			GL11.glTranslatef(-0.5f, -0.49f, -0.5f);*/
 			
 			rotor.renderRotor(te.getBladeSize());
 			

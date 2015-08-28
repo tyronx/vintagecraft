@@ -25,7 +25,6 @@ public class TESRBellows extends TESRMechanicalBase {
 			modelbellows.initComponents();
 		}
 		
-		//System.out.println("render");
 		float angle = te.getAngle();
 		float squeeze = MathHelper.sin((float) ((angle+90) / 180 * Math.PI)) / 6 + 0.166f;
 		

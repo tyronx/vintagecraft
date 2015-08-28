@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.BlockClass;
 
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC2;
+import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import net.minecraft.block.Block;
@@ -10,7 +10,7 @@ import net.minecraft.item.ItemBlock;
 
 public class CropClass extends BaseBlockClass {
 	String getBlockClassName() { return  "crops"; }
-	Class<? extends Block> getBlockClass() { return BlockCropsVC2.class; }
+	Class<? extends Block> getBlockClass() { return BlockCropsVC.class; }
 	Class<? extends ItemBlock> getItemClass() { return ItemBlock.class; }
 	float getHardness() { return 0.4f; }
 	SoundType getStepSound() { return Block.soundTypeGrass; }
@@ -22,7 +22,7 @@ public class CropClass extends BaseBlockClass {
 	
 	public CropClass init() {
 		name="crops";
-		blockclass = BlockCropsVC2.class;
+		blockclass = BlockCropsVC.class;
 		itemclass = ItemBlock.class;
 		
 		for (EnumCrop crop: EnumCrop.values()) {

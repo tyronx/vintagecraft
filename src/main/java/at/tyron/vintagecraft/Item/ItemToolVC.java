@@ -15,6 +15,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -32,13 +33,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IItemRackable {	
 	public EnumTool tooltype;
+	public boolean diamondencrusted; 
 	
-	public ItemToolVC(EnumTool tooltype) {
+	public ItemToolVC(EnumTool tooltype, boolean diamondencrusted) {
 		this.tooltype = tooltype;
-		setCreativeTab(VintageCraft.toolsarmorTab);
+		if (!diamondencrusted) {
+			setCreativeTab(VintageCraft.toolsarmorTab);
+		}
 		maxStackSize = 1;
-		//System.out.println("set max damage for " + tooltype);
-		setMaxDamage(getMaxUses());
+		this.diamondencrusted = diamondencrusted;
+
+		int maxUses = (int) (getMaxUses() * (diamondencrusted ? 1.5f : 1));
+		setMaxDamage(maxUses);
 	}
 	
 	@Override
@@ -49,7 +55,20 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		
 		return super.getUnlocalizedName();
 	}
-
+	
+	
+	public static ItemStack getDiamondEncrustedVarianOf(ItemStack toolstack) {
+		if (!(toolstack.getItem() instanceof ItemToolVC)) return null;
+		if (((ItemToolVC)toolstack.getItem()).diamondencrusted) return toolstack;
+		
+		ItemToolVC item = ItemsVC.tools.get(toolstack.getItem().getUnlocalizedName(toolstack) + "_dmd");
+		
+		return new ItemStack(item);
+	}
+	
+	public String getVariant(ItemStack toolstack) {
+		return diamondencrusted ? "_dmd" : "";
+	}
 	
 	
 	@Override
@@ -57,6 +76,10 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		boolean harvestable = canHarvestBlock(state);
 		
 		float f = getEfficiencyOnMaterial(itemstack, state.getBlock().getMaterial());
+		
+		if (diamondencrusted) {
+			f *= 1.3;
+		}
 		
 		if (state.getBlock() instanceof BlockVC) {
 			f /= ((BlockVC)state.getBlock()).getBlockHardnessMultiplier(state);

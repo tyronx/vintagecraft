@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IIgniteable;
+import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,8 +21,8 @@ public class ItemFireStarter extends ItemVC implements IItemRackable {
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		IBlockState state = world.getBlockState(pos);
-		if (state.getBlock() instanceof IIgniteable) {
-			((IIgniteable)state.getBlock()).ignite(world, pos, itemstack);
+		if (state.getBlock() instanceof IBlockIgniteable) {
+			((IBlockIgniteable)state.getBlock()).ignite(world, pos, itemstack);
 			itemstack.damageItem(1, entityplayer);
 			return true;
 		}

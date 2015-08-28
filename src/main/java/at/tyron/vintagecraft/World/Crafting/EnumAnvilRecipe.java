@@ -8,10 +8,14 @@ import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemMetalPlate;
+import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemToolHead;
+import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.item.ItemStack;
 
 
@@ -40,7 +44,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.LIGHTHIT
 	}, 3, EnumTool.AXE),
 	
-	SWORD (new EnumAnvilTechnique[] { 
+	SWORD (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.MEDIUMHIT,
 		EnumAnvilTechnique.DRAW,
 		EnumAnvilTechnique.DRAW,
@@ -74,7 +78,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.LIGHTHIT
 	}, 1, EnumTool.SHOVEL),
 	
-	HOE (new EnumAnvilTechnique[] { 
+	HOE (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.MEDIUMHIT,
 		EnumAnvilTechnique.DRAW,
 		EnumAnvilTechnique.DRAW,
@@ -184,7 +188,7 @@ public enum EnumAnvilRecipe {
 	}, 2),
 
 	
-	HELMET (new EnumAnvilTechnique[] { 
+	HELMET (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.MEDIUMHIT,
@@ -195,7 +199,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.PUNCH
 	}, 2, 0),
 	
-	CHESTPLATE (new EnumAnvilTechnique[] { 
+	CHESTPLATE (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.LIGHTHIT,
@@ -207,7 +211,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.UPSET,
 	}, 4, 1),
 	
-	LEGGINGS (new EnumAnvilTechnique[] { 
+	LEGGINGS (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.BEND,
@@ -218,7 +222,7 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.LIGHTHIT,			
 	}, 3, 2),
 	
-	BOOTS (new EnumAnvilTechnique[] { 
+	BOOTS (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.BEND,
 		EnumAnvilTechnique.LIGHTHIT,
@@ -269,7 +273,22 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.HEAVYHIT,
 		EnumAnvilTechnique.MEDIUMHIT,
 		EnumAnvilTechnique.LIGHTHIT		
-	}, 1),
+	}, 1)/*,
+	
+	DIAMONDENCRUST (new EnumAnvilTechnique[] {
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.LIGHTHIT
+	}),*/
 				
 	/*	
 	COPPER_WIRE (new EnumAnvilTechnique[] {
@@ -355,7 +374,8 @@ public enum EnumAnvilRecipe {
 		for (EnumMetal metal : EnumMetal.values()) {
 			ItemStack metalingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
 			ItemStack metalplate = BlocksVC.metalplate.getItemStackFor(metal);
-	
+			ItemStack twoDiamonds = ItemOreVC.getItemStackFor(EnumOreType.DIAMOND, 2);
+					
 			/**** 1. Tool recipes ****/
 			if (metal.hasTools) {
 				for (EnumTool tool : EnumTool.values()) {
@@ -372,6 +392,16 @@ public enum EnumAnvilRecipe {
 					
 					if (tool == EnumTool.CARPENTERSTOOLSET) {
 						recipe.setIngredientText("5ingotstier2plus");
+					}
+					
+					if (tool.isUpgradable) {
+						if (tool.requiresWoodenHandle) {
+							recipe = toolrecipes.get(tool).registerRecipe(ItemToolHead.getDiamondEncrustedVarianOf(output), metalingot.copy(), twoDiamonds);
+						} else {
+							recipe = toolrecipes.get(tool).registerRecipe(ItemToolVC.getDiamondEncrustedVarianOf(output), metalingot.copy(), twoDiamonds);
+						}
+						
+						recipe.displayInRecipeHelper = false;
 					}
 				}
 			}

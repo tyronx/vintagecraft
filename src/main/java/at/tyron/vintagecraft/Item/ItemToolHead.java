@@ -21,12 +21,27 @@ public class ItemToolHead extends ItemVC implements ISubtypeFromStackPovider {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return material + "_" + tooltype.getName();
+		return material + "_" + tooltype.getName() + getVariant(stack);
 	}
+	
+	
+	public static ItemStack getDiamondEncrustedVarianOf(ItemStack toolstack) {
+		getOrCreateNBT(toolstack).setBoolean("diamondencrusted", true);
+		return toolstack;
+	}
+	
+	public String getVariant(ItemStack toolstack) {
+		boolean diamondencrusted = getOrCreateNBT(toolstack).getBoolean("diamondencrusted");
+		return diamondencrusted ? "_dmd" : "";
+	}
+
 
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
+		if (getOrCreateNBT(itemstack).getBoolean("diamondencrusted")) {
+			tooltip.add("Diamond encrusted");
+		}
 		tooltip.add("Combine with a stick to complete the tool");
 	}
 	

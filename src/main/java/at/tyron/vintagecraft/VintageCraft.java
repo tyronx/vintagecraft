@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft;
 
+import at.tyron.vintagecraft.Client.CreativeTabsVC;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
 import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
 import at.tyron.vintagecraft.Network.ChunkPutNbtPacket;
@@ -10,6 +11,7 @@ import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.Network.WorldDataPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.VCraftWorldSavedData;
 import at.tyron.vintagecraft.World.WindGen;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilRecipe;
 import at.tyron.vintagecraft.World.Crafting.EnumCarpentryRecipes;
@@ -51,6 +53,12 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 
+/*
+ * Things to add before for a "Update requires new world":
+ * - Wood type chests
+ * - New trees, plants, rocktypes, etc.
+ */
+
 @Mod(modid = ModInfo.ModID, version = ModInfo.ModVersion)
 public class VintageCraft {
 	@Instance("vintagecraft")
@@ -60,8 +68,6 @@ public class VintageCraft {
 	public static CommonProxy proxy;
 	
 	    
-    // The packet pipeline
- 	//public static final PacketPipeline packetPipeline = new PacketPipeline();
  	public static final SimpleNetworkWrapper packetPipeline = NetworkRegistry.INSTANCE.newSimpleChannel("vintagecraft");
  	
  	
@@ -92,10 +98,6 @@ public class VintageCraft {
     	BlocksVC.init();
     	ItemsVC.init();
     	
-    	
-    	
-    	//packetPipeline.initalise();
-    	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
     	
@@ -110,7 +112,6 @@ public class VintageCraft {
      	
      	
      	GameRegistry.registerWorldGenerator(new WorldGenDeposits(), 4);
-     	//GameRegistry.registerWorldGenerator(new WorldGenFlora(), 5);
      	
         
         WorldType.DEFAULT = WorldTypeVC.DEFAULT;
@@ -177,9 +178,9 @@ public class VintageCraft {
 	@SubscribeEvent
 	public void entitySpawn(SpecialSpawn evt) {
 		if (evt.world.isRemote) return;
-    	VintageCraftMobTweaker.entityJoin(evt);
-    	
+    	VintageCraftMobTweaker.entitySpawn(evt);
 	}
+	
 	
 	public VCraftWorldSavedData getOrCreateWorldData(World world) {
 		VCraftWorldSavedData worlddata;
@@ -198,9 +199,8 @@ public class VintageCraft {
 	public void loadWorld(WorldEvent.Load evt) {
 		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world);
 		worlddata.setWorld(evt.world);
-		long worldtime = worlddata.getWorldTime();
 		
-		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, evt.world.getDifficulty()));
+		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(evt.world.getTotalWorldTime() / 24000L, evt.world.getDifficulty()));
 		
 		WindGen.registerWorld(evt.world);
 	}
@@ -221,11 +221,8 @@ public class VintageCraft {
 			event.world.provider.getDimensionId() != 0
 		) return;
 		
-		
-		
-		long worldtime = getOrCreateWorldData(event.world).getWorldTime();
-		getOrCreateWorldData(event.world).setWorldTime(worldtime + 1);
-		
+		long worldtime = event.world.getTotalWorldTime();
+		long timeofday = event.world.getWorldTime() / 24000L;
 		
 		if (worldtime % 6000L == 0) {
 			VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(worldtime / 24000L, event.world.getDifficulty()));
@@ -253,7 +250,7 @@ public class VintageCraft {
 		
 		
 		long day = worldtime / 24000L;
-		if (day > 0 && day % 20 == 0 && worldtime % 24000L == 14000) {
+		if (day > 0 && day % 20 == 0 && timeofday % 24000L == 14000) {
 			packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
 			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText("Something strange is happening in the night sky"));
 		}
@@ -268,22 +265,7 @@ public class VintageCraft {
 		return timer;
 	}
 	
-	
-	
-	
-	public long getWorldTime(World world) {
-		return getOrCreateWorldData(world).getWorldTime();
-	}
-	
-	/*public int getNightSkyType(World world) {
-		return getOrCreateWorldData(world).getNightSkyType(world);
-	}*/
-	
-	public long daysPassed(World worldObj) {
-		return getWorldTime(worldObj) / 24000;
-	}
-
-	
+		
 	
 	@SubscribeEvent
 	public void onEvent(LivingDropsEvent event) {

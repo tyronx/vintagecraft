@@ -5,9 +5,9 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import at.tyron.vintagecraft.Matrix4f;
-import at.tyron.vintagecraft.Quaternion;
 import at.tyron.vintagecraft.Client.Model.ModelGearComponents;
+import at.tyron.vintagecraft.Client.Render.Math.Matrix4f;
+import at.tyron.vintagecraft.Client.Render.Math.Quaternion;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;

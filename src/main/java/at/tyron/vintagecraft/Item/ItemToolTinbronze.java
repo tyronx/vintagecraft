@@ -6,8 +6,8 @@ import net.minecraft.item.ItemStack;
 
 public class ItemToolTinbronze extends ItemToolVC {
 
-	public ItemToolTinbronze(EnumTool tooltype) {
-		super(tooltype);
+	public ItemToolTinbronze(EnumTool tooltype, boolean diamondencrusted) {
+		super(tooltype, diamondencrusted);
 	}
 
 
@@ -69,7 +69,7 @@ public class ItemToolTinbronze extends ItemToolVC {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		return "tinbronze_" + tooltype.getName();
+		return "tinbronze_" + tooltype.getName() + getVariant(stack);
 	}
 
 

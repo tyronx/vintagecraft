@@ -23,6 +23,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.ColorizerGrass;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -138,7 +139,6 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {
         if (!this.canBlockStay(worldIn, pos, state)) {
-            this.dropBlockAsItem(worldIn, pos, state, 0);
             worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
         }
     }
@@ -180,5 +180,9 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
 	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
 		return true;
 	}
+
+    public boolean canDropFromExplosion(Explosion explosionIn) {
+        return false;
+    }
 
 }

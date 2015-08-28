@@ -27,6 +27,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -71,6 +72,8 @@ public class ItemsVC {
 	public static Item ironTuyere;
 	
 	public static Item sail;
+
+	public static Item blastingPowder;
 
 	//public static Item coke;
 	
@@ -175,6 +178,9 @@ public class ItemsVC {
 		sail = new ItemSail();
 		register(sail, "sail");
 		
+		blastingPowder  = new ItemCrafted();
+		register(blastingPowder, "blastingpowder");
+		
 //		coke = new ItemCoke();
 //		register(coke, "coke");
 	}
@@ -243,30 +249,35 @@ public class ItemsVC {
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (metal.hasTools) materials.add(metal.getName());
 		}
+	
+		String[] variants = new String[]{"", "_dmd"};
 		
 		for (EnumTool tool : EnumTool.values()) {
 			for (String material : materials) {
 				if (material.equals("stone") && !tool.canBeMadeFromStone) continue;
 				if (!tool.canBeMadeOf(material)) continue;
 				
-				String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
-				String unlocalizedname = material + "_" + tool.getName();
+				for (String variant : variants) {
 				
-				try {
-					Class<? extends ItemToolVC> toolclass = (Class<? extends ItemToolVC>) Class.forName("at.tyron.vintagecraft.Item.ItemTool" + ucfirstmaterial);
-					ItemToolVC item = toolclass.getDeclaredConstructor(EnumTool.class).newInstance(tool);
-					item.setUnlocalizedName(unlocalizedname);
-					GameRegistry.registerItem(item, unlocalizedname);
+					String ucfirstmaterial = material.substring(0, 1).toUpperCase(Locale.ROOT) + material.substring(1);
+					String unlocalizedname = material + "_" + tool.getName() + variant;
 					
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
-					
-					tools.put(unlocalizedname, item);
-					
-					
-				} catch (Exception e) {
-					System.out.println(e.toString());
-					e.printStackTrace();
-				}		
+					try {
+						Class<? extends ItemToolVC> toolclass = (Class<? extends ItemToolVC>) Class.forName("at.tyron.vintagecraft.Item.ItemTool" + ucfirstmaterial);
+						ItemToolVC item = toolclass.getDeclaredConstructor(EnumTool.class, boolean.class).newInstance(tool, variant.equals("_dmd"));
+						item.setUnlocalizedName(unlocalizedname);
+						GameRegistry.registerItem(item, unlocalizedname);
+						
+						VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
+						
+						tools.put(unlocalizedname, item);
+						
+						
+					} catch (Exception e) {
+						System.out.println(e.toString());
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 	}
@@ -297,6 +308,7 @@ public class ItemsVC {
 					GameRegistry.registerItem(item, unlocalizedname);
 					
 					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName());
+					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName() + "_dmd");
 					
 					toolheads.put(unlocalizedname, item);
 					
