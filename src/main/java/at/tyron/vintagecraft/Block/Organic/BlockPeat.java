@@ -34,6 +34,7 @@ public class BlockPeat extends BlockVC implements IBlockSoil {
 		this.setDefaultState(this.blockState.getBaseState().withProperty(organicLayer, EnumOrganicLayer.NORMALGRASS));
 		this.setTickRandomly(true);
 		setCreativeTab(VintageCraft.terrainTab);
+		minDropChance = 0.3f;
 	}
 	
 	

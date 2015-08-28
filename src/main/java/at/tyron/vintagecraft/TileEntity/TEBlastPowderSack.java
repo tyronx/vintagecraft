@@ -7,7 +7,10 @@ import net.minecraft.util.EnumParticleTypes;
 
 public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlayerListBox {
 	int fuseTimer;
+	int dropTimer; // If no more solid ground, wait 1-2 ticks before dropping
+	
 	boolean exploded;
+	
 	
 	public static int getFuseDuration() {
 		return 80;
@@ -32,6 +35,7 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 		super.readFromNBT(compound);
 		
 		fuseTimer = compound.getInteger("fuseTimer");
+		dropTimer = compound.getInteger("dropTimer");
 	}
 	
 	@Override
@@ -39,6 +43,7 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 		super.writeToNBT(compound);
 		
 		compound.setInteger("fuseTimer", fuseTimer);
+		compound.setInteger("dropTimer", dropTimer);
 	}
 	
 
@@ -52,6 +57,15 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 			if (fuseTimer <= 0) {
 				explode(explosionStrength());
 			}
+			
+			dropTimer = 0;
+		}
+		
+		if (dropTimer > 0) {
+			dropTimer--;
+			if (dropTimer <= 0) {
+				worldObj.destroyBlock(pos, true);
+			}
 		}
 	}
 	
@@ -59,7 +73,8 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 	public boolean tryIgnite() {
 		if (fuseTimer == 0) {
 			fuseTimer = getFuseDuration();
-			worldObj.playSound(pos.getX(), pos.getY(), pos.getZ(), "game.tnt.primed", 1.0F, 1.0F, false);
+			worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "game.tnt.primed", 1.0F, 1.0F);
+			worldObj.markBlockForUpdate(pos);
 			return true;
 		}
 		return false;
@@ -71,6 +86,7 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 		exploded = true;
 		
 		if (!this.worldObj.isRemote) {
+			worldObj.destroyBlock(getPos(), false);
 			worldObj.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.125, pos.getZ() + 0.5, strength, true);
 		}
 	}
@@ -80,6 +96,12 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 			explode(indirectExplosionStrength());
 		}
 		
+	}
+
+	public void groundRemoved() {
+		if (!worldObj.isRemote) {
+			dropTimer = 2;
+		}
 	}
 	
 }

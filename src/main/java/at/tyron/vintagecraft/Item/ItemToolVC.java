@@ -118,7 +118,13 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
     
     public Multimap getItemAttributeModifiers() {
         Multimap multimap = super.getItemAttributeModifiers();
-        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Tool modifier", (double)this.getDamageGainOnEntities(), 0));
+        
+        float dmg = this.getDamageGainOnEntities();
+		if (diamondencrusted) {
+			dmg *= 1.3;
+		}
+
+        multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(itemModifierUUID, "Tool modifier", (double)dmg, 0));
         return multimap;
     }
     

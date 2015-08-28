@@ -47,6 +47,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockFurnaceChimney;
 import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
+import at.tyron.vintagecraft.Block.Utility.BlockSaltLamp;
 import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Block.Utility.BlockStonePot;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
@@ -168,6 +169,8 @@ public class BlocksVC {
 	
 	public static BlockContainerVC blastpowdersack;
 	
+	
+	public static Block saltlamp;
 	
 
 	
@@ -320,6 +323,8 @@ public class BlocksVC {
 		carpenterTable = new BlockCarpenterTable().registerSingleState("carpentertable", ItemCarpenterTable.class);
 		
 		blastpowdersack = new BlockBlastPowderSack().registerSingleState("blastpowdersack", ItemBlock.class);
+		
+		saltlamp = new BlockSaltLamp().registerSingleState("saltlamp", ItemBlock.class);
 	}
 	
 

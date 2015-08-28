@@ -45,6 +45,7 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
 	public BlockCropsVC() {
 		super(Material.plants);
 		setTickRandomly(true);
+		minDropChance = 0f;
 	}
 	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {
@@ -228,7 +229,7 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
     	EnumCrop croptype = getCropType(state);
     	if (getGrowthStage(state) == croptype.growthstages - 1) {
     		ItemStack stack = ItemSeedVC.withCropType(croptype);
-    		stack.stackSize = croptype.quantitySeedsDroped;
+    		stack.stackSize = croptype.quantitySeedsDroped + (((World)world).rand.nextBoolean() ? 1 : 0);
     		ret.add(stack);
     		
     		if (croptype == EnumCrop.FLAX) {

@@ -396,7 +396,7 @@ public enum EnumAnvilRecipe {
 					
 					if (tool.isUpgradable) {
 						if (tool.requiresWoodenHandle) {
-							recipe = toolrecipes.get(tool).registerRecipe(ItemToolHead.getDiamondEncrustedVarianOf(output), metalingot.copy(), twoDiamonds);
+							recipe = toolrecipes.get(tool).registerRecipe(ItemToolHead.getDiamondEncrustedVariantOf(output), metalingot.copy(), twoDiamonds);
 						} else {
 							recipe = toolrecipes.get(tool).registerRecipe(ItemToolVC.getDiamondEncrustedVarianOf(output), metalingot.copy(), twoDiamonds);
 						}

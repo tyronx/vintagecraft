@@ -69,6 +69,19 @@ public class ShapedRecipesVC implements IRecipe {
                     if (itemstack.getMetadata() != 32767 && itemstack.getMetadata() != itemstack1.getMetadata()) {
                         return false;
                     }
+                    
+                    
+                    // null and empty itemstacks are also ok 
+                    boolean firstempty = itemstack.getTagCompound() == null || itemstack.getTagCompound().hasNoTags(); 
+                    boolean secondempty = itemstack1.getTagCompound() == null || itemstack1.getTagCompound().hasNoTags();
+                    
+                  //  System.out.println(firstempty + ": " + itemstack.getItem() + " / " + itemstack.getTagCompound());
+                  //  System.out.println(secondempty + ": " + itemstack1.getItem() + " / " + itemstack1.getTagCompound());
+                    
+                    if (firstempty != secondempty && !ItemStack.areItemStackTagsEqual(itemstack, itemstack1)) {
+                        return false;
+                    }
+
                  
                 }
             }

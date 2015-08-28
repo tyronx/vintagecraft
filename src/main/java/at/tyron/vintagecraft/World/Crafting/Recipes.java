@@ -1,3 +1,4 @@
+
 package at.tyron.vintagecraft.World.Crafting;
 
 import java.util.ArrayList;
@@ -64,13 +65,17 @@ public class Recipes {
 				if (!metal.hasTools) continue;
 				
 				Item toolitem = ItemsVC.tools.get(metal.getName() + "_" + tool.getName());
-				Item toolheaditem = ItemsVC.toolheads.get(metal.getName() + "_" + tool.getName()+"toolhead");				
-				
-				
 				Item dmdtoolitem = ItemsVC.tools.get(metal.getName() + "_" + tool.getName() + "_dmd");
 				
-				addShapedRecipe(new ItemStack(dmdtoolitem), new Object[]{" T", " S", 'T', ItemToolHead.getDiamondEncrustedVarianOf(new ItemStack(toolheaditem)), 'S', Items.stick});
-				addShapedRecipe(new ItemStack(toolitem), new Object[]{" T", " S", 'T', new ItemStack(toolheaditem), 'S', Items.stick});
+				
+				Item toolheaditem = ItemsVC.toolheads.get(metal.getName() + "_" + tool.getName() + "toolhead");
+				ItemStack toolheadstack = new ItemStack(toolheaditem);
+				ItemStack dmdtoolheadstack = ItemToolHead.getDiamondEncrustedVariantOf(new ItemStack(toolheaditem)); 
+				
+				 
+				
+				addShapedRecipeVC(new ItemStack(dmdtoolitem), new Object[]{" T", " S", 'T', dmdtoolheadstack, 'S', Items.stick});
+				addShapedRecipeVC(new ItemStack(toolitem), new Object[]{" T", " S", 'T', toolheadstack, 'S', Items.stick});
 
 			}
 		}
@@ -212,6 +217,8 @@ public class Recipes {
 		
 		ItemStack wheat = ItemSeedVC.withCropType(EnumCrop.WHEAT);
 		GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), new Object[]{wheat, wheat, wheat, wheat, wheat});
+		ItemStack flaxSeeds = ItemSeedVC.withCropType(EnumCrop.FLAX);
+		GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), new Object[]{flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds});
 		
 		addShapelessRecipeVC(new ItemStack(ItemsVC.blastingPowder, 3), new Object[] {
 			ItemOreVC.getItemStackFor(EnumOreType.SULFUR, 1), 
@@ -233,6 +240,8 @@ public class Recipes {
 			ItemsVC.flaxTwine
 		});
 		
+		
+		addShapedRecipeVC(new ItemStack(BlocksVC.saltlamp), new Object[] {"SSS", "S S", "STS", 'S', ItemOreVC.getItemStackFor(EnumOreType.ROCKSALT, 1), 'T', new ItemStack(Blocks.torch) });
 	}
 	
 	
@@ -267,7 +276,7 @@ public class Recipes {
 	
 	
 	// Also checks the item NBT Tags and input quantity
-    public static ShapedRecipesVC addShapedRecipe(ItemStack stack, Object ... recipeComponents) {
+    public static ShapedRecipesVC addShapedRecipeVC(ItemStack stack, Object ... recipeComponents) {
         String s = "";
         int i = 0;
         int j = 0;

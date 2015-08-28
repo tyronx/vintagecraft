@@ -1,8 +1,13 @@
 package at.tyron.vintagecraft.Block.Utility;
 
+import java.util.List;
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -12,38 +17,22 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
+import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.TileEntity.TEBlastPowderSack;
 
-public class BlockBlastPowderSack extends BlockContainerVC implements IBlockIgniteable {
+public class BlockSaltLamp extends BlockVC {
 
-	public BlockBlastPowderSack() {
-		super(Material.tnt);
-		setCreativeTab(VintageCraft.resourcesTab);
+	public BlockSaltLamp() {
+		super(Material.rock);
+		setCreativeTab(VintageCraft.craftedBlocksTab);
+		setLightLevel(0.75f);
 	}
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		
 		return null;
 	}
 
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TEBlastPowderSack();
-	}
-
-	@Override
-	public boolean ignite(World world, BlockPos pos, ItemStack firestarter) {
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TEBlastPowderSack) {
-			return ((TEBlastPowderSack)te).tryIgnite();
-		}
-		return false;
-	}
-	
-	
 	
 	@Override
 	public int getRenderType() {
@@ -59,7 +48,7 @@ public class BlockBlastPowderSack extends BlockContainerVC implements IBlockIgni
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-		return AxisAlignedBB.fromBounds(pos.getX() + 0.3125, pos.getY(), pos.getZ() + 0.3125, pos.getX() + 0.6875f, pos.getY() + 0.625f, pos.getZ() + 0.6875f);
+		return AxisAlignedBB.fromBounds(pos.getX() + 0.375, pos.getY(), pos.getZ() + 0.375, pos.getX() + 0.625f, pos.getY() + 0.375f, pos.getZ() + 0.625f);
 	}
 
 	
@@ -77,13 +66,7 @@ public class BlockBlastPowderSack extends BlockContainerVC implements IBlockIgni
 	@Override
 	public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {
 		if (!suitableGround(world, pos.down())) {
-	    	TileEntity te = world.getTileEntity(pos);
-			if (te instanceof TEBlastPowderSack) {
-				((TEBlastPowderSack)te).groundRemoved();
-			} else {
-				world.destroyBlock(pos, true);
-			}
-
+			world.destroyBlock(pos, true);
 		}
 	}
 
@@ -130,19 +113,29 @@ public class BlockBlastPowderSack extends BlockContainerVC implements IBlockIgni
 		return 0;
 	}
 	
-    public boolean canDropFromExplosion(Explosion explosionIn) {
-        return false;
-    }
-    
-    @Override
-    public void onBlockExploded(World worldIn, BlockPos pos, Explosion explosionIn) {
-    	TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof TEBlastPowderSack) {
-			((TEBlastPowderSack)te).destroyedByExplosion();
-		}
-    	super.onBlockExploded(worldIn, pos, explosionIn);
-    	
-    }
+	
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return Item.getItemFromBlock(this);
+	}
+	
+	@Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	ret.add(new ItemStack(Item.getItemFromBlock(this)));
+    	return ret;
+	}
+	
+	// Why the hell does it not drop per default? O.o
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+		super.breakBlock(worldIn, pos, state);
+	}
 	
 
+	
+	
+	
+	
 }

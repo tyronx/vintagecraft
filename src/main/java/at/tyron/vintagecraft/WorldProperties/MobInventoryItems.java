@@ -15,9 +15,9 @@ public class MobInventoryItems {
 	static float[] weaponChance = new float[]{0.3f, 0.6f, 0.9f};  
 	
 	static float[][] armorTypeChances = new float[][]{
-	/* chest+leggings */		new float[]{0.1f, 0.1f, 0.2f},
+	/* all armor items */		new float[]{0.1f, 0.2f, 0.4f},
 	/* chest+leggings+boots */  new float[]{0.1f, 0.2f, 0.3f},
-	/* all armor items */		new float[]{0.1f, 0.2f, 0.4f}
+	/* chest+leggings */		new float[]{0.1f, 0.1f, 0.2f}
 	};
 	
 	

@@ -29,6 +29,7 @@ public class BlockLogVC extends BlockVC implements ISubtypeFromStackPovider, IMu
 	public BlockLogVC() {
 		super(Material.wood);
 		setCreativeTab(VintageCraft.floraTab);
+		minDropChance = 0f;
 	}
 	
 	public void init(BlockClassEntry []subtypes, PropertyBlockClass property) {

@@ -25,7 +25,7 @@ public class ItemToolHead extends ItemVC implements ISubtypeFromStackPovider {
 	}
 	
 	
-	public static ItemStack getDiamondEncrustedVarianOf(ItemStack toolstack) {
+	public static ItemStack getDiamondEncrustedVariantOf(ItemStack toolstack) {
 		getOrCreateNBT(toolstack).setBoolean("diamondencrusted", true);
 		return toolstack;
 	}

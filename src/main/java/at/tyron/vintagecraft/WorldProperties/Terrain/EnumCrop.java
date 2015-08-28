@@ -9,9 +9,9 @@ import net.minecraft.util.IStringSerializable;
 public enum EnumCrop implements IStateEnum, IStringSerializable{
 
 	PEAS     (0, 9, 2, 0),
-	WHEAT    (1, 8, 4, 0),
+	WHEAT    (1, 8, 2, 0),
 	TOMATOES (2, 13, 0, 2),
-	FLAX 	 (3, 5, 2, 0)
+	FLAX 	 (3, 5, 1, 0)
 	
 	;
 	

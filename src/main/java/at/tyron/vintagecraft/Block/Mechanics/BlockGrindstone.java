@@ -18,7 +18,7 @@ public class BlockGrindstone extends BlockMechanicalVC  {
 
 	public BlockGrindstone() {
 		super(Material.rock);
-		setCreativeTab(VintageCraft.mechanicsTab);
+//		setCreativeTab(VintageCraft.mechanicsTab);
 	}
 
 	@Override

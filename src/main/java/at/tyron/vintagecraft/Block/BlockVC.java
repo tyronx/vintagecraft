@@ -31,8 +31,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class BlockVC extends Block implements ISubtypeFromStackPovider {
 	protected BlockClassEntry[] subtypes;
 	
+	// For items dropped by explosions (amongst others)	
+	public float minDropChance;
+	
+	
 	protected BlockVC(Material materialIn) {
 		super(materialIn);
+		this.minDropChance = 0.95f;
 	}
 	
 	public BlockVC(IStateEnum[] states) {
@@ -258,6 +263,6 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 	
 	// Explosison yield much more drops
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
-		super.dropBlockAsItemWithChance(worldIn, pos, state, Math.max(0.95f, 1f), fortune);
+		super.dropBlockAsItemWithChance(worldIn, pos, state, Math.max(minDropChance, chance), fortune);
 	}
 }

@@ -279,26 +279,22 @@ tile.ceramicvessel2.name=Ceramic Vessel
 tile.clayvessel2.name=Clay Vessel
 
 
-item.steel_axe.name=Steel Axe
-item.steel_pickaxe.name=Steel Pickaxe
-item.steel_shovel.name=Steel Shovel
-item.steel_sword.name=Steel Sword
-item.steel_hoe.name=Steel Hoe
-item.steel_saw.name=Steel Saw
-item.steel_shears.name=Steel Shears
-item.steel_hammer.name=Steel Hammer
-item.steel_carpenterstoolset.name=Steel Carpenters Toolset
+item.stone_axe.name=Stone Axe
+item.stone_pickaxe.name=Stone Pickaxe
+item.stone_shovel.name=Stone Shovel
+item.stone_sword.name=Stone Sword
+item.stone_hoe.name=Stone Hoe
+item.stone_saw.name=Stone Saw
+item.stone_hammer.name=Stone Hammer
 
-
-item.iron_axe.name=Iron Axe
-item.iron_pickaxe.name=Iron Pickaxe
-item.iron_shovel.name=Iron Shovel
-item.iron_sword.name=Iron Sword
-item.iron_hoe.name=Iron Hoe
-item.iron_saw.name=Iron Saw
-item.iron_shears.name=Iron Shears
-item.iron_hammer.name=Iron Hammer
-item.iron_carpenterstoolset.name=Iron Carpenters Toolset
+item.copper_axe.name=Copper Axe
+item.copper_pickaxe.name=Copper Pickaxe
+item.copper_shovel.name=Copper Shovel
+item.copper_sword.name=Copper Sword
+item.copper_hoe.name=Copper Hoe
+item.copper_saw.name=Copper Saw
+item.copper_shears.name=Copper Shears
+item.copper_hammer.name=Copper Hammer
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe
 item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
@@ -320,31 +316,106 @@ item.tinbronze_shears.name=Tin Bronze Shears
 item.tinbronze_hammer.name=Tin Bronze Hammer
 item.tinbronze_carpenterstoolset.name=Tin Bronze Carpenters Toolset
 
-item.copper_axe.name=Copper Axe
-item.copper_pickaxe.name=Copper Pickaxe
-item.copper_shovel.name=Copper Shovel
-item.copper_sword.name=Copper Sword
-item.copper_hoe.name=Copper Hoe
-item.copper_saw.name=Copper Saw
-item.copper_shears.name=Copper Shears
-item.copper_hammer.name=Copper Hammer
+item.iron_axe.name=Iron Axe
+item.iron_pickaxe.name=Iron Pickaxe
+item.iron_shovel.name=Iron Shovel
+item.iron_sword.name=Iron Sword
+item.iron_hoe.name=Iron Hoe
+item.iron_saw.name=Iron Saw
+item.iron_shears.name=Iron Shears
+item.iron_hammer.name=Iron Hammer
+item.iron_carpenterstoolset.name=Iron Carpenters Toolset
 
-item.stone_axe.name=Stone Axe
-item.stone_pickaxe.name=Stone Pickaxe
-item.stone_shovel.name=Stone Shovel
-item.stone_sword.name=Stone Sword
-item.stone_hoe.name=Stone Hoe
-item.stone_saw.name=Stone Saw
-item.stone_hammer.name=Stone Hammer
+item.steel_axe.name=Steel Axe
+item.steel_pickaxe.name=Steel Pickaxe
+item.steel_shovel.name=Steel Shovel
+item.steel_sword.name=Steel Sword
+item.steel_hoe.name=Steel Hoe
+item.steel_saw.name=Steel Saw
+item.steel_shears.name=Steel Shears
+item.steel_hammer.name=Steel Hammer
+item.steel_carpenterstoolset.name=Steel Carpenters Toolset
 
 
-item.iron_axetoolhead.name=Iron Axe Toolhead
-item.iron_pickaxetoolhead.name=Iron Pickaxe Toolhead
-item.iron_shoveltoolhead.name=Iron Shovel Toolhead
-item.iron_swordtoolhead.name=Iron Sword Toolhead
-item.iron_hoetoolhead.name=Iron Hoe Toolhead
-item.iron_sawtoolhead.name=Iron Saw Toolhead
-item.iron_hammertoolhead.name=Iron Hammer Toolhead
+
+
+
+
+item.stone_axe_dmd.name=Diamond Encrusted Stone Axe
+item.stone_pickaxe_dmd.name=Diamond Encrusted Stone Pickaxe
+item.stone_shovel_dmd.name=Diamond Encrusted Stone Shovel
+item.stone_sword_dmd.name=Diamond Encrusted Stone Sword
+item.stone_hoe_dmd.name=Diamond Encrusted Stone Hoe
+item.stone_saw_dmd.name=Diamond Encrusted Stone Saw
+item.stone_hammer_dmd.name=Diamond Encrusted Stone Hammer
+
+item.copper_axe_dmd.name=Diamond Encrusted Copper Axe
+item.copper_pickaxe_dmd.name=Diamond Encrusted Copper Pickaxe
+item.copper_shovel_dmd.name=Diamond Encrusted Copper Shovel
+item.copper_sword_dmd.name=Diamond Encrusted Copper Sword
+item.copper_hoe_dmd.name=Diamond Encrusted Copper Hoe
+item.copper_saw_dmd.name=Diamond Encrusted Copper Saw
+item.copper_shears_dmd.name=Diamond Encrusted Copper Shears
+item.copper_hammer_dmd.name=Diamond Encrusted Copper Hammer
+
+item.bismuthbronze_axe_dmd.name=Diamond Encrusted Bismuth Bronze Axe
+item.bismuthbronze_pickaxe_dmd.name=Diamond Encrusted Bismuth Bronze Pickaxe
+item.bismuthbronze_shovel_dmd.name=Diamond Encrusted Bismuth Bronze Shovel
+item.bismuthbronze_sword_dmd.name=Diamond Encrusted Bismuth Bronze Sword
+item.bismuthbronze_hoe_dmd.name=Diamond Encrusted Bismuth Bronze Hoe
+item.bismuthbronze_saw_dmd.name=Diamond Encrusted Bismuth Bronze Saw
+item.bismuthbronze_shears_dmd.name=Diamond Encrusted Bismuth Bronze Shears
+item.bismuthbronze_hammer_dmd.name=Diamond Encrusted Bismuth Bronze Hammer
+item.bismuthbronze_carpenterstoolset_dmd.name=Diamond Encrusted Bismuth Bronze Carpenters Toolset
+
+item.tinbronze_axe_dmd.name=Diamond Encrusted Tin Bronze Axe
+item.tinbronze_pickaxe_dmd.name=Diamond Encrusted Tin Bronze Pickaxe
+item.tinbronze_shovel_dmd.name=Diamond Encrusted Tin Bronze Shovel
+item.tinbronze_sword_dmd.name=Diamond Encrusted Tin Bronze Sword
+item.tinbronze_hoe_dmd.name=Diamond Encrusted Tin Bronze Hoe
+item.tinbronze_saw_dmd.name=Diamond Encrusted Tin Bronze Saw
+item.tinbronze_shears_dmd.name=Diamond Encrusted Tin Bronze Shears
+item.tinbronze_hammer_dmd.name=Diamond Encrusted Tin Bronze Hammer
+item.tinbronze_carpenterstoolset_dmd.name=Diamond Encrusted Tin Bronze Carpenters Toolset
+
+item.iron_axe_dmd.name=Diamond Encrusted Iron Axe
+item.iron_pickaxe_dmd.name=Diamond Encrusted Iron Pickaxe
+item.iron_shovel_dmd.name=Diamond Encrusted Iron Shovel
+item.iron_sword_dmd.name=Diamond Encrusted Iron Sword
+item.iron_hoe_dmd.name=Diamond Encrusted Iron Hoe
+item.iron_saw_dmd.name=Diamond Encrusted Iron Saw
+item.iron_shears_dmd.name=Diamond Encrusted Iron Shears
+item.iron_hammer_dmd.name=Diamond Encrusted Iron Hammer
+item.iron_carpenterstoolset_dmd.name=Diamond Encrusted Iron Carpenters Toolset
+
+item.steel_axe_dmd.name=Diamond Encrusted Steel Axe
+item.steel_pickaxe_dmd.name=Diamond Encrusted Steel Pickaxe
+item.steel_shovel_dmd.name=Diamond Encrusted Steel Shovel
+item.steel_sword_dmd.name=Diamond Encrusted Steel Sword
+item.steel_hoe_dmd.name=Diamond Encrusted Steel Hoe
+item.steel_saw_dmd.name=Diamond Encrusted Steel Saw
+item.steel_shears_dmd.name=Diamond Encrusted Steel Shears
+item.steel_hammer_dmd.name=Diamond Encrusted Steel Hammer
+item.steel_carpenterstoolset_dmd.name=Diamond Encrusted Steel Carpenters Toolset
+
+
+
+
+item.stone_axetoolhead.name=Stone Axe Toolhead
+item.stone_pickaxetoolhead.name=Stone Pickaxe Toolhead
+item.stone_shoveltoolhead.name=Stone Shovel Toolhead
+item.stone_swordtoolhead.name=Stone Sword Toolhead
+item.stone_hoetoolhead.name=Stone Hoe Toolhead
+item.stone_sawtoolhead.name=Stone Saw Toolhead
+item.stone_hammertoolhead.name=Stone Hammer Toolhead
+
+item.copper_axetoolhead.name=Copper Axe Toolhead
+item.copper_pickaxetoolhead.name=Copper Pickaxe Toolhead
+item.copper_shoveltoolhead.name=Copper Shovel Toolhead
+item.copper_swordtoolhead.name=Copper Sword Toolhead
+item.copper_hoetoolhead.name=Copper Hoe Toolhead
+item.copper_sawtoolhead.name=Copper Saw Toolhead
+item.copper_hammertoolhead.name=Copper Bronze Hammer Toolhead
 
 item.bismuthbronze_axetoolhead.name=Bismuth Bronze Axe Toolhead
 item.bismuthbronze_pickaxetoolhead.name=Bismuth Bronze Pickaxe Toolhead
@@ -362,22 +433,13 @@ item.tinbronze_hoetoolhead.name=Tin Bronze Hoe Toolhead
 item.tinbronze_sawtoolhead.name=Tin Bronze Saw Toolhead
 item.tinbronze_hammertoolhead.name=Tin Bronze Hammer Toolhead
  
-item.copper_axetoolhead.name=Copper Axe Toolhead
-item.copper_pickaxetoolhead.name=Copper Pickaxe Toolhead
-item.copper_shoveltoolhead.name=Copper Shovel Toolhead
-item.copper_swordtoolhead.name=Copper Sword Toolhead
-item.copper_hoetoolhead.name=Copper Hoe Toolhead
-item.copper_sawtoolhead.name=Copper Saw Toolhead
-item.copper_hammertoolhead.name=Copper Bronze Hammer Toolhead
-
-
-item.stone_axetoolhead.name=Stone Axe Toolhead
-item.stone_pickaxetoolhead.name=Stone Pickaxe Toolhead
-item.stone_shoveltoolhead.name=Stone Shovel Toolhead
-item.stone_swordtoolhead.name=Stone Sword Toolhead
-item.stone_hoetoolhead.name=Stone Hoe Toolhead
-item.stone_sawtoolhead.name=Stone Saw Toolhead
-item.stone_hammertoolhead.name=Stone Hammer Toolhead
+item.iron_axetoolhead.name=Iron Axe Toolhead
+item.iron_pickaxetoolhead.name=Iron Pickaxe Toolhead
+item.iron_shoveltoolhead.name=Iron Shovel Toolhead
+item.iron_swordtoolhead.name=Iron Sword Toolhead
+item.iron_hoetoolhead.name=Iron Hoe Toolhead
+item.iron_sawtoolhead.name=Iron Saw Toolhead
+item.iron_hammertoolhead.name=Iron Hammer Toolhead
 
 
 
@@ -697,7 +759,7 @@ recipe.helmet.name=Helmet
 recipe.chestplate.name=Chestplate
 recipe.leggings.name=Leggings
 recipe.boots.name=Boots
-recipe.cokeovendoor.name=Iron C.O.K.
+recipe.cokeovendoor.name=Iron C.O. Door
 recipe.fix_ingot.name=Repair ingot
 recipe.fix_plate.name=Repair plate
 recipe.bellows.name=Bellows
@@ -740,3 +802,4 @@ tile.fireclaystairs.name=Burned Fireclay stairs
 tile.blastpowdersack.name=Sack of Blast Powder
 item.blastingpowder.name=Blast Powder
 blastpowdersackinfo.name=Weak against rock, but an excellent choice for mining ores. Only 5% of ores from the explosion.
+tile.saltlamp.name=Salt Lamp

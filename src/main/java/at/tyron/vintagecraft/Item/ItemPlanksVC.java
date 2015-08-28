@@ -43,7 +43,8 @@ public class ItemPlanksVC extends ItemLogVC implements ISubtypeFromStackPovider,
 	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
 		return 
 			itemstack.getItemDamage() == comparison.getItemDamage() &&
-			itemstack.stackSize == comparison.stackSize
+			itemstack.stackSize == comparison.stackSize &&
+			getTreeType(itemstack) == getTreeType(comparison)
 		;
 	}	
 }

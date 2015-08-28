@@ -35,11 +35,11 @@ public class VintageCraftMobTweaker {
 	// Called from Vintagecraft.java
     public static void entitySpawn(LivingSpawnEvent evt) {
     	if (! (evt.entity.worldObj instanceof WorldServer)) return;
-    	
-    	if (evt.entity instanceof EntityZombie && ((EntityZombie)evt.entity).isChild()) {
-    		evt.setCanceled(true);
-    		return;
-    	}
+    
+		if (evt.entity instanceof EntityZombie) {
+			// Completely Disable baby zombies for now
+			((EntityZombie)evt.entity).setChild(false);
+		}
     	
     	if (evt.entity instanceof EntityMob) {
     		int spawncap = VintageCraftMobTweaker.spawnCapByDay(evt.world.getTotalWorldTime() / 24000L, evt.world.getDifficulty());
@@ -163,6 +163,8 @@ public class VintageCraftMobTweaker {
 		// The deeper the mob spawns, the better equipment it receives
 		float difficultyModifier = 0.45f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
 		
+		//System.out.println("gear up mob at y = "+mob.getPosition().getY()+", diff mod = " + difficultyModifier);
+		
 		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
 		if (inventory == null) return;
 		
@@ -180,10 +182,6 @@ public class VintageCraftMobTweaker {
 			if (inventory[i] != null) numgearitems++;
 		}
 
-		if (mob instanceof EntityZombie) {
-			// Completely Disable baby zombies for now
-			((EntityZombie)mob).setChild(false);
-		}
 		
 		if (numgearitems >= 4 && mob instanceof EntityZombie) {
 		
