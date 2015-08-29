@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.World;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockWoodBucketVC;
 import at.tyron.vintagecraft.Block.BlockCobblestone;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Block.BlockFireBrick;
@@ -77,6 +78,7 @@ import at.tyron.vintagecraft.Item.ItemTallGrassVC;
 import at.tyron.vintagecraft.Item.ItemTallMetalMold;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
+import at.tyron.vintagecraft.Item.ItemWoodBucket;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
@@ -168,7 +170,7 @@ public class BlocksVC {
 	public static BlockContainerVC carpenterTable;
 	
 	public static BlockContainerVC blastpowdersack;
-	
+	public static BlockContainerVC woodbucket;
 	
 	public static Block saltlamp;
 	
@@ -325,6 +327,8 @@ public class BlocksVC {
 		blastpowdersack = new BlockBlastPowderSack().registerSingleState("blastpowdersack", ItemBlock.class);
 		
 		saltlamp = new BlockSaltLamp().registerSingleState("saltlamp", ItemBlock.class);
+		
+		woodbucket = new BlockWoodBucketVC().registerSingleState("woodbucket", ItemWoodBucket.class);
 	}
 	
 
@@ -380,6 +384,8 @@ public class BlocksVC {
 		carpenterTable.setStepSound(Block.soundTypeWood).setHardness(1.5f).setHarvestLevel("axe", 0);
 		
 		blastpowdersack.setHardness(0.2f);
+		woodbucket.setHardness(0.2f);
+		woodbucket.setStepSound(Block.soundTypeWood);
 	}	
 	
 

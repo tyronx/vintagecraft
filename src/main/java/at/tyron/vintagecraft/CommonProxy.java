@@ -20,6 +20,7 @@ import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TEBlastPowderSack;
+import at.tyron.vintagecraft.TileEntity.TEWoodBucket;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import at.tyron.vintagecraft.TileEntity.TECokeOvenDoor;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
@@ -106,6 +107,7 @@ public class CommonProxy implements IGuiHandler {
 		
 		GameRegistry.registerTileEntity(TECarpenterTable.class, ModInfo.ModID + ":carpentertable");
 		GameRegistry.registerTileEntity(TEBlastPowderSack.class, ModInfo.ModID + ":blastpowdersack");
+		GameRegistry.registerTileEntity(TEWoodBucket.class, ModInfo.ModID + ":bucket");
 	}
 	
 	

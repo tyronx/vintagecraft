@@ -118,21 +118,6 @@ public class BlockSaltLamp extends BlockVC {
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return Item.getItemFromBlock(this);
 	}
-	
-	@Override
-    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
-    	ret.add(new ItemStack(Item.getItemFromBlock(this)));
-    	return ret;
-	}
-	
-	// Why the hell does it not drop per default? O.o
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
-		super.breakBlock(worldIn, pos, state);
-	}
-	
 
 	
 	

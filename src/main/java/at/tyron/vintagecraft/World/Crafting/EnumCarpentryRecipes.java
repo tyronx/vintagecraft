@@ -4,10 +4,12 @@ import java.util.Locale;
 
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
 import at.tyron.vintagecraft.Item.ItemToolRack;
+import at.tyron.vintagecraft.Item.ItemWoodBucket;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWoodenOppositePlacement;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumBucketContents;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -85,6 +87,27 @@ public enum EnumCarpentryRecipes {
 		EnumWoodWorkingTechnique.JOIN
 	}, 2),
 
+	
+	BUCKET(new EnumWoodWorkingTechnique[]{
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.SAW,
+		EnumWoodWorkingTechnique.SAW,
+		EnumWoodWorkingTechnique.DRILL,
+		EnumWoodWorkingTechnique.DRILL,
+		EnumWoodWorkingTechnique.JOIN,	
+	}, 3)
+	
 	;
 	
 	
@@ -125,6 +148,13 @@ public enum EnumCarpentryRecipes {
 				plankstack.stackSize = SAIL.planks;
 				recipe = SAIL.registerRecipe(new ItemStack(ItemsVC.sail), plankstack, new ItemStack(ItemsVC.linenCloth, 3));
 				recipe.setIngredientText(SAIL.planks + "planksand3linen");
+			}
+			
+			if (treetype.jankahardness > 800) {
+				plankstack.stackSize = BUCKET.planks;
+				ItemWoodBucket item = (ItemWoodBucket)Item.getItemFromBlock(BlocksVC.woodbucket); 
+				WorkableRecipeBase recipe = BUCKET.registerRecipe(item.withTreeTypeAndBucketContents(treetype, EnumBucketContents.EMPTY), plankstack, new ItemStack(ItemsVC.flaxTwine, 2));
+				recipe.setIngredientText("3planks2flaxtwine");
 				
 			}
 			

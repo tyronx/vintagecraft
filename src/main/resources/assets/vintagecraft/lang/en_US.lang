@@ -769,6 +769,7 @@ recipe.toolrack.name=Tool Rack
 recipe.axle.name=Axle
 recipe.carpenterstoolset.name=Carpenters Toolset
 recipe.sail.name=Windmill Sails
+recipe.bucket.name=Wooden Bucket
 
 recipeingredients.1ingots.name=1 Ingot
 recipeingredients.2ingots.name=2 Ingots
@@ -789,6 +790,7 @@ recipeingredients.4planks.name=4 Planks
 recipeingredients.6planks.name=6 Planks
 recipeingredients.2planksand4leather.name=2 Planks, 4 Stitched Leather
 recipeingredients.2planksand3linen.name=2 Planks, 3 Linen Cloth
+recipeingredients.3planks2flaxtwine.name=3 Planks, 2 Flax Twine
 
 tile.carpentertable.name=Carpenters Table
 tile.cokeovendoor.name=Coke Oven Door
@@ -803,3 +805,6 @@ tile.blastpowdersack.name=Sack of Blast Powder
 item.blastingpowder.name=Blast Powder
 blastpowdersackinfo.name=Weak against rock, but an excellent choice for mining ores. Only 5% of ores from the explosion.
 tile.saltlamp.name=Salt Lamp
+
+item.emptywoodbucket.name=Empty Wood Bucket
+item.waterwoodbucket.name=Water Wood Bucket

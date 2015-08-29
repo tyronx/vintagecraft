@@ -105,6 +105,7 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
     private int getGrowthStage(IBlockState state) {
     	return ((CropClassEntry)BlocksVC.crops.getEntryFromState(state)).stage;
 	}
+    
 	public EnumCrop getCropType(IBlockState state) {
 		return ((CropClassEntry)BlocksVC.crops.getEntryFromState(state)).crop;
 	}
@@ -118,7 +119,7 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
 		if (state.getBlock() instanceof BlockFarmlandVC) {
 			EnumFertility fertility = ((BlockFarmlandVC)state.getBlock()).getFertility(worldIn, pos.down());
 			if (fertility != null) {
-				return 0.1f * fertility.growthspeedmultiplier;
+				return 0.05f * fertility.growthspeedmultiplier;
 			} else {
 				if (worldIn.rand.nextFloat() < 0.1f) return -1f;
 				return 0.05f;

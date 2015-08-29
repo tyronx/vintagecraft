@@ -50,7 +50,7 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 
     
 	private boolean isTurning() {
-		return networkId != 0 && getNetwork(orientation).getSpeed() > 0;
+		return networkId != 0 && getNetwork(orientation) != null && getNetwork(orientation).getSpeed() > 0;
 	}
 
 	@Override

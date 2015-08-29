@@ -22,6 +22,7 @@ import at.tyron.vintagecraft.Client.Render.TESR.TESRStonePot;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRTallMetalMold;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRToolRack;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWindmillRotor;
+import at.tyron.vintagecraft.Client.Render.TESR.TESRWoodBucket;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityGunpowderSparkFX;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
@@ -29,6 +30,7 @@ import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.TileEntity.TEWoodBucket;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
@@ -42,6 +44,7 @@ import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldProperties.EnumBucketContents;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
@@ -198,8 +201,13 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         for (EnumTree treetype : EnumTree.values()) {
         	if (treetype.jankahardness > 800) {
         		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.carpenterTable), "vintagecraft:carpentertable/" + treetype.getName());
+        		
+	        	for (EnumBucketContents cnt : EnumBucketContents.values()) {
+	        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.woodbucket), "vintagecraft:woodbucket/" + treetype.getName() + "-" + cnt.getName());
+	        	}
         	}
         }
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.woodbucket), "woodbucket", "inventory");
         registerModelLocation(Item.getItemFromBlock(BlocksVC.carpenterTable), "carpentertable", "inventory");
         
         
@@ -250,6 +258,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEGrindStone.class, "grindstone", new TESRGrindstone());
 		ClientRegistry.registerTileEntity(TEBellows.class, "bellows", new TESRBellows());
 		ClientRegistry.registerTileEntity(TETallMetalMold.class, "tallmetalmold", new TESRTallMetalMold());
+		ClientRegistry.registerTileEntity(TEWoodBucket.class, "woodbucket", new TESRWoodBucket());
     }
     
     

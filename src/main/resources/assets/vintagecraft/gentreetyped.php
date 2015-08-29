@@ -47,6 +47,34 @@ file_put_contents("blockstates/carpentertable.json", getBlockStates($variants));
 
 
 
+/******** Buckets *****/
+
+$bucketcontents = array("empty", "water");
+$blocktype = "bucket";
+foreach ($bucketcontents as $bucketcontent) {
+	foreach ($blocktypes as $blocktype) { 
+		$parent = "empty";
+		if ($bucketcontent != "empty") $parent="filled";
+		
+		$itemjson = '{
+    "parent": "vintagecraft:block/woodbucket/'.$parent.'",
+    "textures": {
+        "wood": "vintagecraft:blocks/planks/'.$blocktype.'"
+	},
+    "display": {
+        "thirdperson": {
+            "rotation": [ 10, -45, 170 ],
+            "translation": [ 0, 3, 1 ],
+            "scale": [ 0.75, 0.75, 0.75 ]
+        }
+    }
+}
+';
+		file_put_contents("models/item/woodbucket/{$blocktype}-{$bucketcontent}.json", $itemjson);
+	}
+}
+
+
 
 /********** items only *************/
 foreach ($itemclasses as $itemclass) {

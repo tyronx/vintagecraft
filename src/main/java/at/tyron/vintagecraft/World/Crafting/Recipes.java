@@ -163,13 +163,6 @@ public class Recipes {
 		
 		
 		
-		/*GameRegistry.addShapedRecipe(new ItemStack(Items.spruce_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.SPRUCE)});
-		GameRegistry.addShapedRecipe(new ItemStack(Items.birch_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.BIRCH)});
-		GameRegistry.addShapedRecipe(new ItemStack(Items.acacia_door, 1), new Object[] { "WW ", "WW ", "WW ", 'W', BlocksVC.planks.getItemStackFor(EnumTree.ACACIA)});*/
-		
-
-		//GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.sail, 1), new Object[] { "SSS", "CCC", "SSS", 'C', Blocks.carpet, 'S', Items.stick});
-		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.fireclay_brick_raw, 1), new Object[] { "CC", "CC", 'C', ItemsVC.fireclay_ball});
 		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.fireclaybricks, 1), new Object[] { "CCC", "CCC", "CCC", 'C', ItemsVC.fireclay_brick});
 		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.fireclaystairs, 1), new Object[] { "CC ", "CCC", "CCC", 'C', ItemsVC.fireclay_brick});
@@ -209,11 +202,13 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Items.saddle), new Object[] {"LLL", "L L", " B ", 'L', ItemsVC.stitchedleather, 'B', tinbronzeingot});
 		GameRegistry.addShapedRecipe(new ItemStack(Items.saddle), new Object[] {"LLL", "L L", " B ", 'L', ItemsVC.stitchedleather, 'B', bismuthbronzeingot});
 		
-		//GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.sail), new Object[] {"SL ", "SL ", "SL ", 'S', Items.stick, 'L', ItemsVC.linenCloth});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.flaxTwine), new Object[]{ItemsVC.flaxFibers, ItemsVC.flaxFibers, ItemsVC.flaxFibers, ItemsVC.flaxFibers});
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.stitchedleather), new Object[]{Items.leather, Items.leather, Items.leather, Items.leather, ItemsVC.flaxTwine});
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.linenCloth), new Object[] {"FFF", "FFF", "FFF", 'F', ItemsVC.flaxTwine});
+		
+		GameRegistry.addShapedRecipe(new ItemStack(Items.lead), new Object[] {"FF ", "FF ", "  F", 'F', ItemsVC.flaxTwine});
+		
 		
 		ItemStack wheat = ItemSeedVC.withCropType(EnumCrop.WHEAT);
 		GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), new Object[]{wheat, wheat, wheat, wheat, wheat});
@@ -242,6 +237,8 @@ public class Recipes {
 		
 		
 		addShapedRecipeVC(new ItemStack(BlocksVC.saltlamp), new Object[] {"SSS", "S S", "STS", 'S', ItemOreVC.getItemStackFor(EnumOreType.ROCKSALT, 1), 'T', new ItemStack(Blocks.torch) });
+		
+		
 	}
 	
 	

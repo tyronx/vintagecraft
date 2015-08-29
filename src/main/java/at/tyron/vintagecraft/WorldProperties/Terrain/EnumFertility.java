@@ -8,9 +8,9 @@ import net.minecraft.util.IStringSerializable;
 
 public enum EnumFertility implements IStateEnum, IStringSerializable {
 	VERYLOW (3, 1, 0.00002f, false),
-	LOW (0, 4, 0.5f, true),
-	MEDIUM (1, 9, 1f, true),
-	HIGH (2, 21, 1.35f, true) 
+	LOW (0, 4, 0.2f, true),
+	MEDIUM (1, 9, 0.8f, true),
+	HIGH (2, 21, 1.3f, true) 
 	;
 
 	int meta;

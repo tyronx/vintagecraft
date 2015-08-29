@@ -181,7 +181,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
         if(te instanceof TESapling) {
         	TESapling cte = (TESapling) te;
             
-        	if (worldIn.getWorldTime() > cte.getGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(state).getKey())) {
+        	if (worldIn.getTotalWorldTime() > cte.getGrowthEnd(worldIn.getTotalWorldTime(), (EnumTree) getTreeType(state).getKey())) {
         		growTree(worldIn, rand, pos, state, cte.getSize());
         	}
         }
@@ -209,7 +209,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 			
 	        if(te instanceof TESapling) {
 	        	TESapling cte = (TESapling) te;
-	            cte.updateGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(worldIn.getBlockState(pos)).getKey());
+	            cte.updateGrowthEnd(worldIn.getTotalWorldTime(), (EnumTree) getTreeType(worldIn.getBlockState(pos)).getKey());
 	        }
 		}
     	
@@ -257,7 +257,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 	        if(te instanceof TESapling) {
 	        	TESapling cte = (TESapling) te;
 	            
-	        	playerIn.addChatMessage(new ChatComponentText("Sapling growth: " + (Math.round(100 * cte.size)/100f) + ", growth in " + Math.round((cte.getGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(state).getKey()) - worldIn.getWorldTime())/24000) + " days"));
+	        	playerIn.addChatMessage(new ChatComponentText("Sapling growth: " + (Math.round(100 * cte.size)/100f) + ", growth in " + Math.round((cte.getGrowthEnd(worldIn.getTotalWorldTime(), (EnumTree) getTreeType(state).getKey()) - worldIn.getTotalWorldTime())/24000) + " days"));
 	        }
 		}
 		
@@ -270,7 +270,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 		
         if(te instanceof TESapling) {
         	TESapling cte = (TESapling) te;
-        	return cte.canApplyBonemeal(worldIn.getWorldTime());
+        	return cte.canApplyBonemeal(worldIn.getTotalWorldTime());
         }
         return false;
 	}
@@ -287,10 +287,10 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
 		TileEntity te = worldIn.getTileEntity(pos);
         if(te instanceof TESapling) {
         	TESapling cte = (TESapling) te;
-        	cte.getGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(state).getKey()); // Refresh growth end
-        	cte.applyBonemeal(worldIn.getWorldTime());
+        	cte.getGrowthEnd(worldIn.getTotalWorldTime(), (EnumTree) getTreeType(state).getKey()); // Refresh growth end
+        	cte.applyBonemeal(worldIn.getTotalWorldTime());
         	
-        	if (cte.getGrowthEnd(worldIn.getWorldTime(), (EnumTree) getTreeType(state).getKey()) <= worldIn.getWorldTime()) 
+        	if (cte.getGrowthEnd(worldIn.getTotalWorldTime(), (EnumTree) getTreeType(state).getKey()) <= worldIn.getTotalWorldTime()) 
         		growTree(worldIn, rand, pos, state, cte.getSize());
         }
 		
