@@ -30,21 +30,12 @@ public class WorkableRecipeManager {
 	
 	
 	public boolean isInvalidRecipe(EnumWorkableTechnique []techniques, ItemStack []input) {
-	//	System.out.println("isinvalidrecipe " + recipes.size());
 		
 		for (WorkableRecipeBase  recipe : recipes) {
 			
-		/*	System.out.println(recipe.wildcardMatch + "   " +
-				(input.length != recipe.input.length) + " || " + (techniques.length > recipe.requiredTechniques.length && !recipe.wildcardMatch)
-			);
-			*/
 			if (input.length != recipe.input.length || (techniques.length > recipe.requiredTechniques.length && !recipe.wildcardMatch)) continue;
-
 			
-		//	System.out.println("input is ok ");
-			
-			boolean match = true;
-			
+			boolean match = true;			
 			for (int i = 0; i < input.length; i++) {
 				if (!((IItemWorkable)input[i].getItem()).isIngredient(input[i], recipe.input[i], recipe)) {
 					match = false;
@@ -57,10 +48,6 @@ public class WorkableRecipeManager {
 			
 			if (!match) continue;
 			
-			
-			//System.out.println("match on " + recipe.getName());
-
-			
 			return false;
 		}			
 		
@@ -71,16 +58,11 @@ public class WorkableRecipeManager {
 	
 	
 	public WorkableRecipeBase getMatchingRecipe(EnumWorkableTechnique []techniques, ItemStack []input) {
-		//System.out.println("getmatchingrecipe");
 		
 		for (WorkableRecipeBase recipe : recipes) {
 			boolean match = true;
 			
-			//System.out.println("match for " + recipe.output + ": " + input.length+" == "+recipe.input.length+" && " + recipe.requiredTechniques.length + " == " + recipe.requiredTechniques.length);
-			
 			if (input.length != recipe.input.length || (techniques.length != recipe.requiredTechniques.length && !recipe.wildcardMatch)) continue;
-			
-			//System.out.println("basically ok");
 			
 			int matching1=0, matching2=0;
 			
@@ -93,11 +75,8 @@ public class WorkableRecipeManager {
 			}
 			
 			 
-			
 			int matching = quantityMatches(techniques, recipe.requiredTechniques, recipe.wildcardMatch);
 			match = match && (matching == recipe.requiredTechniques.length);
-			
-			//System.out.println(match + "    " +matching+" == "+recipe.requiredTechniques.length);
 			
 			if (!match) continue;
 			
@@ -117,11 +96,10 @@ public class WorkableRecipeManager {
 		
 		if (wildcardMatch) {
 			int curMatching = 0;
+			
 			// x = recipeTechniques.length
 			// Check the last x - 0 techniques and see if any match
 			// (as in, check if the last sequence was fully or at least partially matching)
-			
-			//System.out.println(techniques.length - recipeTechniques.length + " < " + techniques.length);
 			
 			for (int shift = 0; shift < recipeTechniques.length; shift++) {
 				int start = Math.max(0, techniques.length - recipeTechniques.length);
@@ -136,8 +114,6 @@ public class WorkableRecipeManager {
 						break;
 					}
 				}
-				
-				//System.out.println(curMatching);
 				
 				matching = Math.max(curMatching, matching);
 			}

@@ -51,8 +51,8 @@ stone.name=Stone
 item.peatbrick.name=Peat Brick
 
 item.ore.peridot_olivine.name=Raw Peridot
-item.ore.nativegold_quartz.name=Native Gold
-item.ore.nativesilver_quartz.name=Native Silver
+item.ore.nativegold_quartz.name=Native Gold Nugget
+item.ore.nativesilver_quartz.name=Native Silver Nugget
 item.ore.sylvite_rocksalt.name=Sylvite
 item.ore.rocksalt.name=Rock Salt
 item.ore.limonite.name=Limonite
@@ -770,6 +770,7 @@ recipe.axle.name=Axle
 recipe.carpenterstoolset.name=Carpenters Toolset
 recipe.sail.name=Windmill Sails
 recipe.bucket.name=Wooden Bucket
+recipe.itemframe.name=Item Frame
 
 recipeingredients.1ingots.name=1 Ingot
 recipeingredients.2ingots.name=2 Ingots
@@ -791,6 +792,7 @@ recipeingredients.6planks.name=6 Planks
 recipeingredients.2planksand4leather.name=2 Planks, 4 Stitched Leather
 recipeingredients.2planksand3linen.name=2 Planks, 3 Linen Cloth
 recipeingredients.3planks2flaxtwine.name=3 Planks, 2 Flax Twine
+recipeingredients.1planks1stitchedleather.name=1 Planks, 1 Leather
 
 tile.carpentertable.name=Carpenters Table
 tile.cokeovendoor.name=Coke Oven Door

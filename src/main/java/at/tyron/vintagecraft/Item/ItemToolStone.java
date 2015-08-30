@@ -16,7 +16,6 @@ public class ItemToolStone extends ItemToolVC {
 			case AXE: 
 				if (material == Material.wood) return 3f; 
 				break;
-			//case CHISEL:
 			case PICKAXE: 
 				if (material == Material.rock) return 2f; 
 				if (material == Material.ground) return 1f;  
@@ -45,6 +44,9 @@ public class ItemToolStone extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
+		if (tooltype == EnumTool.HOE) {
+			return 30;
+		}
 		if (tooltype == EnumTool.HAMMER) {
 			return 22;
 		}

@@ -74,4 +74,11 @@ public class ItemToolIron extends ItemToolVC {
 	public String getSubType(ItemStack stack) {
 		return "iron_" + tooltype.getName() + getVariant(stack);
 	}
+	
+    int quantityBonusBlockBreaks() {
+    	if (tooltype == EnumTool.SHEARS) return 5;
+    	if (tooltype == EnumTool.SICKLE) return 2;
+    	return 0;
+    }
+
 }

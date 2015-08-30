@@ -134,9 +134,26 @@ public enum EnumAnvilRecipe {
 			EnumAnvilTechnique.UPSET,
 			EnumAnvilTechnique.MEDIUMHIT
 	
-	}, 5, EnumTool.CARPENTERSTOOLSET),
+	}, 4, EnumTool.CARPENTERSTOOLSET),
 	
 
+	
+	
+
+	SICKLE (new EnumAnvilTechnique[] {
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.UPSET,
+			EnumAnvilTechnique.UPSET,
+			EnumAnvilTechnique.UPSET,
+	}, 2, EnumTool.SICKLE),
+	
+
+	
 	
 	ANVIL_BASE (new EnumAnvilTechnique[] {
 		EnumAnvilTechnique.HEAVYHIT,
@@ -273,42 +290,8 @@ public enum EnumAnvilRecipe {
 		EnumAnvilTechnique.HEAVYHIT,
 		EnumAnvilTechnique.MEDIUMHIT,
 		EnumAnvilTechnique.LIGHTHIT		
-	}, 1)/*,
-	
-	DIAMONDENCRUST (new EnumAnvilTechnique[] {
-		EnumAnvilTechnique.PUNCH,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.PUNCH,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.PUNCH,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.PUNCH,
-		EnumAnvilTechnique.LIGHTHIT,
-		EnumAnvilTechnique.LIGHTHIT
-	}),*/
-				
-	/*	
-	COPPER_WIRE (new EnumAnvilTechnique[] {
-		EnumAnvilTechnique.HEAVYHIT,
-		EnumAnvilTechnique.MEDIUMHIT,
-		EnumAnvilTechnique.MEDIUMHIT,
-		EnumAnvilTechnique.DRAW,
-		EnumAnvilTechnique.DRAW,
-		EnumAnvilTechnique.DRAW,		
-		EnumAnvilTechnique.DRAW,
-		EnumAnvilTechnique.DRAW,
-		EnumAnvilTechnique.DRAW, 
-		EnumAnvilTechnique.DRAW
-	}, 1),
-		*/		
+	}, 1)
 		
-
-
-	
-	// Scharniere
 	/*HINGES (new EnumAnvilTechnique[] { 
 		EnumAnvilTechnique.PUNCH,
 		EnumAnvilTechnique.PUNCH,

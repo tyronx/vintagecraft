@@ -1,7 +1,7 @@
 <?php
 
 $metals = array("stone", "copper", "tinbronze", "bismuthbronze", "iron", "steel");
-$tooltypes = array("axe", "shovel", "pickaxe", "shears", "sword", "saw", "hoe", "hammer", "carpenterstoolset");
+$tooltypes = array("axe", "shovel", "pickaxe", "shears", "sword", "saw", "hoe", "hammer", "carpenterstoolset", "sickle");
 
 
 $outdir = "models/item/tool/";
@@ -80,7 +80,7 @@ function getItemJson($itemtype, $metal, $tooltype, $dmd) {
 /********* Toolheads *************/
 
 
-$tooltypes = array("axe", "hoe", "pickaxe", "saw", "shovel", "sword", "hammer");
+$tooltypes = array("axe", "hoe", "pickaxe", "saw", "shovel", "sword", "hammer", "sickle");
 
 
 foreach ($tooltypes as $tooltype) {

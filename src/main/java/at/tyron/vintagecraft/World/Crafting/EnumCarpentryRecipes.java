@@ -11,6 +11,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumBucketContents;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -106,7 +107,19 @@ public enum EnumCarpentryRecipes {
 		EnumWoodWorkingTechnique.DRILL,
 		EnumWoodWorkingTechnique.DRILL,
 		EnumWoodWorkingTechnique.JOIN,	
-	}, 3)
+	}, 3),
+	
+	
+	ITEMFRAME(new EnumWoodWorkingTechnique[]{
+			EnumWoodWorkingTechnique.SAW,
+			EnumWoodWorkingTechnique.SAW,
+			EnumWoodWorkingTechnique.SAW,
+			EnumWoodWorkingTechnique.SAW,
+			EnumWoodWorkingTechnique.JOIN,	
+			EnumWoodWorkingTechnique.JOIN,	
+			EnumWoodWorkingTechnique.JOIN,	
+			EnumWoodWorkingTechnique.JOIN	
+		}, 0),
 	
 	;
 	
@@ -160,7 +173,19 @@ public enum EnumCarpentryRecipes {
 			
 			plankstack.stackSize = TOOLRACK.planks;
 			TOOLRACK.registerRecipe(((ItemToolRack)Item.getItemFromBlock(BlocksVC.toolrack)).withTreeType(treetype), plankstack);
+			
+			plankstack.stackSize = 1;
+			WorkableRecipeBase recipe = ITEMFRAME.registerRecipe(
+				new ItemStack(Items.item_frame), 
+				plankstack,
+				new ItemStack(ItemsVC.stitchedleather, 1)
+			);
+			recipe.setUnlocalizedName("itemframe");
+			recipe.setIngredientText("1planks1stitchedleather");
+			
 		}
+		
+		
 	}
 	
 	

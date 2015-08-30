@@ -33,7 +33,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockSpiderEgg;
 import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
 import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
@@ -206,7 +206,7 @@ public class BlocksVC {
 		farmland = new BlockFarmlandVC().registerMultiState("farmland", ItemFarmLand.class, EnumFertility.values());
 		topsoil = new BlockTopSoil().registerMultiState("topsoil", ItemTopSoil.class, EnumOrganicLayer.valuesWithFertilityForTopsoil()).setStepSound(Block.soundTypeGrass);
 
-		tallgrass = new BlockTallGrass().registerMultiState("tallgrass", ItemTallGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
+		tallgrass = new BlockTallGrassVC().registerMultiState("tallgrass", ItemTallGrassVC.class, EnumTallGrass.values()).setHardness(0.1f).setStepSound(Block.soundTypeGrass);
 
 		flower = new FlowerClass();
 		flower.init(false);
@@ -386,7 +386,7 @@ public class BlocksVC {
 		blastpowdersack.setHardness(0.2f);
 		woodbucket.setHardness(0.2f);
 		woodbucket.setStepSound(Block.soundTypeWood);
-	}	
+	}
 	
 
 	

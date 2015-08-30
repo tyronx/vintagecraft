@@ -30,7 +30,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
     
     @Override
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
-    	int tmp = getTemperature(stack) / 6;
+    	int tmp = getTemperatureM10(stack) / 60;
     	
     	if (renderPass == 1) {
     		int r = Math.min(255, Math.max(0, 128 + (int) (255*tmp/400f)));
@@ -56,7 +56,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
     
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		int forgetemp = getTemperature(itemstack);
+		int forgetemp = getTemperatureM10(itemstack) / 10;
 		
 		if (forgetemp > 0) {
 			String workable = "";
@@ -159,7 +159,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 	public boolean workableOn(int anviltier, ItemStack itemstack, ItemStack itemstackoptional) {
 		return
 			getMetal(itemstack).tier <= anviltier + 1 &&
-			getTemperature(itemstack) >= getMetal(itemstack).getMinWorkableTemperature();
+			getTemperatureM10(itemstack)/10 >= getMetal(itemstack).getMinWorkableTemperature();
 	}
 
 	

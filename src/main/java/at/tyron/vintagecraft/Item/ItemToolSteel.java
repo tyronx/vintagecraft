@@ -74,4 +74,11 @@ public class ItemToolSteel extends ItemToolVC {
 	public String getSubType(ItemStack stack) {
 		return "steel_" + tooltype.getName() + getVariant(stack);
 	}
+	
+    int quantityBonusBlockBreaks() {
+    	if (tooltype == EnumTool.SHEARS) return 6;
+    	if (tooltype == EnumTool.SICKLE) return 3;
+    	return 0;
+    }
+
 }

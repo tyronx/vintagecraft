@@ -83,19 +83,12 @@ public class TEAnvil extends TENoGUIInventory {
 		ItemStack itemstack = containeranvil.getSlot(0).getStack();
 		if (itemstack == null || !(itemstack.getItem() instanceof IItemSmithable)) return;
 		
-		
-		if (itemstack.getItem() instanceof IItemHeatable) {
-			((IItemHeatable)itemstack.getItem()).updateTemperature(itemstack, worldObj);
-		}
-		
         IItemSmithable smithable = (IItemSmithable)itemstack.getItem();	        
         if (!smithable.workableOn(metal != null ? metal.tier : 0, itemstack, containeranvil.getSlot(1).getStack())) return;
 
         
         EnumWorkableTechnique []techniques = smithable.getAppliedTechniques(itemstack);
         if (techniques.length == 0) return;
-        
-        
         
         ItemStack []input;
         if (containeranvil.getSlot(1).getStack() != null) {
@@ -107,23 +100,36 @@ public class TEAnvil extends TENoGUIInventory {
 		if (WorkableRecipeManager.smithing.isInvalidRecipe(techniques, input)) {
 			smithable.markOddlyShaped(itemstack, true);
 			containeranvil.getSlot(2).putStack(itemstack);
-			containeranvil.getSlot(0).putStack(null);
+			containeranvil.getSlot(0).putStack(null);			
 		} else {
 			WorkableRecipeBase recipe = WorkableRecipeManager.smithing.getMatchingRecipe(techniques, input);
 
 			if (recipe != null) {
-				containeranvil.getSlot(2).putStack(recipe.output.copy());
+				moveToOutput(containeranvil, input[0], recipe.output.copy());
 				containeranvil.getSlot(1).putStack(null);
-				containeranvil.getSlot(0).putStack(null);
 			}
-			
-			
-				
-			
 		}
 		
 		containeranvil.detectAndSendChanges();
+	}
+	
+	
+	public void moveToOutput(ContainerAnvil containeranvil, ItemStack firstinput, ItemStack output) {
+		if (firstinput.getItem() instanceof IItemHeatable && output.getItem() instanceof IItemHeatable) {
+			
+			IItemHeatable heatableInput = (IItemHeatable)firstinput.getItem();
+			IItemHeatable heatableOutput = (IItemHeatable)output.getItem();
+			
+			heatableOutput.setTemperatureM10(
+				output,
+				heatableInput.getTemperatureM10(firstinput), 
+				worldObj.getTotalWorldTime()
+			);
+			heatableOutput.setStartCoolingAt(output, heatableInput.getStartCoolingAt(firstinput));
+		}
 		
+		containeranvil.getSlot(2).putStack(output);
+		containeranvil.getSlot(0).putStack(null);
 	}
 
 

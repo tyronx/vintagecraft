@@ -12,7 +12,8 @@ public enum EnumTool {
 	SAW (6, false, true, true),
 	SHEARS (7, false, false, true),
 	HAMMER (8, true, true, true),
-	CARPENTERSTOOLSET (9, false, false, true)
+	CARPENTERSTOOLSET (9, false, false, true),
+	SICKLE (9, false, true, true),
 	;
 	
 	public int meta;

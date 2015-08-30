@@ -67,6 +67,14 @@ public class ItemToolCopper extends ItemToolVC {
 
 		return 1.5f;
 	}
+	
+	
+    int quantityBonusBlockBreaks() {
+    	if (tooltype == EnumTool.SHEARS) return 4;
+    	if (tooltype == EnumTool.SICKLE) return 1;
+    	return 0;
+    }
+
 
 	@Override
 	public String getSubType(ItemStack stack) {

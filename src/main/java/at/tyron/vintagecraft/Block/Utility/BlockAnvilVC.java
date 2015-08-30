@@ -90,13 +90,7 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-		EnumFacing face = (EnumFacing) state.getValue(FACING);
-		
-		if (face == EnumFacing.EAST || face == EnumFacing.WEST) {
-			return AxisAlignedBB.fromBounds(pos.getX() + 0.1875f, pos.getY(), pos.getZ(), pos.getX() + 0.8125f, pos.getY() + 0.625f, pos.getZ() + 1f);
-		} else {
-			return AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ() + 0.1875, pos.getX() + 1f, pos.getY() + 0.625f, pos.getZ() + 0.8125f);
-		}
+		return getBoundingBox(worldIn, pos, state);
 	}
 
 	
@@ -109,7 +103,28 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	public boolean suitableGround(World world, BlockPos groundpos) {
 		return world.isSideSolid(groundpos, EnumFacing.UP);
 	}
+	
+	
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess worldIn, BlockPos pos) {
+		AxisAlignedBB bounds = getBoundingBox(null, pos, worldIn.getBlockState(pos));
+		setBlockBounds((float)bounds.minX - pos.getX(), (float)bounds.minY - pos.getY(), (float)bounds.minZ - pos.getZ(), (float)bounds.maxX - pos.getX(), (float)bounds.maxY - pos.getY(), (float)bounds.maxZ - pos.getZ());
+	}
 
+	
+	
+	public AxisAlignedBB getBoundingBox(IBlockAccess worldIn, BlockPos pos, IBlockState state) {
+		EnumFacing face = (EnumFacing) state.getValue(FACING);
+		
+		if (face == EnumFacing.EAST || face == EnumFacing.WEST) {
+			return AxisAlignedBB.fromBounds(pos.getX() + 0.1875f, pos.getY(), pos.getZ(), pos.getX() + 0.8125f, pos.getY() + 0.625f, pos.getZ() + 1f);
+		} else {
+			return AxisAlignedBB.fromBounds(pos.getX(), pos.getY(), pos.getZ() + 0.1875, pos.getX() + 1f, pos.getY() + 0.625f, pos.getZ() + 0.8125f);
+		}
+	}
+
+	
+	
 	
 	@Override
 	public void onNeighborBlockChange(World world, BlockPos pos, IBlockState state, Block neighborBlock) {

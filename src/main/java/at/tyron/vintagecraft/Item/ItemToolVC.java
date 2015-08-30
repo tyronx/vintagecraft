@@ -10,7 +10,9 @@ import com.google.common.collect.Ordering;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -95,22 +97,41 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
     }
     
     
+    
+    int quantityBonusBlockBreaks() {
+    	return 0;
+    }
 
 
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn) {
-    	if (tooltype == EnumTool.SHEARS) {
+    	int quantity = Math.min(quantityBonusBlockBreaks(), stack.getMaxDamage() - stack.getItemDamage());
+    	
+    	if (tooltype == EnumTool.SHEARS && quantity > 0 && blockIn instanceof BlockLeavesVC) {
     		stack.damageItem(1, playerIn);
-    		
-    		int uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, Math.min(5, stack.getMaxDamage() - stack.getItemDamage()), BlockLeavesVC.class);
+    		int uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, quantity, BlockLeavesVC.class);
+    		stack.damageItem(uses, playerIn);
+    		return true;
+    	}
+    	
+    	
+    	if (tooltype == EnumTool.SICKLE && quantity > 0 && (blockIn instanceof BlockCropsVC || blockIn instanceof BlockTallGrassVC)) {
+    		stack.damageItem(1, playerIn);
+    		int uses = 0;
+    		if (blockIn instanceof BlockCropsVC) {
+    			uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, quantity, BlockCropsVC.class);
+    		} else {
+    			uses = destroyBlocksOfClass(worldIn, playerIn.getPosition(), pos, quantity, BlockTallGrassVC.class);
+    		}
     		
     		stack.damageItem(uses, playerIn);
-    		
-    	} else {
-    	
-	        if ((double)blockIn.getBlockHardness(worldIn, pos) != 0.0D) {
-	            stack.damageItem(1, playerIn);
-	        }
+    		return true;
     	}
+    	
+    	
+    	
+        if ((double)blockIn.getBlockHardness(worldIn, pos) != 0.0D) {
+            stack.damageItem(1, playerIn);
+        }
         
 
         return true;
@@ -192,7 +213,10 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
     	if (!playerIn.canPlayerEdit(pos.offset(side), side, stack)) return false;
     	
 		if (tooltype == EnumTool.HOE) {
-	        return net.minecraftforge.event.ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos) > 0;
+	        int result = net.minecraftforge.event.ForgeEventFactory.onHoeUse(stack, playerIn, worldIn, pos);
+	        
+	        if (result > 0) stack.damageItem(1, playerIn); // Tilling the ground uses durability twice
+	        return result > 0;
 	    }
 		
 		if (tooltype == EnumTool.HAMMER) {

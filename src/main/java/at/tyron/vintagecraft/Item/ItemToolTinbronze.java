@@ -71,6 +71,13 @@ public class ItemToolTinbronze extends ItemToolVC {
 	public String getSubType(ItemStack stack) {
 		return "tinbronze_" + tooltype.getName() + getVariant(stack);
 	}
+	
+    int quantityBonusBlockBreaks() {
+    	if (tooltype == EnumTool.SHEARS) return 5;
+    	if (tooltype == EnumTool.SICKLE) return 2;
+    	return 0;
+    }
+
 
 
 }

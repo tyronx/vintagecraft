@@ -49,7 +49,14 @@ public class Recipes {
 	
 	public static void addRecipes() {
 		registerToSorter();
-	
+
+		
+		removeRecipe(new ItemStack(Items.item_frame));
+		removeRecipe(new ItemStack(Items.arrow, 4));
+
+		
+		
+		
 		
 		ItemStack stick = new ItemStack(Items.stick);
 		ItemStack copperingot = ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.COPPER);
@@ -141,7 +148,6 @@ public class Recipes {
 				
 			
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_button), new Object[] {"#", '#', planksstack});
-			GameRegistry.addShapedRecipe(new ItemStack(Items.wooden_hoe, 1), new Object[] { "WW ", " S ", " S ", 'W', planksstack, 'S', Items.stick});
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.jukebox, 1), new Object[] { "WWW", "WDW", "WWW", 'W', planksstack, 'D', Items.diamond});
 			GameRegistry.addShapedRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1), new Object[] { "WW", 'W', planksstack});
 			GameRegistry.addShapedRecipe(new ItemStack(Items.sign, 1), new Object[] { "WWW", "WWW", " S ", 'W', planksstack, 'S', Items.stick});
@@ -192,7 +198,8 @@ public class Recipes {
 		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});
 		
 		
-		removeRecipe(new ItemStack(Items.arrow, 4));
+		
+		
 		GameRegistry.addShapedRecipe(new ItemStack(Items.arrow, 1), new Object[] { " F ", " S ", " F ", 'F', Items.flint, 'S', Items.stick, 'F', Items.feather});
 		
 		
@@ -339,30 +346,23 @@ public class Recipes {
     
 
 	
-	static void removeRecipe(ItemStack resultItem) { //Code by yope_fried inspired by pigalot
+	static void removeRecipe(ItemStack resultItem) {
 	    ItemStack recipeResult = null;
 	    ArrayList recipes = (ArrayList) CraftingManager.getInstance().getRecipeList();
 
-	    for (int scan = 0; scan < recipes.size(); scan++)
-	    {
+	    for (int scan = 0; scan < recipes.size(); scan++) {
 	        IRecipe tmpRecipe = (IRecipe) recipes.get(scan);
-	        if (tmpRecipe instanceof ShapedRecipes)
-	        {
-	            ShapedRecipes recipe = (ShapedRecipes)tmpRecipe;
-	            recipeResult = recipe.getRecipeOutput();
-	        }
-
-	        if (tmpRecipe instanceof ShapelessRecipes)
-	        {
-	            ShapelessRecipes recipe = (ShapelessRecipes)tmpRecipe;
-	            recipeResult = recipe.getRecipeOutput();
-	        }
-
-	        if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
-	        {
-	            System.out.println("[YOUR_MOD_NAME] Removed Recipe: " + recipes.get(scan) + " -> " + recipeResult);
+	        recipeResult = tmpRecipe.getRecipeOutput();
+	        
+	        
+	        //System.out.println(resultItem + " == " + recipeResult);
+	        if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) {
+	            System.out.println("[Vintagecraft] Removed Recipe: " + recipes.get(scan) + " -> " + recipeResult);
 	            recipes.remove(scan);
+	            return;
 	        }
 	    }
+	    
+	    System.out.println("failed removing recipe, no matching recipe found for  " + resultItem);
 	}
 }

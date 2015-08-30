@@ -66,4 +66,10 @@ public class ItemToolBismuthbronze extends ItemToolTinbronze {
 		return "bismuthbronze_" + tooltype.getName() + getVariant(stack);
 	}
 
+    int quantityBonusBlockBreaks() {
+    	if (tooltype == EnumTool.SHEARS) return 5;
+    	if (tooltype == EnumTool.SICKLE) return 2;
+    	return 0;
+    }
+
 }

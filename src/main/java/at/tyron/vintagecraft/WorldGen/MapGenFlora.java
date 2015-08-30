@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -233,7 +233,7 @@ public class MapGenFlora {
 		if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
 			EnumTallGrass grasstype = EnumTallGrassGroup.fromClimate(fertility, temperature, random);
 			if (grasstype != null) {
-				world.setBlockState(pos, BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrass.GRASSTYPE, grasstype), 2);
+				world.setBlockState(pos, BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrassVC.GRASSTYPE, grasstype), 2);
 			}
 		}
 	}

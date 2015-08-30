@@ -73,36 +73,24 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	
 	public void changeHeatableTemperature() {
 		if (getHeatableItemStack() != null) {
-			NBTTagCompound nbt = getHeatableItemStack().getTagCompound();
-			if (nbt == null) nbt = new NBTTagCompound();
-			
 			int change = 4;
 			if (burnTime > 0 && burnTime < burnTimePerCoal) change = 1;
 			if (!burning) change = -4;
 
 			
 			IItemHeatable item = (IItemHeatable)getHeatableItemStack().getItem();
+			int itemTemperature = item.getTemperatureM10(getHeatableItemStack()); 
 			
+			// Heat until max temperature of the item or until min temperature of 0 degree
 			int forgetemp = Math.min(
 				10 * item.heatableUntil(getHeatableItemStack()), 
-				Math.max(0, nbt.getInteger("forgetemp") + change)
+				Math.max(0, itemTemperature + change)
 			);
 			
 			// Forge can only max reach 1100 degrees
 			forgetemp = Math.min(forgetemp, 11000);
 			
-			
-			nbt.setInteger("forgetemp", forgetemp);
-			
-			if (forgetemp <= 0) {
-				nbt.removeTag("lasttempupdate");				
-			} else {
-				nbt.setLong("lasttempupdate", worldObj.getWorldTime());
-			}
-
-			//System.out.println(forgetemp);
-			
-			getHeatableItemStack().setTagCompound(nbt);
+			item.setTemperatureM10(getHeatableItemStack(), forgetemp, worldObj.getTotalWorldTime());
 		}
 	}
 	
@@ -247,7 +235,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 			
 			
 			if (utilization == EnumStonePotUtilization.FORGE) {
-				dropped.getTagCompound().setLong("startcoolingat", worldObj.getWorldTime() + 200);
+				dropped.getTagCompound().setLong("startcoolingat", worldObj.getTotalWorldTime() + 200);
 				IItemHeatable heatable = (IItemHeatable)dropped.getItem();
 				
 				for (int i = 0; i < player.inventory.mainInventory.length; i++) {

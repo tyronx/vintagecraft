@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Network;
 
+import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
@@ -57,7 +58,11 @@ public class AnvilTechniquePacket implements IMessage {
     				container.detectAndSendChanges();
     				return null;
     			}
-    			
+
+    			if (itemstack.getItem() instanceof IItemHeatable) {
+    				((IItemHeatable)itemstack.getItem()).updateTemperature(itemstack, player.worldObj);
+    			}
+
     	        IItemSmithable smithable = (IItemSmithable)itemstack.getItem();	        
     	        if (!smithable.workableOn(message.anviltier, itemstack, container.getSlot(1).getStack())) {
     	        	container.detectAndSendChanges();

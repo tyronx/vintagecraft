@@ -31,10 +31,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class BlockTallGrass extends BlockVC implements IPlantable {
+public class BlockTallGrassVC extends BlockVC implements IPlantable {
 	public static final PropertyEnum GRASSTYPE = PropertyEnum.create("grasstype", EnumTallGrass.class);
 	
-	public BlockTallGrass() {
+	public BlockTallGrassVC() {
 		super(Material.plants);
 		setCreativeTab(VintageCraft.floraTab);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(GRASSTYPE, EnumTallGrass.LONG));
@@ -59,7 +59,13 @@ public class BlockTallGrass extends BlockVC implements IPlantable {
     
     @Override
     public int quantityDropped(IBlockState state, int fortune, Random random) {
-    	return 1;
+    	EnumTallGrass grasstype = (EnumTallGrass) state.getValue(GRASSTYPE);
+    	
+    	if (random.nextFloat() < grasstype.drygrassDropChance) {
+    		return 1;
+    	}
+    	
+    	return 0;
     }
     
 

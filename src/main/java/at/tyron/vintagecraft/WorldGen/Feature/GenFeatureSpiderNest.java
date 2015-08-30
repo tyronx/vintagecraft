@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.WorldGen.Feature;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
@@ -27,7 +27,7 @@ public class GenFeatureSpiderNest {
 	
 	public static BlockPos toSurface(World world, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
-		while (block instanceof BlockVineVC || block instanceof BlockLeavesVC || block instanceof BlockTallGrass || block == Blocks.air ) {
+		while (block instanceof BlockVineVC || block instanceof BlockLeavesVC || block instanceof BlockTallGrassVC || block == Blocks.air ) {
 			pos = pos.down();
 			block = world.getBlockState(pos).getBlock();
 			if (pos.getY() == 0) return null;

@@ -8,7 +8,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrass;
+import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -61,7 +61,7 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 		return 
 			iblockstate.getBlock() instanceof IBlockSoil &&
 			((IBlockSoil)iblockstate.getBlock()).canGrowTallGrass(world, pos) &&
-			(aboveblockstate.getBlock() == Blocks.air || aboveblockstate.getBlock() instanceof BlockTallGrass)
+			(aboveblockstate.getBlock() == Blocks.air || aboveblockstate.getBlock() instanceof BlockTallGrassVC)
 		;
 	}
 	
@@ -75,7 +75,7 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
         IBlockState iblockstate = world.getBlockState(centerpos);
         Block block = iblockstate.getBlock();
         
-        if (block instanceof BlockTallGrass) {
+        if (block instanceof BlockTallGrassVC) {
         	centerpos = centerpos.down();
             iblockstate = world.getBlockState(centerpos);
             block = iblockstate.getBlock();
@@ -109,8 +109,8 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 			int tallgrassindex = 0;
 			
 			abovestate = world.getBlockState(pos.up());
-			if (abovestate.getBlock() instanceof BlockTallGrass) {
-				tallgrassindex = 1 + ((EnumTallGrass)abovestate.getValue(BlockTallGrass.GRASSTYPE)).getId();
+			if (abovestate.getBlock() instanceof BlockTallGrassVC) {
+				tallgrassindex = 1 + ((EnumTallGrass)abovestate.getValue(BlockTallGrassVC.GRASSTYPE)).getId();
 				if (tallgrassindex >= 5) continue;
 			} else {
 				int distance = (int)MathHelper.sqrt_float((float) centerpos.distanceSq(pos.getX(), pos.getY(), pos.getZ()));
@@ -120,7 +120,7 @@ public class ItemPeatBrick extends ItemVC implements IItemFuel {
 			if (!world.isRemote) {
 				world.setBlockState(
 					pos.up(), 
-					BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrass.GRASSTYPE, EnumTallGrass.fromMeta(tallgrassindex))
+					BlocksVC.tallgrass.getDefaultState().withProperty(BlockTallGrassVC.GRASSTYPE, EnumTallGrass.fromMeta(tallgrassindex))
 				);
 			}
 			numGrown++;

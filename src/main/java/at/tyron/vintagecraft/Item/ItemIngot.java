@@ -53,7 +53,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
     
     @Override
     public int getColorFromItemStack(ItemStack stack, int renderPass) {
-    	int tmp = getTemperature(stack) / 6;
+    	int tmp = getTemperatureM10(stack) / 60;
     	
     	if (renderPass == 1) {
     		int r = Math.min(255, Math.max(0, 128 + (int) (255*tmp/400f)));
@@ -89,7 +89,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		int forgetemp = getTemperature(itemstack);
+		int forgetemp = getTemperatureM10(itemstack) / 10;
 		
 		if (forgetemp > 0) {
 			String workable = "";
@@ -139,9 +139,9 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	}
 	
 
-	
+	// Only placeable once below 500 degrees and not oddly shaped
 	public boolean isPlaceable(ItemStack is) {
-		return !isOddlyShaped(is) && getTemperature(is) < 500;
+		return !isOddlyShaped(is) && (getTemperatureM10(is)/10) < 500;
 	}
 	
 	
@@ -155,15 +155,6 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
-		/*IBlockState blockstate = BlocksVC.crops.getBlockStateFor(EnumCrop.TOMATOES, world.rand.nextInt(13));
-		if (blockstate == null) { 
-			System.out.println("blockstate is null!");
-			return false;
-		}
-		if (!world.isRemote)
-			world.setBlockState(pos.up(), blockstate);
-		if (true) return false;
-		*/
 		if (super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ)) return true;
 		
 		if (!entityplayer.isSneaking() || !isPlaceable(itemstack)) return false;
@@ -191,7 +182,7 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 	public boolean workableOn(int anviltier, ItemStack itemstack, ItemStack itemstackoptional) {
 		return
 			getMetal(itemstack).tier <= anviltier + 1 &&
-			getTemperature(itemstack) >= getMetal(itemstack).getMinWorkableTemperature();
+			getTemperatureM10(itemstack)/10 >= getMetal(itemstack).getMinWorkableTemperature();
 	}
 
 
@@ -245,6 +236,8 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 		
 		return false;
 	}
+
+
 
 }
 
