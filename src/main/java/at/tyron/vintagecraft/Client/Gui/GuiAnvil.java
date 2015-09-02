@@ -2,7 +2,9 @@ package at.tyron.vintagecraft.Client.Gui;
 
 import java.util.ArrayList;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
@@ -12,8 +14,11 @@ import at.tyron.vintagecraft.TileEntity.TENoGUIInventory;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeManager;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -26,6 +31,7 @@ public class GuiAnvil extends GuiWorkbench {
 
 	public GuiAnvil(InventoryPlayer player, TENoGUIInventory te) {
 		super(player, te);
+		adjustIconsToMetalAge();
 	}
 	
 	public EnumWorkableTechnique[] getAppliedTechniques() {
@@ -37,6 +43,41 @@ public class GuiAnvil extends GuiWorkbench {
 	}
 
 	
+	public void adjustIconsToMetalAge() {
+		String metalage = getPlayerMetalAge();
+		EnumMetal metal = EnumMetal.byString(metalage);
+		if (metal == null) return;
+		
+		for (WorkableRecipeBase recipe : getRecipes()) {
+			if (!recipe.shouldDisplayInRecipeHelper()) continue;
+			
+			ItemStack display = recipe.getIcon();
+			if (display.getItem() instanceof IItemMetalTyped) {
+				ItemStack itemstack = ((IItemMetalTyped)display.getItem()).setItemMetal(display, metal);
+				if (itemstack != null && itemstack.getItem() != null) {
+					recipe.setIcon(itemstack);
+				}
+			}
+		}
+	}
+	
+	public String getPlayerMetalAge() {
+		if (playerInventory.player instanceof EntityPlayerSP) {
+			EntityPlayerSP player = (EntityPlayerSP) playerInventory.player;
+			
+			if (player.getStatFileWriter().hasAchievementUnlocked(AchievementsVC.steelAge)) {
+				return "steel";
+			}
+			if (player.getStatFileWriter().hasAchievementUnlocked(AchievementsVC.ironAge)) {
+				return "iron";
+			}
+			if (player.getStatFileWriter().hasAchievementUnlocked(AchievementsVC.bronzeAge)) {
+				return "tinbronze";
+			}
+		}
+		
+		return "copper";
+	}
 	
 	@Override
 	void initButtons() {

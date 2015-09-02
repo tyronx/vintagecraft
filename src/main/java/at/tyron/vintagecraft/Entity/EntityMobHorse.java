@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Entity;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -119,4 +120,16 @@ public class EntityMobHorse extends EntityHorse {
         return flag;
     }
 
+	
+	@Override
+	public void onDeath(DamageSource cause) {
+    	if (cause.getEntity() instanceof EntityPlayer) {
+    		EntityPlayer player = (EntityPlayer)cause.getEntity();
+    		player.triggerAchievement(AchievementsVC.killUndeadHorse);
+    	}
+    	
+		super.onDeath(cause);
+	}
+	
+    
 }

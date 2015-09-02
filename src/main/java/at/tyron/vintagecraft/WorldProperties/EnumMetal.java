@@ -167,6 +167,16 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 			(colors[2])
 		;
 	}
+
+
+	public static EnumMetal byString(String name) {
+		for (EnumMetal metal : values()) {
+			if (name.toLowerCase(Locale.ROOT).equals(metal.getName())) {
+				return metal;
+			}
+		}
+		return null;
+	}
 	
 	
 	

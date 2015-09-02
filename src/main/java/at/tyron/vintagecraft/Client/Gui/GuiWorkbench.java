@@ -15,6 +15,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 
@@ -138,9 +139,14 @@ public abstract class GuiWorkbench extends GuiContainer {
 		if (recipe.getIcon().getItem() == null) { System.out.println("Recipe item icon for "+recipe.getName()+" is null?"); return; }
 		
 		GL11.glPushMatrix();
+			GlStateManager.enableRescaleNormal();
+        	RenderHelper.enableGUIStandardItemLighting();
 			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
 				recipe.getIcon(), posX, posY
 			);
+	        RenderHelper.disableStandardItemLighting();
+	        GlStateManager.disableRescaleNormal();
+
 		GL11.glPopMatrix();
 		
 		
@@ -200,11 +206,9 @@ public abstract class GuiWorkbench extends GuiContainer {
         int j = 0;
         for (int i = start; i < appliedTechniques.length; i++) {
         	EnumWorkableTechnique technique = appliedTechniques[i];
-        	//System.out.println(technique);
         	drawTexturedModalRect(x + 6 + 15*j, y + 5, 200 + 13 * (technique.ordinal() % buttonsPerRow()), 67 + 13 * (technique.ordinal() >= buttonsPerRow() ? 1 : 0), 13, 13);
         	j++;
         }
-        //System.out.println();
 	}
 	
 	

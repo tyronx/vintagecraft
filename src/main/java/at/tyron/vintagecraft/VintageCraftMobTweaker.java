@@ -38,6 +38,7 @@ public class VintageCraftMobTweaker {
     
 		if (evt.entity instanceof EntityZombie) {
 			// Completely Disable baby zombies for now
+			// EDIT: This is not working whatsoever o.O Baby zombies still spawn
 			((EntityZombie)evt.entity).setChild(false);
 		}
     	

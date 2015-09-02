@@ -1,10 +1,16 @@
 package at.tyron.vintagecraft.Client.Render;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 
 import org.lwjgl.opengl.GL11;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.VintageCraftConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GLAllocation;
@@ -14,7 +20,9 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.client.renderer.vertex.VertexFormat;
 import net.minecraft.client.renderer.vertex.VertexFormatElement;
@@ -36,6 +44,28 @@ public class RenderSkyVC extends IRenderHandler {
     	new ResourceLocation("vintagecraft:textures/environment/sky3.png"),
     	new ResourceLocation("vintagecraft:textures/environment/sky4.png")
     };
+    
+    public static DynamicTexture nightSkyTex;
+    
+    public static void setSkyBrightnessAndContrast(float nightSkyContrast, int nightSkyBrightness) {
+    	ResourceLocation nightSkyTexLoc = nightSkies[VintageCraft.instance.proxy.getNightSkyType()];
+    	
+    	try {
+    		
+			BufferedImage bufferedimage = TextureUtil.readBufferedImage(Minecraft.getMinecraft().getResourceManager().getResource(nightSkyTexLoc).getInputStream());
+	    	RescaleOp op = new RescaleOp(nightSkyContrast, nightSkyBrightness, null);
+	    	op.filter(bufferedimage, bufferedimage);
+	    	nightSkyTex = new DynamicTexture(bufferedimage);
+	    	
+		} catch (IOException e) {
+			return;
+		}	
+    }
+    
+    public static void clearNightSkyTextures() {
+    	
+    }
+    
     
     private final TextureManager renderEngine;
     private final RenderManager renderManager;
@@ -87,15 +117,21 @@ public class RenderSkyVC extends IRenderHandler {
 	
 	
 	
-	public void renderSkyImage(ResourceLocation sky) {
-//        GlStateManager.disableFog();
+	public void renderSkyImage() {
         GlStateManager.disableAlpha();
         GlStateManager.enableTexture2D();
         GlStateManager.enableBlend();
         //GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
         RenderHelper.disableStandardItemLighting();
     //    GlStateManager.depthMask(false);
-        this.renderEngine.bindTexture(sky);
+        //this.renderEngine.bindTexture(sky);
+        
+		if (nightSkyTex == null) {
+			setSkyBrightnessAndContrast(VintageCraftConfig.nightSkyContrast, VintageCraftConfig.nightSkyBrightness);
+		}
+		ResourceLocation nightSkyLoc = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation("nightskyvc", nightSkyTex);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(nightSkyLoc);
+		
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         
@@ -114,23 +150,19 @@ public class RenderSkyVC extends IRenderHandler {
 	                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
 	            }
 	
-	            if (i == 2)
-	            {
+	            if (i == 2) {
 	                GlStateManager.rotate(-90.0F, 1.0F, 0.0F, 0.0F);
 	            }
 	
-	            if (i == 3)
-	            {
+	            if (i == 3) {
 	                GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
 	            }
 	
-	            if (i == 4)
-	            {
+	            if (i == 4) {
 	                GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
 	            }
 	
-	            if (i == 5)
-	            {
+	            if (i == 5) {
 	                GlStateManager.rotate(-90.0F, 0.0F, 0.0F, 1.0F);
 	            }
 	            
@@ -215,8 +247,7 @@ public class RenderSkyVC extends IRenderHandler {
             f9 = afloat[2];
             float f12;
 
-            if (pass != 2)
-            {
+            if (pass != 2) {
                 f10 = (f7 * 30.0F + f8 * 59.0F + f9 * 11.0F) / 100.0F;
                 f11 = (f7 * 30.0F + f8 * 70.0F) / 100.0F;
                 f12 = (f7 * 30.0F + f9 * 70.0F) / 100.0F;
@@ -231,8 +262,7 @@ public class RenderSkyVC extends IRenderHandler {
             boolean flag = true;
             worldrenderer.setColorRGBA_F(afloat[0], afloat[1], afloat[2], 0.0F);
 
-            for (int j = 0; j <= 16; ++j)
-            {
+            for (int j = 0; j <= 16; ++j) {
                 f12 = (float)j * (float)Math.PI * 2.0F / 16.0F;
                 float f13 = MathHelper.sin(f12);
                 float f14 = MathHelper.cos(f12);
@@ -326,8 +356,9 @@ public class RenderSkyVC extends IRenderHandler {
 				GlStateManager.pushMatrix();
 					GlStateManager.rotate((worldtime / 133f) % 360f, 0.5f, 0.5f, 0f);
 					GlStateManager.color(1.0F, 1.0F, 1.0F, nightSkyopacity);
-				
-					renderSkyImage(nightSkies[VintageCraft.instance.proxy.getNightSkyType()]);
+					
+					
+					renderSkyImage(); //nightSkies[VintageCraft.instance.proxy.getNightSkyType()]);
 				GlStateManager.popMatrix();
 			}
 		
@@ -355,13 +386,11 @@ public class RenderSkyVC extends IRenderHandler {
         GlStateManager.color(0.0F, 0.0F, 0.0F);
         double d0 = this.mc.thePlayer.getPositionEyes(partialTicks).yCoord - world.getHorizon();
 
-        if (d0 < 0.0D)
-        {
+        if (d0 < 0.0D) {
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.0F, 12.0F, 0.0F);
 
-            if (this.vboEnabled)
-            {
+            if (this.vboEnabled) {
                 this.sky2VBO.bindBuffer();
                 GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
                 GL11.glVertexPointer(3, GL11.GL_FLOAT, 12, 0L);
@@ -369,8 +398,7 @@ public class RenderSkyVC extends IRenderHandler {
                 this.sky2VBO.unbindBuffer();
                 GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
             }
-            else
-            {
+            else {
                 GlStateManager.callList(this.glSkyList2);
             }
 
@@ -416,8 +444,8 @@ public class RenderSkyVC extends IRenderHandler {
         GlStateManager.popMatrix();
         GlStateManager.enableTexture2D();
         GlStateManager.depthMask(true);
-        
     }
+	
 
 	
     private void generateSky() {
@@ -450,6 +478,7 @@ public class RenderSkyVC extends IRenderHandler {
     }
     
     
+    
     private void generateSky2() {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -478,6 +507,8 @@ public class RenderSkyVC extends IRenderHandler {
             GL11.glEndList();
         }
     }
+    
+    
 
     
     private void renderSky(WorldRenderer worldRendererIn, float p_174968_2_, boolean p_174968_3_) {

@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Block.Organic;
 import java.util.List;
 import java.util.Random;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
@@ -163,6 +164,16 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
 			worldIn.setBlockState(pos, BlocksVC.crops.getBlockStateFor(crop, growthStage + 1), 2);
 		*/
 		return super.onBlockActivated(worldIn, pos, state, playerIn, side, hitX, hitY, hitZ);
+	}
+	
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player) {
+		
+		if (getCropType(state) == EnumCrop.FLAX) {
+			player.triggerAchievement(AchievementsVC.findFlax);
+		}
+		
+		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 	
 	@Override

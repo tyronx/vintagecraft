@@ -6,6 +6,7 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -26,7 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, IItemSmithable, IItemHeatable {
+public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, IItemSmithable, IItemHeatable, IItemMetalTyped {
 	public static final int maxstacksize = 16;
 	public static final int maxpilesize = 64;
 	
@@ -235,6 +236,18 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 		}
 		
 		return false;
+	}
+
+
+	// Useless extra code because Java is not able to inherit static methods... -.-
+	@Override
+	public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+		return setMetal(itemstack, metal);
+	}
+
+	@Override
+	public EnumMetal getItemMetal(ItemStack itemstack) {
+		return getMetal(itemstack);
 	}
 
 

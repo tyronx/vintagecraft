@@ -369,11 +369,16 @@ public class VCraftWorld {
 	        cloudTextureWidth = bufferedimage.getWidth();
 	        cloudTextureHeight = bufferedimage.getHeight();
 	        
-	        int[] cloudBuffer = new int[cloudTextureWidth * cloudTextureHeight];
-	        bufferedimage.getRGB(0, 0, cloudTextureWidth, cloudTextureHeight, cloudBuffer, 0, cloudTextureWidth);
+	        int[] cloudPixels = new int[256 * 256];
+	        bufferedimage.getRGB(0, 0, cloudTextureWidth, cloudTextureHeight, cloudPixels, 0, cloudTextureWidth);
 	        
-	        for (int i = 0; i < cloudBuffer.length; i++) {
-	        	VCraftWorld.cloudBuffer[i] = (cloudBuffer[i] >> 24) > 0;
+	        // For low or high res clouds
+	        float scale = cloudTextureWidth / 256; 
+	        
+	        for (int x = 0; x < 256; x++) {
+	        	for (int y = 0; y < 256; y++) {
+	        		cloudBuffer[x + 256 * y] = ((cloudPixels[(int) (x * scale + 256 * y * scale)] >> 24) & 0xff) > 0;
+	        	}
 	        }
 	        
 			

@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -40,7 +41,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;
 
-public class VintageCraftCommands extends CommandBase {
+public class ServerCommandsVC extends CommandBase {
 
 	@Override
 	public String getName() {
@@ -49,7 +50,7 @@ public class VintageCraftCommands extends CommandBase {
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return "/vcraft genlayer [forest|continents|rock]";
+		return "/vcraft command params";
 	}
 
 	
@@ -124,26 +125,7 @@ public class VintageCraftCommands extends CommandBase {
 			return;
 		}
 		
-		// Don't use this in SMP Worlds, it will probably crash
-		if (args[0].equals("fog")) {
-			int start = 2;
-			int end = 5;
-			float density = 0.3f;
 
-			if (args.length >= 2) {
-				start = parseInt(args[1]);
-			}
-			
-			if (args.length >= 3) {
-				end = parseInt(args[2]);
-			}
-			
-			at.tyron.vintagecraft.Client.Render.RenderFog.customFogRange = start != -1;
-			at.tyron.vintagecraft.Client.Render.RenderFog.fogStart = start;
-			at.tyron.vintagecraft.Client.Render.RenderFog.fogEnd = end;
-			
-		}
-		
 		if (args[0].equals("meteorshower")) {
 			VintageCraft.instance.packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
 			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText("Something strange is happening in the night sky"));
@@ -164,6 +146,8 @@ public class VintageCraftCommands extends CommandBase {
 			sender.addChatMessage(new ChatComponentText(
 				EnumCreatureType.MONSTER.getMaxNumberOfCreature() + " max mobs / " + (Math.floor(sender.getEntityWorld().getTotalWorldTime()  / 2400F) / 10f) + " days passed"
 			));
+			
+			VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(sender.getEntityWorld().getTotalWorldTime() / 24000L, sender.getEntityWorld().getDifficulty()));
 		}
 		
 		if (args[0].equals("clear")) {

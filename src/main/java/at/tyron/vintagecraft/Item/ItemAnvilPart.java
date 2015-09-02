@@ -3,8 +3,10 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.Arrays;
 
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
@@ -12,7 +14,7 @@ import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, IItemSmithable {
+public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, IItemSmithable, IItemMetalTyped {
 	boolean upper;
 	
 
@@ -117,5 +119,17 @@ public class ItemAnvilPart extends ItemVC implements ISubtypeFromStackPovider, I
 			itemstack.setTagCompound(nbt = new NBTTagCompound());
 		}	
 		return nbt;
+	}
+	
+	
+	// Useless extra code because Java is not able to inherit static methods... -.-
+	@Override
+	public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+		return setMetal(itemstack, metal);
+	}
+
+	@Override
+	public EnumMetal getItemMetal(ItemStack itemstack) {
+		return getMetal(itemstack);
 	}
 }

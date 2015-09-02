@@ -218,7 +218,7 @@ public class BlockAnvilVC extends BlockContainerVC implements IBlockItemSink {
 	
 	
 	public ItemStack getItemStackFor(EnumMetal metal) {
-		return ItemAnvilVC.getItemStack(metal);
+		return ItemAnvilVC.withMetal(metal);
 	}
 
 

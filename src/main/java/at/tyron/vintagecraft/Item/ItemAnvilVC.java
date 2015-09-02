@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.Block.Utility.BlockAnvilVC;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
@@ -16,9 +17,10 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider {
+public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider, IItemMetalTyped {
 	public ItemAnvilVC(Block block) {
 		super(block);
+		setMaxStackSize(1);
 	}
 
 
@@ -39,7 +41,7 @@ public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider
 	}
 	
 	
-	public static ItemStack getItemStack(EnumMetal metal) {
+	public static ItemStack withMetal(EnumMetal metal) {
 		ItemStack itemstack = new ItemStack(Item.getItemFromBlock(BlocksVC.metalanvil));
 		itemstack.setTagCompound(new NBTTagCompound());
 		itemstack.getTagCompound().setInteger("metal", metal.getId());
@@ -77,4 +79,16 @@ public class ItemAnvilVC extends ItemBlockVC implements ISubtypeFromStackPovider
 	public String getSubType(ItemStack stack) {
 		return getMetal(stack).getName().toLowerCase(Locale.ROOT);
 	}
+	
+	// Useless extra code because Java is not able to inherit static methods... -.-
+	@Override
+	public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+		return withMetal(metal);
+	}
+
+	@Override
+	public EnumMetal getItemMetal(ItemStack itemstack) {
+		return getMetal(itemstack);
+	}
+
 }

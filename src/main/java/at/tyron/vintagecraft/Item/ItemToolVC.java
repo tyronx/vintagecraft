@@ -8,16 +8,21 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Ordering;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemRackable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
+import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -27,13 +32,14 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IItemRackable {	
+public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovider, IItemRackable, IItemMetalTyped {	
 	public EnumTool tooltype;
 	public boolean diamondencrusted; 
 	
@@ -104,6 +110,28 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 
 
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn) {
+    	
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		if (playerIn instanceof EntityPlayer) {
+			if (tileentity instanceof TEFurnaceSection) {
+				TEFurnaceSection tefurnacesection = (TEFurnaceSection)tileentity;
+				ItemStack output = tefurnacesection.getStackInSlot(2);
+			
+				if (output != null && output.getItem() instanceof ItemIngot && ((ItemIngot)output.getItem()).getMetal(output) == EnumMetal.IRON) {
+					((EntityPlayer)playerIn).triggerAchievement(AchievementsVC.ironAge);
+				}
+			}
+			
+			if (tileentity instanceof TETallMetalMold) {
+				TETallMetalMold metalmod = (TETallMetalMold)tileentity;
+				if (metalmod.getMetal() == EnumMetal.STEEL && metalmod.getQuantityIngots() > 0) {
+					((EntityPlayer)playerIn).triggerAchievement(AchievementsVC.steelAge);
+				}
+			}
+		}
+    	
+    	
+    	
     	int quantity = Math.min(quantityBonusBlockBreaks(), stack.getMaxDamage() - stack.getItemDamage());
     	
     	if (tooltype == EnumTool.SHEARS && quantity > 0 && blockIn instanceof BlockLeavesVC) {
@@ -287,5 +315,21 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		
 		return destroyed;
     }
+    
+    
+    @Override
+    public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+    	if (this instanceof ItemToolStone) return null;
+    	
+    	return new ItemStack(ItemsVC.tools.get(metal.getName() + "_" + tooltype.getName()));
+    }
+    
+    @Override
+    public EnumMetal getItemMetal(ItemStack itemstack) {
+    	if (this instanceof ItemToolStone) return null;
+    	return null;
+    }
+    
+
     
 }

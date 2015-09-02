@@ -52,8 +52,9 @@ public class TEOrePile extends TENoGUIInventory implements IUpdatePlayerListBox 
 	}
 	
 
-	public void tryGrabOre(EntityPlayer player) {
-		if (burnTime > 0) return;
+	public boolean tryGrabOre(EntityPlayer player) {
+		if (burnTime > 0) return false;
+		boolean success = false;
 		
 		TEOrePile pile = getTopmostOrePile();
 		
@@ -71,6 +72,8 @@ public class TEOrePile extends TENoGUIInventory implements IUpdatePlayerListBox 
 					));
 				}
 			}
+			success = true;
+			
 		}
 		
 		if (pile.storage[0].stackSize <= 0) {
@@ -78,6 +81,8 @@ public class TEOrePile extends TENoGUIInventory implements IUpdatePlayerListBox 
 		}
 		
 		getWorld().markBlockForUpdate(pile.getPos());
+		
+		return success;
 	}
 
 	public boolean tryTransferOre(ItemStack stack) {

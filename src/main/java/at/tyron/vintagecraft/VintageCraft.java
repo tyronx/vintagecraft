@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft;
 
 import at.tyron.vintagecraft.Client.CreativeTabsVC;
+import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
 import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
 import at.tyron.vintagecraft.Network.ChunkPutNbtPacket;
@@ -23,8 +24,10 @@ import at.tyron.vintagecraft.WorldGen.Helper.WorldTypeVC;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.EnumDifficulty;
@@ -33,6 +36,7 @@ import net.minecraft.world.WorldType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent.SpecialSpawn;
 import net.minecraftforge.event.world.WorldEvent;
@@ -97,6 +101,7 @@ public class VintageCraft {
     	
     	BlocksVC.init();
     	ItemsVC.init();
+    	AchievementsVC.init();
     	
     	FMLCommonHandler.instance().bus().register(this);
     	MinecraftForge.EVENT_BUS.register(this);
@@ -133,9 +138,6 @@ public class VintageCraft {
 		
 		
 		proxy.init(event);
-		
-
-		
     }
     
     
@@ -162,7 +164,7 @@ public class VintageCraft {
 		MinecraftServer server = MinecraftServer.getServer();
 		ICommandManager command = server.getCommandManager();
 		ServerCommandManager manager = (ServerCommandManager) command;
-		manager.registerCommand(new VintageCraftCommands());
+		manager.registerCommand(new ServerCommandsVC());
 	}
 		
 
@@ -179,6 +181,23 @@ public class VintageCraft {
 	public void entitySpawn(SpecialSpawn evt) {
 		if (evt.world.isRemote) return;
     	VintageCraftMobTweaker.entitySpawn(evt);
+	}
+	
+	@SubscribeEvent
+	public void entityDeath(LivingDeathEvent evt) {
+		if (evt.entityLiving instanceof EntityZombie && evt.source.getEntity() instanceof EntityPlayer) {
+			ItemStack[]inventory = evt.entityLiving.getInventory();
+			int numArmorItems = 0;
+			for (ItemStack stack : inventory) {
+				if (stack != null && stack.getItem() instanceof ItemArmorVC) {
+					ItemArmorVC armoritem = (ItemArmorVC)stack.getItem();
+					if (armoritem.getArmorMaterial().getName().equals("IRONVC")) numArmorItems++;
+				}
+			}
+			if (numArmorItems == 4) {
+				((EntityPlayer)evt.source.getEntity()).triggerAchievement(AchievementsVC.killIronArmorZombie);
+			}
+		}
 	}
 	
 	

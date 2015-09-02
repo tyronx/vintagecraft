@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Entity;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.Entity.AI.EntityAIGoBackHome;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -104,5 +105,16 @@ public class EntityForestSpider extends EntityCaveSpider {
         return flag;
     }
 
+    
+    
+	@Override
+	public void onDeath(DamageSource cause) {
+    	if (cause.getEntity() instanceof EntityPlayer) {
+    		EntityPlayer player = (EntityPlayer)cause.getEntity();
+    		player.triggerAchievement(AchievementsVC.killForestSpider);
+    	}
+    	
+		super.onDeath(cause);
+	}
 
 }

@@ -47,8 +47,11 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.stats.Achievement;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -62,10 +65,11 @@ public class CommonProxy implements IGuiHandler {
 	HashMap<Long, NBTTagCompound> chunkextranbt = new HashMap<Long, NBTTagCompound>();
 	public int meteorShowerDuration = 0;
 	public long worldSeed;
+	public int nightskytypeOffset = 0;
 	
 	
 	public int getNightSkyType() {
-		return (int) (Math.abs(worldSeed) % 4);
+		return (int) (Math.abs(worldSeed + nightskytypeOffset) % 4);
 	}
 	
 	public void putChunkNbt(long index, NBTTagCompound nbt) {
@@ -116,6 +120,15 @@ public class CommonProxy implements IGuiHandler {
 		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", 3, VintageCraft.instance, 64, 1, true);  
 		EntityRegistry.registerModEntity(EntityMobHorse.class, "mobhorse", 4, VintageCraft.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityForestSpider.class, "VCForestSpider", 5, VintageCraft.instance, 64, 1, true);
+		
+		for (Achievement ach : AchievementsVC.achievements) {
+			ach.registerStat();
+		}
+		AchievementPage.registerAchievementPage(new AchievementPage(
+			"Vintagecraft", 
+		    AchievementsVC.achievements.toArray(new Achievement[0])
+		));
+
 	}
 
 

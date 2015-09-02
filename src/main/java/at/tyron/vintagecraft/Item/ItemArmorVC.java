@@ -1,12 +1,15 @@
 package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 
-public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider {
+public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider, IItemMetalTyped {
 	// 																										5		Vanilla Leather = 1, 3, 2, 1
 	public static ArmorMaterial LEATHERVC = EnumHelper.addArmorMaterial("LEATHERVC", "leather", 2, new int[]{2, 3, 2, 2}, 0);
 	public static ArmorMaterial COPPERVC = EnumHelper.addArmorMaterial("COPPERVC", "copper", 3, new int[]{2, 3, 2, 2}, 0);
@@ -39,5 +42,17 @@ public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider {
 	public String getSubType(ItemStack stack) {
 		return getArmorMaterial().getName() + "_" + armorTypes[armorType];
 	}
+
 	
+	// Useless extra code because Java is not able to inherit static methods... -.-
+	@Override
+	public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+		return new ItemStack(ItemsVC.armor.get(metal.getName() + "_" + armorTypes[armorType]));
+	}
+
+	@Override
+	public EnumMetal getItemMetal(ItemStack itemstack) {
+		return EnumMetal.byString(getArmorMaterial().getName());
+	}
+
 }

@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.TileEntity;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
@@ -98,6 +99,8 @@ public class TEAnvil extends TENoGUIInventory {
         }
         
 		if (WorkableRecipeManager.smithing.isInvalidRecipe(techniques, input)) {
+			containeranvil.playerInventory.player.triggerAchievement(AchievementsVC.createOddlyShapedIngot);
+			
 			smithable.markOddlyShaped(itemstack, true);
 			containeranvil.getSlot(2).putStack(itemstack);
 			containeranvil.getSlot(0).putStack(null);			

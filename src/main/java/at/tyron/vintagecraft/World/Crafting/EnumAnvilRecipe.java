@@ -391,7 +391,7 @@ public enum EnumAnvilRecipe {
 			
 			/**** 2. Anvil recipes ****/
 			if (metal.hasAnvil) {
-				ItemStack anvil = ItemAnvilVC.getItemStack(metal);
+				ItemStack anvil = ItemAnvilVC.withMetal(metal);
 				ItemStack anvilbase = ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilbase), metal);
 				ItemStack anvilsurface = ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilsurface), metal);
 				
@@ -502,10 +502,10 @@ public enum EnumAnvilRecipe {
 	
 	
 	public ItemStack getOutputForDisplay() {
-		EnumMetal metal = EnumMetal.IRON;
+		EnumMetal metal = EnumMetal.COPPER;
 		
 		switch (this) {
-			case ANVIL: return ItemAnvilVC.getItemStack(metal);
+			case ANVIL: return ItemAnvilVC.withMetal(metal);
 			case ANVIL_BASE: return ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilbase), metal);
 			case ANVIL_SURFACE: return ItemAnvilPart.setMetal(new ItemStack(ItemsVC.anvilsurface), metal);
 			case AXE: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_axe"));
@@ -516,15 +516,16 @@ public enum EnumAnvilRecipe {
 			case SHOVEL: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_shovel"));
 			case SWORD: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_sword"));
 			case SHEARS: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_" + "shears"));
+			case SICKLE: return new ItemStack(ItemsVC.tools.get(metal.getName() + "_" + "sickle"));
 			
-			case PLATE: return BlocksVC.metalplate.getItemStackFor(metal); //ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			case PLATE: return BlocksVC.metalplate.getItemStackFor(metal); 
 			case HELMET: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_helmet"));
 			case CHESTPLATE: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_chestplate"));
 			case LEGGINGS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_leggings"));
 			case BOOTS: return new ItemStack(ItemsVC.armor.get(metal.getName() + "_boots"));
-//			case COPPER_WIRE: return new ItemStack(Items.redstone);
+
 			case FIX_INGOT: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), metal);
-			case FIX_PLATE: return BlocksVC.metalplate.getItemStackFor(metal); //return ItemMetalPlate.setMetal(new ItemStack(ItemsVC.metalplate), metal);
+			case FIX_PLATE: return BlocksVC.metalplate.getItemStackFor(metal); 
 			case COKEOVENDOOR: return new ItemStack(BlocksVC.cokeovendoor);
 			default:
 		}

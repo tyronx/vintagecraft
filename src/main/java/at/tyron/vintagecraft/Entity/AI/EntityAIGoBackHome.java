@@ -39,10 +39,6 @@ public class EntityAIGoBackHome extends EntityAIBase {
 	
 
 	public boolean isTooFarOff() {
-		/*System.out.println(
-			taskOwner.func_180486_cf().distanceSq(taskOwner.getPosition()) +" > " + 
-			(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())
-		);*/
 		return
 			taskOwner.hasHome() &&
 			taskOwner.func_180486_cf().distanceSq(taskOwner.getPosition()) > (double)(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())

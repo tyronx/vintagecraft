@@ -1,12 +1,19 @@
 package at.tyron.vintagecraft.Client.Render;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
+import java.io.IOException;
+
+import at.tyron.vintagecraft.World.VCraftWorld;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureUtil;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -24,6 +31,31 @@ public class RenderCloudsVC extends IRenderHandler {
     private final TextureManager renderEngine;
     private final RenderManager renderManager;
     
+ /*   public static boolean[][]cloudFlag = null;
+    
+    static {
+    	updateCloudFlags();
+    }
+    
+    public static void updateCloudFlags() {
+    	cloudFlag = new boolean[512][512];
+    	
+    	try {
+			BufferedImage bufferedimage = TextureUtil.readBufferedImage(Minecraft.getMinecraft().getResourceManager().getResource(locationCloudsPng).getInputStream());
+			int scale = bufferedimage.getWidth() / 512;
+				
+			for (int x = 0; x < 512; x++) {
+				for (int y = 0; y < 512; y++) {
+					cloudFlag[x][y] = bufferedimage.getAlphaRaster().getSample(x, y, 0) < 10;
+				}
+			}
+	    	
+		} catch (IOException e) {
+			return;
+		}	
+
+    }
+    */
     
     /** counts the cloud render updates. Used with mod to stagger some updates */
     private int cloudTickCounter;
@@ -79,28 +111,29 @@ public class RenderCloudsVC extends IRenderHandler {
                 float x = (float)vec3.xCoord;
                 float y = (float)vec3.yCoord;
                 float z = (float)vec3.zCoord;
-                float f5;
+                //float f5;
 
                 if (pass != 2) {
-                    f5 = (x * 30.0F + y * 59.0F + z * 11.0F) / 100.0F;
+                    //f5 = ;
                     float f6 = (x * 30.0F + y * 70.0F) / 100.0F;
                     float f7 = (x * 30.0F + z * 70.0F) / 100.0F;
-                    x = f5;
+                    x = (x * 30.0F + y * 59.0F + z * 11.0F) / 100.0F;
                     y = f6;
                     z = f7;
                 }
 
-                f5 = 4.8828125E-4F;
+                //f5 = 4.8828125E-4F;
                 double cloudPos = (double)((float)this.cloudTickCounter + partialTicks);
-                double d0 = this.mc.getRenderViewEntity().prevPosX + (this.mc.getRenderViewEntity().posX - this.mc.getRenderViewEntity().prevPosX) * (double)partialTicks + cloudPos * 0.029999999329447746D;
-                double d1 = this.mc.getRenderViewEntity().prevPosZ + (this.mc.getRenderViewEntity().posZ - this.mc.getRenderViewEntity().prevPosZ) * (double)partialTicks;
-                int j = MathHelper.floor_double(d0 / 2048.0D);
-                int k = MathHelper.floor_double(d1 / 2048.0D);
-                d0 -= (double)(j * 2048);
-                d1 -= (double)(k * 2048);
+                
+                double parallaxX = this.mc.getRenderViewEntity().prevPosX + (this.mc.getRenderViewEntity().posX - this.mc.getRenderViewEntity().prevPosX) * (double)partialTicks + cloudPos * 0.029999999329447746D;
+                double parallaxZ = this.mc.getRenderViewEntity().prevPosZ + (this.mc.getRenderViewEntity().posZ - this.mc.getRenderViewEntity().prevPosZ) * (double)partialTicks;
+                
+//                parallaxX -= MathHelper.floor_double(parallaxX / 2048.0D) * 2048;
+//                parallaxZ -= MathHelper.floor_double(parallaxZ / 2048.0D) * 2048;
+                
                 float yCoord = world.provider.getCloudHeight() - f1 + 0.33F;
-                float texOffsetX = (float)(d0 * 4.8828125E-4D);
-                float textOffsetY = (float)(d1 * 4.8828125E-4D);
+                float texOffsetX = (float)(parallaxX / 2048f);
+                float textOffsetY = (float)(parallaxZ / 2048f);
                 worldrenderer.startDrawingQuads();
                 worldrenderer.setColorRGBA_F(x, y, z, 1F);
 
@@ -116,10 +149,10 @@ public class RenderCloudsVC extends IRenderHandler {
                 
                 for (int xCoord = -512; xCoord < 512; xCoord += 32) {
                     for (int zCoord = -512; zCoord < 512; zCoord += 32) {
-                        worldrenderer.addVertexWithUV((double)(xCoord + 0), (double)yCoord, (double)(zCoord + 32), (double)((float)(xCoord + 0) * 4.8828125E-4F + texOffsetX), (double)((float)(zCoord + 32) * 4.8828125E-4F + textOffsetY));
-                        worldrenderer.addVertexWithUV((double)(xCoord + 32), (double)yCoord, (double)(zCoord + 32), (double)((float)(xCoord + 32) * 4.8828125E-4F + texOffsetX), (double)((float)(zCoord + 32) * 4.8828125E-4F + textOffsetY));
-                        worldrenderer.addVertexWithUV((double)(xCoord + 32), (double)yCoord, (double)(zCoord + 0), (double)((float)(xCoord + 32) * 4.8828125E-4F + texOffsetX), (double)((float)(zCoord + 0) * 4.8828125E-4F + textOffsetY));
-                        worldrenderer.addVertexWithUV((double)(xCoord + 0), (double)yCoord, (double)(zCoord + 0), (double)((float)(xCoord + 0) * 4.8828125E-4F + texOffsetX), (double)((float)(zCoord + 0) * 4.8828125E-4F + textOffsetY));
+                        worldrenderer.addVertexWithUV(xCoord +  0, yCoord, zCoord + 32, (xCoord +  0) / 2048f + texOffsetX, (zCoord + 32) / 2048f + textOffsetY);
+                        worldrenderer.addVertexWithUV(xCoord + 32, yCoord, zCoord + 32, (xCoord + 32) / 2048f + texOffsetX, (zCoord + 32) / 2048f + textOffsetY);
+                        worldrenderer.addVertexWithUV(xCoord + 32, yCoord, zCoord +  0, (xCoord + 32) / 2048f + texOffsetX, (zCoord +  0) / 2048f + textOffsetY);
+                        worldrenderer.addVertexWithUV(xCoord +  0, yCoord, zCoord +  0, (xCoord +  0) / 2048f + texOffsetX, (zCoord +  0) / 2048f + textOffsetY);
                     }
                 }
 
@@ -215,7 +248,7 @@ public class RenderCloudsVC extends IRenderHandler {
                 }
             }
 
-            //System.out.println(VCraftWorld.instance.isCloudAt(14, 50));
+            //System.out.println(VCraftWorld.instance.isCloudAt(0, 0));
             
             for (int i1 = -7; i1 <= 8; ++i1) {
                 for (int j1 = -7; j1 <= 8; ++j1) {
@@ -246,27 +279,27 @@ public class RenderCloudsVC extends IRenderHandler {
                     }
 
                     worldrenderer.setColorRGBA_F(x * 0.9F, y * 0.9F, z * 0.9F, 1F);
-                    int k1;
+                    int dx;
 
                     if (i1 > -1) {
                         worldrenderer.setNormal(-1.0F, 0.0F, 0.0F);
 
-                        for (k1 = 0; k1 < 8; ++k1) {
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 0.0F, yCoord + 0.0F, zCoord + 8.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 0.0F, yCoord + 4.0F, zCoord + 8.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 0.0F, yCoord + 4.0F, zCoord + 0.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 0.0F, yCoord + 0.0F, zCoord + 0.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
+                        for (dx = 0; dx < 8; ++dx) {
+                            worldrenderer.addVertexWithUV(xCoord + dx + 0.0F, yCoord + 0.0F, zCoord + 8.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 0.0F, yCoord + 4.0F, zCoord + 8.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 0.0F, yCoord + 4.0F, zCoord + 0.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 0.0F, yCoord + 0.0F, zCoord + 0.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
                         }
                     }
 
                     if (i1 <= 1) {
                         worldrenderer.setNormal(1.0F, 0.0F, 0.0F);
 
-                        for (k1 = 0; k1 < 8; ++k1) {
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 1.0F - 9.765625E-4F, yCoord + 0.0F, zCoord + 8.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 1.0F - 9.765625E-4F, yCoord + 4.0F, zCoord + 8.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 1.0F - 9.765625E-4F, yCoord + 4.0F, zCoord + 0.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + k1 + 1.0F - 9.765625E-4F, yCoord + 0.0F, zCoord + 0.0F, (texPosX + k1 + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
+                        for (dx = 0; dx < 8; ++dx) {
+                            worldrenderer.addVertexWithUV(xCoord + dx + 1.0F - 9.765625E-4F, yCoord + 0.0F, zCoord + 8.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 1.0F - 9.765625E-4F, yCoord + 4.0F, zCoord + 8.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 8.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 1.0F - 9.765625E-4F, yCoord + 4.0F, zCoord + 0.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + dx + 1.0F - 9.765625E-4F, yCoord + 0.0F, zCoord + 0.0F, (texPosX + dx + 0.5F) * 0.00390625F + texOffsetX, ((texPosY + 0.0F) * 0.00390625F + texOffsetY));
                         }
                     }
 
@@ -275,22 +308,22 @@ public class RenderCloudsVC extends IRenderHandler {
                     if (j1 > -1) {
                         worldrenderer.setNormal(0.0F, 0.0F, -1.0F);
 
-                        for (k1 = 0; k1 < 8; ++k1) {
-                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 4.0F, zCoord + k1 + 0.0F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 4.0F, zCoord + k1 + 0.0F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 0.0F, zCoord + k1 + 0.0F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 0.0F, zCoord + k1 + 0.0F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
+                        for (dx = 0; dx < 8; ++dx) {
+                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 4.0F, zCoord + dx + 0.0F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 4.0F, zCoord + dx + 0.0F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 0.0F, zCoord + dx + 0.0F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 0.0F, zCoord + dx + 0.0F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
                         }
                     }
 
                     if (j1 <= 1) {
                         worldrenderer.setNormal(0.0F, 0.0F, 1.0F);
 
-                        for (k1 = 0; k1 < 8; ++k1) {
-                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 4.0F, zCoord + k1 + 1.0F - 9.765625E-4F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 4.0F, zCoord + k1 + 1.0F - 9.765625E-4F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 0.0F, zCoord + k1 + 1.0F - 9.765625E-4F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
-                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 0.0F, zCoord + k1 + 1.0F - 9.765625E-4F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + k1 + 0.5F) * 0.00390625F + texOffsetY));
+                        for (dx = 0; dx < 8; ++dx) {
+                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 4.0F, zCoord + dx + 1.0F - 9.765625E-4F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 4.0F, zCoord + dx + 1.0F - 9.765625E-4F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 8.0F, yCoord + 0.0F, zCoord + dx + 1.0F - 9.765625E-4F, (texPosX + 8.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
+                            worldrenderer.addVertexWithUV(xCoord + 0.0F, yCoord + 0.0F, zCoord + dx + 1.0F - 9.765625E-4F, (texPosX + 0.0F) * 0.00390625F + texOffsetX, ((texPosY + dx + 0.5F) * 0.00390625F + texOffsetY));
                         }
                     }
 

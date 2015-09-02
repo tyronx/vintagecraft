@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Block.Mechanics;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
@@ -78,6 +79,8 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 		if (itemstack.getItem() == ItemsVC.sail && itemstack.stackSize == 4) {
 			TEWindmillRotor te = (TEWindmillRotor)world.getTileEntity(pos);
 			if (te != null && te.tryAddBlades()) {
+				player.triggerAchievement(AchievementsVC.acquireMechanicalPower);
+				
 				itemstack.stackSize = 0;
 				return true;
 			}

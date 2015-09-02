@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.Block.Utility;
 
+import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
@@ -97,7 +98,14 @@ public class BlockOrePile extends BlockIngotPile implements IBlockIgniteable {
 				teorepile.tryTransferOre(equippedItem);
 			}
 		} else {
-			teorepile.tryGrabOre(entityplayer);
+			ItemStack content = teorepile.getStackInSlot(0);
+			
+			boolean iscoke = content != null && content.getItem() instanceof ItemOreVC && ((ItemOreVC)content.getItem()).getOreType(content) == EnumOreType.COKE; 
+			boolean grabbed = teorepile.tryGrabOre(entityplayer);
+			
+			if (grabbed && iscoke) {
+				entityplayer.triggerAchievement(AchievementsVC.acquireCoke);
+			}
 		}
 		
 		world.markBlockForUpdate(pos);

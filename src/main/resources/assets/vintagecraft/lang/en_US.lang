@@ -295,6 +295,7 @@ item.copper_hoe.name=Copper Hoe
 item.copper_saw.name=Copper Saw
 item.copper_shears.name=Copper Shears
 item.copper_hammer.name=Copper Hammer
+item.copper_sickle.name=Copper Sickle
 
 item.bismuthbronze_axe.name=Bismuth Bronze Axe
 item.bismuthbronze_pickaxe.name=Bismuth Bronze Pickaxe
@@ -305,6 +306,7 @@ item.bismuthbronze_saw.name=Bismuth Bronze Saw
 item.bismuthbronze_shears.name=Bismuth Bronze Shears
 item.bismuthbronze_hammer.name=Bismuth Bronze Hammer
 item.bismuthbronze_carpenterstoolset.name=Bismuth Bronze Carpenters Toolset
+item.bismuthbronze_sickle.name=Bismuth Bronze Sickle
 
 item.tinbronze_axe.name=Tin Bronze Axe
 item.tinbronze_pickaxe.name=Tin Bronze Pickaxe
@@ -315,6 +317,7 @@ item.tinbronze_saw.name=Tin Bronze Saw
 item.tinbronze_shears.name=Tin Bronze Shears
 item.tinbronze_hammer.name=Tin Bronze Hammer
 item.tinbronze_carpenterstoolset.name=Tin Bronze Carpenters Toolset
+item.tinbronze_sickle.name=Tin Bronze Sickle
 
 item.iron_axe.name=Iron Axe
 item.iron_pickaxe.name=Iron Pickaxe
@@ -325,6 +328,7 @@ item.iron_saw.name=Iron Saw
 item.iron_shears.name=Iron Shears
 item.iron_hammer.name=Iron Hammer
 item.iron_carpenterstoolset.name=Iron Carpenters Toolset
+item.iron_sickle.name=Iron Sickle
 
 item.steel_axe.name=Steel Axe
 item.steel_pickaxe.name=Steel Pickaxe
@@ -335,6 +339,7 @@ item.steel_saw.name=Steel Saw
 item.steel_shears.name=Steel Shears
 item.steel_hammer.name=Steel Hammer
 item.steel_carpenterstoolset.name=Steel Carpenters Toolset
+item.steel_sickle.name=Steel Sickle
 
 
 
@@ -349,6 +354,7 @@ item.stone_hoe_dmd.name=Diamond Encrusted Stone Hoe
 item.stone_saw_dmd.name=Diamond Encrusted Stone Saw
 item.stone_hammer_dmd.name=Diamond Encrusted Stone Hammer
 
+
 item.copper_axe_dmd.name=Diamond Encrusted Copper Axe
 item.copper_pickaxe_dmd.name=Diamond Encrusted Copper Pickaxe
 item.copper_shovel_dmd.name=Diamond Encrusted Copper Shovel
@@ -357,6 +363,7 @@ item.copper_hoe_dmd.name=Diamond Encrusted Copper Hoe
 item.copper_saw_dmd.name=Diamond Encrusted Copper Saw
 item.copper_shears_dmd.name=Diamond Encrusted Copper Shears
 item.copper_hammer_dmd.name=Diamond Encrusted Copper Hammer
+item.copper_sickle_dmd.name=Diamond Encrusted Copper Sickle
 
 item.bismuthbronze_axe_dmd.name=Diamond Encrusted Bismuth Bronze Axe
 item.bismuthbronze_pickaxe_dmd.name=Diamond Encrusted Bismuth Bronze Pickaxe
@@ -367,6 +374,7 @@ item.bismuthbronze_saw_dmd.name=Diamond Encrusted Bismuth Bronze Saw
 item.bismuthbronze_shears_dmd.name=Diamond Encrusted Bismuth Bronze Shears
 item.bismuthbronze_hammer_dmd.name=Diamond Encrusted Bismuth Bronze Hammer
 item.bismuthbronze_carpenterstoolset_dmd.name=Diamond Encrusted Bismuth Bronze Carpenters Toolset
+item.bismuthbronze_sickle_dmd.name=Diamond Encrusted Bismuth Bronze Sickle
 
 item.tinbronze_axe_dmd.name=Diamond Encrusted Tin Bronze Axe
 item.tinbronze_pickaxe_dmd.name=Diamond Encrusted Tin Bronze Pickaxe
@@ -377,6 +385,7 @@ item.tinbronze_saw_dmd.name=Diamond Encrusted Tin Bronze Saw
 item.tinbronze_shears_dmd.name=Diamond Encrusted Tin Bronze Shears
 item.tinbronze_hammer_dmd.name=Diamond Encrusted Tin Bronze Hammer
 item.tinbronze_carpenterstoolset_dmd.name=Diamond Encrusted Tin Bronze Carpenters Toolset
+item.tinbronze_sickle_dmd.name=Diamond Encrusted Tin Bronze Sickle
 
 item.iron_axe_dmd.name=Diamond Encrusted Iron Axe
 item.iron_pickaxe_dmd.name=Diamond Encrusted Iron Pickaxe
@@ -387,6 +396,7 @@ item.iron_saw_dmd.name=Diamond Encrusted Iron Saw
 item.iron_shears_dmd.name=Diamond Encrusted Iron Shears
 item.iron_hammer_dmd.name=Diamond Encrusted Iron Hammer
 item.iron_carpenterstoolset_dmd.name=Diamond Encrusted Iron Carpenters Toolset
+item.iron_sickle_dmd.name=Diamond Encrusted Iron Sickle
 
 item.steel_axe_dmd.name=Diamond Encrusted Steel Axe
 item.steel_pickaxe_dmd.name=Diamond Encrusted Steel Pickaxe
@@ -397,6 +407,7 @@ item.steel_saw_dmd.name=Diamond Encrusted Steel Saw
 item.steel_shears_dmd.name=Diamond Encrusted Steel Shears
 item.steel_hammer_dmd.name=Diamond Encrusted Steel Hammer
 item.steel_carpenterstoolset_dmd.name=Diamond Encrusted Steel Carpenters Toolset
+item.steel_sickle_dmd.name=Diamond Encrusted Steel Sickle
 
 
 
@@ -415,7 +426,8 @@ item.copper_shoveltoolhead.name=Copper Shovel Toolhead
 item.copper_swordtoolhead.name=Copper Sword Toolhead
 item.copper_hoetoolhead.name=Copper Hoe Toolhead
 item.copper_sawtoolhead.name=Copper Saw Toolhead
-item.copper_hammertoolhead.name=Copper Bronze Hammer Toolhead
+item.copper_hammertoolhead.name=Copper Hammer Toolhead
+item.copper_sickletoolhead.name=Copper Sickle Toolhead
 
 item.bismuthbronze_axetoolhead.name=Bismuth Bronze Axe Toolhead
 item.bismuthbronze_pickaxetoolhead.name=Bismuth Bronze Pickaxe Toolhead
@@ -424,6 +436,7 @@ item.bismuthbronze_swordtoolhead.name=Bismuth Bronze Sword Toolhead
 item.bismuthbronze_hoetoolhead.name=Bismuth Bronze Hoe Toolhead
 item.bismuthbronze_sawtoolhead.name=Bismuth Bronze Saw Toolhead
 item.bismuthbronze_hammertoolhead.name=Bismuth Bronze Hammer Toolhead
+item.bismuthbronze_sickletoolhead.name=Bismuth Bronze Sickle Toolhead
  
 item.tinbronze_axetoolhead.name=Tin Bronze Axe Toolhead
 item.tinbronze_pickaxetoolhead.name=Tin Bronze Pickaxe Toolhead
@@ -432,6 +445,7 @@ item.tinbronze_swordtoolhead.name=Tin Bronze Sword Toolhead
 item.tinbronze_hoetoolhead.name=Tin Bronze Hoe Toolhead
 item.tinbronze_sawtoolhead.name=Tin Bronze Saw Toolhead
 item.tinbronze_hammertoolhead.name=Tin Bronze Hammer Toolhead
+item.tinbronze_sickletoolhead.name=Tin Bronze Sickle Toolhead
  
 item.iron_axetoolhead.name=Iron Axe Toolhead
 item.iron_pickaxetoolhead.name=Iron Pickaxe Toolhead
@@ -440,6 +454,7 @@ item.iron_swordtoolhead.name=Iron Sword Toolhead
 item.iron_hoetoolhead.name=Iron Hoe Toolhead
 item.iron_sawtoolhead.name=Iron Saw Toolhead
 item.iron_hammertoolhead.name=Iron Hammer Toolhead
+item.iron_sickletoolhead.name=Iron Sickle Toolhead
 
 
 
@@ -771,6 +786,7 @@ recipe.carpenterstoolset.name=Carpenters Toolset
 recipe.sail.name=Windmill Sails
 recipe.bucket.name=Wooden Bucket
 recipe.itemframe.name=Item Frame
+recipe.sickle.name=Sickle
 
 recipeingredients.1ingots.name=1 Ingot
 recipeingredients.2ingots.name=2 Ingots
@@ -792,7 +808,7 @@ recipeingredients.6planks.name=6 Planks
 recipeingredients.2planksand4leather.name=2 Planks, 4 Stitched Leather
 recipeingredients.2planksand3linen.name=2 Planks, 3 Linen Cloth
 recipeingredients.3planks2flaxtwine.name=3 Planks, 2 Flax Twine
-recipeingredients.1planks1stitchedleather.name=1 Planks, 1 Leather
+recipeingredients.1planks1stitchedleather.name=1 Planks, 1 Stitched Leather
 
 tile.carpentertable.name=Carpenters Table
 tile.cokeovendoor.name=Coke Oven Door
@@ -810,3 +826,34 @@ tile.saltlamp.name=Salt Lamp
 
 item.emptywoodbucket.name=Empty Wood Bucket
 item.waterwoodbucket.name=Water Wood Bucket
+
+achievement.copperAge=Copper age \o/
+achievement.copperAge.desc=Smelt copper ore to get a copper ingot
+
+achievement.bronzeAge=Bronze age \o/
+achievement.bronzeAge.desc=Create a tin bronze or bismuth bronze Ingot
+
+achievement.ironAge=Iron age \o/
+achievement.ironAge.desc=Acquire iron produced in a bloomery 
+
+achievement.steelAge=Steel age \o/
+achievement.steelAge.desc=Acquire steel from a blast furnace mold 
+
+achievement.acquireCoke=Expensive fuel
+achievement.acquireCoke.desc=Acquire coke from the coke oven
+
+achievement.createOddlyShapedIngot=Nobody's perfect ;-)
+achievement.createOddlyShapedIngot.desc=Created a oddly shaped ingot or plate
+achievement.findFlax=Serious farming ahead
+achievement.findFlax.desc=Find flax seeds
+achievement.acquireMechanicalPower=I need more power!
+achievement.acquireMechanicalPower.desc=Build your first windmill that produces mechanical power
+
+achievement.killUndeadHorse=Level 1 Fighter
+achievement.killUndeadHorse.desc=Kill an undead Horse
+
+achievement.killForestSpider=Level 10 Warrior
+achievement.killForestSpider.desc=Kill a forest spider
+
+achievement.killIronArmorMob=Level 30 Crusader
+achievement.killIronArmorMob.desc=Kill a fully armored zombie

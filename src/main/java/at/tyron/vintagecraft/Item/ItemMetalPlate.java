@@ -5,6 +5,7 @@ import java.util.Locale;
 
 import at.tyron.vintagecraft.BlockClass.MetalPlatingClassEntry;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -19,7 +20,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, IItemSmithable, IItemHeatable {
+public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, IItemSmithable, IItemHeatable, IItemMetalTyped {
 
 	public ItemMetalPlate(Block block) {
 		super(block);
@@ -187,4 +188,17 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 		
 		return false;
     }
+	
+	
+	// Useless extra code because Java is not able to inherit static methods... -.-
+	@Override
+	public ItemStack setItemMetal(ItemStack itemstack, EnumMetal metal) {
+		return BlocksVC.metalplate.getItemStackFor(metal);
+	}
+
+	@Override
+	public EnumMetal getItemMetal(ItemStack itemstack) {
+		return getMetal(itemstack);
+	}
+
 }
