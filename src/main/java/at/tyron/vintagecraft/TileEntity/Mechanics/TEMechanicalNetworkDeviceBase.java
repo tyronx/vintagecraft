@@ -15,6 +15,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.WorldInfo;
 
 public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity implements IMechanicalPowerDevice  {
 	public boolean markedForRemoval = false;
@@ -30,13 +31,13 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	
 	
 	private EnumTree treeType;
-	public ResourceLocation texture;
+	public ResourceLocation woodTexture;
 	
 	public void setTreeType(EnumTree treeType) {
 		if (treeType == null) treeType = EnumTree.OAK;
 		
 		this.treeType = treeType;
-		texture = new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + treeType.getName() + ".png");
+		woodTexture = new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + treeType.getName() + ".png");
 	}
 	public EnumTree getTreeType() {
 		return treeType;
@@ -128,12 +129,23 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		this.directionFromFacing = facing;
 	}
 	
+	public EnumFacing getDirectionFromFacing() {
+		return directionFromFacing;
+	}
+	
 	@Override
 	public MechanicalNetwork getNetwork(EnumFacing facing) {
 		if (worldObj == null || MechnicalNetworkManager.getNetworkManagerForWorld(worldObj) == null) return null;
 		
 		return MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getNetworkById(networkId);
 	}
+	
+	@Override
+	public EnumFacing getFacing(MechanicalNetwork network) {
+		return orientation;
+	}
+	
+
 	
 	public MechanicalNetwork[] getNetworks() {
 		MechanicalNetwork network = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getNetworkById(networkId);
@@ -201,9 +213,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		trySetNetwork(networkId, remoteFacing.getOpposite());
 		getNetwork(remoteFacing.getOpposite()).register(this);
 		
-		//if (true) throw new RuntimeException("safg");
-		System.out.println(pos);
-		
+		 		
 		sendNetworkToNeighbours(propagationId, networkId, remoteFacing);
 	}
 	
@@ -215,13 +225,17 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		this.propagationId = propagationId;
 		
 		this.clockwise = clockwise;
+		setDirectionFromFacing(remoteFacing);
+		
+		if (this instanceof TEWindmillRotor) {
+			System.out.println("direction set to " + clockwise + " from facing is " + remoteFacing);
+		}
 		
 		worldObj.markBlockForUpdate(pos);
 		
 		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);
-				
+		
 		for (EnumFacing localFacing : connectibleNeighbours.keySet()) {
-			//System.out.println(remoteFacing.getOpposite() +"!= "+localFacing);			
 			if (remoteFacing.getOpposite() != localFacing) {
 				boolean remoteClockwise = isClockWiseDirection(localFacing);
 				connectibleNeighbours.get(localFacing).propagateDirectionToNeightbours(propagationId, localFacing, remoteClockwise);
@@ -286,8 +300,48 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 			}
 		}
 		
-		if (networks.size() > 1) {
-			throw new RuntimeException("Connecting mechanical networks is not yet supported!");
+		if (networks.size() > 1 && !worldObj.isRemote) {
+			float maxSpeedDifference = 0;
+			MechanicalNetwork dominantNetwork = null;
+			
+			for (MechanicalNetwork network : networks.values()) {
+				if (dominantNetwork == null) {
+					dominantNetwork = network;
+					continue;
+				}
+				
+				maxSpeedDifference = Math.max(maxSpeedDifference, Math.abs(network.getSpeed() - dominantNetwork.getSpeed()));
+				
+				if (Math.abs(network.getSpeed()) > Math.abs(dominantNetwork.getSpeed())) {
+					dominantNetwork = network;
+				}
+			}
+			
+			
+			//if (maxSpeedDifference < 1f) {
+				for (MechanicalNetwork network : networks.values()) {
+					if (network != dominantNetwork) {
+						network.isDead = true;
+						MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).discardNetwork(network);
+					}
+				}
+				dominantNetwork.rebuildNetwork();
+				
+				System.out.println("connected mechanical networks, because maxsspeeddiff is " + maxSpeedDifference);
+				
+				worldObj.markBlockForUpdate(pos);
+				
+			// Need to make a better mechanic for breaking, I can't break the block at this point, we get an exception
+			/*} else {
+				System.out.println("attempted to connect mechanical networks, but speed diff is too large: " + maxSpeedDifference);
+				
+				worldObj.destroyBlock(pos, true);
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "mob.zombie.woodbreak", 0.8f, 1f);
+			}
+			*/
+			
+			
+		//	throw new RuntimeException("Connecting mechanical networks is not yet supported!");
 		}				
 		
 	}
@@ -373,6 +427,9 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	public void clearNetwork() {
 		this.networkId = 0;
 		worldObj.markBlockForUpdate(pos);
+	}
+	
+	public void onNeighborBlockChange() {
 	}
 	
 }

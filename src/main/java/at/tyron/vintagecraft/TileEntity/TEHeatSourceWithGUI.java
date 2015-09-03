@@ -249,6 +249,11 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 		// Ore follows furnace temperature
 		heatOre();
 		
+		// Finished smelting? Turn to smelted item
+		if (oreCookingTime > maxCookingTime()) {
+			smeltItem();
+		}
+		
 		
 		// Furnace is not burning and can burn: Ignite the fuel
 		if (!isBurning() && canSmelt()) {
@@ -338,13 +343,10 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     		return smeltable.getSmeltingSpeedModifier(oreSlot());
     	}
     	return 1f;    	
-    	
     }
     
-    ItemStack smeltedItem() {
-    	return furnaceItemStacks[2];
-    }
-
+    
+  
     
    
 
@@ -361,9 +363,8 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	// Fire pits always burn up their fuel
     	if (furnace == EnumStrongHeatSource.FIREPIT) {
     		smeltableOre = smeltableOre || oreSlot() == null;
-    	}
-    	
-    	
+    	}    	
+
     	return
     			smeltableOre
     			// Require fuel
@@ -371,7 +372,20 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     			// Require enough fuel
     			&& fuelSlot().stackSize >= furnace.fueluse
     			// Require empty output slot or stackable smelted
-    			&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + 1 < smeltedSlot().getMaxStackSize()))
+    			&& placeableInOutputSlot(oreItemSmelted())
+    	;
+    }
+    
+    
+    
+    public boolean placeableInOutputSlot(ItemStack stack) {
+    	return 
+    		smeltedSlot() == null || 
+    		(
+    			smeltedSlot().isItemEqual(stack) && 
+    			ItemStack.areItemStackTagsEqual(stack, smeltedSlot()) && 
+    			smeltedSlot().stackSize + stack.stackSize < smeltedSlot().getMaxStackSize()
+    		)
     	;
     }
 
@@ -392,10 +406,6 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 			if (oreCookingTime > 0) oreCookingTime--;
 		}
 		
-		// Finished smelting? Turn to smelted item
-		if (oreCookingTime > maxCookingTime()) {
-			smeltItem();
-		}
     }
     
     
@@ -430,16 +440,15 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     		oreSlot() != null 
     		&& oreItemSmelted() != null
     		&& oreSlot().stackSize >= oreItemSmeltedRatio()
-    		&& (smeltedSlot() == null || (smeltedSlot().isItemEqual(smeltedItem()) && smeltedSlot().stackSize + oreItemSmelted().stackSize < smeltedSlot().getMaxStackSize()))
+    		&& placeableInOutputSlot(oreItemSmelted())
     	) {
     		
             ItemStack itemstack = oreItemSmelted();
 
-            if (smeltedItem() == null) {
+            if (smeltedSlot() == null) {
                 this.furnaceItemStacks[2] = itemstack.copy();
-            }
-            else if (smeltedItem().getItem() == itemstack.getItem()) {
-            	smeltedItem().stackSize += itemstack.stackSize; 
+            } else {
+            	smeltedSlot().stackSize += itemstack.stackSize; 
             }
             
             oreSlot().stackSize -= oreItemSmeltedRatio();

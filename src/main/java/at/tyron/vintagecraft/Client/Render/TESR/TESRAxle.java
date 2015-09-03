@@ -12,7 +12,7 @@ public class TESRAxle extends TESRMechanicalBase {
 	ModelAxle axle = new ModelAxle();
 	
 	public void renderAt(TEAxle te, float posX, float posY, float posZ, float f) {
-		if (te.getWorld() == null || te.texture == null) return;
+		if (te.getWorld() == null || te.woodTexture == null) return;
 		if (te.refreshModel) {
 			te.refreshModel = false;
 			System.out.println("refreshed " + te.orientation);
@@ -22,7 +22,7 @@ public class TESRAxle extends TESRMechanicalBase {
 		GL11.glPushMatrix();
 			setupRotationsAndPos(EnumFacing.NORTH, te.orientation, te.getAngle(), posX, posY, posZ);
 			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(te.texture);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(te.woodTexture);
 			axle.renderAxle();
 			
 		GL11.glPopMatrix();

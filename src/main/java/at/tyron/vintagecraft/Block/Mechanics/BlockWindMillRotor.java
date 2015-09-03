@@ -6,6 +6,7 @@ import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -56,6 +57,9 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 		TEWindmillRotor te = (TEWindmillRotor)worldIn.getTileEntity(pos);
 		if (te != null) {
 			//System.out.println("network: " + te.getNetwork(te.getOrientation()));
+			
+			
+			
 			te.refreshModel = true;
 			if (te.getNetwork(side) != null) {
 	//			if (!worldIn.isRemote) te.getNetwork(null).sendNetworkToClient(worldIn);
@@ -78,7 +82,7 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 	public boolean tryPutItemstack(World world, BlockPos pos, EntityPlayer player, EnumFacing side, ItemStack itemstack) {
 		if (itemstack.getItem() == ItemsVC.sail && itemstack.stackSize == 4) {
 			TEWindmillRotor te = (TEWindmillRotor)world.getTileEntity(pos);
-			if (te != null && te.tryAddBlades()) {
+			if (te != null && te.tryAddBlades(player)) {
 				player.triggerAchievement(AchievementsVC.acquireMechanicalPower);
 				
 				itemstack.stackSize = 0;
@@ -93,14 +97,6 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
 		
-		if (!suitableGround(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
-		}
-		
-		/*TEAngledGearBox te = (TEAngledGearBox)worldIn.getTileEntity(pos);
-		if (te != null) {
-			te.connectToNeighbours();
-		}*/
 	}
 
 
@@ -118,7 +114,7 @@ public class BlockWindMillRotor extends BlockMechanicalVC implements IBlockItemS
 			int bladesize = ((TEWindmillRotor)te).getBladeSize();
 			if (bladesize > 0) {
 				ItemStack sails = new ItemStack(ItemsVC.sail, bladesize * 4);
-				spawnAsEntity(worldIn, pos, sails);
+				Block.spawnAsEntity(worldIn, pos, sails);
 			}
 		}
 		

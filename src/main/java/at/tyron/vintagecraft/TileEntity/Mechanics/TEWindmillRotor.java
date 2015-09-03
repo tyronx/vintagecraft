@@ -1,11 +1,17 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.WindGen;
+import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,20 +31,26 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	int bladeSize;  // 0..4
 	
 	
-	@SideOnly(Side.CLIENT)
 	public float getAngle() {
-		MechanicalNetwork network = getNetwork(null);
-		if (network == null) return 0;
+		MechanicalNetwork network = getNetwork(null); 
+		if (network == null) {
+			return lastAngle;
+		}
 		
-		/*if (orientation == EnumFacing.WEST || orientation == EnumFacing.SOUTH || orientation == EnumFacing.NORTH) {
-			return 360 - network.getAngle();
-		}*/
+		if (directionFromFacing == orientation) {
+			return (lastAngle = 360 - network.getAngle());
+		}
 		
-		return network.getAngle();
+		return (lastAngle = network.getAngle());
 	}
 
 	
-	public boolean tryAddBlades() {
+	public boolean tryAddBlades(EntityPlayer player) {
+		if (bladeSize < 4 && getObstacleBlockForRadius(bladeSize + 1) != null) {
+			player.addChatMessage(new ChatComponentText("Block in the way!"));
+			return false;
+		}
+		
 		if (bladeSize < 4) {
 			bladeSize++;
 			worldObj.markBlockForUpdate(pos);
@@ -92,8 +104,8 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		
 		WindGen windgen = WindGen.getWindGenForWorld(worldObj);
 		float wind = (float) (windgen == null ? 0 : windgen.getWindAt(pos));
-		//System.out.println(wind);
-		//return -10f;
+		
+		
 		
 		if (Math.abs(wind) < 0.1) return 0;
 		return Math.abs(wind) * 70;
@@ -107,16 +119,11 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	@Override
 	public float getTorque(MechanicalNetwork network) {
 		if (bladeSize == 0) return 0;
-//		if (worldObj.isRemote)
-//		 new Exception().printStackTrace();
-		float rotatingpower = getWindRotatingPower();
-		//System.out.println("rot power = " + rotatingpower);
-		int dir1 = (int)Math.signum(rotatingpower);
-		int dir2 = (int)Math.signum(network.getSpeed());
 		
-		if (dir1 != dir2 && dir1 != 0 && dir2 != 0) {
-			return 0;
-		}
+		float rotatingpower = getWindRotatingPower();
+		
+		
+		
 		
 		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * maxSpeedMultiplier))  return 0;
 		
@@ -129,18 +136,20 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	// If the network runs at higher speed or the other direction than what the rotor creates, it will act as a resistor.
 	@Override
 	public float getResistance(MechanicalNetwork network) {
-		float rotatingpower = getWindRotatingPower();
+		/*float rotatingpower = getWindRotatingPower();
 		
-		int dir1 = (int)Math.signum(rotatingpower);
-		int dir2 = (int)Math.signum(network.getSpeed());
+		boolean clockwise1 = orientation == directionFromFacing;
+		boolean clockwise2 = network.isClockWise(orientation);
 		
-		if (dir1 != dir2 && dir1 != 0 && dir2 != 0) {
+		// If windmill and network rotate in opposite directions
+		// then it produces no torque but resistance
+		if (clockwise1 != clockwise2 && Math.signum(rotatingpower) != 0 && Math.signum(network.getSpeed()) != 0) {
 			return Math.abs(rotatingpower * maxSpeedMultiplier);
 		}
 		
 		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * maxSpeedMultiplier)) {
 			return Math.abs(network.getSpeed()) - Math.abs(rotatingpower * maxSpeedMultiplier);
-		}
+		}*/
 		
 		return 0;
 	}
@@ -153,15 +162,60 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	long cnt = 0;
 	@Override
 	public void update() {
+		if (getNetwork(null) == null || worldObj == null) return; 
 		
-		if (getNetwork(null) != null && worldObj != null && !worldObj.isRemote) {
+		
+		if (!worldObj.isRemote) {
 			if (worldObj.rand.nextFloat() < Math.min(0.03f, getNetwork(null).getSpeed() / 1000f)) {
 				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1.4f, 1f);
 			}
 		}
+		
+		
+		if (!worldObj.isRemote && worldObj.getWorldTime() % 60 == 0 && Math.abs(getNetwork(null).getSpeed()) > 0.01) {
+			
+			BlockPos closestPos = getObstacleBlockForRadius(bladeSize);
+			
+			if (closestPos != null) {
+				double distanceSq = pos.distanceSq(getPos().getX(), getPos().getY(), getPos().getZ());
+				int loss = (int) (bladeSize - Math.sqrt(distanceSq));
+				
+				bladeSize -= loss;
+				
+				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "mob.zombie.woodbreak", 0.8f, 1f);
+				worldObj.markBlockForUpdate(getPos());
+				
+				ItemStack sails = new ItemStack(ItemsVC.sail, loss * (1 + worldObj.rand.nextInt(4)));
+				Block.spawnAsEntity(worldObj, pos, sails);
+			}
+			
+		}
 	}
 
 
+	
+	public BlockPos getObstacleBlockForRadius(int radius) {
+		BlockPos closestPos = null;
+		double closestdistanceSq = 9999;
+
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
+				BlockPos pos = getPos().offset(orientation.rotateY(), x).add(0, y, 0);
+				double distanceSq = pos.distanceSq(getPos().getX(), getPos().getY(), getPos().getZ());
+				
+				if (!worldObj.getBlockState(pos).getBlock().isPassable(worldObj, pos) && distanceSq <= radius*radius) {
+					if (closestPos == null || distanceSq < closestdistanceSq) {
+						closestdistanceSq = distanceSq;
+						closestPos = pos;
+					}
+				}
+				
+			}
+		}
+		
+		return closestPos; 
+	}
+	
 	
 	public void connectToNeighbour() {
 		if (getConnectibleNeighbourDevice(orientation.getOpposite()) != null) return;
@@ -176,7 +230,10 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	}
 	
 
-
+	@Override
+	public AxisAlignedBB getRenderBoundingBox() {		
+		return super.getRenderBoundingBox().expand(5, 5, 5);
+	}
 
 
 	

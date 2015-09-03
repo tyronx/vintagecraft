@@ -11,6 +11,7 @@ public abstract interface IMechanicalPowerDevice {
 	
 	public void trySetNetwork(int networkId, EnumFacing localFacing);
 	public MechanicalNetwork getNetwork(EnumFacing localFacing);
+	public EnumFacing getFacing(MechanicalNetwork network);
 	
 	public void propagateNetworkToNeighbours(int propagationId, int  networkId, EnumFacing remoteFacing);
 	public void propagateDirectionToNeightbours(int propagationId, EnumFacing remoteFacing, boolean clockwise);
@@ -18,6 +19,7 @@ public abstract interface IMechanicalPowerDevice {
 	public boolean isClockWiseDirection(EnumFacing localFacing);
 	public void setClockWiseDirection(int networkId, boolean clockwise);
 
+	public EnumFacing getDirectionFromFacing();
 
 	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside);
 	public void onDeviceRemoved(World world, BlockPos pos);
@@ -26,6 +28,8 @@ public abstract interface IMechanicalPowerDevice {
 	
 	public boolean exists();
 	public BlockPos getPosition();
+	
+	public MechanicalNetwork[] getNetworks();
 	public void clearNetwork();
 	
 	

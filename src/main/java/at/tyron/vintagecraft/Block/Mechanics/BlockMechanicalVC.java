@@ -4,9 +4,12 @@ import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -56,6 +59,11 @@ public abstract class BlockMechanicalVC extends BlockContainerVC {
 		if (stack.getItem() instanceof ItemMechanicalWooden && te instanceof TEMechanicalNetworkDeviceBase) {
 			stack = ((ItemMechanicalWooden)stack.getItem()).withTreeType(((TEMechanicalNetworkDeviceBase)te).getTreeType());
 		}
+
+		if (stack.getItem() instanceof ItemMechanicalRock && te instanceof TEGrindStone) {
+			stack = ((ItemMechanicalRock)stack.getItem()).withRockType(((TEGrindStone)te).getRockType());
+		}
+
 		
 		spawnAsEntity(worldIn, pos, stack);
 
@@ -119,5 +127,20 @@ public abstract class BlockMechanicalVC extends BlockContainerVC {
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
     	return true;
     }
-
+    
+    @Override
+    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
+    	super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
+    	
+		if (!isBlockedAllowedAt(worldIn, pos)) {
+			worldIn.destroyBlock(pos, true);
+			return;
+		}
+	
+    	TileEntity te = worldIn.getTileEntity(pos);
+    	if (te instanceof TEMechanicalNetworkDeviceBase) {
+    		((TEMechanicalNetworkDeviceBase)te).onNeighborBlockChange();
+    	}
+    }
+    
 }

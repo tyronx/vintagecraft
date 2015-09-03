@@ -60,10 +60,6 @@ public class BlockAxle extends BlockMechanicalVC {
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
 		
-		if (!isBlockedAllowedAt(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
-		}
-		
 		TEAxle te = (TEAxle)worldIn.getTileEntity(pos);
 		if (te != null) {
 			te.recheckNeighbours();

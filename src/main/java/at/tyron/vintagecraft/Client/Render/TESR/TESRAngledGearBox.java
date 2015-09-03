@@ -7,7 +7,7 @@ public class TESRAngledGearBox extends TESRMechanicalBase  {
 
 	
 	public void renderAt(TEAngledGearBox te, float posX, float posY, float posZ, float f) {
-		if (te.getWorld() == null || te.texture == null) return;
+		if (te.getWorld() == null || te.woodTexture == null) return;
 		renderAngledGearBox(te, te.getAngle(), posX, posY, posZ);		
 	}
 	

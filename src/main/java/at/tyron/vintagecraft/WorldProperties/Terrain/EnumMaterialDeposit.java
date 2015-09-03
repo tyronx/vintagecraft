@@ -30,7 +30,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 145)),
 	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(60, 1, 10, 60, 0.5f)), 
-	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(40, 2, 8, 103)),
+	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(60, 2, 8, 103)),
 
 	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(11, 2, 1, 155)),
 	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(6, 2, 2, 160)),

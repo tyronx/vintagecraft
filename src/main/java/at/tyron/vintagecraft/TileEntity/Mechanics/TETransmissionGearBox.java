@@ -183,6 +183,14 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 	}
 
 
+	@Override
+	public void createMechanicalNetwork(MechanicalNetwork forkedFromNetwork,
+			EnumFacing facing) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 
 

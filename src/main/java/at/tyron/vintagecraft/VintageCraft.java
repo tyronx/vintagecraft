@@ -12,6 +12,7 @@ import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.Network.WorldDataPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
+import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import at.tyron.vintagecraft.World.VCraftWorldSavedData;
 import at.tyron.vintagecraft.World.WindGen;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilRecipe;
@@ -174,6 +175,12 @@ public class VintageCraft {
 			
 			packetPipeline.sendTo(new WorldDataPacket(evt.world.getSeed()), (EntityPlayerMP)evt.entity);
 		}
+		
+		if (evt.entity instanceof EntityZombie) {
+			if (((EntityZombie)evt.entity).isChild()) {
+				((EntityZombie)evt.entity).setChild(false);
+			}
+		}
     }
 
 	
@@ -216,9 +223,6 @@ public class VintageCraft {
 	
 	@SubscribeEvent
 	public void loadWorld(WorldEvent.Load evt) {
-		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world);
-		worlddata.setWorld(evt.world);
-		
 		VintageCraftMobTweaker.setSpawnCap(EnumCreatureType.MONSTER, VintageCraftMobTweaker.spawnCapByDay(evt.world.getTotalWorldTime() / 24000L, evt.world.getDifficulty()));
 		
 		WindGen.registerWorld(evt.world);
@@ -227,8 +231,12 @@ public class VintageCraft {
 	@SubscribeEvent
 	public void unloadWorld(WorldEvent.Unload evt) {
 		WindGen.unregisterWorld(evt.world);
+		
+		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world);
+		
+		
 		System.out.println("unload networks");
-		//MechanicalNetwork.unloadNetworks();
+		MechnicalNetworkManager.unloadManagers();
 	}
 	
 	
@@ -239,6 +247,16 @@ public class VintageCraft {
 			event.phase == TickEvent.Phase.END || 
 			event.world.provider.getDimensionId() != 0
 		) return;
+		
+		
+		if (MechnicalNetworkManager.getNetworkManagerForWorld(event.world) == null) {
+			
+			VCraftWorldSavedData worlddata = getOrCreateWorldData(event.world);
+			worlddata.setWorld(event.world);
+			MechnicalNetworkManager.addManager(event.world, worlddata.getNetworks());
+		}		
+
+		
 		
 		long worldtime = event.world.getTotalWorldTime();
 		long timeofday = event.world.getWorldTime() / 24000L;

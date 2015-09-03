@@ -18,7 +18,7 @@ public class TESRBellows extends TESRMechanicalBase {
 	ModelBellows modelbellows = new ModelBellows();
 	
 	public void renderAt(TEBellows te, float posX, float posY, float posZ, float f) {
-		if (te.getWorld() == null || te.texture == null) return;
+		if (te.getWorld() == null || te.woodTexture == null) return;
 		if (te.refreshModel) {
 			te.refreshModel = false;
 			System.out.println("refreshed " + te.orientation);
@@ -35,7 +35,7 @@ public class TESRBellows extends TESRMechanicalBase {
 			GL11.glRotatef(angles[0], 0, 1f, 0);
 			GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
 			
-			Minecraft.getMinecraft().getTextureManager().bindTexture(te.texture);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(te.woodTexture);
 			modelbellows.woodCover.render(0.0625F / 2f);
 			
 			GL11.glPushMatrix();

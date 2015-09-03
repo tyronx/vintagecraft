@@ -6,16 +6,31 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.MechnicalNetworkManager;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetworkDeviceBase implements IMechanicalPowerNetworkNode {
 
+	public void createMechanicalNetwork(MechanicalNetwork forkedFromNetwork, EnumFacing facing) {
+		MechanicalNetwork network = createMechanicalNetwork();
+		
+		NBTTagCompound nbt = new NBTTagCompound();
+		forkedFromNetwork.writeToNBT(nbt);
+		network.readFromNBTForked(nbt);
+		
+		if (!worldObj.isRemote) { // Might not be needed, this check
+			System.out.println("sent to clients");
+			network.sentNetworkToClients();
+		}
+	}
 	
-	protected void createMechanicalNetwork() {
+	public MechanicalNetwork createMechanicalNetwork() {
 		MechanicalNetwork network = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).createAndRegisterNetwork(this);
 		this.networkId = network.networkId;
+		directionFromFacing = orientation.getOpposite();
+		
 		worldObj.markBlockForUpdate(pos);
 		
 		if (worldObj.isRemote || MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getWorld().isRemote) {
@@ -32,6 +47,7 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 			neighbourdevices.get(facing).propagateNetworkToNeighbours(MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getUniquePropagationId(), networkId, facing);
 		}
 		
+		return network;
 	}
 
 	
@@ -64,7 +80,7 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 		this.networkId = networkId;
 		getNetwork(remoteFacing.getOpposite()).register(this);
 		
-		System.out.println(pos);
+		//System.out.println(pos);
 		
 		sendNetworkToNeighbours(propagationId, networkId, remoteFacing);
 	}

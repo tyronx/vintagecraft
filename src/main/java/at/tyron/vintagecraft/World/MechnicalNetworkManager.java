@@ -27,22 +27,42 @@ public class MechnicalNetworkManager {
 	
 	public static MechnicalNetworkManager addManager(World world, NBTTagList networks) {
 		MechnicalNetworkManager manager = new MechnicalNetworkManager(world);
-		manager.loadNetworksFromTaglist(networks);
 		
 		if (world.isRemote) {
 			VintageCraft.instance.proxy.clientNetworkManagers.put(world.provider.getDimensionId(), manager);
 		} else {
 			VintageCraft.instance.proxy.serverNetworkManagers.put(world.provider.getDimensionId(), manager);
-		}	
+		}
+		
+		manager.loadNetworksFromTaglist(networks);
+		
 		return manager;
 	}
 	
 	public static void removeManager(World world) {
 		
 	}
+	
+	public static void unloadManagers() {
+		for (MechnicalNetworkManager manager : VintageCraft.instance.proxy.clientNetworkManagers.values()) {
+			manager.unload();
+		}
+		for (MechnicalNetworkManager manager : VintageCraft.instance.proxy.serverNetworkManagers.values()) {
+			manager.unload();
+		}
+		
+		VintageCraft.instance.proxy.clientNetworkManagers.clear();
+		VintageCraft.instance.proxy.serverNetworkManagers.clear();
+		
+	}
 
 	
 	
+	private void unload() {
+		FMLCommonHandler.instance().bus().unregister(this);
+		networksById.clear();
+	}
+
 	@SubscribeEvent
 	public void onClientTick(ClientTickEvent event) {
 		if (world == null || !world.isRemote) return;
@@ -70,12 +90,13 @@ public class MechnicalNetworkManager {
 		
 		
 		if (world.getWorldTime() != lastWorldTime) {
-
+			
 			Iterator<MechanicalNetwork> it = networksById.values().iterator();
 			while (it.hasNext()) {
 				MechanicalNetwork network = it.next();
 				network.serverTick(world);
 				if (network.isDead) {
+					System.out.println("network is dead :(");
 					it.remove();
 				}
 			}
@@ -98,6 +119,7 @@ public class MechnicalNetworkManager {
 	public MechnicalNetworkManager(World world) {
 		this.world = world;
 		FMLCommonHandler.instance().bus().register(this);
+		
 	}
 	
 	public World getWorld() {
@@ -105,7 +127,7 @@ public class MechnicalNetworkManager {
 	}
 	
 	public void loadNetworksFromTaglist(NBTTagList networks) {
-		System.out.println("load networks " + networks);
+		System.out.println("load networks for dimension " + world.provider.getDimensionId() + ", list: " + networks);
 		networksById.clear();
 		
 		if (networks == null) return;
@@ -116,10 +138,10 @@ public class MechnicalNetworkManager {
 			
 			networksById.put(network.networkId, network);
 			network.readFromNBT(nbt, false);
-			//System.out.println("rebuild network " + network.networkId);
-			// Only works in 1 world
-			//network.rediscoverNetwork(MinecraftServer.getServer().worldServers[0]);
+			network.rediscoverNetwork(world);
 		}
+		
+		System.out.println(networksById.size());
 	}
 	
 	public NBTTagList saveNetworksToTaglist() {

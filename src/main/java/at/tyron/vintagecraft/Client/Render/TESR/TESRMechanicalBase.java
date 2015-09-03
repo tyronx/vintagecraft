@@ -18,13 +18,13 @@ public abstract class TESRMechanicalBase extends TESRBase {
 	
 	
 	
-	void setupRotationsAndPos(EnumFacing base, EnumFacing desired, float angle, float posX, float posY, float posZ) {
+	void setupRotationsAndPos(EnumFacing base, EnumFacing desired, float angle, double posX, double posY, double posZ) {
 		if (desired == null) {
 			desired = EnumFacing.NORTH;
 		}
 		
 		float[] angles = getAnglesBetween(base, desired);
-		GL11.glTranslatef(posX + 0.5f, posY + 0.5f, posZ + 0.5f);
+		GL11.glTranslated(posX + 0.5f, posY + 0.5f, posZ + 0.5f);
 		
 		Quaternion q = new Quaternion(); // Identity
 		q.eulerToQuat(angles[1], angles[0], 0);
@@ -52,14 +52,14 @@ public abstract class TESRMechanicalBase extends TESRBase {
 		// Peg Gear
 		GL11.glPushMatrix();
 			setupRotationsAndPos(EnumFacing.NORTH, te.orientation, te.getAngle(), posX, posY, posZ);
-			renderPegGear(te.texture);
+			renderPegGear(te.woodTexture);
 		GL11.glPopMatrix();
 		
 		// Cage Gear
 		if (te.cagegearOrientation != null) {
 			GL11.glPushMatrix();
 				setupRotationsAndPos(EnumFacing.NORTH, te.cagegearOrientation, 360 - te.getAngle() - 18, posX, posY, posZ);
-				renderCageGear(te.texture);
+				renderCageGear(te.woodTexture);
 			GL11.glPopMatrix();
 		}
 	}

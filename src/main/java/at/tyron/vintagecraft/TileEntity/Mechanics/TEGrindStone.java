@@ -1,18 +1,32 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
+import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox, IPitchAndVolumProvider {
 
 	private boolean initialized;
 	EnumRockType rocktype;
+	public ResourceLocation rockTexture;
+	
+	public boolean refreshModel;
 
+	
+	public TEGrindStone() {
+		setTreeType(EnumTree.OAK);
+		setRockType(EnumRockType.ANDESITE);
+	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
@@ -53,16 +67,31 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 		return networkId != 0 && getNetwork(orientation) != null && getNetwork(orientation).getSpeed() > 0;
 	}
 
+	// Client side Network speed updates only happen every 2-3 seconds, so lets interpolate 
+	// the pitch just like we to with the rotation angle
+	float lastPitch = 0;
+	float lastVolumne = 0;
+	
 	@Override
 	public float getPitch() {
-		return Math.max(0.2f, getNetwork(orientation).getSpeed());
+		if (getNetwork(orientation) == null) return 0;
+		
+		float pitch = Math.min(1f, Math.max(0f, (float) Math.sqrt(getNetwork(orientation).getSpeed() / 6)));
+		float interpolatedPitch = (pitch - lastPitch) / 30f;
+		
+		return lastPitch += interpolatedPitch;
 	}
 
 	@Override
 	public float getVolumne() {
+		if (getNetwork(orientation) == null) return 0;
+		
 		if (getNetwork(orientation).getSpeed() < 0.01f) return 0;
 		
-		return 0.5f + getNetwork(orientation).getSpeed() / 100f;
+		float volumne = (0.5f + getNetwork(orientation).getSpeed() / 100f) / 2;
+		float interpolatedVolumne = (volumne - lastVolumne) / 30f;
+		
+		return lastVolumne += interpolatedVolumne;
 	}
 
 	@Override
@@ -72,10 +101,12 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 	
 	
 	public void setRockType(EnumRockType rockType) {
-		this.rocktype = rockType;		
+		this.rocktype = rockType;
+		
+		rockTexture = new ResourceLocation(ModInfo.ModID, "textures/blocks/rock/" + rocktype.getName() + ".png");
 	}
 	
-	public EnumRockType EnumRockType() {
+	public EnumRockType getRockType() {
 		return rocktype;
 	}
 
@@ -91,7 +122,31 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 
 	@Override
 	public EnumFacing getOutputSideForNetworkPropagation() {
-		return null;
+		return EnumFacing.UP;
 	}
+	
+	@Override
+	public void onDevicePlaced(World world, BlockPos pos, EnumFacing facing, EnumFacing ontoside) {
+		orientation = EnumFacing.UP;
+		super.onDevicePlaced(world, pos, facing, ontoside);
+		updateWoodType();
+		
+	}
+	
+	public void onNeighborBlockChange() {
+		updateWoodType();
+	}
+
+	private void updateWoodType() {
+		TileEntity te = worldObj.getTileEntity(pos.up());
+		if (te instanceof TEMechanicalNetworkDeviceBase) {
+			setTreeType(((TEMechanicalNetworkDeviceBase)te).getTreeType());
+		}
+		
+	}
+	
+	
+	
+	
 
 }

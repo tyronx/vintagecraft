@@ -15,7 +15,7 @@ public class TESRWindmillRotor extends TESRMechanicalBase {
 	
 	public void renderAt(TEWindmillRotor te, float posX, float posY, float posZ, float f) {
 		
-		if (te.getWorld() == null || te.texture == null) return;
+		if (te.getWorld() == null || te.woodTexture == null) return;
 		
 		if (te.refreshModel) {
 			te.refreshModel = false;
@@ -26,7 +26,7 @@ public class TESRWindmillRotor extends TESRMechanicalBase {
 		GL11.glPushMatrix();
 			setupRotationsAndPos(EnumFacing.SOUTH, te.getOrientation(), te.getAngle(), posX, posY, posZ);
 		
-			Minecraft.getMinecraft().getTextureManager().bindTexture(te.texture);
+			Minecraft.getMinecraft().getTextureManager().bindTexture(te.woodTexture);
 			
 			rotor.renderRotor(te.getBladeSize());
 			

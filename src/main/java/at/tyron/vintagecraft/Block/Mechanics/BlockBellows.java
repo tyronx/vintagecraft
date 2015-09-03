@@ -52,11 +52,6 @@ public class BlockBellows extends BlockMechanicalVC {
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
 		
-		if (!isBlockedAllowedAt(worldIn, pos)) {
-			worldIn.destroyBlock(pos, true);
-			return;
-		}
-		
 		TEBellows te = (TEBellows)worldIn.getTileEntity(pos);
 		if (te != null) {
 			te.connectToFurnace();

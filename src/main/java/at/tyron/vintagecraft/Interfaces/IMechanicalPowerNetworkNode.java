@@ -10,5 +10,7 @@ public interface IMechanicalPowerNetworkNode extends IMechanicalPowerDevice {
 	public float getResistance(MechanicalNetwork network);
 	
 	// Should return local facing
-	public EnumFacing getOutputSideForNetworkPropagation();	
+	public EnumFacing getOutputSideForNetworkPropagation();
+	
+	public void createMechanicalNetwork(MechanicalNetwork forkedFromNetwork, EnumFacing facing);
 }
