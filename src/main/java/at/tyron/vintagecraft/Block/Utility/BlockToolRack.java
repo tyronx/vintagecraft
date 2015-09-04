@@ -16,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
@@ -113,10 +114,9 @@ public class BlockToolRack extends BlockContainerVC {
 	}
 
 	private boolean handleArea(World world, BlockPos pos, EntityPlayer entityplayer, TEToolRack te, int slot, EnumFacing facing) {
-		ItemStack currentitem = entityplayer.getCurrentEquippedItem();
-		boolean hasToolInHand = currentitem != null && currentitem.getItem() instanceof IItemRackable;
-
-		if(te.storage[slot] == null && hasToolInHand) {
+		ItemStack itemstack = entityplayer.getCurrentEquippedItem();
+		
+		if(te.storage[slot] == null && isRackable(itemstack)) {
 			te.storage[slot] = entityplayer.getCurrentEquippedItem().copy();
 			entityplayer.inventory.mainInventory[entityplayer.inventory.currentItem] = null;
 			return true;
@@ -128,6 +128,13 @@ public class BlockToolRack extends BlockContainerVC {
 		}
 		
 		return false;
+	}
+	
+	public static boolean isRackable(ItemStack stack) {
+		return
+			stack != null &&
+			(stack.getItem() instanceof IItemRackable || stack.getItem() instanceof ItemBow)
+		;
 	}
 
 	

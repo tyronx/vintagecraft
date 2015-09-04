@@ -117,8 +117,8 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
         if (!keepInventory) {
             TileEntity tileentity = worldIn.getTileEntity(pos);
 
-            if (tileentity instanceof TileEntityFurnace) {
-                InventoryHelper.dropInventoryItems(worldIn, pos, (TileEntityFurnace)tileentity);
+            if (tileentity instanceof TEHeatSourceWithGUI) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (TEHeatSourceWithGUI)tileentity);
                 worldIn.updateComparatorOutputLevel(pos, this);
             }
         }

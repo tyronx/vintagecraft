@@ -117,7 +117,12 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 				TEFurnaceSection tefurnacesection = (TEFurnaceSection)tileentity;
 				ItemStack output = tefurnacesection.getStackInSlot(2);
 			
-				if (output != null && output.getItem() instanceof ItemIngot && ((ItemIngot)output.getItem()).getMetal(output) == EnumMetal.IRON) {
+				if (
+					output != null && 
+					output.stackSize > 0 &&
+					output.getItem() instanceof ItemIngot && 
+					((ItemIngot)output.getItem()).getMetal(output) == EnumMetal.IRON
+				) {
 					((EntityPlayer)playerIn).triggerAchievement(AchievementsVC.ironAge);
 				}
 			}

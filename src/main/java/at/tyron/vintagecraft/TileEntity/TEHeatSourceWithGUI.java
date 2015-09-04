@@ -247,7 +247,9 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 		}
 		
 		// Ore follows furnace temperature
-		heatOre();
+		if (canSmeltItem()) {
+			heatOre();
+		}
 		
 		// Finished smelting? Turn to smelted item
 		if (oreCookingTime > maxCookingTime()) {
@@ -363,7 +365,9 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	// Fire pits always burn up their fuel
     	if (furnace == EnumStrongHeatSource.FIREPIT) {
     		smeltableOre = smeltableOre || oreSlot() == null;
-    	}    	
+    	}
+    	
+    	
 
     	return
     			smeltableOre
@@ -435,13 +439,17 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     }
     
     
-    public void smeltItem() {
-    	if (
-    		oreSlot() != null 
+    public boolean canSmeltItem() {
+    	return 
+			oreSlot() != null 
     		&& oreItemSmelted() != null
     		&& oreSlot().stackSize >= oreItemSmeltedRatio()
     		&& placeableInOutputSlot(oreItemSmelted())
-    	) {
+    	;
+    }
+    
+    public void smeltItem() {
+    	if (canSmeltItem()) {
     		
             ItemStack itemstack = oreItemSmelted();
 
