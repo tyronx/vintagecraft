@@ -358,7 +358,7 @@ public class RenderSkyVC extends IRenderHandler {
 					GlStateManager.color(1.0F, 1.0F, 1.0F, nightSkyopacity);
 					
 					
-					renderSkyImage(); //nightSkies[VintageCraft.instance.proxy.getNightSkyType()]);
+					renderSkyImage();
 				GlStateManager.popMatrix();
 			}
 		

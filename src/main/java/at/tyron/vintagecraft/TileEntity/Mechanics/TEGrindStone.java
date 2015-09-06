@@ -76,7 +76,7 @@ public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IU
 	public float getPitch() {
 		if (getNetwork(orientation) == null) return 0;
 		
-		float pitch = Math.min(1f, Math.max(0f, (float) Math.sqrt(getNetwork(orientation).getSpeed() / 6)));
+		float pitch = Math.min(1f, Math.max(0f, (float) Math.sqrt(getNetwork(orientation).getSpeed() / 40)));
 		float interpolatedPitch = (pitch - lastPitch) / 30f;
 		
 		return lastPitch += interpolatedPitch;

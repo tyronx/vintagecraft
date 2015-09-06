@@ -55,6 +55,12 @@ public class MechanicalNetworkNBTPacket implements IMessage {
 		@Override
 		public IMessage onMessage(MechanicalNetworkNBTPacket message, MessageContext ctx) {
 			//System.out.println("got package");
+			
+			if (VintageCraft.proxy.getClientWorld() == null) {
+				System.out.println("packet sent to a null world?!");
+				return null;
+			}
+			
 			MechnicalNetworkManager manager = MechnicalNetworkManager.getNetworkManagerForWorld(VintageCraft.proxy.getClientWorld());
 			
 			if (manager == null) {

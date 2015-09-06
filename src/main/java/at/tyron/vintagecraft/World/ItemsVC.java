@@ -8,6 +8,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Item.ItemAnvilPart;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.ItemCoalPoweredMinecart;
 import at.tyron.vintagecraft.Item.ItemCrafted;
 import at.tyron.vintagecraft.Item.ItemDryGrass;
 import at.tyron.vintagecraft.Item.ItemFireClay;
@@ -76,7 +77,7 @@ public class ItemsVC {
 	public static Item blastingPowder;
 
 	//public static Item coke;
-	
+	public static Item coalpoweredMinecart;
 
 	
 	public static void init() {
@@ -183,6 +184,9 @@ public class ItemsVC {
 		
 //		coke = new ItemCoke();
 //		register(coke, "coke");
+		
+		coalpoweredMinecart = new ItemCoalPoweredMinecart();
+		register(coalpoweredMinecart, "coalpoweredminecart");
 	}
 	
 	

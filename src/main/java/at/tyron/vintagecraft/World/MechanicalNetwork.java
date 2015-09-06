@@ -176,7 +176,7 @@ public class MechanicalNetwork {
 			}
 		}
 		if (powerNodes.size() == 0) {
-			System.out.println("no more power nodes");
+			//System.out.println("no more power nodes");
 			isDead = true;
 			return;
 		}
@@ -248,11 +248,11 @@ public class MechanicalNetwork {
 		direction = (int)Math.signum(speed);
 		
 		if (olddirection != direction) {
-			System.out.println("=====propagate direction to neighbours");
+			//System.out.println("=====propagate direction to neighbours");
 			for (IMechanicalPowerNetworkNode powerNode : powerNodes) {
 				// FIXME: This assumes there is only 1 power producer per network
 				if (powerNode.getTorque(this) > 0) {
-					System.out.println("sent!");
+					//System.out.println("sent!");
 					powerNode.propagateDirectionToNeightbours(
 						myManager.getUniquePropagationId(), 
 						powerNode.getOutputSideForNetworkPropagation(), 
@@ -277,12 +277,12 @@ public class MechanicalNetwork {
 			node.propagateNetworkToNeighbours(myManager.getUniquePropagationId(), networkId, node.getOutputSideForNetworkPropagation());
 		}
 		
-		System.out.println("rediscovery complete, found " + powerNodes.size() + " power nodes");
+		//System.out.println("rediscovery complete, found " + powerNodes.size() + " power nodes");
 	}
 
 	
 	public void rebuildNetwork() {
-		System.out.println("rebuilding network");
+		//System.out.println("rebuilding network");
 		
 		for (IMechanicalPowerDevice device : powerRelays) {
 			if (device != null) {
@@ -329,12 +329,12 @@ public class MechanicalNetwork {
 				}
 			}
 			if (!found) {
-				System.out.println("forked network");
+				//System.out.println("forked network");
 				forkMechanicalNetwork(otherNode, otherNodes.get(otherNode));
 			}
 		}
 		
-		System.out.println("total networks in game: " + myManager.networksById.size());
+		//System.out.println("total networks in game: " + myManager.networksById.size());
 	}
 	
 	

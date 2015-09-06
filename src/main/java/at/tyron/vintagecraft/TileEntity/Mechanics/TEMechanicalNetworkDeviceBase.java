@@ -227,10 +227,10 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		this.clockwise = clockwise;
 		setDirectionFromFacing(remoteFacing);
 		
-		if (this instanceof TEWindmillRotor) {
+/*		if (this instanceof TEWindmillRotor) {
 			System.out.println("direction set to " + clockwise + " from facing is " + remoteFacing);
 		}
-		
+	*/	
 		worldObj.markBlockForUpdate(pos);
 		
 		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);

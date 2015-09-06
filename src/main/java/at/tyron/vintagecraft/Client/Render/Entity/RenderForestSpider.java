@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.Client.Render;
+package at.tyron.vintagecraft.Client.Render.Entity;
 
 import net.minecraft.client.renderer.entity.RenderCaveSpider;
 import net.minecraft.client.renderer.entity.RenderManager;

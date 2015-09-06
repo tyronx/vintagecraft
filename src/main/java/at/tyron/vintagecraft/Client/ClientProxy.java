@@ -8,9 +8,10 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Client.Render.RenderFog;
-import at.tyron.vintagecraft.Client.Render.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Client.Render.ShootingStar;
+import at.tyron.vintagecraft.Client.Render.Entity.RenderCoalPoweredMinecart;
+import at.tyron.vintagecraft.Client.Render.Entity.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRAngledGearBox;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRAxle;
@@ -23,6 +24,7 @@ import at.tyron.vintagecraft.Client.Render.TESR.TESRTallMetalMold;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRToolRack;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWindmillRotor;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWoodBucket;
+import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecart;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityGunpowderSparkFX;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
@@ -113,10 +115,11 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		
 		IReloadableResourceManager IRRM = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
 		IRRM.registerReloadListener(this);
-		 
+		System.out.println("register renderers");
 		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));		
 		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCoalPoweredMinecart.class, new RenderCoalPoweredMinecart(Minecraft.getMinecraft().getRenderManager()));
 	}
 
 	@Override

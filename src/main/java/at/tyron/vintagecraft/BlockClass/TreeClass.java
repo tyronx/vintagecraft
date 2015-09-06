@@ -29,7 +29,7 @@ public class TreeClass extends BaseBlockClass {
 	
 	public TreeClass init() {
 		for (EnumTree tree : EnumTree.values()) {
-			if (tree.isBush && !name.equals("leaves") && !name.equals("leavesbranchy")) {
+			if (tree.isBush && !name.equals("leaves") && !name.equals("leavesbranchy") && !name.equals("sapling")) {
 				continue;
 			}
 			

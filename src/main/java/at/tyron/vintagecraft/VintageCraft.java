@@ -198,9 +198,10 @@ public class VintageCraft {
 			for (ItemStack stack : inventory) {
 				if (stack != null && stack.getItem() instanceof ItemArmorVC) {
 					ItemArmorVC armoritem = (ItemArmorVC)stack.getItem();
-					if (armoritem.getArmorMaterial().getName().equals("IRONVC")) numArmorItems++;
+					if (armoritem.getArmorMaterial().name().equals("IRONVC")) numArmorItems++;
 				}
 			}
+			
 			if (numArmorItems == 4) {
 				((EntityPlayer)evt.source.getEntity()).triggerAchievement(AchievementsVC.killIronArmorZombie);
 			}

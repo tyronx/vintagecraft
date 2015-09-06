@@ -1,5 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
+import java.util.Locale;
+
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -52,7 +54,7 @@ public class ItemArmorVC extends ItemArmor implements ISubtypeFromStackPovider, 
 
 	@Override
 	public EnumMetal getItemMetal(ItemStack itemstack) {
-		return EnumMetal.byString(getArmorMaterial().getName());
+		return EnumMetal.byString(getArmorMaterial().name().toLowerCase(Locale.ROOT).substring(0, -2));
 	}
 
 }

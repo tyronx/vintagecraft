@@ -8,6 +8,7 @@ import at.tyron.vintagecraft.Client.Gui.GuiCarpenterTable;
 import at.tyron.vintagecraft.Client.Gui.GuiForge;
 import at.tyron.vintagecraft.Client.Gui.GuiStove;
 import at.tyron.vintagecraft.Client.Gui.GuiVessel;
+import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecart;
 import at.tyron.vintagecraft.Entity.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.EntityMobHorse;
 import at.tyron.vintagecraft.Entity.EntityStone;
@@ -120,6 +121,7 @@ public class CommonProxy implements IGuiHandler {
 		EntityRegistry.registerModEntity(EntityStone.class, "stonethrown", 3, VintageCraft.instance, 64, 1, true);  
 		EntityRegistry.registerModEntity(EntityMobHorse.class, "mobhorse", 4, VintageCraft.instance, 64, 1, true);
 		EntityRegistry.registerModEntity(EntityForestSpider.class, "VCForestSpider", 5, VintageCraft.instance, 64, 1, true);
+		EntityRegistry.registerModEntity(EntityCoalPoweredMinecart.class, "VCCoalPoweredMinecart", 6, VintageCraft.instance, 80, 1, true);
 		
 		for (Achievement ach : AchievementsVC.achievements) {
 			ach.registerStat();

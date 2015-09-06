@@ -44,7 +44,6 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 	
 	public BlockLeavesVC() {
 		super(Material.leaves);
-		this.setTickRandomly(true);
 		this.setLightOpacity(1);
 		setCreativeTab(VintageCraft.floraTab);    
 	}
@@ -105,35 +104,10 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
     }
     
 
-    public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-        byte b0 = 1;
-        int i = b0 + 1;
-        int j = pos.getX();
-        int k = pos.getY();
-        int l = pos.getZ();
-
-        if (worldIn.isAreaLoaded(new BlockPos(j - i, k - i, l - i), new BlockPos(j + i, k + i, l + i))) {
-            for (int i1 = -b0; i1 <= b0; ++i1) {
-                for (int j1 = -b0; j1 <= b0; ++j1) {
-                    for (int k1 = -b0; k1 <= b0; ++k1) {
-                        BlockPos blockpos1 = pos.add(i1, j1, k1);
-                        IBlockState iblockstate1 = worldIn.getBlockState(blockpos1);
-
-                        if (iblockstate1.getBlock().isLeaves(worldIn, blockpos1)) {
-                            iblockstate1.getBlock().beginLeavesDecay(worldIn, blockpos1);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 
     @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (worldIn.canLightningStrike(pos.up()) && !World.doesBlockHaveSolidTopSurface(worldIn, pos.down()) && rand.nextInt(15) == 1)
-        {
+    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if (worldIn.canLightningStrike(pos.up()) && !World.doesBlockHaveSolidTopSurface(worldIn, pos.down()) && rand.nextInt(15) == 1) {
             double d0 = (double)((float)pos.getX() + rand.nextFloat());
             double d1 = (double)pos.getY() - 0.05D;
             double d2 = (double)((float)pos.getZ() + rand.nextFloat());
@@ -141,31 +115,25 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
         }
     }
 
-    private void destroy(World worldIn, BlockPos pos)
-    {
+    private void destroy(World worldIn, BlockPos pos) {
         this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
         worldIn.setBlockToAir(pos);
     }
 
-    public int quantityDropped(Random random)
-    {
+    public int quantityDropped(Random random) {
         return random.nextInt(20) == 0 ? 1 : 0;
     }
 
-    public Item getItemDropped(IBlockState state, Random rand, int fortune)
-    {
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return Item.getItemFromBlock(Blocks.sapling);
     }
 
-    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune)
-    {
+    public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
         super.dropBlockAsItemWithChance(worldIn, pos, state, chance, fortune);
     }
 
-    protected void dropApple(World worldIn, BlockPos pos, IBlockState state, int chance) {}
 
-    protected int getSaplingDropChance(IBlockState state)
-    {
+    protected int getSaplingDropChance(IBlockState state) {
         return 20;
     }
 
@@ -198,9 +166,17 @@ public class BlockLeavesVC extends BlockVC implements IMultiblock {
 		}
 
 		EnumTree tree = (EnumTree) ((BlockClassEntry)state.getValue(getTypeProperty())).getKey();
-
+		if (tree == null) return ret;
+		
+		
 		if (rand.nextFloat() < tree.saplingdropchance * 0.1f) {
-			ret.add(BlocksVC.sapling.getItemStackFor(tree));
+			ItemStack stack = BlocksVC.sapling.getItemStackFor(tree);
+			
+			if (stack == null || stack.getItem() == null) {
+				throw new RuntimeException("Call to getDrops() on BlockLeavesVC at pos " + pos + ", blockstate " + state + ", should return sapling stack of tree type " + tree + " but corresponding Itemtack or item is null!");
+			}
+			
+			ret.add(stack);
 		}
 
 
