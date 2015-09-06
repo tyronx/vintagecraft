@@ -303,7 +303,7 @@ public class BlockSaplingVC extends BlockContainerVC implements IMultiblock, IGr
         	boolean ok = ((TESapling)te).tryPutItemStack(itemstack);
         	
         	if (ok) {
-        		ItemDye.spawnBonemealParticles(world, pos, 10);
+        		world.playAuxSFX(2005, pos, 10);
         		world.markBlockForUpdate(pos);
         	}
         	return ok; 
