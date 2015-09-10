@@ -208,15 +208,18 @@ public class MapGenFlora {
 			
 			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z)));
 			
-			int quantity = random.nextInt(6) + 3;
+			if (climate[0] > -4 && climate[0] < 23 && climate[2] > 60) {
 			
-			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
-				Block block = world.getBlockState(pos.down()).getBlock();
+				int quantity = random.nextInt(6) + 3;
 				
-				if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
-			
-					world.setBlockState(pos, BlocksVC.crops.getBlockStateFor(EnumCrop.FLAX, random.nextInt(4)), 2);
+				while (quantity-- > 0) {
+					pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+					Block block = world.getBlockState(pos.down()).getBlock();
+					
+					if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
+				
+						world.setBlockState(pos, BlocksVC.crops.getBlockStateFor(EnumCrop.FLAX, random.nextInt(4)), 2);
+					}
 				}
 			}
 		}

@@ -3,6 +3,7 @@
         "buildstage=stones": { "model": "vintagecraft:firepit/stones" },
 		"buildstage=log1": { "model": "vintagecraft:firepit/log1" },
 		"buildstage=log2": { "model": "vintagecraft:firepit/log2" },
-		"buildstage=log3": { "model": "vintagecraft:firepit/log3" }
+		"buildstage=log3": { "model": "vintagecraft:firepit/log3" },
+		"buildstage=extinct": { "model": "vintagecraft:firepit/extinct" }
     }
 }

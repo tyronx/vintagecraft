@@ -6,6 +6,7 @@ import java.util.Random;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.IBlockEatableGrass;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
@@ -16,6 +17,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -31,7 +33,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
-public class BlockTallGrassVC extends BlockVC implements IPlantable {
+public class BlockTallGrassVC extends BlockVC implements IPlantable, IBlockEatableGrass {
 	public static final PropertyEnum GRASSTYPE = PropertyEnum.create("grasstype", EnumTallGrass.class);
 	
 	public BlockTallGrassVC() {
@@ -190,5 +192,29 @@ public class BlockTallGrassVC extends BlockVC implements IPlantable {
     public boolean canDropFromExplosion(Explosion explosionIn) {
         return false;
     }
+
+
+
+	@Override
+	public boolean canBeEatenBy(EntityLiving entity, World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		return 
+			state.getBlock() instanceof BlockTallGrassVC && (
+				state.getValue(GRASSTYPE) == EnumTallGrass.SHORT ||
+				state.getValue(GRASSTYPE) == EnumTallGrass.MEDIUM ||
+				state.getValue(GRASSTYPE) == EnumTallGrass.LONG ||
+				state.getValue(GRASSTYPE) == EnumTallGrass.VERYLONG ||
+				state.getValue(GRASSTYPE) == EnumTallGrass.VERYLONG_FLOWERING
+			)
+		;
+	}
+
+
+
+	@Override
+	public void setEatenBy(EntityLiving entity, World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		world.setBlockState(pos, state.withProperty(GRASSTYPE, EnumTallGrass.EATEN));
+	}
 
 }

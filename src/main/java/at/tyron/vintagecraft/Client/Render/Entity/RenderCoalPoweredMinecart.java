@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Vec3;
@@ -128,21 +129,34 @@ public class RenderCoalPoweredMinecart extends Render {
         GlStateManager.popMatrix();
         
         
+		EntityPlayer player = Minecraft.getMinecraft().thePlayer;
+       
+		double playerX = player.prevPosX + (player.posX - player.prevPosX) * partialTicks; 
+		double playerY = player.prevPosY + (player.posY - player.prevPosY) * partialTicks;
+		double playerZ = player.prevPosZ + (player.posZ - player.prevPosZ) * partialTicks;
+		
+        double entityX = entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks; 
+        double entityY = entity.prevPosY + (entity.posY - entity.prevPosY) * partialTicks + 0.25f;
+        double entityZ = entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks;
+        
+        
 		WorldRenderer worldrenderer = Tessellator.getInstance().getWorldRenderer();
 		worldrenderer.startDrawing(GL11.GL_LINES);
 		GL11.glPushMatrix();
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glLineWidth(0.5f);
+			GL11.glDisable(GL11.GL_DEPTH_TEST);
+			GL11.glLineWidth(2f);
 			GL11.glColor3f(1, 1, 1);
-			//GL11.glTranslated(entity.posX, entity.posY, entity.posZ);
+			GL11.glTranslated(entityX-playerX, entityY-playerY, entityZ-playerZ);
 			worldrenderer.addVertexWithUV(0, 0, 0, 0, 0);
-			//worldrenderer.addVertexWithUV(20 * entity.motionX, 20 * entity.motionY, 20 * entity.motionZ, 1, 1);
-			worldrenderer.addVertexWithUV(1, 0, 1, 1, 1);
+			worldrenderer.addVertexWithUV(20 * entity.motionX, 20 * entity.motionY, 20 * entity.motionZ, 1, 1);
 			
 			Tessellator.getInstance().draw();
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
+			GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glPopMatrix();
-        
+
+		
         super.doRender(entity, x, y, z, rotationYaw, partialTicks);
     }
 	

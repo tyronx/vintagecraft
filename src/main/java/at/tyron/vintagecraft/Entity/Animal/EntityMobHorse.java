@@ -1,4 +1,4 @@
-package at.tyron.vintagecraft.Entity;
+package at.tyron.vintagecraft.Entity.Animal;
 
 import at.tyron.vintagecraft.AchievementsVC;
 import net.minecraft.enchantment.EnchantmentHelper;

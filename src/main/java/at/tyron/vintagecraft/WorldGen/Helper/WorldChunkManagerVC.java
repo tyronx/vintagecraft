@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Interfaces.ClimateGenWorldChunkManager;
-import at.tyron.vintagecraft.World.BiomeVC;
+import at.tyron.vintagecraft.WorldGen.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;

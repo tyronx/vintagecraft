@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.WorldGen.Layer;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldGen.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
@@ -67,8 +67,7 @@ public class GenLayerTerrain extends GenLayerVC {
 		//this.noiseGen5 = new NoiseGeneratorOctaves(this.rand, 2);
 		this.noiseGen6 = new NoiseGeneratorOctaves(this.rand, 1);
 
-		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed, -70);
-		//this.noiseFieldModifier2 = GenLayerVC.genNoiseFieldModifier(seed + 50, 0);
+		this.noiseFieldModifier = GenLayerVC.genNoiseFieldModifier(seed, -80);
 
 	}
 
@@ -78,25 +77,7 @@ public class GenLayerTerrain extends GenLayerVC {
 	}
 	
 	public int[] getHeightmap(World world, int chunkZ, int chunkX, int xSize, int zSize) {
-		xSize = (int) (16 * Math.ceil(xSize / 16f));
-		zSize = (int) (16 * Math.ceil(zSize / 16f));
-		
-		int[] heightmap = new int[xSize * zSize];
-
-		/*for (int c)
-		
-		for (int x = 0; x < 16; x++) {
-			for (int z = 0; z < 16; z++) {
-				for (int y = 256; y > 0; y--) {
-					if (primer.getBlockState(x, y, z).getBlock() != Blocks.air) {
-						heightmap[x + z * 16] = y;
-						break;
-					}
-				}
-			}
-		}*/
-		
-		return heightmap;
+		return world.getChunkFromChunkCoords(chunkX, chunkZ).getHeightMap();
 	}
 
 	
@@ -244,6 +225,9 @@ public class GenLayerTerrain extends GenLayerVC {
 
 		for (int x = 0; x < xSize; ++x) {
 			for (int z = 0; z < zSize; ++z) {
+				float noisemodfactor = Math.max(0.1f, noiseFieldModifierArray[x + z * xSize] / 255f);
+				float noisemoddiff = 1 - noisemodfactor; 
+				 
 				float maxBlendedHeight = 0.0F;
 				float minBlendedHeight = 0.0F;
 				float blendedHeightSum = 0.0F;
@@ -254,13 +238,13 @@ public class GenLayerTerrain extends GenLayerVC {
 					for (int zR = -smoothingRadius; zR <= smoothingRadius; ++zR) {
 						BiomeVC blendBiome = (BiomeVC)largerBiomeMap[x + xR + smoothingRadius + (z + zR + smoothingRadius) * (xSize + 5)];
 						float blendedHeight = this.parabolicField[xR + smoothingRadius + (zR + smoothingRadius) * 5] / 2.0F;
-						//System.out.println(blendedHeight + " / " + blendBiome.minHeight + " > " + baseBiome.minHeight + " max:" + blendBiome.maxHeight);
+						
 						if (blendBiome.minHeight > baseBiome.minHeight) {
 							blendedHeight *= 0.5F;
 						}
 
-						maxBlendedHeight += blendBiome.maxHeight * blendedHeight;
-						minBlendedHeight += blendBiome.minHeight * blendedHeight;
+						maxBlendedHeight += (blendBiome.maxHeight - noisemoddiff) * blendedHeight;
+						minBlendedHeight += (blendBiome.minHeight - noisemoddiff) * blendedHeight * noisemodfactor;
 						blendedHeightSum += blendedHeight;
 					}
 				}
@@ -323,8 +307,8 @@ public class GenLayerTerrain extends GenLayerVC {
 					}*/
 					
 					result = 2D * noise1[posIndex] 
-							  + (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * Math.max(0f, noiseFieldModifierArray[x + z * xSize] / 255f);
-;
+							  + (noise2[posIndex] / 512D + (this.noise3[posIndex] / 10.0D + 1.0D) / 8.0D) * noisemodfactor;
+					;
 					//result = noise1var;
 							
 					result -= theheight;

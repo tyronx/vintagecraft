@@ -2,6 +2,7 @@ package at.tyron.vintagecraft;
 
 import java.io.File;
 import java.util.Locale;
+import java.util.Random;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,10 +13,13 @@ import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.World.VCraftWorldSavedData;
+import at.tyron.vintagecraft.WorldGen.ChunkProviderGenerateVC;
 import at.tyron.vintagecraft.WorldGen.DynTreeGenerators;
 import at.tyron.vintagecraft.WorldGen.GenLayerVC;
+import at.tyron.vintagecraft.WorldGen.MapGenLakes;
 import at.tyron.vintagecraft.WorldGen.Helper.BlockStateSerializer;
 import at.tyron.vintagecraft.WorldGen.Helper.DynTreeGen;
+import at.tyron.vintagecraft.WorldGen.Layer.GenLayerDrainage;
 import at.tyron.vintagecraft.WorldGen.Village.DynVillageGenerators;
 import at.tyron.vintagecraft.WorldGen.Village.EnumVillage;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrustLayerGroup;
@@ -24,6 +28,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
@@ -39,86 +44,27 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
+import net.minecraft.world.gen.layer.GenLayer;
 import net.minecraftforge.client.event.EntityViewRenderEvent.RenderFogEvent;
 
 public class ServerCommandsVC extends CommandBase {
 
 	@Override
 	public String getName() {
-		return "vcraft";
+		return "vcs";
 	}
 
 	@Override
 	public String getCommandUsage(ICommandSender sender) {
-		return "/vcraft command params";
+		return "/vcs command params";
 	}
 
-	
-	// /vcraft genlayer forest
-	
-	void replaceBlocks(BlockPos center, ICommandSender sender, int wdt, int hgt, boolean ignoremeta) {
-		ItemStack searchstack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[0];
-		ItemStack replacestack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[1];
-
-		if (!(searchstack.getItem() instanceof ItemBlock)) {
-			sender.addChatMessage(new ChatComponentText("Search item is not a block"));
-			return;
-		}
-
-		
-		if (!(replacestack.getItem() instanceof ItemBlock)) {
-			sender.addChatMessage(new ChatComponentText("Replace item is not a block"));
-			return;
-		}
-		
-		Block searchblock = ((ItemBlock)searchstack.getItem()).block;
-		Block replaceblock = ((ItemBlock)replacestack.getItem()).block;
-		IBlockState replaceblockstate = replaceblock.getStateFromMeta(replacestack.getItemDamage());
-		
-		int replaced = 0;
-		
-		for (int x = -wdt/2; x < wdt; x++) {
-			for (int z = -wdt/2; z < wdt; z++) {
-				for (int y = 0; y < hgt; y++) {
-					IBlockState blockstate = sender.getEntityWorld().getBlockState(center.add(x, y, z));
-						
-					
-					if (blockstate.getBlock() == searchblock && 
-						(ignoremeta || blockstate.getBlock().getMetaFromState(blockstate) == searchstack.getItemDamage())) { 
-					
-						sender.getEntityWorld().setBlockState(center.add(x, y, z), replaceblockstate);
-						replaced++;
-					}
-				}
-			}
-		}
-		
-		sender.addChatMessage(new ChatComponentText("Replaced " + replaced + " blocks"));
-		
-	}
-	
-	void clearArea(World world, BlockPos center, int wdt, int hgt) {
-		for (int x = -wdt/2; x < wdt; x++) {
-			for (int z = -wdt/2; z < wdt; z++) {
-				for (int y = 0; y < hgt; y++) {
-					world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
-				}
-			}
-		}
-	}
-	
-	void createPlane(World world, BlockPos center, int wdt, IBlockState state) {
-		for (int x = -wdt/2; x < wdt; x++) {
-			for (int z = -wdt/2; z < wdt; z++) {
-				world.setBlockState(center.add(x, -1, z), state);
-			}
-		}
-	}
-	
 	
 	@Override
 	public void execute(ICommandSender sender, String[] args) throws CommandException {
 		World world = sender.getEntityWorld();
+		int chunkX = sender.getPosition().getX() >> 4;
+		int chunkZ = sender.getPosition().getZ() >> 4;
 		
 		if (args.length == 0) {
 			sender.addChatMessage(new ChatComponentText(getCommandUsage(sender)));
@@ -155,6 +101,13 @@ public class ServerCommandsVC extends CommandBase {
 			int hgt = 80;
 			
 			clearArea(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
+		}
+
+		if (args[0].equals("clearwater")) {
+			int wdt = 80;
+			int hgt = 80;
+			
+			clearAreaWater(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
 		}
 
 		if (args[0].equals("replace")) {
@@ -289,14 +242,27 @@ public class ServerCommandsVC extends CommandBase {
 				GenLayerVC.genHeightmap(seed);
 			}
 			if (args[1].equals("noisemod")) {
-				GenLayerVC.genNoiseFieldModifier(seed, -70);
+				GenLayerVC layer = GenLayerVC.genNoiseFieldModifier(seed, -70);
+				//GenLayerVC.drawImage(16 * 6, layer.getInts(chunkX-3, chunkZ-3, 16 * 6, 16 * 6), "currentchunknoisemod", 3);
+				//GenLayerVC.drawImage(16, layer.getInts(chunkX, chunkZ, 16, 16), "currentchunknoisemod", 3);
 			}
+			
 			if (args[1].equals("noisemod2")) {
 				GenLayerVC.genNoiseFieldModifier(seed, 0);
+				
+				
 			}
 			if (args[1].equals("rockoffset")) {
 				GenLayerVC.genHorizontalRockOffsetMap(seed);
 			}
+			
+			if (args[1].equals("drainage")) {
+				MapGenLakes lakegen = new MapGenLakes();
+				lakegen.generate(new Random(), chunkX, chunkZ, world, null, null);
+				System.out.println("done");
+			}
+			
+	
 			
 			
 			GenLayerVC.shouldDraw = false;
@@ -306,6 +272,7 @@ public class ServerCommandsVC extends CommandBase {
 			
 		}
 
+		
 		
 		if (args[0].equals("climate")) {
 			int climate[] = VCraftWorld.instance.getClimate(sender.getPosition());
@@ -381,5 +348,81 @@ public class ServerCommandsVC extends CommandBase {
 	   File sdf = new File("");
 	   return sdf.getAbsolutePath();
 	}
+	
+	
+	void replaceBlocks(BlockPos center, ICommandSender sender, int wdt, int hgt, boolean ignoremeta) {
+		ItemStack searchstack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[0];
+		ItemStack replacestack = ((EntityPlayer)sender.getCommandSenderEntity()).inventory.mainInventory[1];
+
+		if (!(searchstack.getItem() instanceof ItemBlock)) {
+			sender.addChatMessage(new ChatComponentText("Search item is not a block"));
+			return;
+		}
+
+		
+		if (!(replacestack.getItem() instanceof ItemBlock)) {
+			sender.addChatMessage(new ChatComponentText("Replace item is not a block"));
+			return;
+		}
+		
+		Block searchblock = ((ItemBlock)searchstack.getItem()).block;
+		Block replaceblock = ((ItemBlock)replacestack.getItem()).block;
+		IBlockState replaceblockstate = replaceblock.getStateFromMeta(replacestack.getItemDamage());
+		
+		int replaced = 0;
+		
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = 0; y < hgt; y++) {
+					IBlockState blockstate = sender.getEntityWorld().getBlockState(center.add(x, y, z));
+						
+					
+					if (blockstate.getBlock() == searchblock && 
+						(ignoremeta || blockstate.getBlock().getMetaFromState(blockstate) == searchstack.getItemDamage())) { 
+					
+						sender.getEntityWorld().setBlockState(center.add(x, y, z), replaceblockstate);
+						replaced++;
+					}
+				}
+			}
+		}
+		
+		sender.addChatMessage(new ChatComponentText("Replaced " + replaced + " blocks"));
+		
+	}
+	
+	void clearArea(World world, BlockPos center, int wdt, int hgt) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = 0; y < hgt; y++) {
+					world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
+				}
+			}
+		}
+	}
+
+	
+	void clearAreaWater(World world, BlockPos center, int wdt, int hgt) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = -hgt/2; y < hgt; y++) {
+					if (world.getBlockState(center.add(x, y, z)).getBlock().getMaterial() == Material.water) {
+						world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
+					}
+				}
+			}
+		}
+	}
+
+	void createPlane(World world, BlockPos center, int wdt, IBlockState state) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				world.setBlockState(center.add(x, -1, z), state);
+			}
+		}
+	}
+	
+	
+
 
 }

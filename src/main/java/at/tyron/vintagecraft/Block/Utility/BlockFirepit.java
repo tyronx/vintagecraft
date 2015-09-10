@@ -5,9 +5,12 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
+import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
+import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
@@ -45,7 +48,6 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 		this.burning = burning;
 		
 		if (!burning) { 
-			//setCreativeTab(CreativeTabs.tabDecorations);
 			setDefaultState(getDefaultState().withProperty(buildstage, EnumBuildStage.STONES));
 		}
 	}
@@ -85,7 +87,7 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
         	return true;
         }
         
-        if (!isBurning() && state.getValue(buildstage) != EnumBuildStage.LOG3) {
+        if (!isBurning() && (state.getValue(buildstage) != EnumBuildStage.LOG3 && state.getValue(buildstage) != EnumBuildStage.EXTINCT)) {
         	return true;
         } 
 
@@ -114,6 +116,14 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
     
     
     public void setState(boolean burning, World worldIn, BlockPos pos) {
+        if (!burning) {
+        	setState(burning, worldIn, pos, EnumBuildStage.EXTINCT, true);
+        } else {
+        	setState(burning, worldIn, pos, EnumBuildStage.LOG3, true);
+        }
+    }
+    
+    public void setState(boolean burning, World worldIn, BlockPos pos, EnumBuildStage stage, boolean validate) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
         TileEntity tileentity = worldIn.getTileEntity(pos);
         
@@ -121,17 +131,18 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
         if (burning) block = getLitVersion();
         
         keepInventory = true;
-        IBlockState state = block.getDefaultState();
-        if (!burning) {
-        	state = state.withProperty(buildstage, EnumBuildStage.LOG3);
-        }
+        IBlockState state = block.getDefaultState().withProperty(buildstage, stage);
         worldIn.setBlockState(pos, state, 3);
-        keepInventory = false;
-
+                
         if (tileentity != null) {
-            tileentity.validate();
-            worldIn.setTileEntity(pos, tileentity);
+            if(validate) tileentity.validate(); // NO Idea what this is good for -.-
+            
+            worldIn.setTileEntity(pos, tileentity);        
         }
+        
+       
+        keepInventory = false;
+    	
     }
     
     
@@ -169,18 +180,39 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 	@Override
 	public boolean tryPutItemstack(World world, BlockPos pos, EntityPlayer player, EnumFacing side, ItemStack itemstack) {
 		BlockFirepit.EnumBuildStage stage = getNextFirepitStage(itemstack, player, world, pos, side);
-		if (stage != null) {
-			world.setBlockState(pos, BlocksVC.firepit.getDefaultState().withProperty(BlockFirepit.buildstage, stage));
+		
+		boolean isFuel =
+			itemstack.getItem() instanceof ItemLogVC &&
+			BlocksVC.log.containsBlock(((ItemLogVC)itemstack.getItem()).block)
+		;
+		
+		
+		if (stage != null && isFuel) {
 			itemstack.stackSize--;
+			
+			setState(stage == EnumBuildStage.LOG3, world, pos, stage, false);
+			
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (stage == EnumBuildStage.LOG3 && tileentity instanceof TEHeatSourceWithGUI) {
+				TEHeatSourceWithGUI tepit = (TEHeatSourceWithGUI)tileentity;
+				
+				tepit.igniteWithFuel(itemstack, 3);
+				
+			} 
+			
+			
 			return true;
 		}
-
-		if (!player.isSneaking()) return false;
+		
+		
+		
+		if (!player.isSneaking() || stage != null) return true;
 		
 		TileEntity tileentity = world.getTileEntity(pos);
 		if (tileentity instanceof TEHeatSourceWithGUI) { 
 			return ((TEHeatSourceWithGUI)tileentity).tryPutItemStack(itemstack);
 		}
+		
 		return false;
 	}
 
@@ -267,7 +299,9 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 		STONES,
 		LOG1,
 		LOG2,
-		LOG3;
+		LOG3,
+		EXTINCT
+		;
 
 		@Override
 		public String getName() {

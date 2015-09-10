@@ -218,9 +218,9 @@ public class Recipes {
 		
 		
 		ItemStack wheat = ItemSeedVC.withCropType(EnumCrop.WHEAT);
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), new Object[]{wheat, wheat, wheat, wheat, wheat});
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.bread), new Object[]{wheat, wheat, wheat, wheat, wheat});
 		ItemStack flaxSeeds = ItemSeedVC.withCropType(EnumCrop.FLAX);
-		GameRegistry.addShapelessRecipe(new ItemStack(Items.bread), new Object[]{flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds});
+		GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.bread), new Object[]{flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds});
 		
 		addShapelessRecipeVC(new ItemStack(ItemsVC.blastingPowder, 3), new Object[] {
 			ItemOreVC.getItemStackFor(EnumOreType.SULFUR, 1), 

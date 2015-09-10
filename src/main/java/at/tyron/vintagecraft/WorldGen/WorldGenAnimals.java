@@ -4,7 +4,6 @@ package at.tyron.vintagecraft.WorldGen;
 import java.util.List;
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.BiomeVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.BlockStairs;

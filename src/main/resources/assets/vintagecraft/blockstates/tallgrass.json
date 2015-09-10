@@ -19,7 +19,9 @@
 		"grasstype=verylong_forgetmenot2": { "model": "vintagecraft:tallgrass/verylong_forgetmenot2" },
 		"grasstype=verylong_forgetmenot3": { "model": "vintagecraft:tallgrass/verylong_forgetmenot3" },
 		
-		"grasstype=verylong_cowparsley": { "model": "vintagecraft:tallgrass/verylong_cowparsley" }
+		"grasstype=verylong_cowparsley": { "model": "vintagecraft:tallgrass/verylong_cowparsley" },
+		
+		"grasstype=eaten": { "model": "vintagecraft:tallgrass/eaten" }
 
 	}
 }

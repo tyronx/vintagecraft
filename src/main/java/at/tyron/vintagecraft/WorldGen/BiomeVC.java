@@ -1,8 +1,9 @@
-package at.tyron.vintagecraft.World;
+package at.tyron.vintagecraft.WorldGen;
 
 import java.util.ArrayList;
 
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
+import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.world.biome.BiomeGenBase;
 
 public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {

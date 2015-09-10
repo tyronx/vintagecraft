@@ -26,7 +26,9 @@ public enum EnumTallGrass implements IStateEnum, IStringSerializable {
 	VERYLONG_FORGETMENOT2 	(10, 160, 1f, 1), 
 	VERYLONG_FORGETMENOT3 	(11, 160, 1f, 1),
 	
-//	VERYLONG_COWPARSLEY 	(12, 160, 2),
+	// Eaten short by a cow
+	// Applies only for tallgrasses short, medium, long, verylong and verylong_flowering
+	EATEN					(15, 500, 0, 0)
 	
 	;
 	

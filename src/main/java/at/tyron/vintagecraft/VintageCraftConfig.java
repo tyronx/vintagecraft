@@ -40,7 +40,7 @@ public class VintageCraftConfig {
 	public static boolean debugBlockRegistration = false;
 	
 	// Configurable stuff
-	public static int mobFreeDays = 1;
+	public static int mobFreeDays = 2;
 	public static int easyMobCap = 70;
 	public static int mediumMobCap = 80;
 	public static int hardMobCap = 90;

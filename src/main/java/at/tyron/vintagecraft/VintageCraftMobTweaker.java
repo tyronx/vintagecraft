@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Random;
 
-import at.tyron.vintagecraft.Entity.EntityMobHorse;
+import at.tyron.vintagecraft.Entity.Animal.EntityMobHorse;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.MobInventoryItems;
@@ -146,7 +146,6 @@ public class VintageCraftMobTweaker {
 		if (VintageCraftConfig.mobFreeDays == 0) return cap;
 		if (VintageCraftConfig.mobFreeDays > days) return 0;
 		
-		//System.out.println(days + " / " + VintageCraftConfig.mobFreeDays);
 		return (int) Math.min(cap, (days - VintageCraftConfig.mobFreeDays + 1) * 15);
 	}
 	

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurAll;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerBlurSelective;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerClampedSubstractAll;
@@ -21,6 +20,7 @@ import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoiseUnclamped;
 import at.tyron.vintagecraft.WorldProperties.EnumDepositSize;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.gen.layer.GenLayer;
 
 public abstract class GenLayerVC extends GenLayer {
@@ -31,6 +31,8 @@ public abstract class GenLayerVC extends GenLayer {
 	protected long baseSeed;
 	
 	
+
+
 	public static GenLayerVC genHorizontalRockOffsetMap(long seed) {
 		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 2, 0.6f, 50, 0);
 		noise.scale = 128;
@@ -40,7 +42,7 @@ public abstract class GenLayerVC extends GenLayer {
 	}
 	
 	public static GenLayerVC genNoiseFieldModifier(long seed, int offset) {	
-		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.96f, 165, offset, 2048D);
+		GenLayerSimplexNoise noise = new GenLayerSimplexNoise(seed, 5, 0.96f, 170, offset, 1024D);
 		GenLayerVC.drawImageGrayScale(512, noise, "NoiseFieldModifier 0 Noise");
 		
 		GenLayerVC noisemod = new GenLayerBlurAll(seed, 2, 6, noise);
@@ -237,8 +239,9 @@ public abstract class GenLayerVC extends GenLayer {
 	
 	// type:
 	// 0 .. biome
-	// 1 .. grayscale
+	// 1 .. rgb
 	// 2 .. rocklayer
+	// 3 .. grayscale from lowest byte
 	public static void drawImage(int size, int[] ints, String name, int type) {
 		if(!shouldDraw) {
 			return;
@@ -268,7 +271,6 @@ public abstract class GenLayerVC extends GenLayer {
 						break;
 						
 					case 1:
-						//id = id & 0xff;
 						c = new Color((id >> 16) & 0xff, (id >> 8) & 0xff, id & 0xff);
 						graphics.setColor(c);
 						graphics.drawRect(x, z, 1, 1);

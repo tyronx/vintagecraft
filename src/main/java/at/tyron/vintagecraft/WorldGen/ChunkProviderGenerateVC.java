@@ -1,12 +1,15 @@
 package at.tyron.vintagecraft.WorldGen;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Queue;
 import java.util.Random;
 
-import at.tyron.vintagecraft.World.BiomeVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerFlatVC;
@@ -51,6 +54,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	MapGenCavesVC caveGenerator;
 	MapGenFlora floragenerator;
+	MapGenLakes lakegenerator;
 
 	// These create deformations in the transitions of rocks, so they are not in a straight line
 	GenLayerVC rockOffsetNoiseX;
@@ -74,6 +78,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		
 		caveGenerator = new MapGenCavesVC();
 		floragenerator = new MapGenFlora(seed, ageLayer);
+		lakegenerator = new MapGenLakes();
 		
 		this.worldObj = worldIn;
 		this.rand = new Random(seed);
@@ -97,6 +102,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			return provideFlatChunk(chunkX, chunkZ, (WorldChunkManagerFlatVC)worldObj.getWorldChunkManager());
 		}
 		WorldChunkManagerVC wcm = (WorldChunkManagerVC)worldObj.getWorldChunkManager();
+		
+		//System.out.println("provide chunk");
 		
 		primer = new ChunkPrimer();
 		
@@ -125,7 +132,11 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		}
 		
 		chunk.setBiomeArray(biomeMapbytes);
+		
+		// Also generates the height map, so beyond this point we can do calculations based on that
 		chunk.generateSkylightMap();
+		
+		
 		
 		
 		
@@ -152,49 +163,78 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	}
 
 
-	
 	@Override
-	// chunkprovider is an instance of ChunkProviderServer
 	public void populate(IChunkProvider chunkprovider, int chunkX, int chunkZ) {
-		
-		// Actually working check on whether or not to populate a chunk (prevents runaway chunk generation)
-		// Vanilla pop-check is very strangely programmed and fails to prevent runaway chunk generation
-
-		// Seems to be buggy on rare occassions where a stripe of chunks are not populated, but still much better than the game crashing from endless chunk generation   
+		checkUnpopulatedQueue(chunkprovider);
 		
 		if (chunkprovider instanceof ChunkProviderServer) {
-			int x, z;
-			
-			for (Iterator<BlockPos> it = VCraftWorld.instance.unpopulatedChunks.iterator(); it.hasNext(); ) {
-				BlockPos chunkpos = it.next();
-				x = chunkpos.getX();
-				z = chunkpos.getZ();
-				
-				if (shouldPopulate((ChunkProviderServer)chunkprovider, x, z)) {
-					it.remove();
-					populate(chunkprovider, x, z);
-					VCraftWorld.instance.setChunkNBT(x, z, "vcraftpopulated", true);
-					break;
-				}
-			}
-			
+			// Don't populate if not all direct neighbours have been populated
+			// Instead put on queue
 			if(!shouldPopulate((ChunkProviderServer)chunkprovider, chunkX, chunkZ)) {
-				VCraftWorld.instance.unpopulatedChunks.add(new BlockPos(chunkX, 0, chunkZ));
+				synchronized (VCraftWorld.instance.unpopulatedChunks) {
+					VCraftWorld.instance.unpopulatedChunks.add(new BlockPos(chunkX, 0, chunkZ));	
+				}
+				
 				VCraftWorld.instance.setChunkNBT(chunkX, chunkZ, "vcraftpopulated", false);	
 				return;
 			}
+	
+			populateNow(chunkprovider, chunkX, chunkZ);
+		}
+	}
+	
+	
+	public void checkUnpopulatedQueue(IChunkProvider chunkprovider) {
+
+		// Actually working check on whether or not to populate a chunk (prevents runaway chunk generation)
+		// Vanilla pop-check is very strangely programmed and fails to prevent runaway chunk generation - mostly because they only small structures and trees
+		// Seems to be buggy on rare occassions where a stripe of chunks are not populated, but still much better than the game crashing from endless chunk generation   
+		
+		// Principle: Populate a chunk only if all direct neighbours have been generated already 
+		if (chunkprovider instanceof ChunkProviderServer) {
+			Queue<Point> chunks2Pop = new LinkedList<Point>();
+			
+			synchronized(VCraftWorld.instance.unpopulatedChunks) {
+				int x, z;
+				if (VCraftWorld.instance.unpopulatedChunks.size() > 2000) {
+					System.out.println("Warning: Over 2000 chunks in unpop queue - possible runaway chunk generation.");
+				}
+				
+				// check queue of not yet populated chunks and see if we can pop these by now
+				Iterator<BlockPos> it = VCraftWorld.instance.unpopulatedChunks.iterator();
+				while (it.hasNext()) {
+					BlockPos chunkpos = it.next();
+					x = chunkpos.getX();
+					z = chunkpos.getZ();
+					
+					if (shouldPopulate((ChunkProviderServer)chunkprovider, x, z)) {
+						it.remove();
+						chunks2Pop.add(new Point(x, z));		
+					}
+				}
+			}
+			
+			while (!chunks2Pop.isEmpty()) {
+				Point p = chunks2Pop.remove();
+				populateNow(chunkprovider, p.x, p.y);
+				VCraftWorld.instance.setChunkNBT(p.x, p.y, "vcraftpopulated", true);
+			}
+			
 			
 		}
-			
-		
+	}
+	
+	public void populateNow(IChunkProvider chunkprovider, int chunkX, int chunkZ) {
 		BlockPos pos;
 		int xCoord = chunkX * 16;
 		int zCoord = chunkZ * 16;
 
+		lakegenerator.generate(rand, chunkX, chunkZ, worldObj, chunkprovider, chunkprovider);
+		
 		WorldGenAnimals.performWorldGenSpawning(this.worldObj, null, xCoord, zCoord, 16, 16, this.rand);
 		
 		floragenerator.generate(rand, chunkX, chunkZ, worldObj, chunkprovider, chunkprovider);
-
+		
 		
 		BlockPos chunkpos = new BlockPos(xCoord, 0, zCoord);
 		int temp;
@@ -209,13 +249,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					}
 				}
 			}
-		}
-		
-		
+		}		
 	}
 	
-	
-
 	
 	
 	
@@ -382,11 +418,18 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	public boolean shouldPopulate(ChunkProviderServer chunkprovider, int chunkX, int chunkZ) {
 		return
-			 chunkprovider.chunkExists(chunkX - 1, chunkZ)
-			 && chunkprovider.chunkExists(chunkX, chunkZ - 1)
-			 && chunkprovider.chunkExists(chunkX + 1, chunkZ)
-			 && chunkprovider.chunkExists(chunkX, chunkZ + 1)
+				// Direct neighbours
+				 chunkprovider.chunkExists(chunkX - 1, chunkZ)
+				 && chunkprovider.chunkExists(chunkX, chunkZ - 1)
+				 && chunkprovider.chunkExists(chunkX + 1, chunkZ)
+				 && chunkprovider.chunkExists(chunkX, chunkZ + 1)
+				// Diagonals
+				 && chunkprovider.chunkExists(chunkX - 1, chunkZ - 1)
+				 && chunkprovider.chunkExists(chunkX - 1, chunkZ + 1)
+				 && chunkprovider.chunkExists(chunkX + 1, chunkZ - 1)
+				 && chunkprovider.chunkExists(chunkX + 1, chunkZ + 1)
 		;
+		
 	}
 	
 	@Override

@@ -226,6 +226,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
     	if (worldObj.isRemote) return;
     	
+    	    	
     	counter = ++counter % counterMax();
     	int tick = counter / (counterMax()-1);
     	if (tick == 0) return;
@@ -414,16 +415,21 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     
     
     public void igniteFuel() {
-    	maxFuelBurnTime = fuelBurnTime = furnace.getHeatDuration(fuelSlot());
-		maxTemperature = furnace.getProducedHeat(fuelSlot());
-		smokeLevel = ((IItemFuel)fuelSlot().getItem()).smokeLevel(fuelSlot());
-		
+    	igniteWithFuel(fuelSlot(), 1);
+    	
 		fuelSlot().stackSize -= furnace.fueluse;
 		
 		if (fuelSlot().stackSize <= 0) {
 			furnaceItemStacks[1] = null;
 		}
 		
+		
+    }
+    
+    public void igniteWithFuel(ItemStack stack, int durationMultiplier) {
+    	maxFuelBurnTime = fuelBurnTime = furnace.getHeatDuration(stack) * durationMultiplier;
+		maxTemperature = furnace.getProducedHeat(stack);
+		smokeLevel = ((IItemFuel)stack.getItem()).smokeLevel(stack);
 		setStoveBurning(true);
     }
     
@@ -435,7 +441,6 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	}
     	
     	worldObj.markBlockForUpdate(pos);
-    	markDirty();
     }
     
     

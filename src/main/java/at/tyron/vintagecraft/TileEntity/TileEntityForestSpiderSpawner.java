@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Entity.EntityForestSpider;
+import at.tyron.vintagecraft.Entity.Animal.EntityForestSpider;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;

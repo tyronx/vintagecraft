@@ -805,7 +805,7 @@ public class DynTreeGenerators {
 						0.01f,
 						0.4f
 					),
-					1.5f
+					1.6f
 			), null, null
 		);
 		
@@ -839,7 +839,7 @@ public class DynTreeGenerators {
 						-0.8f,
 						0f
 					),
-					0.7f
+					1.1f
 			), null, null
 		);
 		

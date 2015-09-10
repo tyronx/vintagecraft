@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import at.tyron.vintagecraft.VintageCraft;
@@ -49,7 +52,7 @@ public class VCraftWorld {
 	public static final ResourceLocation cloudResourceLocation = new ResourceLocation("minecraft:textures/environment/clouds.png");
 	
 	
-	public ArrayList<BlockPos> unpopulatedChunks = new ArrayList<BlockPos>();
+	public List<BlockPos> unpopulatedChunks = Collections.synchronizedList(new ArrayList());
 	private boolean printingProfiling = false;
 	
 	private static int[] grassBuffer = new int[65536];
@@ -214,7 +217,10 @@ public class VCraftWorld {
 		VintageCraft.proxy.putChunkNbt(Chunk2Index(event.getChunk()), nbt);
 		
 		if (nbt.hasKey("vcraftpopulated") && !nbt.getBoolean("vcraftpopulated")) {
-			unpopulatedChunks.add(new BlockPos(event.getChunk().xPosition, 0, event.getChunk().zPosition));
+			synchronized (unpopulatedChunks) {
+				unpopulatedChunks.add(new BlockPos(event.getChunk().xPosition, 0, event.getChunk().zPosition));				
+			}
+			
 		}
 		
 		mark(event.getChunk().xPosition, event.getChunk().zPosition, "load " + nbt.hasKey("climate"));		

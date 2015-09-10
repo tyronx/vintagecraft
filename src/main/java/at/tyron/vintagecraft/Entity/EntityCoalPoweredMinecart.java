@@ -72,6 +72,10 @@ public class EntityCoalPoweredMinecart extends EntityMinecart {
 
 
 	public void onUpdate() {
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+
 		onUpdateMinecartCode();
 		
 		this.setMinecartPowered(this.fuel > 0);

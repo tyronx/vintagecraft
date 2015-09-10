@@ -19,6 +19,16 @@ import net.minecraft.world.gen.MapGenBase;
 
 public class MapGenCavesVC extends MapGenBase {
 	// All copied from Vanilla minecraft with minor adjustments
+
+	// This is one very intelligent piece of code actually
+	// It cleverly circumvents the issue of runaway chunk generation
+	
+	// The magic starts in MapGenBase
+	// - For each chunk, the method func_180701_a() is called 64 times - a 8*8 chunk square around the chunk to be generated
+	// - It gives each chunk it's own, reproducible chunk seed
+	// - Each chunk generates its caves as usually, but only the parts which are in the current chunk are being drawn out   
+	
+	// => A piece of a cave from not a yet generated chunks can appear in our generated chunk 
 	
     protected void digCave(long seed, int chunkX, int chunkZ, ChunkPrimer primer, double xcoord, double ycoord, double zcoord) {
         this.digTunnel(seed, chunkX, chunkZ, primer, xcoord, ycoord, zcoord, 1.0F + this.rand.nextFloat() * 6.0F, 0.0F, 0.0F, -1, -1, 0.5D);

@@ -29,8 +29,10 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
+import net.minecraft.item.ItemFood;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -62,6 +64,7 @@ public class ItemsVC {
 	public static Item porkchopCooked;
 	public static Item beefRaw;
 	public static Item beefCooked;
+	public static Item bread;
 	
 	public static Item chickenRaw;
 	public static Item chickenCooked;
@@ -149,6 +152,7 @@ public class ItemsVC {
 		beefCooked = new ItemFoodVC(8, 0.8f, true).register("beefCooked");
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
 		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
+		bread = new ItemFoodVC(6, 0.6f, true).register("bread");
 		
 		seeds = new ItemSeedVC();
 		register(seeds, "seeds");
@@ -182,11 +186,9 @@ public class ItemsVC {
 		blastingPowder  = new ItemCrafted();
 		register(blastingPowder, "blastingpowder");
 		
-//		coke = new ItemCoke();
-//		register(coke, "coke");
 		
-		coalpoweredMinecart = new ItemCoalPoweredMinecart();
-		register(coalpoweredMinecart, "coalpoweredminecart");
+		//coalpoweredMinecart = new ItemCoalPoweredMinecart();
+		//register(coalpoweredMinecart, "coalpoweredminecart");
 	}
 	
 	
