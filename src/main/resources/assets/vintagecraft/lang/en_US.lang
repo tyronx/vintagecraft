@@ -787,6 +787,9 @@ recipe.sail.name=Windmill Sails
 recipe.bucket.name=Wooden Bucket
 recipe.itemframe.name=Item Frame
 recipe.sickle.name=Sickle
+recipe.rails.name=Minecart rails
+recipe.minecart.name=Minecart
+recipe.coalpoweredminecart.name=Coal Powered Minecart
 
 recipeingredients.1ingots.name=1 Ingot
 recipeingredients.2ingots.name=2 Ingots
@@ -799,6 +802,8 @@ recipeingredients.2plates.name=2 Plates
 recipeingredients.3plates.name=3 Plates
 recipeingredients.4plates.name=4 Plates
 recipeingredients.2ironplates.name=2 Iron Plates
+recipeingredients.3ironplates.name=3 Iron Plates
+recipeingredients.3ironplatesandemptyminecart.name=3 Iron Plates + Empty Minecart
 recipeingredients.anvilbaseplussurface.name=Base + Surface
 recipeingredients.5ingotstier2plus.name=5 Ingots (Tier 2-5)
 recipeingredients.1planks.name=1 Planks
@@ -809,6 +814,8 @@ recipeingredients.2planksand4leather.name=2 Planks, 4 Stitched Leather
 recipeingredients.2planksand3linen.name=2 Planks, 3 Linen Cloth
 recipeingredients.3planks2flaxtwine.name=3 Planks, 2 Flax Twine
 recipeingredients.1planks1stitchedleather.name=1 Planks, 1 Stitched Leather
+recipeingredients.8planks1ironplate.name=8 Planks, 1 Iron Plate
+
 
 tile.carpentertable.name=Carpenters Table
 tile.cokeovendoor.name=Coke Oven Door
@@ -859,3 +866,5 @@ achievement.killIronArmorMob=Level 30 Crusader
 achievement.killIronArmorMob.desc=Kill a fully armored zombie
 
 tile.firepit.name=Fire pit
+item.coalpoweredminecart.name=Coal powered minecart
+item.emptyminecart.name=Empty minecart

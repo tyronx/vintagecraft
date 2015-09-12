@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Inventory;
 
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.IItemSmithableSideIngredient;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,6 @@ public class SlotAnvil extends Slot {
 
     
     public static boolean validItem(ItemStack stack) {
-    	return stack.getItem() instanceof IItemSmithable;
+    	return stack.getItem() instanceof IItemSmithable || stack.getItem() instanceof IItemSmithableSideIngredient;
     }
 }

@@ -241,7 +241,7 @@ public class DynTreeGen {
 			
 			IBlockState blockstate = block(baseWidth);
 
-			if (canPlace(blockstate, world.getBlockState(pos.add(dx, dy, dz)))) {
+			if (canPlace(world, pos.add(dx, dy, dz), blockstate)) {
 				world.setBlockState(pos.add(dx, dy, dz), blockstate, 2);
 				
 				//System.out.println("block @" + dx + "/" + dy + "/"+ dz);
@@ -357,15 +357,17 @@ public class DynTreeGen {
 	}
 	
 	
-	boolean canPlace(IBlockState blockstate, IBlockState blockatpos) {
+	boolean canPlace(World world, BlockPos targetPos, IBlockState desiredblockstate) {
+		IBlockState currentblockstate = world.getBlockState(targetPos);
+		
 		// Logs override any leaves
 		// branchy leaves override leaves
 		return 
-			blockatpos.getBlock() == Blocks.air || blockatpos.getBlock() == Blocks.vine 
-			|| blockatpos.getBlock() == BlocksVC.tallgrass
-			|| blockatpos.getBlock() instanceof BlockFlowerVC
-			|| (blockstate == log && (blockatpos.getBlock() instanceof BlockLeavesVC))
-			|| (blockstate == leavesbranchy && (blockatpos.getBlock() instanceof BlockLeavesVC) && !(blockatpos.getBlock() instanceof BlockLeavesBranchy))
+			currentblockstate.getBlock() == Blocks.air || currentblockstate.getBlock() == Blocks.vine 
+			|| currentblockstate.getBlock().isReplaceable(world, targetPos)
+			|| currentblockstate.getBlock() instanceof BlockFlowerVC
+			|| (desiredblockstate == log && (currentblockstate.getBlock() instanceof BlockLeavesVC))
+			|| (desiredblockstate == leavesbranchy && (currentblockstate.getBlock() instanceof BlockLeavesVC) && !(currentblockstate.getBlock() instanceof BlockLeavesBranchy))
 			
 		;
 	

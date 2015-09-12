@@ -5,11 +5,11 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
-public class ModelCoalPoweredMinecart extends ModelBaseVC {
+public class ModelMinecartVC extends ModelBaseVC {
 	public ModelRenderer[] sides;
 	public ModelRenderer chimney;
 	
-	public ModelCoalPoweredMinecart() {
+	public ModelMinecartVC() {
 		initComponents();
 	}
 	
@@ -94,8 +94,14 @@ public class ModelCoalPoweredMinecart extends ModelBaseVC {
         sides[10].rotateAngleX = (float) Math.PI / 2F;
 	}
 
-	public void render(Entity p_78088_1_, float p_78088_2_, float p_78088_3_, float p_78088_4_, float p_78088_5_, float speed, float scale) {
-
+	
+	public void renderEmptyCart(float scale) {
+		for (int i = 0; i < 9; ++i) {
+            this.sides[i].render(scale);
+        }
+	}
+	
+	public void renderCoalPoweredCart(float scale) {
         for (int i = 0; i < 11; ++i) {
             this.sides[i].render(scale);
         }

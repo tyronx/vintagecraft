@@ -251,21 +251,64 @@ public enum EnumAnvilRecipe {
 	}, 2, 3),
 	
 	
-	COKEOVENDOOR (new EnumAnvilTechnique[] {
-		EnumAnvilTechnique.DRAW,
+	MINECART (new EnumAnvilTechnique[] {
+		EnumAnvilTechnique.SHRINK,
+		EnumAnvilTechnique.SHRINK,
 		EnumAnvilTechnique.BEND,
-		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.SHRINK,
+		EnumAnvilTechnique.SHRINK,
 		EnumAnvilTechnique.BEND,
-		EnumAnvilTechnique.DRAW,
-		EnumAnvilTechnique.BEND,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
 		EnumAnvilTechnique.LIGHTHIT,
 		EnumAnvilTechnique.LIGHTHIT,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,
 		EnumAnvilTechnique.PUNCH,
 		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,
 		EnumAnvilTechnique.PUNCH,
 		EnumAnvilTechnique.PUNCH,
 		EnumAnvilTechnique.MEDIUMHIT,
 	}),
+	
+	
+	
+	COALPOWEREDMINECART (new EnumAnvilTechnique[] {
+		EnumAnvilTechnique.BEND,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.BEND,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.BEND,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.MEDIUMHIT,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.DRAW,
+		EnumAnvilTechnique.HEAVYHIT,
+		EnumAnvilTechnique.UPSET,
+		EnumAnvilTechnique.SHRINK,
+		EnumAnvilTechnique.BEND,
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.PUNCH,
+		EnumAnvilTechnique.MEDIUMHIT,
+	}),
+	
+	COKEOVENDOOR (new EnumAnvilTechnique[] {
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.DRAW,
+			EnumAnvilTechnique.BEND,
+			EnumAnvilTechnique.LIGHTHIT,
+			EnumAnvilTechnique.LIGHTHIT,
+			EnumAnvilTechnique.PUNCH,
+			EnumAnvilTechnique.PUNCH,
+			EnumAnvilTechnique.PUNCH,
+			EnumAnvilTechnique.PUNCH,
+			EnumAnvilTechnique.MEDIUMHIT,
+		}),
 
 	
 	FIX_INGOT (new EnumAnvilTechnique[] {
@@ -448,6 +491,15 @@ public enum EnumAnvilRecipe {
 		ItemStack ironplate  = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
 		ironplate.stackSize = 2;
 		COKEOVENDOOR.registerRecipe(new ItemStack(BlocksVC.cokeovendoor), ironplate).setIngredientText("2ironplates");
+		
+		ironplate.stackSize = 3;
+		WorkableRecipeBase recipe = MINECART.registerRecipe(new ItemStack(ItemsVC.emptyMinecart), ironplate);
+		recipe.setIngredientText("3ironplates");
+		
+		
+		ironplate.stackSize = 3;
+		recipe = COALPOWEREDMINECART.registerRecipe(new ItemStack(ItemsVC.coalpoweredMinecart), ironplate, new ItemStack(ItemsVC.emptyMinecart));
+		recipe.setIngredientText("3ironplatesandemptyminecart");
 	}
 	
 	

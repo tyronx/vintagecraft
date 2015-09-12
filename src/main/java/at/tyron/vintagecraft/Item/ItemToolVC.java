@@ -276,6 +276,8 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 					worldIn.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:stonehit", 1f, 1f);
 				}
 				
+				worldIn.markBlockForUpdate(pos);
+				
 				stack.damageItem(2, playerIn);
 				playerIn.swingItem();
 			}

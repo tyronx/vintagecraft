@@ -1,6 +1,7 @@
 package at.tyron.vintagecraft.Inventory;
 
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -25,8 +26,13 @@ public class SlotVessel extends Slot {
 
     
     public static boolean validItem(ItemStack stack) {
+    	EnumItemSize size = null;
+    	if (stack.getItem() instanceof ISizedItem) {
+    		size = ((ISizedItem)stack.getItem()).getItemSize();
+    	}
+    	
     	return 
-    		(stack.getItem() instanceof ISizedItem && ((ISizedItem)stack.getItem()).getItemSize().getExactSize() < 40) ||
+    		(size != null && size.getSizeAsNumber() < 40) ||
     		vanillaItem(stack.getItem());
     }
 

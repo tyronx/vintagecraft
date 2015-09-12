@@ -15,7 +15,7 @@ public enum EnumItemSize {
 		this.size = size;
 	}
 	
-	public int getExactSize() {
+	public int getSizeAsNumber() {
 		return size;
 	}
 }

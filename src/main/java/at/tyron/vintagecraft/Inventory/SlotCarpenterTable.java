@@ -1,4 +1,5 @@
 package at.tyron.vintagecraft.Inventory;
+import at.tyron.vintagecraft.Interfaces.IItemSmithableSideIngredient;
 import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -23,6 +24,6 @@ public class SlotCarpenterTable extends Slot {
 
     
     public static boolean validItem(ItemStack stack) {
-    	return stack.getItem() instanceof IItemWoodWorkable || stack.getItem() == Items.stick;
+    	return stack.getItem() instanceof IItemWoodWorkable || stack.getItem() instanceof IItemSmithableSideIngredient || stack.getItem() == Items.stick;
     }
 }

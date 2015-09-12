@@ -7,6 +7,8 @@ import at.tyron.vintagecraft.BlockClass.MetalPlatingClassEntry;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.IItemWoodWorkingSideIngredient;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
@@ -20,7 +22,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, IItemSmithable, IItemHeatable, IItemMetalTyped {
+public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovider, IItemSmithable, IItemHeatable, IItemMetalTyped, IItemWoodWorkingSideIngredient {
 
 	public ItemMetalPlate(Block block) {
 		super(block);

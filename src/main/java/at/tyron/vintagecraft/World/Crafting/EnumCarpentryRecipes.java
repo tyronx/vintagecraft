@@ -10,7 +10,9 @@ import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWoodenOppositePlacemen
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumBucketContents;
+import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -121,6 +123,23 @@ public enum EnumCarpentryRecipes {
 			EnumWoodWorkingTechnique.JOIN	
 		}, 0),
 	
+		
+	RAILS(new EnumWoodWorkingTechnique[]{
+		EnumWoodWorkingTechnique.SAW,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SAW,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.SAW,
+		EnumWoodWorkingTechnique.SPLIT,
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.JOIN,
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.JOIN	
+	}, 0),
+	
+		
 	;
 	
 	
@@ -182,6 +201,12 @@ public enum EnumCarpentryRecipes {
 			);
 			recipe.setUnlocalizedName("itemframe");
 			recipe.setIngredientText("1planks1stitchedleather");
+			
+			ItemStack ironplate = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
+			
+			plankstack.stackSize = 8;
+			recipe = RAILS.registerRecipe(new ItemStack(Blocks.rail, 32), plankstack, ironplate);
+			recipe.setIngredientText("8planks1ironplate");
 			
 		}
 		

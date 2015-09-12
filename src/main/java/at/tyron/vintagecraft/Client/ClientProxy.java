@@ -10,7 +10,7 @@ import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.Client.Render.RenderFog;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Client.Render.ShootingStar;
-import at.tyron.vintagecraft.Client.Render.Entity.RenderCoalPoweredMinecart;
+import at.tyron.vintagecraft.Client.Render.Entity.RenderMinecart;
 import at.tyron.vintagecraft.Client.Render.Entity.RenderForestSpider;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRAngledGearBox;
@@ -24,8 +24,10 @@ import at.tyron.vintagecraft.Client.Render.TESR.TESRTallMetalMold;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRToolRack;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWindmillRotor;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRWoodBucket;
-import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecart;
+import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecartVC;
+import at.tyron.vintagecraft.Entity.EntityEmptyMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityGunpowderSparkFX;
+import at.tyron.vintagecraft.Entity.EntityMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityStone;
 import at.tyron.vintagecraft.Entity.Animal.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.Animal.EntityMobHorse;
@@ -119,7 +121,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));		
 		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(Minecraft.getMinecraft().getRenderManager()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCoalPoweredMinecart.class, new RenderCoalPoweredMinecart(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCoalPoweredMinecartVC.class, new RenderMinecart(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEmptyMinecartVC.class, new RenderMinecart(Minecraft.getMinecraft().getRenderManager()));
 	}
 
 	@Override
@@ -231,6 +234,10 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
     	registerModelLocation(ItemsVC.seeds, "seeds", "inventory");    	
     	registerModelLocation(ItemsVC.dryGrass, "drygrass", "inventory");
+    	
+    	registerModelLocation(ItemsVC.coalpoweredMinecart, "minecart/coalpowered", "inventory");
+    	registerModelLocation(ItemsVC.emptyMinecart, "minecart/empty", "inventory");
+    	
     	registerModelLocation(ItemsVC.blastingPowder, "blastingpowder", "inventory");
     	registerModelLocation(ItemsVC.flaxFibers, "flaxfibers", "inventory");
     	registerModelLocation(ItemsVC.linenCloth, "linencloth", "inventory");

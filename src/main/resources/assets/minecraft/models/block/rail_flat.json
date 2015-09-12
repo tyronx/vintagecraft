@@ -2,7 +2,8 @@
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
         "0": "vintagecraft:blocks/planks/oak",
-        "1": "vintagecraft:blocks/ingot/iron_darkened"
+        "1": "vintagecraft:blocks/ingot/iron_darkened",
+        "particle": "vintagecraft:blocks/planks/oak"
     },
     "elements": [
         {

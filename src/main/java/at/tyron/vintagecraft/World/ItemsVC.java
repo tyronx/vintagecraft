@@ -8,7 +8,7 @@ import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Item.ItemAnvilPart;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
-import at.tyron.vintagecraft.Item.ItemCoalPoweredMinecart;
+import at.tyron.vintagecraft.Item.ItemMinecartVC;
 import at.tyron.vintagecraft.Item.ItemCrafted;
 import at.tyron.vintagecraft.Item.ItemDryGrass;
 import at.tyron.vintagecraft.Item.ItemFireClay;
@@ -22,6 +22,7 @@ import at.tyron.vintagecraft.Item.ItemSeedVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.Item.ItemToolHead;
 import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
@@ -29,6 +30,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityMinecart.EnumMinecartType;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
@@ -81,6 +83,7 @@ public class ItemsVC {
 
 	//public static Item coke;
 	public static Item coalpoweredMinecart;
+	public static Item emptyMinecart;
 
 	
 	public static void init() {
@@ -163,7 +166,7 @@ public class ItemsVC {
 		dryGrass = new ItemDryGrass();
 		register(dryGrass, "drygrass");
 		
-		flaxFibers = new ItemCrafted();
+		flaxFibers = new ItemCrafted().setItemSize(EnumItemSize.SMALL);
 		register(flaxFibers, "flaxfibers");
 		flaxTwine = new ItemCrafted();
 		register(flaxTwine, "flaxtwine");
@@ -186,16 +189,23 @@ public class ItemsVC {
 		blastingPowder  = new ItemCrafted();
 		register(blastingPowder, "blastingpowder");
 		
-		
-		//coalpoweredMinecart = new ItemCoalPoweredMinecart();
-		//register(coalpoweredMinecart, "coalpoweredminecart");
+
+		emptyMinecart = new ItemMinecartVC(EnumMinecartType.RIDEABLE);
+		register(emptyMinecart, "emptyminecart", "minecart/empty");
+
+		coalpoweredMinecart = new ItemMinecartVC(EnumMinecartType.FURNACE);
+		register(coalpoweredMinecart, "coalpoweredminecart", "minecart/coalpowered");
 	}
 	
 	
 	public static Item register(Item item, String internalname) {
+		return register(item, internalname, internalname);
+	}
+	
+	public static Item register(Item item, String internalname, String modelname) {
 		item.setUnlocalizedName(internalname);
 		GameRegistry.registerItem(item, internalname);
-		VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":" + internalname);
+		VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":" + modelname);
 		return item;
 	}
 	
