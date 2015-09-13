@@ -55,7 +55,7 @@ public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFrom
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		super.addInformation(stack, playerIn, tooltip, advanced);
 		
-		tooltip.add("Fills " + getHealAmount(stack) + " foodbars");
+		tooltip.add("+" + (getHealAmount(stack)/2f) + " food");
 	}
 	
 	@Override
