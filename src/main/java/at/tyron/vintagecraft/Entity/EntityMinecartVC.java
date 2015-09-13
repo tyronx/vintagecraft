@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 public abstract class EntityMinecartVC extends EntityMinecart {
 	public int[][][] matrix = new int[][][] {{{0, 0, -1}, {0, 0, 1}}, {{ -1, 0, 0}, {1, 0, 0}}, {{ -1, -1, 0}, {1, 0, 0}}, {{ -1, 0, 0}, {1, -1, 0}}, {{0, 0, -1}, {0, -1, 1}}, {{0, -1, -1}, {0, 0, 1}}, {{0, 0, 1}, {1, 0, 0}}, {{0, 0, 1}, { -1, 0, 0}}, {{0, 0, -1}, { -1, 0, 0}}, {{0, 0, -1}, {1, 0, 0}}};
 	
-	public float railYOffset = 0.125f;  
+	public float railYOffset = 0.1875f;  
 	
 	
 	public EntityMinecartVC(World worldIn, double p_i1713_2_, double p_i1713_4_, double p_i1713_6_) {

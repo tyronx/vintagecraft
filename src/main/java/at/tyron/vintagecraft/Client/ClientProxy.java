@@ -240,6 +240,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	
     	registerModelLocation(ItemsVC.blastingPowder, "blastingpowder", "inventory");
     	registerModelLocation(ItemsVC.flaxFibers, "flaxfibers", "inventory");
+    	
     	registerModelLocation(ItemsVC.linenCloth, "linencloth", "inventory");
     	registerModelLocation(ItemsVC.firestarter, "firestarter", "inventory");
     	registerModelLocation(ItemsVC.ironTuyere, "irontuyere", "inventory");
@@ -257,7 +258,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     	registerModelLocation(ItemsVC.armor.values().toArray(new Item[0]), "armor", "inventory");
     	
     	
-    	registerModelLocation(new Item[]{ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
+    	registerModelLocation(new Item[]{ItemsVC.bread, ItemsVC.porkchopRaw, ItemsVC.porkchopCooked, ItemsVC.beefRaw, ItemsVC.beefCooked, ItemsVC.chickenRaw, ItemsVC.chickenCooked}, "food", "inventory");
     	
     	
     	
