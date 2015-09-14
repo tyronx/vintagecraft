@@ -118,6 +118,7 @@ item.ingot.bismuthbronze.oddlyshaped.name=Oddly shaped Bismuth Bronze Ingot
 item.metalplate.copper.oddlyshaped.name=Oddly shaped Copper Metal Plate
 item.metalplate.tinbronze.oddlyshaped.name=Oddly shaped Tin Bronze Metal Plate
 item.metalplate.iron.oddlyshaped.name=Oddly shaped Iron Metal Plate
+item.metalplate.lead.oddlyshaped.name=Oddly shaped Lead Metal Plate
 item.metalplate.steel.oddlyshaped.name=Oddly shaped Steel Metal Plate
 item.metalplate.titanium.oddlyshaped.name=Oddly shaped Titanium Metal Plate
 item.metalplate.platinum.oddlyshaped.name=Oddly shaped Platinum Metal Plate
@@ -135,6 +136,7 @@ item.metalplate.bismuthbronze.oddlyshaped.name=Oddly shaped Bismuth Bronze Metal
 item.metalplate.copper.name=Copper Plate
 item.metalplate.tinbronze.name=Tin Bronze Plate
 item.metalplate.iron.name=Iron Plate
+item.metalplate.lead.name=Lead Plate
 item.metalplate.steel.name=Steel Plate
 item.metalplate.titanium.name=Titanium Plate
 item.metalplate.platinum.name=Platinum Plate
@@ -236,40 +238,40 @@ container.firepit=Fire pit
 container.stove=Stove
 tile.stove.name=Stove
 
-tile.flower.orangemilkweed.name=Orange Milkweed
-tile.flower.orangemilkweed2.name=Orange Milkweed
-tile.flower.purplemilkweed.name=Purple Milkweed
-tile.flower.purplemilkweed2.name=Purple Milkweed
-tile.flower.catmint.name=Catmint
-tile.flower.calendula.name=Calendula
-tile.flower.cornflower.name=Cornflower
-tile.flower.cornflower2.name=Cornflower
-tile.flower.lilyofthevalley.name=Lily of the Valley
-tile.flower.lilyofthevalley2.name=Lily of the Valley
-tile.flower.lilyofthevalley3.name=Lily of the Valley
-tile.flower.clover.name=Clover
-tile.flower.goldenrod.name=Goldenrod
-tile.flower.goldenrod2.name=Goldenrod
-tile.flower.goldenrod3.name=Goldenrod
+flower.orangemilkweed.name=Orange Milkweed
+flower.orangemilkweed2.name=Orange Milkweed
+flower.purplemilkweed.name=Purple Milkweed
+flower.purplemilkweed2.name=Purple Milkweed
+flower.catmint.name=Catmint
+flower.calendula.name=Calendula
+flower.cornflower.name=Cornflower
+flower.cornflower2.name=Cornflower
+flower.lilyofthevalley.name=Lily of the Valley
+flower.lilyofthevalley2.name=Lily of the Valley
+flower.lilyofthevalley3.name=Lily of the Valley
+flower.clover.name=Clover
+flower.goldenrod.name=Goldenrod
+flower.goldenrod2.name=Goldenrod
+flower.goldenrod3.name=Goldenrod
 
-tile.flower.forgetmenot.name=Forget-me-not 
-tile.flower.forgetmenot2.name=Forget-me-not
-tile.flower.forgetmenot3.name=Forget-me-not
-tile.flower.forgetmenot4.name=Forget-me-not
-tile.flower.forgetmenot5.name=Forget-me-not
+flower.forgetmenot.name=Forget-me-not 
+flower.forgetmenot2.name=Forget-me-not
+flower.forgetmenot3.name=Forget-me-not
+flower.forgetmenot4.name=Forget-me-not
+flower.forgetmenot5.name=Forget-me-not
 
-tile.flower.narcissus.name=Narcissus
-tile.flower.narcissus2.name=Narcissus
-tile.flower.narcissus3.name=Narcissus
+flower.narcissus.name=Narcissus
+flower.narcissus2.name=Narcissus
+flower.narcissus3.name=Narcissus
 
-tile.flower.purpletulip.name=Purple Tulip
-tile.flower.purpletulip2.name=Purple Tulip
-tile.flower.purpletulip3.name=Purple Tulip
+flower.purpletulip.name=Purple Tulip
+flower.purpletulip2.name=Purple Tulip
+flower.purpletulip3.name=Purple Tulip
 
-tile.flower.cowparsley.name=Cow Parsley
-tile.flower.cowparsley2.name=Cow Parsley
+flower.cowparsley.name=Cow Parsley
+flower.cowparsley2.name=Cow Parsley
 
-tile.flower.horsetail.name=Horsetail
+flower.horsetail.name=Horsetail
 
 
 tile.ceramicvessel.name=Ceramic Vessel
@@ -456,6 +458,14 @@ item.iron_sawtoolhead.name=Iron Saw Toolhead
 item.iron_hammertoolhead.name=Iron Hammer Toolhead
 item.iron_sickletoolhead.name=Iron Sickle Toolhead
 
+item.steel_axetoolhead.name=Steel Axe Toolhead
+item.steel_pickaxetoolhead.name=Steel Pickaxe Toolhead
+item.steel_shoveltoolhead.name=Steel Shovel Toolhead
+item.steel_swordtoolhead.name=Steel Sword Toolhead
+item.steel_hoetoolhead.name=Steel Hoe Toolhead
+item.steel_sawtoolhead.name=Steel Saw Toolhead
+item.steel_hammertoolhead.name=Steel Hammer Toolhead
+item.steel_sickletoolhead.name=Steel Sickle Toolhead
 
 
 tile.planks.name=Planks
@@ -470,8 +480,17 @@ tile.tallgrass.veryshort.name=Very Short Tallgrass
 tile.tallgrass.short.name=Short Tallgrass
 tile.tallgrass.medium.name=Medium Tallgrass
 tile.tallgrass.long.name=Long Tallgrass
+tile.tallgrass.fern2.name=Tall Fern
+tile.tallgrass.fern3.name=Tall Fern
+tile.tallgrass.eaten.name=Eaten Tallgrass
 tile.tallgrass.verylong.name=Very long Tallgrass
 tile.tallgrass.verylong_flowering.name=Very long flowering Tallgrass
+tile.tallgrass.verylong_oxeyedaisy.name=Tallgrass with Oxeye Daisy
+tile.tallgrass.verylong_cornflower.name=Tallgrass with Cornflower
+tile.tallgrass.verylong_cornflower2.name=Tallgrass with Cornflower
+tile.tallgrass.verylong_forgetmenot.name=Tallgrass with Forget-me-not
+tile.tallgrass.verylong_forgetmenot2.name=Tallgrass with Forget-me-not
+tile.tallgrass.verylong_forgetmenot3.name=Tallgrass with Forget-me-not
 
 
 tile.cobblestone.name=Cobblestone
@@ -824,6 +843,7 @@ item.stitchedleather.name=Stitched Leather
 item.flaxfibers.name=Flax Fibers
 item.flaxtwine.name=Flax Twine
 item.linencloth.name=Linen Cloth
+item.irontuyere.name=Iron Tuyere
 
 tile.fireclaystairs.name=Burned Fireclay stairs
 tile.blastpowdersack.name=Sack of Blast Powder
