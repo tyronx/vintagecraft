@@ -458,14 +458,14 @@ item.iron_sawtoolhead.name=Iron Saw Toolhead
 item.iron_hammertoolhead.name=Iron Hammer Toolhead
 item.iron_sickletoolhead.name=Iron Sickle Toolhead
 
-item.steel_axetoolhead.name=Iron Axe Toolhead
-item.steel_pickaxetoolhead.name=Iron Pickaxe Toolhead
-item.steel_shoveltoolhead.name=Iron Shovel Toolhead
-item.steel_swordtoolhead.name=Iron Sword Toolhead
-item.steel_hoetoolhead.name=Iron Hoe Toolhead
-item.steel_sawtoolhead.name=Iron Saw Toolhead
-item.steel_hammertoolhead.name=Iron Hammer Toolhead
-item.steel_sickletoolhead.name=Iron Sickle Toolhead
+item.steel_axetoolhead.name=Steel Axe Toolhead
+item.steel_pickaxetoolhead.name=Steel Pickaxe Toolhead
+item.steel_shoveltoolhead.name=Steel Shovel Toolhead
+item.steel_swordtoolhead.name=Steel Sword Toolhead
+item.steel_hoetoolhead.name=Steel Hoe Toolhead
+item.steel_sawtoolhead.name=Steel Saw Toolhead
+item.steel_hammertoolhead.name=Steel Hammer Toolhead
+item.steel_sickletoolhead.name=Steel Sickle Toolhead
 
 
 tile.planks.name=Planks
@@ -485,13 +485,12 @@ tile.tallgrass.fern3.name=Tall Fern
 tile.tallgrass.eaten.name=Eaten Tallgrass
 tile.tallgrass.verylong.name=Very long Tallgrass
 tile.tallgrass.verylong_flowering.name=Very long flowering Tallgrass
-tile.tallgrass.verylong_oxeyedaisy.name=Very long flowering Ox Eye Daisy
-tile.tallgrass.verylong_cornflower.name=Very long flowering Cornflower
-tile.tallgrass.verylong_cornflower2.name=Very long flowering Cornflower
-tile.tallgrass.verylong_forgetmenot.name=Very long flowering Forget-me-not
-tile.tallgrass.verylong_forgetmenot2.name=Very long flowering Forget-me-not
-tile.tallgrass.verylong_forgetmenot3.name=Very long flowering Forget-me-not
-tile.tallgrass.verylong_flowering.name=Very long flowering Tallgrass
+tile.tallgrass.verylong_oxeyedaisy.name=Tallgrass with Oxeye Daisy
+tile.tallgrass.verylong_cornflower.name=Tallgrass with Cornflower
+tile.tallgrass.verylong_cornflower2.name=Tallgrass with Cornflower
+tile.tallgrass.verylong_forgetmenot.name=Tallgrass with Forget-me-not
+tile.tallgrass.verylong_forgetmenot2.name=Tallgrass with Forget-me-not
+tile.tallgrass.verylong_forgetmenot3.name=Tallgrass with Forget-me-not
 
 
 tile.cobblestone.name=Cobblestone
