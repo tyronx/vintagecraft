@@ -49,10 +49,29 @@ public class EntitySheepVC extends EntitySheep implements IEntityGrassEater {
 	}
 	
 	
+	// Called after successfull breeding
+	@Override
+	public void resetInLove() {
+		super.resetInLove();
+		fullness /= 3;
+	}
+	
+	// Cheap fixes to make 
+	// - baby sheep take 5 days to grow up instead of 1
+	// - adults take 3 days to be able to breed again instead of a quarter day
+	@Override
+	public void setGrowingAge(int age) {
+		if (age == -24000) age = -24000 *5;
+		if (age == 6000) age = 24000 * 3;
+		super.setGrowingAge(age);
+	}
+
+
+	
 	// Spawn init
 	@Override
 	public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_) {
-		fullness = rand.nextInt(40000);
+		fullness = rand.nextInt(30000);
 		saturation = rand.nextInt(1000);
 		
 		return super.func_180482_a(p_180482_1_, p_180482_2_);
@@ -116,8 +135,8 @@ public class EntitySheepVC extends EntitySheep implements IEntityGrassEater {
 	public void onLivingUpdate() {
 		if (saturation <= 0) {
 	        long worldtime = worldObj.getWorldTime();
-	        // Hunger goes down half as much during night
-	        if (worldtime < 14000 || rand.nextBoolean()) { 
+	        // Hunger goes down 30% as much during night
+	        if (worldtime < 14000 || rand.nextInt(3) == 0) { 
 	        	fullness--;
 	        }
 		} else {
@@ -127,8 +146,7 @@ public class EntitySheepVC extends EntitySheep implements IEntityGrassEater {
             grassEatingTimer = Math.max(0, grassEatingTimer - 1);
         }
         
-        if (fullness > 26000 && worldObj.rand.nextInt(900) == 0) {
-        	System.out.println("can breed");
+        if (fullness > 26000 && worldObj.rand.nextInt(900) == 0 && !isChild()) {
         	setInLove(null);
         }
 
@@ -154,4 +172,11 @@ public class EntitySheepVC extends EntitySheep implements IEntityGrassEater {
 	}
 
 
+	public void playLivingSound() {
+		String s = this.getLivingSound();
+		
+		if (s != null && (isHungry() || worldObj.rand.nextInt(20) == 0)) {
+			this.playSound(s, this.getSoundVolume(), this.getSoundPitch());
+		}
+	}
 }

@@ -36,9 +36,11 @@ public class EntityAIEatTallGrass extends EntityAIBase {
     
 	@Override
 	public boolean shouldExecute() {
-		if (!grassEater.isHungry()) {
+		if (eatingGrassTimer < 0) {
+			eatingGrassTimer++;
 			return false;
 		}
+		
 		long worldtime = grassEaterEntity.worldObj.getWorldTime();
 		
 		if (worldtime < 0 || worldtime > 14000) {
@@ -58,7 +60,7 @@ public class EntityAIEatTallGrass extends EntityAIBase {
     }
 
     public void resetTask() {
-        this.eatingGrassTimer = 0;
+        this.eatingGrassTimer = -30 + entityWorld.rand.nextInt(60);
     }
     
     public boolean continueExecuting() {

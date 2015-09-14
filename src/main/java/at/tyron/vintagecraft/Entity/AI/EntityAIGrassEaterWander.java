@@ -22,7 +22,7 @@ public class EntityAIGrassEaterWander extends EntityAIBase {
     public float wanderchance;
 
     public EntityAIGrassEaterWander(EntityCreature entity, double speed) {
-        this(entity, speed, 1f/200f);
+        this(entity, speed, 1f/100f);
     }
 
     public EntityAIGrassEaterWander(EntityCreature entity, double speed, float wanderchance) {
@@ -36,15 +36,16 @@ public class EntityAIGrassEaterWander extends EntityAIBase {
 
     public boolean shouldExecute() {
     	float adjustedchance = wanderchance;
-        if (grassEater.isHungry()) {
-        	adjustedchance *= 4;
+        long worldtime = entity.worldObj.getWorldTime();
+        if (worldtime > 14000) {
+        	adjustedchance /= 8;
+        } else {
+        
+	        if (grassEater.isHungry()) {
+	        	adjustedchance = 0.4f;
+	        }
         }
         
-        long worldtime = entity.worldObj.getWorldTime();
-        if (worldtime < 0 || worldtime > 14000) {
-        	adjustedchance /= 8;
-        }
-    	
         if (entity.getRNG().nextFloat() > adjustedchance) {
             return false;
         }
@@ -52,7 +53,7 @@ public class EntityAIGrassEaterWander extends EntityAIBase {
         // Food just in front of me?! I will never leave this place <3
         if (getEatableGrassPos() != null) return false;
         
-        
+        //System.out.println("look for grass");
         Vec3 target = null;
         
         if (grassEater.isHungry()) {

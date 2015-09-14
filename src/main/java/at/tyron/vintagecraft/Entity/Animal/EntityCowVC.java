@@ -35,10 +35,6 @@ public class EntityCowVC extends EntityCow implements IEntityGrassEater	 {
 	public EntityCowVC(World worldIn) {
 		super(worldIn);
 		
-		fullness = worldIn.rand.nextInt(40000);
-		saturation = worldIn.rand.nextInt(1000);
-
-		
 		tasks.taskEntries.clear();
         tasks.addTask(0, new EntityAISwimming(this));
         tasks.addTask(1, new EntityAIPanic(this, 2.0D));
@@ -53,11 +49,29 @@ public class EntityCowVC extends EntityCow implements IEntityGrassEater	 {
 	}
 	
 	
+	// Called after successfull breeding
+	@Override
+	public void resetInLove() {
+		super.resetInLove();
+		fullness /= 4;
+		//System.out.println("new fullness = " + fullness);
+	}
+	
+	// Cheap fixes to make 
+	// - baby sheep take 5 days to grow up instead of 1
+	// - adults take 3 days to be able to breed again instead of a quarter day
+	@Override
+	public void setGrowingAge(int age) {
+		if (age == -24000) age = -24000 * 6;
+		if (age == 6000) age = 24000 * 3;
+		super.setGrowingAge(age);
+	}
+	
 	
 	// Spawn init
 	@Override
 	public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_) {
-		fullness = rand.nextInt(40000);
+		fullness = rand.nextInt(30000);
 		saturation = rand.nextInt(1000);
 		
 		return super.func_180482_a(p_180482_1_, p_180482_2_);
@@ -93,15 +107,23 @@ public class EntityCowVC extends EntityCow implements IEntityGrassEater	 {
 	public void onLivingUpdate() {
 		if (saturation <= 0) {
 	        long worldtime = worldObj.getWorldTime();
-	        // Hunger goes down half as much during night
-	        if (worldtime < 14000 || rand.nextBoolean()) { 
+	        // Hunger goes down 30% as much during night
+	        if (worldtime < 14000 || rand.nextInt(3) == 0) { 
 	        	fullness--;
 	        }
 		} else {
 			saturation--;
+			// When saturated, hunger goes down 5 times slower
+			if (rand.nextInt(5) == 0) {
+				fullness--;
+			}
 		}
         if (this.worldObj.isRemote) {
             grassEatingTimer = Math.max(0, grassEatingTimer - 1);
+        }
+
+        if (fullness > 28000 && worldObj.rand.nextInt(1000) == 0 && getGrowingAge() == 0) {
+        	setInLove(null);
         }
 
 		super.onLivingUpdate();

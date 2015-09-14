@@ -41,7 +41,7 @@ public class EntityAIStayCloseToGroup extends EntityAIBase {
 		
 		
 		if (checkdelay <= 0) {
-			checkdelay = 201 + entity.worldObj.rand.nextInt(200);
+			checkdelay = 101 + entity.worldObj.rand.nextInt(200);
 		
 			AxisAlignedBB aabb = new AxisAlignedBB(entity.getPosition(), entity.getPosition()).expand(maxsearchdistance, maxsearchdistance, maxsearchdistance);
 			Entity nearest = findNearestEntityWithinAABB(entity.getClass(), aabb, entity, lastApproachedEntityId);

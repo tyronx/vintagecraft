@@ -6,7 +6,7 @@ public class ModInfo {
 
 	public static final int VersionMajor = 0;
 	public static final int VersionMinor = 8;
-	public static final int VersionRevision = 84;
+	public static final int VersionRevision = 85;
 
 	public static final String ModVersion = VersionMajor+"."+VersionMinor+"."+VersionRevision;
 
