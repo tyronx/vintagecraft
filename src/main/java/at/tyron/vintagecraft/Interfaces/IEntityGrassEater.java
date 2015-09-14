@@ -5,7 +5,7 @@ public interface IEntityGrassEater {
 	public boolean isHungry();
 	public boolean isVeryHungry();
 	
-	public boolean didEatGrass();
+	public void didEatGrass();
 	
 	
 }

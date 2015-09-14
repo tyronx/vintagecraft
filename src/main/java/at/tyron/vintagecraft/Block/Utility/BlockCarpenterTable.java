@@ -5,6 +5,7 @@ import java.util.List;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Item.ItemCarpenterTable;
+import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.material.Material;
@@ -14,6 +15,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -131,10 +133,18 @@ public class BlockCarpenterTable extends BlockContainerVC {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		ItemStack stack = ((ItemCarpenterTable)Item.getItemFromBlock(this)).withTreeType(getTreeType(worldIn, pos));
-		
+        TileEntity tileentity = worldIn.getTileEntity(pos);
+
+        if (tileentity instanceof TECarpenterTable) {
+        	((TECarpenterTable) tileentity).ejectContents();
+        }
+
+        
+		ItemStack stack = ((ItemCarpenterTable)Item.getItemFromBlock(this)).withTreeType(getTreeType(worldIn, pos));		
 		spawnAsEntity(worldIn, pos, stack);
 
+		
+		
 		super.breakBlock(worldIn, pos, state);
 	}
 	

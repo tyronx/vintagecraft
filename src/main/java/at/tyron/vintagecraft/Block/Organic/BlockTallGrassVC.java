@@ -10,6 +10,7 @@ import at.tyron.vintagecraft.Interfaces.IBlockEatableGrass;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrass;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTallGrassGroup;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -143,6 +144,16 @@ public class BlockTallGrassVC extends BlockVC implements IPlantable, IBlockEatab
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         this.checkAndDropBlock(worldIn, pos, state);
+        
+        if (state.getValue(GRASSTYPE) == EnumTallGrass.EATEN && rand.nextFloat() < 0.001f) {
+        	int[]climate = VCraftWorld.instance.getClimate(pos);
+        	
+        	EnumTallGrass newgrass = EnumTallGrassGroup.fromClimate(climate[1], climate[0], rand);
+        	if (newgrass.getId() < 6) { // Only until tallgrass flowering
+        		worldIn.setBlockState(pos, state.withProperty(GRASSTYPE, newgrass));
+//        		System.out.println("regrown to " + newgrass + " at " + pos);
+        	}
+        }
     }
 
     protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state) {

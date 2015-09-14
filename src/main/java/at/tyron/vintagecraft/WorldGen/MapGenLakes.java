@@ -106,9 +106,9 @@ public class MapGenLakes extends MapGenBase {
 				}
 			}
 			
-			if (water.size() > 0) {
+			/*if (water.size() > 0) {
 				System.out.println("found " + water.size() + " water points");
-			}
+			}*/
 			
 			
 			for (Point p : water) {

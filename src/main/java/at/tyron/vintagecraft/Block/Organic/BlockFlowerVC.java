@@ -118,7 +118,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     
     
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos);
+        return canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
     }
 
     protected boolean canPlaceBlockOn(Block ground) {
@@ -143,7 +143,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
     }
 
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-        return this.canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
+        return canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
     }
 
     public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {

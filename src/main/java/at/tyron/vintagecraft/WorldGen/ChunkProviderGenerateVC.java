@@ -10,6 +10,8 @@ import java.util.ListIterator;
 import java.util.Queue;
 import java.util.Random;
 
+import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
+import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerFlatVC;
@@ -371,8 +373,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		ArrayList<SpawnListEntry> list = new ArrayList<SpawnListEntry>();
 		
 		// Returns climate = int[temp, fertility, rain]
-		int[] climate = VCraftWorld.instance.getClimate(new BlockPos(xcoord, 128, zcoord));
-		if (climate[2] < 60) return list;
+		int[] climate = VCraftWorld.instance.getClimate(world.getHorizon(new BlockPos(xcoord, 0, zcoord)));
+		if (climate[2] < 70) return list;
 		
 		if (climate[0] < -3 && climate[0] > -15 && climate[2] > 70) {
 			list.add(new SpawnListEntry(EntityWolf.class, 2, 1, 2));
@@ -384,29 +386,28 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			return list;
 		}
 
-
 		if (climate[0] > 10) {
-			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityCowVC.class, 25, 2, 5));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			list.add(new SpawnListEntry(EntitySheepVC.class, 1, 2, 5));
 			list.add(new SpawnListEntry(EntityPig.class, 25, 2, 4));
 			list.add(new SpawnListEntry(EntityChicken.class, 10, 2, 4));
 			return list;
 		}
 		
 		if (climate[0] > 0) {
-			list.add(new SpawnListEntry(EntityCow.class, 15, 2, 4));
+			list.add(new SpawnListEntry(EntityCowVC.class, 15, 2, 4));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 10, 2, 4));
+			list.add(new SpawnListEntry(EntitySheepVC.class, 10, 2, 4));
 			list.add(new SpawnListEntry(EntityPig.class, 5, 2, 4));
 			
 			return list;
 		}		
 
 		if (climate[0] > -10) {
-			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 3));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 3));
 			return list;
 		}
 		

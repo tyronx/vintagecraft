@@ -417,7 +417,7 @@ public enum EnumAnvilRecipe {
 					WorkableRecipeBase recipe = toolrecipes.get(tool).registerRecipe(output.copy(), metalingot.copy());
 					
 					if (tool == EnumTool.CARPENTERSTOOLSET) {
-						recipe.setIngredientText("5ingotstier2plus");
+						recipe.setIngredientText("4ingotstier2plus");
 					}
 					
 					if (tool.isUpgradable) {

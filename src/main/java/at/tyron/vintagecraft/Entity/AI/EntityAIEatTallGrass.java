@@ -36,7 +36,17 @@ public class EntityAIEatTallGrass extends EntityAIBase {
     
 	@Override
 	public boolean shouldExecute() {
-		if (!grassEater.isHungry()) return false;
+		if (eatingGrassTimer < 0) {
+			eatingGrassTimer++;
+			return false;
+		}
+		
+		long worldtime = grassEaterEntity.worldObj.getWorldTime();
+		
+		if (worldtime < 0 || worldtime > 14000) {
+			return false;
+		}
+		
 		return getEatableGrassPos() != null;
 	}
 	
@@ -50,7 +60,7 @@ public class EntityAIEatTallGrass extends EntityAIBase {
     }
 
     public void resetTask() {
-        this.eatingGrassTimer = 0;
+        this.eatingGrassTimer = -30 + entityWorld.rand.nextInt(60);
     }
     
     public boolean continueExecuting() {
@@ -71,6 +81,8 @@ public class EntityAIEatTallGrass extends EntityAIBase {
             if (blockpos != null) {
             	IBlockState state = entityWorld.getBlockState(blockpos);
             	((IBlockEatableGrass)state.getBlock()).setEatenBy(grassEaterEntity, entityWorld, blockpos);
+            	entityWorld.playSoundAtEntity(grassEaterEntity, "dig.grass", 1f, 1f);
+            	grassEater.didEatGrass();
             }
         }
     }

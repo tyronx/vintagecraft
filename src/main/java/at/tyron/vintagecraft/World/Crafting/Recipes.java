@@ -200,7 +200,7 @@ public class Recipes {
 		
 		
 		
-		GameRegistry.addShapedRecipe(new ItemStack(Items.arrow, 1), new Object[] { " F ", " S ", " F ", 'F', Items.flint, 'S', Items.stick, 'F', Items.feather});
+		GameRegistry.addShapedRecipe(new ItemStack(Items.arrow, 2), new Object[] { " T ", " S ", " F ", 'T', Items.flint, 'S', Items.stick, 'F', Items.feather});
 		
 		
 		GameRegistry.addShapedRecipe(new ItemStack(Items.armor_stand), new Object[] {"SSS", " S ", "SCS", 'S', Items.stick, 'C', Items.clay_ball});

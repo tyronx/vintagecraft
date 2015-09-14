@@ -10,6 +10,7 @@ import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLiving.SpawnPlacementType;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.passive.EntityWaterMob;
@@ -105,6 +106,11 @@ public class WorldGenAnimals {
 							world.spawnEntityInWorld(entityliving);
 							entitylivingdata = entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), entitylivingdata);
 							flag = true;
+							
+							if (entityliving instanceof EntityAgeable && rand.nextInt(4) == 0) {
+								((EntityAgeable)entityliving).setGrowingAge(-rand.nextInt(24000 * 5));
+							}
+							
 						}
 
 						x += rand.nextInt(5) - rand.nextInt(5);
