@@ -12,6 +12,7 @@ import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Client.Render.ShootingStar;
 import at.tyron.vintagecraft.Client.Render.Entity.RenderMinecart;
 import at.tyron.vintagecraft.Client.Render.Entity.RenderForestSpider;
+import at.tyron.vintagecraft.Client.Render.Model.ModelCowVC;
 import at.tyron.vintagecraft.Client.Render.Model.RenderEntityStone;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRAngledGearBox;
 import at.tyron.vintagecraft.Client.Render.TESR.TESRAxle;
@@ -29,8 +30,10 @@ import at.tyron.vintagecraft.Entity.EntityEmptyMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityGunpowderSparkFX;
 import at.tyron.vintagecraft.Entity.EntityMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityStone;
+import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
 import at.tyron.vintagecraft.Entity.Animal.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.Animal.EntityMobHorse;
+import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
@@ -56,13 +59,18 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.model.ModelCow;
 import net.minecraft.client.model.ModelHorse;
+import net.minecraft.client.model.ModelSheep2;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.BlockModelShapes;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.entity.RenderCow;
 import net.minecraft.client.renderer.entity.RenderHorse;
 import net.minecraft.client.renderer.entity.RenderItem;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderSheep;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
@@ -70,6 +78,9 @@ import net.minecraft.client.resources.model.ModelBakery;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityChicken;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
@@ -107,9 +118,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		particle.motionY = motionY;
 		particle.motionZ = motionZ;
 		
-		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
-		
+		Minecraft.getMinecraft().effectRenderer.addEffect(particle);	
 	}
+	
 	
 	@Override
 	public void registerTileEntities() {
@@ -117,13 +128,19 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		
 		IReloadableResourceManager IRRM = (IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager();
 		IRRM.registerReloadListener(this);
-		System.out.println("register renderers");
+		
+		RenderManager rm = Minecraft.getMinecraft().getRenderManager();
+		
 		RenderingRegistry.registerEntityRenderingHandler(EntityStone.class, new RenderEntityStone());
-		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(Minecraft.getMinecraft().getRenderManager(), new ModelHorse(), 0.75f));		
-		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(Minecraft.getMinecraft().getRenderManager()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityCoalPoweredMinecartVC.class, new RenderMinecart(Minecraft.getMinecraft().getRenderManager()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityEmptyMinecartVC.class, new RenderMinecart(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(EntityMobHorse.class, new RenderHorse(rm, new ModelHorse(), 0.75f));		
+		RenderingRegistry.registerEntityRenderingHandler(EntityForestSpider.class, new RenderForestSpider(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityCoalPoweredMinecartVC.class, new RenderMinecart(rm));
+		RenderingRegistry.registerEntityRenderingHandler(EntityEmptyMinecartVC.class, new RenderMinecart(rm));
+		
+		RenderingRegistry.registerEntityRenderingHandler(EntityCowVC.class, new RenderCow(rm, new ModelCowVC(), 0.7F));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySheepVC.class, new RenderSheep(rm, new ModelSheep2(), 0.7F));
 	}
+	
 
 	@Override
 	public void onResourceManagerReload(IResourceManager resourceManager) {

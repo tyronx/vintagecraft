@@ -9,6 +9,8 @@ import com.google.gson.GsonBuilder;
 
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
+import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
+import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
 import at.tyron.vintagecraft.Network.StartMeteorShowerPacket;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
@@ -86,7 +88,20 @@ public class ServerCommandsVC extends CommandBase {
 		if (args[0].equals("time")) {
 			sender.addChatMessage(new ChatComponentText((Math.floor(sender.getEntityWorld().getTotalWorldTime() / 2400F) / 10f) + " days passed"));
 		}
+		
+		if (args[0].equals("cow")) {
+			EntityCowVC cow = new EntityCowVC(sender.getEntityWorld());
+			BlockPos pos = sender.getPosition();
+			cow.setLocationAndAngles(pos.getX(), pos.getY() + 0.5f, pos.getZ(), sender.getEntityWorld().rand.nextFloat() * 360.0F, 0.0F);
+			world.spawnEntityInWorld(cow);
+		}
 
+		if (args[0].equals("sheep")) {
+			EntitySheepVC sheep = new EntitySheepVC(sender.getEntityWorld());
+			BlockPos pos = sender.getPosition();
+			sheep.setLocationAndAngles(pos.getX(), pos.getY() + 0.5f, pos.getZ(), sender.getEntityWorld().rand.nextFloat() * 360.0F, 0.0F);
+			world.spawnEntityInWorld(sheep);
+		}
 		
 		if (args[0].equals("mobcap")) {
 			sender.addChatMessage(new ChatComponentText(

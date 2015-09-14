@@ -12,8 +12,10 @@ import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityEmptyMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityStone;
+import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
 import at.tyron.vintagecraft.Entity.Animal.EntityForestSpider;
 import at.tyron.vintagecraft.Entity.Animal.EntityMobHorse;
+import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
 import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
@@ -47,6 +49,7 @@ import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
@@ -126,9 +129,14 @@ public class CommonProxy implements IGuiHandler {
 		EntityRegistry.registerModEntity(EntityCoalPoweredMinecartVC.class, "VCCoalPoweredMinecart", 6, VintageCraft.instance, 80, 1, true);
 		EntityRegistry.registerModEntity(EntityEmptyMinecartVC.class, "VCMinecart", 7, VintageCraft.instance, 80, 1, true);
 		
+		EntityRegistry.registerModEntity(EntityCowVC.class, "CowVC", 8, VintageCraft.instance, 80, 1, true);
+		EntityRegistry.registerModEntity(EntitySheepVC.class, "SheepVC", 9, VintageCraft.instance, 80, 1, true);
+		
+		
 		for (Achievement ach : AchievementsVC.achievements) {
 			ach.registerStat();
 		}
+		
 		AchievementPage.registerAchievementPage(new AchievementPage(
 			"Vintagecraft", 
 		    AchievementsVC.achievements.toArray(new Achievement[0])
@@ -137,9 +145,7 @@ public class CommonProxy implements IGuiHandler {
 	}
 
 
-	public void postInit(FMLPostInitializationEvent event) {
-		// TODO Auto-generated method stub
-		
+	public void postInit(FMLPostInitializationEvent event) {		
 	}
 	
 	public boolean isFancyGraphics() {

@@ -24,6 +24,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -57,13 +58,13 @@ public class BlockRock extends BlockVC implements IMultiblock {
 	
 	public boolean isFreeFloating(World world, BlockPos pos) {
 		return 
-			world.isAirBlock(pos.up()) &&
-			world.isAirBlock(pos.down()) &&
-			world.isAirBlock(pos.east()) &&
-			world.isAirBlock(pos.west()) && 
-			world.isAirBlock(pos.north()) &&
-			world.isAirBlock(pos.south())
-			;
+			!world.isSideSolid(pos.up(), EnumFacing.DOWN) &&
+			!world.isSideSolid(pos.down(), EnumFacing.UP) &&
+			!world.isSideSolid(pos.east(), EnumFacing.WEST) &&
+			!world.isSideSolid(pos.west(), EnumFacing.EAST) && 
+			!world.isSideSolid(pos.north(), EnumFacing.SOUTH) &&
+			!world.isSideSolid(pos.south(), EnumFacing.NORTH)
+		;
 	}
 
 

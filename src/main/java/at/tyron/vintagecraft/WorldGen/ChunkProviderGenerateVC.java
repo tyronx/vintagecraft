@@ -10,6 +10,8 @@ import java.util.ListIterator;
 import java.util.Queue;
 import java.util.Random;
 
+import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
+import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Helper.WorldChunkManagerFlatVC;
@@ -384,20 +386,19 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			return list;
 		}
 
-
 		if (climate[0] > 10) {
-			list.add(new SpawnListEntry(EntityCow.class, 25, 2, 4));
+			list.add(new SpawnListEntry(EntityCowVC.class, 25, 2, 4));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 1, 2, 4));
+			list.add(new SpawnListEntry(EntitySheepVC.class, 1, 2, 4));
 			list.add(new SpawnListEntry(EntityPig.class, 25, 2, 4));
 			list.add(new SpawnListEntry(EntityChicken.class, 10, 2, 4));
 			return list;
 		}
 		
 		if (climate[0] > 0) {
-			list.add(new SpawnListEntry(EntityCow.class, 15, 2, 4));
+			list.add(new SpawnListEntry(EntityCowVC.class, 15, 2, 4));
 			list.add(new SpawnListEntry(EntityHorse.class, 1, 1, 2));
-			list.add(new SpawnListEntry(EntitySheep.class, 10, 2, 4));
+			list.add(new SpawnListEntry(EntitySheepVC.class, 10, 2, 4));
 			list.add(new SpawnListEntry(EntityPig.class, 5, 2, 4));
 			
 			return list;
