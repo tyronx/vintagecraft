@@ -16,26 +16,21 @@ public class PseudoNumberGen {
     protected long baseSeed;
     
 	
-    public PseudoNumberGen(long p_i2125_1_) {
-        this.baseSeed = p_i2125_1_;
+    public PseudoNumberGen(long seed) {
+        this.baseSeed = seed;
         this.baseSeed *= this.baseSeed * 6364136223846793005L + 1442695040888963407L;
-        this.baseSeed += p_i2125_1_;
+        this.baseSeed += seed;
         this.baseSeed *= this.baseSeed * 6364136223846793005L + 1442695040888963407L;
-        this.baseSeed += p_i2125_1_;
+        this.baseSeed += seed;
         this.baseSeed *= this.baseSeed * 6364136223846793005L + 1442695040888963407L;
-        this.baseSeed += p_i2125_1_;
+        this.baseSeed += seed;
     }
 
-    /**
-     * Initialize layer's local worldGenSeed based on its own baseSeed and the world's global seed (passed in as an
-     * argument).
-     */
-    public void initWorldGenSeed(long p_75905_1_) {
-        this.worldGenSeed = p_75905_1_;
+    public void initWorldGenSeed(long seed) {
+        this.worldGenSeed = seed;
 
-        if (this.parent != null)
-        {
-            this.parent.initWorldGenSeed(p_75905_1_);
+        if (this.parent != null) {
+            this.parent.initWorldGenSeed(seed);
         }
 
         this.worldGenSeed *= this.worldGenSeed * 6364136223846793005L + 1442695040888963407L;
@@ -46,9 +41,6 @@ public class PseudoNumberGen {
         this.worldGenSeed += this.baseSeed;
     }
 
-    /**
-     * Initialize layer's current chunkSeed based on the local worldGenSeed and the (x,z) chunk coordinates.
-     */
     public void initPosSeed(long p_75903_1_, long p_75903_3_) {
         this.chunkSeed = this.worldGenSeed;
         this.chunkSeed *= this.chunkSeed * 6364136223846793005L + 1442695040888963407L;
@@ -64,12 +56,11 @@ public class PseudoNumberGen {
     /**
      * returns a LCG pseudo random number from [0, x). Args: int x
      */
-    public int nextInt(int p_75902_1_) {
-        int j = (int)((this.chunkSeed >> 24) % (long)p_75902_1_);
+    public int nextInt(int maxvalue) {
+        int j = (int)((this.chunkSeed >> 24) % (long)maxvalue);
 
-        if (j < 0)
-        {
-            j += p_75902_1_;
+        if (j < 0) {
+            j += maxvalue;
         }
 
         this.chunkSeed *= this.chunkSeed * 6364136223846793005L + 1442695040888963407L;

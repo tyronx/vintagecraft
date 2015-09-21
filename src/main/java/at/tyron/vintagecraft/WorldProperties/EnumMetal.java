@@ -7,6 +7,16 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import net.minecraft.block.Block;
 import net.minecraft.util.IStringSerializable;
 
+// To add:
+// Brass
+// Chromium
+// Tungsten
+// Cobalt?
+// Nickel?
+// Stainless Steel (Steel, Chromium)
+// High Speed Steel (Chromium, Tungsten, Cobalt?)
+// Maraging Steel (Steel, Nickel, Cobalt, Titanium) 
+
 public enum EnumMetal implements IStringSerializable, IStateEnum {
 	
 	COPPER 			(0, 1, 1084, 2.5f, true, true, true),
@@ -19,7 +29,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	PALLADIUM 		(5, 5, 1555, 4.8f),
 	PLATINUM 		(6, 6, 1770, 4.3f),
 	TITANIUM 		(7, 5, 1668, 6f),
-	IRIDIUM 		(8, 5, 2450, 6.5f),
+	CHROMIUM 		(8, 5, 1907, 8.5f),
 	OSMIUM 			(9, 7, 3025, 7f),
 	
 	SILVER 			(10, 1, 961, 3f),
@@ -41,7 +51,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	public int id;
 	public int tier;
 	public int meltingpoint; // °C
-	public float hardness; 
+	public float hardness; // Mohs Hardness
 	public boolean hasTools;
 	public boolean hasArmor;
 	public boolean hasAnvil;

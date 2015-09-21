@@ -15,8 +15,8 @@ import net.minecraft.stats.AchievementList;
 public class SlotFurnaceOutputVC extends SlotFurnaceOutput {
 	EntityPlayer player;
 	
-	public SlotFurnaceOutputVC(EntityPlayer player, IInventory p_i45793_2_, int slotIndex, int xPosition, int yPosition) {
-		super(player, p_i45793_2_, slotIndex, xPosition, yPosition);
+	public SlotFurnaceOutputVC(EntityPlayer player, IInventory inventory, int slotIndex, int xPosition, int yPosition) {
+		super(player, inventory, slotIndex, xPosition, yPosition);
 		this.player = player;
 	}
 	

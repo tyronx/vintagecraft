@@ -93,7 +93,6 @@ public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IBlo
 		if (world.isRemote) return false;
 		
 		BlockPos bottomSection = bottomSection(world, pos);
-		//System.out.println("try put chimn " + bottomSection);
 		
 		if (bottomSection != null) {
 			IBlockState state = world.getBlockState(bottomSection);
@@ -137,7 +136,6 @@ public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IBlo
 			if (te == null) return null;
 			furnacetype = te.getFurnaceType();
 			
-//			System.out.println(furnacetype);
 			if (furnacetype == EnumFurnaceType.BLASTFURNACE) return pos;
 			
 			

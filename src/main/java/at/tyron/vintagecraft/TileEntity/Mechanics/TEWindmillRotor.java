@@ -122,12 +122,7 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 		
 		float rotatingpower = getWindRotatingPower();
 		
-		
-		
-		
 		if (Math.abs(network.getSpeed()) > Math.abs(rotatingpower * maxSpeedMultiplier))  return 0;
-		
-		//System.out.println("foobar " + network.getSpeed() + " / " + (rotatingpower * windmillSize));
 		
 		return rotatingpower * maxSpeedMultiplier / (5 - bladeSize);
 	}
@@ -136,6 +131,8 @@ public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements
 	// If the network runs at higher speed or the other direction than what the rotor creates, it will act as a resistor.
 	@Override
 	public float getResistance(MechanicalNetwork network) {
+		// TODO: Uncomment and properly test this code
+		
 		/*float rotatingpower = getWindRotatingPower();
 		
 		boolean clockwise1 = orientation == directionFromFacing;

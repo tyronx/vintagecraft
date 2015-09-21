@@ -1,0 +1,21 @@
+{
+    "parent": "vintagecraft:block/woodenrail/rail_flat",
+    "display": {
+        "gui": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 4, 0 ],
+            "scale": [ 1.2, 1.2, 1.2 ]
+        },
+        "thirdperson": {
+            "rotation": [ 0, 0, 180 ],
+            "translation": [ 0, -1, -3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "firstperson": {
+            "rotation": [ 0, 45, 90 ],
+            "translation": [ 0, 0, 2 ],
+            "scale": [ 1.7, 1.7, 1.7 ]
+        }
+
+    }
+}

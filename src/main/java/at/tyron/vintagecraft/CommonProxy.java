@@ -2,9 +2,11 @@ package at.tyron.vintagecraft;
 
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.List;
 
 import at.tyron.vintagecraft.Client.Gui.GuiAnvil;
 import at.tyron.vintagecraft.Client.Gui.GuiCarpenterTable;
+import at.tyron.vintagecraft.Client.Gui.GuiCoalPoweredMinecart;
 import at.tyron.vintagecraft.Client.Gui.GuiForge;
 import at.tyron.vintagecraft.Client.Gui.GuiStove;
 import at.tyron.vintagecraft.Client.Gui.GuiVessel;
@@ -20,6 +22,7 @@ import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.Inventory.ContainerCarpenterTable;
+import at.tyron.vintagecraft.Inventory.ContainerCoalPoweredMinecart;
 import at.tyron.vintagecraft.Inventory.ContainerForge;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.Inventory.ContainerVessel;
@@ -49,11 +52,14 @@ import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.particle.EntityFX;
+import net.minecraft.command.IEntitySelector;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.Achievement;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.AchievementPage;
@@ -173,6 +179,17 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 6) {
 			return new ContainerCarpenterTable(player.inventory, (TECarpenterTable) world.getTileEntity(new BlockPos(x, y, z)));
 		}
+		if (ID == 7) {
+			double centerX = x + 0.5;
+			double centerY = y + 0.5;
+			double centerZ = z + 0.5;
+			AxisAlignedBB bb = new AxisAlignedBB(x - 1, y - 1, z - 1, x+1.5, y+1.5, z+1.5);
+			
+			EntityCoalPoweredMinecartVC cart = (EntityCoalPoweredMinecartVC)findNearestEntityWithinAABB(world, EntityCoalPoweredMinecartVC.class, bb, centerX, centerY, centerZ);
+			if (cart == null) return null;
+
+			return new ContainerCoalPoweredMinecart(player.inventory, cart);
+		}
 		
 		return null;
 	}
@@ -197,7 +214,16 @@ public class CommonProxy implements IGuiHandler {
 		if (ID == 6) {
 			return new GuiCarpenterTable(player.inventory, (TECarpenterTable) world.getTileEntity(new BlockPos(x, y, z)));
 		}
-
+		if (ID == 7) {
+			double centerX = x + 0.5;
+			double centerY = y + 0.5;
+			double centerZ = z + 0.5;
+			AxisAlignedBB bb = new AxisAlignedBB(x - 1, y - 1, z - 1, x+1.5, y+1.5, z+1.5);
+			
+			EntityCoalPoweredMinecartVC cart = (EntityCoalPoweredMinecartVC)findNearestEntityWithinAABB(world, EntityCoalPoweredMinecartVC.class, bb, centerX, centerY, centerZ);
+			if (cart == null) return null;
+			return new GuiCoalPoweredMinecart(player.inventory, cart);
+		}
 		
 			
 			
@@ -205,6 +231,26 @@ public class CommonProxy implements IGuiHandler {
 	}
 	
 	
+	
+	
+	
+	   public Entity findNearestEntityWithinAABB(World world, Class entityType, AxisAlignedBB aabb, double centerX, double centerY, double centerZ) {
+	        List list = world.getEntitiesWithinAABB(entityType, aabb);
+	        Entity entity1 = null;
+	        double d0 = Double.MAX_VALUE;
+
+	        for (int i = 0; i < list.size(); ++i) {
+	            Entity entity2 = (Entity)list.get(i);
+
+                double d1 = entity2.getDistance(centerX, centerY, centerZ);
+                if (d1 <= d0) {
+                    entity1 = entity2;
+                    d0 = d1;
+                }
+	        }
+
+	        return entity1;
+	    }
 	
 	
 	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {}

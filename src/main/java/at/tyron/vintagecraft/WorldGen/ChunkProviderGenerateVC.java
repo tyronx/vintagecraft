@@ -51,21 +51,33 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	// 3D Simplex Noise Rock Generator
 	GenRockLayers genrocklayers;
 	
-	// Currently almost no use
+	// The idea of this layer is to sort of represent the age since the 
+	// last large nature event (earthquake, volcano, flood) happened.
+	// Current uses:
+	// - Thickness of Kimberlite layer
+	// - Age of forests (young age = small tress)
 	GenLayerVC ageLayer;
 	
+	// Generates Vanilla caves
 	MapGenCavesVC caveGenerator;
+	
+	// Generates Flowers, Trees, Tallgrass, Wild Crops 
 	MapGenFlora floragenerator;
+	
+	// Generates above sealevel lakes
 	MapGenLakes lakegenerator;
 
-	// These create deformations in the transitions of rocks, so they are not in a straight line
+	// These create horizontal deformations of the 3D Rock Layer generator
+	// This prevents the 100% straight lines between two rocktypes
 	GenLayerVC rockOffsetNoiseX;
 	GenLayerVC rockOffsetNoiseZ;
 	
+	// 3D Noise generator that ultimately determines the shape of the landscape 
 	GenLayerTerrain normalTerrainGen;
 	
-	/** The biomes that are used to generate the chunk */
+	
 	private BiomeGenBase[] biomeMap;
+	
 	
 	int[] seaLevelOffsetMap = new int[256];
 	int[] chunkGroundLevelMap = new int[256]; // Skips floating islands
@@ -230,6 +242,15 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		BlockPos pos;
 		int xCoord = chunkX * 16;
 		int zCoord = chunkZ * 16;
+		
+		
+		HeightmapCache.putHeightMap(
+			worldObj.provider.getDimensionId(), 
+			worldObj.getChunkFromChunkCoords(chunkX, chunkZ).getHeightMap().clone(), 
+			chunkX, chunkZ
+		);
+		
+		
 
 		lakegenerator.generate(rand, chunkX, chunkZ, worldObj, chunkprovider, chunkprovider);
 		
@@ -251,7 +272,9 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					}
 				}
 			}
-		}		
+		}
+		
+//		HeightmapCache.removeHeightMap(worldObj.provider.getDimensionId(), chunkX, chunkZ);
 	}
 	
 	
@@ -259,6 +282,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 	
 	
 	
+	// Places the soil and rock layers
 	void decorate(int chunkX, int chunkZ, Random rand, ChunkPrimer primer) {
 		Arrays.fill(chunkGroundLevelMap, 0);
 		Arrays.fill(chunkHeightMap, 0);
@@ -322,7 +346,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						
 
 						
-						if (y < Math.abs(age[arrayIndexChunk]) / 10) {
+						if (y < Math.abs(age[arrayIndexChunk]) / 9) {
 							primer.setBlockState(x, y, z, BlocksVC.rock.getEntryFromKey(EnumRockType.KIMBERLITE).getBlockState());
 						} else {
 							if (toplayers.length > depth) {
@@ -356,8 +380,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						airblocks = 0;
 						/*prevCrustlayerDepth = 0;
 						prevCrustlayer = null;*/
-
-						
 					}
 				}
 			}

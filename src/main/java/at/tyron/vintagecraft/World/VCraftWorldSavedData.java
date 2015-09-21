@@ -19,7 +19,6 @@ public class VCraftWorldSavedData extends WorldSavedData {
 	
 	public void setWorld(World world) {
 		this.world = world;
-		//MechnicalNetworkManager.addManager(world, networks);
 	}
 
 	

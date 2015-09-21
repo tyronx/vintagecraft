@@ -156,8 +156,6 @@ public class BlockFurnaceSection extends BlockContainerVC implements IBlockItemS
 		TEFurnaceSection tefurnacesection = (TEFurnaceSection)world.getTileEntity(pos);
 		if(tefurnacesection == null) return false;
 
-		//System.out.println(tefurnacesection.getFurnaceType());
-		
 		if (tefurnacesection.getFurnaceType() == null) {
 			player.addChatMessage(new ChatComponentText("Not a furnace!"));
 			return false;
@@ -184,7 +182,6 @@ public class BlockFurnaceSection extends BlockContainerVC implements IBlockItemS
 		TEFurnaceSection tefurnacesection = (TEFurnaceSection)worldIn.getTileEntity(pos);
 		if(tefurnacesection == null) return false;
 		
-		//return tefurnacesection.tryTakeItemStack(playerIn);
 		return false;
 	}
 	

@@ -197,7 +197,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 	public boolean canHarvestBlock(IBlockState state) {
 		if (state.getBlock() instanceof BlockVC) {
 			BlockVC block = (BlockVC)state.getBlock();
-			return block.getHarvetLevel(state) <= getHarvestLevel();
+			return block.getHarvestLevelVC(state) <= getHarvestLevel();
 		}
 		return true;
 	}

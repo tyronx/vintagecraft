@@ -45,19 +45,17 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityplayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TEStonePot) {
-			return ((TEStonePot)te).tryGrabItemStack(entityplayer);
+		if (!entityplayer.isSneaking()) {
+			TileEntity te = world.getTileEntity(pos);
+			if (te instanceof TEStonePot) {
+				return ((TEStonePot)te).tryGrabItemStack(entityplayer);
+			}
+			
+			world.markBlockForUpdate(pos);
 		}
-		
-		world.markBlockForUpdate(pos);
 		
 		return true;
 	}
-	
-	
-
-
 	
 
 
@@ -97,7 +95,6 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 
         if (tileentity instanceof TEStonePot) {
             InventoryHelper.dropInventoryItems(worldIn, pos, (TEStonePot)tileentity);
-            //spawnAsEntity(worldIn, pos, ItemStonePot.setRockType(new ItemStack(ItemsVC.stonepot), ((TEStonePot)tileentity).rocktype));
             spawnAsEntity(worldIn, pos, ItemStonePot.setRockType(new ItemStack(BlocksVC.stonepot), ((TEStonePot)tileentity).rocktype));
         }
 
@@ -123,7 +120,6 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 			TEStonePot testonepot = ((TEStonePot)te); 
 
 			if (testonepot.utilization == EnumStonePotUtilization.FORGE && testonepot.burning) {
-				//this.setLightLevel(0.46f);
 			    double x = (double)pos.getX() + 0.3D + rand.nextDouble()*0.3;
 	            double y = (double)pos.getY() + rand.nextDouble()*0.2 + (testonepot.burnTime / testonepot.burnTimePerCoal) / 16f;
 	            double z = (double)pos.getZ() + 0.3D + rand.nextDouble()*0.3;

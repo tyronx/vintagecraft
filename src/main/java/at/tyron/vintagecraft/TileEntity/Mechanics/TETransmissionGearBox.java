@@ -8,6 +8,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 
 
+/* This code here is completely unfinished and currently not used */
+
 public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase implements IMechanicalPowerNetworkNode {
 	public EnumFacing[] gearOrientations = new EnumFacing[2];
 	public EnumFacing[] networkOrientations = new EnumFacing[2];
@@ -184,10 +186,7 @@ public class TETransmissionGearBox extends TEMechanicalNetworkDeviceBase impleme
 
 
 	@Override
-	public void createMechanicalNetwork(MechanicalNetwork forkedFromNetwork,
-			EnumFacing facing) {
-		// TODO Auto-generated method stub
-		
+	public void createMechanicalNetwork(MechanicalNetwork forkedFromNetwork, EnumFacing facing) {
 	}
 
 

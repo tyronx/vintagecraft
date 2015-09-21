@@ -1,7 +1,6 @@
 package at.tyron.vintagecraft.World;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.BlockWoodBucketVC;
 import at.tyron.vintagecraft.Block.BlockCobblestone;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
 import at.tyron.vintagecraft.Block.BlockFireBrick;
@@ -16,6 +15,7 @@ import at.tyron.vintagecraft.Block.BlockSaltpeter;
 import at.tyron.vintagecraft.Block.BlockSandVC;
 import at.tyron.vintagecraft.Block.BlockUpperMantle;
 import at.tyron.vintagecraft.Block.BlockVC;
+import at.tyron.vintagecraft.Block.BlockWoodenRail;
 import at.tyron.vintagecraft.Block.Mechanics.BlockAngledGears;
 import at.tyron.vintagecraft.Block.Mechanics.BlockAxle;
 import at.tyron.vintagecraft.Block.Mechanics.BlockBellows;
@@ -54,6 +54,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockStonePot;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
+import at.tyron.vintagecraft.Block.Utility.BlockWoodBucketVC;
 import at.tyron.vintagecraft.BlockClass.CoatingClass;
 import at.tyron.vintagecraft.BlockClass.CropClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
@@ -66,6 +67,7 @@ import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.Item.ItemCarpenterTable;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.Item.ItemClayVessel;
+import at.tyron.vintagecraft.Item.ItemCrafted;
 import at.tyron.vintagecraft.Item.ItemFarmLand;
 import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.Item.ItemPlanksVC;
@@ -173,7 +175,7 @@ public class BlocksVC {
 	public static BlockContainerVC woodbucket;
 	
 	public static Block saltlamp;
-	
+	public static Block woodenrail;
 
 	
 	public static void init() {
@@ -329,6 +331,8 @@ public class BlocksVC {
 		saltlamp = new BlockSaltLamp().registerSingleState("saltlamp", ItemBlock.class);
 		
 		woodbucket = new BlockWoodBucketVC().registerSingleState("woodbucket", ItemWoodBucket.class);
+		
+		woodenrail = new BlockWoodenRail().register("woodenrail", ItemBlock.class);
 	}
 	
 
@@ -337,9 +341,11 @@ public class BlocksVC {
 	
 	
 	private static void initBlockProperties() {
+		
 		firepit_lit.setLightLevel(0.86f);
 		stove_lit.setLightLevel(0.86f);
 		
+		saltlamp.setHardness(0.1f);
 		firepit.setHardness(1f);
 		firepit_lit.setHardness(1F);
 		furnaceSection.setHardness(3.8f);
@@ -386,6 +392,8 @@ public class BlocksVC {
 		blastpowdersack.setHardness(0.2f);
 		woodbucket.setHardness(0.2f);
 		woodbucket.setStepSound(Block.soundTypeWood);
+		
+		woodenrail.setHardness(0.15f);
 	}
 	
 

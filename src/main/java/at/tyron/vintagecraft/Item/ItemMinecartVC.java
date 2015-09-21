@@ -4,7 +4,8 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityEmptyMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityMinecartVC;
-import at.tyron.vintagecraft.Interfaces.IItemSmithableSideIngredient;
+import at.tyron.vintagecraft.Interfaces.IItemWorkableIngredient;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
@@ -17,7 +18,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemMinecartVC extends ItemMinecart implements IItemSmithableSideIngredient {
+public class ItemMinecartVC extends ItemMinecart implements IItemWorkableIngredient {
 	EnumMinecartType type;
 	
 	public ItemMinecartVC(EnumMinecartType type) {
@@ -62,5 +63,11 @@ public class ItemMinecartVC extends ItemMinecart implements IItemSmithableSideIn
             return false;
         }
     }
+
+
+	@Override
+	public boolean isIngredient(ItemStack itemstack, ItemStack comparison, WorkableRecipeBase forrecipe) {
+		return itemstack.getItem() == this;
+	}
 
 }

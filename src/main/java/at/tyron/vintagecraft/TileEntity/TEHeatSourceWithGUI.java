@@ -28,7 +28,7 @@ import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory, IPitchAndVolumProvider {
+public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePlayerListBox, IPitchAndVolumProvider {
 	boolean initialized = false;
 	
     private static final int[] slotsTop = new int[] {0};
@@ -389,7 +389,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     		(
     			smeltedSlot().isItemEqual(stack) && 
     			ItemStack.areItemStackTagsEqual(stack, smeltedSlot()) && 
-    			smeltedSlot().stackSize + stack.stackSize < smeltedSlot().getMaxStackSize()
+    			smeltedSlot().stackSize + stack.stackSize <= smeltedSlot().getMaxStackSize()
     		)
     	;
     }
@@ -497,33 +497,11 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     public void closeInventory(EntityPlayer player) {}
 
     public boolean isItemValidForSlot(int index, ItemStack stack) {
-    	//System.out.println("check valid");
         return index == 2 ? false : (index != 1 ? true : isItemFuel(stack));
     }
 
-    public int[] getSlotsForFace(EnumFacing side) {
-        return side == EnumFacing.DOWN ? slotsBottom : (side == EnumFacing.UP ? slotsTop : slotsSides);
-    }
 
-    public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-    	//System.out.println("can insert");
-        return isItemValidForSlot(index, itemStackIn);
-    }
-
-    public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-        if (direction == EnumFacing.DOWN && index == 1) {
-            Item item = stack.getItem();
-
-            if (item != Items.water_bucket && item != Items.bucket) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    public String getGuiID()
-    {
+    public String getGuiID() {
         return "minecraft:furnace";
     }
 
@@ -639,10 +617,8 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
         
         NBTTagList nbttaglist = new NBTTagList();
 
-        for (int i = 0; i < this.furnaceItemStacks.length; ++i)
-        {
-            if (this.furnaceItemStacks[i] != null)
-            {
+        for (int i = 0; i < this.furnaceItemStacks.length; ++i) {
+            if (this.furnaceItemStacks[i] != null){
                 NBTTagCompound nbttagcompound1 = new NBTTagCompound();
                 nbttagcompound1.setByte("Slot", (byte)i);
                 this.furnaceItemStacks[i].writeToNBT(nbttagcompound1);
@@ -652,8 +628,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
         compound.setTag("Items", nbttaglist);
 
-        if (this.hasCustomName())
-        {
+        if (this.hasCustomName()) {
             compound.setString("CustomName", this.furnaceCustomName);
         }
     }

@@ -105,7 +105,7 @@ public class BlockToolRack extends BlockContainerVC {
 				default: break;
 			}
 			
-			if (handleArea(world, pos, entityplayer, tet, slot, facing)) { 
+			if (handleSlot(world, pos, entityplayer, tet, slot)) { 
 				world.markBlockForUpdate(pos);
 				return true;
 			}
@@ -113,7 +113,7 @@ public class BlockToolRack extends BlockContainerVC {
 		return true;
 	}
 
-	private boolean handleArea(World world, BlockPos pos, EntityPlayer entityplayer, TEToolRack te, int slot, EnumFacing facing) {
+	private boolean handleSlot(World world, BlockPos pos, EntityPlayer entityplayer, TEToolRack te, int slot) {
 		ItemStack itemstack = entityplayer.getCurrentEquippedItem();
 		
 		if(te.storage[slot] == null && isRackable(itemstack)) {
@@ -122,7 +122,7 @@ public class BlockToolRack extends BlockContainerVC {
 			return true;
 		}
 		else if(te.storage[slot] != null && entityplayer.getCurrentEquippedItem() == null) {
-			te.grabItem(slot, facing, entityplayer);
+			te.grabItem(slot, entityplayer);
 			te.storage[slot] = null;
 			return true;
 		}

@@ -54,8 +54,8 @@ public class ItemToolSteel extends ItemToolVC {
 
 	@Override
 	public int getMaxUses() {
-		if (tooltype == EnumTool.SHEARS) return 2534;
-		return 1152;
+		if (tooltype == EnumTool.SHEARS) return 2592;
+		return 1296;
 	}
 
 	@Override

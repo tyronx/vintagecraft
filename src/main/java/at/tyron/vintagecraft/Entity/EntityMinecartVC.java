@@ -1,11 +1,15 @@
 package at.tyron.vintagecraft.Entity;
 
+import java.util.Iterator;
+
 import at.tyron.vintagecraft.World.ItemsVC;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
@@ -32,6 +36,11 @@ public abstract class EntityMinecartVC extends EntityMinecart {
 		return EnumMinecartType.RIDEABLE;
 	}
 	
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		return super.attackEntityFrom(source, amount);
+	}
+	
 	
     public void killMinecart(DamageSource p_94095_1_) {
         this.setDead();
@@ -48,6 +57,23 @@ public abstract class EntityMinecartVC extends EntityMinecart {
         this.entityDropItem(itemstack, 0.0F);
     }
 
+    
+    @Override
+    public void onUpdate() {
+    	super.onUpdate();
+        AxisAlignedBB box;
+        if (getCollisionHandler() != null) box = this.getCollisionHandler().getMinecartCollisionBox(this);
+        else                               box = this.getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D);
+        Iterator iterator = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, box).iterator();
+
+        while (iterator.hasNext()) {
+            Entity entity = (Entity)iterator.next();
+
+            if (entity != this.riddenByEntity && entity.canBePushed() && !(entity instanceof EntityMinecart)) {
+                entity.applyEntityCollision(this);
+            }
+        }
+	}
 
 	// Copied from original minecart code so that I can position the minecart a bit higher above the rails
     public Vec3 func_70489_a(double p_70489_1_, double p_70489_3_, double p_70489_5_) {

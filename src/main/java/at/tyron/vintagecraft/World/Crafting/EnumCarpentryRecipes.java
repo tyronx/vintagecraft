@@ -124,7 +124,7 @@ public enum EnumCarpentryRecipes {
 		}, 0),
 	
 		
-	RAILS(new EnumWoodWorkingTechnique[]{
+	WOODENRAILS(new EnumWoodWorkingTechnique[]{
 		EnumWoodWorkingTechnique.SAW,
 		EnumWoodWorkingTechnique.SPLIT,
 		EnumWoodWorkingTechnique.SAW,
@@ -135,6 +135,16 @@ public enum EnumCarpentryRecipes {
 		EnumWoodWorkingTechnique.DRILL,	
 		EnumWoodWorkingTechnique.JOIN,
 		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.JOIN	
+	}, 0),
+	
+	
+	IRONREINFORCEDRAILS(new EnumWoodWorkingTechnique[]{
+		EnumWoodWorkingTechnique.CARVE,
+		EnumWoodWorkingTechnique.CARVE,
+		EnumWoodWorkingTechnique.DRILL,	
+		EnumWoodWorkingTechnique.JOIN,
 		EnumWoodWorkingTechnique.DRILL,	
 		EnumWoodWorkingTechnique.JOIN	
 	}, 0),
@@ -187,7 +197,6 @@ public enum EnumCarpentryRecipes {
 				ItemWoodBucket item = (ItemWoodBucket)Item.getItemFromBlock(BlocksVC.woodbucket); 
 				WorkableRecipeBase recipe = BUCKET.registerRecipe(item.withTreeTypeAndBucketContents(treetype, EnumBucketContents.EMPTY), plankstack, new ItemStack(ItemsVC.flaxTwine, 2));
 				recipe.setIngredientText("3planks2flaxtwine");
-				
 			}
 			
 			plankstack.stackSize = TOOLRACK.planks;
@@ -202,14 +211,17 @@ public enum EnumCarpentryRecipes {
 			recipe.setUnlocalizedName("itemframe");
 			recipe.setIngredientText("1planks1stitchedleather");
 			
-			ItemStack ironplate = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
-			
+		
 			plankstack.stackSize = 8;
-			recipe = RAILS.registerRecipe(new ItemStack(Blocks.rail, 32), plankstack, ironplate);
-			recipe.setIngredientText("8planks1ironplate");
+			recipe = WOODENRAILS.registerRecipe(new ItemStack(BlocksVC.woodenrail, 32), plankstack);
+			recipe.setIngredientText("8planks");
+			
 			
 		}
 		
+		ItemStack ironplate = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
+		WorkableRecipeBase recipe = IRONREINFORCEDRAILS.registerRecipe(new ItemStack(Blocks.rail), new ItemStack(BlocksVC.woodenrail, 32), ironplate);
+		recipe.setIngredientText("32rails1ironplate");
 		
 	}
 	

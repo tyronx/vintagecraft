@@ -198,6 +198,8 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
+        registerModelLocation(Item.getItemFromBlock(BlocksVC.woodenrail), "woodenrail", "inventory");
+        
         registerModelLocation(Item.getItemFromBlock(BlocksVC.saltlamp), "saltlamp", "inventory");
         
         registerModelLocation(Item.getItemFromBlock(BlocksVC.tallmetalmolds), "tallmetalmolds", "inventory");

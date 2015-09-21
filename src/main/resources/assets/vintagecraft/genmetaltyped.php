@@ -1,6 +1,6 @@
 <?php
 
-$metals = array("copper", "tin", "tinbronze", "iron", "steel", "palladium", "platinum", "titanium", "iridium", "osmium", "silver", "gold", "uranium", "zinc", "bismuth", "bismuthbronze", "lead");
+$metals = array("copper", "tin", "tinbronze", "iron", "steel", "palladium", "platinum", "titanium", "chromium", "osmium", "silver", "gold", "uranium", "zinc", "bismuth", "bismuthbronze", "lead");
 $pieces = array("helmet", "chestplate", "leggings", "boots");
 
 $outdir = "models/item/armor/";

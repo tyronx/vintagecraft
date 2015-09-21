@@ -48,7 +48,7 @@ public class GenLayerBlurSelective extends GenLayerVC {
 		sizeZ += 2*margin;
 
 		int[] inInts = this.parent.getInts(xCoord, zCoord, sizeX, sizeZ);
-		//int[] outInts = new int[inInts.length];
+
 		int[] outInts = IntCache.getIntCache(inInts.length);
 		
 		Kernel kernel = makeKernel(radius);

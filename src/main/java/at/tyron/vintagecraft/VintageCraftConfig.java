@@ -23,21 +23,15 @@ public class VintageCraftConfig {
     public static float lowerLimitScale = 512.0F;*/
 
 	
-	
-	
+	/* Internal Configs */ 
 	
 	public static final String ModChannel = "VintageCraft";
-
-
-
-
-
-
-
-	
-	
-	public static boolean rearrangeCreativeTabs = true;
 	public static boolean debugBlockRegistration = false;
+	
+	/* User Configs */
+	public static boolean rearrangeCreativeTabs = true;
+	public static int nightSkyBrightness = -20;
+	public static float nightSkyContrast = 0.8f;
 	
 	// Configurable stuff
 	public static int mobFreeDays = 2;
@@ -45,8 +39,6 @@ public class VintageCraftConfig {
 	public static int mediumMobCap = 80;
 	public static int hardMobCap = 90;
 	
-	public static int nightSkyBrightness = -20;
-	public static float nightSkyContrast = 0.8f;
 	
 	
 	static Configuration cfg;
@@ -54,7 +46,6 @@ public class VintageCraftConfig {
 	public static void loadConfig(FMLPreInitializationEvent event) {
 		cfg = new Configuration(event.getSuggestedConfigurationFile());
 		
-	//	worldTime = Long.parseLong(cfg.get("internal", "worldtime", "0").getString());
 		mobFreeDays = cfg.get("difficulty", "mobFreeDays", "1", "Amount of days in a new world where mob cap is 0, after that in increases by 15 each day until the default cap is reached. Set to 0 to have no mob cap reduction at all.").getInt();
 		easyMobCap = cfg.get("difficulty", "easyMobCap", "70", "Mob cap when on easy difficulty").getInt();
 		mediumMobCap = cfg.get("difficulty", "mediumMobCap", "80", "Mob cap when on medium difficulty").getInt();
@@ -62,6 +53,7 @@ public class VintageCraftConfig {
 		
 		nightSkyBrightness = cfg.get("client", "nightskyBrightness", -20).getInt();
 		nightSkyContrast = (float) cfg.get("client", "nightskyContrast", 0.8).getDouble();
+		rearrangeCreativeTabs = cfg.get("client", "reArrangeCreativeTabs",true, "Wether to put the vanilla creative tabs on page 2").getBoolean();
  	}
 	
 	public static void saveConfig() {

@@ -143,7 +143,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case NATIVESILVER_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.SILVER);
 			case PLATINUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.PLATINUM);
 			case ILMENITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TITANIUM);
-			case IRIDIUM: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRIDIUM);
+			case CHROMITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.CHROMIUM);
 			case SPHALERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.ZINC);
 			case BISMUTHINITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.BISMUTH);
 			case GALENA:  return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.LEAD);
@@ -167,7 +167,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case NATIVESILVER_QUARTZ: return 4;
 			case PLATINUM: return 4;
 			case ILMENITE: return 4;
-			case IRIDIUM: return 4;
+			case CHROMITE: return 4;
 			case SPHALERITE: return 4;
 			case BISMUTHINITE: return 4;
 			case GALENA: return 4;
@@ -192,7 +192,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case NATIVEGOLD_QUARTZ: return EnumMetal.GOLD.meltingpoint;
 			case NATIVESILVER_QUARTZ: return EnumMetal.SILVER.meltingpoint;
 			case BISMUTHINITE: return EnumMetal.BISMUTH.meltingpoint;
-			case IRIDIUM: return EnumMetal.IRIDIUM.meltingpoint;
+			case CHROMITE: return EnumMetal.CHROMIUM.meltingpoint;
 			case PLATINUM: return EnumMetal.PLATINUM.meltingpoint;
 			case ILMENITE: return EnumMetal.TITANIUM.meltingpoint;
 			case SPHALERITE: return EnumMetal.ZINC.meltingpoint;

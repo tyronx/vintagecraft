@@ -106,8 +106,6 @@ public class TETallMetalMold extends NetworkTileEntity implements IUpdatePlayerL
 
 	@Override
 	public void update() {
-		//System.out.println(orientation);
-		
 		if (liquidMetalFlowTimer > 0) {
 			liquidMetalFlowTimer--;
 		}
@@ -123,13 +121,4 @@ public class TETallMetalMold extends NetworkTileEntity implements IUpdatePlayerL
 		this.orientation = facing;
 		worldObj.markBlockForUpdate(pos);
 	}
-	
-	
-
-/*	@Override
-	public AxisAlignedBB getRenderBoundingBox() {
-		return super.getRenderBoundingBox().expand(5f, 5f, 5f);
-	}
-*/
-
 }

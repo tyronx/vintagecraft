@@ -7,6 +7,7 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import at.tyron.vintagecraft.Block.BlockRock;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
@@ -124,6 +125,16 @@ public class ServerCommandsVC extends CommandBase {
 			
 			clearAreaWater(sender.getEntityWorld(), sender.getPosition(), wdt, hgt);
 		}
+		
+		if (args[0].equals("clearrock")) {
+			int wdt = 100;
+			int hgt = 200;
+			BlockPos pos = new BlockPos(sender.getPosition().getX(), 0, sender.getPosition().getZ());
+			clearAreaRock(sender.getEntityWorld(), pos, wdt, hgt);
+			System.out.println("rock cleared");
+		}
+		
+		
 
 		if (args[0].equals("replace")) {
 			int wdt = 35;
@@ -422,6 +433,19 @@ public class ServerCommandsVC extends CommandBase {
 			for (int z = -wdt/2; z < wdt; z++) {
 				for (int y = -hgt/2; y < hgt; y++) {
 					if (world.getBlockState(center.add(x, y, z)).getBlock().getMaterial() == Material.water) {
+						world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
+					}
+				}
+			}
+		}
+	}
+
+	
+	void clearAreaRock(World world, BlockPos center, int wdt, int hgt) {
+		for (int x = -wdt/2; x < wdt; x++) {
+			for (int z = -wdt/2; z < wdt; z++) {
+				for (int y = 0; y < 240; y++) {
+					if (world.getBlockState(center.add(x, y, z)).getBlock() instanceof BlockRock) {
 						world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
 					}
 				}

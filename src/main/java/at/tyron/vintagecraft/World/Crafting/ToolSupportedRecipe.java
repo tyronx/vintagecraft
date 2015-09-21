@@ -35,8 +35,7 @@ public class ToolSupportedRecipe implements IRecipe {
                 j = s1.length();
                 s = s + s1;
             }
-        }
-        else {
+        } else {
             while (recipeComponents[i] instanceof String) {
                 String s2 = (String)recipeComponents[i++];
                 ++k;
@@ -71,9 +70,7 @@ public class ToolSupportedRecipe implements IRecipe {
 
             if (hashmap.containsKey(Character.valueOf(c0))) {
                 aitemstack[i1] = ((ItemStack)hashmap.get(Character.valueOf(c0))).copy();
-            }
-            else
-            {
+            } else {
                 aitemstack[i1] = null;
             }
         }
@@ -89,31 +86,24 @@ public class ToolSupportedRecipe implements IRecipe {
 	
 	
 	
-    private boolean checkMatch(InventoryCrafting p_77573_1_, int p_77573_2_, int p_77573_3_, boolean p_77573_4_) {
-        for (int k = 0; k < 3; ++k)
-        {
-            for (int l = 0; l < 3; ++l)
-            {
-                int i1 = k - p_77573_2_;
-                int j1 = l - p_77573_3_;
+    private boolean checkMatch(InventoryCrafting inventory, int x, int y, boolean reverse) {
+        for (int k = 0; k < 3; ++k) {
+            for (int l = 0; l < 3; ++l) {
+                int i1 = k - x;
+                int j1 = l - y;
                 ItemStack itemstack = null;
 
-                if (i1 >= 0 && j1 >= 0 && i1 < this.recipeWidth && j1 < this.recipeHeight)
-                {
-                    if (p_77573_4_)
-                    {
+                if (i1 >= 0 && j1 >= 0 && i1 < this.recipeWidth && j1 < this.recipeHeight) {
+                    if (reverse) {
                         itemstack = this.recipeItems[this.recipeWidth - i1 - 1 + j1 * this.recipeWidth];
-                    }
-                    else
-                    {
+                    } else {
                         itemstack = this.recipeItems[i1 + j1 * this.recipeWidth];
                     }
                 }
 
-                ItemStack itemstack1 = p_77573_1_.getStackInRowAndColumn(k, l);
+                ItemStack itemstack1 = inventory.getStackInRowAndColumn(k, l);
 
-                if (itemstack1 != null || itemstack != null)
-                {
+                if (itemstack1 != null || itemstack != null) {
                     if (itemstack1 == null && itemstack != null || itemstack1 != null && itemstack == null) {
                         return false;
                     }
@@ -188,9 +178,6 @@ public class ToolSupportedRecipe implements IRecipe {
     }
 
   
-    /**
-     * Returns an Item that is the result of this recipe
-     */
     public ItemStack getCraftingResult(InventoryCrafting p_77572_1_) {
         ItemStack itemstack = this.getRecipeOutput().copy();
 

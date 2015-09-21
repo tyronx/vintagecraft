@@ -20,11 +20,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 public class MechanicalNetwork {
 	MechnicalNetworkManager myManager;
 
+	// List of all connected devices  
 	ArrayList<IMechanicalPowerNetworkNode> powerNodes = new ArrayList<IMechanicalPowerNetworkNode>();
 	ArrayList<IMechanicalPowerNetworkRelay> powerRelays = new ArrayList<IMechanicalPowerNetworkRelay>();
 	
-	// A network may only contain devices of same torque and speed.
-	// Power converters create a new network
 	float totalAvailableTorque;
 	float totalResistance;
 	float speed;
@@ -40,7 +39,6 @@ public class MechanicalNetwork {
 	
 	public boolean isDead;
 	
-	// Client field
 	public float serverSideAngle;
 	
 	
@@ -115,16 +113,18 @@ public class MechanicalNetwork {
 	
 	
 	// Tick Events are called by the Network Managers
-	
 	public void clientTick(ClientTickEvent event) {
 		if (speed < 0.001) return;
 		
 		updateAngle(speed);
 		
+		// Since the server may be running at different tick speeds,
+		// we slowly sync angle updates from server to reduce 
+		// rotation jerkiness on the client
+		
 		// Each tick, add 5% of server<->client angle difference
 		float diff = 0.01f * (serverSideAngle - angle);
 		if (diff > 0.005f) {
-			//System.out.println(diff);
 			angle -= diff;
 		}
 	}
@@ -145,14 +145,6 @@ public class MechanicalNetwork {
 	public void sentNetworkToClients() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		writeToNBT(nbt);
-		//System.out.println("send " + speed + " / " + networkId);
-		/*VintageCraft.packetPipeline.sendToDimension(
-			 
-			world.provider.getDimensionId()
-		);*/
-		//System.out.println("sent! " + speed + " / " + networkId);
-		
-		
 		
 		MechanicalNetworkNBTPacket packet = new MechanicalNetworkNBTPacket(nbt, networkId);
 		for (Object plr : MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
@@ -164,10 +156,11 @@ public class MechanicalNetwork {
 	    }		
 	}
 	
-	// Should run every 5 ticks
+	// Should run every 5 ticks or so
 	public void updateNetwork() {
 		
 		/* 1. Verify network */
+		
 		IMechanicalPowerNetworkNode[] powernodesArray = powerNodes.toArray(new IMechanicalPowerNetworkNode[0]);
 		for (IMechanicalPowerNetworkNode node : powernodesArray) {
 			if (!node.exists()) {
@@ -176,13 +169,14 @@ public class MechanicalNetwork {
 			}
 		}
 		if (powerNodes.size() == 0) {
-			//System.out.println("no more power nodes");
 			isDead = true;
 			return;
 		}
 		
 		
+		
 		/* 2. Determine total available torque and total resistance of the network */
+		
 		totalAvailableTorque = 0;
 		totalResistance = 0;
 		
@@ -217,6 +211,7 @@ public class MechanicalNetwork {
 			System.out.println("unusedTorque: " + unusedTorque + " / speedChange: " + speedChange);
 		}*/
 		
+		// TODO: This step value should be determined by the total system drag
 		float step = 0.75f;
 		
 		switch (speedChange) {
@@ -239,8 +234,6 @@ public class MechanicalNetwork {
 		}
 		
 		
-		//if (networkId == 1)
-		//System.out.println(networkId + ": " + unusedTorque);
 		
 		/* 4. Set direction, also did the direction change? Propagate it through the network */
 		
@@ -252,7 +245,6 @@ public class MechanicalNetwork {
 			for (IMechanicalPowerNetworkNode powerNode : powerNodes) {
 				// FIXME: This assumes there is only 1 power producer per network
 				if (powerNode.getTorque(this) > 0) {
-					//System.out.println("sent!");
 					powerNode.propagateDirectionToNeightbours(
 						myManager.getUniquePropagationId(), 
 						powerNode.getOutputSideForNetworkPropagation(), 

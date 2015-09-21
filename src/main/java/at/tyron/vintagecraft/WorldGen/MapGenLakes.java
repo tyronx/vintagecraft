@@ -132,7 +132,7 @@ public class MapGenLakes extends MapGenBase {
 		BlockPos horizon = world.getHorizon(pos);
 		Block block = world.getBlockState(horizon.down()).getBlock();
 		
-		// This stuff is probably no longer needed but to lazy to test the code without it atm
+		
 		while (block instanceof BlockLeavesVC || block instanceof BlockLogVC || block instanceof BlockVineVC || block.isAir(world, pos)) {
 			horizon = horizon.down();
 			block = world.getBlockState(horizon).getBlock();

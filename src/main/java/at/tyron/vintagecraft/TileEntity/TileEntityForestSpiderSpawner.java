@@ -115,7 +115,6 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 
 			if (entity.getCanSpawnHere()) {
 				this.spawnIfPossible(entity);
-			//	worldObj.playAuxSFX(2004, blockpos, 0);
 				spawned = true;
 			}
 			
@@ -137,8 +136,6 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 			int i = this.maxSpawnDelay - this.minSpawnDelay;
 			this.spawnDelay = this.minSpawnDelay + worldObj.rand.nextInt(i);
 		}
-
-		//worldObj.addBlockEvent(pos, Blocks.mob_spawner, 1, 0);
 	}
 
 
@@ -155,9 +152,6 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 	
 	
 	
-    /**
-     * Returns true if the given bounding box contains solid blocks
-     */
     public boolean isSolidBlockInBB(World world, AxisAlignedBB boundingbox) {
         int i = MathHelper.floor_double(boundingbox.minX);
         int j = MathHelper.floor_double(boundingbox.maxX + 1.0D);

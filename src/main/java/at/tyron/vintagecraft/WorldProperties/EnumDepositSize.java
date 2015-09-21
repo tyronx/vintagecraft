@@ -5,9 +5,11 @@ public enum EnumDepositSize {
 	SINGLE,
 	TINY,
 	SMALL,
+	MEDIUM,
 	LARGE,
 	HUGE,
 	GIGANTIC,
-	SMALLANDLARGE
+	STUPENDOUS,
+	SMALLANDMEDIUM 
 	;
 }

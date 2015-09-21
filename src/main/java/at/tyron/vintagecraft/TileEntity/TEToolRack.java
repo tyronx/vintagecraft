@@ -94,7 +94,7 @@ public class TEToolRack extends NetworkTileEntity implements IInventory {
 
 	
 	
-	public void grabItem(int index, EnumFacing dir, EntityPlayer player) {
+	public void grabItem(int index, EntityPlayer player) {
 		if(storage[index] != null) {
 			
 			if (!player.inventory.addItemStackToInventory(storage[index])) {
@@ -134,11 +134,12 @@ public class TEToolRack extends NetworkTileEntity implements IInventory {
 		woodtype = EnumTree.byId(nbttagcompound.getInteger("woodType"));
 		NBTTagList nbttaglist = nbttagcompound.getTagList("Items", 10);
 		storage = new ItemStack[getSizeInventory()];
+		
 		for(int i = 0; i < nbttaglist.tagCount(); i++) {
 			NBTTagCompound nbttagcompound1 = nbttaglist.getCompoundTagAt(i);
-			byte byte0 = nbttagcompound1.getByte("Slot");
-			if(byte0 >= 0 && byte0 < storage.length)
-				storage[byte0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
+			byte slot = nbttagcompound1.getByte("Slot");
+			if(slot >= 0 && slot < storage.length)
+				storage[slot] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
 		}
 	}
 
@@ -146,11 +147,11 @@ public class TEToolRack extends NetworkTileEntity implements IInventory {
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		NBTTagList nbttaglist = new NBTTagList();
-		for(int i = 0; i < storage.length; i++) {
-			if(storage[i] != null) {
+		for(int slot = 0; slot < storage.length; slot++) {
+			if(storage[slot] != null) {
 				NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-				nbttagcompound1.setByte("Slot", (byte)i);
-				storage[i].writeToNBT(nbttagcompound1);
+				nbttagcompound1.setByte("Slot", (byte)slot);
+				storage[slot].writeToNBT(nbttagcompound1);
 				nbttaglist.appendTag(nbttagcompound1);
 			}
 		}

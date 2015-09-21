@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 public enum EnumAlloy {
 
 	BRONZE (EnumMetal.TINBRONZE, new EnumMetal[]{EnumMetal.COPPER, EnumMetal.TIN}, new int[]{88, 8}, new int[]{92, 12}, EnumMetal.COPPER.meltingpoint),
+	
 	BISMUTHBRONZE (EnumMetal.BISMUTHBRONZE, new EnumMetal[]{EnumMetal.COPPER, EnumMetal.ZINC, EnumMetal.BISMUTH}, new int[]{50, 20, 10}, new int[]{70, 30, 20}, EnumMetal.COPPER.meltingpoint)
 	
 	

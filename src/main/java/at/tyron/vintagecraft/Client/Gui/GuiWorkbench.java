@@ -130,7 +130,7 @@ public abstract class GuiWorkbench extends GuiContainer {
 		}
 
 		
-		fontRendererObj.drawSplitString(name, x + 30, y + 100, 80, 0x333333	);
+		fontRendererObj.drawSplitString(name, x + 30, y + 100, 90, 0x333333	);
 	}
 
 

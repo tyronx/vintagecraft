@@ -50,7 +50,22 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 						cache[x + z * sizeX] = 
 							(getDepth(genlayersuppliers[i]) << 16) + 		// Reference depth
 							genlayersuppliers[i].getColor();				// Type of deposit 
+
+
+						if (genlayersuppliers[i].getSize() == 2) {
+							if (nextInt(2) == 0) {
+								cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+							} else {
+								cache[Math.max(0, x-1 + z * sizeX)] = cache[x + z * sizeX];
+							}
+						}
 						
+						if (genlayersuppliers[i].getSize() == 4) {
+							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+						}
+
 						
 						if (genlayersuppliers[i].getSize() == 9) {
 							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];

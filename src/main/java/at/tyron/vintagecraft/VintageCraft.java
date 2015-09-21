@@ -179,6 +179,7 @@ public class VintageCraft {
 		if (evt.entity instanceof EntityZombie) {
 			if (((EntityZombie)evt.entity).isChild()) {
 				((EntityZombie)evt.entity).setChild(false);
+				evt.setCanceled(true);
 			}
 		}
     }

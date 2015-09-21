@@ -1,6 +1,5 @@
 package at.tyron.vintagecraft.TileEntity;
 
-
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;

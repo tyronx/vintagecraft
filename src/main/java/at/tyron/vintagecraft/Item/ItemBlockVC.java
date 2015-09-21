@@ -26,12 +26,13 @@ public class ItemBlockVC extends ItemBlock {
 
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
+		IBlockState state = world.getBlockState(pos);
+		
 		if (!entityplayer.canPlayerEdit(pos.offset(side), side, itemstack)) {
             return false;
         }
 		
-		IBlockState state = world.getBlockState(pos);
-        
+		
         if (state.getBlock() instanceof IBlockItemSink) {
     		if (((IBlockItemSink)state.getBlock()).tryPutItemstack(world, pos, entityplayer, side, itemstack)) {
     			return true;

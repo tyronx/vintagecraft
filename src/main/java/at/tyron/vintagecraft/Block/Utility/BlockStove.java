@@ -203,28 +203,23 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
     }
 
     private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state) {
-        if (!worldIn.isRemote)
-        {
+        if (!worldIn.isRemote) {
             Block block = worldIn.getBlockState(pos.north()).getBlock();
             Block block1 = worldIn.getBlockState(pos.south()).getBlock();
             Block block2 = worldIn.getBlockState(pos.west()).getBlock();
             Block block3 = worldIn.getBlockState(pos.east()).getBlock();
             EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
 
-            if (enumfacing == EnumFacing.NORTH && block.isFullBlock() && !block1.isFullBlock())
-            {
+            if (enumfacing == EnumFacing.NORTH && block.isFullBlock() && !block1.isFullBlock()) {
                 enumfacing = EnumFacing.SOUTH;
             }
-            else if (enumfacing == EnumFacing.SOUTH && block1.isFullBlock() && !block.isFullBlock())
-            {
+            else if (enumfacing == EnumFacing.SOUTH && block1.isFullBlock() && !block.isFullBlock()) {
                 enumfacing = EnumFacing.NORTH;
             }
-            else if (enumfacing == EnumFacing.WEST && block2.isFullBlock() && !block3.isFullBlock())
-            {
+            else if (enumfacing == EnumFacing.WEST && block2.isFullBlock() && !block3.isFullBlock()) {
                 enumfacing = EnumFacing.EAST;
             }
-            else if (enumfacing == EnumFacing.EAST && block3.isFullBlock() && !block2.isFullBlock())
-            {
+            else if (enumfacing == EnumFacing.EAST && block3.isFullBlock() && !block2.isFullBlock()) {
                 enumfacing = EnumFacing.WEST;
             }
 
@@ -238,9 +233,9 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
     public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (burning) {
             EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
-            double d0 = (double)pos.getX() + 0.5D;
-            double d1 = (double)pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
-            double d2 = (double)pos.getZ() + 0.5D;
+            double x = (double)pos.getX() + 0.5D;
+            double y = (double)pos.getY() + rand.nextDouble() * 6.0D / 16.0D;
+            double z = (double)pos.getZ() + 0.5D;
             double d3 = 0.52D;
             double d4 = rand.nextDouble() * 0.6D - 0.3D;
 
@@ -254,23 +249,22 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
 	        while (smokelevel > 0) {
 	        	if (smokelevel < 100 && worldIn.rand.nextFloat() * 100 > smokelevel) break;
 	        		
-	            switch (BlockStove.SwitchEnumFacing.FACING_LOOKUP[enumfacing.ordinal()])
-	            {
+	            switch (BlockStove.SwitchEnumFacing.FACING_LOOKUP[enumfacing.ordinal()]) {
 	                case 1:
-	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 - d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x - d3, y, z + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, x - d3, y, z + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case 2:
-	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d3, d1, d2 + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + d3, y, z + d4, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, x + d3, y, z + d4, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case 3:
-	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + d4, y, z - d3, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, x + d4, y, z - d3, 0.0D, 0.0D, 0.0D, new int[0]);
 	                    break;
 	                case 4:
-	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
-	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, d0 + d4, d1, d2 + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x + d4, y, z + d3, 0.0D, 0.0D, 0.0D, new int[0]);
+	                    worldIn.spawnParticle(EnumParticleTypes.FLAME, x + d4, y, z + d3, 0.0D, 0.0D, 0.0D, new int[0]);
 	            }
 	            
 	            smokelevel -= 200;
@@ -286,49 +280,37 @@ public class BlockStove extends BlockContainer implements IStrongHeatSource {
     
     
     @SideOnly(Side.CLIENT)
+    static final class SwitchEnumFacing {
+        static final int[] FACING_LOOKUP = new int[EnumFacing.values().length];
 
-    static final class SwitchEnumFacing
-        {
-            static final int[] FACING_LOOKUP = new int[EnumFacing.values().length];
-            private static final String __OBFID = "CL_00002111";
+        static {
+            try {
+                FACING_LOOKUP[EnumFacing.WEST.ordinal()] = 1;
+            }
+            catch (NoSuchFieldError var4) {
+                ;
+            }
 
-            static
-            {
-                try
-                {
-                    FACING_LOOKUP[EnumFacing.WEST.ordinal()] = 1;
-                }
-                catch (NoSuchFieldError var4)
-                {
-                    ;
-                }
+            try {
+                FACING_LOOKUP[EnumFacing.EAST.ordinal()] = 2;
+            }
+            catch (NoSuchFieldError var3) {
+                ;
+            }
 
-                try
-                {
-                    FACING_LOOKUP[EnumFacing.EAST.ordinal()] = 2;
-                }
-                catch (NoSuchFieldError var3)
-                {
-                    ;
-                }
+            try {
+                FACING_LOOKUP[EnumFacing.NORTH.ordinal()] = 3;
+            }
+            catch (NoSuchFieldError var2) {
+                ;
+            }
 
-                try
-                {
-                    FACING_LOOKUP[EnumFacing.NORTH.ordinal()] = 3;
-                }
-                catch (NoSuchFieldError var2)
-                {
-                    ;
-                }
-
-                try
-                {
-                    FACING_LOOKUP[EnumFacing.SOUTH.ordinal()] = 4;
-                }
-                catch (NoSuchFieldError var1)
-                {
-                    ;
-                }
+            try {
+                FACING_LOOKUP[EnumFacing.SOUTH.ordinal()] = 4;
+            }
+            catch (NoSuchFieldError var1) {
+                ;
             }
         }
+    }
 }

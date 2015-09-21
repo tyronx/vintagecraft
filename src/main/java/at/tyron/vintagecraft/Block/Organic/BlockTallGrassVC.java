@@ -149,7 +149,7 @@ public class BlockTallGrassVC extends BlockVC implements IPlantable, IBlockEatab
         	int[]climate = VCraftWorld.instance.getClimate(pos);
         	
         	EnumTallGrass newgrass = EnumTallGrassGroup.fromClimate(climate[1], climate[0], rand);
-        	if (newgrass.getId() < 6) { // Only until tallgrass flowering
+        	if (newgrass != null && newgrass.getId() < 6) { // Only until tallgrass flowering
         		worldIn.setBlockState(pos, state.withProperty(GRASSTYPE, newgrass));
 //        		System.out.println("regrown to " + newgrass + " at " + pos);
         	}

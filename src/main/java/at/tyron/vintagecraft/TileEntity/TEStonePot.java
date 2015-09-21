@@ -22,7 +22,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public EnumStonePotUtilization utilization;
 	
 
-	// Utilization = FORGE
+	// For utilization = FORGE
 	public int burnTime = 0;
 	public boolean burning = false;
 	

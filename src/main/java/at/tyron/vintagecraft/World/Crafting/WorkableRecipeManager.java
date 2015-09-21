@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.World.Crafting;
 
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.Interfaces.IItemWorkable;
+import at.tyron.vintagecraft.Interfaces.*;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.item.ItemStack;
 
@@ -37,7 +37,7 @@ public class WorkableRecipeManager {
 			
 			boolean match = true;			
 			for (int i = 0; i < input.length; i++) {
-				if (!((IItemWorkable)input[i].getItem()).isIngredient(input[i], recipe.input[i], recipe)) {
+				if (!((IItemWorkableIngredient)input[i].getItem()).isIngredient(input[i], recipe.input[i], recipe)) {
 					match = false;
 					break;
 				}
@@ -67,10 +67,11 @@ public class WorkableRecipeManager {
 			int matching1=0, matching2=0;
 			
 			for (int i = 0; i < input.length; i++) {
-				if (!((IItemWorkable)input[i].getItem()).isIngredient(input[i], recipe.input[i], recipe)) {
+				if (!((IItemWorkableIngredient)input[i].getItem()).isIngredient(input[i], recipe.input[i], recipe)) {
 					match = false;
 					break;
 				}
+				
 				matching1++;
 			}
 			

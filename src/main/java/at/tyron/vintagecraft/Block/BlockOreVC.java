@@ -193,7 +193,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
     }
 
     
-	public int getHarvetLevel(IBlockState state) {
+	public int getHarvestLevelVC(IBlockState state) {
     	if (!BlocksVC.rawore.containsBlock(state.getBlock())) return 1;
     	
      	String[] type = ((OreInRockClassEntry)state.getValue(OREANDROCKTYPE)).getName().split("-");

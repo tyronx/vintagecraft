@@ -1,5 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -28,46 +29,45 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	
 	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
 
-	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 145)),
-	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(60, 1, 10, 60, 0.5f)), 
-	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(60, 2, 8, 103)),
+	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 2, 145)),
+	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(60, 1, 10, 90, 0.5f)), 
+	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(60, 2, 8, 128)),
 
-	CLAY 				( 0, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(11, 2, 1, 155)),
-	FIRECLAY 			(22, false, EnumDepositSize.LARGE, DepositOccurence.followSurface(6, 2, 2, 160)),
+	CLAY 				( 0, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(11, 2, 1, 2, 155)),
+	FIRECLAY 			(22, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(6, 2, 2, 3, 160)),
 
-	QUARTZ 				(19, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
-	ROCKSALT 			(20, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(45, 2, 5, 255, 170)),
-	OLIVINE 			(21, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
+	QUARTZ 				(19, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyRelativeDepth(80, 1, 0, 254)),
+	ROCKSALT 			(20, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyRelativeDepth(45, 2, 5, 100, 170)),
+	OLIVINE 			(21, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 	
-	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
-	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(10, 1, 0, 35)),
-	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(8, 1, 0, 40)),
+	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(28, 1, 4, 60, 0.35f)),
+	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(10, 1, 0, 140)),
+	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyRelativeDepth(8, 1, 0, 40)),
 	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyRelativeDepth(12, 1, 0, 50)),
 
-	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyBelowSealevel(30, 1, 15, 103)),
+	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyBelowSealevel(30, 1, 15, 128)),
 
-	IRIDIUM 			( 9, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
+	CHROMITE 			( 9, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 80, 110)),
 	PLATINUM 			(10, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(2, 1, 90, 110)),
 	ILMENITE 			(11, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(2, 1, 100, 140)),
 	
-	LAPISLAZULI 		(15, true, EnumDepositSize.HUGE, DepositOccurence.anyRelativeDepth(5, 1, 0, 35, 220)),
-	DIAMOND 			(16, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(15, 1, 100, 140)),
-	EMERALD 			(17, true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(60, 1, 100, 140)),
-		
+	LAPISLAZULI 		(15, true, EnumDepositSize.MEDIUM, DepositOccurence.anyRelativeDepth(5, 1, 0, 35, 220)),
+	DIAMOND 			(16, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(80, 1, 100, 140)),
+	EMERALD 			(17, true, EnumDepositSize.SINGLE, DepositOccurence.anyBelowSealevel(1000, 1, 100, 140)),
+	
 	NATIVEGOLD_QUARTZ   ( 6, true, EnumDepositSize.TINY, DepositOccurence.inDeposit(QUARTZ, 1)),
-	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 35)), 
+	SYLVITE_ROCKSALT    (13, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(ROCKSALT, 35)),
 	NATIVESILVER_QUARTZ (14, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(QUARTZ, 3)), 
 	PERIDOT_OLIVINE     (23, true, EnumDepositSize.SMALL, DepositOccurence.inDeposit(OLIVINE, 20)),  
 
 	
-	GALENA 				( 7, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.anyRelativeDepth(15, 1, 30, 100)),
-	SULFUR 				(24, true, EnumDepositSize.SMALLANDLARGE, DepositOccurence.mixedDepths(10, 1, 0, 60, 0.5f)),
-	SALTPETER			(25, true, EnumDepositSize.HUGE, DepositOccurence.anyBelowSealevel(50, 15, 10, 200))
+	GALENA 				( 7, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyRelativeDepth(15, 1, 30, 100)),
+	SULFUR 				(24, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(70, 1, 70, 130)),
+	SALTPETER			(25, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyBelowSealevel(50, 15, 10, 200))
 	
 	;
 
 	
-
 	public int id;
 	public boolean dropsOre;
 
@@ -262,7 +262,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	@Override
 	public int getWeight() {
-		return occurence.weight;
+		return occurence.minweight;
 	}
 	
 	
@@ -295,11 +295,66 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	@Override
 	public int getSize() {
-		if (size == EnumDepositSize.GIGANTIC) return 16;
-		if (size == EnumDepositSize.HUGE) return 9;
+		if (size == EnumDepositSize.STUPENDOUS) return 16;
+		if (size == EnumDepositSize.GIGANTIC) return 9;
+		if (size == EnumDepositSize.HUGE) return 4;
+		if (size == EnumDepositSize.LARGE) return 2;
 		return 1;
 	}	
 
+	public int quantityAttemptsPerChunk() {
+		return Math.max(1, (occurence.maxdepth - occurence.mindepth) / 8);
+	}
         
+
+	
+	public static EnumMaterialDeposit[] getMapGenDeposits() {
+		return mapGenDeposits;
+	}
+	
+	public static EnumMaterialDeposit[] getLayerGenDeposits() {
+		return layerGenDeposits;
+	}
+	
+	public static int[] getQuantityAttemptsPerDeposit() {
+		int []attemptsPerDeposit = new int[values().length];
+		for (EnumMaterialDeposit deposit : layerGenDeposits) {
+			attemptsPerDeposit[deposit.ordinal()] = deposit.quantityAttemptsPerChunk();
+		}
+		return attemptsPerDeposit;
+	}
+	
+	
+	// Single, Tiny, Small, SmallandLarge Deposits
+	static EnumMaterialDeposit[] mapGenDeposits;
+	// Medium, Large, Huge, Gigantic Deposits
+	static EnumMaterialDeposit[] layerGenDeposits;
+	
+	public static int maxLayerGenAttemptsPerChunk;
+	
+	static {
+		ArrayList<EnumMaterialDeposit> mapGenDepList = new ArrayList<EnumMaterialDeposit>();
+		ArrayList<EnumMaterialDeposit> layerGenDepList = new ArrayList<EnumMaterialDeposit>();
+		
+		for (EnumMaterialDeposit deposit : values()) {
+			EnumDepositSize size = deposit.size;
+			
+			if (size == EnumDepositSize.SINGLE || size == EnumDepositSize.TINY || size == EnumDepositSize.SMALL || size == EnumDepositSize.SMALLANDMEDIUM) {
+				mapGenDepList.add(deposit);
+			}
+			if (deposit.occurence.type == EnumDepositOccurenceType.NODEPOSIT || size == EnumDepositSize.MEDIUM || size == EnumDepositSize.HUGE || size == EnumDepositSize.GIGANTIC || size == EnumDepositSize.STUPENDOUS || size == EnumDepositSize.SMALLANDMEDIUM) {
+				layerGenDepList.add(deposit);
+				maxLayerGenAttemptsPerChunk = Math.max(maxLayerGenAttemptsPerChunk, deposit.quantityAttemptsPerChunk());
+			}
+		}
+		
+		mapGenDeposits = mapGenDepList.toArray(new EnumMaterialDeposit[0]);
+		layerGenDeposits = layerGenDepList.toArray(new EnumMaterialDeposit[0]);
+		
+		int depositsMax = 0;
+	}
+	
+
+
 	
 }

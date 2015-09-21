@@ -5,7 +5,8 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumMaterialDeposit;
 
 
 public class DepositOccurence {
-	public int weight; // How common the ore is 
+	public int minweight; // How common the ore is or minweight
+	public int maxweight; // How common the ore is for gradient weighted deposits
 	public int height = 2;
 	
 	public int mindepth;
@@ -20,12 +21,17 @@ public class DepositOccurence {
 	
 	
 	private DepositOccurence(EnumDepositOccurenceType type, int weight, int height, int mindepth, int maxdepth) {
-		this(type, weight, height, mindepth, maxdepth, 255);
+		this(type, height, weight, weight, mindepth, maxdepth, 255);
 	}
 	
 	private DepositOccurence(EnumDepositOccurenceType type, int weight, int height, int mindepth, int maxdepth, int untilyheight) {
+		this(type, height, weight, weight, mindepth, maxdepth, untilyheight);
+	}
+	
+	private DepositOccurence(EnumDepositOccurenceType type, int height, int minweight, int maxweight, int mindepth, int maxdepth, int untilyheight) {
 		this.type = type;
-		this.weight = weight;
+		this.minweight = minweight;
+		this.maxweight = maxweight;
 		this.height = height;
 		this.mindepth = mindepth;
 		this.maxdepth = maxdepth;
@@ -42,8 +48,8 @@ public class DepositOccurence {
 		return new DepositOccurence(EnumDepositOccurenceType.FOLLOWSURFACE, weight, height, 0, 1, 255);
 	}
 
-	public static DepositOccurence followSurface(int weight, int height, int depth, int untilyheight) {
-		return new DepositOccurence(EnumDepositOccurenceType.FOLLOWSURFACE, weight, height, depth, depth+1, untilyheight);
+	public static DepositOccurence followSurface(int weight, int height, int minDepth, int maxDepth, int untilyheight) {
+		return new DepositOccurence(EnumDepositOccurenceType.FOLLOWSURFACE, weight, height, minDepth, maxDepth, untilyheight);
 	}
 
 	
@@ -72,5 +78,19 @@ public class DepositOccurence {
 		occ.belowSealLevelRatio = belowsealevelratio;
 		return occ;
 	}
+	
+
+
+
+
+	/*public static DepositOccurence gradientRelativeDepth(int height, int minweight, int maxweight, int mindepth, int maxdepth, int untilyheight) {
+		return new DepositOccurence(EnumDepositOccurenceType.GRADIENTRELATIVEDEPTH, minweight, height, mindepth, maxdepth, untilyheight);
+	}
+	
+	public static DepositOccurence gradientBelowSealevel(int height, int minweight, int maxweight, int mindepth, int maxdepth) {
+		return new DepositOccurence(EnumDepositOccurenceType.GRADIENTBELOWSEALEVEL, minweight, height, mindepth, maxdepth);
+	}*/
+
+	
 	
 }

@@ -19,7 +19,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	GALENA              ( 7, 0, 0.5f),
 	CASSITERITE 		( 8, 2, 1f),
 	
-	IRIDIUM 			( 9, 4, 1.1f),
+	CHROMITE 			( 9, 5, 1.5f),
 	PLATINUM 			(10, 5, 1.3f),
 	ILMENITE 			(11, 5, 1.2f),
 	SPHALERITE 			(12, 2, 0.8f),
@@ -37,7 +37,7 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	SULFUR				(24, 2, 0.5f),
 	SALTPETER			(25, 0, 0.2F, false),
 	
-	// These don't reaally belong here
+	// These don't reaally belong here but way easier to code if added here
 	COKE				(26, 0, 0.5f),
 	//CHARCOAL			(27, 0, 0.5f)
 	;
@@ -66,7 +66,6 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 		if (rocktype == null) return false;
 		
 		switch (this) {
-		//	case CHARCOAL:
 			case COKE:
 				return false;
 			

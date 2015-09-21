@@ -28,10 +28,13 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	/* Wether the device turns clockwise as seen from clockwiseFromFacing (standing 3 blocks away from this facing and looking towards the block */
 	public boolean clockwise;
 	public EnumFacing directionFromFacing;
-	
-	
+		
 	private EnumTree treeType;
 	public ResourceLocation woodTexture;
+	
+	float lastAngle = 0f;
+
+
 	
 	public void setTreeType(EnumTree treeType) {
 		if (treeType == null) treeType = EnumTree.OAK;
@@ -39,19 +42,15 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		this.treeType = treeType;
 		woodTexture = new ResourceLocation(ModInfo.ModID, "textures/blocks/planks/" + treeType.getName() + ".png");
 	}
+	
 	public EnumTree getTreeType() {
 		return treeType;
 	}
+	
 	public EnumFacing getOrientation() {
 		return orientation;
 	}
-	
-
-	
-	//@SideOnly(Side.CLIENT)
-	float lastAngle = 0f;
-	
-	//@SideOnly(Side.CLIENT)
+		
 	public float getAngle() {
 		MechanicalNetwork network = getNetwork(null); 
 		if (network == null) {
@@ -69,29 +68,13 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 	@Override
 	public void validate() {
 		super.validate();
-		//loadNetwork();
-		
-		//System.out.println("registered device during validate");
-		
 	}
-	
-/*	public void loadNetwork() {
-		MechnicalNetworkManager manager = MechnicalNetworkManager.getNetworkManagerForWorld(worldObj);
-		if (manager != null) {
-			network = manager.getNetworkById(this.networkId);
-			if (network != null) {
-				System.out.println("registered device during validate");
-				network.register(this);
-			}
-		}
-	}*/
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		
 		this.networkId = compound.getInteger("networkId");
-		//if (worldObj != null) loadNetwork();	
 		
 		clockwise = compound.getBoolean("clockwise");
 		
@@ -187,7 +170,6 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 			worldObj.markBlockForUpdate(pos);
 		} else {
 			directionFromFacing = null;
-			//this.network = null;
 			this.networkId = 0;
 		}
 	}
@@ -227,10 +209,6 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		this.clockwise = clockwise;
 		setDirectionFromFacing(remoteFacing);
 		
-/*		if (this instanceof TEWindmillRotor) {
-			System.out.println("direction set to " + clockwise + " from facing is " + remoteFacing);
-		}
-	*/	
 		worldObj.markBlockForUpdate(pos);
 		
 		Hashtable<EnumFacing, IMechanicalPowerDevice> connectibleNeighbours = getNeighbourDevices(true);
@@ -317,31 +295,19 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 				}
 			}
 			
-			
-			//if (maxSpeedDifference < 1f) {
-				for (MechanicalNetwork network : networks.values()) {
-					if (network != dominantNetwork) {
-						network.isDead = true;
-						MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).discardNetwork(network);
-					}
+			// Here we could disallow connecting of networks if
+			// maxSpeedDifference is larger than 1
+			// e.g. immediately break the placed block again because it cannot handle
+			// the large torque difference. But implementation will be somewhat complicated
+			for (MechanicalNetwork network : networks.values()) {
+				if (network != dominantNetwork) {
+					network.isDead = true;
+					MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).discardNetwork(network);
 				}
-				dominantNetwork.rebuildNetwork();
-				
-				System.out.println("connected mechanical networks, because maxsspeeddiff is " + maxSpeedDifference);
-				
-				worldObj.markBlockForUpdate(pos);
-				
-			// Need to make a better mechanic for breaking, I can't break the block at this point, we get an exception
-			/*} else {
-				System.out.println("attempted to connect mechanical networks, but speed diff is too large: " + maxSpeedDifference);
-				
-				worldObj.destroyBlock(pos, true);
-				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "mob.zombie.woodbreak", 0.8f, 1f);
 			}
-			*/
+			dominantNetwork.rebuildNetwork();
 			
-			
-		//	throw new RuntimeException("Connecting mechanical networks is not yet supported!");
+			worldObj.markBlockForUpdate(pos);
 		}				
 		
 	}
@@ -378,8 +344,6 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 			IMechanicalPowerDevice mechdevice = (IMechanicalPowerDevice)te;
 			if (!mechdevice.exists()) return null;
 					
-//			System.out.println(pos + " / " + pos.offset(facing) + "  " +  facing + " of me is a " + mechdevice.getClass());
-			
 			if (!connected && mechdevice.hasConnectorAt(facing.getOpposite())) {
 				return mechdevice;
 			}
@@ -399,7 +363,7 @@ public abstract class TEMechanicalNetworkDeviceBase extends NetworkTileEntity im
 		return false;
 	}
 
-	// Default behavior: Device is connected to all neighbour devices
+	// Default behavior: Device is connected to all neighbor devices
 	@Override
 	public boolean isConnectedAt(EnumFacing facing) {
 		IMechanicalPowerDevice device = getNeighbourDevice(facing, false);

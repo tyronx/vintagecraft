@@ -11,26 +11,11 @@ import net.minecraft.world.World;
 
 public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {
 	// orientation = peg gear orientation
-	// clockwise = facing of 
 	
 	public EnumFacing cagegearOrientation;
 	public boolean refreshModel;
 	
 	
-	@Override
-	public void setDirectionFromFacing(EnumFacing facing) {
-		super.setDirectionFromFacing(facing);
-		connectToNeighbours();
-		if (cagegearOrientation != null && facing == cagegearOrientation.getOpposite()) {
-			// Flip gears
-			EnumFacing tmp = orientation;
-			orientation = cagegearOrientation;
-			cagegearOrientation = tmp;
-		} else {
-			
-		}
-	}
-
 	public TEAngledGearBox() {
 		cagegearOrientation = null;
 	}
@@ -50,6 +35,20 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IU
 	}
 
 	
+	@Override
+	public void setDirectionFromFacing(EnumFacing facing) {
+		super.setDirectionFromFacing(facing);
+		connectToNeighbours();
+		if (cagegearOrientation != null && facing == cagegearOrientation.getOpposite()) {
+			// Flip gears
+			EnumFacing tmp = orientation;
+			orientation = cagegearOrientation;
+			cagegearOrientation = tmp;
+		} else {
+			
+		}
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
@@ -144,18 +143,9 @@ public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IU
 		if (getNetwork(orientation) != null && worldObj != null && !worldObj.isRemote) {
 			if (worldObj.rand.nextFloat() < Math.min(0.01f, getNetwork(orientation).getSpeed() / 2000f)) {
 				worldObj.playSoundEffect(pos.getX(), pos.getY(), pos.getZ(), "vintagecraft:woodcreak", 1f, 1f);
-				//System.out.println("play sound "  + network.getSpeed()); 
 			}
 		}
 	}
-
-
-
-
-	
-
-
-	
 	
 	
 }

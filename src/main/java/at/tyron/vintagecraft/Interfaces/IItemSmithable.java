@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.Interfaces;
 
 import net.minecraft.item.ItemStack;
 
-public interface IItemSmithable extends IItemWorkable {
+public interface IItemSmithable extends IItemMainWorkableIngredient {
 
 	public boolean workableOn(int anviltier, ItemStack itemstack, ItemStack itemstackoptional);
 	

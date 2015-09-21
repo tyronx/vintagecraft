@@ -108,19 +108,11 @@ public class BlockSaltLamp extends BlockVC {
 		return getDefaultState();
 	}
 	
+	// Why is this not getting called??
 	@Override
-	public int damageDropped(IBlockState state) {
-		return 0;
-	}
-	
-	
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(this);
+	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
+		dropBlockAsItem(worldIn, pos, state, 0);
+		super.onBlockDestroyedByPlayer(worldIn, pos, state);
 	}
 
-	
-	
-	
-	
 }

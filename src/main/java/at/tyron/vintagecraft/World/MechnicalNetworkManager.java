@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
+/* Holds a list mechanical network instances for each world dimension and side (client/server) */
 public class MechnicalNetworkManager {
 	
 	
@@ -80,7 +81,7 @@ public class MechnicalNetworkManager {
 	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
-		if (world == null || world.isRemote) return;  // || VintageCraft.instance.proxy instanceof ClientProxy
+		if (world == null || world.isRemote) return;
 		
 		if (
 			FMLCommonHandler.instance().getMinecraftServerInstance() == null || 
@@ -127,7 +128,7 @@ public class MechnicalNetworkManager {
 	}
 	
 	public void loadNetworksFromTaglist(NBTTagList networks) {
-		System.out.println("load networks for dimension " + world.provider.getDimensionId() + ", list: " + networks);
+		//System.out.println("load networks for dimension " + world.provider.getDimensionId() + ", list: " + networks);
 		networksById.clear();
 		
 		if (networks == null) return;
@@ -189,7 +190,7 @@ public class MechnicalNetworkManager {
 	public MechanicalNetwork getOrCreateNetwork(int networkid) {
 		MechanicalNetwork network = getNetworkById(networkid);
 		if (network == null) {
-			System.out.println("from get instantiated new network with id " + networkid);
+			//System.out.println("from get instantiated new network with id " + networkid);
 			network = new MechanicalNetwork(this, networkid);
 			networksById.put(networkid, network);
 		}
@@ -198,8 +199,8 @@ public class MechnicalNetworkManager {
 
 	public MechanicalNetwork createAndRegisterNetwork() {
 		int networkId = findUniqueId();
-		System.out.println(world.isRemote + " from create instantiated new network with id " + networkId);
-		///new Exception().printStackTrace();
+		//System.out.println(world.isRemote + " from create instantiated new network with id " + networkId);
+
 		MechanicalNetwork network = new MechanicalNetwork(this, networkId);
 		
 		networksById.put(networkId, network);

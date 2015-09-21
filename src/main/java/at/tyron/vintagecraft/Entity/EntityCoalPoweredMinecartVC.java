@@ -2,7 +2,9 @@ package at.tyron.vintagecraft.Entity;
 
 import java.util.Iterator;
 
+import at.tyron.vintagecraft.Inventory.ContainerCoalPoweredMinecart;
 import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.ItemPeatBrick;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockRailBase;
@@ -12,8 +14,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.ContainerChest;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -30,13 +35,26 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
+public class EntityCoalPoweredMinecartVC extends EntityMinecartContainerVC {
 	public boolean refreshModel = false;
 
-	public int fuel;
-	public int burntime;
+	// Amount of ticks how long the current fuel has been burning
+	public int fuelBurnTime;
+	
+	// Amount of ticks the current fuel burns 
+	public int maxFuelBurnTime;
+	
+	// Amount of ticks passed since the cart is burning fuel
+	public int totalBurntime;  
+	
+	
     public double pushX;
     public double pushZ;
+    
+    // Last player how opened the inventory
+    public double plannedPushX;
+    public double plannedPushZ;
+    
 
     public EntityCoalPoweredMinecartVC(World worldIn) {
         super(worldIn);
@@ -50,7 +68,12 @@ public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
 
     
 
-    
+    public boolean isOnRail() {
+        return
+        	BlockRailBase.isRailBlock(this.worldObj, new BlockPos(posX, posY - 1, posZ)) ||
+        	BlockRailBase.isRailBlock(this.worldObj, new BlockPos(posX, posY, posZ))
+        ;
+    }
     
     
     
@@ -65,27 +88,62 @@ public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
         this.dataWatcher.addObject(16, new Byte((byte)0));
     }
 
+    
     public void onUpdate() {
         super.onUpdate();
-
-        if (this.fuel > 0) {
-            --this.fuel;
-            burntime++;
+        
+        if (canBurnFuel()) {
+        	igniteFuel();
+        }
+        
+        if (canConsumeFuel()) {
+            --this.fuelBurnTime;
+            totalBurntime++;
+            this.setMinecartPowered(this.fuelBurnTime > 0);
+            
+        } else {
+        	if (totalBurntime <= 0) {
+        		totalBurntime = 0;
+        		this.pushX = this.pushZ = 0.0D;
+        	}
         }
 
-        if (this.fuel <= 0) {
-            this.pushX = this.pushZ = 0.0D;
-            burntime = 0;
-        }
+        
 
-        this.setMinecartPowered(this.fuel > 0);
-
-        if (this.isMinecartPowered() && this.rand.nextInt(3) == 0) {
+        if (this.isMinecartPowered() && isOnRail() && this.rand.nextInt(3) == 0) {
         	worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, this.posX, this.posY + 1.4D, this.posZ, 0.0D, 0.0D, 0.0D, new int[0]);
         }
     }
 
-    protected double func_174898_m() {
+    
+    private void igniteFuel() {
+		int fuelvalue = getFuelValue(minecartContainerItems[0]);
+		minecartContainerItems[0].stackSize--;
+		if (minecartContainerItems[0].stackSize == 0) {
+			minecartContainerItems[0] = null;
+		}
+		
+		fuelBurnTime = maxFuelBurnTime = fuelvalue;
+		
+		pushX = plannedPushX;
+		pushZ = plannedPushZ;     
+	}
+
+	private boolean canBurnFuel() {
+		return 
+			fuelBurnTime == 0 && 
+			getFuelValue(minecartContainerItems[0]) > 0
+		;
+	}
+
+	private boolean canConsumeFuel() {
+		return 
+			this.fuelBurnTime > 0 &&
+			isOnRail()
+		;
+	}
+
+	protected double func_174898_m() {
         return 0.2D;
     }
 
@@ -118,7 +176,7 @@ public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
             this.motionY *= 0.0D;
             this.motionZ *= 0.800000011920929D;
             
-            float drag = Math.min(0.5f, burntime / 800f);
+            float drag = Math.min(0.5f, totalBurntime / 800f);
             
             this.motionX += this.pushX * d1 * drag;
             this.motionZ += this.pushZ * d1 * drag;
@@ -132,42 +190,61 @@ public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
     }
     
 
+    
     public boolean interactFirst(EntityPlayer playerIn) {
-        ItemStack itemstack = playerIn.inventory.getCurrentItem();
-
-        if (itemstack != null && itemstack.getItem() instanceof ItemOreVC) {
+		plannedPushX = MathHelper.clamp_double(playerIn.posX - posX, -0.2f, 0.2f);
+		plannedPushZ = MathHelper.clamp_double(playerIn.posZ - posZ, -0.2f, 0.2f);
+		
+        return super.interactFirst(playerIn);
+    }
+    
+    
+    
+    public static int getFuelValue(ItemStack itemstack) {
+    	if (itemstack == null) return 0;
+    	
+    	if (itemstack.getItem() instanceof ItemOreVC) {
         	EnumOreType oretype = ItemOreVC.getOreType(itemstack);
         	
         	if (oretype == EnumOreType.LIGNITE || oretype == EnumOreType.BITUMINOUSCOAL || oretype == EnumOreType.COKE) {
         	
-	            if (!playerIn.capabilities.isCreativeMode && --itemstack.stackSize == 0) {
-	                playerIn.inventory.setInventorySlotContents(playerIn.inventory.currentItem, (ItemStack)null);
-	            }
-	            
-	            fuel += oretype == EnumOreType.LIGNITE ? 2400 : 3600;
-	            
-	            this.pushX = MathHelper.clamp_double(playerIn.posX - posX, -0.2f, 0.2f);
-	            this.pushZ = MathHelper.clamp_double(playerIn.posZ - posZ, -0.2f, 0.2f);
+	            return oretype == EnumOreType.LIGNITE ? 2400 : 3600;
         	}
-        }
-
-        return super.interactFirst(playerIn);
+    	}
+    	
+    	if (itemstack.getItem() instanceof ItemPeatBrick) {
+    		return 800;
+    	}
+    	
+    	return 0;
     }
     
     
 
     protected void writeEntityToNBT(NBTTagCompound tagCompound) {
         super.writeEntityToNBT(tagCompound);
+        tagCompound.setDouble("PlannedPushX", this.plannedPushX);
+        tagCompound.setDouble("PlannedPushZ", this.plannedPushZ);
+        tagCompound.setInteger("fuelBurnTime", this.fuelBurnTime);
+        tagCompound.setInteger("maxFuelBurnTime", this.maxFuelBurnTime);
+        tagCompound.setInteger("totalBurntime", this.totalBurntime);
+        
         tagCompound.setDouble("PushX", this.pushX);
         tagCompound.setDouble("PushZ", this.pushZ);
-        tagCompound.setShort("Fuel", (short)this.fuel);
+        
     }
 
 	protected void readEntityFromNBT(NBTTagCompound tagCompund) {
         super.readEntityFromNBT(tagCompund);
+        
         this.pushX = tagCompund.getDouble("PushX");
         this.pushZ = tagCompund.getDouble("PushZ");
-        this.fuel = tagCompund.getShort("Fuel");
+        this.plannedPushX = tagCompund.getDouble("PlannedPushX");
+        this.plannedPushZ = tagCompund.getDouble("PlannedPushZ");
+        
+        this.fuelBurnTime = tagCompund.getInteger("fuelBurnTime");
+        this.maxFuelBurnTime = tagCompund.getInteger("maxFuelBurnTime");
+        this.totalBurntime = tagCompund.getInteger("totalBurntime");
     }
 
     protected boolean isMinecartPowered() {
@@ -182,7 +259,43 @@ public class EntityCoalPoweredMinecartVC extends EntityMinecartVC {
         }
     }
 
-    
+	@Override
+	public int getSizeInventory() {
+		return 1;
+	}
 
+	@Override
+	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
+		return new ContainerCoalPoweredMinecart(playerInventory, this);
+	}
+
+	@Override
+	public String getGuiID() {
+		return "vintagecraft:coalpoweredminecart";
+	}
+
+    
+    public int getField(int id) {
+        switch (id) {
+        	case 0: return fuelBurnTime;
+        	case 1: return maxFuelBurnTime;
+        	default: return 0;
+        }
+    }
+
+    public void setField(int id, int value) {
+        switch (id) {
+    		case 0: fuelBurnTime = value; break;
+    		case 1: maxFuelBurnTime = value; break;
+    		default: return;
+        }
+    	
+    }
+
+    public int getFieldCount() {
+        return 2;
+    }
+
+    
 	
 }

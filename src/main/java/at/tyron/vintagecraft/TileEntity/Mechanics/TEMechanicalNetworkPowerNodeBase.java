@@ -20,7 +20,7 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 		forkedFromNetwork.writeToNBT(nbt);
 		network.readFromNBTForked(nbt);
 		
-		if (!worldObj.isRemote) { // Might not be needed, this check
+		if (!worldObj.isRemote) { // This check might not be needed
 			System.out.println("sent to clients");
 			network.sentNetworkToClients();
 		}
@@ -37,9 +37,6 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 			System.out.println(worldObj.isRemote + " vs. " + MechnicalNetworkManager.getNetworkManagerForWorld(worldObj).getWorld().isRemote);
 			new java.lang.Exception().printStackTrace();
 		}
-		 
-		
-		//System.out.println("create mech network");
 		
 		Hashtable<EnumFacing, IMechanicalPowerDevice> neighbourdevices = getNeighbourDevices(true);
 		
@@ -79,8 +76,6 @@ public abstract class TEMechanicalNetworkPowerNodeBase extends TEMechanicalNetwo
 		
 		this.networkId = networkId;
 		getNetwork(remoteFacing.getOpposite()).register(this);
-		
-		//System.out.println(pos);
 		
 		sendNetworkToNeighbours(propagationId, networkId, remoteFacing);
 	}

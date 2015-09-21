@@ -23,7 +23,13 @@ public class BlockUpperMantle extends BlockVC {
 
 
 	@Override
+	public int getHarvestLevelVC(IBlockState state) {
+		return 9999;
+	}
+	
+	@Override
 	public int getHarvestLevel(IBlockState state) {
 		return 9999;
 	}
+
 }

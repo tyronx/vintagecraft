@@ -36,6 +36,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+// This class holds several Vintagecraft related properties for the world 
 public class VCraftWorld {
 	public static boolean chunkdataprofiling = false;
 	
@@ -65,6 +66,8 @@ public class VCraftWorld {
 	private HashMap<Long, HashMap<String, String>> profiling = new HashMap<Long, HashMap<String,String>>();
 	
 	ClimateGenWorldChunkManager wcm;
+	
+	// Randomized the grass color a bit so they are not completely smooth between transitions particularly
 	PseudoNumberGen grassspeckle;  
 	
 	
@@ -77,89 +80,6 @@ public class VCraftWorld {
 	}
 	
 	
-	void mark(int chunkX, int chunkZ, String key) {
-		long index = ChunkPos2Index(chunkX, chunkZ);
-		
-		if (!chunkdataprofiling) return;
-		
-		
-		if (printingProfiling) return;
-		
-		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ) {
-			//System.out.println("called by client");
-			return;
-		}
-		
-		HashMap<String, String> chunk = profiling.get(index);
-		if (chunk == null) {
-			chunk = new HashMap<String, String>();
-			chunk.put("chunkX", "" + chunkX);
-			chunk.put("chunkZ", "" + chunkZ);
-			chunk.put("list", "");
-			chunk.put("counter", "0");
-		}
-		
-		String str = chunk.get(key);
-		int num;
-		if (str == null) {
-			num = 1;
-		} else {
-			num = Integer.parseInt(str);
-			num++;
-		}
-		chunk.put(key, ""+num);
-		
-		int counter = Integer.parseInt(chunk.get("counter")) + 1;
-		chunk.put("counter", "" + counter);
-		chunk.put("list", chunk.get("list") + "\r\n" + counter + " "  + key);
-		
-		profiling.put(index, chunk);
-	}
-	
-	
-	void printProfiling(String reason) {
-		System.out.println("writing chunknbt.txt");
-		printingProfiling = true;
-		
-		Writer writer;
-		try {
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("chunknbt.txt"), "utf-8"));
-
-			writer.write("Crash at " + FMLCommonHandler.instance().getEffectiveSide());
-			writer.write(reason + "\r\n");
-			
-			Set<Long> keys = profiling.keySet();
-			
-			for (Long index : keys) {
-				HashMap<String, String> chunk = profiling.get(index);
-				
-				writer.write("=======================\r\n");
-				writer.write("chunk @ " + chunk.get("chunkX") + "/" + chunk.get("chunkZ") + "\r\n");
-				writer.write("index = " + index + "\r\n");
-				
-				Set<String> chunkkeys = chunk.keySet();
-				for (String key : chunkkeys) {
-					if (!key.equals("chunkX") && !key.equals("chunkZ") && !key.equals("list") && !key.equals("counter")) {
-						writer.write(key + ": " + chunk.get(key) + "\r\n");
-					}
-				}
-				
-				writer.write("order:\r\n");
-				writer.write(chunk.get("list") + "\r\n");
-			}
-			
-
-			writer.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		printingProfiling = false;
-		System.out.println("chunknbt.txt written.");
-		
-	}
-	
-
 	
 
 
@@ -299,7 +219,7 @@ public class VCraftWorld {
     	
     	if (!nbt.hasKey("climate")) {
     		nbt = recreateClimateNBT(pos);
-    		/*printProfiling*/System.out.println("climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " missing - recreated!");	
+    		System.out.println("climate array for chunk " + (pos.getX()>>4) + "/" + + (pos.getZ()>>4) + " missing - recreated!");	
     	}
     	
     	int climate = nbt.getIntArray("climate")[((pos.getZ() & 15) << 4) + (pos.getX() & 15)];
@@ -307,7 +227,7 @@ public class VCraftWorld {
     	int rain = normalizeRainFall(climate & 0xff, pos);
     	int temp = normalizeTemperature((climate >> 16) & 0xff, pos);
     	
-    	return new int[]{temp, getFertility(/*(climate >> 8) & 0xff,*/ rain, deScaleTemperature(temp), pos), rain};
+    	return new int[]{temp, getFertility(rain, deScaleTemperature(temp), pos), rain};
     }
     
     public int getTemperature(BlockPos pos) {
@@ -319,7 +239,7 @@ public class VCraftWorld {
     }
     
     public int getFertily(int rain, int temperature, BlockPos pos) {
-    	return getFertility(/*(_getClimate(pos) >> 8) & 0xff,*/ rain, temperature, pos);
+    	return getFertility(rain, temperature, pos);
     }
     
     
@@ -393,6 +313,7 @@ public class VCraftWorld {
 		}
 	}
 	
+	
 	// This part of an unfinished feature to optimze cloud rendering (render cloud boxes only where opacity is not 0)
 	@SideOnly(Side.CLIENT)
 	public boolean isCloudAt(int x, int y) {
@@ -412,7 +333,6 @@ public class VCraftWorld {
     	
     	int temperature = (climate >> 16) & 0xff  - (pos.getY() - seaLevel)/2;
     	int rainfall = normalizeRainFall(climate & 0xff, pos);
-    	//System.out.println(temperature + "/" + (255-rainfall));
     	return grassBuffer[Math.min(255, Math.max(0, temperature + grassspeckle.nextInt(15))) + 256 * Math.min(255, (255-rainfall+rainfallmodifier))];
     }
     
@@ -434,7 +354,6 @@ public class VCraftWorld {
 	}
 	long ChunkPos2Index(int chunkX, int chunkZ) {
 		return ChunkCoordIntPair.chunkXZ2Int(chunkX, chunkZ);
-		//return ((long)chunkX + (long)Integer.MAX_VALUE) + (((long)chunkZ + (long)Integer.MAX_VALUE) << 32); 
 	}
     
 	
@@ -449,6 +368,96 @@ public class VCraftWorld {
 		}
 	}
 
+
+	
+	
+	
+	/**** Debug Methods */
+	
+	
+
+	void mark(int chunkX, int chunkZ, String key) {
+		long index = ChunkPos2Index(chunkX, chunkZ);
+		
+		if (!chunkdataprofiling) return;
+		
+		
+		if (printingProfiling) return;
+		
+		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ) {
+			//System.out.println("called by client");
+			return;
+		}
+		
+		HashMap<String, String> chunk = profiling.get(index);
+		if (chunk == null) {
+			chunk = new HashMap<String, String>();
+			chunk.put("chunkX", "" + chunkX);
+			chunk.put("chunkZ", "" + chunkZ);
+			chunk.put("list", "");
+			chunk.put("counter", "0");
+		}
+		
+		String str = chunk.get(key);
+		int num;
+		if (str == null) {
+			num = 1;
+		} else {
+			num = Integer.parseInt(str);
+			num++;
+		}
+		chunk.put(key, ""+num);
+		
+		int counter = Integer.parseInt(chunk.get("counter")) + 1;
+		chunk.put("counter", "" + counter);
+		chunk.put("list", chunk.get("list") + "\r\n" + counter + " "  + key);
+		
+		profiling.put(index, chunk);
+	}
+	
+	
+	void printProfiling(String reason) {
+		System.out.println("writing chunknbt.txt");
+		printingProfiling = true;
+		
+		Writer writer;
+		try {
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("chunknbt.txt"), "utf-8"));
+
+			writer.write("Crash at " + FMLCommonHandler.instance().getEffectiveSide());
+			writer.write(reason + "\r\n");
+			
+			Set<Long> keys = profiling.keySet();
+			
+			for (Long index : keys) {
+				HashMap<String, String> chunk = profiling.get(index);
+				
+				writer.write("=======================\r\n");
+				writer.write("chunk @ " + chunk.get("chunkX") + "/" + chunk.get("chunkZ") + "\r\n");
+				writer.write("index = " + index + "\r\n");
+				
+				Set<String> chunkkeys = chunk.keySet();
+				for (String key : chunkkeys) {
+					if (!key.equals("chunkX") && !key.equals("chunkZ") && !key.equals("list") && !key.equals("counter")) {
+						writer.write(key + ": " + chunk.get(key) + "\r\n");
+					}
+				}
+				
+				writer.write("order:\r\n");
+				writer.write(chunk.get("list") + "\r\n");
+			}
+			
+
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		printingProfiling = false;
+		System.out.println("chunknbt.txt written.");
+		
+	}
+	
 
 
 }

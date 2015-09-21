@@ -150,7 +150,6 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     		EnumOrganicLayer adjustedorganiclayer = organiclayer.adjustToEnviroment(light, VCraftWorld.instance.getRainfall(pos), VCraftWorld.instance.getTemperature(pos));
     		
     		if (adjustedorganiclayer != organiclayer) {
-    			//System.out.println(organiclayer + " => " + adjustedorganiclayer + " @ " + pos);
     			soil.setOrganicLayer(adjustedorganiclayer, worldIn, pos);
     			return;
     		}
@@ -168,10 +167,6 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
                     	soil = (IBlockSoil)neighbourblockstate.getBlock();
                     	EnumOrganicLayer neighbourorganiclayer = soil.getOrganicLayer(worldIn, posneighbour);
                     	
-
-                    	
-                    	if (neighbourorganiclayer == null) System.out.println("neighbourorganiclayer is null! " + neighbourblockstate);
-
                         if (worldIn.getLight(posneighbour.up()) >= neighbourorganiclayer.minblocklight &&
                             block.getLightOpacity(worldIn, posneighbour.up()) <= 2 &&
                             neighbourorganiclayer == EnumOrganicLayer.NOGRASS) {
@@ -212,7 +207,6 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
 		if (this instanceof IBlockSoil) {
-			//return BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
 			return VCraftWorld.instance.getGrassColorAtPos(pos);
 		} else {
 			return 16777215;
@@ -243,7 +237,8 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 		return 1f;
 	}
 	
-	public int getHarvetLevel(IBlockState state) {
+	
+	public int getHarvestLevelVC(IBlockState state) {
 		return 1;
 	}
 	

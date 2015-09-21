@@ -16,7 +16,10 @@ import net.minecraft.world.World;
 public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
 	public boolean refreshModel = false;
 	public boolean connectedToFurnace = false;
-	
+
+	float lastSqueeze;
+	int lastDirection = 0;
+
 	@Override
 	public boolean hasConnectorAt(EnumFacing facing) {
 		return facing == orientation.getOpposite();
@@ -78,8 +81,6 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 	}
 
 	
-	float lastSqueeze;
-	int lastDirection = 0;
 	
 	@Override
 	public void update() {
@@ -91,7 +92,6 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 			float pitch = getNetwork(orientation).getSpeed() / 30f;
 			
 			if (direction != lastDirection && Math.abs(squeeze - lastSqueeze) > 0.000001f) {
-				//System.out.println(direction + " / " + lastDirection);
 				if (worldObj.isRemote) {
 					if (direction > 0) {
 						((WorldClient)worldObj).playSoundAtPos(pos, "vintagecraft:air_blow", pitch/4, pitch, false);
@@ -108,7 +108,6 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 						IBlockState state = worldObj.getBlockState(pos.offset(orientation, 2).down());
 						if (state.getBlock() instanceof BlockFurnaceSection) {
 							TEFurnaceSection tefs = (TEFurnaceSection) worldObj.getTileEntity(pos.offset(orientation, 2).down());
-							//System.out.println("send blow");
 							tefs.receiveAirBlowFromBellows();
 						}
 					}
@@ -119,11 +118,6 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 			}
 			
 			lastSqueeze = squeeze;
-		}
-		
-		
-		if (getNetwork(orientation) != null && worldObj != null && !worldObj.isRemote && getNetwork(orientation).getSpeed() > 1f) {
-			
 		}
 	}
 	

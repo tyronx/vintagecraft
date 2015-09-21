@@ -7,11 +7,19 @@ import net.minecraft.util.EnumParticleTypes;
 
 public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlayerListBox {
 	int fuseTimer;
-	int dropTimer; // If no more solid ground, wait 1-2 ticks before dropping
-	
 	boolean exploded;
 	
+	// If no more solid ground, wait 1-2 ticks before dropping
+	// This prevents the blast powder sack from just dropping when 
+	// a nearby explosion first blows up the ground below
+	int dropTimer; 
 	
+
+	public TEBlastPowderSack() {
+		
+	}
+	
+
 	public static int getFuseDuration() {
 		return 80;
 	}
@@ -25,10 +33,6 @@ public class TEBlastPowderSack extends NetworkTileEntity implements IUpdatePlaye
 		return 2f;
 	}
 	
-	
-	public TEBlastPowderSack() {
-		
-	}
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {

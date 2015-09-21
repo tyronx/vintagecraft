@@ -15,6 +15,7 @@ import at.tyron.vintagecraft.WorldGen.Layer.GenLayerContrastAndBrightnessAll;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerWeightedNoise;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerZoom;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerAddNoise;
+import at.tyron.vintagecraft.WorldGen.Noise.GenLayerAddPerlin;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerClimateRGBNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoise;
 import at.tyron.vintagecraft.WorldGen.Noise.GenLayerSimplexNoiseUnclamped;
@@ -115,30 +116,33 @@ public abstract class GenLayerVC extends GenLayer {
 	
 
 	public static GenLayerVC genDeposits(long seed) {
-		ArrayList<EnumMaterialDeposit> largedeposits = new ArrayList<EnumMaterialDeposit>();
-		
-		for (EnumMaterialDeposit deposit : EnumMaterialDeposit.values()) {
-			if (deposit.size == EnumDepositSize.GIGANTIC || deposit.size == EnumDepositSize.LARGE || deposit.size == EnumDepositSize.SMALLANDLARGE || deposit.size == EnumDepositSize.NONE || deposit.size == EnumDepositSize.HUGE) {
-				largedeposits.add(deposit);
-			}
-		}
-		
-		GenLayerVC noise = new GenLayerWeightedNoise(1L, largedeposits.toArray(new EnumMaterialDeposit[0]));
+		GenLayerVC noise = new GenLayerWeightedNoise(1L, EnumMaterialDeposit.getLayerGenDeposits());
 		GenLayerVC.drawImageRGB(512, noise, "Deposits 0 Noise");
 		
 		noise.initWorldGenSeed(seed);
-		
-		GenLayerVC deposits = GenLayerZoom.magnify(2L, noise, 2);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 1 2x Magnify");
-		
-		deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 22, deposits);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add height variation (green)");
 
-		deposits = GenLayerZoom.magnify(4L, deposits, 2);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 2x Magnify");
+		GenLayerVC deposits = GenLayerZoom.magnify(1L, noise, 4);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 1 8x Magnify");
 
-		deposits = new GenLayerBlurSelective(2L, 2, 5, false, 8, deposits);
-		GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 Blur height variation (green)");
+		deposits = new GenLayerAddPerlin(seed, 3, 0.5f, 20, 15, 8, 148, deposits);
+		GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add height noise (green)");
+
+		
+		//GenLayerVC deposits = GenLayerZoom.magnify(2L, noise, 2);
+		//GenLayeVC.drawImageRGB(512, deposits, "Deposits 1 2x Magnify");
+		
+		//deposits = new GenLayerAddNoise(3L, 70, 10, 8, 70, 22, deposits);
+		//GenLayerVC.drawImageRGB(512, deposits, "Deposits 2 Add height variation (green)");
+
+		//deposits = GenLayerZoom.magnify(4L, deposits, 2);
+		//GenLayerVC.drawImageRGB(512, deposits, "Deposits 3 2x Magnify");
+
+		//deposits = new GenLayerBlurSelective(2L, 2, 5, false, 8, deposits);
+		//GenLayerVC.drawImageRGB(512, deposits, "Deposits 4 Blur height variation (green)");
+		
+		
+		
+		
 
 
 		deposits.initWorldGenSeed(seed);
@@ -194,7 +198,6 @@ public abstract class GenLayerVC extends GenLayer {
 	public static GenLayerVC genErosion(long seed) {
 		GenLayerVC noise = new GenLayerWeightedNoise(1L, BiomeVC.getBiomes());
 		drawImageBiome(512, noise, "Erosion 1 noise");
-		
 		
 		GenLayerVC erosion = GenLayerZoom.magnify(seed, noise, 8);
 		drawImageBiome(512, erosion, "Erosion 2 8x magnify");
