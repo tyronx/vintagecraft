@@ -236,10 +236,10 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		EnumOreType oretype = getOreType(stack);
 		
 		if (oretype == EnumOreType.LIGNITE) {
-			return getItemStackFor(EnumOreType.COKE, stack.stackSize / 3);
+			return getItemStackFor(EnumOreType.COKE, stack.stackSize / 2);
 		}
 		if (oretype == EnumOreType.BITUMINOUSCOAL) {
-			return getItemStackFor(EnumOreType.COKE, stack.stackSize / 2);
+			return getItemStackFor(EnumOreType.COKE, (3 * stack.stackSize) / 4);
 		}
 		return null;
 	}

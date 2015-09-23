@@ -14,12 +14,12 @@ public class ModelGrindstone extends ModelBaseVC {
 	public void initComponents() {
 		stone = new ModelRendererVC(this);
 		
-		// stone.cubeList.add(newBox(stone, 1, 0, 1, 14, 6, 14));
+		stone.cubeList.add(newBox(stone, 1, 0, 1, 14, 6, 14));
 		
-		stone.cubeList.add(newBox(stone, 1, 0, 1, 6, 6, 6));
+		/*stone.cubeList.add(newBox(stone, 1, 0, 1, 6, 6, 6));
 		stone.cubeList.add(newBox(stone, 7, 0, 1, 6, 6, 6));
 		stone.cubeList.add(newBox(stone, 1, 0, 7, 6, 6, 6));
-		stone.cubeList.add(newBox(stone, 7, 0, 7, 6, 6, 6));
+		stone.cubeList.add(newBox(stone, 7, 0, 7, 6, 6, 6));*/
 	}
 	
 	public void renderGrindStone() {
