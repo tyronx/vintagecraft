@@ -132,6 +132,7 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 			self != null &&
 			remote != null &&
 			self.getItem() == remote.getItem() &&
+			isOddlyShaped(self) == isOddlyShaped(remote) &&
 			getMetal(self) == getMetal(remote) &&
 			world.getWorldTime() < self.getTagCompound().getLong("startcoolingat") &&
 			world.getWorldTime() < remote.getTagCompound().getLong("startcoolingat") &&

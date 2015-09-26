@@ -30,7 +30,7 @@ public enum EnumCrustType {
 				}
 				return BlocksVC.topsoil.getDefaultState().withProperty(BlockTopSoil.organicLayer, layer).withProperty(BlockTopSoil.fertility, fertility);
 				
-				//break;
+			
 				
 			case SUBOIL:
 				return BlocksVC.subsoil.getBlockStateFor("nograss-" + rocktype.getName());
@@ -63,7 +63,7 @@ public enum EnumCrustType {
 		
 		System.out.println("block not found for " + this + " defaulting to null!! fertility = "  + climate[1]);
 		
-		return null; //Blocks.stone.getDefaultState();
+		return null; 
 	}
 	
 	

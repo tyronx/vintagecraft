@@ -35,9 +35,6 @@ public enum EnumCrustLayer {
 	L7_PACKEDICE		(99,  0, -99, -28, 255, EnumCrustType.PACKEDICE)
 	
 	
-	//L5_ROCK			    (999, 99,  0, -99, 99, 255, EnumCrustType.ROCK)
-	
-	
 	;
 	
 	
@@ -77,53 +74,33 @@ public enum EnumCrustLayer {
 		
 		mintemperature_descaled = VCraftWorld.deScaleTemperature(mintemperature);
 		maxtemperature_descaled = VCraftWorld.deScaleTemperature(maxtemperature);
-		
 	}
 	
-
+	
+	// Size of transition between two layers in Blocks  
 	static int transitionSize = 2;
 	
 	boolean valid(int []climate, int y, Random rand) {
-		/*int distfert = climate[1] - minfertility;
-		int disttempmin = climate[0] - mintemperature;
-		int disttempmax = maxtemperature - climate[0];
-		int distrainmax = maxrain - climate[2];*/
 		int distycoord = maxy - y;
 		
+		int temperature = VCraftWorld.deScaleTemperature(climate[0]);
 		
-		int temp = VCraftWorld.deScaleTemperature(climate[0]);
-		/*
-		int lowertempdistance = mintemperature_descaled + transitionSize - temp;
-		int uppertempdistance = temp - maxtemperature_descaled - transitionSize; 
-		
-		int tempdistance = Math.min(
-				lowertempdistance < -5 ? 999 : Math.max(0, lowertempdistance),
-				uppertempdistance < -5 ? 999 : Math.max(0, uppertempdistance)
-		);
-		
-		*/
 		int tempdistance = tmin(
-			Math.abs(mintemperature_descaled - temp),
-			Math.abs(temp - maxtemperature_descaled),
-			(temp > mintemperature_descaled + transitionSize && temp < maxtemperature_descaled - transitionSize) ? 0 : 999 
+			Math.abs(mintemperature_descaled - temperature),
+			Math.abs(temperature - maxtemperature_descaled),
+			(temperature > mintemperature_descaled + transitionSize && temperature < maxtemperature_descaled - transitionSize) ? 0 : 999 
 		);
-		
 		int fertdistance = Math.max(0, minfertility + transitionSize - climate[1]);
-		
 		int raindistance = Math.max(0, climate[2] - maxrain - transitionSize);
 		
-
 		
-		int distance = tempdistance + raindistance + fertdistance;
+		int totalDistance = tempdistance + raindistance + fertdistance;
 
-		
-		//if (this == L5_PACKEDICE) System.out.println(temp + " - " + maxtemperature_descaled + " - " + transitionSize);  // System.out.println("for temp = " + climate[0] +"    " + tempdistance + " + " + raindistance + " + " + fertdistance);
 		
 		return
-			(distance == 0 || (distance < 4 && rand.nextInt(1 + (2 * distance)) == 0))
+			(totalDistance == 0 || (totalDistance < 4 && rand.nextInt(1 + (2 * totalDistance)) == 0))
 			&& distycoord >= 0
 			&& rand.nextFloat() <= placementchance;
-		
 	}
 	
 	

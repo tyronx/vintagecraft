@@ -43,7 +43,7 @@ import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.TileEntity.TileEntityForestSpiderSpawner;
-import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGears;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEBellows;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
@@ -112,7 +112,7 @@ public class CommonProxy implements IGuiHandler {
 		GameRegistry.registerTileEntity(TEStonePot.class, ModInfo.ModID + ":forge");
 		
 		GameRegistry.registerTileEntity(TileEntityForestSpiderSpawner.class, ModInfo.ModID + ":nonburningmobspawner");
-		GameRegistry.registerTileEntity(TEAngledGearBox.class, ModInfo.ModID + ":angledgearbox");
+		GameRegistry.registerTileEntity(TEAngledGears.class, ModInfo.ModID + ":angledgearbox");
 		GameRegistry.registerTileEntity(TEAxle.class, ModInfo.ModID + ":axle");
 		GameRegistry.registerTileEntity(TEWindmillRotor.class, ModInfo.ModID + ":windmillrotor");
 		GameRegistry.registerTileEntity(TEGrindStone.class, ModInfo.ModID + ":grindstone");

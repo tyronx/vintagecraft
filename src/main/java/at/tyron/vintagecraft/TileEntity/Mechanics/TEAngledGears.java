@@ -9,14 +9,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
 
-public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {
+public class TEAngledGears extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {
 	// orientation = peg gear orientation
 	
 	public EnumFacing cagegearOrientation;
 	public boolean refreshModel;
 	
 	
-	public TEAngledGearBox() {
+	public TEAngledGears() {
 		cagegearOrientation = null;
 	}
 	

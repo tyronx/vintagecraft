@@ -101,8 +101,9 @@ public class ContainerAnvil extends Container {
 		if (clickedSlot != null && clickedSlot.getHasStack()) {
 			ItemStack clickedStack = clickedSlot.getStack();
 			returnedStack = clickedStack.copy();
-
+			
 			if (clickedIndex < 4) {
+				
 				if (clickedStack.getItem() instanceof IItemHeatable) {
 					for (int i = 4; i < inventorySlots.size(); i++) {
 						Slot playerSlot = (Slot)this.inventorySlots.get(i);

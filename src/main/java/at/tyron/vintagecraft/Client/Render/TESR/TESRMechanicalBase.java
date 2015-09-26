@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import at.tyron.vintagecraft.Client.Model.ModelGearComponents;
 import at.tyron.vintagecraft.Client.Render.Math.Matrix4f;
 import at.tyron.vintagecraft.Client.Render.Math.Quaternion;
-import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGears;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -42,7 +42,7 @@ public abstract class TESRMechanicalBase extends TESRBase {
 	
 
 
-	public void renderAngledGearBox(TEAngledGearBox te, float angle, float posX, float posY, float posZ) {
+	public void renderAngledGearBox(TEAngledGears te, float angle, float posX, float posY, float posZ) {
 		if (te.refreshModel) {
 			te.refreshModel = false;
 			modelcagegear.initComponents();

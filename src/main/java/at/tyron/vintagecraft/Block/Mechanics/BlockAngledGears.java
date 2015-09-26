@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Block.Mechanics;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGears;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +21,7 @@ public class BlockAngledGears extends BlockMechanicalVC {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TEAngledGearBox();
+		return new TEAngledGears();
 	}
 	
 	@Override
@@ -51,7 +51,7 @@ public class BlockAngledGears extends BlockMechanicalVC {
 	public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock) {
 		super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
 		
-		TEAngledGearBox te = (TEAngledGearBox)worldIn.getTileEntity(pos);
+		TEAngledGears te = (TEAngledGears)worldIn.getTileEntity(pos);
 		if (te != null) {
 			te.connectToNeighbours();
 		}

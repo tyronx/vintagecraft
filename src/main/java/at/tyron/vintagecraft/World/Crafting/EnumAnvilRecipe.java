@@ -490,10 +490,10 @@ public enum EnumAnvilRecipe {
 		// Coke Oven Door
 		ItemStack ironplate  = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
 		ironplate.stackSize = 2;
-		COKEOVENDOOR.registerRecipe(new ItemStack(BlocksVC.cokeovendoor), ironplate).setIngredientText("2ironplates");
+		COKEOVENDOOR.registerRecipe(new ItemStack(BlocksVC.cokeovendoor), ironplate.copy()).setIngredientText("2ironplates");
 		
 		ironplate.stackSize = 3;
-		WorkableRecipeBase recipe = MINECART.registerRecipe(new ItemStack(ItemsVC.emptyMinecart), ironplate);
+		WorkableRecipeBase recipe = MINECART.registerRecipe(new ItemStack(ItemsVC.emptyMinecart), ironplate.copy());
 		recipe.setIngredientText("3ironplates");
 		
 		

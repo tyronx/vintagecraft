@@ -43,7 +43,7 @@ import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
 import at.tyron.vintagecraft.TileEntity.TEToolRack;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
-import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGearBox;
+import at.tyron.vintagecraft.TileEntity.Mechanics.TEAngledGears;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEAxle;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEBellows;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
@@ -286,7 +286,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 		ClientRegistry.registerTileEntity(TEVessel.class, "ceramicvessel2", new TESRCeramicVessel());
 		ClientRegistry.registerTileEntity(TEStonePot.class, "stonepot", new TESRStonePot());
 		ClientRegistry.registerTileEntity(TEAxle.class, "axle", new TESRAxle());
-		ClientRegistry.registerTileEntity(TEAngledGearBox.class, "angledgearbox", new TESRAngledGearBox());
+		ClientRegistry.registerTileEntity(TEAngledGears.class, "angledgearbox", new TESRAngledGearBox());
 		ClientRegistry.registerTileEntity(TEWindmillRotor.class, "windmillrotor", new TESRWindmillRotor());
 		ClientRegistry.registerTileEntity(TEGrindStone.class, "grindstone", new TESRGrindstone());
 		ClientRegistry.registerTileEntity(TEBellows.class, "bellows", new TESRBellows());
