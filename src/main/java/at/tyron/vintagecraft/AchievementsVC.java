@@ -36,8 +36,6 @@ public class AchievementsVC {
 	
 	
 	
-	
-	//public static Achievement acquireIron = (new Achievement("achievement.acquireIron", "acquireIron", 1, 4, Items.iron_ingot, buildFurnace)).func_180788_c();
 	public static void init() {
 		ItemStack copperIngot = ItemIngot.getItemStack(EnumMetal.COPPER, 1);
 		ItemStack bronzeIngot = ItemIngot.getItemStack(EnumMetal.TINBRONZE, 1);

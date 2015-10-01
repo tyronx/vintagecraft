@@ -3,26 +3,7 @@ package at.tyron.vintagecraft;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class VintageCraftConfig {
-	// Terraingeneration
-	/*public static float coordinateScale = 1000f;
-	public static float heightScale = 1000f;
-	public static float depthNoiseScaleX = 200f;
-    public static float depthNoiseScaleZ = 200f;
-    public static float depthNoiseScaleExponent = 0.5f;
-    public static float mainNoiseScaleX = 80f;
-    public static float mainNoiseScaleY = 160f;
-    public static float mainNoiseScaleZ = 80f;
-    public static float biomeDepthWeight = 1.0F;
-    public static float biomeDepthOffset = 0.0F;
-    public static float biomeScaleWeight = 1.0F;
-    public static float biomeScaleOffset = 0.0F;
-    public static float baseSize = 8.5F;
-    public static float stretchY = 12.0F;
-    public static float upperLimitScale = 512.0F;
-    public static float lowerLimitScale = 512.0F;*/
-
-	
+public class VintageCraftConfig {	
 	/* Internal Configs */ 
 	
 	public static final String ModChannel = "VintageCraft";

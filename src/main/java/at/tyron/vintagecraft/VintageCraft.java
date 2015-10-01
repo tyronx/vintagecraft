@@ -236,8 +236,6 @@ public class VintageCraft {
 		
 		VCraftWorldSavedData worlddata = getOrCreateWorldData(evt.world);
 		
-		
-		System.out.println("unload networks");
 		MechnicalNetworkManager.unloadManagers();
 	}
 	

@@ -32,16 +32,11 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 
 public class VintageCraftMobTweaker {
+	
 	// Called from Vintagecraft.java
     public static void entitySpawn(LivingSpawnEvent evt) {
     	if (! (evt.entity.worldObj instanceof WorldServer)) return;
     
-		if (evt.entity instanceof EntityZombie) {
-			// Completely Disable baby zombies for now
-			// EDIT: This is not working whatsoever o.O Baby zombies still spawn
-			((EntityZombie)evt.entity).setChild(false);
-		}
-    	
     	if (evt.entity instanceof EntityMob) {
     		int spawncap = VintageCraftMobTweaker.spawnCapByDay(evt.world.getTotalWorldTime() / 24000L, evt.world.getDifficulty());
     		if (spawncap == 0) {
@@ -156,15 +151,14 @@ public class VintageCraftMobTweaker {
 		if (mob.worldObj.isRemote) return;
 		
 		// Already has armor? Skip!
+		// FIXME: Should check for and remove vanilla armors
 		if (mob.getInventory()[2] != null || mob.getInventory()[3] != null || mob.getInventory()[1] != null) return;
 		
 		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
 		
 		// The deeper the mob spawns, the better equipment it receives
 		float difficultyModifier = 0.45f * Math.max(0, VCraftWorld.seaLevel - mob.getPosition().getY()) / VCraftWorld.seaLevel;
-		
-		//System.out.println("gear up mob at y = "+mob.getPosition().getY()+", diff mod = " + difficultyModifier);
-		
+				
 		ItemStack[] inventory = MobInventoryItems.getDifficultyBasedMobInventory(difficulty, difficultyModifier, mob.worldObj.rand);
 		if (inventory == null) return;
 		
@@ -185,9 +179,10 @@ public class VintageCraftMobTweaker {
 		
 		if (numgearitems >= 4 && mob instanceof EntityZombie) {
 		
+			// turns out to be too overkill 
+			//	mob.getEntityAttribute(((EntityZombie)mob).reinforcementChance).applyModifier(new AttributeModifier("Leader zombie bonus", 0.95D, 0));
 			
-		//	mob.getEntityAttribute(((EntityZombie)mob).reinforcementChance).applyModifier(new AttributeModifier("Leader zombie bonus", 0.95D, 0));
-			
+			// FIXME: Make this work ^_^
 			if (healthboost > 5) {
 		//		((EntityZombie)mob).multiplySize(1.1f);
 			}
@@ -195,13 +190,6 @@ public class VintageCraftMobTweaker {
 		}
 		
 		if (healthboost > 0) {
-			//System.out.println("added health " + healthboost + " / new max h = " + mob.getMaxHealth());
-			
-			/*System.out.println("boosting mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
-					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
-			);*/
-
-			
 			mob.getEntityAttribute(SharedMonsterAttributes.maxHealth).applyModifier(
 				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 12f, 1)
 			);
@@ -212,14 +200,7 @@ public class VintageCraftMobTweaker {
 				new AttributeModifier("Vintagecraft Gear bonus", healthboost / 20f, 1)
 			);
 			
-			//mob.experienceValue += healthboost;
-			
-			//System.out.println("now resis: " + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue());
 			mob.setHealth(mob.getMaxHealth());
-			
-			/*System.out.println("boosted mob. attributes: resistance=" + mob.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).getAttributeValue()
-					+ " / maxhealth=" + mob.getHealth() + " / attack damage=" +  mob.getEntityAttribute(SharedMonsterAttributes.attackDamage).getAttributeValue()
-			);*/
 			
 			tryGearUpMobWithHorse(mob, numgearitems);
 		}
@@ -239,9 +220,6 @@ public class VintageCraftMobTweaker {
 		
 		EnumDifficulty difficulty = mob.worldObj.getDifficulty();
 
-		//System.out.println("try horsing up " + mob.getClass());
-		//new Exception().printStackTrace(System.out);
-		
 		// after 20,15,10 days  => 50% the amount of horses
 		// increase by 10% every 10,15,20 days
 		// until a max of 110% horses
@@ -280,7 +258,8 @@ public class VintageCraftMobTweaker {
 		
 		EntityMobHorse horse = new EntityMobHorse(mob.worldObj);
 
-		// Aw pity, undead horses can't wear armor it seems
+		// Aw pity, undead horses can't wear armor it seems D:
+		// Somebody should totally fix that!
         /*ItemStack horseArmor = MobInventoryItems.getDifficultyBasedHorseArmor(mob.worldObj.getDifficulty(), mob.worldObj.rand);
         if (horseArmor != null) {
         	horse.setHorseArmorStack(horseArmor);

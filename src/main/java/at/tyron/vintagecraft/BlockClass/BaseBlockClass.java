@@ -21,6 +21,9 @@ import net.minecraft.item.ItemStack;
  *
  * This allows for near Zero-Configuration subtyping of blocks as it takes out the mess of registering and comparing subblocks
  * 
+ * Dynamically registers as many blocks as needed to accommodate all desired block types, also making use of 
+ * unused metadata bits, then offers convenient methods to access and compare these blocks
+ * 
  */
 
 public abstract class BaseBlockClass {
@@ -93,13 +96,16 @@ public abstract class BaseBlockClass {
 		int typesperblock = 1;
 		try {
 			typesperblock = (Integer)invokeMethod(blockclass, blockclass.newInstance(), "multistateAvailableTypes", new Object[0]);
-		} catch (Exception e) { System.out.println("Unable to get multistateAvailableTypes ("+e.getMessage()+") for "+name+"! Will use 1 (= waste of blockids)"); } 
+		} catch (Exception e) { 
+			System.out.println("Unable to get multistateAvailableTypes ("+e.getMessage()+") for "+name+"! Will use 1 (= waste of blockids)"); 
+		} 
 		
 		BlockClassEntry[][] chunked = split(values(), typesperblock);
 		ArrayList<Block> blocks = new ArrayList<Block>();
 		
 		for (BlockClassEntry[] blockclassentrychunk : chunked) {
 			if(debug) System.out.println("register chunk piece of size " + blockclassentrychunk.length);
+			
 			Block block;
 			try {
 				block = blockclass.newInstance();

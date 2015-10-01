@@ -164,7 +164,7 @@ public class VCraftWorld {
 		
 		if (!event.getChunk().isLoaded()) {
 			mark(event.getChunk().xPosition, event.getChunk().zPosition, "removed from list");
-			// TODO
+			// FIXME: Make this work (seems to be causing issues at random where removed nbts were still needed)
 			//VintageCraft.proxy.removeChunkNbt(Chunk2Index(event.getChunk()));
 		}
 	}
