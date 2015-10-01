@@ -93,41 +93,41 @@ public class ItemsVC {
 	public static void init() {
 		initItems();
 		initIngots();
-		
-
-		// Really messes with vanilla recipes, e.g. creates a vanilla iron sword with stick+2 copper ingots
-		// Don't want to repair this right now
 		initOreDictItems();
 	}
 	
-	
+	/* 
+	 * OreDict entries are regged with a prefix because
+	 * 1. In VCraft crafting is NBT-Sensitive, whereas Vanilla Recipes are not, so e.g. registering an ingotIron would allow the player to craft vanilla iron swords from any vcraft metal
+	 * 2. VCraft is a full conversion mod, which means I have to keep a strict control which vanilla items can be crafted from vcraft items 
+	 */
 	private static void initOreDictItems() {
 		for (EnumMetal metal : EnumMetal.values()) {
-			OreDictionary.registerOre("ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));
+			OreDictionary.registerOre("vcraft-ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));
 		}
 		
 		for (EnumOreType oretype : EnumOreType.values()) {
-			OreDictionary.registerOre("ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
+			OreDictionary.registerOre("vcraft-ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
 		}
 		
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			OreDictionary.registerOre("stone" + rocktype.getNameUcFirst(), ItemStone.getItemStackFor(rocktype, 1));
-			OreDictionary.registerOre("stoneAny", ItemStone.getItemStackFor(rocktype, 1));
+			OreDictionary.registerOre("vcraft-stone" + rocktype.getNameUcFirst(), ItemStone.getItemStackFor(rocktype, 1));
+			OreDictionary.registerOre("vcraft-stoneAny", ItemStone.getItemStackFor(rocktype, 1));
 		}
 		
 		for (EnumTree treetype : EnumTree.values()) {
 			if (!treetype.isBush) {
-				OreDictionary.registerOre("logWood", BlocksVC.log.getItemStackFor(treetype));
-				OreDictionary.registerOre("plankWood", BlocksVC.planks.getItemStackFor(treetype));
+				OreDictionary.registerOre("vcraft-logWood", BlocksVC.log.getItemStackFor(treetype));
+				OreDictionary.registerOre("vcraft-plankWood", BlocksVC.planks.getItemStackFor(treetype));
 			}
-			OreDictionary.registerOre("treeSapling", BlocksVC.sapling.getItemStackFor(treetype));
-			OreDictionary.registerOre("treeLeaves", BlocksVC.leaves.getItemStackFor(treetype));
+			OreDictionary.registerOre("vcraft-treeSapling", BlocksVC.sapling.getItemStackFor(treetype));
+			OreDictionary.registerOre("vcraft-treeLeaves", BlocksVC.leaves.getItemStackFor(treetype));
 			
 		}
 		
 		for (EnumCrop crop : EnumCrop.values()) {
 			for (int stage = 0; stage < crop.growthstages; stage++) {
-				OreDictionary.registerOre("crop" + crop.getNameUcFirst(), BlocksVC.crops.getItemStackFor(crop.getName() + "-stage" + stage));
+				OreDictionary.registerOre("vcraft-crop" + crop.getNameUcFirst(), BlocksVC.crops.getItemStackFor(crop.getName() + "-stage" + stage));
 			}
 		}
 		
