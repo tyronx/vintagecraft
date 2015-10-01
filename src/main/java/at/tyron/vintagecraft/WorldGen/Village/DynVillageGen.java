@@ -20,29 +20,50 @@ public class DynVillageGen {
 		this.params = params;
 	}
 	
+	public float[] genAngles(float quantity) {
+		int actualQuantity = (int)quantity + (rand.nextFloat() < quantity - (int)quantity ? 1 : 0);
+		float minAngleDistance = NatFloat.PI / actualQuantity;
+		
+		// By this much degress the angles can vary
+		float angleVariance = (NatFloat.PI * 2) / actualQuantity - minAngleDistance;
+		float bonusVariance = -angleVariance; // if one road is quite close to the previous, then we have some extra space for the next one
+		
+		float[] angles = new float[actualQuantity];
+		
+		angles[0] = rand.nextFloat() * NumFloat.PI * 2;
+		actualQuantity--;
+		int i = 1;
+		
+		while (actualQuantity-- > 0) {
+			float variance = rand.nextFloat()*(angleVariance + Math.max(0, bonusVariance));
+			bonusVariance = angleVariance - variance;
+			
+			angles[i] = angles[i - 1] + minAngleDistance + variance;
+			i++;
+		}
+		
+		
+		
+		return angles;
+	}
+	
 	public void generate(World world, BlockPos pos, float size) {
 		this.world = world;
 		
 		float quantity = params[Param.centerBranchingQuantity.ordinal()].nextFloat();
-		float[] angles = new float[(int)quantity+1];
-		int i = 0;
+		float[] angles = genAngles(quantity);
+
 		
-		while (quantity-- >= 1 || (quantity > 0 && rand.nextFloat() < quantity)) {
-			angles[i] = rand.nextFloat() * NumFloat.PI * 2;
-			
-			while (i > 0 && Math.abs(angles[i - 1] - angles[i]) > 0.4f) {
-				angles[i] = rand.nextFloat() * NumFloat.PI * 2;
-			}
-			
+		for (float angle : angles) {
+			System.out.println("Road at " + angle);
 			buildRoad(
 				0,
 				size * params[Param.centerBranchingWidth.ordinal()].nextFloat(),
 				pos,
 				0f,
 				0f,
-				angles[i]
+				angle
 			);
-			i++;
 		}
 	}
 	

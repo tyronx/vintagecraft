@@ -6,8 +6,10 @@ import java.util.Locale;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.Item.ItemAnvilPart;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.ItemLogVC;
 import at.tyron.vintagecraft.Item.ItemMinecartVC;
 import at.tyron.vintagecraft.Item.ItemCrafted;
 import at.tyron.vintagecraft.Item.ItemDryGrass;
@@ -22,6 +24,7 @@ import at.tyron.vintagecraft.Item.ItemSeedVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.Item.ItemToolHead;
 import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.WorldGen.Helper.EnumTreeGenParam;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
@@ -29,6 +32,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityMinecart.EnumMinecartType;
 import net.minecraft.init.Items;
@@ -99,16 +103,32 @@ public class ItemsVC {
 	
 	private static void initOreDictItems() {
 		for (EnumMetal metal : EnumMetal.values()) {
-			OreDictionary.registerOre("vcraft-ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));			
+			OreDictionary.registerOre("ingot" + metal.getNameUcFirst(), ItemIngot.getItemStack(metal, 1));
 		}
 		
 		for (EnumOreType oretype : EnumOreType.values()) {
-			OreDictionary.registerOre("vcraft-ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
+			OreDictionary.registerOre("ore" + oretype.getNameUcFirst(), ItemOreVC.getItemStackFor(oretype, 1));
 		}
 		
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			OreDictionary.registerOre("vcraft-stone" + rocktype.getNameUcFirst(), ItemStone.getItemStackFor(rocktype, 1));
-			OreDictionary.registerOre("vcraft-stone-any", ItemStone.getItemStackFor(rocktype, 1));
+			OreDictionary.registerOre("stone" + rocktype.getNameUcFirst(), ItemStone.getItemStackFor(rocktype, 1));
+			OreDictionary.registerOre("stoneAny", ItemStone.getItemStackFor(rocktype, 1));
+		}
+		
+		for (EnumTree treetype : EnumTree.values()) {
+			if (!treetype.isBush) {
+				OreDictionary.registerOre("logWood", BlocksVC.log.getItemStackFor(treetype));
+				OreDictionary.registerOre("plankWood", BlocksVC.planks.getItemStackFor(treetype));
+			}
+			OreDictionary.registerOre("treeSapling", BlocksVC.sapling.getItemStackFor(treetype));
+			OreDictionary.registerOre("treeLeaves", BlocksVC.leaves.getItemStackFor(treetype));
+			
+		}
+		
+		for (EnumCrop crop : EnumCrop.values()) {
+			for (int stage = 0; stage < crop.growthstages; stage++) {
+				OreDictionary.registerOre("crop" + crop.getNameUcFirst(), BlocksVC.crops.getItemStackFor(crop.getName() + "-stage" + stage));
+			}
 		}
 		
 		

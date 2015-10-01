@@ -176,11 +176,7 @@ public class DynTreeGen {
 		
 	}
 
-	
-/*	private void setBlock(BlockPos pos, IBlockState state) {
-		 
-	}
-*/
+
 
 	private void genTrunk(float curx, float cury, float curz, float curwidth, EvolvingNatFloat anglehor, /*float anglever,*/ EvolvingNatFloat angleVert) {
 		trunk.branchWidthMultiplier.init();
@@ -244,7 +240,6 @@ public class DynTreeGen {
 			if (canPlace(world, pos.add(dx, dy, dz), blockstate)) {
 				world.setBlockState(pos.add(dx, dy, dz), blockstate, 2);
 				
-				//System.out.println("block @" + dx + "/" + dy + "/"+ dz);
 				if (vineGrowthChance > 0 && rand.nextInt(100) < vineGrowthChance) {
 					EnumFacing facing = EnumFacing.getHorizontal(rand.nextInt(4));
 					
@@ -256,10 +251,7 @@ public class DynTreeGen {
 						vinePos = vinePos.down();
 					}
 				}
-			} else {
-				//System.out.println("cant place " + blockstate + " @ angle " + anglehor);
 			}
-			
 			
 			reldistance = MathHelper.sqrt_float(dx*dx + dy*dy + dz*dz) / totaldistance;
 			
@@ -282,8 +274,6 @@ public class DynTreeGen {
 			
 			if (reldistance < branchstart) continue;
 			
-			//if (recursion > 1) continue;
-			
 			if (reldistance > lastreldistance + branchspacing * (1f - reldistance)) {
 				branchspacing = branchSpacing.nextFloat();
 				lastreldistance = reldistance;
@@ -291,7 +281,6 @@ public class DynTreeGen {
 				
 				int quantity = (int)numBranching.nextFloat(recursion);
 				
-				//if (quantity > 0) baseWidth *= widthBranchLossBase;
 				float prevHorAngle = 0f;
 				float horAngle;
 				float minHorangleDist = Math.min(NatFloat.PI / 10, branchHorizontalAngle.variance / 5); 
@@ -307,7 +296,7 @@ public class DynTreeGen {
 					
 					
 					growBranch(
-						recursion+1, 
+						recursion + 1, 
 						pos, dx + trunkOffsetX, dy, dz + trunkOffsetZ, 
 						branches.angleVert.copyWithOffset(branchVerticalAngle.nextFloat()),
 						branches.angleHori.copyWithOffset(prevHorAngle = horAngle),

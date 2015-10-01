@@ -21,17 +21,17 @@ public class DynVillageGenerators {
 	public static void initGenerators() {
 		
 		EnumVillage.DEFAULT.setGenerator(new DynVillageGen(new NumFloat[]{
-			NatFloat.createUniform(3f, 0.5f),
-			NumFloat.create(1.5f),
-			EvolvingFloat.createPerlin(NumFloat.create(0f), 0.5f, 3, 0.002f), //Uniform(NumFloat.PIHALF / 2, 0.3f),
-			NumFloat.create(0.02f),
-			NatFloat.createInvGauss(0f, 1.8f),
-			NumFloat.create(0.2f),
-			NumFloat.create(0.4f),
-			NumFloat.create(1f),
-			NumFloat.create(0.8f),
-			NumFloat.create(1f),
-			NumFloat.create(1f),
+			NatFloat.createUniform(3f, 0.5f),										// centerBranchingQuantity
+			NumFloat.create(1.5f),													// centerBranchingWidth
+			EvolvingFloat.createPerlin(NumFloat.create(0f), 0.5f, 3, 0.002f), 		// branchAngleOffset
+			NumFloat.create(0.02f),													// branchWidthLoss
+			NatFloat.createInvGauss(0f, 1.8f),										// branchingAngle
+			NumFloat.create(0.2f),													// branchingStart
+			NumFloat.create(0.4f),													// branchingSpacing
+			NumFloat.create(1f),													// branchingQuantity
+			NumFloat.create(0.8f),													// branchingWidth
+			NumFloat.create(1f),													// branchingWidthLoss
+			NumFloat.create(1f),													// branchingMaxRecursion
 		}));
 		
 	}

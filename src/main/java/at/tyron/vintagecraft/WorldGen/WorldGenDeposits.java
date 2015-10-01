@@ -149,7 +149,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int horizon = VCraftWorld.instance.seaLevel;
 				
 				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH || deposit.occurence.type == EnumDepositOccurenceType.FOLLOWSURFACE) {
-					horizon = HeightmapCache.getHeightAt(world.provider.getDimensionId(), xCoord+x, zCoord + z); 
+					horizon = HeightmapCache.getHeightAt(world, xCoord+x, zCoord + z); 
 					
 					if (horizon > deposit.occurence.untilyheight) continue;
 				}

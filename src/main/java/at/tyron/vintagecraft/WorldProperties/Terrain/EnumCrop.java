@@ -32,6 +32,11 @@ public enum EnumCrop implements IStateEnum, IStringSerializable{
 	public String getName() {
 		return name().toLowerCase(Locale.ROOT);
 	}
+	
+	public String getNameUcFirst() {
+		return name().toUpperCase(Locale.ROOT).substring(0, 1) + name().toLowerCase(Locale.ROOT).substring(1);
+	}
+
 
 	@Override
 	public int getMetaData(Block block) {
