@@ -1,13 +1,13 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.BlockFireBrick;
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceChimney;
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
-import at.tyron.vintagecraft.Block.Utility.BlockMetalPlate;
-import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFireBrick;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFurnaceChimney;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFurnaceSection;
+import at.tyron.vintagecraft.Block.Metalworking.BlockMetalPlate;
+import at.tyron.vintagecraft.Block.Metalworking.BlockTallMetalMolds;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnaceType;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
@@ -62,7 +62,7 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 	}
 	
 	public int getRequiredBlowsForSteel() { 
-		return 60;
+		return 30;
 	}
 
 	public EnumFurnaceType getFurnaceType() {
@@ -93,6 +93,8 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 					return fuelitem.isMetalWorkingFuel(stack) && fuelitem.getBurningHeat(stack) >= 1300;
 				case BLOOMERY:
 					return fuelitem.isMetalWorkingFuel(stack) && fuelitem.getBurningHeat(stack) >= 1200;
+				default:
+					break;
 			}
 		}
 		

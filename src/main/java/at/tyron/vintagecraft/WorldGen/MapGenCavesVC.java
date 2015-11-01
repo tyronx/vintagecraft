@@ -4,9 +4,9 @@ import java.util.Random;
 
 import com.google.common.base.Objects;
 
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRock;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockTopSoil;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

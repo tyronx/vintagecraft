@@ -1,0 +1,7 @@
+{
+	"parent": "vintagecraft:block/flora/crops/doubletallcross",
+	"textures": {
+		"uppercross": "vintagecraft:blocks/crops/upper/tomatoes-stage2",
+		"lowercross": "vintagecraft:blocks/crops/lower/tomatoes-stage2"
+	}
+}

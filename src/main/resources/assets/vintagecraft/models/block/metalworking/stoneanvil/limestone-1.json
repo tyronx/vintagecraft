@@ -1,0 +1,6 @@
+{
+	"parent": "vintagecraft:block/metalworking/stoneanvil/base_1",
+	"textures": {
+		"stone": "vintagecraft:blocks/rock/limestone"
+	}
+}

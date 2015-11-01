@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Entity;
 
-import at.tyron.vintagecraft.Item.ItemStone;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;

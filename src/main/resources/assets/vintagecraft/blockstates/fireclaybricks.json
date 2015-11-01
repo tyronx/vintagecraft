@@ -1,7 +1,7 @@
 {
     "variants": {
         "normal": [
-            { "model": "vintagecraft:fireclaybricks" }
+            { "model": "vintagecraft:metalworking/fireclaybricks" }
         ]
     }
 }

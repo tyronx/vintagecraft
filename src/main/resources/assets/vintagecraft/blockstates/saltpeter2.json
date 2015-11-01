@@ -1,91 +1,90 @@
 {
 	"variants": {
-		"facings=d": { "model": "vintagecraft:coated/saltpeter_d" },
-		"facings=u": { "model": "vintagecraft:coated/saltpeter_d", "x": 180 },
-		"facings=s": { "model": "vintagecraft:coated/saltpeter_d", "x": 90 },
-		"facings=n": { "model": "vintagecraft:coated/saltpeter_d", "x": 90, "y": 180 },
-		"facings=e": { "model": "vintagecraft:coated/saltpeter_d", "x": 90, "y": 270  },
-		"facings=w": { "model": "vintagecraft:coated/saltpeter_d", "x": 90, "y": 90   },
+		"facings=d": { "model": "vintagecraft:terrafirma/coated/saltpeter_d" },
+		"facings=u": { "model": "vintagecraft:terrafirma/coated/saltpeter_d", "x": 180 },
+		"facings=s": { "model": "vintagecraft:terrafirma/coated/saltpeter_d", "x": 90 },
+		"facings=n": { "model": "vintagecraft:terrafirma/coated/saltpeter_d", "x": 90, "y": 180 },
+		"facings=e": { "model": "vintagecraft:terrafirma/coated/saltpeter_d", "x": 90, "y": 270  },
+		"facings=w": { "model": "vintagecraft:terrafirma/coated/saltpeter_d", "x": 90, "y": 90   },
 
-		"facings=du": { "model": "vintagecraft:coated/saltpeter_du" },
-		"facings=ns": { "model": "vintagecraft:coated/saltpeter_du", "x": 90 },
-		"facings=we": { "model": "vintagecraft:coated/saltpeter_du", "x": 90, "y": 90 },
+		"facings=du": { "model": "vintagecraft:terrafirma/coated/saltpeter_du" },
+		"facings=ns": { "model": "vintagecraft:terrafirma/coated/saltpeter_du", "x": 90 },
+		"facings=we": { "model": "vintagecraft:terrafirma/coated/saltpeter_du", "x": 90, "y": 90 },
 		
-		"facings=dn": { "model": "vintagecraft:coated/saltpeter_dn" },
-		"facings=de": { "model": "vintagecraft:coated/saltpeter_dn", "y": 90 },
-		"facings=ds": { "model": "vintagecraft:coated/saltpeter_dn", "y": 180 },
-		"facings=dw": { "model": "vintagecraft:coated/saltpeter_dn", "y": 270 },
+		"facings=dn": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn" },
+		"facings=de": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "y": 90 },
+		"facings=ds": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "y": 180 },
+		"facings=dw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "y": 270 },
+
+		"facings=us": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "x": 180},
+		"facings=uw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "x": 180, "y": 90},
+		"facings=un": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "x": 180, "y": 180},
+		"facings=ue": { "model": "vintagecraft:terrafirma/coated/saltpeter_dn", "x": 180, "y": 270},
 		
-		"facings=us": { "model": "vintagecraft:coated/saltpeter_dn", "x": 180},
-		"facings=uw": { "model": "vintagecraft:coated/saltpeter_dn", "x": 180, "y": 90},
-		"facings=un": { "model": "vintagecraft:coated/saltpeter_dn", "x": 180, "y": 180},
-		"facings=ue": { "model": "vintagecraft:coated/saltpeter_dn", "x": 180, "y": 270},
+		"facings=se": { "model": "vintagecraft:terrafirma/coated/saltpeter_se"},
+		"facings=sw": { "model": "vintagecraft:terrafirma/coated/saltpeter_se", "y": 90},
+		"facings=nw": { "model": "vintagecraft:terrafirma/coated/saltpeter_se", "y": 180},
+		"facings=ne": { "model": "vintagecraft:terrafirma/coated/saltpeter_se", "y": 270},
+
+
+		"facings=dnw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw" },
+		"facings=dne": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "y": 90 },
+		"facings=dse": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "y": 180 },
+		"facings=dsw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "y": 270 },
+
+		"facings=unw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "x": 180, "y": 90 },
+		"facings=une": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "x": 180, "y": 180 },
+		"facings=use": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "x": 180, "y": 270 },
+		"facings=usw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnw", "x": 180 },
+
+		"facings=dns": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns" },
+		"facings=dwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "y": 90 },
 		
-		"facings=se": { "model": "vintagecraft:coated/saltpeter_se"},
-		"facings=sw": { "model": "vintagecraft:coated/saltpeter_se", "y": 90},
-		"facings=nw": { "model": "vintagecraft:coated/saltpeter_se", "y": 180},
-		"facings=ne": { "model": "vintagecraft:coated/saltpeter_se", "y": 270},
+		"facings=dus": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 90 },
+		"facings=duw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 90, "y": 90 },
+		"facings=dun": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 90, "y": 180 },
+		"facings=due": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 90, "y": 270 },
 
+		"facings=uns": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 180 },
+		"facings=uwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dns", "x": 180, "y": 90 },
 
-		"facings=dnw": { "model": "vintagecraft:coated/saltpeter_dnw" },
-		"facings=dne": { "model": "vintagecraft:coated/saltpeter_dnw", "y": 90 },
-		"facings=dse": { "model": "vintagecraft:coated/saltpeter_dnw", "y": 180 },
-		"facings=dsw": { "model": "vintagecraft:coated/saltpeter_dnw", "y": 270 },
-
-		"facings=unw": { "model": "vintagecraft:coated/saltpeter_dnw", "x": 180, "y": 90 },
-		"facings=une": { "model": "vintagecraft:coated/saltpeter_dnw", "x": 180, "y": 180 },
-		"facings=use": { "model": "vintagecraft:coated/saltpeter_dnw", "x": 180, "y": 270 },
-		"facings=usw": { "model": "vintagecraft:coated/saltpeter_dnw", "x": 180 },
-
-		"facings=dns": { "model": "vintagecraft:coated/saltpeter_dns" },
-		"facings=dwe": { "model": "vintagecraft:coated/saltpeter_dns", "y": 90 },
-		
-		"facings=dus": { "model": "vintagecraft:coated/saltpeter_dns", "x": 90 },
-		"facings=duw": { "model": "vintagecraft:coated/saltpeter_dns", "x": 90, "y": 90 },
-		"facings=dun": { "model": "vintagecraft:coated/saltpeter_dns", "x": 90, "y": 180 },
-		"facings=due": { "model": "vintagecraft:coated/saltpeter_dns", "x": 90, "y": 270 },
-
-		"facings=uns": { "model": "vintagecraft:coated/saltpeter_dns", "x": 180 },
-		"facings=uwe": { "model": "vintagecraft:coated/saltpeter_dns", "x": 180, "y": 90 },
-
-		"facings=nse": { "model": "vintagecraft:coated/saltpeter_nse" },
-		"facings=swe": { "model": "vintagecraft:coated/saltpeter_nse", "y": 90 },
-		"facings=nsw": { "model": "vintagecraft:coated/saltpeter_nse", "y": 180 },
-		"facings=nwe": { "model": "vintagecraft:coated/saltpeter_nse", "y": 270 },
+		"facings=nse": { "model": "vintagecraft:terrafirma/coated/saltpeter_nse" },
+		"facings=swe": { "model": "vintagecraft:terrafirma/coated/saltpeter_nse", "y": 90 },
+		"facings=nsw": { "model": "vintagecraft:terrafirma/coated/saltpeter_nse", "y": 180 },
+		"facings=nwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_nse", "y": 270 },
 		
 		
-		"facings=dnwe": { "model": "vintagecraft:coated/saltpeter_dnwe" },
-		"facings=dnse": { "model": "vintagecraft:coated/saltpeter_dnwe", "y": 90 },
-		"facings=dswe": { "model": "vintagecraft:coated/saltpeter_dnwe", "y": 180 },
-		"facings=dnsw": { "model": "vintagecraft:coated/saltpeter_dnwe", "y": 270 },
+		"facings=dnwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe" },
+		"facings=dnse": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "y": 90 },
+		"facings=dswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "y": 180 },
+		"facings=dnsw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "y": 270 },
 
-		"facings=uswe": { "model": "vintagecraft:coated/saltpeter_dnwe", "x": 180 },
-		"facings=unsw": { "model": "vintagecraft:coated/saltpeter_dnwe", "x": 180, "y": 90 },
-		"facings=unwe": { "model": "vintagecraft:coated/saltpeter_dnwe", "x": 180, "y": 180 },
-		"facings=unse": { "model": "vintagecraft:coated/saltpeter_dnwe", "x": 180, "y": 270 },
-
-
-
-		"facings=nswe": { "model": "vintagecraft:coated/saltpeter_nswe" },
-		"facings=duwe": { "model": "vintagecraft:coated/saltpeter_nswe", "x": 90 },
-		"facings=duns": { "model": "vintagecraft:coated/saltpeter_nswe", "x": 90, "y": 90 },
+		"facings=uswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "x": 180 },
+		"facings=unsw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "x": 180, "y": 90 },
+		"facings=unwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "x": 180, "y": 180 },
+		"facings=unse": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnwe", "x": 180, "y": 270 },
 
 
-		"facings=dune": { "model": "vintagecraft:coated/saltpeter_dune" },
-		"facings=duse": { "model": "vintagecraft:coated/saltpeter_dune", "y": 90 },
-		"facings=dusw": { "model": "vintagecraft:coated/saltpeter_dune", "y": 180 },
-		"facings=dunw": { "model": "vintagecraft:coated/saltpeter_dune", "y": 270 },
+		"facings=nswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_nswe" },
+		"facings=duwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_nswe", "x": 90 },
+		"facings=duns": { "model": "vintagecraft:terrafirma/coated/saltpeter_nswe", "x": 90, "y": 90 },
 
 
-		"facings=dnswe": { "model": "vintagecraft:coated/saltpeter_dnswe" },
-		"facings=unswe": { "model": "vintagecraft:coated/saltpeter_dnswe", "x": 180 },
+		"facings=dune": { "model": "vintagecraft:terrafirma/coated/saltpeter_dune" },
+		"facings=duse": { "model": "vintagecraft:terrafirma/coated/saltpeter_dune", "y": 90 },
+		"facings=dusw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dune", "y": 180 },
+		"facings=dunw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dune", "y": 270 },
+
+
+		"facings=dnswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe" },
+		"facings=unswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe", "x": 180 },
 		
-		"facings=dunwe": { "model": "vintagecraft:coated/saltpeter_dnswe", "x": 90, "y": 180 },
-		"facings=dunse": { "model": "vintagecraft:coated/saltpeter_dnswe", "x": 90, "y" : 270 },
-		"facings=duswe": { "model": "vintagecraft:coated/saltpeter_dnswe", "x": 90 },
-		"facings=dunsw": { "model": "vintagecraft:coated/saltpeter_dnswe", "x": 90, "y" : 90 },
+		"facings=dunwe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe", "x": 90, "y": 180 },
+		"facings=dunse": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe", "x": 90, "y" : 270 },
+		"facings=duswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe", "x": 90 },
+		"facings=dunsw": { "model": "vintagecraft:terrafirma/coated/saltpeter_dnswe", "x": 90, "y" : 90 },
 	
 
-		"facings=dunswe": { "model": "vintagecraft:coated/saltpeter_dunswe" }
+		"facings=dunswe": { "model": "vintagecraft:terrafirma/coated/saltpeter_dunswe" }
 	}
 }

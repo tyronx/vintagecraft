@@ -1,0 +1,6 @@
+{
+	"parent": "vintagecraft:block/flora/crops/wheat",
+	"textures": {
+		"crop": "vintagecraft:blocks/crops/flax-stage3"
+	}
+}

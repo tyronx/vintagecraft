@@ -52,7 +52,9 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.EnumBucketContents;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
+import at.tyron.vintagecraft.Interfaces.*;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
@@ -198,6 +200,9 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
     public void postInit(FMLPostInitializationEvent event) {
         super.postInit(event);
         
+        String mechFolder = EnumObjectCategory.Mechanics.getFolderPart();
+        String metalFolder = EnumObjectCategory.Metalworking.getFolderPart();
+        
         registerModelLocation(Item.getItemFromBlock(BlocksVC.woodenrail), "woodenrail", "inventory");
         
         registerModelLocation(Item.getItemFromBlock(BlocksVC.saltlamp), "saltlamp", "inventory");
@@ -206,32 +211,32 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
         
         registerModelLocation(Item.getItemFromBlock(BlocksVC.blastpowdersack), "blastpowdersack", "inventory");
         
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.stonepot), "vintagecraft:stonepot/", EnumRockType.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.stonepot), ModInfo.AssetPrefix + metalFolder + "stonepot/", EnumRockType.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.stonepot), "stonepot", "inventory");
 
         registerModelLocation(Item.getItemFromBlock(BlocksVC.toolrack), "toolrack", "inventory");
         
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.axle), "vintagecraft:axle/", EnumTree.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.axle), ModInfo.AssetPrefix + mechFolder + "axle/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.axle), "axle", "inventory");
         
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.angledgears), "vintagecraft:angledgearbox/", EnumTree.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.angledgears), ModInfo.AssetPrefix + mechFolder + "angledgearbox/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.angledgears), "angledgearbox", "inventory");
         
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.windmillrotor), "vintagecraft:windmillrotor/", EnumTree.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.windmillrotor), ModInfo.AssetPrefix + mechFolder + "windmillrotor/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.windmillrotor), "windmillrotor", "inventory");
 
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.bellows), "vintagecraft:bellows/", EnumTree.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.bellows), ModInfo.AssetPrefix + mechFolder + "bellows/", EnumTree.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.bellows), "bellows", "inventory");
 
-        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.grindstone), "vintagecraft:grindstone/", EnumRockType.values());
+        addVariantNamesFromEnum(Item.getItemFromBlock(BlocksVC.grindstone), ModInfo.AssetPrefix + mechFolder + "grindstone/", EnumRockType.values());
         registerModelLocation(Item.getItemFromBlock(BlocksVC.grindstone), "grindstone", "inventory");
         
         for (EnumTree treetype : EnumTree.values()) {
         	if (treetype.jankahardness > 800) {
-        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.carpenterTable), "vintagecraft:carpentertable/" + treetype.getName());
+        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.carpenterTable), ModInfo.AssetPrefix + mechFolder + "carpentertable/" + treetype.getName());
         		
 	        	for (EnumBucketContents cnt : EnumBucketContents.values()) {
-	        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.woodbucket), "vintagecraft:woodbucket/" + treetype.getName() + "-" + cnt.getName());
+	        		ModelBakery.addVariantName(Item.getItemFromBlock(BlocksVC.woodbucket), ModInfo.AssetPrefix + mechFolder + "woodbucket/" + treetype.getName() + "-" + cnt.getName());
 	        	}
         	}
         }
@@ -342,12 +347,14 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	        renderItem.getItemModelMesher().register(item, new ItemMeshDefinition() {
 	            @Override
 	            public ModelResourceLocation getModelLocation(ItemStack stack) {
+	            	EnumObjectCategory cat = ((ICategorizedBlockOrItem)stack.getItem()).getCategory();
+	            	
 	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
 	            	if (item instanceof ISubtypeFromStackPovider && ((ISubtypeFromStackPovider)item).getSubType(stack) != null) {
 	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
-	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);
+	            		return new ModelResourceLocation(ModInfo.AssetPrefix + cat.getFolderPart() + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);
 	            	} else {
-	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name, type);
+	            		return new ModelResourceLocation(ModInfo.AssetPrefix + cat.getFolderPart() + name, type);
 	            	}
 	            }
 	        });
@@ -356,24 +363,34 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	
 	public boolean isFancyGraphics() {
-		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
+		return Minecraft.isFancyGraphicsEnabled();
 	}
 	
 	
 	@Override
 	public void registerItemBlockTexture(Block block, String blockclassname, String subtype, int meta) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), meta, new ModelResourceLocation("vintagecraft:" + blockclassname + "/" + subtype, "inventory"));
-		ModelBakery.addVariantName(Item.getItemFromBlock(block), "vintagecraft:" + blockclassname + "/" + subtype);
+		EnumObjectCategory cat = ((ICategorizedBlockOrItem)block).getCategory();
+		
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(
+			Item.getItemFromBlock(block), meta, new ModelResourceLocation(ModInfo.AssetPrefix + cat.getFolderPart() + blockclassname + "/" + subtype, "inventory")
+		);
+		ModelBakery.addVariantName(Item.getItemFromBlock(block), ModInfo.AssetPrefix + cat.getFolderPart() + blockclassname + "/" + subtype);
 	}
 	
 	@Override
 	public void registerItemBlockTexture(Block block, String blockclassname) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation("vintagecraft:" + blockclassname, "inventory"));
+		EnumObjectCategory cat = ((ICategorizedBlockOrItem)block).getCategory();
+		
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(
+			Item.getItemFromBlock(block), 0, new ModelResourceLocation(ModInfo.AssetPrefix + cat.getFolderPart() + blockclassname, "inventory")
+		);
 	}
 	
 	@Override
 	public void registerItemBlockTextureVanilla(Block block, String blockclassname) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(blockclassname, "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(
+			Item.getItemFromBlock(block), 0, new ModelResourceLocation(blockclassname, "inventory")
+		);
 	}
 	
 	public void addVariantName(Item item, String... names) {

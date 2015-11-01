@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.google.common.collect.Maps;
 
-import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.InventoryCrafting;

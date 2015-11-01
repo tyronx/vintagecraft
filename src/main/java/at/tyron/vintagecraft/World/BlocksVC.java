@@ -1,60 +1,60 @@
 package at.tyron.vintagecraft.World;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Block.BlockCobblestone;
+import at.tyron.vintagecraft.Block.BlockBlastPowderSack;
+import at.tyron.vintagecraft.Block.BlockCeramicVessel;
+import at.tyron.vintagecraft.Block.BlockClayVessel;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Block.BlockFireBrick;
-import at.tyron.vintagecraft.Block.BlockFireclayStairs;
-import at.tyron.vintagecraft.Block.BlockGravelVC;
-import at.tyron.vintagecraft.Block.BlockQuartzGlass;
-import at.tyron.vintagecraft.Block.BlockRawClay;
-import at.tyron.vintagecraft.Block.BlockRawFireClay;
-import at.tyron.vintagecraft.Block.BlockRegolith;
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.BlockSaltpeter;
-import at.tyron.vintagecraft.Block.BlockSandVC;
-import at.tyron.vintagecraft.Block.BlockUpperMantle;
+import at.tyron.vintagecraft.Block.BlockIngotPile;
+import at.tyron.vintagecraft.Block.BlockOrePile;
+import at.tyron.vintagecraft.Block.BlockSaltLamp;
+import at.tyron.vintagecraft.Block.BlockSpiderEgg;
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Block.BlockWoodenRail;
+import at.tyron.vintagecraft.Block.Carpentry.BlockCarpenterTable;
+import at.tyron.vintagecraft.Block.Carpentry.BlockFenceGateVC;
+import at.tyron.vintagecraft.Block.Carpentry.BlockFenceVC;
+import at.tyron.vintagecraft.Block.Carpentry.BlockPlanksVC;
+import at.tyron.vintagecraft.Block.Carpentry.BlockQuartzGlass;
+import at.tyron.vintagecraft.Block.Carpentry.BlockSingleWoodenSlab;
+import at.tyron.vintagecraft.Block.Carpentry.BlockToolRack;
+import at.tyron.vintagecraft.Block.Carpentry.BlockWoodBucketVC;
+import at.tyron.vintagecraft.Block.Carpentry.BlockWoodenRail;
+import at.tyron.vintagecraft.Block.Carpentry.BlockWoodenStairsVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLogVC;
+import at.tyron.vintagecraft.Block.Flora.BlockSaplingVC;
+import at.tyron.vintagecraft.Block.Flora.BlockTallGrassVC;
+import at.tyron.vintagecraft.Block.Flora.BlockVineVC;
 import at.tyron.vintagecraft.Block.Mechanics.BlockAngledGears;
 import at.tyron.vintagecraft.Block.Mechanics.BlockAxle;
 import at.tyron.vintagecraft.Block.Mechanics.BlockBellows;
 import at.tyron.vintagecraft.Block.Mechanics.BlockGrindstone;
 import at.tyron.vintagecraft.Block.Mechanics.BlockWindMillRotor;
-import at.tyron.vintagecraft.Block.Organic.BlockFarmlandVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFenceGateVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFenceVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
-import at.tyron.vintagecraft.Block.Organic.BlockPeat;
-import at.tyron.vintagecraft.Block.Organic.BlockPlanksVC;
-import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
-import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
-import at.tyron.vintagecraft.Block.Organic.BlockSpiderEgg;
-import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
-import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
-import at.tyron.vintagecraft.Block.Utility.BlockBlastPowderSack;
-import at.tyron.vintagecraft.Block.Utility.BlockAnvilVC;
-import at.tyron.vintagecraft.Block.Utility.BlockCarpenterTable;
-import at.tyron.vintagecraft.Block.Utility.BlockCeramicVessel;
-import at.tyron.vintagecraft.Block.Utility.BlockClayVessel;
-import at.tyron.vintagecraft.Block.Utility.BlockCokeOvenDoor;
-import at.tyron.vintagecraft.Block.Utility.BlockFirepit;
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceChimney;
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
-import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
-import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
-import at.tyron.vintagecraft.Block.Utility.BlockSaltLamp;
-import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
-import at.tyron.vintagecraft.Block.Utility.BlockStonePot;
-import at.tyron.vintagecraft.Block.Utility.BlockStove;
-import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
-import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
-import at.tyron.vintagecraft.Block.Utility.BlockWoodBucketVC;
+import at.tyron.vintagecraft.Block.Metalworking.BlockAnvilVC;
+import at.tyron.vintagecraft.Block.Metalworking.BlockCokeOvenDoor;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFireBrick;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFireclayStairs;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFirepit;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFurnaceChimney;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFurnaceSection;
+import at.tyron.vintagecraft.Block.Metalworking.BlockStoneAnvil;
+import at.tyron.vintagecraft.Block.Metalworking.BlockStonePot;
+import at.tyron.vintagecraft.Block.Metalworking.BlockStove;
+import at.tyron.vintagecraft.Block.Metalworking.BlockTallMetalMolds;
+import at.tyron.vintagecraft.Block.Stoneworkig.BlockCobblestone;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockFarmlandVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockGravelVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockPeat;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRawClay;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRawFireClay;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRegolith;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRock;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSaltpeter;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSandVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockUpperMantle;
 import at.tyron.vintagecraft.BlockClass.CoatingClass;
 import at.tyron.vintagecraft.BlockClass.CropClass;
 import at.tyron.vintagecraft.BlockClass.FlowerClass;
@@ -63,28 +63,28 @@ import at.tyron.vintagecraft.BlockClass.OreInRockClass;
 import at.tyron.vintagecraft.BlockClass.RockClass;
 import at.tyron.vintagecraft.BlockClass.SoilRockClass;
 import at.tyron.vintagecraft.BlockClass.TreeClass;
-import at.tyron.vintagecraft.Item.ItemAnvilVC;
-import at.tyron.vintagecraft.Item.ItemCarpenterTable;
 import at.tyron.vintagecraft.Item.ItemCeramicVessel;
 import at.tyron.vintagecraft.Item.ItemClayVessel;
 import at.tyron.vintagecraft.Item.ItemCrafted;
-import at.tyron.vintagecraft.Item.ItemFarmLand;
-import at.tyron.vintagecraft.Item.ItemLogVC;
-import at.tyron.vintagecraft.Item.ItemPlanksVC;
-import at.tyron.vintagecraft.Item.ItemRock;
 import at.tyron.vintagecraft.Item.ItemRockTyped;
-import at.tyron.vintagecraft.Item.ItemSaltpeterBlock;
-import at.tyron.vintagecraft.Item.ItemStonePot;
-import at.tyron.vintagecraft.Item.ItemSubsoil;
-import at.tyron.vintagecraft.Item.ItemTallGrassVC;
-import at.tyron.vintagecraft.Item.ItemTallMetalMold;
-import at.tyron.vintagecraft.Item.ItemToolRack;
-import at.tyron.vintagecraft.Item.ItemTopSoil;
-import at.tyron.vintagecraft.Item.ItemWoodBucket;
-import at.tyron.vintagecraft.Item.ItemWoodtyped;
+import at.tyron.vintagecraft.Item.Carpentry.ItemCarpenterTable;
+import at.tyron.vintagecraft.Item.Carpentry.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.Carpentry.ItemToolRack;
+import at.tyron.vintagecraft.Item.Carpentry.ItemWoodBucket;
+import at.tyron.vintagecraft.Item.Carpentry.ItemWoodtyped;
+import at.tyron.vintagecraft.Item.Flora.ItemLogVC;
+import at.tyron.vintagecraft.Item.Flora.ItemTallGrassVC;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWoodenOppositePlacement;
+import at.tyron.vintagecraft.Item.Metalworking.ItemAnvilVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemStonePot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemTallMetalMold;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemFarmLand;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemRock;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemSaltpeterBlock;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemSubsoil;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemTopSoil;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
@@ -127,9 +127,6 @@ public class BlocksVC {
 	public static BlockContainerVC farmland;
 	public static CropClass crops;
 	public static BlockContainer spiderEgg;	
-	// Todo
-	public static BlockVC charredtopsoil;  // Burned dirt when in contact with lava 
-	public static BlockVC lichen; // Mossy stuff that grows on stones
 	public static Block vine;
 	
 	
@@ -294,7 +291,7 @@ public class BlocksVC {
 		vine = new BlockVineVC().setHardness(0.2f).setStepSound(Block.soundTypeGrass);
 		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");
 		vine.setUnlocalizedName("vine");
-		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
+		VintageCraft.proxy.registerItemBlockTextureVanilla(vine, "vine");
 
 		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.anvilValues());
 
@@ -383,8 +380,6 @@ public class BlocksVC {
 		cokeovendoor.setHardness(2.5f).setHarvestLevel("pickaxe", 0);
 
 		
-	//	wheatcrops.setHardness(0.2f);
-		
 		grindstone.setStepSound(Block.soundTypeStone);
 		
 		carpenterTable.setStepSound(Block.soundTypeWood).setHardness(1.5f).setHarvestLevel("axe", 0);
@@ -409,7 +404,7 @@ public class BlocksVC {
 		
 		block.setUnlocalizedName(blockclassname);
 		
-		VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname);
+		VintageCraft.proxy.registerItemBlockTexture(block, blockclassname);
 	}
 
 

@@ -9,6 +9,7 @@ import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,6 +31,12 @@ public class ItemClayVessel extends ItemBlockVC implements IItemSmeltable {
 		maxStackSize = 1;
 		setCreativeTab(CreativeTabs.tabMisc);
 	}
+	
+	@Override
+	public EnumObjectCategory getCategory() {
+		return EnumObjectCategory.Misc;
+	}
+
 	
 	@Override
 	public ItemStack getSmelted(ItemStack raw) {

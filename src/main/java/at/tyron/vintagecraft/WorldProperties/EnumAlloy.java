@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.WorldProperties;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
 import net.minecraft.item.ItemStack;
 
 public enum EnumAlloy {

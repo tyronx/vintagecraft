@@ -6,9 +6,11 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.ICategorizedBlockOrItem;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.VCraftWorld;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -28,8 +30,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public abstract class BlockVC extends Block implements ISubtypeFromStackPovider {
+public abstract class BlockVC extends Block implements ISubtypeFromStackPovider, ICategorizedBlockOrItem {
 	protected BlockClassEntry[] subtypes;
+	
+	public abstract EnumObjectCategory getCategory();
 	
 	// For items dropped by explosions (amongst others)	
 	public float minDropChance;
@@ -61,7 +65,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 		for (int i = 0; i < types.length; i++) {
 			IStateEnum enumstate = types[i]; 
 			
-			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
+			VintageCraft.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		
 		return this;
@@ -73,7 +77,7 @@ public abstract class BlockVC extends Block implements ISubtypeFromStackPovider 
 		GameRegistry.registerBlock(this, itemclass, name);
 		setUnlocalizedName(name);
 		
-		VintageCraft.instance.proxy.registerItemBlockTexture(this, name);
+		VintageCraft.proxy.registerItemBlockTexture(this, name);
 		
 		
 		return this;

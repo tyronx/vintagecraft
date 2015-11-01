@@ -117,7 +117,7 @@ public class GenLayerTerrain extends GenLayerVC {
 		double xLerp = 0.25D;
 		double zLerp = 0.25D;
 		
-	
+		// This is a unpretty, but	 optimized way to perform trilinear interpolation (from original minecraft)  
 		for (int x = 0; x < horizontalPart; ++x) {
 			for (int z = 0; z < horizontalPart; ++z) {
 				for (int y = 0; y < verticalPart; ++y) {
@@ -140,19 +140,19 @@ public class GenLayerTerrain extends GenLayerVC {
 						double topCounting = lower_lefttop;
 						double bottomCounting = lower_leftbottom;
 						
-						double noisetopdx = (lower_righttop - lower_lefttop) * xLerp;
-						double noisedowndx = (lower_rightbottom - lower_leftbottom) * xLerp;
+						double xNoiseGainTop = (lower_righttop - lower_lefttop) * xLerp;
+						double xNoiseGainBottom = (lower_rightbottom - lower_leftbottom) * xLerp;
 
 						for (int dx = 0; dx < 4; ++dx) {
 							
-							double var49 = (bottomCounting - topCounting) * zLerp;
-							double var47 = topCounting - var49;
+							double zNoiseGain = (bottomCounting - topCounting) * zLerp;
+							double finalNoise = topCounting - zNoiseGain;
 
 							for (int dz = 0; dz < 4; ++dz) {
 								
-								if ((var47 += var49) > 0.0D) {
+								if ((finalNoise += zNoiseGain) > 0.0D) {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.stone.getDefaultState());
-								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.instance.seaLevel) {
+								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.seaLevel) {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.water.getDefaultState());
 								} else {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.air.getDefaultState());
@@ -160,8 +160,8 @@ public class GenLayerTerrain extends GenLayerVC {
 								
 							}
 							
-							topCounting += noisetopdx;
-							bottomCounting += noisedowndx;
+							topCounting += xNoiseGainTop;
+							bottomCounting += xNoiseGainBottom;
 						}
 						
 						lower_lefttop += dy_lefttop;

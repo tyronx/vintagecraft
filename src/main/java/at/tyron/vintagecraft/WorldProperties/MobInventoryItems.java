@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.WorldProperties;
 import java.util.Locale;
 import java.util.Random;
 
-import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemArmorVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemArmor;

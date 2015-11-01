@@ -1,7 +1,7 @@
 {
     "variants": {
         "normal": [
-            { "model": "vintagecraft:grindstone" }
+            { "model": "vintagecraft:mechanics/grindstone" }
         ]
     }
 }

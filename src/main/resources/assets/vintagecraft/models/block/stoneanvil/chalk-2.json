@@ -1,6 +1,0 @@
-{
-	"parent": "vintagecraft:block/stoneanvil/base_2",
-	"textures": {
-		"stone": "vintagecraft:blocks/rock/chalk"
-	}
-}

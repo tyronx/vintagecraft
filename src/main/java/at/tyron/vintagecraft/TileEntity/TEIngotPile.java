@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
-import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Block.BlockIngotPile;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;

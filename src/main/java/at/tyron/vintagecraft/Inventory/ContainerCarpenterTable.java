@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolVC;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;

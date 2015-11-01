@@ -8,6 +8,7 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.ItemBlockVC;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,6 +30,11 @@ public class ItemMechanicalWooden extends ItemBlockVC implements IItemFuel, ISub
 		setMaxStackSize(16);
 	}
 	
+	@Override
+	public EnumObjectCategory getCategory() {
+		return EnumObjectCategory.Mechanics;
+	}
+
 
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {

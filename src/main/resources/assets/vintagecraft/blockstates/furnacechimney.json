@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "vintagecraft:furnace/chimney" }
+        "normal": { "model": "vintagecraft:metalworking/furnace/chimney" }
 	}
 }

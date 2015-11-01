@@ -7,6 +7,7 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.Item.ItemBlockVC;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,6 +29,11 @@ public class ItemMechanicalRock extends ItemBlockVC implements ISubtypeFromStack
 		setMaxStackSize(1);
 	}
 	
+	@Override
+	public EnumObjectCategory getCategory() {
+		return EnumObjectCategory.Mechanics;
+	}
+
 
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {

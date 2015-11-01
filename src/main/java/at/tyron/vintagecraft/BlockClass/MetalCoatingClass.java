@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.BlockClass;
 
 import java.util.Locale;
 
-import at.tyron.vintagecraft.Block.Utility.BlockMetalPlate;
+import at.tyron.vintagecraft.Block.Metalworking.BlockMetalPlate;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Item.ItemMetalPlate;
+import at.tyron.vintagecraft.Item.Metalworking.ItemMetalPlate;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

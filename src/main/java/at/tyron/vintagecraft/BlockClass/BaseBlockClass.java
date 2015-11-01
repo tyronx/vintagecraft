@@ -49,6 +49,10 @@ public abstract class BaseBlockClass {
 	abstract int getHarvestLevel();
 	
 	abstract String getTypeName();
+	
+	String getSubfolderName() {
+		return "";
+	}
 
 	
 	

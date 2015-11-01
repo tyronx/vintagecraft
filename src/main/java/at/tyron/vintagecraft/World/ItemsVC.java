@@ -7,32 +7,27 @@ import java.util.Locale;
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Item.ItemAnvilPart;
-import at.tyron.vintagecraft.Item.ItemArmorVC;
-import at.tyron.vintagecraft.Item.ItemLogVC;
-import at.tyron.vintagecraft.Item.ItemMinecartVC;
 import at.tyron.vintagecraft.Item.ItemCrafted;
-import at.tyron.vintagecraft.Item.ItemDryGrass;
-import at.tyron.vintagecraft.Item.ItemFireClay;
-import at.tyron.vintagecraft.Item.ItemFireStarter;
 import at.tyron.vintagecraft.Item.ItemFoodVC;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemPeatBrick;
-import at.tyron.vintagecraft.Item.ItemSail;
-import at.tyron.vintagecraft.Item.ItemSeedVC;
-import at.tyron.vintagecraft.Item.ItemStone;
-import at.tyron.vintagecraft.Item.ItemToolHead;
-import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.Item.Carpentry.ItemSail;
+import at.tyron.vintagecraft.Item.Flora.ItemDryGrass;
+import at.tyron.vintagecraft.Item.Flora.ItemLogVC;
+import at.tyron.vintagecraft.Item.Flora.ItemSeedVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemAnvilPart;
+import at.tyron.vintagecraft.Item.Metalworking.ItemArmorVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemFireStarter;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemMinecartVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolHead;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolVC;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemFireClay;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemStone;
 import at.tyron.vintagecraft.WorldGen.Helper.EnumTreeGenParam;
-import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
-import at.tyron.vintagecraft.WorldProperties.EnumMetal;
-import at.tyron.vintagecraft.WorldProperties.EnumTool;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
-import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
+import at.tyron.vintagecraft.WorldProperties.Terrain.*;
+import at.tyron.vintagecraft.WorldProperties.*;
+import at.tyron.vintagecraft.Interfaces.*;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityMinecart.EnumMinecartType;
 import net.minecraft.init.Items;
@@ -152,12 +147,12 @@ public class ItemsVC {
 		
 		stone = new ItemStone().register("stone");
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());
+			VintageCraft.proxy.addVariantName(stone, ModInfo.AssetPrefix + EnumObjectCategory.Terrafirma.getFolderPart() + "stone/" + rocktype.getStateName());
 		}
 		
 		ore = new ItemOreVC().register("ore");
 		for (EnumOreType oretype : EnumOreType.values()) {
-			VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
+			VintageCraft.proxy.addVariantName(ore, ModInfo.AssetPrefix + EnumObjectCategory.Terrafirma.getFolderPart() + "ore/" + oretype.getName());
 		}
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
@@ -174,13 +169,13 @@ public class ItemsVC {
 		beefRaw = new ItemFoodVC(3, 0.3f, true).register("beefRaw");
 		beefCooked = new ItemFoodVC(8, 0.8f, true).register("beefCooked");
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
-		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
+		chickenCooked = new ItemFoodVC(8, 0.7f, true).register("chickenCooked");
 		bread = new ItemFoodVC(6, 0.6f, true).register("bread");
 		
 		seeds = new ItemSeedVC();
 		register(seeds, "seeds");
 		for (EnumCrop croptype : EnumCrop.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":seeds/" + croptype.getStateName());
+			VintageCraft.proxy.addVariantName(stone, ModInfo.AssetPrefix + EnumObjectCategory.Flora.getFolderPart() + "seeds/" + croptype.getStateName());
 		}
 		
 		dryGrass = new ItemDryGrass();
@@ -225,7 +220,10 @@ public class ItemsVC {
 	public static Item register(Item item, String internalname, String modelname) {
 		item.setUnlocalizedName(internalname);
 		GameRegistry.registerItem(item, internalname);
-		VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":" + modelname);
+		
+		EnumObjectCategory cat = ((ICategorizedBlockOrItem)item).getCategory();
+		
+		VintageCraft.proxy.addVariantName(item, ModInfo.AssetPrefix + cat.getFolderPart() + modelname);
 		return item;
 	}
 	
@@ -236,10 +234,12 @@ public class ItemsVC {
 		anvilbase = new ItemAnvilPart(false).register("anvilbase");
 		anvilsurface = new ItemAnvilPart(true).register("anvilsurface");
 	
+		String folder = ModInfo.AssetPrefix + EnumObjectCategory.Metalworking.getFolderPart(); 
+		
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (metal.hasAnvil) {
-				VintageCraft.instance.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase(Locale.ROOT));
-				VintageCraft.instance.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase(Locale.ROOT));
+				VintageCraft.proxy.addVariantName(anvilbase, folder + "anvilbase/" + metal.name().toLowerCase(Locale.ROOT));
+				VintageCraft.proxy.addVariantName(anvilsurface, folder + "anvilsurface/" + metal.name().toLowerCase(Locale.ROOT));
 			}
 		}
 	}
@@ -249,6 +249,7 @@ public class ItemsVC {
 	
 	static void registerArmor() {
 		ArrayList<String> materials = new ArrayList<String>();
+		String folder = ModInfo.AssetPrefix + EnumObjectCategory.Metalworking.getFolderPart();
 		
 		for (int i = 0; i < ItemArmorVC.armorTypes.length; i++) {
 			String armorpiece = ItemArmorVC.armorTypes[i];
@@ -266,7 +267,7 @@ public class ItemsVC {
 					item.setUnlocalizedName(unlocalizedname);
 					GameRegistry.registerItem(item, unlocalizedname);
 					
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":armor/" + unlocalizedname);
+					VintageCraft.proxy.addVariantName(item, folder = "armor/" + unlocalizedname);
 					
 					armor.put(unlocalizedname, item);
 					
@@ -299,12 +300,12 @@ public class ItemsVC {
 					String unlocalizedname = material + "_" + tool.getName() + variant;
 					
 					try {
-						Class<? extends ItemToolVC> toolclass = (Class<? extends ItemToolVC>) Class.forName("at.tyron.vintagecraft.Item.ItemTool" + ucfirstmaterial);
+						Class<? extends ItemToolVC> toolclass = (Class<? extends ItemToolVC>) Class.forName("at.tyron.vintagecraft.Item.Metalworking.ItemTool" + ucfirstmaterial);
 						ItemToolVC item = toolclass.getDeclaredConstructor(EnumTool.class, boolean.class).newInstance(tool, variant.equals("_dmd"));
 						item.setUnlocalizedName(unlocalizedname);
 						GameRegistry.registerItem(item, unlocalizedname);
 						
-						VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
+						VintageCraft.proxy.addVariantName(item, ModInfo.AssetPrefix + EnumObjectCategory.Metalworking.getFolderPart() + "tool/" + unlocalizedname);
 						
 						tools.put(unlocalizedname, item);
 						
@@ -322,6 +323,8 @@ public class ItemsVC {
 	static void registerToolHeads() {
 		ArrayList<String> materials = new ArrayList<String>();
 		materials.add("stone");
+		
+		String folder = ModInfo.AssetPrefix + EnumObjectCategory.Metalworking.getFolderPart();
 		
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (metal.hasTools) materials.add(metal.getName());
@@ -343,8 +346,8 @@ public class ItemsVC {
 					item.setUnlocalizedName(unlocalizedname);
 					GameRegistry.registerItem(item, unlocalizedname);
 					
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName());
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName() + "_dmd");
+					VintageCraft.proxy.addVariantName(item, folder + "toolhead/" + material + "_" + tool.getName());
+					VintageCraft.proxy.addVariantName(item, folder + "toolhead/" + material + "_" + tool.getName() + "_dmd");
 					
 					toolheads.put(unlocalizedname, item);
 					
@@ -368,8 +371,10 @@ public class ItemsVC {
 	static void initIngots() {
 		metalingot = new ItemIngot().register("ingot");
 		
+		String folder = ModInfo.AssetPrefix + EnumObjectCategory.Metalworking.getFolderPart();
+		
 		for (EnumMetal metal : EnumMetal.values()) {
-			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
+			VintageCraft.proxy.addVariantName(metalingot, folder + "ingot/" + metal.name().toLowerCase(Locale.ROOT));
 		}
 	}
 	

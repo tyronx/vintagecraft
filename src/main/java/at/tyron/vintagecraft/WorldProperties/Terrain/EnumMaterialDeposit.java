@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import at.tyron.vintagecraft.Block.BlockOreVC;
-import at.tyron.vintagecraft.Block.BlockRegolith;
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.Organic.BlockPeat;
-import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockOreVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockPeat;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRegolith;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRock;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockTopSoil;
 import at.tyron.vintagecraft.Interfaces.IGenLayerSupplier;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;

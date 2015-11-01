@@ -9,8 +9,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class GenRockLayers {
-	SimplexNoise noisegenLow;
-	SimplexNoise noisegenHigh;
+	SimplexNoise noisegen;
 	int amplitude = 0;
 	int offset = 0;
 	
@@ -23,7 +22,7 @@ public class GenRockLayers {
 		float persistence = 0.6f;
 		amplitude = 128;
 				
-		noisegenLow = new SimplexNoise(octaves, persistence, seed);
+		noisegen = new SimplexNoise(octaves, persistence, seed);
 		
 		int currentcolor = 0;
 		
@@ -65,7 +64,7 @@ public class GenRockLayers {
 	
 	
 	public EnumRockType getRockType(int xCoord, int depth, int zCoord, int age, Random rand) {
-		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegenLow.getNoise(xCoord / 1048576.0, depth / 196608.0, zCoord / 1048576.0))))); //65536   32768
+		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegen.getNoise(xCoord / 1048576.0, depth / 196608.0, zCoord / 1048576.0))))); //65536   32768
 		
 		EnumRockType rock = color2Rock.get(value);
 		

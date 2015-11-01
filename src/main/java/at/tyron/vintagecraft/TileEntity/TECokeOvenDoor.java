@@ -1,7 +1,7 @@
 
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Block.Utility.BlockCokeOvenDoor;
+import at.tyron.vintagecraft.Block.Metalworking.BlockCokeOvenDoor;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.state.IBlockState;

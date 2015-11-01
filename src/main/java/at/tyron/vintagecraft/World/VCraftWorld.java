@@ -416,6 +416,7 @@ public class VCraftWorld {
 	}
 	
 	
+	@SuppressWarnings("resource")
 	void printProfiling(String reason) {
 		System.out.println("writing chunknbt.txt");
 		printingProfiling = true;

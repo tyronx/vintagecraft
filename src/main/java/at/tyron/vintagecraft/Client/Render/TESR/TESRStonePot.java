@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Client.Model.ModelStonePot;
-import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumStonePotUtilization;

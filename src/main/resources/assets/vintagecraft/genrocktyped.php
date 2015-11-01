@@ -2,8 +2,10 @@
 
 // Block+Item
 $blockclasses = array("rock", "subsoil", "regolith", "gravel", "sand", "cobblestone", "stoneanvil");
+$blockclassgroups = array("terrafirma", "terrafirma", "terrafirma", "terrafirma", "terrafirma", "stoneworking", "metalworking");
 // Item only
 $itemclasses = array("stonepot", "grindstone", "grindstonebase");
+$itemclassgroups = array("metalworking", "mechanics", "mechanics");
 
 $blocktypes = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert", "chalk", "kimberlite", "slate");
 $organiclayers = array("nograss", "verysparsegrass", "sparsegrass", "normalgrass");
@@ -12,31 +14,39 @@ $anvilstages = array(0, 1, 2);
 $availtypes = array("rock" => 16, "subsoil" => 4, "regolith" => 16, "gravel" => 16, "sand" => 16, "cobblestone" => 16, "stoneanvil" => 4);
 
 
-foreach ($blockclasses as $blockclass) {
+foreach ($blockclasses as $index => $blockclass) {
 	$variants = array();
 	
+	if (strlen($blockclassgroups[$index])) {
+		$basedir = $blockclassgroups[$index] . "/";
+	} else {
+		$basedir = "";
+	}
+	
 	foreach ($blocktypes as $blocktype) {
-		$blockoutdir = "models/block/{$blockclass}/";
-		$itemoutdir = "models/item/{$blockclass}/";
+		$blockoutdir = "models/block/{$basedir}{$blockclass}/";
+		$itemoutdir = "models/item/{$basedir}{$blockclass}/";
 		$modeltype = "all";
 
 		
+		
 		if ($blockclass == "subsoil") {
 			foreach ($organiclayers as $organiclayer) {
-				$variants[] = "\t\t" . '"rocktype='.$organiclayer.'-'.$blocktype.'": { "model": "vintagecraft:'.$blockclass.'/'.$organiclayer.'-'.$blocktype.'" }';
+				$variants[] = "\t\t" . '"rocktype='.$organiclayer.'-'.$blocktype.'": { "model": "vintagecraft:'.$basedir.$blockclass.'/'.$organiclayer.'-'.$blocktype.'" }';
 				file_put_contents($blockoutdir . $organiclayer."-".$blocktype.".json", getBlockModel($modeltype, $blockclass, $blocktype, $organiclayer));
 				file_put_contents($itemoutdir . $organiclayer."-".$blocktype.".json", getItemModel($blockclass, $blocktype, $organiclayer));
 			}
 		} elseif ($blockclass == "stoneanvil") {
 			foreach ($anvilstages as $anvilstage) {
-				$variants[] = "\t\t" . '"rocktype='.$blocktype.',stage='.$anvilstage.'": { "model": "vintagecraft:'.$blockclass.'/'.$blocktype.'-'.$anvilstage.'" }';
+				$variants[] = "\t\t" . '"rocktype='.$blocktype.',stage='.$anvilstage.'": { "model": "vintagecraft:'.$basedir.$blockclass.'/'.$blocktype.'-'.$anvilstage.'" }';
 				file_put_contents($blockoutdir . $blocktype."-".$anvilstage.".json", getBlockModel($modeltype, $blockclass, $blocktype, $anvilstage));
 			}
 			file_put_contents($itemoutdir . $blocktype . ".json", getItemModel($blockclass, $blocktype . "-2"));
 		} else {
 			file_put_contents($blockoutdir . $blocktype.".json", getBlockModel($modeltype, $blockclass, $blocktype));
 			file_put_contents($itemoutdir . $blocktype.".json", getItemModel($blockclass, $blocktype));
-			$variants[] = "\t\t" . '"rocktype='.$blocktype.'": { "model": "vintagecraft:'.$blockclass.'/'.$blocktype.'" }';
+			
+			$variants[] = "\t\t" . '"rocktype='.$blocktype.'": { "model": "vintagecraft:'.$basedir.$blockclass.'/'.$blocktype.'" }';
 		}
 	}
 	
@@ -47,11 +57,17 @@ foreach ($blockclasses as $blockclass) {
 
 
 
-foreach ($itemclasses as $itemclass) {
+foreach ($itemclasses as $index=>$itemclass) {
+	if (strlen($itemclassgroups[$index])) {
+		$basedir = $itemclassgroups[$index] . "/";
+	} else {
+		$basedir = "";
+	}
+
 	foreach ($blocktypes as $blocktype) {
-		$itemoutdir = "models/item/{$itemclass}/";
+		$itemoutdir = "models/item/{$basedir}{$itemclass}/";
 		
-		file_put_contents($itemoutdir . $blocktype.".json", getItemModel($itemclass, $blocktype));
+		file_put_contents($itemoutdir . $blocktype.".json", getItemModel($itemclass, $blocktype, $basedir));
 	}
 }
 
@@ -84,19 +100,10 @@ function getBlockModel($modeltype, $blockclass, $blocktype, $param = null) {
 }';
 	}
 	
-	if ($blockclass == "forge") {
-		return '{
-    "parent": "vintagecraft:block/forge/forge_'.$param.'",
-    "textures": {
-        "stone": "vintagecraft:blocks/cobblestone/'.$blocktype.'"
-    }
-}';
-	}
-	
-	
+
 	if ($blockclass == "stoneanvil") {
 		return '{
-	"parent": "vintagecraft:block/stoneanvil/base_'.$param.'",
+	"parent": "vintagecraft:block/metalworking/stoneanvil/base_'.$param.'",
 	"textures": {
 		"stone": "vintagecraft:blocks/rock/'.$blocktype.'"
 	}
@@ -113,10 +120,10 @@ function getBlockModel($modeltype, $blockclass, $blocktype, $param = null) {
 }
 
 
-function getItemModel($blockclass, $blocktype, $organiclayer = null) {
+function getItemModel($blockclass, $blocktype, $organiclayer = null, $basedir = "") {
 	if ($blockclass == "stonepot") {
 		return '{
-    "parent": "vintagecraft:item/'.$blockclass.'/base",
+    "parent": "vintagecraft:item/'.$basedir.$blockclass.'/base",
     "textures": {
         "stone": "vintagecraft:blocks/cobblestone/'.$blocktype.'"
     },
@@ -133,7 +140,7 @@ function getItemModel($blockclass, $blocktype, $organiclayer = null) {
 
 	if ($blockclass == "grindstone" || $blockclass == "grindstonebase") {
 		return '{
-    "parent": "vintagecraft:item/'.$blockclass.'/base",
+    "parent": "vintagecraft:item/'.$basedir.$blockclass.'/base",
     "textures": {
         "stone": "vintagecraft:blocks/rock/'.$blocktype.'"
     },
@@ -164,7 +171,7 @@ function getItemModel($blockclass, $blocktype, $organiclayer = null) {
 	
 	
 	return '{
-"parent": "vintagecraft:block/'.$blockclass.'/'.$blocktype.'",
+"parent": "vintagecraft:block/'.$basedir.$blockclass.'/'.$blocktype.'",
     "display": {
         "thirdperson": {
             "rotation": [ 10, -45, 170 ],

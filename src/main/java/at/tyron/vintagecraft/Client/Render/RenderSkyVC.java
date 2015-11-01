@@ -48,7 +48,7 @@ public class RenderSkyVC extends IRenderHandler {
     public static DynamicTexture nightSkyTex;
     
     public static void setSkyBrightnessAndContrast(float nightSkyContrast, int nightSkyBrightness) {
-    	ResourceLocation nightSkyTexLoc = nightSkies[VintageCraft.instance.proxy.getNightSkyType()];
+    	ResourceLocation nightSkyTexLoc = nightSkies[VintageCraft.proxy.getNightSkyType()];
     	
     	try {
     		
@@ -136,7 +136,7 @@ public class RenderSkyVC extends IRenderHandler {
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         
         
-        if (mc.isFancyGraphicsEnabled()) {
+        if (Minecraft.isFancyGraphicsEnabled()) {
         	/*GL11.glPolygonMode(GL11.GL_FRONT, GL11.GL_LINE);
             GL11.glPolygonMode(GL11.GL_BACK, GL11.GL_LINE);*/
         	drawSphere(200F, 40, 40);

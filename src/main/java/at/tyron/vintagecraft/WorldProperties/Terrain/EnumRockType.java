@@ -49,40 +49,6 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
 	CHALK			(17, 40, "chalk", EnumRockGroup.SEDIMENTARY)
     ;
     
-	private static HashMap<EnumCrustLayer, List<EnumRockType>> CRUSTLAYER_ROCKTYPES = new HashMap<EnumCrustLayer, List<EnumRockType>>(EnumCrustLayer.values().length);
-    private static EnumRockType[] ID_LOOKUP = new EnumRockType[values().length+1];
-    
-    
-    
-    public static EnumRockType getSedimentary(EnumRockType rocktype, int age, int depth, Random rand) {
-    	/*if (age > 35 || (depth < 4 && age > 30 && rand.nextInt(37 - age) == 0)) {
-    		return SANDSTONE;
-    	}*/
-    	
-    	switch (rocktype) {
-    		case QUARTZITE:
-    			return REDSANDSTONE;
-    			
-    		case MARBLE:
-    			if (age > 70) 
-    				return LIMESTONE;
-    			return CHALK;
-    			
-    		case GNEISS:
-    			return CONGLOMERATE;
-    		
-    		case SCHIST:
-    			return CLAYSTONE;
-    			
-			default:
-				return rocktype;
-    		
-    		case SLATE:
-    			return SHALE;
-    	}
-    }
-    
-    
     public int id; // used for GenLayerRockInit
 
     public int weight;
@@ -90,7 +56,11 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
     public String unlocalizedName;
     public EnumRockGroup group;
     
+	private static HashMap<EnumCrustLayer, List<EnumRockType>> CRUSTLAYER_ROCKTYPES = new HashMap<EnumCrustLayer, List<EnumRockType>>(EnumCrustLayer.values().length);
+    private static EnumRockType[] ID_LOOKUP = new EnumRockType[values().length+1];
 
+
+    
     private EnumRockType(int id, int weight, String name, EnumRockGroup group) {
         this(id, weight, name, name, group);
     }
@@ -237,4 +207,34 @@ public enum EnumRockType implements IStringSerializable, IStateEnum, IGenLayerSu
 		return name().toUpperCase(Locale.ROOT).substring(0, 1) + name().toLowerCase(Locale.ROOT).substring(1);
 	}
 
+	
+    
+    public static EnumRockType getSedimentary(EnumRockType rocktype, int age, int depth, Random rand) {
+    	/*if (age > 35 || (depth < 4 && age > 30 && rand.nextInt(37 - age) == 0)) {
+    		return SANDSTONE;
+    	}*/
+    	
+    	switch (rocktype) {
+    		case QUARTZITE:
+    			return REDSANDSTONE;
+    			
+    		case MARBLE:
+    			if (age > 70) 
+    				return LIMESTONE;
+    			return CHALK;
+    			
+    		case GNEISS:
+    			return CONGLOMERATE;
+    		
+    		case SCHIST:
+    			return CLAYSTONE;
+    			
+			default:
+				return rocktype;
+    		
+    		case SLATE:
+    			return SHALE;
+    	}
+    }
+    
 }

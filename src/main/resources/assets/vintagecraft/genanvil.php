@@ -9,17 +9,17 @@ $json = '{
 foreach ($metals as $metal) {
 	foreach ($angles as $name => $angle) {
 		if (!empty($angle)) {
-			$json .= '        "facing='.$name.',metal='.$metal.'": { "model": "vintagecraft:anvil/'. str_replace("_", "-", $metal) .'", "y": '.$angle.' },' . "\r\n";
+			$json .= '        "facing='.$name.',metal='.$metal.'": { "model": "vintagecraft:metalworking/anvil/'. str_replace("_", "-", $metal) .'", "y": '.$angle.' },' . "\r\n";
 		} else {
-			$json .= '        "facing='.$name.',metal='.$metal.'": { "model": "vintagecraft:anvil/'. str_replace("_", "-", $metal) .'" },' . "\r\n";
+			$json .= '        "facing='.$name.',metal='.$metal.'": { "model": "vintagecraft:metalworking/anvil/'. str_replace("_", "-", $metal) .'" },' . "\r\n";
 		}
 	}
 	
-	file_put_contents("models/block/anvil/{$metal}.json", getModelJSON($metal));
-	file_put_contents("models/item/anvilvc/{$metal}.json", getItemJSON($metal));
+	file_put_contents("models/block/metalworking/anvil/{$metal}.json", getModelJSON($metal));
+	file_put_contents("models/item/metalworking/anvilvc/{$metal}.json", getItemJSON($metal));
 	
-	file_put_contents("models/item/anvilbase/{$metal}.json", getItemJSON($metal, "anvilbase"));
-	file_put_contents("models/item/anvilsurface/{$metal}.json", getItemJSON($metal, "anvilsurface"));
+	file_put_contents("models/item/metalworking/anvilbase/{$metal}.json", getItemJSON($metal, "anvilbase"));
+	file_put_contents("models/item/metalworking/anvilsurface/{$metal}.json", getItemJSON($metal, "anvilsurface"));
 	
 }
 
@@ -33,16 +33,16 @@ file_put_contents("blockstates/anvilvc.json", $json);
 
 function getModelJSON($metal) {
 	return '{
-    "parent": "vintagecraft:block/anvil/base",
+    "parent": "vintagecraft:block/metalworking/anvil/base",
     "textures": {
-        "metal": "vintagecraft:blocks/anvil/'.$metal.'"
+        "metal": "vintagecraft:blocks/metalworking/anvil/'.$metal.'"
     }
 }';
 }
 
 function getItemJSON($metal, $parent = null) {
 	if (!$parent) {
-		$parent = 'block/anvil/'.$metal;
+		$parent = 'block/metalworking/anvil/'.$metal;
 	return '{
 	"parent": "vintagecraft:'.$parent.'",
 	"display": {
@@ -63,7 +63,7 @@ function getItemJSON($metal, $parent = null) {
 	return '{
 	"parent": "vintagecraft:'.$parent.'",
     "textures": {
-        "metal": "vintagecraft:blocks/anvil/'.$metal.'"
+        "metal": "vintagecraft:blocks/metalworking/anvil/'.$metal.'"
     },
 	"display": {
 		"thirdperson": {

@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.Item;
 import java.util.Arrays;
 
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.ICategorizedBlockOrItem;
 import at.tyron.vintagecraft.Interfaces.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
@@ -18,7 +19,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 
-public class ItemBlockVC extends ItemBlock {
+public abstract class ItemBlockVC extends ItemBlock implements ICategorizedBlockOrItem {
 	
 	public ItemBlockVC(Block block) {
 		super(block);

@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemPeatBrick;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.init.Items;

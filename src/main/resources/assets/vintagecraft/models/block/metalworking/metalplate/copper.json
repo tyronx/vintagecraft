@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/metalworking/metalplate/base",
+    "textures": {
+        "metal": "vintagecraft:blocks/ingot/copper"
+    }
+}

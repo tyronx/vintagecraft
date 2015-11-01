@@ -2,11 +2,11 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Block.BlockCobblestone;
-import at.tyron.vintagecraft.Block.BlockGravelVC;
-import at.tyron.vintagecraft.Block.BlockRegolith;
-import at.tyron.vintagecraft.Block.BlockSandVC;
-import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
+import at.tyron.vintagecraft.Block.Stoneworkig.BlockCobblestone;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockGravelVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRegolith;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSandVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSubSoil;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;

@@ -1,8 +1,8 @@
 {
     "variants": {
-        "fertility=verylow": { "model": "vintagecraft:farmland/verylow" },
-        "fertility=low": { "model": "vintagecraft:farmland/low" },
-        "fertility=medium": { "model": "vintagecraft:farmland/medium" },
-        "fertility=high": { "model": "vintagecraft:farmland/high" }
+        "fertility=verylow": { "model": "vintagecraft:terrafirma/farmland/verylow" },
+        "fertility=low": { "model": "vintagecraft:terrafirma/farmland/low" },
+        "fertility=medium": { "model": "vintagecraft:terrafirma/farmland/medium" },
+        "fertility=high": { "model": "vintagecraft:terrafirma/farmland/high" }
     }
 }

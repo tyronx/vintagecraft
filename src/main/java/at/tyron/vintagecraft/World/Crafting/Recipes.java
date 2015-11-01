@@ -9,16 +9,16 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.Item.ItemArmorVC;
-import at.tyron.vintagecraft.Item.ItemCarpenterTable;
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemLogVC;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemPlanksVC;
-import at.tyron.vintagecraft.Item.ItemSeedVC;
-import at.tyron.vintagecraft.Item.ItemStone;
-import at.tyron.vintagecraft.Item.ItemStonePot;
-import at.tyron.vintagecraft.Item.ItemToolHead;
+import at.tyron.vintagecraft.Item.Carpentry.ItemCarpenterTable;
+import at.tyron.vintagecraft.Item.Carpentry.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.Flora.ItemLogVC;
+import at.tyron.vintagecraft.Item.Flora.ItemSeedVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemArmorVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemStonePot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolHead;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
@@ -45,6 +45,7 @@ public class Recipes {
 	
 	static void registerToSorter() {
 		RecipeSorter.register("vintagecraft:toolsupportedrecipe", ToolSupportedRecipe.class, Category.SHAPED, "after:minecraft:shaped");
+		RecipeSorter.register("vintagecraft:shapedrecipesvc", ShapedRecipesVC.class, Category.SHAPED, "after:minecraft:shaped");
 	}
 	
 	public static void addRecipes() {
@@ -81,8 +82,8 @@ public class Recipes {
 				
 				 
 				
-				addShapedRecipeVC(new ItemStack(dmdtoolitem), new Object[]{" T", " S", 'T', dmdtoolheadstack, 'S', Items.stick});
-				addShapedRecipeVC(new ItemStack(toolitem), new Object[]{" T", " S", 'T', toolheadstack, 'S', Items.stick});
+				addNBTSensitiveShapedRecipeVC(new ItemStack(dmdtoolitem), new Object[]{" T", " S", 'T', dmdtoolheadstack, 'S', Items.stick});
+				addNBTSensitiveShapedRecipeVC(new ItemStack(toolitem), new Object[]{" T", " S", 'T', toolheadstack, 'S', Items.stick});
 
 			}
 		}
@@ -130,7 +131,7 @@ public class Recipes {
 			
 			
 			ItemStack quartzcrystal = ItemOreVC.getItemStackFor(EnumOreType.QUARTZCRYSTAL, 1);
-			GameRegistry.addShapedRecipe(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
+			addNBTSensitiveShapedRecipeVC(BlocksVC.quartzglass.getItemStackFor(planks.getKey()), new Object[] { " S ", "SQS", " S ", 'S', planksstack, 'Q', quartzcrystal});
 			
 			recipes.add(new ToolSupportedRecipe(BlocksVC.plankstairs.getItemStackFor(planks.getKey()), new Object[] { "S ", " W", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
 			recipes.add(new ToolSupportedRecipe(BlocksVC.plankstairs.getItemStackFor(planks.getKey()), new Object[] { " S", "W ", 'S', ItemsVC.tools.get("copper_saw"), 'W', planksstack}));
@@ -181,7 +182,7 @@ public class Recipes {
 		
 		GameRegistry.addShapedRecipe(new ItemStack(Item.getItemFromBlock(BlocksVC.clayVessel)), new Object[] { " C ", "C C", "CCC", 'C', Items.clay_ball});
 
-		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON)});  //ItemMetalPlate.getItemStack(EnumMetal.IRON, 1)
+		addNBTSensitiveShapedRecipeVC(new ItemStack(BlocksVC.stove), new Object[] { "BIB", "B B", "BBB", 'B', ItemsVC.fireclay_brick, 'I', BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON)});  //ItemMetalPlate.getItemStack(EnumMetal.IRON, 1)
 		
 		GameRegistry.addShapedRecipe(new ItemStack(ItemsVC.firestarter), new Object[] { "SW", "W ", 'S', ItemsVC.dryGrass, 'W', Items.stick});
 		
@@ -193,9 +194,13 @@ public class Recipes {
 		
 		ItemStack bituminouscoal = new ItemStack(ItemsVC.ore);
 		ItemOreVC.setOreType(lignite, EnumOreType.BITUMINOUSCOAL);
-		
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', lignite, 'S', stick});
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});
+
+		ItemStack sulfur = new ItemStack(ItemsVC.ore);
+		ItemOreVC.setOreType(sulfur, EnumOreType.SULFUR);
+
+		addNBTSensitiveShapedRecipeVC(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', lignite, 'S', stick});
+		addNBTSensitiveShapedRecipeVC(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});
+		addNBTSensitiveShapedRecipeVC(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', sulfur, 'S', stick});
 		
 		
 		
@@ -222,7 +227,7 @@ public class Recipes {
 		ItemStack flaxSeeds = ItemSeedVC.withCropType(EnumCrop.FLAX);
 		GameRegistry.addShapelessRecipe(new ItemStack(ItemsVC.bread), new Object[]{flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds, flaxSeeds});
 		
-		addShapelessRecipeVC(new ItemStack(ItemsVC.blastingPowder, 3), new Object[] {
+		addNBTSensitiveShapelessRecipe(new ItemStack(ItemsVC.blastingPowder, 3), new Object[] {
 			ItemOreVC.getItemStackFor(EnumOreType.SULFUR, 1), 
 			ItemOreVC.getItemStackFor(EnumOreType.BITUMINOUSCOAL, 1), 
 			ItemOreVC.getItemStackFor(EnumOreType.SALTPETER, 1),
@@ -243,14 +248,14 @@ public class Recipes {
 		});
 		
 		
-		addShapedRecipeVC(new ItemStack(BlocksVC.saltlamp), new Object[] {"SSS", "S S", "STS", 'S', ItemOreVC.getItemStackFor(EnumOreType.ROCKSALT, 1), 'T', new ItemStack(Blocks.torch) });
+		addNBTSensitiveShapedRecipeVC(new ItemStack(BlocksVC.saltlamp), new Object[] {"SSS", "S S", "STS", 'S', ItemOreVC.getItemStackFor(EnumOreType.ROCKSALT, 1), 'T', new ItemStack(Blocks.torch) });
 		
 		
 	}
 	
 	
 	// Also checks the item NBT Tags and input quantity
-	public static void addShapelessRecipeVC(ItemStack stack, Object ... recipeComponents) {
+	public static void addNBTSensitiveShapelessRecipe(ItemStack stack, Object ... recipeComponents) {
         ArrayList arraylist = Lists.newArrayList();
         Object[] aobject = recipeComponents;
         int i = recipeComponents.length;
@@ -280,7 +285,7 @@ public class Recipes {
 	
 	
 	// Also checks the item NBT Tags and input quantity
-    public static ShapedRecipesVC addShapedRecipeVC(ItemStack stack, Object ... recipeComponents) {
+    public static ShapedRecipesVC addNBTSensitiveShapedRecipeVC(ItemStack stack, Object ... recipeComponents) {
         String s = "";
         int i = 0;
         int j = 0;
@@ -366,3 +371,4 @@ public class Recipes {
 	    System.out.println("failed removing recipe, no matching recipe found for  " + resultItem);
 	}
 }
+

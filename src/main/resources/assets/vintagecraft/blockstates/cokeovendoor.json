@@ -1,12 +1,12 @@
 {
     "variants": {
-        "facing=north,opened=false": { "model": "vintagecraft:cokeoven/doorclosed", "y": 180 },
-        "facing=south,opened=false": { "model": "vintagecraft:cokeoven/doorclosed", "y": 0 },
-        "facing=west,opened=false":  { "model": "vintagecraft:cokeoven/doorclosed", "y": 90 },
-        "facing=east,opened=false":  { "model": "vintagecraft:cokeoven/doorclosed", "y": 270 },
-        "facing=north,opened=true": { "model": "vintagecraft:cokeoven/dooropen", "y": 180  },
-        "facing=south,opened=true": { "model": "vintagecraft:cokeoven/dooropen", "y": 0 },
-        "facing=west,opened=true":  { "model": "vintagecraft:cokeoven/dooropen", "y": 90 },
-        "facing=east,opened=true":  { "model": "vintagecraft:cokeoven/dooropen", "y": 270 }
+        "facing=north,opened=false": { "model": "vintagecraft:metalworking/metalworking/cokeoven/doorclosed", "y": 180 },
+        "facing=south,opened=false": { "model": "vintagecraft:metalworking/cokeoven/doorclosed", "y": 0 },
+        "facing=west,opened=false":  { "model": "vintagecraft:metalworking/cokeoven/doorclosed", "y": 90 },
+        "facing=east,opened=false":  { "model": "vintagecraft:metalworking/cokeoven/doorclosed", "y": 270 },
+        "facing=north,opened=true": { "model": "vintagecraft:metalworking/cokeoven/dooropen", "y": 180  },
+        "facing=south,opened=true": { "model": "vintagecraft:metalworking/cokeoven/dooropen", "y": 0 },
+        "facing=west,opened=true":  { "model": "vintagecraft:metalworking/cokeoven/dooropen", "y": 90 },
+        "facing=east,opened=true":  { "model": "vintagecraft:metalworking/cokeoven/dooropen", "y": 270 }
     }
 }

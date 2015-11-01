@@ -6,16 +6,16 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.BlockRegolith;
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
-import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLogVC;
-import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
-import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
+import at.tyron.vintagecraft.Block.Flora.BlockCropsVC;
+import at.tyron.vintagecraft.Block.Flora.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.Flora.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLogVC;
+import at.tyron.vintagecraft.Block.Flora.BlockTallGrassVC;
+import at.tyron.vintagecraft.Block.Flora.BlockVineVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRegolith;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRock;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockSubSoil;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Layer.GenLayerDrainage;
 import net.minecraft.block.Block;
@@ -52,7 +52,6 @@ public class MapGenLakes extends MapGenBase {
 		int rain = VCraftWorld.instance.getRainfall(world.getHorizon(new BlockPos(chunkX*16 + 8, 0, chunkZ*16 + 8)));
 		if (rain < 100) rain /= 2;
 		int maxTries = (rain*rain) / (8*255);
-		//System.out.println("rain = "+rain+", so tries: " + maxTries);
 		
 		Queue<Point> queue = new LinkedList<Point>();
 		Queue<Point> water = new LinkedList<Point>();
@@ -105,10 +104,6 @@ public class MapGenLakes extends MapGenBase {
 					}
 				}
 			}
-			
-			/*if (water.size() > 0) {
-				System.out.println("found " + water.size() + " water points");
-			}*/
 			
 			
 			for (Point p : water) {

@@ -146,7 +146,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int depthVariation = ((depositLayer[x+z*16] >> 8) & 0xFF) - 7;
 				
 				
-				int horizon = VCraftWorld.instance.seaLevel;
+				int horizon = VCraftWorld.seaLevel;
 				
 				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH || deposit.occurence.type == EnumDepositOccurenceType.FOLLOWSURFACE) {
 					horizon = HeightmapCache.getHeightAt(world, xCoord+x, zCoord + z); 

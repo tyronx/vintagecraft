@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/carpentry/carpentertable/base",
+    "textures": {
+        "treetype": "vintagecraft:blocks/planks/joshua"
+    }
+}

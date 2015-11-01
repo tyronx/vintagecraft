@@ -3,8 +3,8 @@ package at.tyron.vintagecraft.Entity;
 import java.util.Iterator;
 
 import at.tyron.vintagecraft.Inventory.ContainerCoalPoweredMinecart;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemPeatBrick;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemPeatBrick;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockRailBase;

@@ -108,6 +108,8 @@ public class EvolvingFloat extends NatFloat {
 			
 			// amplitude is persistence
 			case PERLIN: result = firstvalue + (float)noise(sequence * perlinzoom); break;
+			default:
+				break;
 				
 		}
 		

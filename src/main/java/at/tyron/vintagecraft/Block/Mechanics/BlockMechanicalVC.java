@@ -8,6 +8,7 @@ import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,6 +24,11 @@ import net.minecraft.world.World;
 
 public abstract class BlockMechanicalVC extends BlockContainerVC {
 
+	@Override
+	public EnumObjectCategory getCategory() {
+		return EnumObjectCategory.Mechanics;
+	}
+	
 	protected BlockMechanicalVC(Material materialIn) {
 		super(materialIn);
 		setHardness(1.2f);

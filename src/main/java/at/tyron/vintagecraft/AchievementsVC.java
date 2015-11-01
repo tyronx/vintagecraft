@@ -2,10 +2,10 @@ package at.tyron.vintagecraft;
 
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.Item.ItemIngot;
-import at.tyron.vintagecraft.Item.ItemOreVC;
-import at.tyron.vintagecraft.Item.ItemSeedVC;
 import at.tyron.vintagecraft.Item.ItemVC;
+import at.tyron.vintagecraft.Item.Flora.ItemSeedVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;

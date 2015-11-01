@@ -2,10 +2,10 @@ package at.tyron.vintagecraft.BlockClass;
 
 import java.util.ArrayList;
 
-import at.tyron.vintagecraft.Block.Organic.BlockDoubleFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Flora.BlockDoubleFlowerVC;
+import at.tyron.vintagecraft.Block.Flora.BlockFlowerVC;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
-import at.tyron.vintagecraft.Item.ItemFlowerVC;
+import at.tyron.vintagecraft.Item.Flora.ItemFlowerVC;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlower;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFlowerGroup;
 import net.minecraft.block.Block;

@@ -1,8 +1,8 @@
 {
     "variants": {
-        "facing=north": { "model": "vintagecraft:furnace" },
-        "facing=south": { "model": "vintagecraft:furnace", "y": 180 },
-        "facing=west":  { "model": "vintagecraft:furnace", "y": 270 },
-        "facing=east":  { "model": "vintagecraft:furnace", "y": 90 }
+        "facing=north": { "model": "vintagecraft:metalworking/furnace" },
+        "facing=south": { "model": "vintagecraft:metalworking/furnace", "y": 180 },
+        "facing=west":  { "model": "vintagecraft:metalworking/furnace", "y": 270 },
+        "facing=east":  { "model": "vintagecraft:metalworking/furnace", "y": 90 }
     }
 }

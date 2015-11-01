@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.BlockClass;
 
-import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
+import at.tyron.vintagecraft.Block.Flora.BlockCropsVC;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumCrop;
 import net.minecraft.block.Block;

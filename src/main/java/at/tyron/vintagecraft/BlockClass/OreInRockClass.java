@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.BlockClass;
 
-import at.tyron.vintagecraft.Block.BlockOreVC;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockOreVC;
 import at.tyron.vintagecraft.Interfaces.EnumStateImplementation;
-import at.tyron.vintagecraft.Item.ItemOreBlock;
+import at.tyron.vintagecraft.Item.Terrafirma.ItemOreBlock;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;

@@ -233,6 +233,8 @@ public class VintageCraftMobTweaker {
 			case EASY: horseSpawnchance = 0.15f; break;
 			case NORMAL: horseSpawnchance = 0.45f; break;
 			case HARD: horseSpawnchance = 0.65f; break;
+			default:
+				break;
 		}
 		
 		if (mob.worldObj.rand.nextFloat() > modifier * horseSpawnchance) return;

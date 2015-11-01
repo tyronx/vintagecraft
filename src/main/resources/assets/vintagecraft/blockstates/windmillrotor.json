@@ -1,7 +1,7 @@
 {
     "variants": {
         "normal": [
-            { "model": "vintagecraft:windmillrotor" }
+            { "model": "vintagecraft:mechanics/windmillrotor" }
         ]
     }
 }

@@ -5,6 +5,7 @@ import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
 import at.tyron.vintagecraft.Interfaces.ISizedItem;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import net.minecraft.item.ItemStack;
 
 public class ItemCrafted extends ItemVC implements IItemWoodWorkable, ISizedItem {
@@ -27,5 +28,10 @@ public class ItemCrafted extends ItemVC implements IItemWoodWorkable, ISizedItem
 	@Override
 	public EnumItemSize getItemSize() {
 		return itemsize;
+	}
+
+	@Override
+	public EnumObjectCategory getCategory() {
+		return EnumObjectCategory.Misc;
 	}
 }

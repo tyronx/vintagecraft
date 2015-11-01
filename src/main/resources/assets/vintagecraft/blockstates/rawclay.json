@@ -1,8 +1,8 @@
 {
     "variants": {
-        "organiclayer=nograss": { "model": "vintagecraft:rawclay/nograss" },
-		"organiclayer=verysparsegrass": { "model": "vintagecraft:rawclay/verysparsegrass" },
-		"organiclayer=sparsegrass": { "model": "vintagecraft:rawclay/sparsegrass" },
-		"organiclayer=normalgrass": { "model": "vintagecraft:rawclay/normalgrass" }
+        "organiclayer=nograss": { "model": "vintagecraft:terrafirma/rawclay/nograss" },
+		"organiclayer=verysparsegrass": { "model": "vintagecraft:terrafirma/rawclay/verysparsegrass" },
+		"organiclayer=sparsegrass": { "model": "vintagecraft:terrafirma/rawclay/sparsegrass" },
+		"organiclayer=normalgrass": { "model": "vintagecraft:terrafirma/rawclay/normalgrass" }
     }
 }

@@ -1,6 +1,0 @@
-{
-    "parent": "vintagecraft:block/metalplate/base",
-    "textures": {
-        "metal": "vintagecraft:blocks/ingot/tinbronze"
-    }
-}

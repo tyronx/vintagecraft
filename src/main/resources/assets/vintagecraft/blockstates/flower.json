@@ -1,38 +1,38 @@
 {
 	"variants": {
-		"flowertype=orangemilkweed": { "model": "vintagecraft:flower/orangemilkweed" },
-		"flowertype=orangemilkweed2": { "model": "vintagecraft:flower/orangemilkweed2" },
-		"flowertype=purplemilkweed": { "model": "vintagecraft:flower/purplemilkweed" },
-		"flowertype=purplemilkweed2": { "model": "vintagecraft:flower/purplemilkweed2" },
-		"flowertype=catmint": { "model": "vintagecraft:flower/catmint" },
-		"flowertype=calendula": { "model": "vintagecraft:flower/calendula" },
-		"flowertype=cornflower": { "model": "vintagecraft:flower/cornflower" },
-		"flowertype=cornflower2": { "model": "vintagecraft:flower/cornflower2" },
+		"flowertype=orangemilkweed": { "model": "vintagecraft:flora/flower/orangemilkweed" },
+		"flowertype=orangemilkweed2": { "model": "vintagecraft:flora/flower/orangemilkweed2" },
+		"flowertype=purplemilkweed": { "model": "vintagecraft:flora/flower/purplemilkweed" },
+		"flowertype=purplemilkweed2": { "model": "vintagecraft:flora/flower/purplemilkweed2" },
+		"flowertype=catmint": { "model": "vintagecraft:flora/flower/catmint" },
+		"flowertype=calendula": { "model": "vintagecraft:flora/flower/calendula" },
+		"flowertype=cornflower": { "model": "vintagecraft:flora/flower/cornflower" },
+		"flowertype=cornflower2": { "model": "vintagecraft:flora/flower/cornflower2" },
 		
-		"flowertype=lilyofthevalley": { "model": "vintagecraft:flower/lilyofthevalley" },
-		"flowertype=lilyofthevalley2": { "model": "vintagecraft:flower/lilyofthevalley2" },
-		"flowertype=lilyofthevalley3": { "model": "vintagecraft:flower/lilyofthevalley3" },
+		"flowertype=lilyofthevalley": { "model": "vintagecraft:flora/flower/lilyofthevalley" },
+		"flowertype=lilyofthevalley2": { "model": "vintagecraft:flora/flower/lilyofthevalley2" },
+		"flowertype=lilyofthevalley3": { "model": "vintagecraft:flora/flower/lilyofthevalley3" },
 		
-		"flowertype=clover": { "model": "vintagecraft:flower/clover" },
+		"flowertype=clover": { "model": "vintagecraft:flora/flower/clover" },
 		
-		"flowertype=forgetmenot": { "model": "vintagecraft:flower/forgetmenot" },
-		"flowertype=forgetmenot2": { "model": "vintagecraft:flower/forgetmenot2" },
-		"flowertype=forgetmenot3": { "model": "vintagecraft:flower/forgetmenot3" },
-		"flowertype=forgetmenot4": { "model": "vintagecraft:flower/forgetmenot4" },
-		"flowertype=forgetmenot5": { "model": "vintagecraft:flower/forgetmenot5" },
+		"flowertype=forgetmenot": { "model": "vintagecraft:flora/flower/forgetmenot" },
+		"flowertype=forgetmenot2": { "model": "vintagecraft:flora/flower/forgetmenot2" },
+		"flowertype=forgetmenot3": { "model": "vintagecraft:flora/flower/forgetmenot3" },
+		"flowertype=forgetmenot4": { "model": "vintagecraft:flora/flower/forgetmenot4" },
+		"flowertype=forgetmenot5": { "model": "vintagecraft:flora/flower/forgetmenot5" },
 		
-		"flowertype=narcissus": { "model": "vintagecraft:flower/narcissus" },
-		"flowertype=narcissus2": { "model": "vintagecraft:flower/narcissus2" },
-		"flowertype=narcissus3": { "model": "vintagecraft:flower/narcissus3" },
+		"flowertype=narcissus": { "model": "vintagecraft:flora/flower/narcissus" },
+		"flowertype=narcissus2": { "model": "vintagecraft:flora/flower/narcissus2" },
+		"flowertype=narcissus3": { "model": "vintagecraft:flora/flower/narcissus3" },
 
-		"flowertype=purpletulip": { "model": "vintagecraft:flower/purpletulip" },
-		"flowertype=purpletulip2": { "model": "vintagecraft:flower/purpletulip2" },
-		"flowertype=purpletulip3": { "model": "vintagecraft:flower/purpletulip3" },
+		"flowertype=purpletulip": { "model": "vintagecraft:flora/flower/purpletulip" },
+		"flowertype=purpletulip2": { "model": "vintagecraft:flora/flower/purpletulip2" },
+		"flowertype=purpletulip3": { "model": "vintagecraft:flora/flower/purpletulip3" },
 		
-		"flowertype=cowparsley": { "model": "vintagecraft:flower/cowparsley" },
-		"flowertype=cowparsley2": { "model": "vintagecraft:flower/cowparsley2" },
+		"flowertype=cowparsley": { "model": "vintagecraft:flora/flower/cowparsley" },
+		"flowertype=cowparsley2": { "model": "vintagecraft:flora/flower/cowparsley2" },
 		
-		"flowertype=horsetail": { "model": "vintagecraft:flower/horsetail" }
+		"flowertype=horsetail": { "model": "vintagecraft:flora/flower/horsetail" }
 		
 	}
 }

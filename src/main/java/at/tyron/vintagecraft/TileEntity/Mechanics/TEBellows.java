@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
-import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
+import at.tyron.vintagecraft.Block.Metalworking.BlockFurnaceSection;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.World.MechanicalNetwork;

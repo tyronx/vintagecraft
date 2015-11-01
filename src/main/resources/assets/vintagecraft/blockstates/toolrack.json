@@ -1,5 +1,5 @@
 {
     "variants": {
-        "normal": { "model": "vintagecraft:toolrack" }
+        "normal": { "model": "vintagecraft:carpentry/toolrack" }
     }
 }

@@ -31,7 +31,7 @@ public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFrom
 	public Item register(String internalname) {
 		setUnlocalizedName(internalname);
 		GameRegistry.registerItem(this, internalname);
-		VintageCraft.instance.proxy.addVariantName(this, ModInfo.ModID + ":food/" + internalname);
+		VintageCraft.proxy.addVariantName(this, ModInfo.ModID + ":food/" + internalname);
 		this.internalname = internalname;
 		return this;
 	}

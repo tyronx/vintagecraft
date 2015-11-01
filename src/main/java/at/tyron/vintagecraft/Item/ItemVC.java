@@ -3,8 +3,10 @@ package at.tyron.vintagecraft.Item;
 import java.util.Arrays;
 
 import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.ICategorizedBlockOrItem;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,8 +18,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public abstract class ItemVC extends Item {
+public abstract class ItemVC extends Item implements ICategorizedBlockOrItem {
 
+	public abstract EnumObjectCategory getCategory();
 	
 	@Override
 	public ItemVC setUnlocalizedName(String unlocalizedName) {

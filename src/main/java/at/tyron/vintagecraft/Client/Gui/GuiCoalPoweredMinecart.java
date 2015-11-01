@@ -34,7 +34,7 @@ public class GuiCoalPoweredMinecart extends GuiContainer {
             
             int totalfuelTime = cart.fuelBurnTime;
             if (cart.minecartContainerItems[0] != null) {
-            	totalfuelTime += cart.getFuelValue(cart.minecartContainerItems[0]) * cart.minecartContainerItems[0].stackSize;
+            	totalfuelTime += EntityCoalPoweredMinecartVC.getFuelValue(cart.minecartContainerItems[0]) * cart.minecartContainerItems[0].stackSize;
             }
             
             String timeleft = "";

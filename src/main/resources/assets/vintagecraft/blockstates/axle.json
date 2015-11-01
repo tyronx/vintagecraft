@@ -1,7 +1,7 @@
 {
     "variants": {
         "normal": [
-            { "model": "vintagecraft:axle" }
+            { "model": "vintagecraft:mechanics/axle" }
         ]
     }
 }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
-import at.tyron.vintagecraft.Item.ItemToolVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemToolVC;
 import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;

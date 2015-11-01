@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.World.Crafting;
 
 import java.util.Locale;
 
-import at.tyron.vintagecraft.Item.ItemPlanksVC;
-import at.tyron.vintagecraft.Item.ItemToolRack;
-import at.tyron.vintagecraft.Item.ItemWoodBucket;
+import at.tyron.vintagecraft.Item.Carpentry.ItemPlanksVC;
+import at.tyron.vintagecraft.Item.Carpentry.ItemToolRack;
+import at.tyron.vintagecraft.Item.Carpentry.ItemWoodBucket;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWoodenOppositePlacement;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -200,7 +200,7 @@ public enum EnumCarpentryRecipes {
 			}
 			
 			plankstack.stackSize = TOOLRACK.planks;
-			TOOLRACK.registerRecipe(((ItemToolRack)Item.getItemFromBlock(BlocksVC.toolrack)).withTreeType(treetype), plankstack);
+			TOOLRACK.registerRecipe(ItemToolRack.withTreeType(treetype), plankstack);
 			
 			plankstack.stackSize = 1;
 			WorkableRecipeBase recipe = ITEMFRAME.registerRecipe(

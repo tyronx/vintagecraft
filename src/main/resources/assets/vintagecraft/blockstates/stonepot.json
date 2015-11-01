@@ -1,5 +1,5 @@
 {
 	"variants": {
-		"normal": { "model": "vintagecraft:stonepot" }
+		"normal": { "model": "vintagecraft:metalworking/stonepot" }
 	}
 }

@@ -3,8 +3,10 @@ package at.tyron.vintagecraft.Block;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.VintageCraftConfig;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
+import at.tyron.vintagecraft.Interfaces.ICategorizedBlockOrItem;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.WorldProperties.EnumObjectCategory;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -17,9 +19,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-public abstract class BlockContainerVC extends BlockContainer implements ISubtypeFromStackPovider {
+public abstract class BlockContainerVC extends BlockContainer implements ISubtypeFromStackPovider, ICategorizedBlockOrItem {
 	BlockClassEntry[] subtypes;
 
+	public abstract EnumObjectCategory getCategory();
+	
 	protected BlockContainerVC(Material materialIn) {
 		super(materialIn);
 	}
@@ -55,7 +59,7 @@ public abstract class BlockContainerVC extends BlockContainer implements ISubtyp
 		for (int i = 0; i < types.length; i++) {
 			IStateEnum enumstate = types[i];
 			
-			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
+			VintageCraft.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		
 		return this;

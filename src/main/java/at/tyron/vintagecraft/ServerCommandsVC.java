@@ -7,8 +7,8 @@ import java.util.Random;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import at.tyron.vintagecraft.Block.BlockRock;
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockRock;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
 import at.tyron.vintagecraft.Entity.Animal.EntitySheepVC;
@@ -76,7 +76,7 @@ public class ServerCommandsVC extends CommandBase {
 		
 
 		if (args[0].equals("meteorshower")) {
-			VintageCraft.instance.packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
+			VintageCraft.packetPipeline.sendToAll(new StartMeteorShowerPacket(10000));
 			MinecraftServer.getServer().getConfigurationManager().sendChatMsg(new ChatComponentText("Something strange is happening in the night sky"));
 		}
 		
@@ -201,7 +201,7 @@ public class ServerCommandsVC extends CommandBase {
 			EnumTree tree = EnumTree.SCOTSPINE;
 			
 			if (args.length >= 2) {
-				tree = tree.valueOf(args[1].toUpperCase(Locale.ROOT));
+				tree = EnumTree.valueOf(args[1].toUpperCase(Locale.ROOT));
 			}
 			
 			if (args.length >= 3) {
@@ -273,10 +273,12 @@ public class ServerCommandsVC extends CommandBase {
 				//GenLayerVC.drawImage(16, layer.getInts(chunkX, chunkZ, 16, 16), "currentchunknoisemod", 3);
 			}
 			
+			if (args[1].equals("biomes")) {
+				GenLayerVC.genErosion(0);
+			}
+
 			if (args[1].equals("noisemod2")) {
 				GenLayerVC.genNoiseFieldModifier(seed, 0);
-				
-				
 			}
 			if (args[1].equals("rockoffset")) {
 				GenLayerVC.genHorizontalRockOffsetMap(seed);
@@ -310,7 +312,7 @@ public class ServerCommandsVC extends CommandBase {
 				", Fertility " + climate[1] + 
 				", Forest " + forest + 
 				", mod forest " + EnumTree.getForestDensity(255-forest, climate[2], climate[0]) + 
-				", descaled temp " + VCraftWorld.instance.deScaleTemperature(climate[0])
+				", descaled temp " + VCraftWorld.deScaleTemperature(climate[0])
 			));
 			
 			EnumFlowerGroup flora = EnumFlowerGroup.getRandomFlowerForClimate(climate[2], climate[0], forest, sender.getEntityWorld().rand);
@@ -325,7 +327,7 @@ public class ServerCommandsVC extends CommandBase {
 		}
 		
 		if (args[0].equals("reloadgrass")) {
-			VCraftWorld.instance.loadTextures(Minecraft.getMinecraft().getResourceManager());
+			VCraftWorld.loadTextures(Minecraft.getMinecraft().getResourceManager());
 			sender.addChatMessage(new ChatComponentText("reloaded."));
 		}
 		

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.WorldProperties.Terrain;
 
-import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
+import at.tyron.vintagecraft.Block.Terrafirma.BlockTopSoil;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.state.IBlockState;
@@ -56,6 +56,9 @@ public enum EnumCrustType {
 			case ROCK:
 				BlockClassEntry rock = BlocksVC.rock.getEntryFromKey(rocktype);
 				if (rock != null) return rock.getBlockState();
+				break;
+				
+			default:
 				break;
 		}
 		

@@ -33,83 +33,78 @@ public class GenLayerWeightedNoise extends GenLayerNoise {
 		int rnd, sum=0;
 		
 		
-		for (int z = 0; z < sizeZ; ++z) {
-			for (int x = 0; x < sizeX; ++x) {
-				this.initChunkSeed(xCoord + x, zCoord + z);
+			for (int z = 0; z < sizeZ; ++z) {
+				for (int x = 0; x < sizeX; ++x) {
+					this.initChunkSeed(xCoord + x, zCoord + z);
 				
-				rnd = nextInt(weightsum);
-				sum = 0;
-				
-				//cache[x + z * sizeX] = nextInt(255) << 8;
-				
-				for (int i = 0; i < genlayersuppliers.length; i++) {
-					sum += genlayersuppliers[i].getWeight();
+					rnd = nextInt(weightsum);
+					sum = 0;
 					
-					if (rnd < sum) {
+					
+					for (int i = 0; i < genlayersuppliers.length; i++) {
+						sum += genlayersuppliers[i].getWeight();
 						
-						cache[x + z * sizeX] = 
-							(getDepth(genlayersuppliers[i]) << 16) + 		// Reference depth
-							genlayersuppliers[i].getColor();				// Type of deposit 
-
-
-						if (genlayersuppliers[i].getSize() == 2) {
-							if (nextInt(2) == 0) {
-								cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
-							} else {
-								cache[Math.max(0, x-1 + z * sizeX)] = cache[x + z * sizeX];
+						if (rnd < sum) {
+							
+							cache[x + z * sizeX] = 
+								(getDepth(genlayersuppliers[i]) << 16) + 		// Reference depth
+								genlayersuppliers[i].getColor();				// Type of deposit 
+	
+	
+							if (genlayersuppliers[i].getSize() == 2) {
+								if (nextInt(2) == 0) {
+									cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+								} else {
+									cache[Math.max(0, x-1 + z * sizeX)] = cache[x + z * sizeX];
+								}
 							}
-						}
-						
-						if (genlayersuppliers[i].getSize() == 4) {
-							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
-						}
-
-						
-						if (genlayersuppliers[i].getSize() == 9) {
-							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
 							
-							cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+							if (genlayersuppliers[i].getSize() == 4) {
+								cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+							}
+	
 							
-							cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
-						}
-
-						
-						if (genlayersuppliers[i].getSize() == 16) {
-							cache[Math.max(0, x + z * sizeX - 3)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
-
-							cache[Math.max(0, x + (z - 3) * sizeX - 3)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 3) * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 3) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 3) * sizeX)] = cache[x + z * sizeX];
-
-							cache[Math.max(0, x + (z - 2) * sizeX - 3)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+							if (genlayersuppliers[i].getSize() == 9) {
+								cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+								
+								cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+								
+								cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+							}
+	
 							
-							cache[Math.max(0, x + (z - 1) * sizeX - 3)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
-							cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+							if (genlayersuppliers[i].getSize() == 16) {
+								cache[Math.max(0, x + z * sizeX - 3)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + z * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + z * sizeX - 1)] = cache[x + z * sizeX];
+	
+								cache[Math.max(0, x + (z - 3) * sizeX - 3)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 3) * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 3) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 3) * sizeX)] = cache[x + z * sizeX];
+	
+								cache[Math.max(0, x + (z - 2) * sizeX - 3)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 2) * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 2) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 2) * sizeX)] = cache[x + z * sizeX];
+								
+								cache[Math.max(0, x + (z - 1) * sizeX - 3)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX - 2)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX - 1)] = cache[x + z * sizeX];
+								cache[Math.max(0, x + (z - 1) * sizeX)] = cache[x + z * sizeX];
+							}
+	
+							
+							break;
 						}
-
-						
-						break;
 					}
-				}
-				
-				
-				
-				
 			}
 		}
 

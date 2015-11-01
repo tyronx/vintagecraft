@@ -12,10 +12,10 @@ foreach ($rocktypes as $rocktype) {
 	foreach ($oretypes as $oretype) {
 		$oreandrocktype = "{$oretype}-{$rocktype}";
 		
-		$variants [] = "\t\t\"oreandrocktype={$oreandrocktype}\": { \"model\": \"vintagecraft:rawore/{$oreandrocktype}\"}";
+		$variants [] = "\t\t\"oreandrocktype={$oreandrocktype}\": { \"model\": \"vintagecraft:terrafirma/rawore/{$oreandrocktype}\"}";
 		
-		file_put_contents("models/block/rawore/" . $oreandrocktype.".json", getBlockModel("rawore", $oreandrocktype));
-		file_put_contents("models/item/rawore/"   . $oreandrocktype.".json", getItemModel("rawore", $oreandrocktype));
+		file_put_contents("models/block/terrafirma/rawore/" . $oreandrocktype.".json", getBlockModel("rawore", $oreandrocktype));
+		file_put_contents("models/item/terrafirma/rawore/"   . $oreandrocktype.".json", getItemModel("rawore", $oreandrocktype));
 
 	}
 }
@@ -53,7 +53,7 @@ return '{
 
 function getItemModel($blockclass, $blocktype) {
 	return '{
-	"parent": "vintagecraft:block/'.$blockclass.'/'.$blocktype.'",
+	"parent": "vintagecraft:block/terrafirma/'.$blockclass.'/'.$blocktype.'",
 	"display": {
 		"thirdperson": {
 			"rotation": [ 10, -45, 170 ],

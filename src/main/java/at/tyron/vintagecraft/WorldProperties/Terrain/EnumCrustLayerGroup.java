@@ -34,7 +34,7 @@ public enum EnumCrustLayerGroup {
 		int []climate = VCraftWorld.instance.getClimate(pos);
 		
 		int depth = 0;
-		if (pos.getY() < VCraftWorld.instance.seaLevel - 1) depth++;
+		if (pos.getY() < VCraftWorld.seaLevel - 1) depth++;
 		
 		for (int i = depth; i < layers.length; i++) {
 			for (EnumCrustLayer variety : layers[i].varieties) {

@@ -42,7 +42,6 @@ public class GenLayerExactZoom extends GenLayerVC {
 		
 		
 		return cutRightAndBottom(out, sizeX, sizeZ, zoomLevel);
-		
 	}
 
 }

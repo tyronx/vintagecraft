@@ -13,7 +13,6 @@ public class HeightmapCache {
 		HeightmapCache cache = worldHeightMaps.get(dimension);
 		if (cache == null) {
 			worldHeightMaps.put(dimension, cache = new HeightmapCache());
-			System.out.println("created heightmap cache for dimension " + dimension);
 		}
 		return cache;
 	}

@@ -1,0 +1,6 @@
+{
+    "parent": "vintagecraft:block/metalworking/anvil/base",
+    "textures": {
+        "metal": "vintagecraft:blocks/metalworking/anvil/copper"
+    }
+}

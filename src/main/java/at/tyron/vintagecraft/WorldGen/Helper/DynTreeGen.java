@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.WorldGen.Helper;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.Organic.BlockFlowerVC;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesBranchy;
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Flora.BlockFlowerVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesBranchy;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumTreeGenMode;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;

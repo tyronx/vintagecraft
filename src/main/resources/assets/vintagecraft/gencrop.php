@@ -13,15 +13,15 @@ $states = 0;
 foreach ($croptypes as $idx => $croptype) {
 
 	for ($stage = 0; $stage < $growthstages[$idx]; $stage++) {
-		$filename = "crops/{$croptype}-stage{$stage}";
+		$filename = "flora/crops/{$croptype}-stage{$stage}";
 		
-		$variants[] = "\t\t\"croptypeandstage={$croptype}-stage{$stage}\": { \"model\": \"vintagecraft:{$filename}\"}";
+		$variants[] = "\t\t\"croptypeandstage={$croptype}-stage{$stage}\": { \"model\": \"vintagecraft:flora/{$filename}\"}";
 		$states++;
 	
 		file_put_contents("models/block/{$filename}.json", getBlockModel($croptype, $cropshapes[$idx], $stage));
 	}
 	
-	file_put_contents("models/item/seeds/{$croptype}.json", getSeedItemModel($croptype));
+	file_put_contents("models/item/flora/seeds/{$croptype}.json", getSeedItemModel($croptype));
 	
 }
 
@@ -50,7 +50,7 @@ function getBlockStates($variants) {
 function getBlockModel($croptype, $cropshape, $stage) {
 	if ($cropshape == "wheat") {
 return '{
-	"parent": "vintagecraft:block/crops/'.$cropshape.'",
+	"parent": "vintagecraft:block/flora/crops/'.$cropshape.'",
 	"textures": {
 		"crop": "vintagecraft:blocks/crops/'.$croptype.'-stage'.$stage.'"
 	}
@@ -59,7 +59,7 @@ return '{
 	
 	if ($cropshape == "doubletallcross" || $cropshape == "cross") {
 return '{
-	"parent": "vintagecraft:block/crops/'.$cropshape.'",
+	"parent": "vintagecraft:block/flora/crops/'.$cropshape.'",
 	"textures": {
 		"uppercross": "vintagecraft:blocks/crops/upper/'.$croptype.'-stage'.$stage.'",
 		"lowercross": "vintagecraft:blocks/crops/lower/'.$croptype.'-stage'.$stage.'"

@@ -125,6 +125,8 @@ public class EvolvingNatFloat {
 			case SINUS: result = firstvalue * MathHelper.sin(factor * sequence); break;
 			case COSINUS: result = firstvalue * MathHelper.cos(factor * sequence); break;
 			case WOBBLE: result = firstvalue + MathHelper.sin(factor * sequence); break;
+			default:
+				break;
 		}
 		
 		if (maxlimit) return Math.min(maxvalue, offset + result);

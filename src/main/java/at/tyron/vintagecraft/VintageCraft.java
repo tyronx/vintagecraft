@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft;
 
 import at.tyron.vintagecraft.Client.CreativeTabsVC;
-import at.tyron.vintagecraft.Item.ItemArmorVC;
+import at.tyron.vintagecraft.Item.Metalworking.ItemArmorVC;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
 import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
 import at.tyron.vintagecraft.Network.ChunkPutNbtPacket;

@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.WorldGen;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
+import at.tyron.vintagecraft.Block.Flora.BlockTallGrassVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;

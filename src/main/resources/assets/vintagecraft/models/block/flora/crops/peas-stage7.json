@@ -1,0 +1,7 @@
+{
+	"parent": "vintagecraft:block/flora/crops/doubletallcross",
+	"textures": {
+		"uppercross": "vintagecraft:blocks/crops/upper/peas-stage7",
+		"lowercross": "vintagecraft:blocks/crops/lower/peas-stage7"
+	}
+}

@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Client.Render.TESR;
 import org.lwjgl.opengl.GL11;
 
 import at.tyron.vintagecraft.ModInfo;
-import at.tyron.vintagecraft.Block.Utility.BlockClayVessel;
+import at.tyron.vintagecraft.Block.BlockClayVessel;
 import at.tyron.vintagecraft.Client.Model.ModelVessel;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import net.minecraft.client.Minecraft;

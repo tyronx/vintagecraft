@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.WorldGen.Feature;
 
 import java.util.Random;
 
-import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
-import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
-import at.tyron.vintagecraft.Block.Organic.BlockVineVC;
+import at.tyron.vintagecraft.Block.Flora.BlockLeavesVC;
+import at.tyron.vintagecraft.Block.Flora.BlockTallGrassVC;
+import at.tyron.vintagecraft.Block.Flora.BlockVineVC;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

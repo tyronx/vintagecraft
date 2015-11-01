@@ -13,7 +13,7 @@ public class GenLayerBlurSelective extends GenLayerVC {
 	// 0 = blue
 	// 8 = green
 	// 16 = red
-	public static int rgbselect = 0;
+	public int rgbselect = 0;
 
 	
 	public GenLayerBlurSelective(long seed, int iterations, int radius, boolean motionBlur, int rgbselect, GenLayerVC parent) {

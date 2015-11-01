@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Item.ItemIngot;
+import at.tyron.vintagecraft.Item.Metalworking.ItemIngot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumStonePotUtilization;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
@@ -74,8 +74,7 @@ public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox
 	public void changeHeatableTemperature() {
 		if (getHeatableItemStack() != null) {
 			int change = 4;
-			if (burnTime > 0 && burnTime < burnTimePerCoal) change = 1;
-			if (!burning) change = -4;
+			if (!burning) change = -3;
 
 			
 			IItemHeatable item = (IItemHeatable)getHeatableItemStack().getItem();
