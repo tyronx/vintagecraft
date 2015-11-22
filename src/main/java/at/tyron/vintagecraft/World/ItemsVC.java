@@ -152,12 +152,12 @@ public class ItemsVC {
 		
 		stone = new ItemStone().register("stone");
 		for (EnumRockType rocktype : EnumRockType.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());
+			VintageCraft.proxy.addVariantName(stone, ModInfo.ModID + ":stone/" + rocktype.getStateName());
 		}
 		
 		ore = new ItemOreVC().register("ore");
 		for (EnumOreType oretype : EnumOreType.values()) {
-			VintageCraft.instance.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
+			VintageCraft.proxy.addVariantName(ore, ModInfo.ModID + ":ore/" + oretype.getName());
 		}
 		
 		peatbrick = new ItemPeatBrick().register("peatbrick");
@@ -174,13 +174,13 @@ public class ItemsVC {
 		beefRaw = new ItemFoodVC(3, 0.3f, true).register("beefRaw");
 		beefCooked = new ItemFoodVC(8, 0.8f, true).register("beefCooked");
 		chickenRaw = new ItemFoodVC(2, 0.3f, true).register("chickenRaw");
-		chickenCooked = new ItemFoodVC(9, 0.6f, true).register("chickenCooked");
+		chickenCooked = new ItemFoodVC(8, 0.8f, true).register("chickenCooked");
 		bread = new ItemFoodVC(6, 0.6f, true).register("bread");
 		
 		seeds = new ItemSeedVC();
 		register(seeds, "seeds");
 		for (EnumCrop croptype : EnumCrop.values()) {
-			VintageCraft.instance.proxy.addVariantName(stone, ModInfo.ModID + ":seeds/" + croptype.getStateName());
+			VintageCraft.proxy.addVariantName(stone, ModInfo.ModID + ":seeds/" + croptype.getStateName());
 		}
 		
 		dryGrass = new ItemDryGrass();
@@ -225,7 +225,7 @@ public class ItemsVC {
 	public static Item register(Item item, String internalname, String modelname) {
 		item.setUnlocalizedName(internalname);
 		GameRegistry.registerItem(item, internalname);
-		VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":" + modelname);
+		VintageCraft.proxy.addVariantName(item, ModInfo.ModID + ":" + modelname);
 		return item;
 	}
 	
@@ -238,8 +238,8 @@ public class ItemsVC {
 	
 		for (EnumMetal metal : EnumMetal.values()) {
 			if (metal.hasAnvil) {
-				VintageCraft.instance.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase(Locale.ROOT));
-				VintageCraft.instance.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase(Locale.ROOT));
+				VintageCraft.proxy.addVariantName(anvilbase, ModInfo.ModID + ":anvilbase/" + metal.name().toLowerCase(Locale.ROOT));
+				VintageCraft.proxy.addVariantName(anvilsurface, ModInfo.ModID + ":anvilsurface/" + metal.name().toLowerCase(Locale.ROOT));
 			}
 		}
 	}
@@ -266,7 +266,7 @@ public class ItemsVC {
 					item.setUnlocalizedName(unlocalizedname);
 					GameRegistry.registerItem(item, unlocalizedname);
 					
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":armor/" + unlocalizedname);
+					VintageCraft.proxy.addVariantName(item, ModInfo.ModID + ":armor/" + unlocalizedname);
 					
 					armor.put(unlocalizedname, item);
 					
@@ -304,7 +304,7 @@ public class ItemsVC {
 						item.setUnlocalizedName(unlocalizedname);
 						GameRegistry.registerItem(item, unlocalizedname);
 						
-						VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
+						VintageCraft.proxy.addVariantName(item, ModInfo.ModID + ":tool/" + unlocalizedname);
 						
 						tools.put(unlocalizedname, item);
 						
@@ -343,8 +343,8 @@ public class ItemsVC {
 					item.setUnlocalizedName(unlocalizedname);
 					GameRegistry.registerItem(item, unlocalizedname);
 					
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName());
-					VintageCraft.instance.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName() + "_dmd");
+					VintageCraft.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName());
+					VintageCraft.proxy.addVariantName(item, ModInfo.ModID + ":toolhead/" + material + "_" + tool.getName() + "_dmd");
 					
 					toolheads.put(unlocalizedname, item);
 					
@@ -369,7 +369,7 @@ public class ItemsVC {
 		metalingot = new ItemIngot().register("ingot");
 		
 		for (EnumMetal metal : EnumMetal.values()) {
-			VintageCraft.instance.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
+			VintageCraft.proxy.addVariantName(metalingot, ModInfo.ModID + ":ingot/" + metal.name().toLowerCase(Locale.ROOT));
 		}
 	}
 	

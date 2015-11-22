@@ -34,7 +34,7 @@ public class ClientCommandsVC extends CommandBase {
 		if (args[0].equals("nst")) {
 			
 			if (args.length >= 2) {
-				VintageCraft.instance.proxy.worldSeed = parseInt(args[1]);
+				VintageCraft.proxy.worldSeed = parseInt(args[1]);
 			}
 			
 			RenderSkyVC.nightSkyTex = null;

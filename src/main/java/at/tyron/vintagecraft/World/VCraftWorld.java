@@ -376,13 +376,11 @@ public class VCraftWorld {
 	
 	
 
-	void mark(int chunkX, int chunkZ, String key) {
-		long index = ChunkPos2Index(chunkX, chunkZ);
-		
+	void mark(int chunkX, int chunkZ, String key) {		
 		if (!chunkdataprofiling) return;
-		
-		
 		if (printingProfiling) return;
+		
+		long index = ChunkPos2Index(chunkX, chunkZ);
 		
 		if (FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT ) {
 			//System.out.println("called by client");
@@ -416,7 +414,7 @@ public class VCraftWorld {
 	}
 	
 	
-	void printProfiling(String reason) {
+	/*void printProfiling(String reason) {
 		System.out.println("writing chunknbt.txt");
 		printingProfiling = true;
 		
@@ -456,7 +454,7 @@ public class VCraftWorld {
 		printingProfiling = false;
 		System.out.println("chunknbt.txt written.");
 		
-	}
+	}*/
 	
 
 

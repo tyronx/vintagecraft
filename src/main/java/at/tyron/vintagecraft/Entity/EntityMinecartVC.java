@@ -62,8 +62,8 @@ public abstract class EntityMinecartVC extends EntityMinecart {
     public void onUpdate() {
     	super.onUpdate();
         AxisAlignedBB box;
-        if (getCollisionHandler() != null) box = this.getCollisionHandler().getMinecartCollisionBox(this);
-        else                               box = this.getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D);
+        if (getCollisionHandler() != null) box = getCollisionHandler().getMinecartCollisionBox(this);
+        else                               box = getEntityBoundingBox().expand(0.20000000298023224D, 0.0D, 0.20000000298023224D);
         Iterator iterator = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, box).iterator();
 
         while (iterator.hasNext()) {

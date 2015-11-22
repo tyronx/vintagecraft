@@ -31,7 +31,7 @@ public class BlockFireclayStairs extends BlockStairs {
 		GameRegistry.registerBlock(this, itemclass, name);
 		setUnlocalizedName(name);
 		
-		VintageCraft.instance.proxy.registerItemBlockTexture(this, name);
+		VintageCraft.proxy.registerItemBlockTexture(this, name);
 		
 		
 		return this;

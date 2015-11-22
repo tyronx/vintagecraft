@@ -356,7 +356,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	
 	public boolean isFancyGraphics() {
-		return Minecraft.getMinecraft().isFancyGraphicsEnabled();
+		return Minecraft.isFancyGraphicsEnabled();
 	}
 	
 	

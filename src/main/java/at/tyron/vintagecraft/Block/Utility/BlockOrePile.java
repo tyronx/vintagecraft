@@ -100,7 +100,7 @@ public class BlockOrePile extends BlockIngotPile implements IBlockIgniteable {
 		} else {
 			ItemStack content = teorepile.getStackInSlot(0);
 			
-			boolean iscoke = content != null && content.getItem() instanceof ItemOreVC && ((ItemOreVC)content.getItem()).getOreType(content) == EnumOreType.COKE; 
+			boolean iscoke = content != null && content.getItem() instanceof ItemOreVC && ItemOreVC.getOreType(content) == EnumOreType.COKE; 
 			boolean grabbed = teorepile.tryGrabOre(entityplayer);
 			
 			if (grabbed && iscoke) {

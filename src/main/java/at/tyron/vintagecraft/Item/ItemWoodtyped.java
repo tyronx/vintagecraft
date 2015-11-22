@@ -12,6 +12,7 @@ import at.tyron.vintagecraft.Block.Organic.BlockSaplingVC;
 import at.tyron.vintagecraft.Block.Organic.BlockSingleWoodenSlab;
 import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
+import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
@@ -43,7 +44,11 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	
 	public static EnumTree getTreeType(ItemStack itemstack) {
 		Block block = ((ItemBlock)itemstack.getItem()).block;
-		return (EnumTree) getBlockClass(block).getEntryFromMeta(block, itemstack.getItemDamage()).getKey();
+		
+		BlockClassEntry entry = getBlockClass(block).getEntryFromMeta(block, itemstack.getItemDamage());
+		if (entry == null) return EnumTree.ACACIA;
+		
+		return (EnumTree)entry.getKey();
 	}
 
 	public static BaseBlockClass getBlockClass(Block block) {

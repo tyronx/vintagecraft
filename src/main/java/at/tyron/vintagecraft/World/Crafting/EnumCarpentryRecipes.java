@@ -200,7 +200,7 @@ public enum EnumCarpentryRecipes {
 			}
 			
 			plankstack.stackSize = TOOLRACK.planks;
-			TOOLRACK.registerRecipe(((ItemToolRack)Item.getItemFromBlock(BlocksVC.toolrack)).withTreeType(treetype), plankstack);
+			TOOLRACK.registerRecipe(ItemToolRack.withTreeType(treetype), plankstack);
 			
 			plankstack.stackSize = 1;
 			WorkableRecipeBase recipe = ITEMFRAME.registerRecipe(

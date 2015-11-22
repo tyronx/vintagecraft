@@ -152,7 +152,7 @@ public class GenLayerTerrain extends GenLayerVC {
 								
 								if ((var47 += var49) > 0.0D) {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.stone.getDefaultState());
-								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.instance.seaLevel) {
+								} else if (y * 8 + dy + VCraftWorld.instance.terrainGenHiLevel < VCraftWorld.seaLevel) {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.water.getDefaultState());
 								} else {
 									primer.setBlockState(4*x + dx, 8*y + dy + VCraftWorld.instance.terrainGenHiLevel, 4*z + dz, Blocks.air.getDefaultState());

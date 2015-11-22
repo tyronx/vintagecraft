@@ -239,7 +239,7 @@ public class BlockMetalPlate extends BlockVC implements IMultiblock {
 		for (IStateEnum type : types) {
 			String[] metalandfacing = type.getStateName().split("-");
 			if (metalandfacing[1].equals("d")) {
-				VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, metalandfacing[0].toLowerCase(Locale.ROOT), type.getMetaData(this));
+				VintageCraft.proxy.registerItemBlockTexture(this, folderprefix, metalandfacing[0].toLowerCase(Locale.ROOT), type.getMetaData(this));
 			}
 		}
 		

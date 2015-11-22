@@ -27,11 +27,11 @@ import net.minecraft.world.World;
 public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplier {
 	// int id, hasOre, adjdepth, color, weight, height, minDepth, maxDepth, relativeDepth, deposittype
 	
-	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(18000)),
+	NODEPOSIT 			(-1, false, EnumDepositSize.NONE, DepositOccurence.noDeposit(17000)),
 
 	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 2, 145)),
-	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(60, 1, 10, 90, 0.5f)), 
-	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(60, 2, 8, 128)),
+	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(80, 1, 10, 90, 0.5f)), 
+	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(70, 2, 8, 128)),
 
 	CLAY 				( 0, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(11, 2, 1, 2, 155)),
 	FIRECLAY 			(22, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(6, 2, 2, 3, 160)),

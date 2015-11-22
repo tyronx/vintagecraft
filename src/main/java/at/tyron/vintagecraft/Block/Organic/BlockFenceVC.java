@@ -88,7 +88,7 @@ public class BlockFenceVC extends BlockFence implements IMultiblock {
 		for (int i = 0; i < types.length; i++) {
 			IStateEnum enumstate = types[i]; 
 			
-			VintageCraft.instance.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
+			VintageCraft.proxy.registerItemBlockTexture(this, folderprefix, enumstate.getStateName(), enumstate.getMetaData(this));
 		}
 		return this;
 	}

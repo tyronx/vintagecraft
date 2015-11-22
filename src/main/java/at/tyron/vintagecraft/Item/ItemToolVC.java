@@ -121,7 +121,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 					output != null && 
 					output.stackSize > 0 &&
 					output.getItem() instanceof ItemIngot && 
-					((ItemIngot)output.getItem()).getMetal(output) == EnumMetal.IRON
+					ItemIngot.getMetal(output) == EnumMetal.IRON
 				) {
 					((EntityPlayer)playerIn).triggerAchievement(AchievementsVC.ironAge);
 				}
@@ -257,7 +257,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 			IBlockState state = worldIn.getBlockState(pos);
 			
 			
-			boolean unfinishedanvil = BlocksVC.stoneanvil.containsBlock(state.getBlock()) && (Integer) state.getValue(((BlockStoneAnvil)state.getBlock()).STAGE) > 0;
+			boolean unfinishedanvil = BlocksVC.stoneanvil.containsBlock(state.getBlock()) && (Integer) state.getValue(BlockStoneAnvil.STAGE) > 0;
 			
 			if (
 				(BlocksVC.rock.containsBlock(state.getBlock()) || unfinishedanvil) && 
@@ -265,7 +265,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 			) {
 
 				if (unfinishedanvil) {
-					int stage = (Integer) state.getValue(((BlockStoneAnvil)state.getBlock()).STAGE) - 1;
+					int stage = (Integer) state.getValue(BlockStoneAnvil.STAGE) - 1;
 					((BlockStoneAnvil)state.getBlock()).setStage(worldIn, pos, state, stage);
 				} else {
 					IBlockState anvilstate = BlocksVC.stoneanvil.getBlockStateFor(BlocksVC.rock.getEntryFromState(state).getKey());

@@ -165,7 +165,8 @@ public abstract class BaseBlockClass {
 			System.out.println(enumitem.metadata+" == "+meta+" && "+enumitem.block.getUnlocalizedName()+" == "+block.getUnlocalizedName());
 		}
 		
-		throw new RuntimeException("BlockClassEntry not found for block " + block + " / meta " + meta);
+		System.out.println("BlockClassEntry not found for block " + block + " / meta " + meta);
+		return null;
 	}
 	
 	public BlockClassEntry getEntryFromKey(IStateEnum key) {

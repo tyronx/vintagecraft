@@ -20,9 +20,9 @@ public class MechnicalNetworkManager {
 	
 	public static MechnicalNetworkManager getNetworkManagerForWorld(World world) {
 		if (world.isRemote) {
-			return VintageCraft.instance.proxy.clientNetworkManagers.get(world.provider.getDimensionId());			
+			return VintageCraft.proxy.clientNetworkManagers.get(world.provider.getDimensionId());			
 		} else {
-			return VintageCraft.instance.proxy.serverNetworkManagers.get(world.provider.getDimensionId());
+			return VintageCraft.proxy.serverNetworkManagers.get(world.provider.getDimensionId());
 		}
 	}
 	
@@ -30,9 +30,9 @@ public class MechnicalNetworkManager {
 		MechnicalNetworkManager manager = new MechnicalNetworkManager(world);
 		
 		if (world.isRemote) {
-			VintageCraft.instance.proxy.clientNetworkManagers.put(world.provider.getDimensionId(), manager);
+			VintageCraft.proxy.clientNetworkManagers.put(world.provider.getDimensionId(), manager);
 		} else {
-			VintageCraft.instance.proxy.serverNetworkManagers.put(world.provider.getDimensionId(), manager);
+			VintageCraft.proxy.serverNetworkManagers.put(world.provider.getDimensionId(), manager);
 		}
 		
 		manager.loadNetworksFromTaglist(networks);
@@ -45,15 +45,15 @@ public class MechnicalNetworkManager {
 	}
 	
 	public static void unloadManagers() {
-		for (MechnicalNetworkManager manager : VintageCraft.instance.proxy.clientNetworkManagers.values()) {
+		for (MechnicalNetworkManager manager : VintageCraft.proxy.clientNetworkManagers.values()) {
 			manager.unload();
 		}
-		for (MechnicalNetworkManager manager : VintageCraft.instance.proxy.serverNetworkManagers.values()) {
+		for (MechnicalNetworkManager manager : VintageCraft.proxy.serverNetworkManagers.values()) {
 			manager.unload();
 		}
 		
-		VintageCraft.instance.proxy.clientNetworkManagers.clear();
-		VintageCraft.instance.proxy.serverNetworkManagers.clear();
+		VintageCraft.proxy.clientNetworkManagers.clear();
+		VintageCraft.proxy.serverNetworkManagers.clear();
 		
 	}
 

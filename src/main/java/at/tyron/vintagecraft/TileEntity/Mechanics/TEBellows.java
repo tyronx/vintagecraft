@@ -20,6 +20,11 @@ public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpda
 	float lastSqueeze;
 	int lastDirection = 0;
 
+	
+	public TEBellows() {
+		orientation = EnumFacing.NORTH;
+	}
+
 	@Override
 	public boolean hasConnectorAt(EnumFacing facing) {
 		return facing == orientation.getOpposite();

@@ -62,7 +62,7 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 	}
 	
 	public int getRequiredBlowsForSteel() { 
-		return 60;
+		return 30;
 	}
 
 	public EnumFurnaceType getFurnaceType() {

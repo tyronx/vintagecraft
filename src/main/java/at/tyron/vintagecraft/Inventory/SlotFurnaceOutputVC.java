@@ -24,17 +24,15 @@ public class SlotFurnaceOutputVC extends SlotFurnaceOutput {
 	protected void onCrafting(ItemStack stack) {
 		super.onCrafting(stack);
 		
-        if (stack.getItem() instanceof ItemIngot && ((ItemIngot)stack.getItem()).getMetal(stack) == EnumMetal.COPPER) {
+        if (stack.getItem() instanceof ItemIngot && ItemIngot.getMetal(stack) == EnumMetal.COPPER) {
             player.triggerAchievement(AchievementsVC.copperAge);
         }
         
         if (stack.getItem() instanceof ItemCeramicVessel) {
-        	ItemCeramicVessel item = (ItemCeramicVessel)stack.getItem();
-        	ItemStack []contents = item.getContainedItemStacks(stack);
+        	ItemStack[] contents = ItemCeramicVessel.getContainedItemStacks(stack);
         	for (ItemStack content : contents) {
         		if (content != null && content.getItem() instanceof ItemIngot) {
-        			ItemIngot ingot = (ItemIngot)content.getItem();
-        			if (ingot.getMetal(content) == EnumMetal.TINBRONZE || ingot.getMetal(content) == EnumMetal.BISMUTHBRONZE) {
+        			if (ItemIngot.getMetal(content) == EnumMetal.TINBRONZE || ItemIngot.getMetal(content) == EnumMetal.BISMUTHBRONZE) {
         				player.triggerAchievement(AchievementsVC.bronzeAge);
         			}
         		}

@@ -294,7 +294,7 @@ public class BlocksVC {
 		vine = new BlockVineVC().setHardness(0.2f).setStepSound(Block.soundTypeGrass);
 		GameRegistry.registerBlock(vine, ItemBlock.class, "vine");
 		vine.setUnlocalizedName("vine");
-		VintageCraft.instance.proxy.registerItemBlockTextureVanilla(vine, "vine");
+		VintageCraft.proxy.registerItemBlockTextureVanilla(vine, "vine");
 
 		metalanvil = new BlockAnvilVC().registerMultiState("anvilvc", ItemAnvilVC.class, EnumMetal.anvilValues());
 
@@ -409,7 +409,7 @@ public class BlocksVC {
 		
 		block.setUnlocalizedName(blockclassname);
 		
-		VintageCraft.instance.proxy.registerItemBlockTexture(block, blockclassname);
+		VintageCraft.proxy.registerItemBlockTexture(block, blockclassname);
 	}
 
 

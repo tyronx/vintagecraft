@@ -121,7 +121,7 @@ public class BlockStonePot extends BlockContainerVC implements IBlockItemSink, I
 
 			if (testonepot.utilization == EnumStonePotUtilization.FORGE && testonepot.burning) {
 			    double x = (double)pos.getX() + 0.3D + rand.nextDouble()*0.3;
-	            double y = (double)pos.getY() + rand.nextDouble()*0.2 + (testonepot.burnTime / testonepot.burnTimePerCoal) / 16f;
+	            double y = (double)pos.getY() + rand.nextDouble()*0.2 + (testonepot.burnTime / TEStonePot.burnTimePerCoal) / 16f;
 	            double z = (double)pos.getZ() + 0.3D + rand.nextDouble()*0.3;
 	
 	            if (rand.nextBoolean()) {

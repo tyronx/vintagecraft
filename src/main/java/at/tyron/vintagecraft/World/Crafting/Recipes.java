@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Item.ItemArmorVC;
 import at.tyron.vintagecraft.Item.ItemCarpenterTable;
@@ -36,6 +37,8 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
@@ -45,11 +48,13 @@ public class Recipes {
 	
 	static void registerToSorter() {
 		RecipeSorter.register("vintagecraft:toolsupportedrecipe", ToolSupportedRecipe.class, Category.SHAPED, "after:minecraft:shaped");
+		RecipeSorter.register("vintagecraft:shapelessrecipesvc", ShapelessRecipesVC.class, Category.SHAPELESS, "after:minecraft:shaped");
+		RecipeSorter.register("vintagecraft:shapedrecipesvc", ShapedRecipesVC.class, Category.SHAPED, "after:minecraft:shaped");
 	}
 	
 	public static void addRecipes() {
 		registerToSorter();
-
+		addInterModRecipes();
 		
 		removeRecipe(new ItemStack(Items.item_frame));
 		removeRecipe(new ItemStack(Items.arrow, 4));
@@ -342,7 +347,26 @@ public class Recipes {
         recipes.add(shapedrecipes);
         return shapedrecipes;
     }
+
     
+    static void addInterModRecipes() {
+    	sendJarLidMaterial(ItemOreVC.getItemStackFor(EnumOreType.LAPISLAZULI, 1), 40, 2);
+    	sendJarLidMaterial(ItemOreVC.getItemStackFor(EnumOreType.EMERALD, 1), 200, 3);
+    	sendJarLidMaterial(ItemOreVC.getItemStackFor(EnumOreType.DIAMOND, 1), 400, 4);
+    	
+    	sendJarLidMaterial(ItemIngot.getItemStack(EnumMetal.LEAD, 1), 80, 0);
+    	sendJarLidMaterial(ItemIngot.getItemStack(EnumMetal.GOLD, 1), 300, 1);
+    }
+    
+    static void sendJarLidMaterial(ItemStack itemstack, int uses, int jartype) {
+    	NBTTagCompound nbt = new NBTTagCompound();
+    	nbt.setTag("liditemstack", itemstack.writeToNBT(new NBTTagCompound()));
+    	nbt.setInteger("uses", uses);
+    	nbt.setInteger("jartype", jartype);
+    	nbt.setBoolean("checknbt", true);
+    	
+    	FMLInterModComms.sendRuntimeMessage(VintageCraft.instance, "butterflymania", "butterflymania-regjarlidmaterial", nbt);
+    }
     
 
 	

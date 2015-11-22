@@ -47,6 +47,7 @@ import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
@@ -88,6 +89,9 @@ public class VintageCraft {
  		VintageCraftConfig.loadConfig(event);
  	}
  	
+ 	
+ 	ButterflySpawner spawner;
+ 	
     @EventHandler
     public void init(FMLInitializationEvent event) throws Exception {
     	packetPipeline.registerMessage(AnvilTechniquePacket.Handler.class, AnvilTechniquePacket.class, 0, Side.SERVER);
@@ -105,6 +109,7 @@ public class VintageCraft {
     	AchievementsVC.init();
     	
     	FMLCommonHandler.instance().bus().register(this);
+    	FMLCommonHandler.instance().bus().register(spawner = new ButterflySpawner());
     	MinecraftForge.EVENT_BUS.register(this);
     	
     	proxy.registerTileEntities();
@@ -157,6 +162,8 @@ public class VintageCraft {
 		Recipes.addRecipes();
 		EnumAnvilRecipe.registerRecipes();
 		EnumCarpentryRecipes.registerRecipes();
+		
+		FMLInterModComms.sendRuntimeMessage(VintageCraft.instance, "butterflymania", "butterflymania-disabledefaultspawn", "");
 	}
 	
 	

@@ -238,7 +238,7 @@ public enum EnumTree implements IStateEnum, IStringSerializable {
 		// forest == 0  => dense forest
 		// forest == 255 => no forest
 		
-		float humidity = rain / Math.max(1f, 1f * VCraftWorld.instance.deScaleTemperature(temperature) - 2 * Math.max(0, rain - 180));
+		float humidity = rain / Math.max(1f, 1f * VCraftWorld.deScaleTemperature(temperature) - 2 * Math.max(0, rain - 180));
 		
 		return (1 - forest/255f) * humidity; // * (0.15f + rain / 255f + Math.max(0, rain / 255f - 0.4f));    //   + Math.max(0, 2 * (rain + temperature / 5 - 150) / 255f) - 8 * Math.min(0, rain - 130) / 255f;
 	}
