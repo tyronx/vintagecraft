@@ -1,4 +1,4 @@
-#zh_TW
+#zh_CN
 #Translate by zhenadao 
 #If you want to color code the text then I recommend you visit http://www.minecraftwiki.net/wiki/Formatting_codes#Color_codes
 #To create the § symbol which is used for assigning a color to the following text press Alt + 21 on Windows. For other OSes, view the above link.
@@ -51,13 +51,13 @@ item.peatbrick.name=泥炭砖
 
 item.ore.peridot_olivine.name=生橄榄石
 item.ore.nativegold_quartz.name=天然金块
-item.ore.nativesilver_quartz.name=原生银块
+item.ore.nativesilver_quartz.name=天然银块
 item.ore.sylvite_rocksalt.name=钾盐
 item.ore.rocksalt.name=岩盐
 item.ore.limonite.name=褐铁矿
 item.ore.galena.name=方铅矿
 item.ore.saltpeter.name=硝石
-item.ore.nativecopper.name=自然铜
+item.ore.nativecopper.name=天然铜
 item.ore.bituminouscoal.name=烟煤
 item.ore.lignite.name=褐煤
 item.ore.cassiterite.name=锡石(锡)
@@ -274,11 +274,11 @@ flower.cowparsley2.name=欧芹
 flower.horsetail.name=问荆
 
 
-tile.ceramicvessel.name=陶瓷容器
-tile.clayvessel.name=粘土容器
+tile.ceramicvessel.name=陶瓷罐
+tile.clayvessel.name=粘土罐
 
-tile.ceramicvessel2.name=陶瓷容器
-tile.clayvessel2.name=粘土容器
+tile.ceramicvessel2.name=陶瓷罐
+tile.clayvessel2.name=粘土罐
 
 
 item.stone_axe.name=石斧
@@ -504,7 +504,7 @@ tile.log.ash.name=灰原木
 tile.log.birch.name=桦树原木
 tile.log.oak.name=橡树原木
 tile.log.crimsonkingmaple.name=王深红色枫原木
-tile.log.mountaindogwood.name=山山茱萸原木
+tile.log.mountaindogwood.name=山茱萸原木
 tile.log.scotspine.name=欧洲赤松原木
 tile.log.spruce.name=云杉原木
 tile.log.acacia.name=金合欢原木
@@ -527,7 +527,7 @@ tile.planks.ash.name=灰木板
 tile.planks.birch.name=桦木板
 tile.planks.oak.name=橡树木板
 tile.planks.crimsonkingmaple.name=王深红色枫木板
-tile.planks.mountaindogwood.name=山山茱萸木板
+tile.planks.mountaindogwood.name=山茱萸木板
 tile.planks.scotspine.name=欧洲赤松木板
 tile.planks.spruce.name=云杉木板
 tile.planks.acacia.name=金合欢木板
@@ -551,7 +551,7 @@ sapling.ash.name=灰树苗
 sapling.birch.name=白桦树苗
 sapling.oak.name=橡树树苗
 sapling.crimsonkingmaple.name=王深红色枫树苗
-sapling.mountaindogwood.name=山山茱萸树苗
+sapling.mountaindogwood.name=山茱萸树苗
 sapling.scotspine.name=欧洲赤松树苗
 sapling.spruce.name=云杉树苗
 sapling.acacia.name=相思树苗
@@ -574,7 +574,7 @@ leaves.ash.name=灰树树叶
 leaves.birch.name=桦树树叶
 leaves.oak.name=橡树树叶
 leaves.crimsonkingmaple.name=王深红色枫树树叶
-leaves.mountaindogwood.name=山山茱萸树叶
+leaves.mountaindogwood.name=山茱萸树叶
 leaves.scotspine.name=苏格兰松树树叶
 leaves.spruce.name=云杉树树叶
 leaves.acacia.name=金合欢树树叶
@@ -620,7 +620,7 @@ fencegate.ash.name=灰篱笆栅栏门
 fencegate.birch.name=桦树栅栏门
 fencegate.oak.name=橡树栅栏门
 fencegate.crimsonkingmaple.name=王深红色枫木栅栏门
-fencegate.mountaindogwood.name=山山茱萸栅栏门
+fencegate.mountaindogwood.name=山茱萸栅栏门
 fencegate.scotspine.name=欧洲赤松栅栏门
 fencegate.spruce.name=云杉栅栏门
 fencegate.acacia.name=金合欢栅栏门
@@ -643,7 +643,7 @@ singleslab.ash.name=灰台阶
 singleslab.birch.name=桦树台阶
 singleslab.oak.name=橡木台阶
 singleslab.crimsonkingmaple.name=深红色枫王台阶
-singleslab.mountaindogwood.name=山山茱萸台阶
+singleslab.mountaindogwood.name=山茱萸台阶
 singleslab.scotspine.name=欧洲赤松台阶
 singleslab.spruce.name=云杉台阶
 singleslab.acacia.name=金合欢台阶
@@ -666,7 +666,7 @@ leavesbranchy.ash.name=灰树叶和树枝
 leavesbranchy.birch.name=白桦树叶和树枝
 leavesbranchy.oak.name=橡树叶和树枝
 leavesbranchy.crimsonkingmaple.name=王深红色枫树叶和树枝
-leavesbranchy.mountaindogwood.name=山山茱萸树叶和树枝
+leavesbranchy.mountaindogwood.name=山茱萸树叶和树枝
 leavesbranchy.scotspine.name=欧洲赤松树叶和树枝
 leavesbranchy.spruce.name=云杉树叶和树枝
 leavesbranchy.acacia.name=金合欢树叶和树枝
@@ -690,7 +690,7 @@ quartzglass.ash.name=灰石英玻璃
 quartzglass.birch.name=桦树石英玻璃
 quartzglass.oak.name=橡树石英玻璃
 quartzglass.crimsonkingmaple.name=深红色枫石英玻璃
-quartzglass.mountaindogwood.name=山山茱萸石英玻璃
+quartzglass.mountaindogwood.name=山茱萸石英玻璃
 quartzglass.scotspine.name=欧洲赤松石英玻璃
 quartzglass.spruce.name=云杉石英玻璃
 quartzglass.acacia.name=金合欢石英玻璃
@@ -714,7 +714,7 @@ stairs.ash.name=灰楼梯
 stairs.birch.name=桦树楼梯
 stairs.oak.name=橡木楼梯
 stairs.crimsonkingmaple.name=王深红色的枫木楼梯
-stairs.mountaindogwood.name=山山茱萸楼梯
+stairs.mountaindogwood.name=山茱萸楼梯
 stairs.scotspine.name=欧洲赤松楼梯
 stairs.spruce.name=云杉楼梯
 stairs.acacia.name=金合欢楼梯
@@ -733,11 +733,11 @@ stairs.coyotewillow.name=狼柳树楼梯
 stairs.blackwalnut.name=黑胡桃木楼梯
 stairs.kauri.name=贝壳杉楼梯
 
-item.fireclay_ball.name=火泥
-item.fireclay_brick_raw.name=生粘土耐火砖
-item.fireclay_brick.name=烧粘土耐火砖
-tile.rawfireclay.name=生的火泥
-tile.fireclaybricks.name=燃烧火泥砖
+item.fireclay_ball.name=耐火粘土
+item.fireclay_brick_raw.name=未烧制的耐火粘土砖
+item.fireclay_brick.name=耐火粘土砖
+tile.rawfireclay.name=生耐火粘土
+tile.fireclaybricks.name=耐火粘土砖
 
 toolrack.name=工具架
 toolrackitem.name=工具架
@@ -751,7 +751,7 @@ itemGroup.flora=植物
 itemGroup.resources=资源
 itemGroup.craftedblocks=制作方块
 itemGroup.toolsandarmor=工具和护甲
-itemGroup.mechanics=机械功率
+itemGroup.mechanics=机械和动力
 
 farmland.name=农田
 
@@ -793,7 +793,7 @@ recipe.helmet.name=头盔
 recipe.chestplate.name=胸甲
 recipe.leggings.name=护腿
 recipe.boots.name=靴子
-recipe.cokeovendoor.name=铁狱警门
+recipe.cokeovendoor.name=铁焦炉门
 recipe.fix_ingot.name=修复锭
 recipe.fix_plate.name=修理板
 recipe.bellows.name=风箱
@@ -804,12 +804,12 @@ recipe.axle.name=轴
 recipe.carpenterstoolset.name=木匠工具组
 recipe.sail.name=风车帆
 recipe.bucket.name=木制的桶
-recipe.itemframe.name=项目框架
+recipe.itemframe.name=物品框架
 recipe.sickle.name=镰刀
-recipe.rails.name=矿车铁路
+recipe.rails.name=铁路
 recipe.minecart.name=矿车
 recipe.woodenrails.name=木轨
-recipe.coalpoweredminecart.name=燃煤发电矿车
+recipe.coalpoweredminecart.name=燃煤动力矿车
 
 recipeingredients.1ingots.name=1锭
 recipeingredients.2ingots.name=2锭
@@ -824,7 +824,7 @@ recipeingredients.4plates.name=4板
 recipeingredients.2ironplates.name=2铁板
 recipeingredients.3ironplates.name=3铁板
 recipeingredients.3ironplatesandemptyminecart.name=3铁板+空矿车
-recipeingredients.anvilbaseplussurface.name=基地+表面
+recipeingredients.anvilbaseplussurface.name=砧基+砧面
 recipeingredients.4ingotstier2plus.name=4锭(2-5阶段,铜碇不能做)
 recipeingredients.1planks.name=1木板
 recipeingredients.2planks.name=2木板
@@ -860,34 +860,34 @@ achievement.copperAge=铜器时代\o/
 achievement.copperAge.desc=熔炼铜矿石成为铜锭
 
 achievement.bronzeAge=青铜时代\o/
-achievement.bronzeAge.desc=创建一个锡青铜或铋青铜锭
+achievement.bronzeAge.desc=制作锡青铜或铋青铜锭
 
 achievement.ironAge=铁器时代\o/
 achievement.ironAge.desc=获得铁生产锻铁炉
 
 achievement.steelAge=钢铁时代\o/
-achievement.steelAge.desc=从高炉获得钢模具
+achievement.steelAge.desc=从高炉中炼出钢
 
 achievement.acquireCoke=昂贵的燃料
 achievement.acquireCoke.desc=获得焦炭
 
 achievement.createOddlyShapedIngot=没有人是完美的;-)
-achievement.createOddlyShapedIngot.desc=创建了一个奇怪的钢锭或板
+achievement.createOddlyShapedIngot.desc=制作一个奇怪的钢锭或板
 achievement.findFlax=繁重的农业
 achievement.findFlax.desc=找到亚麻籽
 achievement.acquireMechanicalPower=我需要更多的力量!
-achievement.acquireMechanicalPower.desc=构建第一个风车产生机械功率
+achievement.acquireMechanicalPower.desc=建造你的第一个风车，以利用机械能
 
 achievement.killUndeadHorse=1级战士
-achievement.killUndeadHorse.desc=杀死一个亡灵马
+achievement.killUndeadHorse.desc=杀死一匹亡灵马
 
 achievement.killForestSpider=10级战士
-achievement.killForestSpider.desc=杀死一个森林蜘蛛
+achievement.killForestSpider.desc=杀死一只森林蜘蛛
 
 achievement.killIronArmorMob=30级斗士
-achievement.killIronArmorMob.desc=杀死一个完全装甲的殭屍
+achievement.killIronArmorMob.desc=杀死一个带有全套装甲的僵尸
 
 tile.firepit.name=火坑
 tile.woodenrail.name=木轨
-item.coalpoweredminecart.name=煤动力矿车
+item.coalpoweredminecart.name=燃煤动力矿车
 item.emptyminecart.name=空矿车
