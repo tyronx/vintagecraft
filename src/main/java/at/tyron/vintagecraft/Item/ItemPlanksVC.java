@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Item;
 
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;

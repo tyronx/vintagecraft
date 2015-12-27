@@ -4,7 +4,7 @@ import java.util.Random;
 
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
-import at.tyron.vintagecraft.Interfaces.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockSoil;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldGen.Feature.GenFeatureSpiderNest;

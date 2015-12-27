@@ -180,6 +180,9 @@ public class WorldGenDeposits implements IWorldGenerator {
 					}
 				}
 				
+				
+				//if (deposit == EnumMaterialDeposit.MAGNETITE) System.out.println("magnetite @ " + pos);
+				
 				int hgt = deposit.occurence.height;
 				while (pos.getY() > 0 && deposit.isParentMaterial(parentmaterial = world.getBlockState(pos), pos) && hgt-- > 0) {
 					world.setBlockState(pos, deposit.getBlockStateForPos(parentmaterial, world, pos), 2);

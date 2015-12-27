@@ -3,9 +3,9 @@ package at.tyron.vintagecraft.Item.Mechanics;
 import java.util.List;
 
 import at.tyron.vintagecraft.Block.Mechanics.BlockMechanicalVC;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Item.ItemBlockVC;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;

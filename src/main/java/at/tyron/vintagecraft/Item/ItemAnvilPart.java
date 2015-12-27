@@ -3,9 +3,9 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.Arrays;
 
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;

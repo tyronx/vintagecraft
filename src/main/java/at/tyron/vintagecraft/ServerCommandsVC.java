@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import at.tyron.vintagecraft.Block.BlockRock;
+import at.tyron.vintagecraft.Block.Organic.BlockSubSoil;
 import at.tyron.vintagecraft.Block.Organic.BlockTopSoil;
 import at.tyron.vintagecraft.Client.Render.RenderSkyVC;
 import at.tyron.vintagecraft.Entity.Animal.EntityCowVC;
@@ -445,7 +446,8 @@ public class ServerCommandsVC extends CommandBase {
 		for (int x = -wdt/2; x < wdt; x++) {
 			for (int z = -wdt/2; z < wdt; z++) {
 				for (int y = 0; y < 240; y++) {
-					if (world.getBlockState(center.add(x, y, z)).getBlock() instanceof BlockRock) {
+					IBlockState state = world.getBlockState(center.add(x, y, z)); 
+					if (state.getBlock() instanceof BlockRock || state.getBlock() instanceof BlockTopSoil || state.getBlock() instanceof BlockSubSoil) {
 						world.setBlockState(center.add(x, y, z), Blocks.air.getDefaultState());
 					}
 				}

@@ -9,8 +9,7 @@ import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockGroup;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 
 public class GenRockLayers {
-	SimplexNoise noisegenLow;
-	SimplexNoise noisegenHigh;
+	SimplexNoise noisegen;
 	int amplitude = 0;
 	int offset = 0;
 	
@@ -23,7 +22,7 @@ public class GenRockLayers {
 		float persistence = 0.6f;
 		amplitude = 128;
 				
-		noisegenLow = new SimplexNoise(octaves, persistence, seed);
+		noisegen = new SimplexNoise(octaves, persistence, seed);
 		
 		int currentcolor = 0;
 		
@@ -57,15 +56,27 @@ public class GenRockLayers {
 		while(currentcolor <= 255) {
 			color2Rock.put(255 - currentcolor++, EnumRockType.GRANITE);
 		}
-		
-		
-		
 	}
 	
 	
+	/*public int[] getValues(int xCoord, int yCoord, int sizeH, int sizeV) {
+		int[] values = new int[sizeH * sizeH * sizeV];
+		
+		for (int dx = 0; dx < sizeH; dx++) {
+			for (int dz = 0; dz < sizeH; dz++) {
+				for (int dy = 0; dy < sizeV; dy++) {
+					values[(dz * sizeH + dx) * sizeH + dy] = 
+						Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegen.getNoise(xCoord / 1048576.0, depth / 196608.0, zCoord / 1048576.0)))));
+				}
+			}
+		}
+		
+		return values;
+	}*/
+	
 	
 	public EnumRockType getRockType(int xCoord, int depth, int zCoord, int age, Random rand) {
-		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegenLow.getNoise(xCoord / 1048576.0, depth / 196608.0, zCoord / 1048576.0))))); //65536   32768
+		int value = Math.max(0, Math.min(255, offset + (int)(amplitude * (1f + noisegen.getNoise(xCoord / 1048576.0, depth / 196608.0, zCoord / 1048576.0)))));
 		
 		EnumRockType rock = color2Rock.get(value);
 		

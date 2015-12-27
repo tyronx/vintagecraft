@@ -4,7 +4,7 @@ import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityEmptyMinecartVC;
 import at.tyron.vintagecraft.Entity.EntityMinecartVC;
-import at.tyron.vintagecraft.Interfaces.IItemWorkableIngredient;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWorkableIngredient;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.state.IBlockState;

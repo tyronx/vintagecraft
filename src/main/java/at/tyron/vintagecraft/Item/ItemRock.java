@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -58,8 +59,9 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + rocktype.getUnlocalizedName() + ".name"));
 			tooltip.add(StatCollector.translateToLocal("rocktype." + rocktype.group.name().toLowerCase(Locale.ROOT) + ".name"));
 		}
+		
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
-	
 	
 	
     @SideOnly(Side.CLIENT)
@@ -81,7 +83,7 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 	@Override
 	public ItemStack getSmelted(ItemStack raw) {
 		if (getRockType(raw) == EnumRockType.QUARTZITE) {
-			return new ItemStack(Blocks.glass);
+			return new ItemStack(Blocks.glass, 4);
 		}
 		return null;
 	}
@@ -97,15 +99,22 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 	@Override
 	public int getMeltingPoint(ItemStack raw) {
 		if (getRockType(raw) == EnumRockType.QUARTZITE) {
-			return 1800;
+			return 1350;
 		}
 		return 0;
 	}
 	
 	@Override
 	public float getSmeltingSpeedModifier(ItemStack raw) {
-		return 1f;
+		return 0.5f;
 	}
 
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
+			return 4;
+		}
+		return 1;
+	}
 
 }

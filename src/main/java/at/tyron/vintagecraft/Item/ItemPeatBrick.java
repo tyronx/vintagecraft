@@ -9,8 +9,8 @@ import com.google.common.collect.Ordering;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
-import at.tyron.vintagecraft.Interfaces.IBlockSoil;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;

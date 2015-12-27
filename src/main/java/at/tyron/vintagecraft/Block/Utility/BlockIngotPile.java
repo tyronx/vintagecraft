@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block.Utility;
 import java.util.Random;
 
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockItemSink;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEIngotPile;
 import at.tyron.vintagecraft.World.BlocksVC;

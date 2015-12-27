@@ -8,7 +8,7 @@ import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.OreInRockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
-import at.tyron.vintagecraft.Interfaces.IMultiblock;
+import at.tyron.vintagecraft.Interfaces.Block.IMultiblock;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.Item.ItemStone;
 import at.tyron.vintagecraft.World.BlocksVC;

@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.Block.Mechanics;
 
 import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockItemSink;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEMechanicalNetworkDeviceBase;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEWindmillRotor;
 import at.tyron.vintagecraft.World.ItemsVC;

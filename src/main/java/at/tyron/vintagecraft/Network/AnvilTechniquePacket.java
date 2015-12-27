@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Network;
 
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import io.netty.buffer.ByteBuf;

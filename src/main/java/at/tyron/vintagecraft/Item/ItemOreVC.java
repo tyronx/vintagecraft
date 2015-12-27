@@ -4,11 +4,11 @@ import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
@@ -172,9 +172,9 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 			case BISMUTHINITE: return 4;
 			case GALENA: return 4;
 			case QUARTZ:
-				return 4;
-			case QUARTZCRYSTAL:
 				return 2;
+			case QUARTZCRYSTAL:
+				return 1;
 
 			default: break;
 		
@@ -284,5 +284,14 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 		return getOreType(itemstack) == EnumOreType.DIAMOND;
 	}
 
-	
+
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		switch(getOreType(raw)) {
+			case QUARTZ: return 4;
+			case QUARTZCRYSTAL: return 4;
+			default: return 1;
+		}
+	}
+
 }

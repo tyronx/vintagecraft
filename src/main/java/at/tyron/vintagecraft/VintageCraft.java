@@ -87,6 +87,7 @@ public class VintageCraft {
  	@EventHandler
  	public static void preInit(FMLPreInitializationEvent event) {
  		VintageCraftConfig.loadConfig(event);
+ 		
  	}
  	
  	
@@ -103,10 +104,10 @@ public class VintageCraft {
     	packetPipeline.registerMessage(WorldDataPacket.ClientHandler.class, WorldDataPacket.class, 6, Side.CLIENT);
     	packetPipeline.registerMessage(CarpentryTechniquePacket.Handler.class, CarpentryTechniquePacket.class, 7, Side.SERVER);
     	
-    	
     	BlocksVC.init();
     	ItemsVC.init();
     	AchievementsVC.init();
+    	
     	
     	FMLCommonHandler.instance().bus().register(this);
     	FMLCommonHandler.instance().bus().register(spawner = new ButterflySpawner());
@@ -116,11 +117,8 @@ public class VintageCraft {
     	
     	NetworkRegistry.INSTANCE.registerGuiHandler(instance, proxy);
     	
-		System.out.println("vcraft has init.");
 		
-       
-     	
-     	
+		
      	
      	GameRegistry.registerWorldGenerator(new WorldGenDeposits(), 4);
      	

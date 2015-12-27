@@ -4,9 +4,9 @@ import java.util.List;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.entity.player.EntityPlayer;
@@ -83,5 +83,9 @@ public class ItemFoodVC extends ItemFood implements IItemSmeltable, ISubtypeFrom
 		return EnumItemSize.SMALL;
 	}
 
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		return 1;
+	}
 	
 }

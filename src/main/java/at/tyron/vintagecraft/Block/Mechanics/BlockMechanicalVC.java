@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block.Mechanics;
 import java.util.List;
 
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
 import at.tyron.vintagecraft.TileEntity.Mechanics.TEGrindStone;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
 import at.tyron.vintagecraft.TileEntity.TEVessel;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumAlloy;
@@ -180,6 +180,12 @@ public class ItemClayVessel extends ItemBlockVC implements IItemSmeltable {
 		} else {
 			tooltip.add("Baking Temperature: " + getMeltingPoint(itemstack) + " deg.");
 		}
+	}
+
+	
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		return 1;
 	}
 	
 	

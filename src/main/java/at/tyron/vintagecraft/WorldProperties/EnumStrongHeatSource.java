@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.WorldProperties;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
 import net.minecraft.item.ItemStack;
 
 public enum EnumStrongHeatSource {

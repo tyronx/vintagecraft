@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.TileEntity.Mechanics;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;

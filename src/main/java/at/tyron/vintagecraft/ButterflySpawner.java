@@ -98,6 +98,10 @@ public class ButterflySpawner {
                     
                     if (!nearSurface(world, rndxPos, rndyPos, rndzPos)) continue;
                     
+                    if (!VCraftWorld.instance.getChunkNBT(new BlockPos(rndxPos, rndyPos, rndzPos)).getBoolean("vcraftpopulated")) {
+                    	continue;
+                    }
+                    
                     int climate[] = VCraftWorld.instance.getClimate(new BlockPos(rndxPos, rndyPos, rndzPos));
                     int forest = VCraftWorld.instance.getForest(new BlockPos(rndxPos, rndyPos, rndzPos));
                     
@@ -133,13 +137,12 @@ public class ButterflySpawner {
     boolean nearSurface(World world, int posX, int posY, int posZ) {
     	if (!world.isAirBlock(new BlockPos(posX, posY, posZ))) return false;
     	
-    	int maxHeight = 5;
+    	int tries = 5;
     	
-    	while (maxHeight > 0) {
+    	while (tries-- > 0) {
     		Block block = world.getBlockState(new BlockPos(posX, --posY, posZ)).getBlock();
     		
-    		if (block == Blocks.air || 
-    			block == Blocks.snow ||
+    		if (block == Blocks.snow ||
     			block == Blocks.ice ||
 				block instanceof BlockTopSoil || 
 				block instanceof BlockSubSoil ||
@@ -149,11 +152,8 @@ public class ButterflySpawner {
 				BlocksVC.gravel.containsBlock(block) || 
 				BlocksVC.sand.containsBlock(block)
 			) {
-
     			return true;
     		}
-    		
-    		maxHeight--;
     	}
     	
     	return false;

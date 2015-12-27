@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.TileEntity;
 
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumStonePotUtilization;

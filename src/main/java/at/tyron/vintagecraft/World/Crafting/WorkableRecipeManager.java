@@ -3,6 +3,7 @@ package at.tyron.vintagecraft.World.Crafting;
 import java.util.ArrayList;
 
 import at.tyron.vintagecraft.Interfaces.*;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWorkableIngredient;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.item.ItemStack;
 

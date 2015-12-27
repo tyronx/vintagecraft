@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Entity.AI;
 
-import at.tyron.vintagecraft.Interfaces.IBlockEatableGrass;
 import at.tyron.vintagecraft.Interfaces.IEntityGrassEater;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockEatableGrass;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

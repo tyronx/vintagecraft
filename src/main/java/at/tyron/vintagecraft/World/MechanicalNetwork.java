@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerNetworkNode;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerNetworkRelay;
 import at.tyron.vintagecraft.Network.MechanicalNetworkNBTPacket;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;

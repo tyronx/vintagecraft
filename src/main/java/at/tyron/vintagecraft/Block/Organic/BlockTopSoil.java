@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockVC;
-import at.tyron.vintagecraft.Interfaces.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockSoil;
 import at.tyron.vintagecraft.TileEntity.TEFarmland;
 //import at.tyron.vintagecraft.TileEntity.TEOre;
 import at.tyron.vintagecraft.World.BlocksVC;

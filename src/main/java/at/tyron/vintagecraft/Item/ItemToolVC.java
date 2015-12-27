@@ -15,9 +15,9 @@ import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
 import at.tyron.vintagecraft.Block.Organic.BlockTallGrassVC;
 import at.tyron.vintagecraft.Block.Utility.BlockStoneAnvil;
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.IItemRackable;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.IItemRackable;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.TileEntity.TETallMetalMold;
 import at.tyron.vintagecraft.World.BlocksVC;
@@ -51,7 +51,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		maxStackSize = 1;
 		this.diamondencrusted = diamondencrusted;
 
-		int maxUses = (int) (getMaxUses() * (diamondencrusted ? 1.5f : 1));
+		int maxUses = (int) (getMaxUses() * (diamondencrusted ? 2f : 1));
 		setMaxDamage(maxUses);
 	}
 	

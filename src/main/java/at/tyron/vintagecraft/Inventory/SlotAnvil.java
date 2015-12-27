@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.IItemWorkableIngredient;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWorkableIngredient;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;

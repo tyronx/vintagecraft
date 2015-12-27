@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.BlockClass.MetalPlatingClassEntry;
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkingSideIngredient;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkingSideIngredient;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
@@ -127,15 +127,13 @@ public class ItemMetalPlate extends ItemBlockVC implements ISubtypeFromStackPovi
 	// this timer will be shorter if the player already has taken an ingot that is not yet cooling, 
 	// so that these may stack together 
 	@Override
-	public boolean canStackWith(World world, ItemStack self, ItemStack remote) {
+	public boolean canStackWith(World world, ItemStack self, ItemStack remote) {		
 		return 
 			self != null &&
 			remote != null &&
 			self.getItem() == remote.getItem() &&
 			isOddlyShaped(self) == isOddlyShaped(remote) &&
 			getMetal(self) == getMetal(remote) &&
-			world.getWorldTime() < self.getTagCompound().getLong("startcoolingat") &&
-			world.getWorldTime() < remote.getTagCompound().getLong("startcoolingat") &&
 			(Math.abs(self.getTagCompound().getInteger("forgetemp") - remote.getTagCompound().getInteger("forgetemp")) < 80)
 		;
 	}

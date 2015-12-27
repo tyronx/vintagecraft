@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.Network.AnvilTechniquePacket;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;

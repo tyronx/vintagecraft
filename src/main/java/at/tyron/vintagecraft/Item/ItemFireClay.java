@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.creativetab.CreativeTabs;
@@ -54,6 +54,10 @@ public class ItemFireClay extends ItemVC implements IItemSmeltable, ISizedItem {
 		return EnumItemSize.SMALL;
 	}
 	
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		return 1;
+	}
 	
 	
 }

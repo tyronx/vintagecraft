@@ -405,6 +405,9 @@ public enum EnumAnvilRecipe {
 			/**** 1. Tool recipes ****/
 			if (metal.hasTools) {
 				for (EnumTool tool : EnumTool.values()) {
+					
+					if (metal == EnumMetal.COPPER && tool == EnumTool.CARPENTERSTOOLSET) continue;
+					
 					if (tool.requiresWoodenHandle) {
 						output = new ItemStack(ItemsVC.toolheads.get(metal.getName() + "_" + tool.getName()+"toolhead"));
 					} else {

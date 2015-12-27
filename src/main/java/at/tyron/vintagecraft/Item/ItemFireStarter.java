@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
-import at.tyron.vintagecraft.Interfaces.IItemRackable;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockIgniteable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemRackable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

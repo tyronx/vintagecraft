@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Entity.AI;
 
-import at.tyron.vintagecraft.Interfaces.IBlockEatableGrass;
 import at.tyron.vintagecraft.Interfaces.IEntityGrassEater;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockEatableGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;

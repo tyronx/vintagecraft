@@ -2,9 +2,9 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.Arrays;
 
-import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.World.Crafting.EnumWoodWorkingTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;

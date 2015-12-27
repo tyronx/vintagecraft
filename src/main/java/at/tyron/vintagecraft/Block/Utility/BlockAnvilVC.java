@@ -4,7 +4,7 @@ import java.util.List;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockItemSink;
 import at.tyron.vintagecraft.Item.ItemAnvilVC;
 import at.tyron.vintagecraft.TileEntity.TEAnvil;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;

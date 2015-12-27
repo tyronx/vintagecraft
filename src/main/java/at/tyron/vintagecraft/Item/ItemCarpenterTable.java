@@ -2,7 +2,7 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.List;
 
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.TileEntity.TECarpenterTable;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;

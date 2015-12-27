@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IBlockSoil;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockSoil;
 import at.tyron.vintagecraft.World.VCraftWorld;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumFertility;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOrganicLayer;

@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.AchievementsVC;
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
 import at.tyron.vintagecraft.Inventory.ContainerAnvil;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeManager;

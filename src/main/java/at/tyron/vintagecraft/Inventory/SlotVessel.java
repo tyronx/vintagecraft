@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Inventory;
 
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;

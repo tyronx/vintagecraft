@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.Block.Utility;
 
 import at.tyron.vintagecraft.AchievementsVC;
-import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockIgniteable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.TileEntity.TEOrePile;

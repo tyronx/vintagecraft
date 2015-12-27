@@ -5,14 +5,17 @@ import java.util.Locale;
 
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Entity.EntityStone;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
+import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -25,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISizedItem {
+public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISizedItem, IItemSmeltable {
 
 	public ItemStone() {
 		setHasSubtypes(true);
@@ -46,6 +49,8 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISize
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
 		tooltip.add(StatCollector.translateToLocal("rock." + ItemStone.getRockType(itemstack) + ".name"));
 		tooltip.add(StatCollector.translateToLocal("rocktype." + ItemStone.getRockType(itemstack).group.name().toLowerCase(Locale.ROOT) + ".name"));
+		
+		EnumStrongHeatSource.addItemStackInformation(itemstack, tooltip);
 	}
 	
 	@Override
@@ -161,6 +166,47 @@ public class ItemStone extends ItemVC implements ISubtypeFromStackPovider, ISize
 		return setRockType(new ItemStack(ItemsVC.stone, i), rocktype);
 	}
 
+	
+	
+	
+	
+
+	@Override
+	public ItemStack getSmelted(ItemStack raw) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
+			return new ItemStack(Blocks.glass);
+		}
+		return null;
+	}
+
+	@Override
+	public int getRaw2SmeltedRatio(ItemStack raw) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
+			return 1;
+		}
+		return 0;
+	}
+
+	@Override
+	public int getMeltingPoint(ItemStack raw) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
+			return 1350;
+		}
+		return 0;
+	}
+	
+	@Override
+	public float getSmeltingSpeedModifier(ItemStack raw) {
+		return 0.5f;
+	}
+
+	@Override
+	public int smeltBatchSize(ItemStack raw) {
+		if (getRockType(raw) == EnumRockType.QUARTZITE) {
+			return 4;
+		}
+		return 1;
+	}
     
 
 }

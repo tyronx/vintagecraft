@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.BlockClass;
 
-import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Interfaces.Block.IMultiblock;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;

@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.WindGen;

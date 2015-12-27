@@ -1,10 +1,10 @@
 package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
-import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
-import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IStrongHeatSource;
 import at.tyron.vintagecraft.Inventory.ContainerStove;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import net.minecraft.entity.player.EntityPlayer;
@@ -453,18 +453,38 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
     	;
     }
     
+    
+    public int getSmeltBatchSize() {
+    	ItemStack smelted = oreItemSmelted();
+    	ItemStack raw = oreSlot();
+    	
+    	int maxBatchSize = ((IItemSmeltable)raw.getItem()).smeltBatchSize(raw);
+    	
+    	int maxOutputSize = smelted.getMaxStackSize();
+    	if (smeltedSlot() != null) {
+    		maxOutputSize = smeltedSlot().getMaxStackSize() - smeltedSlot().stackSize;    		
+    	}
+    	
+    	int maxInputSize = oreSlot().stackSize / ((IItemSmeltable)oreSlot().getItem()).getRaw2SmeltedRatio(raw);
+    	
+    	return Math.min(Math.min(maxBatchSize, maxOutputSize), maxInputSize);
+    }
+    
     public void smeltItem() {
     	if (canSmeltItem()) {
     		
             ItemStack itemstack = oreItemSmelted();
 
+            int quantity = getSmeltBatchSize();
+            
             if (smeltedSlot() == null) {
                 this.furnaceItemStacks[2] = itemstack.copy();
+                this.furnaceItemStacks[2].stackSize = quantity;
             } else {
-            	smeltedSlot().stackSize += itemstack.stackSize; 
+            	smeltedSlot().stackSize += quantity * itemstack.stackSize; 
             }
             
-            oreSlot().stackSize -= oreItemSmeltedRatio();
+            oreSlot().stackSize -= quantity * oreItemSmeltedRatio();
 
             if (oreSlot().stackSize <= 0) {
                 this.furnaceItemStacks[0] = null;

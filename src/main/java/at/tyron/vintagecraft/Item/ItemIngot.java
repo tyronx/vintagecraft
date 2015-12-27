@@ -5,11 +5,11 @@ import java.util.List;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.Utility.BlockIngotPile;
 import at.tyron.vintagecraft.Block.Utility.BlockOrePile;
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.IItemSmithable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
@@ -214,8 +214,8 @@ public class ItemIngot extends ItemVC implements ISubtypeFromStackPovider, ISize
 			self != null &&
 			remote != null &&
 			self.getItem() == remote.getItem() &&
-			getMetal(self) == getMetal(remote) &&
 			isOddlyShaped(self) == isOddlyShaped(remote) &&
+			getMetal(self) == getMetal(remote) &&
 			(Math.abs(self.getTagCompound().getInteger("forgetemp") - remote.getTagCompound().getInteger("forgetemp")) < 800)
 		;
 	}

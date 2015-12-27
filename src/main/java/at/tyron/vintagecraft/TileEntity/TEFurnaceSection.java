@@ -5,7 +5,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockFurnaceChimney;
 import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
 import at.tyron.vintagecraft.Block.Utility.BlockMetalPlate;
 import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnaceType;

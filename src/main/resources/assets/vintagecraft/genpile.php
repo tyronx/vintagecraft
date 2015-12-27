@@ -1,7 +1,7 @@
 <?php
 
 $blocktype = "orepile";
-$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "ilmenite", "nativesilver_quartz", "sphalerite", "bismuthinite", "chromite", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena", "sulfur", "saltpeter", "quartzcrystal", "coke");
+$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "ilmenite", "nativesilver_quartz", "sphalerite", "bismuthinite", "chromite", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena", "sulfur", "saltpeter", "quartzcrystal", "coke", "magnetite");
 
 $heights = array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15);
 

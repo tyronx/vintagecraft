@@ -2,7 +2,7 @@
 
 $blocktype = "rawore";
 $rocktypes = array("andesite", "basalt", "claystone", "conglomerate", "diorite", "gneiss", "granite", "limestone", "marble", "quartzite", "schist", "shale", "gabbro", "sandstone", "redsandstone", "chert", "chalk", "kimberlite", "slate");
-$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "ilmenite", "nativesilver_quartz", "sphalerite", "bismuthinite", "chromite", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena", "sulfur");
+$oretypes = array("clay", "peat", "lignite", "bituminouscoal", "nativecopper", "limonite", "nativegold_quartz", "redstone", "diamond", "emerald", "lapislazuli", "cassiterite", "quartz", "rocksalt", "platinum", "ilmenite", "nativesilver_quartz", "sphalerite", "bismuthinite", "chromite", "sylvite_rocksalt", "olivine", "peridot_olivine", "galena", "sulfur", "magnetite");
 
 
 $variants = array();
@@ -16,7 +16,6 @@ foreach ($rocktypes as $rocktype) {
 		
 		file_put_contents("models/block/rawore/" . $oreandrocktype.".json", getBlockModel("rawore", $oreandrocktype));
 		file_put_contents("models/item/rawore/"   . $oreandrocktype.".json", getItemModel("rawore", $oreandrocktype));
-
 	}
 }
 

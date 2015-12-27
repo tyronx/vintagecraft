@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerNetworkNode;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;

@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Block.Utility;
 import java.util.Random;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IStrongHeatSource;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IStrongHeatSource;
 import at.tyron.vintagecraft.TileEntity.TEHeatSourceWithGUI;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;

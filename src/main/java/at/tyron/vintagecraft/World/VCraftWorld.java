@@ -83,7 +83,7 @@ public class VCraftWorld {
 	
 
 
-	NBTTagCompound getChunkNBT(BlockPos blockpos) {
+	public NBTTagCompound getChunkNBT(BlockPos blockpos) {
 		return VintageCraft.proxy.getChunkNbt(BlockPos2Index(blockpos));
 	}
 	

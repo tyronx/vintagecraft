@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Network;
 
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
 import at.tyron.vintagecraft.Inventory.ContainerCarpenterTable;
 import at.tyron.vintagecraft.World.Crafting.EnumWoodWorkingTechnique;
 import io.netty.buffer.ByteBuf;

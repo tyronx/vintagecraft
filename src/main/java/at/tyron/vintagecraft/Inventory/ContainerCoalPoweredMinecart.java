@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.Inventory;
 
 import at.tyron.vintagecraft.Entity.EntityCoalPoweredMinecartVC;
-import at.tyron.vintagecraft.Interfaces.IItemFuel;
-import at.tyron.vintagecraft.Interfaces.IItemSmeltable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

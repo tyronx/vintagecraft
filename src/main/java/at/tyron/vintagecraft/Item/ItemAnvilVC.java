@@ -3,8 +3,8 @@ package at.tyron.vintagecraft.Item;
 import java.util.Locale;
 
 import at.tyron.vintagecraft.Block.Utility.BlockAnvilVC;
-import at.tyron.vintagecraft.Interfaces.IItemMetalTyped;
-import at.tyron.vintagecraft.Interfaces.ISubtypeFromStackPovider;
+import at.tyron.vintagecraft.Interfaces.Item.IItemMetalTyped;
+import at.tyron.vintagecraft.Interfaces.Item.ISubtypeFromStackPovider;
 import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.block.Block;

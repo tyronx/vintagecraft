@@ -2,8 +2,8 @@ package at.tyron.vintagecraft.Item;
 
 import java.util.Arrays;
 
-import at.tyron.vintagecraft.Interfaces.IBlockItemSink;
-import at.tyron.vintagecraft.Interfaces.IItemHeatable;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockItemSink;
+import at.tyron.vintagecraft.Interfaces.Item.IItemHeatable;
 import at.tyron.vintagecraft.World.Crafting.EnumAnvilTechnique;
 import at.tyron.vintagecraft.WorldProperties.EnumWorkableTechnique;
 import net.minecraft.block.state.IBlockState;

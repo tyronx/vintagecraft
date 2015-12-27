@@ -1,0 +1,6 @@
+{
+		"parent": "vintagecraft:block/orepile/base_2",
+		"textures": {
+			"material": "vintagecraft:blocks/orepile/magnetite"
+		}
+}

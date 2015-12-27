@@ -287,9 +287,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		Arrays.fill(chunkGroundLevelMap, 0);
 		Arrays.fill(chunkHeightMap, 0);
 		
-		
-		//int []heightmap = this.heightmapGen.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
-		
 		EnumCrustLayer[] crustLayersByDepth = new EnumCrustLayer[255];
 		
 		int age[] = ageLayer.getInts(chunkX*16 - 1, chunkZ*16 - 1, 18, 18);
@@ -316,10 +313,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 						primer.setBlockState(x, y, z, BlocksVC.uppermantle.getDefaultState());
 						break;
 					}
-					/*if (y > heightmap[arrayIndexHeightmap] && y <= VCraftWorld.seaLevel) {
-						primer.setBlockState(x, y, z, Blocks.water.getDefaultState());
-						continue;
-					}*/
 					
 					if (primer.getBlockState(x, y, z).getBlock() == Blocks.stone) {
 						if (chunkGroundLevelMap[arrayIndexChunk] == 0) {
@@ -339,14 +332,10 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 							chunkHeightMap[arrayIndexChunk] = y;
 						}
 						
-						//int steepness = Math.max(Math.abs(heightmap[(z+1)*18 + (x+1)-1] - heightmap[(z+1)*18 + (x+1)+1]), Math.abs(heightmap[(z+1-1)*18 + (x+1)] - heightmap[(z+1+1)*18 + (x+1)]));
-						
 						int depth = chunkGroundLevelMap[arrayIndexChunk] - y;
-						
-						
 
 						
-						if (y < Math.abs(age[arrayIndexChunk]) / 9) {
+						if (y < Math.abs(age[arrayIndexChunk])/2 - 40) {
 							primer.setBlockState(x, y, z, BlocksVC.rock.getEntryFromKey(EnumRockType.KIMBERLITE).getBlockState());
 						} else {
 							if (toplayers.length > depth) {
@@ -365,9 +354,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 							}
 							
 						}
-						
-						
-						//placeCrustLayerBlock(x, y, z, chunkGroundLevelMap[arrayIndexChunk] - y, primer, biome, chunkX, chunkZ);
 					}
 					
 					if (chunkGroundLevelMap[arrayIndexChunk] != 0 && primer.getBlockState(x, y, z).getBlock() == Blocks.air) {
@@ -378,8 +364,6 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 					if (airblocks > 8) {
 						chunkGroundLevelMap[arrayIndexChunk] = 0;
 						airblocks = 0;
-						/*prevCrustlayerDepth = 0;
-						prevCrustlayer = null;*/
 					}
 				}
 			}

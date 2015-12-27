@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.Item;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
-import at.tyron.vintagecraft.Interfaces.ISizedItem;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Item.ISizedItem;
 import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumItemSize;
 import net.minecraft.item.ItemStack;

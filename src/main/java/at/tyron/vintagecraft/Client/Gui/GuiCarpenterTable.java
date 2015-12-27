@@ -3,7 +3,7 @@ package at.tyron.vintagecraft.Client.Gui;
 import java.util.ArrayList;
 
 import at.tyron.vintagecraft.VintageCraft;
-import at.tyron.vintagecraft.Interfaces.IItemWoodWorkable;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWoodWorkable;
 import at.tyron.vintagecraft.Item.ItemToolVC;
 import at.tyron.vintagecraft.Network.CarpentryTechniquePacket;
 import at.tyron.vintagecraft.Network.SoundEffectToServerPacket;

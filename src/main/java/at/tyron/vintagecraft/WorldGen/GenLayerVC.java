@@ -55,7 +55,7 @@ public abstract class GenLayerVC extends GenLayer {
 	
 	public static GenLayerVC genAgemap(long seed) {
 		GenLayerSimplexNoiseUnclamped noise = new GenLayerSimplexNoiseUnclamped(seed, 1, 1f, 90, 0);
-		noise.resolution = 1024;
+		noise.resolution = 512;
 		
 		GenLayerVC.drawImageGrayScale(512, noise, "Age 0 Noise");
 

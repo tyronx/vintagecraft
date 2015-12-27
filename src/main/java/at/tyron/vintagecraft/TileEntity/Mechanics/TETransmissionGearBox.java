@@ -1,7 +1,7 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkNode;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerNetworkNode;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.MechnicalNetworkManager;
 import net.minecraft.nbt.NBTTagCompound;

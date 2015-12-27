@@ -1,8 +1,8 @@
 package at.tyron.vintagecraft.TileEntity.Mechanics;
 
 import at.tyron.vintagecraft.Block.Mechanics.BlockMechanicalVC;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
-import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerDevice;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IMechanicalPowerNetworkRelay;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;

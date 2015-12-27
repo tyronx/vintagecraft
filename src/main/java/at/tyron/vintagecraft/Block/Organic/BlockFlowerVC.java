@@ -8,8 +8,8 @@ import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.BlockClass.PropertyBlockClass;
-import at.tyron.vintagecraft.Interfaces.IMultiblock;
 import at.tyron.vintagecraft.Interfaces.IStateEnum;
+import at.tyron.vintagecraft.Interfaces.Block.IMultiblock;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -41,7 +41,7 @@ public class BlockFlowerVC extends BlockVC implements IPlantable, IMultiblock {
 		super(Material.plants);
 		setCreativeTab(VintageCraft.floraTab);
 		this.setTickRandomly(true);
-		float f = 0.2F;
+		float f = 0.3F;
 	    this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, f * 3.0F, 0.5F + f);
 	}
 	

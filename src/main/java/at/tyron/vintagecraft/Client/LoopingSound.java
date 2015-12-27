@@ -1,6 +1,6 @@
 package at.tyron.vintagecraft.Client;
 
-import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
+import at.tyron.vintagecraft.Interfaces.Tileentity.IPitchAndVolumProvider;
 import net.minecraft.client.audio.ITickableSound;
 import net.minecraft.client.audio.PositionedSound;
 import net.minecraft.util.ResourceLocation;

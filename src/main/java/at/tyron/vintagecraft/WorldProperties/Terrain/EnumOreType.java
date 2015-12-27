@@ -40,6 +40,8 @@ public enum EnumOreType implements IStringSerializable, IStateEnum {
 	// These don't reaally belong here but way easier to code if added here
 	COKE				(26, 0, 0.5f),
 	//CHARCOAL			(27, 0, 0.5f)
+	
+	MAGNETITE			(27, 4, 1f),
 	;
 	
 	int id;

@@ -13,7 +13,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import at.tyron.vintagecraft.VintageCraft;
 import at.tyron.vintagecraft.Block.BlockContainerVC;
-import at.tyron.vintagecraft.Interfaces.IBlockIgniteable;
+import at.tyron.vintagecraft.Interfaces.Block.IBlockIgniteable;
 import at.tyron.vintagecraft.TileEntity.TEBlastPowderSack;
 
 public class BlockBlastPowderSack extends BlockContainerVC implements IBlockIgniteable {
