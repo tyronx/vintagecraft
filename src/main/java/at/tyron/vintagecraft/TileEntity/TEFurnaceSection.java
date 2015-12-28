@@ -6,8 +6,10 @@ import at.tyron.vintagecraft.Block.Utility.BlockFurnaceSection;
 import at.tyron.vintagecraft.Block.Utility.BlockMetalPlate;
 import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
 import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemSmeltable;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
+import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumFurnaceType;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
@@ -32,10 +34,11 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 	
 	int airblowtimer;
 	
-	// The furnace section has 3 inventory slots
+	// The furnace section has 4 inventory slots
 	// storage[0] == coal
-	// storage[1] == iron ore
-	// storage[2] == ingots
+	// storage[1] == input ore 
+	// storage[2] == output metal
+	// storage[3] == input metal
 	
 	
 	public TEFurnaceSection() {
@@ -46,10 +49,10 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		// Input fuel
 		storage[0] = null;
 		// Input ore
-		storage[1] = ItemOreVC.getItemStackFor(EnumOreType.LIMONITE, 0);
-		// Output iron 
-		storage[2] = ItemIngot.getItemStack(EnumMetal.IRON, 0);
-		// Input iron
+		storage[1] = null;
+		// Output metal 
+		storage[2] = null;
+		// Input metal
 		storage[3] = ItemIngot.getItemStack(EnumMetal.IRON, 0);
 	}
 	
@@ -240,22 +243,31 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 			
 			TETallMetalMold te = (TETallMetalMold) worldObj.getTileEntity(pos.offset(facing).down());
 			if (te != null) {
-				int quantityIngots = Math.min(storage[0].stackSize / 6, storage[1].stackSize / 4);
+				int quantityIngots = Math.min(storage[0].stackSize / 6, storage[1].stackSize / getSmeltedRatio(storage[1]));
 
-				// Below 75% blows -> no steel
-				// Between 75% and 100% blows -> between 0 and fullsteel 
-				float steelQuantity = Math.min(1f, 4f * Math.max(0, receivedAirBlows*1f / getRequiredBlowsForSteel() - 0.75f)); 
+				EnumMetal smeltedMetal = getSmeltedMetalType(storage[1]);
 				
-				int quantitySteel = (int) (steelQuantity * quantityIngots);
-				int quantityIron = quantityIngots - quantitySteel;
-				
-				System.out.println("received " + receivedAirBlows + " blows, resulting in " + quantitySteel + " steel ingots and " + quantityIron + " iron ingots");
-				
-				if (quantityIron > 0) {
-					te.receiveMoltenMetalMix(quantityIron, EnumMetal.IRON, quantitySteel, EnumMetal.STEEL);					
+				if (smeltedMetal != EnumMetal.IRON) {
+					te.receiveMoltenMetal(quantityIngots, smeltedMetal);
+					
 				} else {
-					te.receiveMoltenMetal(quantitySteel, EnumMetal.STEEL);
+					// Below 75% blows -> no steel
+					// Between 75% and 100% blows -> between 0 and fullsteel 
+					float steelRatio = Math.min(1f, 4f * Math.max(0, receivedAirBlows*1f / getRequiredBlowsForSteel() - 0.75f));
+										
+					int quantitySteel = (int) (steelRatio * quantityIngots);
+					int quantityIron = quantityIngots - quantitySteel;
+					
+					System.out.println("received " + receivedAirBlows + " blows, resulting in " + quantitySteel + " steel ingots and " + quantityIron + " iron ingots");
+					
+					if (quantityIron > 0) {
+						te.receiveMoltenMetalMix(quantityIron, EnumMetal.IRON, quantitySteel, EnumMetal.STEEL);					
+					} else {
+						te.receiveMoltenMetal(quantitySteel, EnumMetal.STEEL);
+					}
+					
 				}
+				
 			}
 			
 			TEFurnaceSection tefs = (TEFurnaceSection) worldObj.getTileEntity(pos.up());
@@ -270,8 +282,12 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 			state = 2;
 			
 			storage[0] = null;
-			storage[2].stackSize = storage[1].stackSize / 4;  // Iron ingots
-			storage[1].stackSize = 0; // Iron ore
+			storage[2] = getSmeltedOre(storage[1]);
+			if (storage[2] != null) {
+				storage[2].stackSize = storage[1].stackSize / getSmeltedRatio(storage[1]);  // ingots	
+			}
+			
+			storage[1].stackSize = 0; // ore
 			
 			if (storage[2].stackSize == 0) state = 0;
 		}
@@ -300,10 +316,12 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		}
 		
 		int quantityFuel = storage[0] != null ? storage[0].stackSize : 0; 
+		int quantityOre = storage[1] != null ? storage[1].stackSize : 0;
+		int quantityOutput = storage[2] != null ? storage[2].stackSize * 4 : 0;
 		
 		return Math.max(
-			2 * ((quantityFuel + storage[1].stackSize) / 4 + storage[3].stackSize),
-			storage[2].stackSize * 4
+			2 * ((quantityFuel + quantityOre) / 4 + storage[3].stackSize),
+			quantityOutput
 		);
 	}
 	
@@ -333,13 +351,39 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 	
 	
 	
-	public int maxStackSize(EnumOreType oretype) {
+	public int maxStackSize(ItemStack ore) {
 		// 16 coal and 16 limonite ore for bloomeries
 		if (furnacetype != EnumFurnaceType.BLASTFURNACE) return 16;
 
 		// 36 coal and 24 limonite ore for blast furnaces
-		if (oretype == EnumOreType.LIMONITE) return 24;
+		if (getSmeltedOre(ore) != null) return 24;
 		return 36;
+	}
+	
+	
+	public ItemStack getSmeltedOre(ItemStack ore) {
+		if (ore.getItem() instanceof IItemSmeltable) {
+			ItemStack smelted = ((IItemSmeltable)ore.getItem()).getSmelted(ore);
+			
+			if (((IItemSmeltable)ore.getItem()).getMeltingPoint(ore) <= furnacetype.maxTemperature) {
+				return smelted;
+			}
+			
+			return null;
+		}
+		
+		return null;
+	}
+	
+	public int getSmeltedRatio(ItemStack ore) {
+		return ((IItemSmeltable)ore.getItem()).getRaw2SmeltedRatio(ore);
+	}
+	
+	public EnumMetal getSmeltedMetalType(ItemStack ore) {
+		if (ore.getItem() instanceof IItemSmeltable) {
+			return ItemIngot.getMetal(getSmeltedOre(ore));
+		}
+		return null;
 	}
 	
 	
@@ -353,7 +397,6 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 			TEFurnaceSection te = (TEFurnaceSection) worldObj.getTileEntity(pos.up());
 			te.state = 1;
 			worldObj.markBlockForUpdate(pos.up());
-			System.out.println("ignited block above too");
 		}
 		
 		worldObj.markBlockForUpdate(pos);
@@ -373,6 +416,8 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 			return true;
 		}
 		
+		
+		
 		if (storage[0] != null && ItemStack.areItemsEqual(storage[0], itemstack) && ItemStack.areItemStackTagsEqual(storage[0], itemstack)) {
 			if (storage[0].stackSize >= maxStackSize(null)) return false;
 
@@ -383,27 +428,33 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		}
 
 		
-		EnumOreType oretype = ItemOreVC.getOreType(itemstack);
-		if (oretype == null) return false;
+		ItemStack smelted = getSmeltedOre(itemstack);
 
-		// TODO: Non hardcoded Oretype
-		if (oretype == EnumOreType.LIMONITE) {
-			if (storage[1].stackSize + storage[3].stackSize*4 >= maxStackSize(oretype)) return false;
+		if (smelted != null) {
+
+			if (storage[1] != null) {
+				if (ItemOreVC.getOreType(storage[1]) != ItemOreVC.getOreType(itemstack)) return false;
+				
+				if (storage[1].stackSize >= maxStackSize(itemstack)) return false;
+
+				storage[1].stackSize++;
+				itemstack.stackSize--;
+			} else {
+				storage[1] = itemstack.splitStack(1);
+			}
 			
-			storage[1].stackSize++;
-			itemstack.stackSize--;
 			worldObj.markBlockForUpdate(pos);
 			return true;
 		}
 		
 		//  TODO: Make this work (i.e. being able to smelt iron ingots back into steel)
-		if (itemstack.getItem() instanceof ItemIngot && ItemIngot.getMetal(itemstack) == EnumMetal.IRON) {
+		/*if (itemstack.getItem() instanceof ItemIngot && ItemIngot.getMetal(itemstack) == EnumMetal.IRON) {
 			if (storage[1].stackSize + storage[3].stackSize*4 >= maxStackSize(EnumOreType.LIMONITE)) return false;
 			
 			storage[3].stackSize++;
 			itemstack.stackSize--;
 			worldObj.markBlockForUpdate(pos);
-		}
+		}*/
 		
 		return false;
 	}

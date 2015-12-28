@@ -343,6 +343,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	            @Override
 	            public ModelResourceLocation getModelLocation(ItemStack stack) {
 	            	//System.out.println(name + "/" + stack.getUnlocalizedName());
+	            	
 	            	if (item instanceof ISubtypeFromStackPovider && ((ISubtypeFromStackPovider)item).getSubType(stack) != null) {
 	            		//System.out.println(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack));
 	            		return new ModelResourceLocation(ModInfo.ModID + ":" + name + "/" + ((ISubtypeFromStackPovider)item).getSubType(stack), type);

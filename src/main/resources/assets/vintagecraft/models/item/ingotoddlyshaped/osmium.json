@@ -1,7 +1,7 @@
 {
     "parent": "builtin/generated",
     "textures": {
-        "layer0": "vintagecraft:items/ore/limonite"
+        "layer0": "vintagecraft:items/ingotoddlyshaped/osmium"
     },
     "display": {
         "thirdperson": {

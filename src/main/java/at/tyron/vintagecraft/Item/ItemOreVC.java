@@ -136,7 +136,9 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 	@Override
 	public ItemStack getSmelted(ItemStack ore) {
 		switch (getOreType(ore)) {
-			case LIMONITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRON);
+			case LIMONITE:
+			case MAGNETITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.IRON);
+			
 			case NATIVEGOLD_QUARTZ: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.GOLD);
 			case NATIVECOPPER: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.COPPER);
 			case CASSITERITE: return ItemIngot.setMetal(new ItemStack(ItemsVC.metalingot), EnumMetal.TIN);
@@ -161,6 +163,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 	public int getRaw2SmeltedRatio(ItemStack ore) {
 		switch (getOreType(ore)) {
 			case LIMONITE:
+			case MAGNETITE:
 			case NATIVECOPPER: return 4;
 			case NATIVEGOLD_QUARTZ: return 8;
 			case CASSITERITE: return 8;				// "even a rich cassiterite ore only has 5% tin" @ http://en.wikipedia.org/wiki/Smelting
@@ -187,6 +190,7 @@ public class ItemOreVC extends ItemVC implements ISubtypeFromStackPovider, IItem
 	public int getMeltingPoint(ItemStack ore) {
 		switch (getOreType(ore)) {
 			case CASSITERITE: return EnumMetal.TIN.meltingpoint;
+			case MAGNETITE:
 			case LIMONITE: return EnumMetal.IRON.meltingpoint;
 			case NATIVECOPPER: return EnumMetal.COPPER.meltingpoint;
 			case NATIVEGOLD_QUARTZ: return EnumMetal.GOLD.meltingpoint;

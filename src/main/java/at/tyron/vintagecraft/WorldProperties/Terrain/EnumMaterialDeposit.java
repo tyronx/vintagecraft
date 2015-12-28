@@ -31,7 +31,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	PEAT 				( 1, false, EnumDepositSize.HUGE, DepositOccurence.followSurface(40, 2, 1, 2, 145)),
 	LIGNITE 			( 2, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(320, 1, 10, 90, 0.5f)), 
-	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(200, 2, 8, 128)),
+	BITUMINOUSCOAL      ( 3, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(120, 2, 8, 128)),
 
 	CLAY 				( 0, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(11, 2, 1, 2, 155)),
 	FIRECLAY 			(22, false, EnumDepositSize.MEDIUM, DepositOccurence.followSurface(6, 2, 2, 3, 160)),
@@ -41,12 +41,12 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 	OLIVINE 			(21, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyRelativeDepth(100, 2, 0, 254, 210)),
 	
 	NATIVECOPPER 		( 4, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.mixedDepths(60, 1, 4, 60, 0.35f)),
-	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(80, 1, 0, 140)),
+	SPHALERITE 			(12, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(60, 1, 0, 140)),
 	CASSITERITE 		( 8, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyRelativeDepth(32, 1, 0, 40)),
-	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyRelativeDepth(48, 1, 0, 50)),
+	BISMUTHINITE 		(18, true, EnumDepositSize.SMALL, DepositOccurence.anyRelativeDepth(24, 1, 0, 50)),
 
-	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyBelowSealevel(100, 1, 15, 80)),
-	MAGNETITE 			(27, true, EnumDepositSize.LARGE, DepositOccurence.anyBelowSealevel(24, 1, 61, 128)),
+	LIMONITE 			( 5, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyBelowSealevel(80, 1, 15, 80)),
+	MAGNETITE 			(27, true, EnumDepositSize.MEDIUM, DepositOccurence.anyBelowSealevel(30, 2, 61, 128)),
 
 	CHROMITE 			( 9, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(4, 1, 80, 110)),
 	PLATINUM 			(10, true, EnumDepositSize.TINY, DepositOccurence.anyBelowSealevel(3, 1, 90, 110)),
@@ -63,7 +63,7 @@ public enum EnumMaterialDeposit implements IStringSerializable, IGenLayerSupplie
 
 	
 	GALENA 				( 7, true, EnumDepositSize.SMALLANDMEDIUM, DepositOccurence.anyRelativeDepth(15, 1, 30, 100)),
-	SULFUR 				(24, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(70, 1, 70, 130)),
+	SULFUR 				(24, true, EnumDepositSize.SMALL, DepositOccurence.anyBelowSealevel(40, 1, 70, 130)),
 	SALTPETER			(25, true, EnumDepositSize.GIGANTIC, DepositOccurence.anyBelowSealevel(50, 15, 10, 200))
 	;
 

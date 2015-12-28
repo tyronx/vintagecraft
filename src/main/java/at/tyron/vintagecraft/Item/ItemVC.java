@@ -42,9 +42,8 @@ public abstract class ItemVC extends Item {
 		IBlockState state = world.getBlockState(pos);
         
         if (state.getBlock() instanceof IBlockItemSink) {
-    		if (((IBlockItemSink)state.getBlock()).tryPutItemstack(world, pos, entityplayer, side, itemstack)) {
-    			return true;
-    		}
+    		((IBlockItemSink)state.getBlock()).tryPutItemstack(world, pos, entityplayer, side, itemstack); 
+    		return true;
     	}
     	
 		return super.onItemUse(itemstack, entityplayer, world, pos, side, hitX, hitY, hitZ);
