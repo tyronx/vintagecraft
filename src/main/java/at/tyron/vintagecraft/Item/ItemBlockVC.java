@@ -23,7 +23,8 @@ public class ItemBlockVC extends ItemBlock {
 	public ItemBlockVC(Block block) {
 		super(block);
 	}
-
+	
+	
 	@Override
 	public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		IBlockState state = world.getBlockState(pos);

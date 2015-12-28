@@ -14,7 +14,6 @@ import at.tyron.vintagecraft.Item.ItemMinecartVC;
 import at.tyron.vintagecraft.Item.ItemCrafted;
 import at.tyron.vintagecraft.Item.ItemDryGrass;
 import at.tyron.vintagecraft.Item.ItemFireClay;
-import at.tyron.vintagecraft.Item.ItemFireStarter;
 import at.tyron.vintagecraft.Item.ItemFoodVC;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.Item.ItemOreVC;
@@ -200,8 +199,8 @@ public class ItemsVC {
 		ironTuyere = new ItemCrafted();
 		register(ironTuyere, "irontuyere");
 		
-		firestarter = new ItemFireStarter();
-		register(firestarter, "firestarter");
+		//firestarter = new ItemFireStarter();
+		//register(firestarter, "firestarter");
 		
 		sail = new ItemSail();
 		register(sail, "sail");

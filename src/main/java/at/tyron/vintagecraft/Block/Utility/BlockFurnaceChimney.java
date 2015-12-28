@@ -98,7 +98,7 @@ public class BlockFurnaceChimney extends BlockVC implements IBlockItemSink, IBlo
 			IBlockState state = world.getBlockState(bottomSection);
 			return ((IBlockItemSink)state.getBlock()).tryPutItemstack(world, bottomSection, player, side, itemstack);
 		} else {
-			player.addChatMessage(new ChatComponentText("Not a furnace!"));
+			player.addChatMessage(new ChatComponentText("Can't put item in here, it's not a furnace (or missing air block above)!"));
 			return false;
 		}
 	}

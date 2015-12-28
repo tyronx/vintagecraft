@@ -892,3 +892,5 @@ tile.firepit.name=Fire pit
 tile.woodenrail.name=Wooden Rails
 item.coalpoweredminecart.name=Coal powered minecart
 item.emptyminecart.name=Empty minecart
+
+tile.torchvc.name=Torch

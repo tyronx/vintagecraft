@@ -54,6 +54,7 @@ import at.tyron.vintagecraft.Block.Utility.BlockStonePot;
 import at.tyron.vintagecraft.Block.Utility.BlockStove;
 import at.tyron.vintagecraft.Block.Utility.BlockTallMetalMolds;
 import at.tyron.vintagecraft.Block.Utility.BlockToolRack;
+import at.tyron.vintagecraft.Block.Utility.BlockTorchVC;
 import at.tyron.vintagecraft.Block.Utility.BlockWoodBucketVC;
 import at.tyron.vintagecraft.BlockClass.CoatingClass;
 import at.tyron.vintagecraft.BlockClass.CropClass;
@@ -80,6 +81,7 @@ import at.tyron.vintagecraft.Item.ItemTallGrassVC;
 import at.tyron.vintagecraft.Item.ItemTallMetalMold;
 import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
+import at.tyron.vintagecraft.Item.ItemTorchVC;
 import at.tyron.vintagecraft.Item.ItemWoodBucket;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
@@ -173,6 +175,8 @@ public class BlocksVC {
 	
 	public static BlockContainerVC blastpowdersack;
 	public static BlockContainerVC woodbucket;
+	
+	public static Block torch;
 	
 	public static Block saltlamp;
 	public static Block woodenrail;
@@ -333,6 +337,8 @@ public class BlocksVC {
 		woodbucket = new BlockWoodBucketVC().registerSingleState("woodbucket", ItemWoodBucket.class);
 		
 		woodenrail = new BlockWoodenRail().register("woodenrail", ItemBlock.class);
+		
+		torch = new BlockTorchVC().registerSingleState("torchvc", ItemTorchVC.class);
 	}
 	
 
@@ -345,7 +351,9 @@ public class BlocksVC {
 		firepit_lit.setLightLevel(0.86f);
 		stove_lit.setLightLevel(0.86f);
 		
-		saltlamp.setHardness(0.1f);
+		saltlamp.setHardness(0.2f);
+		saltlamp.setHarvestLevel("pickaxe", 0);
+		
 		firepit.setHardness(1f);
 		firepit_lit.setHardness(1F);
 		furnaceSection.setHardness(3.8f);
@@ -382,8 +390,6 @@ public class BlocksVC {
 		stonepot.setHardness(2f).setHarvestLevel("pickaxe", 0);
 		cokeovendoor.setHardness(2.5f).setHarvestLevel("pickaxe", 0);
 
-		
-	//	wheatcrops.setHardness(0.2f);
 		
 		grindstone.setStepSound(Block.soundTypeStone);
 		

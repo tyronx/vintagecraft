@@ -58,7 +58,6 @@ public class Recipes {
 		
 		removeRecipe(new ItemStack(Items.item_frame));
 		removeRecipe(new ItemStack(Items.arrow, 4));
-
 		
 		
 		
@@ -199,9 +198,10 @@ public class Recipes {
 		ItemStack bituminouscoal = new ItemStack(ItemsVC.ore);
 		ItemOreVC.setOreType(lignite, EnumOreType.BITUMINOUSCOAL);
 		
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', lignite, 'S', stick});
-		GameRegistry.addShapedRecipe(new ItemStack(Blocks.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.torch, 4), new Object[] { "C", "S", 'C', lignite, 'S', stick});
+		GameRegistry.addShapedRecipe(new ItemStack(BlocksVC.torch, 4), new Object[] { "C", "S", 'C', bituminouscoal, 'S', stick});
 		
+		GameRegistry.addShapelessRecipe(new ItemStack(BlocksVC.torch), new Object[] { Blocks.torch });
 		
 		
 		

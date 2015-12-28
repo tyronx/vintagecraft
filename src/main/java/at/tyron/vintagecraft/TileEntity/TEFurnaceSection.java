@@ -356,7 +356,7 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		if (furnacetype != EnumFurnaceType.BLASTFURNACE) return 16;
 
 		// 36 coal and 24 limonite ore for blast furnaces
-		if (getSmeltedOre(ore) != null) return 24;
+		if (ore != null && getSmeltedOre(ore) != null) return 24;
 		return 36;
 	}
 	
@@ -403,6 +403,12 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		return true;
 	}
 	
+	// :D
+	public boolean canTheoreticallyPutItemStack(ItemStack itemstack) {
+		return 
+			viableFuel(itemstack) ||
+			getSmeltedOre(itemstack) != null;			
+	}
 
 	public boolean tryPutItemStack(ItemStack itemstack) {
 		checkFurnaceType();

@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "vintagecraft:normal_torch" },
+        "facing=east": { "model": "vintagecraft:normal_torch_wall" },
+        "facing=south": { "model": "vintagecraft:normal_torch_wall", "y": 90 },
+        "facing=west": { "model": "vintagecraft:normal_torch_wall", "y": 180 },
+        "facing=north": { "model": "vintagecraft:normal_torch_wall", "y": 270 }
+    }
+}

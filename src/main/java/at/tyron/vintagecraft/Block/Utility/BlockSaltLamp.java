@@ -108,11 +108,22 @@ public class BlockSaltLamp extends BlockVC {
 		return getDefaultState();
 	}
 	
+    @Override
+    public List<ItemStack> getDrops(IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+    	List<ItemStack> ret = new java.util.ArrayList<ItemStack>();
+    	
+    	ret.add(new ItemStack(this));
+    	
+    	return ret;
+    }
+    
+    
+	
 	// Why is this not getting called??
-	@Override
+	/*@Override
 	public void onBlockDestroyedByPlayer(World worldIn, BlockPos pos, IBlockState state) {
 		dropBlockAsItem(worldIn, pos, state, 0);
 		super.onBlockDestroyedByPlayer(worldIn, pos, state);
-	}
+	}*/
 
 }

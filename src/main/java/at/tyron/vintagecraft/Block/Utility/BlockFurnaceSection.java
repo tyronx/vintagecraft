@@ -156,8 +156,8 @@ public class BlockFurnaceSection extends BlockContainerVC implements IBlockItemS
 		TEFurnaceSection tefurnacesection = (TEFurnaceSection)world.getTileEntity(pos);
 		if(tefurnacesection == null) return false;
 
-		if (tefurnacesection.getFurnaceType() == null) {
-			player.addChatMessage(new ChatComponentText("Not a furnace!"));
+		if (tefurnacesection.getFurnaceType() == null && tefurnacesection.canTheoreticallyPutItemStack(itemstack)) {
+			player.addChatMessage(new ChatComponentText("Can't put item in here, it's not a furnace (or missing air block above)!"));
 			return false;
 		}
 		
