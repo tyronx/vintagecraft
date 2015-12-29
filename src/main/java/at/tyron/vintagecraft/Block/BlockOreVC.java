@@ -83,7 +83,9 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
  
     
     public static EnumOreType getOreType(IBlockState state) {
-    	String[] type = ((OreInRockClassEntry)state.getValue(((IMultiblock)BlocksVC.rawore.getEntryFromState(state).block).getTypeProperty())).getName().split("-");
+    	BlockClassEntry entry = BlocksVC.rawore.getEntryFromState(state);
+    	if (entry == null) return null;
+    	String[] type = ((OreInRockClassEntry)state.getValue(((IMultiblock)entry.block).getTypeProperty())).getName().split("-");
     	return EnumOreType.valueOf(type[0].toUpperCase(Locale.ROOT));
     }
 

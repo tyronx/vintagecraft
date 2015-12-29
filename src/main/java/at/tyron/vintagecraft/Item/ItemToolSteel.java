@@ -78,6 +78,7 @@ public class ItemToolSteel extends ItemToolVC {
     int quantityBonusBlockBreaks() {
     	if (tooltype == EnumTool.SHEARS) return 6;
     	if (tooltype == EnumTool.SICKLE) return 3;
+    	if (tooltype == EnumTool.PICKAXE) return 1;
     	return 0;
     }
 

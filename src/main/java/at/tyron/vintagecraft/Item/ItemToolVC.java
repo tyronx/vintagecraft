@@ -10,6 +10,7 @@ import com.google.common.collect.Ordering;
 
 import at.tyron.vintagecraft.AchievementsVC;
 import at.tyron.vintagecraft.VintageCraft;
+import at.tyron.vintagecraft.Block.BlockOreVC;
 import at.tyron.vintagecraft.Block.BlockVC;
 import at.tyron.vintagecraft.Block.Organic.BlockCropsVC;
 import at.tyron.vintagecraft.Block.Organic.BlockLeavesVC;
@@ -24,6 +25,7 @@ import at.tyron.vintagecraft.World.BlocksVC;
 import at.tyron.vintagecraft.World.ItemsVC;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import at.tyron.vintagecraft.WorldProperties.EnumTool;
+import at.tyron.vintagecraft.WorldProperties.Terrain.EnumOreType;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -110,7 +112,7 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 
 
     public boolean onBlockDestroyed(ItemStack stack, World worldIn, Block blockIn, BlockPos pos, EntityLivingBase playerIn) {
-    	
+    	/* Achievement for entering iron or steel age */
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		if (playerIn instanceof EntityPlayer) {
 			if (tileentity instanceof TEFurnaceSection) {
@@ -136,8 +138,17 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		}
     	
     	
+		/* Tools that break multiple blocks */
     	
     	int quantity = Math.min(quantityBonusBlockBreaks(), stack.getMaxDamage() - stack.getItemDamage());
+    	
+    	if (tooltype == EnumTool.PICKAXE && quantity > 0 && blockIn instanceof BlockOreVC) {
+    		stack.damageItem(1, playerIn);
+    		EnumOreType oretype = BlockOreVC.getOreType(worldIn.getBlockState(pos));
+    		int uses = destroyBlocksOfOreType(worldIn, playerIn.getPosition(), pos, quantity, oretype);
+    		stack.damageItem(uses, playerIn);
+    		return true;
+    	}
     	
     	if (tooltype == EnumTool.SHEARS && quantity > 0 && blockIn instanceof BlockLeavesVC) {
     		stack.damageItem(1, playerIn);
@@ -322,6 +333,47 @@ public abstract class ItemToolVC extends ItemVC implements ISubtypeFromStackPovi
 		
 		return destroyed;
     }
+    
+    
+    
+    
+    
+    
+    public int destroyBlocksOfOreType(World world, BlockPos playerpos, BlockPos centerpos, int quantity, EnumOreType oretype) {
+    	HashMap<BlockPos, Double> positions = new HashMap<BlockPos, Double>(); 
+		BlockPos pos;
+		
+		for (int dx = -1; dx <= 1; dx++) {
+			for (int dy = -1; dy <= 1; dy++) {
+				for (int dz = -1; dz <= 1; dz++) {
+					if (dx != 0 || dz != 0 || dy != 0) {
+						pos = centerpos.add(dx, dy, dz);
+						IBlockState blockstate = world.getBlockState(pos);
+						
+						if (blockstate.getBlock() instanceof BlockOreVC && BlockOreVC.getOreType(blockstate) == oretype) {
+							positions.put(pos, playerpos.distanceSq(pos.getX(), pos.getY(), pos.getZ()));
+						}
+					}
+				}
+			}
+		}
+		
+		ImmutableList<BlockPos> nearestblocks = Ordering.natural().onResultOf(Functions.forMap(positions)).immutableSortedCopy(positions.keySet());
+		int destroyed = 0;
+		
+		
+		for (int i = 0; i < quantity; i++) {
+			if (nearestblocks.size() <= i) break;
+			if (!world.isRemote) world.destroyBlock(nearestblocks.get(i), true);
+			destroyed++;
+		}
+		
+		return destroyed;
+    }
+    
+    
+    
+    
     
     
     @Override

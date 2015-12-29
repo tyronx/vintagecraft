@@ -544,8 +544,8 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 	
 	public void clearContent() {
 		storage[0] = null;
-		storage[1].stackSize = 0;
-		storage[2].stackSize = 0;
+		storage[1] = null;
+		storage[2] = null;
 		storage[3].stackSize = 0;
 	}
 
