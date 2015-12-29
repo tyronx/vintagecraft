@@ -36,7 +36,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return getBlockClass(((ItemBlock)stack.getItem()).block).getCommandSenderName()  + "." + getTreeType(stack).getStateName();
+		return getBlockClass(((ItemBlock)stack.getItem()).block).getName()  + "." + getTreeType(stack).getStateName();
 	}
 
 

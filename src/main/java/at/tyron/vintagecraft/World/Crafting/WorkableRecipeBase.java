@@ -68,7 +68,7 @@ public abstract class WorkableRecipeBase {
 		return unlocalizedName;
 	}
 
-	public String getCommandSenderName() {
+	public String getName() {
 		if (unlocalizedName == null) {	
 			return StatCollector.translateToLocal(output.getItem().getUnlocalizedName(output) + ".name");
 		}
