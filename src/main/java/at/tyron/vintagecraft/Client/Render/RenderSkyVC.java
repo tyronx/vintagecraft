@@ -68,11 +68,11 @@ public class RenderSkyVC extends IRenderHandler {
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
         GlStateManager.bindTexture(0);
-        
+       
         this.vboEnabled = OpenGlHelper.useVbo();
 
         this.vertexBufferFormat = new VertexFormat();
-        this.vertexBufferFormat.setElement(new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.POSITION, 3));
+        this.vertexBufferFormat.addElement(new VertexFormatElement(0, VertexFormatElement.EnumType.FLOAT, VertexFormatElement.EnumUsage.POSITION, 3));
         this.generateSky();
         this.generateSky2();		
 	}
@@ -81,14 +81,14 @@ public class RenderSkyVC extends IRenderHandler {
 	public void render(float partialTicks, WorldClient world, Minecraft mc) {
 		GlStateManager.pushMatrix();
 			GlStateManager.color(1f, 1f, 1f, 0.5f);
-			renderSkyVanillaStyle(partialTicks, 2);
+//			renderSkyVanillaStyle(partialTicks, 2);
 		GlStateManager.popMatrix();
 	}
 	
 	
 	
 	public void renderSkyImage(ResourceLocation sky) {
-//        GlStateManager.disableFog();
+
         GlStateManager.disableAlpha();
         GlStateManager.enableTexture2D();
         GlStateManager.enableBlend();
@@ -96,9 +96,7 @@ public class RenderSkyVC extends IRenderHandler {
         RenderHelper.disableStandardItemLighting();
     //    GlStateManager.depthMask(false);
         this.renderEngine.bindTexture(sky);
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        
+
         
         if (mc.isFancyGraphicsEnabled()) {
         	/*GL11.glPolygonMode(GL11.GL_FRONT, GL11.GL_LINE);
@@ -135,13 +133,14 @@ public class RenderSkyVC extends IRenderHandler {
 	            }
 	            
 	            	
-            	worldrenderer.startDrawingQuads();
-  				worldrenderer.addVertexWithUV(-100.0D, -100.0D, -100.0D, 0.0D, 0.0D);
-  				worldrenderer.addVertexWithUV(-100.0D, -100.0D, 100.0D, 0.0D, 1.0D);
-				worldrenderer.addVertexWithUV(100.0D, -100.0D, 100.0D, 1.0D, 1.0D);
-  				worldrenderer.addVertexWithUV(100.0D, -100.0D, -100.0D, 1.0D, 0.0D);
+            	RenderUtils.startDrawingQuads();
+          
+            	RenderUtils.addVertexWithUV(-100.0D, -100.0D, -100.0D, 0.0D, 0.0D);
+            	RenderUtils.addVertexWithUV(-100.0D, -100.0D, 100.0D, 0.0D, 1.0D);
+            	RenderUtils.addVertexWithUV(100.0D, -100.0D, 100.0D, 1.0D, 1.0D);
+            	RenderUtils.addVertexWithUV(100.0D, -100.0D, -100.0D, 1.0D, 0.0D);
 
-  				tessellator.draw();
+            	RenderUtils.tessellator.draw();
 	            
 	            GlStateManager.popMatrix();
 	        }
@@ -172,8 +171,7 @@ public class RenderSkyVC extends IRenderHandler {
         }
 
         GlStateManager.color(f1, f2, f3);
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+      
         GlStateManager.depthMask(false);
         GlStateManager.enableFog();
         GlStateManager.color(f1, f2, f3);
@@ -224,22 +222,22 @@ public class RenderSkyVC extends IRenderHandler {
                 f8 = f11;
                 f9 = f12;
             }
-
-            worldrenderer.startDrawing(6);
-            worldrenderer.setColorRGBA_F(f7, f8, f9, afloat[3]);
-            worldrenderer.addVertex(0.0D, 100.0D, 0.0D);
+           
+            RenderUtils.startDrawing(6);
+            RenderUtils.worldrenderer.color(f7, f8, f9, afloat[3]);
+            RenderUtils.addVertex(0.0D, 100.0D, 0.0D);
             boolean flag = true;
-            worldrenderer.setColorRGBA_F(afloat[0], afloat[1], afloat[2], 0.0F);
+            RenderUtils.worldrenderer.color(afloat[0], afloat[1], afloat[2], 0.0F);
 
             for (int j = 0; j <= 16; ++j)
             {
                 f12 = (float)j * (float)Math.PI * 2.0F / 16.0F;
                 float f13 = MathHelper.sin(f12);
                 float f14 = MathHelper.cos(f12);
-                worldrenderer.addVertex((double)(f13 * 120.0F), (double)(f14 * 120.0F), (double)(-f14 * 40.0F * afloat[3]));
+                RenderUtils.addVertex((double)(f13 * 120.0F), (double)(f14 * 120.0F), (double)(-f14 * 40.0F * afloat[3]));
             }
 
-            tessellator.draw();
+            RenderUtils.tessellator.draw();
             GlStateManager.popMatrix();
             GlStateManager.shadeModel(7424);
         }
@@ -257,12 +255,13 @@ public class RenderSkyVC extends IRenderHandler {
         GlStateManager.rotate(world.getCelestialAngle(partialTicks) * 360.0F, 1.0F, 0.0F, 0.0F);
         f11 = 30.0F;
         this.renderEngine.bindTexture(locationSunPng);
-        worldrenderer.startDrawingQuads();
-        worldrenderer.addVertexWithUV((double)(-f11), 100.0D, (double)(-f11), 0.0D, 0.0D);
-        worldrenderer.addVertexWithUV((double)f11, 100.0D, (double)(-f11), 1.0D, 0.0D);
-        worldrenderer.addVertexWithUV((double)f11, 100.0D, (double)f11, 1.0D, 1.0D);
-        worldrenderer.addVertexWithUV((double)(-f11), 100.0D, (double)f11, 0.0D, 1.0D);
-        tessellator.draw();
+        
+        RenderUtils.startDrawingQuads();
+        RenderUtils.addVertexWithUV((double)(-f11), 100.0D, (double)(-f11), 0.0D, 0.0D);
+        RenderUtils.addVertexWithUV((double)f11, 100.0D, (double)(-f11), 1.0D, 0.0D);
+        RenderUtils.addVertexWithUV((double)f11, 100.0D, (double)f11, 1.0D, 1.0D);
+        RenderUtils.addVertexWithUV((double)(-f11), 100.0D, (double)f11, 0.0D, 1.0D);
+        RenderUtils.tessellator.draw();
         f11 = 20.0F;
         this.renderEngine.bindTexture(locationMoonPhasesPng);
         int k = world.getMoonPhase();
@@ -272,12 +271,13 @@ public class RenderSkyVC extends IRenderHandler {
         float f16 = (float)(i1 + 0) / 2.0F;
         float f17 = (float)(l + 1) / 4.0F;
         float f18 = (float)(i1 + 1) / 2.0F;
-        worldrenderer.startDrawingQuads();
-        worldrenderer.addVertexWithUV((double)(-f11), -100.0D, (double)f11, (double)f17, (double)f18);
-        worldrenderer.addVertexWithUV((double)f11, -100.0D, (double)f11, (double)f15, (double)f18);
-        worldrenderer.addVertexWithUV((double)f11, -100.0D, (double)(-f11), (double)f15, (double)f16);
-        worldrenderer.addVertexWithUV((double)(-f11), -100.0D, (double)(-f11), (double)f17, (double)f16);
-        tessellator.draw();
+       
+        RenderUtils.startDrawingQuads();
+        RenderUtils.addVertexWithUV((double)(-f11), -100.0D, (double)f11, (double)f17, (double)f18);
+        RenderUtils.addVertexWithUV((double)f11, -100.0D, (double)f11, (double)f15, (double)f18);
+        RenderUtils.addVertexWithUV((double)f11, -100.0D, (double)(-f11), (double)f15, (double)f16);
+        RenderUtils.addVertexWithUV((double)(-f11), -100.0D, (double)(-f11), (double)f17, (double)f16);
+        RenderUtils.tessellator.draw();
         
       //  GlStateManager.disableTexture2D();
        // float f19 = world.getStarBrightness(partialTicks) * f7;
@@ -353,7 +353,7 @@ public class RenderSkyVC extends IRenderHandler {
         GlStateManager.popMatrix();
         GlStateManager.disableTexture2D();
         GlStateManager.color(0.0F, 0.0F, 0.0F);
-        double d0 = this.mc.thePlayer.getPositionEyes(partialTicks).yCoord - world.getHorizon();
+        double d0 = this.mc.thePlayer.getPositionEyes(partialTicks).yCoord - world.getHeight();
 
         if (d0 < 0.0D)
         {
@@ -378,29 +378,30 @@ public class RenderSkyVC extends IRenderHandler {
             f9 = 1.0F;
             f10 = -((float)(d0 + 65.0D));
             f11 = -1.0F;
-            worldrenderer.startDrawingQuads();
-            worldrenderer.setColorRGBA_I(0, 255);
-            worldrenderer.addVertex(-1.0D, (double)f10, 1.0D);
-            worldrenderer.addVertex(1.0D, (double)f10, 1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, -1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, -1.0D);
-            worldrenderer.addVertex(1.0D, (double)f10, -1.0D);
-            worldrenderer.addVertex(-1.0D, (double)f10, -1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, -1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(1.0D, (double)f10, 1.0D);
-            worldrenderer.addVertex(1.0D, (double)f10, -1.0D);
-            worldrenderer.addVertex(-1.0D, (double)f10, -1.0D);
-            worldrenderer.addVertex(-1.0D, (double)f10, 1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, -1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, -1.0D);
-            worldrenderer.addVertex(-1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, 1.0D);
-            worldrenderer.addVertex(1.0D, -1.0D, -1.0D);
-            tessellator.draw();
+           
+            RenderUtils.startDrawingQuads();
+            RenderUtils.worldrenderer.color(0, 0, 0,255);
+            RenderUtils.addVertex(-1.0D, (double)f10, 1.0D);
+            RenderUtils.addVertex(1.0D, (double)f10, 1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, -1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, -1.0D);
+            RenderUtils.addVertex(1.0D, (double)f10, -1.0D);
+            RenderUtils.addVertex(-1.0D, (double)f10, -1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, -1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(1.0D, (double)f10, 1.0D);
+            RenderUtils.addVertex(1.0D, (double)f10, -1.0D);
+            RenderUtils.addVertex(-1.0D, (double)f10, -1.0D);
+            RenderUtils.addVertex(-1.0D, (double)f10, 1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, -1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, -1.0D);
+            RenderUtils.addVertex(-1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, 1.0D);
+            RenderUtils.addVertex(1.0D, -1.0D, -1.0D);
+            RenderUtils.tessellator.draw();
         }
 
         if (world.provider.isSkyColored()) {
@@ -421,9 +422,6 @@ public class RenderSkyVC extends IRenderHandler {
 
 	
     private void generateSky() {
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-
         if (this.skyVBO != null) {
             this.skyVBO.deleteGlBuffers();
         }
@@ -435,24 +433,24 @@ public class RenderSkyVC extends IRenderHandler {
 
         if (this.vboEnabled) {
             this.skyVBO = new VertexBuffer(this.vertexBufferFormat);
-            this.renderSky(worldrenderer, 16.0F, false);
-            worldrenderer.finishDrawing();
-            worldrenderer.reset();
-            this.skyVBO.bufferData(worldrenderer.getByteBuffer(), worldrenderer.getByteIndex());
+         
+            this.renderSky(16.0F, false);
+            RenderUtils.worldrenderer.finishDrawing();
+            RenderUtils.worldrenderer.reset();
+            this.skyVBO.bufferData(RenderUtils.worldrenderer.getByteBuffer());
         }
         else {
             this.glSkyList = GLAllocation.generateDisplayLists(1);
             GL11.glNewList(this.glSkyList, GL11.GL_COMPILE);
-            this.renderSky(worldrenderer, 16.0F, false);
-            tessellator.draw();
+            this.renderSky(16.0F, false);
+            RenderUtils.tessellator.draw();
             GL11.glEndList();
         }
     }
     
     
     private void generateSky2() {
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
+        
 
         if (this.sky2VBO != null) {
             this.sky2VBO.deleteGlBuffers();
@@ -465,25 +463,28 @@ public class RenderSkyVC extends IRenderHandler {
 
         if (this.vboEnabled) {
             this.sky2VBO = new VertexBuffer(this.vertexBufferFormat);
-            this.renderSky(worldrenderer, -16.0F, true);
-            worldrenderer.finishDrawing();
-            worldrenderer.reset();
-            this.sky2VBO.bufferData(worldrenderer.getByteBuffer(), worldrenderer.getByteIndex());
+ 
+            this.renderSky(-16.0F, true);
+            RenderUtils.worldrenderer.finishDrawing();
+            RenderUtils.worldrenderer.reset();
+            this.sky2VBO.bufferData(RenderUtils.worldrenderer.getByteBuffer());
         }
         else {
             this.glSkyList2 = GLAllocation.generateDisplayLists(1);
             GL11.glNewList(this.glSkyList2, GL11.GL_COMPILE);
-            this.renderSky(worldrenderer, -16.0F, true);
-            tessellator.draw();
+           
+            this.renderSky(-16.0F, true);
+            RenderUtils.tessellator.draw();
             GL11.glEndList();
         }
     }
 
     
-    private void renderSky(WorldRenderer worldRendererIn, float p_174968_2_, boolean p_174968_3_) {
+    private void renderSky( float p_174968_2_, boolean p_174968_3_) {
         boolean flag1 = true;
         boolean flag2 = true;
-        worldRendererIn.startDrawingQuads();
+       
+        RenderUtils.startDrawingQuads();
 
         for (int i = -384; i <= 384; i += 64) {
             for (int j = -384; j <= 384; j += 64) {
@@ -495,10 +496,10 @@ public class RenderSkyVC extends IRenderHandler {
                     f1 = (float)(i + 64);
                 }
 
-                worldRendererIn.addVertex((double)f1, (double)p_174968_2_, (double)j);
-                worldRendererIn.addVertex((double)f2, (double)p_174968_2_, (double)j);
-                worldRendererIn.addVertex((double)f2, (double)p_174968_2_, (double)(j + 64));
-                worldRendererIn.addVertex((double)f1, (double)p_174968_2_, (double)(j + 64));
+                RenderUtils.addVertex((double)f1, (double)p_174968_2_, (double)j);
+                RenderUtils.addVertex((double)f2, (double)p_174968_2_, (double)j);
+                RenderUtils.addVertex((double)f2, (double)p_174968_2_, (double)(j + 64));
+                RenderUtils.addVertex((double)f1, (double)p_174968_2_, (double)(j + 64));
             }
         }
     }
@@ -518,13 +519,12 @@ public class RenderSkyVC extends IRenderHandler {
     	//Icosahedron.drawIcosahedron(1, radius);
     	
     	float textureScale = 2f;
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
+        
+    	RenderUtils.startDrawingQuads();
         
         double stack = ((2*Math.PI) / stacks);
         double slice = ((2*Math.PI) / slices);
-        
+      
         for (double theta = 0; theta < 2 * Math.PI; theta += stack) {
             for (double phi = 0; phi < 2 * Math.PI; phi += slice) {
             	Vec3 p1 = getPoints(phi, theta, radius);
@@ -537,22 +537,22 @@ public class RenderSkyVC extends IRenderHandler {
                 double t1 = textureScale * (phi + slice) / (2 * Math.PI);
                 double s0 = textureScale * theta / (2 * Math.PI);
                 double s1 = textureScale * (theta + stack) / (2 * Math.PI);
-                
-                /*if (Math.abs(theta - Math.PI) < 0.5 || Math.abs(phi - Math.PI) < 0.5) {
+              /*  
+                if (Math.abs(theta - Math.PI) < 0.5 || Math.abs(phi - Math.PI) < 0.5) {
                 	t0 = t0/2;
                 	t1 = t1/2;
                 	s0 = s0/2;
                 	s1 = s1/2;
                 }*/
-                
-                worldrenderer.addVertexWithUV(p1.xCoord, p1.yCoord, p1.zCoord, t0, s0);   // bottom left
-                worldrenderer.addVertexWithUV(p2.xCoord, p2.yCoord, p2.zCoord, t1, s0);   // top left
-                worldrenderer.addVertexWithUV(p3.xCoord, p3.yCoord, p3.zCoord, t1, s1);   // top right
-                worldrenderer.addVertexWithUV(p4.xCoord, p4.yCoord, p4.zCoord, t0, s1);   // bottom right
+               
+                RenderUtils.addVertexWithUV(p1.xCoord, p1.yCoord, p1.zCoord, t0, s0);   // bottom left
+                RenderUtils.addVertexWithUV(p2.xCoord, p2.yCoord, p2.zCoord, t1, s0);   // top left
+                RenderUtils.addVertexWithUV(p3.xCoord, p3.yCoord, p3.zCoord, t1, s1);   // top right
+                RenderUtils.addVertexWithUV(p4.xCoord, p4.yCoord, p4.zCoord, t0, s1);   // bottom right
             }
         }
         
-        tessellator.draw();
+        RenderUtils.tessellator.draw();
     }
 
     

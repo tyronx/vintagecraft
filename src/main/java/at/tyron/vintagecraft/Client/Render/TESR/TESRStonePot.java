@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import at.tyron.vintagecraft.ModInfo;
 import at.tyron.vintagecraft.Client.Model.ModelStonePot;
+import at.tyron.vintagecraft.Client.Render.RenderUtils;
 import at.tyron.vintagecraft.Item.ItemIngot;
 import at.tyron.vintagecraft.TileEntity.TEStonePot;
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
@@ -260,20 +261,19 @@ public class TESRStonePot extends TESRBase {
         
         GL11.glTranslatef(-0.5f, -0.5f, -0.5f);
         
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawingQuads();
-        worldrenderer.setVertexFormat(DefaultVertexFormats.ITEM);
+        
+     
+        RenderUtils.worldrenderer.begin(GL11.GL_QUADS,DefaultVertexFormats.ITEM);
         EnumFacing[] aenumfacing = EnumFacing.values();
         int j = aenumfacing.length;
         
         for (int k = 0; k < j; ++k) {
             EnumFacing enumfacing = aenumfacing[k];
-            renderQuads(worldrenderer, ibakedmodel.getFaceQuads(enumfacing), itemstack, 1, color);
+            renderQuads(RenderUtils.worldrenderer, ibakedmodel.getFaceQuads(enumfacing), itemstack, 1, color);
         }
 
-        renderQuads(worldrenderer, ibakedmodel.getGeneralQuads(), itemstack, 1, color);
-        tessellator.draw();
+        renderQuads(RenderUtils.worldrenderer, ibakedmodel.getGeneralQuads(), itemstack, 1, color);
+        RenderUtils.tessellator.draw();
         
         
 

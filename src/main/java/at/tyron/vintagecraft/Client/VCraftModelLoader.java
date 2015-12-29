@@ -111,8 +111,7 @@ public class VCraftModelLoader implements ICustomModelLoader {
 
         public boolean isBuiltInRenderer() { return false; }
 
-        public TextureAtlasSprite getTexture() { return this.texture; }
-
+     
         public ItemCameraTransforms getItemCameraTransforms()
         {
             return ItemCameraTransforms.DEFAULT;
@@ -122,6 +121,11 @@ public class VCraftModelLoader implements ICustomModelLoader {
         {
             return Attributes.DEFAULT_BAKED_FORMAT;
         }
+
+		@Override
+		public TextureAtlasSprite getParticleTexture() {
+			return this.texture;
+		}
     }
 
     public void onResourceManagerReload(IResourceManager resourceManager) {}

@@ -316,7 +316,7 @@ public class ClientProxy extends CommonProxy implements IResourceManagerReloadLi
 	
 	public void ignoreProperties(Block block, IProperty[] properties) {
 		BlockModelShapes bms = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes();
-		bms.registerBlockWithStateMapper(block, (new StateMap.Builder()).addPropertiesToIgnore(properties).build());
+		bms.registerBlockWithStateMapper(block, (new StateMap.Builder()).ignore(properties).build());
 	}
 	
 	

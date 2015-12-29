@@ -41,9 +41,9 @@ public class ContainerStove extends Container {
 	
 
     public void addCraftingToCrafters(ICrafting listener) {
-        super.addCraftingToCrafters(listener);
+        super.onCraftGuiOpened(listener);
         
-        listener.func_175173_a(this, stove);
+        listener.sendAllWindowProperties(this, stove);
     }
 	
 	@Override

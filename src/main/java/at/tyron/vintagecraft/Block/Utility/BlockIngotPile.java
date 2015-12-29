@@ -242,7 +242,7 @@ public class BlockIngotPile extends BlockContainerVC implements IBlockItemSink {
 
 	@Override
 	public String getSubType(ItemStack stack) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 }

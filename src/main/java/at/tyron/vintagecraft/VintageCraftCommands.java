@@ -41,7 +41,7 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 public class VintageCraftCommands extends CommandBase {
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "vcraft";
 	}
 
@@ -114,7 +114,7 @@ public class VintageCraftCommands extends CommandBase {
 	
 	
 	@Override
-	public void execute(ICommandSender sender, String[] args) throws CommandException {
+	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 		World world = sender.getEntityWorld();
 		
 		if (args.length == 0) {

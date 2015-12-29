@@ -16,15 +16,15 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ITickable;
 
-public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerListBox {
+public class TEFurnaceSection extends TENoGUIInventory implements ITickable {
 	int state;
 	int burntime;
 	EnumFurnaceType furnacetype;
@@ -226,10 +226,7 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		return 4;
 	}
 
-	@Override
-	public String getName() {
-		return "furnacesection";
-	}
+
 
 	@Override
 	public IChatComponent getDisplayName() {
@@ -496,4 +493,8 @@ public class TEFurnaceSection extends TENoGUIInventory implements IUpdatePlayerL
 		storage[3].stackSize = 0;
 	}
 
+	@Override
+	public String getName() {
+		return "furnacesection";
+	}
 }

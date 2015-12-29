@@ -151,7 +151,7 @@ public class DynVillageGen {
 				if (dx*dx + dz*dz < placeWidthSq) {
 					IBlockState blockstate = roadBlock(width);
 					if (blockstate != null) {
-						world.setBlockState(world.getHorizon(pos.add(dx, 0, dz)).down(), blockstate);
+						world.setBlockState(world.getHeight(pos.add(dx, 0, dz)).down(), blockstate);
 					}					
 				}
 			}
@@ -165,7 +165,7 @@ public class DynVillageGen {
 			
 			IBlockState blockstate = roadBlock(width);
 			if (blockstate != null) {
-				world.setBlockState(world.getHorizon(pos.add(dx, 0, dz)).down(), blockstate);
+				world.setBlockState(world.getHeight(pos.add(dx, 0, dz)).down(), blockstate);
 			}
 			
 			placeWidth--;

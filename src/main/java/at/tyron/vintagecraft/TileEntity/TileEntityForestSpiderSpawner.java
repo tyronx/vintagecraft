@@ -5,15 +5,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdatePlayerListBox {
+public class TileEntityForestSpiderSpawner extends TileEntity implements ITickable {
 	int spawnDelay = 20;
     int minSpawnDelay = 200;
     int maxSpawnDelay = 600;
@@ -27,7 +27,7 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 
 	private boolean isActivated() {
 		BlockPos blockpos = getPos();
-		return worldObj.func_175636_b(
+		return worldObj.isAnyPlayerWithinRangeAt(
 			(double)blockpos.getX() + 0.5D, 
 			(double)blockpos.getY() + 0.5D, 
 			(double)blockpos.getZ() + 0.5D, 
@@ -145,7 +145,7 @@ public class TileEntityForestSpiderSpawner extends TileEntity implements IUpdate
 
 	private Entity spawnIfPossible(Entity entity) {
 		if (entity instanceof EntityLivingBase && entity.worldObj != null) {
-			((EntityLiving)entity).func_180482_a(entity.worldObj.getDifficultyForLocation(new BlockPos(entity)), (IEntityLivingData)null);
+			((EntityLiving)entity).onInitialSpawn(entity.worldObj.getDifficultyForLocation(new BlockPos(entity)), (IEntityLivingData)null);
 
 			entity.worldObj.spawnEntityInWorld(entity);
 		}

@@ -3,13 +3,14 @@ package at.tyron.vintagecraft.TileEntity.Mechanics;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.Interfaces.IMechanicalPowerNetworkRelay;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
+
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 
 
-public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements IUpdatePlayerListBox, IMechanicalPowerNetworkRelay {
+public class TEAngledGearBox extends TEMechanicalNetworkDeviceBase implements ITickable, IMechanicalPowerNetworkRelay {
 	// orientation = peg gear orientation
 	// clockwise = facing of 
 	

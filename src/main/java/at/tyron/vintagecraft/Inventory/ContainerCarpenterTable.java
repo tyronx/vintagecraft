@@ -59,7 +59,7 @@ public class ContainerCarpenterTable extends Container {
 	
 	
     public void addCraftingToCrafters(ICrafting listener) {
-        super.addCraftingToCrafters(listener);
+        super.onCraftGuiOpened(listener);
     }
 
 

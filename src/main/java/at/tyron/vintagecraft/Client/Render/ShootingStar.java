@@ -59,9 +59,8 @@ public class ShootingStar {
 	public void render() {
 		GL11.glPushMatrix();
 			GL11.glRotatef(angle, 0, 1f, 0f);
-	        Tessellator tessellator = Tessellator.getInstance();
-	        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-	        worldrenderer.startDrawing(GL11.GL_LINES);
+
+	        RenderUtils.startDrawing(GL11.GL_LINES);
 	        GL11.glLineWidth(0.5f);
 	        float col = Math.min(1f, age/10f);
 	        GL11.glColor3f(col, col, col);
@@ -69,11 +68,11 @@ public class ShootingStar {
 	        Vec3 p1 = new Vec3(xPos + xOffset2, skyRadius, zPos + zOffset2);
 	        Vec3 p3 = new Vec3(xPos + xOffset, skyRadius, zPos + zOffset);
 	        
-	        worldrenderer.addVertexWithUV(p1.xCoord, p1.yCoord, p1.zCoord, 0, 0);   // bottom left
-	        worldrenderer.addVertexWithUV(p3.xCoord, p3.yCoord, p3.zCoord, 1, 1);   // top right
+	        RenderUtils.addVertexWithUV(p1.xCoord, p1.yCoord, p1.zCoord, 0, 0);   // bottom left
+	        RenderUtils.addVertexWithUV(p3.xCoord, p3.yCoord, p3.zCoord, 1, 1);   // top right
 	
 	        
-	        tessellator.draw();
+	        RenderUtils.tessellator.draw();
         GL11.glPopMatrix();
 	}
 

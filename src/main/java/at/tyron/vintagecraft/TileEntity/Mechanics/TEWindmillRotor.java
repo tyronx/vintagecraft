@@ -4,16 +4,16 @@ import at.tyron.vintagecraft.Interfaces.IMechanicalPowerDevice;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.World.WindGen;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
-public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
+public class TEWindmillRotor extends TEMechanicalNetworkPowerNodeBase implements ITickable {
 	// The tower mill was more powerful than the water mill, able to generate roughly 20 to 30 horsepower.
 	// https://en.wikipedia.org/wiki/Tower_mill#Application
 	// 20 hp = 15 KW

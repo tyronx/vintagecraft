@@ -33,7 +33,7 @@ public class ItemRockTyped extends ItemBlock {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return getBlockClass(((ItemBlock)stack.getItem()).block).getName();
+		return getBlockClass(((ItemBlock)stack.getItem()).block).getCommandSenderName();
 	}
 
 
@@ -66,7 +66,7 @@ public class ItemRockTyped extends ItemBlock {
 	
 	@Override
 	public void addInformation(ItemStack itemstack, EntityPlayer playerIn, List tooltip, boolean advanced) {
-		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + getRockType(itemstack).getUnlocalizedName() + ".name"));	
+		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getCommandSenderName() + "." + getRockType(itemstack).getUnlocalizedName() + ".name"));	
 	}
 	
 

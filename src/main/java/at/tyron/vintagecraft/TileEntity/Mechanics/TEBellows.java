@@ -6,14 +6,14 @@ import at.tyron.vintagecraft.TileEntity.TEFurnaceSection;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox {
+public class TEBellows extends TEMechanicalNetworkPowerNodeBase implements ITickable {
 	public boolean refreshModel = false;
 	public boolean connectedToFurnace = false;
 	

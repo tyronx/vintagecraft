@@ -98,21 +98,20 @@ public class Icosahedron {
 	  private static void drawTriangle(double[] v1, double[] v2, double[] v3, float radius) {
 	    double[] spherical;
 
-        Tessellator tessellator = Tessellator.getInstance();
-        WorldRenderer worldrenderer = tessellator.getWorldRenderer();
-        worldrenderer.startDrawing(GL11.GL_TRIANGLES);
+        
+//        worldrenderer.startDrawing(GL11.GL_TRIANGLES);
         
 	    GL11.glEnable(GL11.GL_TEXTURE_2D);
 
 	    spherical = calcTextureMap(v1);
-	    worldrenderer.addVertexWithUV(radius * v1[0], radius * v1[1], radius * v1[2], spherical[1], spherical[2]);
+//	    worldrenderer.addVertexWithUV(radius * v1[0], radius * v1[1], radius * v1[2], spherical[1], spherical[2]);
 
 	    spherical = calcTextureMap(v2);
-	    worldrenderer.addVertexWithUV(radius * v2[0], radius * v2[1], radius * v2[2], spherical[1], spherical[2]);
+//	    worldrenderer.addVertexWithUV(radius * v2[0], radius * v2[1], radius * v2[2], spherical[1], spherical[2]);
 	    
 	    spherical = calcTextureMap(v3);
-	    worldrenderer.addVertexWithUV(radius * v3[0], radius * v3[1], radius * v3[2], spherical[1], spherical[2]);
+//	    worldrenderer.addVertexWithUV(radius * v3[0], radius * v3[1], radius * v3[2], spherical[1], spherical[2]);
 
-	    tessellator.draw();
+//	    tessellator.draw();
 	  }
 	}

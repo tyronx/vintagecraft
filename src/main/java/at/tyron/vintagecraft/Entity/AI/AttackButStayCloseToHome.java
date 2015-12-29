@@ -22,7 +22,7 @@ public class AttackButStayCloseToHome extends EntityAINearestAttackableTarget {
 	public boolean isTooFarOff() {
 		return
 			taskOwner.hasHome() &&
-			taskOwner.func_180486_cf().distanceSq(taskOwner.getPosition()) > (double)(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())
+			taskOwner.getHomePosition().distanceSq(taskOwner.getPosition()) > (double)(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())
 		;
 	}
 

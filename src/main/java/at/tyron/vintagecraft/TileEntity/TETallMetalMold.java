@@ -2,10 +2,10 @@ package at.tyron.vintagecraft.TileEntity;
 
 import at.tyron.vintagecraft.WorldProperties.EnumMetal;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TETallMetalMold extends NetworkTileEntity implements IUpdatePlayerListBox {
+public class TETallMetalMold extends NetworkTileEntity implements ITickable {
 	public boolean refreshModel = false;
 
 	

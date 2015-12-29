@@ -10,11 +10,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ITickable;
 
-public class TEStonePot extends TENoGUIInventory implements IUpdatePlayerListBox {
+public class TEStonePot extends TENoGUIInventory implements ITickable {
 	public static int burnTimePerCoal = 900; 
 	public static int maxCoalInPot = 5;
 	

@@ -189,7 +189,7 @@ public class TEToolRack extends NetworkTileEntity implements IInventory {
 	}
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int var1) {
+	public ItemStack removeStackFromSlot(int var1) {
 		return null;
 	}
 

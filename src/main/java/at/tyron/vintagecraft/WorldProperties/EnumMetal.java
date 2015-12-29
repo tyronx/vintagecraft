@@ -40,7 +40,7 @@ public enum EnumMetal implements IStringSerializable, IStateEnum {
 	
 	public int id;
 	public int tier;
-	public int meltingpoint; // °C
+	public int meltingpoint; // ï¿½C
 	public float hardness; 
 	public boolean hasTools;
 	public boolean hasArmor;

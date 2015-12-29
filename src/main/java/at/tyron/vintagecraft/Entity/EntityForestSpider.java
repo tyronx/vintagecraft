@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -14,6 +15,7 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityCaveSpider;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -31,7 +33,7 @@ public class EntityForestSpider extends EntityCaveSpider {
         
 
         this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, this.field_175455_a);
+        this.tasks.addTask(2, new EntityAIAvoidEntity(this,EntityCreeper.class,6.0F, 1.0D, 1.2D));
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(4, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, true));
         this.tasks.addTask(5, new EntityAIWander(this, 0.8D));
@@ -50,7 +52,7 @@ public class EntityForestSpider extends EntityCaveSpider {
         super.updateAITasks();
 
         if (!this.hasHome()) {
-            this.func_175449_a(worldObj.getHorizon(new BlockPos(this)), 14);
+            this.setHomePosAndDistance(worldObj.getHeight(new BlockPos(this)), 14);
         }
     }
     
@@ -98,7 +100,7 @@ public class EntityForestSpider extends EntityCaveSpider {
                 p_70652_1_.setFire(j * 4);
             }
 
-            this.func_174815_a(this, p_70652_1_);
+            this.applyEnchantments(this, p_70652_1_);
         }
 
         return flag;

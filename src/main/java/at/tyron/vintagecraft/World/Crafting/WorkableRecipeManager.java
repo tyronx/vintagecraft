@@ -58,7 +58,7 @@ public class WorkableRecipeManager {
 			if (!match) continue;
 			
 			
-			//System.out.println("match on " + recipe.getName());
+			//System.out.println("match on " + recipe.getCommandSenderName());
 
 			
 			return false;

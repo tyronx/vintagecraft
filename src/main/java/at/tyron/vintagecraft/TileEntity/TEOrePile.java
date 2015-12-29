@@ -11,14 +11,14 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.ITickable;
 
-public class TEOrePile extends TENoGUIInventory implements IUpdatePlayerListBox {
+public class TEOrePile extends TENoGUIInventory implements ITickable {
 	int burnTime;
 	
 	public int getMaxBurntime() {

@@ -175,9 +175,9 @@ public abstract class TENoGUIInventory extends NetworkTileEntity implements IInv
 	{
 		return this.storage[i];
 	}
-
+	
 	@Override
-	public ItemStack getStackInSlotOnClosing(int var1)
+	public ItemStack removeStackFromSlot(int var1)
 	{
 		return null;
 	}

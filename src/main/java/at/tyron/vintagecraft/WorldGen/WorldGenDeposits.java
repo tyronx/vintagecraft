@@ -75,7 +75,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 		if (belowsealevel) {
 			referencePos = new BlockPos(x, VCraftWorld.seaLevel, z);	
 		} else {
-			referencePos = world.getHorizon(new BlockPos(x, 0, z));
+			referencePos = world.getHeight(new BlockPos(x, 0, z));
 		}
 
 		int depth = deposit.occurence.mindepth + rand.nextInt(deposit.occurence.maxdepth - deposit.occurence.mindepth);
@@ -169,7 +169,7 @@ public class WorldGenDeposits implements IWorldGenerator {
 				int horizon = VCraftWorld.instance.seaLevel;
 				
 				if (deposit.occurence.type == EnumDepositOccurenceType.ANYRELATIVEDEPTH || deposit.occurence.type == EnumDepositOccurenceType.FOLLOWSURFACE) {
-					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeight(x, z);
+					horizon = world.getChunkFromChunkCoords(xCoord >> 4, zCoord >> 4).getHeightValue(x, z);
 					
 					if (horizon > deposit.occurence.untilyheight) continue;
 				}

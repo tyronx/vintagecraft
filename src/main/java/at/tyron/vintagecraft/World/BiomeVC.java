@@ -120,14 +120,13 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 
 	@Override
 	public int getDepthMin() {
-		// TODO Auto-generated method stub
+	
 		return 0;
 	}
 
 
 	@Override
 	public int getDepthMax() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
@@ -151,7 +150,7 @@ public class BiomeVC extends BiomeGenBase implements IGenLayerSupplier {
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 }

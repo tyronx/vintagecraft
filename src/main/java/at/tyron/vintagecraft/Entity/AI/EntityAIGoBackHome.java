@@ -20,7 +20,7 @@ public class EntityAIGoBackHome extends EntityAIBase {
 	@Override
 	public boolean shouldExecute() {
 		if (!taskOwner.hasHome()) return false;
-		BlockPos home = taskOwner.func_180486_cf();
+		BlockPos home = taskOwner.getHomePosition();
 		
 		if (isTooFarOff()) {
 			pathentity = taskOwner.getNavigator().getPathToXYZ(home.getX() + 0.5f, home.getY(), home.getZ() + 0.5f);
@@ -45,7 +45,7 @@ public class EntityAIGoBackHome extends EntityAIBase {
 		);*/
 		return
 			taskOwner.hasHome() &&
-			taskOwner.func_180486_cf().distanceSq(taskOwner.getPosition()) > (double)(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())
+			taskOwner.getHomePosition().distanceSq(taskOwner.getPosition()) > (double)(4 * taskOwner.getMaximumHomeDistance() * taskOwner.getMaximumHomeDistance())
 		;
 	}
 

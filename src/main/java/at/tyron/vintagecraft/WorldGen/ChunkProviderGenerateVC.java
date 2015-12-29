@@ -111,8 +111,8 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 			normalTerrainGen.generateTerrain(chunkX, chunkZ, primer, worldObj);
 		
 			decorate(chunkX, chunkZ, rand, primer);
-			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
-			caveGenerator.func_175792_a(this, this.worldObj, chunkX, chunkZ, primer);
+			caveGenerator.generate(this, this.worldObj, chunkX, chunkZ, primer);
+			caveGenerator.generate(this, this.worldObj, chunkX, chunkZ, primer);
 			
 		//}
 		
@@ -200,7 +200,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 		int temp;
 		for (int x = 0; x < 16; x++) {
 			for (int z = 0; z < 16; z++) {
-				pos = worldObj.getHorizon(chunkpos.add(x, 0, z));
+				pos = worldObj.getHeight(chunkpos.add(x, 0, z));
 				
 				if (worldObj.getBlockState(pos.down()).getBlock().getMaterial() != Material.water) {
 					temp = VCraftWorld.instance.getTemperature(pos);
@@ -407,7 +407,7 @@ public class ChunkProviderGenerateVC extends ChunkProviderGenerate {
 
 	// Get spawnable creatures list
 	@Override
-	public List func_177458_a(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
+	public List getPossibleCreatures(EnumCreatureType p_177458_1_, BlockPos p_177458_2_) {
 		BiomeGenBase biomegenbase = this.worldObj.getBiomeGenForCoords(p_177458_2_);
 		
 		return biomegenbase.getSpawnableList(p_177458_1_);

@@ -113,7 +113,7 @@ public class EntityMobHorse extends EntityHorse {
                 p_70652_1_.setFire(j * 4);
             }
 
-            this.func_174815_a(this, p_70652_1_);
+            this.applyEnchantments(this, p_70652_1_);
         }
 
         return flag;

@@ -26,7 +26,7 @@ public class ItemSubsoil extends ItemBlockVC {
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return getBlockClass(((ItemBlock)stack.getItem()).block).getName();
+		return getBlockClass(((ItemBlock)stack.getItem()).block).getCommandSenderName();
 	}
 
 	
@@ -46,7 +46,7 @@ public class ItemSubsoil extends ItemBlockVC {
 		// Totally should be programmed using generic types
 		SoilRockClassEntry entry = (SoilRockClassEntry)getBlockClass(((ItemBlock)itemstack.getItem()).block).getEntryFromItemStack(itemstack);
 		
-		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + entry.rocktype.getUnlocalizedName() + ".name"));
+		tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getCommandSenderName() + "." + entry.rocktype.getUnlocalizedName() + ".name"));
 		tooltip.add(StatCollector.translateToLocal(entry.organiclayer.getStateName() + ".name"));
 	}
 	

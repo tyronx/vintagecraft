@@ -52,7 +52,7 @@ public class MapGenFlora {
 			
 			int density = forestLayer[x+z*16];
 		
-			BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + x, 0, chunkZ + z));
+			BlockPos blockpos = world.getHeight(new BlockPos(chunkX + x, 0, chunkZ + z));
 			
 			int climate[] = VCraftWorld.instance.getClimate(blockpos);
 			float forestdensity = EnumTree.getForestDensity(density, climate[2], climate[0]);
@@ -90,7 +90,7 @@ public class MapGenFlora {
 		
 		
 		/*** 3. Spider Nests ***/
-		BlockPos blockpos = world.getHorizon(new BlockPos(chunkX + 12 - random.nextInt(9), 0, chunkZ + 12 - random.nextInt(9)));
+		BlockPos blockpos = world.getHeight(new BlockPos(chunkX + 12 - random.nextInt(9), 0, chunkZ + 12 - random.nextInt(9)));
 		
 		int middleIndex = (blockpos.getX() - chunkX) + (blockpos.getZ() - chunkZ) * 16;
 		int climate[] = VCraftWorld.instance.getClimate(blockpos);
@@ -123,8 +123,8 @@ public class MapGenFlora {
 		}
 		
 		int steepness = Math.max(
-			Math.abs(world.getHorizon(blockpos.east(2)).getY() - world.getHorizon(blockpos.west(2)).getY()),
-			Math.abs(world.getHorizon(blockpos.north(2)).getY() - world.getHorizon(blockpos.south(2)).getY())
+			Math.abs(world.getHeight(blockpos.east(2)).getY() - world.getHeight(blockpos.west(2)).getY()),
+			Math.abs(world.getHeight(blockpos.north(2)).getY() - world.getHeight(blockpos.south(2)).getY())
 		);
 		
 		DynTreeGen treegen = EnumTree.getRandomTreeGenForClimate(climate[2], climate[0], 255 - forest, climate[1], steepness, blockpos.getY(), random);				
@@ -149,7 +149,7 @@ public class MapGenFlora {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z));
+			pos = world.getHeight(new BlockPos(xCoord + x, 0, zCoord + z));
 			
 			// Decrease the chance of multiple flowers being placed in the same chunk  
 			if (random.nextFloat() > chance) break;
@@ -164,7 +164,7 @@ public class MapGenFlora {
 			int quantity = flora.getRandomQuantity(random);
 			
 			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(19)+random.nextInt(19))/2 - 6, 0, zCoord + z + (random.nextInt(19)+random.nextInt(19))/2 - 6));
+				pos = world.getHeight(new BlockPos(xCoord + x + (random.nextInt(19)+random.nextInt(19))/2 - 6, 0, zCoord + z + (random.nextInt(19)+random.nextInt(19))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				BlockClassEntry[] variants = BlocksVC.flower.values(flora);
@@ -186,13 +186,13 @@ public class MapGenFlora {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z)));
+			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHeight(new BlockPos(xCoord + x, 0, zCoord + z)));
 			if (climate[1] >= 120 ) {
 			
 				int quantity = random.nextInt(10) + 2;
 				
 				while (quantity-- > 0) {
-					pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+					pos = world.getHeight(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 					Block block = world.getBlockState(pos.down()).getBlock();
 					
 					if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {
@@ -206,12 +206,12 @@ public class MapGenFlora {
 			int x = random.nextInt(16);
 			int z = random.nextInt(16);
 			
-			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHorizon(new BlockPos(xCoord + x, 0, zCoord + z)));
+			int climate[] = VCraftWorld.instance.getClimate(pos = world.getHeight(new BlockPos(xCoord + x, 0, zCoord + z)));
 			
 			int quantity = random.nextInt(6) + 3;
 			
 			while (quantity-- > 0) {
-				pos = world.getHorizon(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
+				pos = world.getHeight(new BlockPos(xCoord + x + (random.nextInt(13)+random.nextInt(13))/2 - 6, 0, zCoord + z + (random.nextInt(13)+random.nextInt(13))/2 - 6));
 				Block block = world.getBlockState(pos.down()).getBlock();
 				
 				if (block instanceof IBlockSoil && block.canPlaceBlockAt(world, pos)) {

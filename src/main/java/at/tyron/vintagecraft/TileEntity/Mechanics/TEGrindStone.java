@@ -5,10 +5,10 @@ import at.tyron.vintagecraft.Interfaces.IPitchAndVolumProvider;
 import at.tyron.vintagecraft.World.MechanicalNetwork;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumRockType;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 
-public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements IUpdatePlayerListBox, IPitchAndVolumProvider {
+public class TEGrindStone extends TEMechanicalNetworkPowerNodeBase implements ITickable, IPitchAndVolumProvider {
 
 	private boolean initialized;
 	EnumRockType rocktype;

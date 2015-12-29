@@ -153,7 +153,7 @@ public class TEVessel extends NetworkTileEntity implements IInventory {
     }
 
 	@Override
-	public ItemStack getStackInSlotOnClosing(int index) {
+	public ItemStack removeStackFromSlot(int index) {
 		 if (this.storage[index] != null) {
 	            ItemStack itemstack = this.storage[index];
 	            this.storage[index] = null;

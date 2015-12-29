@@ -55,7 +55,7 @@ public class WorldProviderVC extends WorldProvider {
 	
 	@Override
 	public boolean canCoordinateBeSpawn(int x, int z) {
-		return worldObj.getHorizon(new BlockPos(x, 0, z)).getY() > VCraftWorld.instance.seaLevel;
+		return worldObj.getHeight(new BlockPos(x, 0, z)).getY() > VCraftWorld.instance.seaLevel;
 	}
 	
 	

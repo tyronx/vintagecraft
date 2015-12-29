@@ -257,7 +257,6 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 	
 	@Override
 	public String getSubType(ItemStack stack) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -301,13 +300,13 @@ public class BlockFirepit extends BlockContainerVC implements IStrongHeatSource,
 
 		@Override
 		public void init(Block block, int meta) {
-			// TODO Auto-generated method stub
+		
 			
 		}
 
 		@Override
 		public int getId() {
-			// TODO Auto-generated method stub
+		
 			return 0;
 		}
 	}

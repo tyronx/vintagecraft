@@ -49,7 +49,7 @@ public enum EnumAlloy {
 			
 		}
 		
-		/*System.out.println(toMetal.getName() + " Ingredients ");
+		/*System.out.println(toMetal.getCommandSenderName() + " Ingredients ");
 		for (int i = 0; i < fromMetals.length; i++) {
 			System.out.println( fromMetals[i] + " " + fromMetalsMinRatio[i] + "% - " + fromMetalsMaxRatio[i] + "%");
 		}*/

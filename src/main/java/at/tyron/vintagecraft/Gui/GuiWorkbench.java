@@ -53,7 +53,7 @@ public abstract class GuiWorkbench extends GuiContainer {
 			int dx = (i % 6) * 20 + 30;
 			int dy = ((i / 6) * 20) + 20;
 			
-			buttons.add(new GuiButtonVC(dx, dy, w, w, recipe.getName(), this, recipe));
+			buttons.add(new GuiButtonVC(dx, dy, w, w, recipe.getCommandSenderName(), this, recipe));
 			i++;
 		}
 		
@@ -134,8 +134,8 @@ public abstract class GuiWorkbench extends GuiContainer {
 
 
 	private void drawRecipeOutput(WorkableRecipeBase recipe, int posX, int posY) {
-		if (recipe.getIcon() == null) { System.out.println("Recipe icon for "+recipe.getName()+" is null?"); return; }
-		if (recipe.getIcon().getItem() == null) { System.out.println("Recipe item icon for "+recipe.getName()+" is null?"); return; }
+		if (recipe.getIcon() == null) { System.out.println("Recipe icon for "+recipe.getCommandSenderName()+" is null?"); return; }
+		if (recipe.getIcon().getItem() == null) { System.out.println("Recipe item icon for "+recipe.getCommandSenderName()+" is null?"); return; }
 		
 		GL11.glPushMatrix();
 			Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(
@@ -323,7 +323,7 @@ public abstract class GuiWorkbench extends GuiContainer {
     
     
 	String getRecipeText(WorkableRecipeBase recipe) {
-		return recipe.getName() + "\n" + recipe.getRecipeText();
+		return recipe.getCommandSenderName() + "\n" + recipe.getRecipeText();
 	}
 	
 	// Cannot make this non-static => cannot make it inheritable :/

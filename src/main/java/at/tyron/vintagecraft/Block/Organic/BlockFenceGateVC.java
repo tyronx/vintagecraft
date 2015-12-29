@@ -10,18 +10,20 @@ import at.tyron.vintagecraft.Interfaces.IStateEnum;
 import at.tyron.vintagecraft.World.BlocksVC;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFenceGate;
+import net.minecraft.block.BlockPlanks.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockState;
 import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
+	public BlockFenceGateVC() {
+		super(EnumType.OAK);
+	}
+
+
 	public PropertyBlockClass TREETYPE;
 	BlockClassEntry[] subtypes;
-	
-	public BlockFenceGateVC() {
-		setCreativeTab(VintageCraft.craftedBlocksTab);
-	}
 	
 	public int multistateAvailableTypes() {
 		return 1;
@@ -35,6 +37,7 @@ public class BlockFenceGateVC extends BlockFenceGate implements IMultiblock {
 		blockState = this.createBlockState();
 	
 		setDefaultState(subtypes[0].getBlockState(blockState.getBaseState(), getTypeProperty()));
+		setCreativeTab(VintageCraft.craftedBlocksTab);
 	}
 
 	@Override

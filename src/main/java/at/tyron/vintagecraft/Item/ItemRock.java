@@ -55,7 +55,7 @@ public class ItemRock extends ItemBlockVC implements IItemSmeltable {
 		
 		if (getBlockClass(item.getBlock()).containsBlock(item.getBlock())) {
 			EnumRockType rocktype = getRockType(itemstack);
-			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getName() + "." + rocktype.getUnlocalizedName() + ".name"));
+			tooltip.add(StatCollector.translateToLocal(BlocksVC.rock.getCommandSenderName() + "." + rocktype.getUnlocalizedName() + ".name"));
 			tooltip.add(StatCollector.translateToLocal("rocktype." + rocktype.group.name().toLowerCase(Locale.ROOT) + ".name"));
 		}
 	}

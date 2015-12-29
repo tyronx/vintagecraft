@@ -100,11 +100,11 @@ public class WorldGenAnimals {
 								continue;
 							}
 							
-					//		System.out.println("spawning " + entityliving.getName() + " at " + f + "/" + f1 + "/" + f2);
+					//		System.out.println("spawning " + entityliving.getCommandSenderName() + " at " + f + "/" + f1 + "/" + f2);
 						
 							entityliving.setLocationAndAngles(f, f1, f2, rand.nextFloat() * 360.0F, 0.0F);
 							world.spawnEntityInWorld(entityliving);
-							entitylivingdata = entityliving.func_180482_a(world.getDifficultyForLocation(new BlockPos(entityliving)), entitylivingdata);
+							entitylivingdata = entityliving.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entityliving)), entitylivingdata);
 							flag = true;
 						}
 

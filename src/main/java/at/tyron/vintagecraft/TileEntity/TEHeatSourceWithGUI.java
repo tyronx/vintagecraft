@@ -20,15 +20,15 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
-import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntityLockable;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePlayerListBox, ISidedInventory, IPitchAndVolumProvider {
+public class TEHeatSourceWithGUI extends TileEntityLockable implements ITickable, ISidedInventory, IPitchAndVolumProvider {
 	boolean initialized = false;
 	
     private static final int[] slotsTop = new int[] {0};
@@ -187,7 +187,7 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
             this.markDirty();
         }
     }
-
+    @Override
     public String getName() {
         return this.hasCustomName() ? this.furnaceCustomName : (furnace == EnumStrongHeatSource.STOVE ? "container.stove" : "container.firepit");
     }
@@ -675,4 +675,12 @@ public class TEHeatSourceWithGUI extends TileEntityLockable implements IUpdatePl
 
 
 	}
+
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

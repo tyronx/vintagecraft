@@ -94,7 +94,7 @@ public class GuiAnvil extends GuiWorkbench {
     }
     
 	String getRecipeText(WorkableRecipeBase recipe) {
-		return recipe.getName() + "\n" + recipe.getRecipeText();
+		return recipe.getCommandSenderName() + "\n" + recipe.getRecipeText();
 	}
 
 	
