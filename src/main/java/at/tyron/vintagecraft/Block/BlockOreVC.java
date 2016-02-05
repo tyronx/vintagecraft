@@ -133,7 +133,7 @@ public class BlockOreVC extends BlockVC implements IMultiblock {
 	        	itemstack = new ItemStack(ItemsVC.ore, 1 + (worldIn.rand.nextInt(7) == 0 ? 1 : 0));
 	        	ItemOreVC.setOreType(itemstack, oretype);
 	        	
-	        	if (oretype == EnumOreType.BITUMINOUSCOAL || oretype == EnumOreType.SYLVITE_ROCKSALT || oretype == EnumOreType.LIMONITE) {
+	        	if (oretype == EnumOreType.LIGNITE || oretype == EnumOreType.BITUMINOUSCOAL || oretype == EnumOreType.SYLVITE_ROCKSALT || oretype == EnumOreType.LIMONITE) {
 	        		itemstack.stackSize++;
 	        	}
 	        	

@@ -83,6 +83,7 @@ import at.tyron.vintagecraft.Item.ItemToolRack;
 import at.tyron.vintagecraft.Item.ItemTopSoil;
 import at.tyron.vintagecraft.Item.ItemTorchVC;
 import at.tyron.vintagecraft.Item.ItemWoodBucket;
+import at.tyron.vintagecraft.Item.ItemWoodenRail;
 import at.tyron.vintagecraft.Item.ItemWoodtyped;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalRock;
 import at.tyron.vintagecraft.Item.Mechanics.ItemMechanicalWooden;
@@ -336,7 +337,7 @@ public class BlocksVC {
 		
 		woodbucket = new BlockWoodBucketVC().registerSingleState("woodbucket", ItemWoodBucket.class);
 		
-		woodenrail = new BlockWoodenRail().register("woodenrail", ItemBlock.class);
+		woodenrail = new BlockWoodenRail().register("woodenrail", ItemWoodenRail.class);
 		
 		torch = new BlockTorchVC().registerSingleState("torchvc", ItemTorchVC.class);
 	}

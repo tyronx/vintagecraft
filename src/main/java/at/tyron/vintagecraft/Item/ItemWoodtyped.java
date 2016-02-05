@@ -14,7 +14,9 @@ import at.tyron.vintagecraft.Block.Organic.BlockWoodenStairsVC;
 import at.tyron.vintagecraft.BlockClass.BaseBlockClass;
 import at.tyron.vintagecraft.BlockClass.BlockClassEntry;
 import at.tyron.vintagecraft.Interfaces.Item.IItemFuel;
+import at.tyron.vintagecraft.Interfaces.Item.IItemWorkableIngredient;
 import at.tyron.vintagecraft.World.BlocksVC;
+import at.tyron.vintagecraft.World.Crafting.WorkableRecipeBase;
 import at.tyron.vintagecraft.WorldProperties.EnumStrongHeatSource;
 import at.tyron.vintagecraft.WorldProperties.Terrain.EnumTree;
 import net.minecraft.block.Block;
@@ -102,6 +104,7 @@ public class ItemWoodtyped extends ItemBlockVC implements IItemFuel {
 	@Override
 	public ItemStack getCokedOutput(ItemStack stack) {
 		return null;
-	}	
+	}
+	
 }
 

@@ -21,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.world.IBlockAccess;
@@ -49,7 +50,7 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
         this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public EnumFlower getVariant(IBlockAccess worldIn, BlockPos pos) {
+/*    public EnumFlower getVariant(IBlockAccess worldIn, BlockPos pos) {
         IBlockState iblockstate = worldIn.getBlockState(pos);
 
         if (iblockstate.getBlock() == this) {
@@ -59,10 +60,14 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
         else {
             return EnumFlower.GOLDENROD;
         }
-    }
+    }*/
 
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        return super.canPlaceBlockAt(worldIn, pos) && worldIn.getBlockState(pos.down()).getBlock().canSustainPlant(worldIn, pos.down(), net.minecraft.util.EnumFacing.UP, this);
+        return canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
+    }
+
+    protected boolean canPlaceBlockOn(Block ground) {
+        return ground == BlocksVC.topsoil || BlocksVC.subsoil.containsBlock(ground) || ground instanceof BlockDoubleFlowerVC;
     }
 
     public boolean isReplaceable(World worldIn, BlockPos pos) {
@@ -100,12 +105,17 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 
     
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
-        if (state.getBlock() != this) return canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
+    	if (true) return true;
+    	
+        //if (state.getBlock() != this) return canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
+    	if (!(state.getBlock() instanceof BlockDoubleFlowerVC)) return false;
+    	
+    	IBlockState belowBlockState = worldIn.getBlockState(pos.down());
+    	
         if (state.getValue(HALF) == EnumBlockHalf.UPPER) {
-            return worldIn.getBlockState(pos.down()).getBlock() == this;
+            return ((BlockDoubleFlowerVC)belowBlockState.getBlock()).getFlowerType(belowBlockState) == getFlowerType(state);
         } else {
-            IBlockState iblockstate1 = worldIn.getBlockState(pos.up());
-            return iblockstate1.getBlock() == this && canPlaceBlockOn(worldIn.getBlockState(pos.down()).getBlock());
+            return canPlaceBlockOn(belowBlockState.getBlock());
         }
     }
 
@@ -123,15 +133,17 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
 
     @SideOnly(Side.CLIENT)
     public int colorMultiplier(IBlockAccess worldIn, BlockPos pos, int renderPass) {
-    	EnumFlower enumplanttype = this.getVariant(worldIn, pos);
+    	//EnumFlower enumplanttype = this.getVariant(worldIn, pos);
         return 16777215; //: BiomeColorHelper.getGrassColorAtPos(worldIn, pos);
     }
 
-    public void placeAt(World worldIn, BlockPos lowerPos, EnumFlower variant, int flags) {
+    /*public void placeAt(World worldIn, BlockPos lowerPos, EnumFlower variant, int flags) {
         worldIn.setBlockState(lowerPos, this.getDefaultState().withProperty(HALF, EnumBlockHalf.LOWER).withProperty(FLOWERTYPE, variant), flags);
         worldIn.setBlockState(lowerPos.up(), this.getDefaultState().withProperty(HALF, EnumBlockHalf.UPPER), flags);
-    }
+    }*/
 
+    
+    
     public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
         worldIn.setBlockState(pos.up(), this.getDefaultState().withProperty(HALF, EnumBlockHalf.UPPER), 2);
     }
@@ -167,18 +179,10 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     }
 
 
-    public int getDamageValue(World worldIn, BlockPos pos) {
+    /*public int getDamageValue(World worldIn, BlockPos pos) {
         return this.getVariant(worldIn, pos).getMetaData(this);
-    }
-
-  
-  /*  public int getMetaFromState(IBlockState state) {
-    	int upper = state.getValue(HALF) == EnumBlockHalf.UPPER ? 1 : 0;
-        
-    	return 
-        	upper << 3
-        	| ((BlockClassEntry)state.getValue(FLOWERTYPE)).metadata & 7;
     }*/
+
 
     protected BlockState createBlockState() {
     	if (FLOWERTYPE == null) {
@@ -190,14 +194,15 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
     
     
     public IBlockState getStateFromMeta(int meta) {
-    	EnumBlockHalf half = (meta & 1) > 0 ? EnumBlockHalf.UPPER : EnumBlockHalf.LOWER;
+    	EnumBlockHalf half = (meta >> 3) > 0 ? EnumBlockHalf.UPPER : EnumBlockHalf.LOWER;
     	
     	return BlocksVC.doubleflower.getEntryFromMeta(this, meta & 7).getBlockState().withProperty(HALF, half);
     }
 
 
     public int getMetaFromState(IBlockState state) {
-    	return BlocksVC.doubleflower.getMetaFromState(state) & 7 + (((EnumBlockHalf)state.getValue(HALF) == EnumBlockHalf.UPPER) ? 8 : 0);
+    	return ((BlocksVC.doubleflower.getMetaFromState(state) & 7)) 
+    			+ (((EnumBlockHalf)state.getValue(HALF) == EnumBlockHalf.UPPER) ? 8 : 0);
     }
     
     
@@ -210,11 +215,6 @@ public class BlockDoubleFlowerVC extends BlockFlowerVC implements IPlantable {
         
     	return ret;
     }
-    
-/*	public BlockClassEntry getFlowerType(IBlockState state) {
-		return BlocksVC.doubleflower.getBlockClassfromMeta((BlockVC)state.getBlock(), (Integer)state.getValue(FLOWERTYPE));
-	}
-	*/
 
 	
     

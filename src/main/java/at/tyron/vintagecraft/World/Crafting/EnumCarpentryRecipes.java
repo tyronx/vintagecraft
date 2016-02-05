@@ -220,7 +220,7 @@ public enum EnumCarpentryRecipes {
 		}
 		
 		ItemStack ironplate = BlocksVC.metalplate.getItemStackFor(EnumMetal.IRON);
-		WorkableRecipeBase recipe = IRONREINFORCEDRAILS.registerRecipe(new ItemStack(Blocks.rail), new ItemStack(BlocksVC.woodenrail, 32), ironplate);
+		WorkableRecipeBase recipe = IRONREINFORCEDRAILS.registerRecipe(new ItemStack(Blocks.rail, 32), new ItemStack(BlocksVC.woodenrail, 32), ironplate);
 		recipe.setIngredientText("32rails1ironplate");
 		
 	}

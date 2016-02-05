@@ -2,8 +2,11 @@ package at.tyron.vintagecraft.Inventory;
 
 import at.tyron.vintagecraft.Interfaces.Item.IItemSmithable;
 import at.tyron.vintagecraft.Interfaces.Item.IItemWorkableIngredient;
+import at.tyron.vintagecraft.World.BlocksVC;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class SlotAnvil extends Slot {

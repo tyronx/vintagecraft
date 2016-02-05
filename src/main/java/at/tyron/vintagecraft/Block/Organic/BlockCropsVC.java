@@ -160,9 +160,9 @@ public class BlockCropsVC extends BlockVC implements ISubtypeFromStackPovider, I
 		
 		/*EnumCrop crop = getCropType(state);
 		int growthStage = getGrowthStage(state);
-		if (growthStage - 1 < crop.growthstages)
-			worldIn.setBlockState(pos, BlocksVC.crops.getBlockStateFor(crop, growthStage + 1), 2);
-		*/
+		if (growthStage - 2 < crop.growthstages)
+			worldIn.setBlockState(pos, BlocksVC.crops.getBlockStateFor(crop, growthStage + 1), 2);*/
+		
 		return super.onBlockActivated(worldIn, pos, state, playerIn, side, hitX, hitY, hitZ);
 	}
 	
